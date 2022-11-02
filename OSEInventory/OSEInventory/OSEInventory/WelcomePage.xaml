@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OSEInventory.WelcomePage"
+             Title="WelcomePage">
+    <StackLayout Orientation="Vertical">
+        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" BackgroundColor="AliceBlue" HeightRequest="35">
+            <Button Pressed="Button_Clicked" Text="test" Clicked="Button_Clicked" IsEnabled="True"></Button>
+        </StackLayout>
+        <GraphicsView  BackgroundColor="Blue" x:Name="graphicsView" HeightRequest="1000" ></GraphicsView>
+    </StackLayout>
+</ContentPage>

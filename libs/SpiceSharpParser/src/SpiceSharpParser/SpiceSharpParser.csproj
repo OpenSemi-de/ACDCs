@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <ProjectGuid>{DF3DD787-71CC-4C89-9E33-DC4536A52278}</ProjectGuid>
+    <TargetFrameworks>net6.0</TargetFrameworks>
+    <Authors>SpiceSharp</Authors>
+    <PackageProjectUrl>https://github.com/SpiceSharp/SpiceSharpParser</PackageProjectUrl>
+    <Copyright>Copyright 2021</Copyright>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/SpiceSharp/SpiceSharpParser</RepositoryUrl>
+    <RepositoryType></RepositoryType>
+    <PackageTags>circuit electronics netlist parser spice</PackageTags>
+    <PackageId>SpiceSharp-Parser</PackageId>
+    <Product>SpiceSharpParser</Product>
+    <Description>SPICE netlists parser for .NET</Description>
+    <PackageReleaseNotes>Refer to the GitHub release for release notes</PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <ApplicationIcon />
+    <OutputType>Library</OutputType>
+    <StartupObject />
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <LangVersion>latest</LangVersion>
+    <Version>3.1.4</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard1.5|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+    <NoWarn>1701;1702;</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ModelWriters\CSharp\Entities\CreateSubCircuitDefinitionsWriter.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SpiceSharpBehavioral\SpiceSharpBehavioral\SpiceSharpBehavioral.csproj" />
+    <ProjectReference Include="..\..\..\SpiceSharp\SpiceSharpGenerator\SpiceSharpGenerator.csproj" />
+    <ProjectReference Include="..\..\..\SpiceSharp\SpiceSharp\SpiceSharp.csproj" />
+  </ItemGroup>
+</Project>

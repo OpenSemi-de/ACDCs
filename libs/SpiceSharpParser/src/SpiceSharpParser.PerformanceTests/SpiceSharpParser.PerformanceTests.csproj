@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <ProjectGuid>{53D996E7-8D58-49D0-97F6-71CAD49670A2}</ProjectGuid>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.1" />
+    <PackageReference Include="SpiceSharp" Version="3.1.5" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SpiceSharpParser\SpiceSharpParser.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Maui.Graphics;
+using Newtonsoft.Json;
 using System;
 using System.Linq;
 
@@ -40,8 +41,8 @@ namespace OSECircuitRender
                 if (instruction is Line)
                 {
                     Log.L("line");
-                    var start = instruction.Coordinates[0];
-                    var end = instruction.Coordinates[1];
+                    var start = new DrawCoordinate(instruction.Coordinates[0]);
+                    var end = new DrawCoordinate(instruction.Coordinates[1]);
                     SetStrokeColor(Canvas, instruction.Colors[0]);
                     Canvas.DrawLine(
                         GetAbs(drawPos.x, drawSize.x, start.x),
@@ -53,8 +54,8 @@ namespace OSECircuitRender
                 if (instruction is Box)
                 {
                     Log.L("box");
-                    var upperLeft = instruction.Coordinates[0];
-                    var lowerRight = instruction.Coordinates[1];
+                    var upperLeft = new DrawCoordinate(instruction.Coordinates[0]);
+                    var lowerRight = new DrawCoordinate(instruction.Coordinates[1]);
                     SetStrokeColor(Canvas, instruction.Colors[0]);
                     SetFillColor(Canvas, instruction.Colors[1]);
                     Canvas.DrawRectangle(
@@ -67,7 +68,7 @@ namespace OSECircuitRender
                 if (instruction is Text text)
                 {
                     Log.L("text");
-                    var centerPos = instruction.Coordinates[0];
+                    var centerPos = new DrawCoordinate(instruction.Coordinates[0]);
                     var x = GetAbs(drawPos.x, drawSize.x, centerPos.x);
                     var y = GetAbs(drawPos.y, drawSize.y, centerPos.y);
                     Canvas.SaveState();
@@ -83,7 +84,7 @@ namespace OSECircuitRender
                 if (instruction is Circle)
                 {
                     Log.L("circle");
-                    var posCenter = instruction.Coordinates[0];
+                    var posCenter = new DrawCoordinate(instruction.Coordinates[0]);
                     posCenter.x = GetAbs(drawPos.x, drawSize.x, posCenter.x);
                     posCenter.y = GetAbs(drawPos.y, drawSize.y, posCenter.y);
                     SetStrokeColor(Canvas, instruction.Colors[0]);
@@ -106,7 +107,7 @@ namespace OSECircuitRender
             foreach (var pin in drawable.DrawablePins)
             {
                 Log.L("pin");
-                var posCenter = pin.Position;
+                var posCenter = new DrawCoordinate(pin.Position);
                 posCenter.x = GetAbs(drawPos.x, drawSize.x, posCenter.x);
                 posCenter.y = GetAbs(drawPos.y, drawSize.y, posCenter.y);
                 SetStrokeColor(Canvas, pin.DrawInstructions[0].Colors[0]);
@@ -118,8 +119,8 @@ namespace OSECircuitRender
 
         private static void GetScaleAndZoom(IDrawableComponent drawable, out DrawCoordinate drawPos, out DrawCoordinate drawSize)
         {
-            drawPos = drawable.Position;
-            drawSize = drawable.Size;
+            drawPos = new DrawCoordinate(drawable.Position);
+            drawSize = new DrawCoordinate(drawable.Size);
             drawSize.x = drawSize.x * Zoom * BaseGridSize;
             drawSize.y = drawSize.y * Zoom * BaseGridSize;
             drawPos.x = drawPos.x * Zoom * BaseGridSize;

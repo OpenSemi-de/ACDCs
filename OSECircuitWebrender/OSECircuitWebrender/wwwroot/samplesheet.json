@@ -1,0 +1,1708 @@
+{
+  "Items": [
+    {
+      "$type": "OSECircuitRender.ResistorItem, OSECircuitRender",
+      "Value": "1k",
+      "RefName": "ResistorItem1",
+      "DrawableComponent": {
+        "$type": "OSECircuitRender.ResistorDrawable, OSECircuitRender",
+        "Position": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "Size": {
+          "x": 1.0,
+          "y": 3.0,
+          "z": 0.0
+        },
+        "DrawablePins": [
+          {
+            "PinType": 0,
+            "Position": {
+              "x": 0.5,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "Size": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "$type": "OSECircuitRender.Circle, OSECircuitRender",
+                "Coordinates": [
+                  {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Colors": [
+                  {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                  },
+                  {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                  }
+                ],
+                "_type": "Circle"
+              }
+            ],
+            "_type": "PinDrawable",
+            "RefName": "ResistorItem1"
+          },
+          {
+            "PinType": 0,
+            "Position": {
+              "x": 0.5,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "Size": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "$type": "OSECircuitRender.Circle, OSECircuitRender",
+                "Coordinates": [
+                  {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Colors": [
+                  {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                  },
+                  {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                  }
+                ],
+                "_type": "Circle"
+              }
+            ],
+            "_type": "PinDrawable",
+            "RefName": "ResistorItem1"
+          }
+        ],
+        "DrawInstructions": [
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 0.0,
+                "z": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": 0.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Box, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.0
+              },
+              {
+                "x": 0.6,
+                "y": 0.6,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 255,
+                "g": 255,
+                "b": 255
+              },
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Box"
+          },
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 0.8,
+                "z": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": 1.0,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Text, OSECircuitRender",
+            "text": "1k",
+            "orientation": -90.0,
+            "size": 12.0,
+            "Coordinates": [
+              {
+                "x": 0.7,
+                "y": 0.5,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Text"
+          }
+        ],
+        "_type": "ResistorDrawable",
+        "RefName": "ResistorItem1"
+      }
+    },
+    {
+      "$type": "OSECircuitRender.ResistorItem, OSECircuitRender",
+      "Value": "1k",
+      "RefName": "ResistorItem2",
+      "DrawableComponent": {
+        "$type": "OSECircuitRender.ResistorDrawable, OSECircuitRender",
+        "Position": {
+          "x": 1.0,
+          "y": 4.0,
+          "z": 0.0
+        },
+        "Size": {
+          "x": 1.0,
+          "y": 3.0,
+          "z": 0.0
+        },
+        "DrawablePins": [
+          {
+            "PinType": 0,
+            "Position": {
+              "x": 0.5,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "Size": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "$type": "OSECircuitRender.Circle, OSECircuitRender",
+                "Coordinates": [
+                  {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Colors": [
+                  {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                  },
+                  {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                  }
+                ],
+                "_type": "Circle"
+              }
+            ],
+            "_type": "PinDrawable",
+            "RefName": "ResistorItem2"
+          },
+          {
+            "PinType": 0,
+            "Position": {
+              "x": 0.5,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "Size": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "$type": "OSECircuitRender.Circle, OSECircuitRender",
+                "Coordinates": [
+                  {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Colors": [
+                  {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                  },
+                  {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                  }
+                ],
+                "_type": "Circle"
+              }
+            ],
+            "_type": "PinDrawable",
+            "RefName": "ResistorItem2"
+          }
+        ],
+        "DrawInstructions": [
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 0.0,
+                "z": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": 0.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Box, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.0
+              },
+              {
+                "x": 0.6,
+                "y": 0.6,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 255,
+                "g": 255,
+                "b": 255
+              },
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Box"
+          },
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 0.8,
+                "z": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": 1.0,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Text, OSECircuitRender",
+            "text": "1k",
+            "orientation": -90.0,
+            "size": 12.0,
+            "Coordinates": [
+              {
+                "x": 0.7,
+                "y": 0.5,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Text"
+          }
+        ],
+        "_type": "ResistorDrawable",
+        "RefName": "ResistorItem2"
+      }
+    },
+    {
+      "$type": "OSECircuitRender.ResistorItem, OSECircuitRender",
+      "Value": "1k",
+      "RefName": "ResistorItem3",
+      "DrawableComponent": {
+        "$type": "OSECircuitRender.ResistorDrawable, OSECircuitRender",
+        "Position": {
+          "x": 1.0,
+          "y": 7.0,
+          "z": 0.0
+        },
+        "Size": {
+          "x": 1.0,
+          "y": 3.0,
+          "z": 0.0
+        },
+        "DrawablePins": [
+          {
+            "PinType": 0,
+            "Position": {
+              "x": 0.5,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "Size": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "$type": "OSECircuitRender.Circle, OSECircuitRender",
+                "Coordinates": [
+                  {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Colors": [
+                  {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                  },
+                  {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                  }
+                ],
+                "_type": "Circle"
+              }
+            ],
+            "_type": "PinDrawable",
+            "RefName": "ResistorItem3"
+          },
+          {
+            "PinType": 0,
+            "Position": {
+              "x": 0.5,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "Size": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "$type": "OSECircuitRender.Circle, OSECircuitRender",
+                "Coordinates": [
+                  {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Colors": [
+                  {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                  },
+                  {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                  }
+                ],
+                "_type": "Circle"
+              }
+            ],
+            "_type": "PinDrawable",
+            "RefName": "ResistorItem3"
+          }
+        ],
+        "DrawInstructions": [
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 0.0,
+                "z": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": 0.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Box, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.0
+              },
+              {
+                "x": 0.6,
+                "y": 0.6,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 255,
+                "g": 255,
+                "b": 255
+              },
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Box"
+          },
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 0.8,
+                "z": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": 1.0,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Text, OSECircuitRender",
+            "text": "1k",
+            "orientation": -90.0,
+            "size": 12.0,
+            "Coordinates": [
+              {
+                "x": 0.7,
+                "y": 0.5,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Text"
+          }
+        ],
+        "_type": "ResistorDrawable",
+        "RefName": "ResistorItem3"
+      }
+    },
+    {
+      "$type": "OSECircuitRender.ResistorItem, OSECircuitRender",
+      "Value": "1k",
+      "RefName": "ResistorItem4",
+      "DrawableComponent": {
+        "$type": "OSECircuitRender.ResistorDrawable, OSECircuitRender",
+        "Position": {
+          "x": 1.0,
+          "y": 10.0,
+          "z": 0.0
+        },
+        "Size": {
+          "x": 1.0,
+          "y": 3.0,
+          "z": 0.0
+        },
+        "DrawablePins": [
+          {
+            "PinType": 0,
+            "Position": {
+              "x": 0.5,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "Size": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "$type": "OSECircuitRender.Circle, OSECircuitRender",
+                "Coordinates": [
+                  {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Colors": [
+                  {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                  },
+                  {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                  }
+                ],
+                "_type": "Circle"
+              }
+            ],
+            "_type": "PinDrawable",
+            "RefName": "ResistorItem4"
+          },
+          {
+            "PinType": 0,
+            "Position": {
+              "x": 0.5,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "Size": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "$type": "OSECircuitRender.Circle, OSECircuitRender",
+                "Coordinates": [
+                  {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Colors": [
+                  {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                  },
+                  {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                  }
+                ],
+                "_type": "Circle"
+              }
+            ],
+            "_type": "PinDrawable",
+            "RefName": "ResistorItem4"
+          }
+        ],
+        "DrawInstructions": [
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 0.0,
+                "z": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": 0.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Box, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.0
+              },
+              {
+                "x": 0.6,
+                "y": 0.6,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 255,
+                "g": 255,
+                "b": 255
+              },
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Box"
+          },
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 0.8,
+                "z": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": 1.0,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Text, OSECircuitRender",
+            "text": "1k",
+            "orientation": -90.0,
+            "size": 12.0,
+            "Coordinates": [
+              {
+                "x": 0.7,
+                "y": 0.5,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Text"
+          }
+        ],
+        "_type": "ResistorDrawable",
+        "RefName": "ResistorItem4"
+      }
+    },
+    {
+      "$type": "OSECircuitRender.PinItem, OSECircuitRender",
+      "RefName": "PinItem1",
+      "DrawableComponent": {
+        "$type": "OSECircuitRender.PinDrawable, OSECircuitRender",
+        "PinType": 2,
+        "Position": {
+          "x": 3.0,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "Size": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "DrawablePins": [
+          {
+            "PinType": 0,
+            "Position": {
+              "x": 0.5,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "Size": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "$type": "OSECircuitRender.Circle, OSECircuitRender",
+                "Coordinates": [
+                  {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Colors": [
+                  {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                  },
+                  {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                  }
+                ],
+                "_type": "Circle"
+              }
+            ],
+            "_type": "PinDrawable",
+            "RefName": "PinItem1"
+          }
+        ],
+        "DrawInstructions": [
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 0.0,
+                "z": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": 0.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.0
+              },
+              {
+                "x": 0.8,
+                "y": 0.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.3,
+                "y": 0.4,
+                "z": 0.0
+              },
+              {
+                "x": 0.7,
+                "y": 0.4,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.4,
+                "y": 0.6,
+                "z": 0.0
+              },
+              {
+                "x": 0.6,
+                "y": 0.6,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Text, OSECircuitRender",
+            "text": "GND",
+            "orientation": 0.0,
+            "size": 12.0,
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 1.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Text"
+          }
+        ],
+        "_type": "PinDrawable",
+        "RefName": "PinItem1"
+      }
+    },
+    {
+      "$type": "OSECircuitRender.PinItem, OSECircuitRender",
+      "RefName": "PinItem2",
+      "DrawableComponent": {
+        "$type": "OSECircuitRender.PinDrawable, OSECircuitRender",
+        "PinType": 2,
+        "Position": {
+          "x": 3.0,
+          "y": 4.0,
+          "z": 0.0
+        },
+        "Size": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "DrawablePins": [
+          {
+            "PinType": 0,
+            "Position": {
+              "x": 0.5,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "Size": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "$type": "OSECircuitRender.Circle, OSECircuitRender",
+                "Coordinates": [
+                  {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Colors": [
+                  {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                  },
+                  {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                  }
+                ],
+                "_type": "Circle"
+              }
+            ],
+            "_type": "PinDrawable",
+            "RefName": "PinItem2"
+          }
+        ],
+        "DrawInstructions": [
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 0.0,
+                "z": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": 0.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.0
+              },
+              {
+                "x": 0.8,
+                "y": 0.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.3,
+                "y": 0.4,
+                "z": 0.0
+              },
+              {
+                "x": 0.7,
+                "y": 0.4,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.4,
+                "y": 0.6,
+                "z": 0.0
+              },
+              {
+                "x": 0.6,
+                "y": 0.6,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Text, OSECircuitRender",
+            "text": "GND",
+            "orientation": 0.0,
+            "size": 12.0,
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 1.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Text"
+          }
+        ],
+        "_type": "PinDrawable",
+        "RefName": "PinItem2"
+      }
+    },
+    {
+      "$type": "OSECircuitRender.PinItem, OSECircuitRender",
+      "RefName": "PinItem3",
+      "DrawableComponent": {
+        "$type": "OSECircuitRender.PinDrawable, OSECircuitRender",
+        "PinType": 2,
+        "Position": {
+          "x": 3.0,
+          "y": 7.0,
+          "z": 0.0
+        },
+        "Size": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "DrawablePins": [
+          {
+            "PinType": 0,
+            "Position": {
+              "x": 0.5,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "Size": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "$type": "OSECircuitRender.Circle, OSECircuitRender",
+                "Coordinates": [
+                  {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Colors": [
+                  {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                  },
+                  {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                  }
+                ],
+                "_type": "Circle"
+              }
+            ],
+            "_type": "PinDrawable",
+            "RefName": "PinItem3"
+          }
+        ],
+        "DrawInstructions": [
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 0.0,
+                "z": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": 0.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.0
+              },
+              {
+                "x": 0.8,
+                "y": 0.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.3,
+                "y": 0.4,
+                "z": 0.0
+              },
+              {
+                "x": 0.7,
+                "y": 0.4,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.4,
+                "y": 0.6,
+                "z": 0.0
+              },
+              {
+                "x": 0.6,
+                "y": 0.6,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Text, OSECircuitRender",
+            "text": "GND",
+            "orientation": 0.0,
+            "size": 12.0,
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 1.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Text"
+          }
+        ],
+        "_type": "PinDrawable",
+        "RefName": "PinItem3"
+      }
+    },
+    {
+      "$type": "OSECircuitRender.PinItem, OSECircuitRender",
+      "RefName": "PinItem4",
+      "DrawableComponent": {
+        "$type": "OSECircuitRender.PinDrawable, OSECircuitRender",
+        "PinType": 2,
+        "Position": {
+          "x": 3.0,
+          "y": 10.0,
+          "z": 0.0
+        },
+        "Size": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "DrawablePins": [
+          {
+            "PinType": 0,
+            "Position": {
+              "x": 0.5,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "Size": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "$type": "OSECircuitRender.Circle, OSECircuitRender",
+                "Coordinates": [
+                  {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Colors": [
+                  {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                  },
+                  {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                  }
+                ],
+                "_type": "Circle"
+              }
+            ],
+            "_type": "PinDrawable",
+            "RefName": "PinItem4"
+          }
+        ],
+        "DrawInstructions": [
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 0.0,
+                "z": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": 0.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.0
+              },
+              {
+                "x": 0.8,
+                "y": 0.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.3,
+                "y": 0.4,
+                "z": 0.0
+              },
+              {
+                "x": 0.7,
+                "y": 0.4,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Line, OSECircuitRender",
+            "Coordinates": [
+              {
+                "x": 0.4,
+                "y": 0.6,
+                "z": 0.0
+              },
+              {
+                "x": 0.6,
+                "y": 0.6,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "$type": "OSECircuitRender.Text, OSECircuitRender",
+            "text": "GND",
+            "orientation": 0.0,
+            "size": 12.0,
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 1.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Text"
+          }
+        ],
+        "_type": "PinDrawable",
+        "RefName": "PinItem4"
+      }
+    },
+    {
+      "$type": "OSECircuitRender.InductorItem, OSECircuitRender",
+      "RefName": "InductorItem1",
+      "DrawableComponent": {
+        "$type": "OSECircuitRender.InductorDrawable, OSECircuitRender",
+        "Position": {
+          "x": 5.0,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "Size": {
+          "x": 1.0,
+          "y": 3.0,
+          "z": 0.0
+        },
+        "DrawablePins": [
+          {
+            "PinType": 0,
+            "Position": {
+              "x": 0.5,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "Size": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "$type": "OSECircuitRender.Circle, OSECircuitRender",
+                "Coordinates": [
+                  {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Colors": [
+                  {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                  },
+                  {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                  }
+                ],
+                "_type": "Circle"
+              }
+            ],
+            "_type": "PinDrawable",
+            "RefName": "InductorItem1"
+          },
+          {
+            "PinType": 0,
+            "Position": {
+              "x": 0.5,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "Size": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "$type": "OSECircuitRender.Circle, OSECircuitRender",
+                "Coordinates": [
+                  {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Colors": [
+                  {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                  },
+                  {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                  }
+                ],
+                "_type": "Circle"
+              }
+            ],
+            "_type": "PinDrawable",
+            "RefName": "InductorItem1"
+          }
+        ],
+        "DrawInstructions": [
+          {
+            "$type": "OSECircuitRender.Path, OSECircuitRender",
+            "Coordinates": [],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Path"
+          }
+        ],
+        "_type": "ResistorDrawable",
+        "RefName": "InductorItem1"
+      }
+    }
+  ],
+  "SheetNum": 1
+}

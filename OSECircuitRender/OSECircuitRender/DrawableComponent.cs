@@ -36,7 +36,11 @@ namespace OSECircuitRender
         {
             get
             {
-                return _backRef.RefName;
+                return _backRef == null ? "" : _backRef.RefName;
+            }
+
+            set
+            {
             }
         }
 

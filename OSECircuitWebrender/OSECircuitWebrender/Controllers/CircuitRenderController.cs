@@ -30,12 +30,6 @@ namespace OSECircuitWebrender.Controllers
             Worksheet ws = wb.AddNewSheet();
             string wwwPath = environment.WebRootPath;
             string contentPath = environment.ContentRootPath;
-            // wb.SaveSheet(ws, wwwPath + "/samplesheet.json");
-
-            //if(System.IO.File.Exists(wwwPath + "/input.json"))
-            //{
-            //   ws = wb.LoadSheet(wwwPath + "/input.json");
-            //}
 
             var res1 = new ResistorItem("1k", 1, 1);
             var res2 = new ResistorItem("1k", 1, 4);
@@ -57,6 +51,13 @@ namespace OSECircuitWebrender.Controllers
             ws.Items.AddItem(gnd3);
             ws.Items.AddItem(gnd4);
 
+            var ind = new InductorItem("10m", 5, 1);
+            ws.Items.AddItem(ind);
+
+            if (System.IO.File.Exists(wwwPath + "/input.json"))
+            {
+                ws = wb.LoadSheet(wwwPath + "/input.json");
+            }
             if (ws != null)
             {
                 ws.CalculateScene();
@@ -71,6 +72,8 @@ namespace OSECircuitWebrender.Controllers
                     ms.Position = 0;
                     imageBytes = ms.ToArray();
                 }
+
+                wb.SaveSheet(ws, wwwPath + "/samplesheet.json");
             }
             return File(imageBytes, "application/octet-stream", "img.bmp");
         }

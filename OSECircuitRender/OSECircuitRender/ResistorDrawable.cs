@@ -2,6 +2,11 @@
 {
     public sealed class ResistorDrawable : DrawableComponent
     {
+        public ResistorDrawable() : base(typeof(ResistorDrawable))
+        {
+            Setup(null);
+        }
+
         public ResistorDrawable(IWorksheetItem backRef) : base(typeof(ResistorDrawable))
         {
             Setup(backRef);
@@ -10,6 +15,11 @@
         public ResistorDrawable(IWorksheetItem backRef, string value, float x, float y) : base(typeof(ResistorDrawable))
         {
             Setup(backRef, value, x, y);
+        }
+
+        public ResistorDrawable(string value, float x, float y) : base(typeof(ResistorDrawable))
+        {
+            Setup(null, value, x, y);
         }
 
         private void Setup(IWorksheetItem backRef, string value = "N/A", float x = 0, float y = 0)

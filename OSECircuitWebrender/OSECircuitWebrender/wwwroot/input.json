@@ -1,0 +1,409 @@
+{
+  "Items": [
+    {
+      "RefName": "ResistorItem1",
+      "DrawableComponent": {
+        "Position": {
+          "x": 10.0,
+          "y": 10.0,
+          "z": 0.0
+        },
+        "Size": {
+          "x": 1.0,
+          "y": 3.0,
+          "z": 0.0
+        },
+        "DrawablePins": [
+          {
+            "PinType": 0,
+            "Position": {
+              "x": 0.5,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "Size": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "Coordinates": [
+                  {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Colors": [
+                  {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                  },
+                  {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                  }
+                ],
+                "_type": "Circle"
+              }
+            ],
+            "_type": "PinDrawable",
+            "RefName": "ResistorItem1"
+          },
+          {
+            "PinType": 0,
+            "Position": {
+              "x": 0.5,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "Size": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "Coordinates": [
+                  {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Colors": [
+                  {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                  },
+                  {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                  }
+                ],
+                "_type": "Circle"
+              }
+            ],
+            "_type": "PinDrawable",
+            "RefName": "ResistorItem1"
+          }
+        ],
+        "DrawInstructions": [
+          {
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 0.0,
+                "z": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": 0.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "Coordinates": [
+              {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.0
+              },
+              {
+                "x": 0.6,
+                "y": 0.6,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 255,
+                "g": 255,
+                "b": 255
+              },
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Box"
+          },
+          {
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 0.8,
+                "z": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": 1.0,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "text": "10k",
+            "orientation": -90.0,
+            "size": 12.0,
+            "Coordinates": [
+              {
+                "x": 0.7,
+                "y": 0.5,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Text"
+          }
+        ],
+        "_type": "ResistorDrawable",
+        "RefName": "ResistorItem1"
+      }
+    },
+    {
+      "RefName": "PinItem1",
+      "DrawableComponent": {
+        "PinType": 2,
+        "Position": {
+          "x": 10.0,
+          "y": 60.0,
+          "z": 0.0
+        },
+        "Size": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "DrawablePins": [
+          {
+            "PinType": 0,
+            "Position": {
+              "x": 0.0,
+              "y": 0.5,
+              "z": 0.0
+            },
+            "Size": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "Coordinates": [
+                  {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 0.0
+                  }
+                ],
+                "Colors": [
+                  {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                  },
+                  {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255
+                  }
+                ],
+                "_type": "Circle"
+              }
+            ],
+            "_type": "PinDrawable",
+            "RefName": "PinItem1"
+          }
+        ],
+        "DrawInstructions": [
+          {
+            "Coordinates": [
+              {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              },
+              {
+                "r": 255,
+                "g": 255,
+                "b": 255
+              }
+            ],
+            "_type": "Circle"
+          },
+          {
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 0.0,
+                "z": 0.0
+              },
+              {
+                "x": 0.5,
+                "y": 0.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "Coordinates": [
+              {
+                "x": 0.2,
+                "y": 0.2,
+                "z": 0.0
+              },
+              {
+                "x": 0.8,
+                "y": 0.2,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "Coordinates": [
+              {
+                "x": 0.3,
+                "y": 0.4,
+                "z": 0.0
+              },
+              {
+                "x": 0.7,
+                "y": 0.4,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "Coordinates": [
+              {
+                "x": 0.4,
+                "y": 0.6,
+                "z": 0.0
+              },
+              {
+                "x": 0.6,
+                "y": 0.6,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Line"
+          },
+          {
+            "text": "GND",
+            "orientation": 0.0,
+            "size": 12.0,
+            "Coordinates": [
+              {
+                "x": 0.5,
+                "y": 0.9,
+                "z": 0.0
+              }
+            ],
+            "Colors": [
+              {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            ],
+            "_type": "Text"
+          }
+        ],
+        "_type": "PinDrawable",
+        "RefName": "PinItem1"
+      }
+    }
+  ],
+  "SheetNum": 1
+}

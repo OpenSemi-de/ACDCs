@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
@@ -19,6 +19,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Microsoft.Maui.Graphics" Version="6.0.501" />
+	  <PackageReference Include="Microsoft.Maui.Graphics.Skia" Version="6.0.501" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	</ItemGroup>
 

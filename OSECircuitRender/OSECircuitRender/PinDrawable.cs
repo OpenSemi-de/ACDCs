@@ -6,21 +6,24 @@
 
         public PinDrawable(IWorksheetItem backRef, float x, float y, PinDrawableType pinType = PinDrawableType.None) : base(typeof(PinDrawable))
         {
-            DrawInstructions.Add(new Circle(0, 0, 1, 1));
             switch (pinType)
             {
                 case PinDrawableType.None:
-                    break;
+                    {
+                        DrawInstructions.Add(new Circle(0, 0, 1, 1));
 
+                        break;
+                    }
                 case PinDrawableType.Null:
                 case PinDrawableType.GND:
                     {
-                        DrawablePins.Add(new PinDrawable(backRef, 0f, 0.5f, PinDrawableType.None));
+                        DrawablePins.Add(new PinDrawable(backRef, 0.5f, 0.0f, PinDrawableType.None));
+
                         DrawInstructions.Add(new Line(0.5f, 0f, 0.5f, 0.2f));
                         DrawInstructions.Add(new Line(0.2f, 0.2f, 0.8f, 0.2f));
                         DrawInstructions.Add(new Line(0.3f, 0.4f, 0.7f, 0.4f));
                         DrawInstructions.Add(new Line(0.4f, 0.6f, 0.6f, 0.6f));
-                        DrawInstructions.Add(new Text("GND", 0, 12, 0.5f, 0.9f));
+                        DrawInstructions.Add(new Text("GND", 0, 12, 0.5f, 1.2f));
 
                         break;
                     };

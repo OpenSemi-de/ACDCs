@@ -1,25 +1,24 @@
-﻿using OSECircuitRender;
-using System;
+﻿using System;
+using OSECircuitRender.Drawables;
+using OSECircuitRender.Items;
+using OSECircuitRender.Sheet;
 
-namespace HelloWold
+namespace OSECircuitRender
 {
     public static class Program
     {
         public static void Main()
         {
-            OSECircuitRender.Log.Method = Console.WriteLine;
+            Log.Method = Console.WriteLine;
             Workbook wb = new();
             Worksheet ws = wb.AddNewSheet();
             ResistorItem ri = new("10k", 10, 10);
             ws.Items.AddItem(ri);
-            PinItem pi = new(PinDrawableType.GND, 10, 60);
+            PinItem pi = new(PinDrawableType.Gnd, 10, 60);
 
             ws.Items.AddItem(pi);
 
-            //Console.WriteLine(JsonConvert.SerializeObject(wb, Formatting.Indented));
-            //	Console.WriteLine(JsonConvert.SerializeObject(wb.Sheets.First().GetDrawableComponents(), Formatting.Indented));
             ws.CalculateScene();
-            //Console.WriteLine(JsonConvert.SerializeObject(wb.Sheets[0].SceneManager.GetSceneForBackend(), Formatting.Indented));
         }
     }
 }

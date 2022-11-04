@@ -2,17 +2,18 @@
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using OSECircuitRender.Sheet;
 
 namespace OSECircuitRender
 {
     public sealed class Workbook
     {
         public Worksheets Sheets = new();
-        private JsonSerializerSettings jsonSerializerSettings;
+        private readonly JsonSerializerSettings _jsonSerializerSettings;
 
         public Workbook()
         {
-            jsonSerializerSettings = new JsonSerializerSettings()
+            _jsonSerializerSettings = new JsonSerializerSettings()
             {
                 TypeNameHandling = TypeNameHandling.Auto,
                 Formatting = Formatting.Indented,
@@ -30,7 +31,7 @@ namespace OSECircuitRender
         public Worksheet LoadSheet(string fileName)
         {
             var json = File.ReadAllText(fileName);
-            Worksheet ws = JsonConvert.DeserializeObject<Worksheet>(json, jsonSerializerSettings);
+            Worksheet ws = JsonConvert.DeserializeObject<Worksheet>(json, _jsonSerializerSettings);
 
             Sheets.AddSheet(ws);
             return ws;
@@ -38,7 +39,7 @@ namespace OSECircuitRender
 
         public void SaveSheet(Worksheet ws, string fileName)
         {
-            var json = JsonConvert.SerializeObject(ws, jsonSerializerSettings);
+            var json = JsonConvert.SerializeObject(ws, _jsonSerializerSettings);
             File.WriteAllText(fileName, json);
         }
     }

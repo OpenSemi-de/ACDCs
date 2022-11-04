@@ -5,6 +5,10 @@ using Microsoft.Maui.Graphics.Skia;
 using Microsoft.Maui.Graphics;
 using System.Net;
 using System.Net.Http.Headers;
+using OSECircuitRender.Drawables;
+using OSECircuitRender.Items;
+using OSECircuitRender.Scene;
+using OSECircuitRender.Sheet;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace OSECircuitWebrender.Controllers
@@ -41,10 +45,10 @@ namespace OSECircuitWebrender.Controllers
             ws.Items.AddItem(res3);
             ws.Items.AddItem(res4);
 
-            var gnd1 = new PinItem(PinDrawableType.GND, 3, 1);
-            var gnd2 = new PinItem(PinDrawableType.GND, 3, 4);
-            var gnd3 = new PinItem(PinDrawableType.GND, 3, 7);
-            var gnd4 = new PinItem(PinDrawableType.GND, 3, 10);
+            var gnd1 = new PinItem(PinDrawableType.Gnd, 3, 1);
+            var gnd2 = new PinItem(PinDrawableType.Gnd, 3, 4);
+            var gnd3 = new PinItem(PinDrawableType.Gnd, 3, 7);
+            var gnd4 = new PinItem(PinDrawableType.Gnd, 3, 10);
 
             ws.Items.AddItem(gnd1);
             ws.Items.AddItem(gnd2);
@@ -63,7 +67,7 @@ namespace OSECircuitWebrender.Controllers
                 ws.CalculateScene();
                 DrawableScene scene = (DrawableScene)ws.SceneManager.GetSceneForBackend();
 
-                SkiaBitmapExportContext context = new SkiaBitmapExportContext(1000, 1000, 1);
+                SkiaBitmapExportContext context = new(1000, 1000, 1);
                 scene.Draw(context.Canvas, RectF.Zero);
 
                 using (MemoryStream ms = new())

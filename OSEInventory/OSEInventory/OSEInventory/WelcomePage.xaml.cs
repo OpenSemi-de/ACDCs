@@ -1,4 +1,7 @@
 using OSECircuitRender;
+using OSECircuitRender.Drawables;
+using OSECircuitRender.Items;
+using OSECircuitRender.Sheet;
 
 namespace OSEInventory;
 

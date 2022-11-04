@@ -2,7 +2,7 @@
 
 namespace OSECircuitRender.Sheet
 {
-    public sealed class Worksheets : List<Worksheet>
+    public sealed class WorksheetsList : List<Worksheet>
     {
         private int _sheetCount = 0;
 

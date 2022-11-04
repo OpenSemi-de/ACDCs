@@ -8,7 +8,7 @@ namespace OSECircuitRender
 {
     public sealed class Workbook
     {
-        public Worksheets Sheets = new();
+        public WorksheetsList Sheets = new();
         private readonly JsonSerializerSettings _jsonSerializerSettings;
 
         public Workbook()

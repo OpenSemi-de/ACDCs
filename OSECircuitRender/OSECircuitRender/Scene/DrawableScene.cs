@@ -97,6 +97,16 @@ namespace OSECircuitRender.Scene
                         break;
 
                     case PathPartType.C:
+                        {
+                            pathF.CurveTo(
+                                drawPos.X + part.Coordinates[0].X,
+                                drawPos.Y + part.Coordinates[0].Y,
+                                drawPos.X + part.Coordinates[1].X,
+                                drawPos.Y + part.Coordinates[1].Y,
+                                drawPos.X + part.Coordinates[2].X,
+                                drawPos.Y + part.Coordinates[2].Y
+                            );
+                        }
                         break;
 
                     case PathPartType.M:

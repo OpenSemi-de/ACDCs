@@ -10,8 +10,8 @@ namespace OSECircuitRender.Instructions
 
         public TextInstruction(string text, float orientation, float size, float x, float y) : base(typeof(TextInstruction))
         {
-            Coordinates.Add(new Coordinate(x, y, 0));
-            Colors.Add(new Color(0, 0, 0));
+            Position = new Coordinate(x, y, 0);
+            StrokeColor = new Color(0, 0, 0);
             Text = text;
             Orientation = orientation;
             Size = size;

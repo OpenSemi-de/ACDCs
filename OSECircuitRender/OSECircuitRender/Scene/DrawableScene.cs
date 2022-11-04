@@ -42,21 +42,21 @@ namespace OSECircuitRender.Scene
                 {
                     Log.L("line");
 
-                    SetStrokeColor(Canvas, instruction.Colors[0]);
+                    SetStrokeColor(Canvas, instruction.StrokeColor);
                     Canvas.DrawLine(
-                        GetAbs(drawPos.X, drawSize.X, line.X1),
-                        GetAbs(drawPos.Y, drawSize.Y, line.Y1),
-                        GetAbs(drawPos.X, drawSize.X, line.X2),
-                        GetAbs(drawPos.Y, drawSize.Y, line.Y2));
+                        GetAbs(drawPos.X, drawSize.X, line.Position.X),
+                        GetAbs(drawPos.Y, drawSize.Y, line.Position.Y),
+                        GetAbs(drawPos.X, drawSize.X, line.End.X),
+                        GetAbs(drawPos.Y, drawSize.Y, line.End.Y));
                 }
 
-                if (instruction is BoxInstruction)
+                if (instruction is BoxInstruction box)
                 {
                     Log.L("box");
-                    var upperLeft = new Coordinate(instruction.Coordinates[0]);
-                    var lowerRight = new Coordinate(instruction.Coordinates[1]);
-                    SetStrokeColor(Canvas, instruction.Colors[0]);
-                    SetFillColor(Canvas, instruction.Colors[1]);
+                    var upperLeft = new Coordinate(box.Position);
+                    var lowerRight = new Coordinate(box.Size);
+                    SetStrokeColor(Canvas, box.StrokeColor);
+                    SetFillColor(Canvas, box.FillColor);
                     Canvas.DrawRectangle(
                         GetAbs(drawPos.X, drawSize.X, upperLeft.X),
                         GetAbs(drawPos.Y, drawSize.Y, upperLeft.Y),
@@ -67,14 +67,14 @@ namespace OSECircuitRender.Scene
                 if (instruction is TextInstruction text)
                 {
                     Log.L("text");
-                    var centerPos = new Coordinate(instruction.Coordinates[0]);
+                    var centerPos = new Coordinate(instruction.Position);
                     var x = GetAbs(drawPos.X, drawSize.X, centerPos.X);
                     var y = GetAbs(drawPos.Y, drawSize.Y, centerPos.Y);
                     Canvas.SaveState();
                     Canvas.FontSize = text.Size;
                     Canvas.Translate(x, y);
                     Canvas.Rotate(text.Orientation);
-                    SetStrokeColor(Canvas, instruction.Colors[0]);
+                    SetStrokeColor(Canvas, instruction.StrokeColor);
                     Canvas.DrawString(text.Text, 0, 0, HorizontalAlignment.Center);
                     Canvas.Translate(0, 0);
                     Canvas.ResetState();
@@ -83,16 +83,16 @@ namespace OSECircuitRender.Scene
                 if (instruction is CircleInstruction)
                 {
                     Log.L("circle");
-                    var posCenter = new Coordinate(instruction.Coordinates[0]);
+                    var posCenter = new Coordinate(instruction.Position);
                     posCenter.X = GetAbs(drawPos.X, drawSize.X, posCenter.X);
                     posCenter.Y = GetAbs(drawPos.Y, drawSize.Y, posCenter.Y);
-                    SetStrokeColor(Canvas, instruction.Colors[0]);
+                    SetStrokeColor(Canvas, instruction.StrokeColor);
                     Canvas.DrawCircle(posCenter.X, posCenter.Y, Zoom * BaseGridSize * 0.1f);
                 }
 
                 if (instruction is PathInstruction path)
                 {
-                    SetStrokeColor(Canvas, instruction.Colors[0]);
+                    SetStrokeColor(Canvas, instruction.StrokeColor);
                     PathInstruction scenePath = path;
 
                     PathF pathF = new(drawPos.X, drawPos.Y);
@@ -152,7 +152,7 @@ namespace OSECircuitRender.Scene
                 var posCenter = new Coordinate(pin.Position);
                 posCenter.X = GetAbs(drawPos.X, drawSize.X, posCenter.X);
                 posCenter.Y = GetAbs(drawPos.Y, drawSize.Y, posCenter.Y);
-                SetStrokeColor(Canvas, pin.DrawInstructions[0].Colors[0]);
+                SetStrokeColor(Canvas, pin.DrawInstructions[0].StrokeColor);
                 Canvas.DrawCircle(posCenter.X, posCenter.Y, Zoom * BaseGridSize * 0.1f);
             }
         }
@@ -169,7 +169,7 @@ namespace OSECircuitRender.Scene
 
         public static void SetFillColor(ICanvas canvas, Definitions.Color fillColor)
         {
-            canvas.StrokeColor = new Microsoft.Maui.Graphics.Color(fillColor.R, fillColor.G, fillColor.B);
+            canvas.FillColor = new Microsoft.Maui.Graphics.Color(fillColor.R, fillColor.G, fillColor.B);
         }
 
         public static void SetStrokeColor(ICanvas canvas, Definitions.Color penColor)

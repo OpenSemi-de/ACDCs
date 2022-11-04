@@ -4,12 +4,15 @@ namespace OSECircuitRender.Instructions
 {
     public sealed class CircleInstruction : DrawInstruction
     {
+        public Coordinate Size { get; set; }
+        public Color FillColor { get; set; }
+
         public CircleInstruction(float centerX, float centerY, float width, float height) : base(typeof(CircleInstruction))
         {
-            Coordinates.Add(new Coordinate(centerX, centerY, 0));
-            Coordinates.Add(new Coordinate(width, height, 0));
-            Colors.Add(new Color(0, 0, 0));
-            Colors.Add(new Color(255, 255, 255));
+            Position = new(centerX, centerY, 0);
+            Size = new(width, height, 0);
+            StrokeColor = new Color(0, 0, 0);
+            FillColor = new Color(255, 255, 255);
         }
     }
 }

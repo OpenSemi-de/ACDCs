@@ -5,7 +5,7 @@ namespace OSECircuitRender.Interfaces
 {
     public interface IDrawInstruction
     {
-        List<Coordinate> Coordinates { get; }
-        List<Color> Colors { get; }
+        Coordinate Position { get; set; }
+        Color StrokeColor { get; set; }
     }
 }

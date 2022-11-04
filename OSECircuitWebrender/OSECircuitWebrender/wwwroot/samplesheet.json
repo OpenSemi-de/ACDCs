@@ -33,30 +33,26 @@
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
-                "Coordinates": [
-                  {
-                    "X": 0.0,
-                    "Y": 0.0,
-                    "Z": 0.0
-                  },
-                  {
-                    "X": 1.0,
-                    "Y": 1.0,
-                    "Z": 0.0
-                  }
-                ],
-                "Colors": [
-                  {
-                    "R": 0,
-                    "G": 0,
-                    "B": 0
-                  },
-                  {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                  }
-                ],
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.0
+                },
+                "FillColor": {
+                  "R": 255,
+                  "G": 255,
+                  "B": 255
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
                 "Type": "CircleInstruction"
               }
             ],
@@ -79,30 +75,26 @@
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
-                "Coordinates": [
-                  {
-                    "X": 0.0,
-                    "Y": 0.0,
-                    "Z": 0.0
-                  },
-                  {
-                    "X": 1.0,
-                    "Y": 1.0,
-                    "Z": 0.0
-                  }
-                ],
-                "Colors": [
-                  {
-                    "R": 0,
-                    "G": 0,
-                    "B": 0
-                  },
-                  {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                  }
-                ],
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.0
+                },
+                "FillColor": {
+                  "R": 255,
+                  "G": 255,
+                  "B": 255
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
                 "Type": "CircleInstruction"
               }
             ],
@@ -113,84 +105,64 @@
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.5,
-            "Y1": 0.0,
-            "X2": 0.5,
-            "Y2": 0.2,
-            "Coordinates": [
-              {
-                "X": 0.5,
-                "Y": 0.0,
-                "Z": 0.0
-              },
-              {
-                "X": 0.5,
-                "Y": 0.2,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.5,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.5,
+              "Y": 0.0,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.BoxInstruction, OSECircuitRender",
-            "Coordinates": [
-              {
-                "X": 0.2,
-                "Y": 0.2,
-                "Z": 0.0
-              },
-              {
-                "X": 0.6,
-                "Y": 0.6,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 255,
-                "G": 255,
-                "B": 255
-              },
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "Size": {
+              "X": 0.6,
+              "Y": 0.6,
+              "Z": 0.0
+            },
+            "FillColor": {
+              "R": 255,
+              "G": 255,
+              "B": 255
+            },
+            "Position": {
+              "X": 0.2,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "BoxInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.5,
-            "Y1": 0.8,
-            "X2": 0.5,
-            "Y2": 1.0,
-            "Coordinates": [
-              {
-                "X": 0.5,
-                "Y": 0.8,
-                "Z": 0.0
-              },
-              {
-                "X": 0.5,
-                "Y": 1.0,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.5,
+              "Y": 1.0,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.5,
+              "Y": 0.8,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
@@ -198,20 +170,16 @@
             "Text": "1k",
             "Orientation": -90.0,
             "Size": 12.0,
-            "Coordinates": [
-              {
-                "X": 0.7,
-                "Y": 0.5,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "Position": {
+              "X": 0.7,
+              "Y": 0.5,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "TextInstruction"
           }
         ],
@@ -252,30 +220,26 @@
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
-                "Coordinates": [
-                  {
-                    "X": 0.0,
-                    "Y": 0.0,
-                    "Z": 0.0
-                  },
-                  {
-                    "X": 1.0,
-                    "Y": 1.0,
-                    "Z": 0.0
-                  }
-                ],
-                "Colors": [
-                  {
-                    "R": 0,
-                    "G": 0,
-                    "B": 0
-                  },
-                  {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                  }
-                ],
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.0
+                },
+                "FillColor": {
+                  "R": 255,
+                  "G": 255,
+                  "B": 255
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
                 "Type": "CircleInstruction"
               }
             ],
@@ -298,30 +262,26 @@
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
-                "Coordinates": [
-                  {
-                    "X": 0.0,
-                    "Y": 0.0,
-                    "Z": 0.0
-                  },
-                  {
-                    "X": 1.0,
-                    "Y": 1.0,
-                    "Z": 0.0
-                  }
-                ],
-                "Colors": [
-                  {
-                    "R": 0,
-                    "G": 0,
-                    "B": 0
-                  },
-                  {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                  }
-                ],
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.0
+                },
+                "FillColor": {
+                  "R": 255,
+                  "G": 255,
+                  "B": 255
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
                 "Type": "CircleInstruction"
               }
             ],
@@ -332,84 +292,64 @@
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.5,
-            "Y1": 0.0,
-            "X2": 0.5,
-            "Y2": 0.2,
-            "Coordinates": [
-              {
-                "X": 0.5,
-                "Y": 0.0,
-                "Z": 0.0
-              },
-              {
-                "X": 0.5,
-                "Y": 0.2,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.5,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.5,
+              "Y": 0.0,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.BoxInstruction, OSECircuitRender",
-            "Coordinates": [
-              {
-                "X": 0.2,
-                "Y": 0.2,
-                "Z": 0.0
-              },
-              {
-                "X": 0.6,
-                "Y": 0.6,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 255,
-                "G": 255,
-                "B": 255
-              },
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "Size": {
+              "X": 0.6,
+              "Y": 0.6,
+              "Z": 0.0
+            },
+            "FillColor": {
+              "R": 255,
+              "G": 255,
+              "B": 255
+            },
+            "Position": {
+              "X": 0.2,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "BoxInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.5,
-            "Y1": 0.8,
-            "X2": 0.5,
-            "Y2": 1.0,
-            "Coordinates": [
-              {
-                "X": 0.5,
-                "Y": 0.8,
-                "Z": 0.0
-              },
-              {
-                "X": 0.5,
-                "Y": 1.0,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.5,
+              "Y": 1.0,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.5,
+              "Y": 0.8,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
@@ -417,20 +357,16 @@
             "Text": "1k",
             "Orientation": -90.0,
             "Size": 12.0,
-            "Coordinates": [
-              {
-                "X": 0.7,
-                "Y": 0.5,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "Position": {
+              "X": 0.7,
+              "Y": 0.5,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "TextInstruction"
           }
         ],
@@ -471,30 +407,26 @@
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
-                "Coordinates": [
-                  {
-                    "X": 0.0,
-                    "Y": 0.0,
-                    "Z": 0.0
-                  },
-                  {
-                    "X": 1.0,
-                    "Y": 1.0,
-                    "Z": 0.0
-                  }
-                ],
-                "Colors": [
-                  {
-                    "R": 0,
-                    "G": 0,
-                    "B": 0
-                  },
-                  {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                  }
-                ],
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.0
+                },
+                "FillColor": {
+                  "R": 255,
+                  "G": 255,
+                  "B": 255
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
                 "Type": "CircleInstruction"
               }
             ],
@@ -517,30 +449,26 @@
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
-                "Coordinates": [
-                  {
-                    "X": 0.0,
-                    "Y": 0.0,
-                    "Z": 0.0
-                  },
-                  {
-                    "X": 1.0,
-                    "Y": 1.0,
-                    "Z": 0.0
-                  }
-                ],
-                "Colors": [
-                  {
-                    "R": 0,
-                    "G": 0,
-                    "B": 0
-                  },
-                  {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                  }
-                ],
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.0
+                },
+                "FillColor": {
+                  "R": 255,
+                  "G": 255,
+                  "B": 255
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
                 "Type": "CircleInstruction"
               }
             ],
@@ -551,84 +479,64 @@
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.5,
-            "Y1": 0.0,
-            "X2": 0.5,
-            "Y2": 0.2,
-            "Coordinates": [
-              {
-                "X": 0.5,
-                "Y": 0.0,
-                "Z": 0.0
-              },
-              {
-                "X": 0.5,
-                "Y": 0.2,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.5,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.5,
+              "Y": 0.0,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.BoxInstruction, OSECircuitRender",
-            "Coordinates": [
-              {
-                "X": 0.2,
-                "Y": 0.2,
-                "Z": 0.0
-              },
-              {
-                "X": 0.6,
-                "Y": 0.6,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 255,
-                "G": 255,
-                "B": 255
-              },
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "Size": {
+              "X": 0.6,
+              "Y": 0.6,
+              "Z": 0.0
+            },
+            "FillColor": {
+              "R": 255,
+              "G": 255,
+              "B": 255
+            },
+            "Position": {
+              "X": 0.2,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "BoxInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.5,
-            "Y1": 0.8,
-            "X2": 0.5,
-            "Y2": 1.0,
-            "Coordinates": [
-              {
-                "X": 0.5,
-                "Y": 0.8,
-                "Z": 0.0
-              },
-              {
-                "X": 0.5,
-                "Y": 1.0,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.5,
+              "Y": 1.0,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.5,
+              "Y": 0.8,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
@@ -636,20 +544,16 @@
             "Text": "1k",
             "Orientation": -90.0,
             "Size": 12.0,
-            "Coordinates": [
-              {
-                "X": 0.7,
-                "Y": 0.5,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "Position": {
+              "X": 0.7,
+              "Y": 0.5,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "TextInstruction"
           }
         ],
@@ -690,30 +594,26 @@
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
-                "Coordinates": [
-                  {
-                    "X": 0.0,
-                    "Y": 0.0,
-                    "Z": 0.0
-                  },
-                  {
-                    "X": 1.0,
-                    "Y": 1.0,
-                    "Z": 0.0
-                  }
-                ],
-                "Colors": [
-                  {
-                    "R": 0,
-                    "G": 0,
-                    "B": 0
-                  },
-                  {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                  }
-                ],
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.0
+                },
+                "FillColor": {
+                  "R": 255,
+                  "G": 255,
+                  "B": 255
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
                 "Type": "CircleInstruction"
               }
             ],
@@ -736,30 +636,26 @@
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
-                "Coordinates": [
-                  {
-                    "X": 0.0,
-                    "Y": 0.0,
-                    "Z": 0.0
-                  },
-                  {
-                    "X": 1.0,
-                    "Y": 1.0,
-                    "Z": 0.0
-                  }
-                ],
-                "Colors": [
-                  {
-                    "R": 0,
-                    "G": 0,
-                    "B": 0
-                  },
-                  {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                  }
-                ],
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.0
+                },
+                "FillColor": {
+                  "R": 255,
+                  "G": 255,
+                  "B": 255
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
                 "Type": "CircleInstruction"
               }
             ],
@@ -770,84 +666,64 @@
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.5,
-            "Y1": 0.0,
-            "X2": 0.5,
-            "Y2": 0.2,
-            "Coordinates": [
-              {
-                "X": 0.5,
-                "Y": 0.0,
-                "Z": 0.0
-              },
-              {
-                "X": 0.5,
-                "Y": 0.2,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.5,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.5,
+              "Y": 0.0,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.BoxInstruction, OSECircuitRender",
-            "Coordinates": [
-              {
-                "X": 0.2,
-                "Y": 0.2,
-                "Z": 0.0
-              },
-              {
-                "X": 0.6,
-                "Y": 0.6,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 255,
-                "G": 255,
-                "B": 255
-              },
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "Size": {
+              "X": 0.6,
+              "Y": 0.6,
+              "Z": 0.0
+            },
+            "FillColor": {
+              "R": 255,
+              "G": 255,
+              "B": 255
+            },
+            "Position": {
+              "X": 0.2,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "BoxInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.5,
-            "Y1": 0.8,
-            "X2": 0.5,
-            "Y2": 1.0,
-            "Coordinates": [
-              {
-                "X": 0.5,
-                "Y": 0.8,
-                "Z": 0.0
-              },
-              {
-                "X": 0.5,
-                "Y": 1.0,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.5,
+              "Y": 1.0,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.5,
+              "Y": 0.8,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
@@ -855,20 +731,16 @@
             "Text": "1k",
             "Orientation": -90.0,
             "Size": 12.0,
-            "Coordinates": [
-              {
-                "X": 0.7,
-                "Y": 0.5,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "Position": {
+              "X": 0.7,
+              "Y": 0.5,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "TextInstruction"
           }
         ],
@@ -909,30 +781,26 @@
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
-                "Coordinates": [
-                  {
-                    "X": 0.0,
-                    "Y": 0.0,
-                    "Z": 0.0
-                  },
-                  {
-                    "X": 1.0,
-                    "Y": 1.0,
-                    "Z": 0.0
-                  }
-                ],
-                "Colors": [
-                  {
-                    "R": 0,
-                    "G": 0,
-                    "B": 0
-                  },
-                  {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                  }
-                ],
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.0
+                },
+                "FillColor": {
+                  "R": 255,
+                  "G": 255,
+                  "B": 255
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
                 "Type": "CircleInstruction"
               }
             ],
@@ -943,110 +811,78 @@
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.5,
-            "Y1": 0.0,
-            "X2": 0.5,
-            "Y2": 0.2,
-            "Coordinates": [
-              {
-                "X": 0.5,
-                "Y": 0.0,
-                "Z": 0.0
-              },
-              {
-                "X": 0.5,
-                "Y": 0.2,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.5,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.5,
+              "Y": 0.0,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.2,
-            "Y1": 0.2,
-            "X2": 0.8,
-            "Y2": 0.2,
-            "Coordinates": [
-              {
-                "X": 0.2,
-                "Y": 0.2,
-                "Z": 0.0
-              },
-              {
-                "X": 0.8,
-                "Y": 0.2,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.8,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.2,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.3,
-            "Y1": 0.4,
-            "X2": 0.7,
-            "Y2": 0.4,
-            "Coordinates": [
-              {
-                "X": 0.3,
-                "Y": 0.4,
-                "Z": 0.0
-              },
-              {
-                "X": 0.7,
-                "Y": 0.4,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.7,
+              "Y": 0.4,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.3,
+              "Y": 0.4,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.4,
-            "Y1": 0.6,
-            "X2": 0.6,
-            "Y2": 0.6,
-            "Coordinates": [
-              {
-                "X": 0.4,
-                "Y": 0.6,
-                "Z": 0.0
-              },
-              {
-                "X": 0.6,
-                "Y": 0.6,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.6,
+              "Y": 0.6,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.4,
+              "Y": 0.6,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
@@ -1054,20 +890,16 @@
             "Text": "GND",
             "Orientation": 0.0,
             "Size": 12.0,
-            "Coordinates": [
-              {
-                "X": 0.5,
-                "Y": 1.2,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "Position": {
+              "X": 0.5,
+              "Y": 1.2,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "TextInstruction"
           }
         ],
@@ -1108,30 +940,26 @@
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
-                "Coordinates": [
-                  {
-                    "X": 0.0,
-                    "Y": 0.0,
-                    "Z": 0.0
-                  },
-                  {
-                    "X": 1.0,
-                    "Y": 1.0,
-                    "Z": 0.0
-                  }
-                ],
-                "Colors": [
-                  {
-                    "R": 0,
-                    "G": 0,
-                    "B": 0
-                  },
-                  {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                  }
-                ],
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.0
+                },
+                "FillColor": {
+                  "R": 255,
+                  "G": 255,
+                  "B": 255
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
                 "Type": "CircleInstruction"
               }
             ],
@@ -1142,110 +970,78 @@
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.5,
-            "Y1": 0.0,
-            "X2": 0.5,
-            "Y2": 0.2,
-            "Coordinates": [
-              {
-                "X": 0.5,
-                "Y": 0.0,
-                "Z": 0.0
-              },
-              {
-                "X": 0.5,
-                "Y": 0.2,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.5,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.5,
+              "Y": 0.0,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.2,
-            "Y1": 0.2,
-            "X2": 0.8,
-            "Y2": 0.2,
-            "Coordinates": [
-              {
-                "X": 0.2,
-                "Y": 0.2,
-                "Z": 0.0
-              },
-              {
-                "X": 0.8,
-                "Y": 0.2,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.8,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.2,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.3,
-            "Y1": 0.4,
-            "X2": 0.7,
-            "Y2": 0.4,
-            "Coordinates": [
-              {
-                "X": 0.3,
-                "Y": 0.4,
-                "Z": 0.0
-              },
-              {
-                "X": 0.7,
-                "Y": 0.4,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.7,
+              "Y": 0.4,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.3,
+              "Y": 0.4,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.4,
-            "Y1": 0.6,
-            "X2": 0.6,
-            "Y2": 0.6,
-            "Coordinates": [
-              {
-                "X": 0.4,
-                "Y": 0.6,
-                "Z": 0.0
-              },
-              {
-                "X": 0.6,
-                "Y": 0.6,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.6,
+              "Y": 0.6,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.4,
+              "Y": 0.6,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
@@ -1253,20 +1049,16 @@
             "Text": "GND",
             "Orientation": 0.0,
             "Size": 12.0,
-            "Coordinates": [
-              {
-                "X": 0.5,
-                "Y": 1.2,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "Position": {
+              "X": 0.5,
+              "Y": 1.2,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "TextInstruction"
           }
         ],
@@ -1307,30 +1099,26 @@
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
-                "Coordinates": [
-                  {
-                    "X": 0.0,
-                    "Y": 0.0,
-                    "Z": 0.0
-                  },
-                  {
-                    "X": 1.0,
-                    "Y": 1.0,
-                    "Z": 0.0
-                  }
-                ],
-                "Colors": [
-                  {
-                    "R": 0,
-                    "G": 0,
-                    "B": 0
-                  },
-                  {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                  }
-                ],
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.0
+                },
+                "FillColor": {
+                  "R": 255,
+                  "G": 255,
+                  "B": 255
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
                 "Type": "CircleInstruction"
               }
             ],
@@ -1341,110 +1129,78 @@
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.5,
-            "Y1": 0.0,
-            "X2": 0.5,
-            "Y2": 0.2,
-            "Coordinates": [
-              {
-                "X": 0.5,
-                "Y": 0.0,
-                "Z": 0.0
-              },
-              {
-                "X": 0.5,
-                "Y": 0.2,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.5,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.5,
+              "Y": 0.0,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.2,
-            "Y1": 0.2,
-            "X2": 0.8,
-            "Y2": 0.2,
-            "Coordinates": [
-              {
-                "X": 0.2,
-                "Y": 0.2,
-                "Z": 0.0
-              },
-              {
-                "X": 0.8,
-                "Y": 0.2,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.8,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.2,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.3,
-            "Y1": 0.4,
-            "X2": 0.7,
-            "Y2": 0.4,
-            "Coordinates": [
-              {
-                "X": 0.3,
-                "Y": 0.4,
-                "Z": 0.0
-              },
-              {
-                "X": 0.7,
-                "Y": 0.4,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.7,
+              "Y": 0.4,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.3,
+              "Y": 0.4,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.4,
-            "Y1": 0.6,
-            "X2": 0.6,
-            "Y2": 0.6,
-            "Coordinates": [
-              {
-                "X": 0.4,
-                "Y": 0.6,
-                "Z": 0.0
-              },
-              {
-                "X": 0.6,
-                "Y": 0.6,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.6,
+              "Y": 0.6,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.4,
+              "Y": 0.6,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
@@ -1452,20 +1208,16 @@
             "Text": "GND",
             "Orientation": 0.0,
             "Size": 12.0,
-            "Coordinates": [
-              {
-                "X": 0.5,
-                "Y": 1.2,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "Position": {
+              "X": 0.5,
+              "Y": 1.2,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "TextInstruction"
           }
         ],
@@ -1506,30 +1258,26 @@
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
-                "Coordinates": [
-                  {
-                    "X": 0.0,
-                    "Y": 0.0,
-                    "Z": 0.0
-                  },
-                  {
-                    "X": 1.0,
-                    "Y": 1.0,
-                    "Z": 0.0
-                  }
-                ],
-                "Colors": [
-                  {
-                    "R": 0,
-                    "G": 0,
-                    "B": 0
-                  },
-                  {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                  }
-                ],
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.0
+                },
+                "FillColor": {
+                  "R": 255,
+                  "G": 255,
+                  "B": 255
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
                 "Type": "CircleInstruction"
               }
             ],
@@ -1540,110 +1288,78 @@
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.5,
-            "Y1": 0.0,
-            "X2": 0.5,
-            "Y2": 0.2,
-            "Coordinates": [
-              {
-                "X": 0.5,
-                "Y": 0.0,
-                "Z": 0.0
-              },
-              {
-                "X": 0.5,
-                "Y": 0.2,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.5,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.5,
+              "Y": 0.0,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.2,
-            "Y1": 0.2,
-            "X2": 0.8,
-            "Y2": 0.2,
-            "Coordinates": [
-              {
-                "X": 0.2,
-                "Y": 0.2,
-                "Z": 0.0
-              },
-              {
-                "X": 0.8,
-                "Y": 0.2,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.8,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.2,
+              "Y": 0.2,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.3,
-            "Y1": 0.4,
-            "X2": 0.7,
-            "Y2": 0.4,
-            "Coordinates": [
-              {
-                "X": 0.3,
-                "Y": 0.4,
-                "Z": 0.0
-              },
-              {
-                "X": 0.7,
-                "Y": 0.4,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.7,
+              "Y": 0.4,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.3,
+              "Y": 0.4,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "X1": 0.4,
-            "Y1": 0.6,
-            "X2": 0.6,
-            "Y2": 0.6,
-            "Coordinates": [
-              {
-                "X": 0.4,
-                "Y": 0.6,
-                "Z": 0.0
-              },
-              {
-                "X": 0.6,
-                "Y": 0.6,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "End": {
+              "X": 0.6,
+              "Y": 0.6,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.4,
+              "Y": 0.6,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "LineInstruction"
           },
           {
@@ -1651,20 +1367,16 @@
             "Text": "GND",
             "Orientation": 0.0,
             "Size": 12.0,
-            "Coordinates": [
-              {
-                "X": 0.5,
-                "Y": 1.2,
-                "Z": 0.0
-              }
-            ],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "Position": {
+              "X": 0.5,
+              "Y": 1.2,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "TextInstruction"
           }
         ],
@@ -1704,30 +1416,26 @@
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
-                "Coordinates": [
-                  {
-                    "X": 0.0,
-                    "Y": 0.0,
-                    "Z": 0.0
-                  },
-                  {
-                    "X": 1.0,
-                    "Y": 1.0,
-                    "Z": 0.0
-                  }
-                ],
-                "Colors": [
-                  {
-                    "R": 0,
-                    "G": 0,
-                    "B": 0
-                  },
-                  {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                  }
-                ],
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.0
+                },
+                "FillColor": {
+                  "R": 255,
+                  "G": 255,
+                  "B": 255
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
                 "Type": "CircleInstruction"
               }
             ],
@@ -1750,30 +1458,26 @@
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
-                "Coordinates": [
-                  {
-                    "X": 0.0,
-                    "Y": 0.0,
-                    "Z": 0.0
-                  },
-                  {
-                    "X": 1.0,
-                    "Y": 1.0,
-                    "Z": 0.0
-                  }
-                ],
-                "Colors": [
-                  {
-                    "R": 0,
-                    "G": 0,
-                    "B": 0
-                  },
-                  {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                  }
-                ],
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.0
+                },
+                "FillColor": {
+                  "R": 255,
+                  "G": 255,
+                  "B": 255
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
                 "Type": "CircleInstruction"
               }
             ],
@@ -1784,14 +1488,12 @@
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.PathInstruction, OSECircuitRender",
-            "Coordinates": [],
-            "Colors": [
-              {
-                "R": 0,
-                "G": 0,
-                "B": 0
-              }
-            ],
+            "Position": null,
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
             "Type": "PathInstruction"
           }
         ],

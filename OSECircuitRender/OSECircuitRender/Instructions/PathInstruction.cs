@@ -11,7 +11,7 @@ namespace OSECircuitRender.Instructions
 
         public PathInstruction(string svgPath) : base(typeof(PathInstruction))
         {
-            Colors.Add(new Definitions.Color(0, 0, 0));
+            StrokeColor = new Color(0, 0, 0);
             PathReader pr = new(svgPath);
             _pathParts = pr.GetPathParts();
         }

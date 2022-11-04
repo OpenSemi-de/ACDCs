@@ -12,16 +12,16 @@
           "Z": 0.0
         },
         "Size": {
-          "X": 1.0,
-          "Y": 3.0,
+          "X": 3.0,
+          "Y": 1.0,
           "Z": 0.0
         },
         "DrawablePins": [
           {
             "PinType": 0,
             "Position": {
-              "X": 0.5,
-              "Y": 0.0,
+              "X": 0.0,
+              "Y": 0.5,
               "Z": 0.0
             },
             "Size": {
@@ -62,8 +62,8 @@
           {
             "PinType": 0,
             "Position": {
-              "X": 0.5,
-              "Y": 1.0,
+              "X": 1.0,
+              "Y": 0.5,
               "Z": 0.0
             },
             "Size": {
@@ -106,13 +106,13 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 0.5,
-              "Y": 0.2,
+              "X": 0.2,
+              "Y": 0.5,
               "Z": 0.0
             },
             "Position": {
-              "X": 0.5,
-              "Y": 0.0,
+              "X": 0.0,
+              "Y": 0.5,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -149,13 +149,13 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 0.5,
-              "Y": 1.0,
+              "X": 1.0,
+              "Y": 0.5,
               "Z": 0.0
             },
             "Position": {
-              "X": 0.5,
-              "Y": 0.8,
+              "X": 0.8,
+              "Y": 0.5,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -168,11 +168,11 @@
           {
             "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
             "Text": "1k",
-            "Orientation": -90.0,
+            "Orientation": 0.0,
             "Size": 12.0,
             "Position": {
-              "X": 0.7,
-              "Y": 0.5,
+              "X": 0.5,
+              "Y": 0.7,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -199,16 +199,16 @@
           "Z": 0.0
         },
         "Size": {
-          "X": 1.0,
-          "Y": 3.0,
+          "X": 3.0,
+          "Y": 1.0,
           "Z": 0.0
         },
         "DrawablePins": [
           {
             "PinType": 0,
             "Position": {
-              "X": 0.5,
-              "Y": 0.0,
+              "X": 0.0,
+              "Y": 0.5,
               "Z": 0.0
             },
             "Size": {
@@ -249,8 +249,8 @@
           {
             "PinType": 0,
             "Position": {
-              "X": 0.5,
-              "Y": 1.0,
+              "X": 1.0,
+              "Y": 0.5,
               "Z": 0.0
             },
             "Size": {
@@ -293,13 +293,13 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 0.5,
-              "Y": 0.2,
+              "X": 0.2,
+              "Y": 0.5,
               "Z": 0.0
             },
             "Position": {
-              "X": 0.5,
-              "Y": 0.0,
+              "X": 0.0,
+              "Y": 0.5,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -336,13 +336,13 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 0.5,
-              "Y": 1.0,
+              "X": 1.0,
+              "Y": 0.5,
               "Z": 0.0
             },
             "Position": {
-              "X": 0.5,
-              "Y": 0.8,
+              "X": 0.8,
+              "Y": 0.5,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -355,11 +355,11 @@
           {
             "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
             "Text": "1k",
-            "Orientation": -90.0,
+            "Orientation": 0.0,
             "Size": 12.0,
             "Position": {
-              "X": 0.7,
-              "Y": 0.5,
+              "X": 0.5,
+              "Y": 0.7,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -386,16 +386,16 @@
           "Z": 0.0
         },
         "Size": {
-          "X": 1.0,
-          "Y": 3.0,
+          "X": 3.0,
+          "Y": 1.0,
           "Z": 0.0
         },
         "DrawablePins": [
           {
             "PinType": 0,
             "Position": {
-              "X": 0.5,
-              "Y": 0.0,
+              "X": 0.0,
+              "Y": 0.5,
               "Z": 0.0
             },
             "Size": {
@@ -436,8 +436,8 @@
           {
             "PinType": 0,
             "Position": {
-              "X": 0.5,
-              "Y": 1.0,
+              "X": 1.0,
+              "Y": 0.5,
               "Z": 0.0
             },
             "Size": {
@@ -480,13 +480,13 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 0.5,
-              "Y": 0.2,
+              "X": 0.2,
+              "Y": 0.5,
               "Z": 0.0
             },
             "Position": {
-              "X": 0.5,
-              "Y": 0.0,
+              "X": 0.0,
+              "Y": 0.5,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -523,13 +523,13 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 0.5,
-              "Y": 1.0,
+              "X": 1.0,
+              "Y": 0.5,
               "Z": 0.0
             },
             "Position": {
-              "X": 0.5,
-              "Y": 0.8,
+              "X": 0.8,
+              "Y": 0.5,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -542,11 +542,11 @@
           {
             "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
             "Text": "1k",
-            "Orientation": -90.0,
+            "Orientation": 0.0,
             "Size": 12.0,
             "Position": {
-              "X": 0.7,
-              "Y": 0.5,
+              "X": 0.5,
+              "Y": 0.7,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -573,16 +573,16 @@
           "Z": 0.0
         },
         "Size": {
-          "X": 1.0,
-          "Y": 3.0,
+          "X": 3.0,
+          "Y": 1.0,
           "Z": 0.0
         },
         "DrawablePins": [
           {
             "PinType": 0,
             "Position": {
-              "X": 0.5,
-              "Y": 0.0,
+              "X": 0.0,
+              "Y": 0.5,
               "Z": 0.0
             },
             "Size": {
@@ -623,8 +623,8 @@
           {
             "PinType": 0,
             "Position": {
-              "X": 0.5,
-              "Y": 1.0,
+              "X": 1.0,
+              "Y": 0.5,
               "Z": 0.0
             },
             "Size": {
@@ -667,13 +667,13 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 0.5,
-              "Y": 0.2,
+              "X": 0.2,
+              "Y": 0.5,
               "Z": 0.0
             },
             "Position": {
-              "X": 0.5,
-              "Y": 0.0,
+              "X": 0.0,
+              "Y": 0.5,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -710,13 +710,13 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 0.5,
-              "Y": 1.0,
+              "X": 1.0,
+              "Y": 0.5,
               "Z": 0.0
             },
             "Position": {
-              "X": 0.5,
-              "Y": 0.8,
+              "X": 0.8,
+              "Y": 0.5,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -729,11 +729,11 @@
           {
             "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
             "Text": "1k",
-            "Orientation": -90.0,
+            "Orientation": 0.0,
             "Size": 12.0,
             "Position": {
-              "X": 0.7,
-              "Y": 0.5,
+              "X": 0.5,
+              "Y": 0.7,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -755,7 +755,7 @@
         "$type": "OSECircuitRender.Drawables.PinDrawable, OSECircuitRender",
         "PinType": 2,
         "Position": {
-          "X": 3.0,
+          "X": 6.0,
           "Y": 1.0,
           "Z": 0.0
         },
@@ -914,7 +914,7 @@
         "$type": "OSECircuitRender.Drawables.PinDrawable, OSECircuitRender",
         "PinType": 2,
         "Position": {
-          "X": 3.0,
+          "X": 6.0,
           "Y": 4.0,
           "Z": 0.0
         },
@@ -1073,7 +1073,7 @@
         "$type": "OSECircuitRender.Drawables.PinDrawable, OSECircuitRender",
         "PinType": 2,
         "Position": {
-          "X": 3.0,
+          "X": 6.0,
           "Y": 7.0,
           "Z": 0.0
         },
@@ -1232,7 +1232,7 @@
         "$type": "OSECircuitRender.Drawables.PinDrawable, OSECircuitRender",
         "PinType": 2,
         "Position": {
-          "X": 3.0,
+          "X": 6.0,
           "Y": 10.0,
           "Z": 0.0
         },
@@ -1390,21 +1390,21 @@
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.InductorDrawable, OSECircuitRender",
         "Position": {
-          "X": 5.0,
+          "X": 10.0,
           "Y": 1.0,
           "Z": 0.0
         },
         "Size": {
-          "X": 1.0,
-          "Y": 3.0,
+          "X": 3.0,
+          "Y": 1.0,
           "Z": 0.0
         },
         "DrawablePins": [
           {
             "PinType": 0,
             "Position": {
-              "X": 0.5,
-              "Y": 0.0,
+              "X": 0.0,
+              "Y": 0.5,
               "Z": 0.0
             },
             "Size": {
@@ -1445,8 +1445,8 @@
           {
             "PinType": 0,
             "Position": {
-              "X": 0.5,
-              "Y": 1.0,
+              "X": 1.0,
+              "Y": 0.5,
               "Z": 0.0
             },
             "Size": {
@@ -1488,6 +1488,8 @@
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.PathInstruction, OSECircuitRender",
+            "Width": 44.0,
+            "Height": 8.5,
             "Position": null,
             "StrokeColor": {
               "R": 0,

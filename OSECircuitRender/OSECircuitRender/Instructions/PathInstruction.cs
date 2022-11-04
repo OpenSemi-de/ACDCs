@@ -9,11 +9,16 @@ namespace OSECircuitRender.Instructions
     {
         private readonly List<PathPart> _pathParts;
 
+        public float Width { get; set; }
+        public float Height { get; set; }
+
         public PathInstruction(string svgPath) : base(typeof(PathInstruction))
         {
             StrokeColor = new Color(0, 0, 0);
             PathReader pr = new(svgPath);
             _pathParts = pr.GetPathParts();
+            Width = pr.GetWidth();
+            Height = pr.GetHeight();
         }
 
         public List<PathPart> GetParts()
@@ -25,15 +30,18 @@ namespace OSECircuitRender.Instructions
     public sealed class PathReader
     {
         private readonly List<PathPart> _pathParts = new();
+        private float width;
+        private float height;
 
         public PathReader(string svgPath)
         {
+            width = 0;
+            height = 0;
             svgPath += "Z";
             string buffer = "";
             string command = "";
-            for (var i = 0; i < svgPath.Length; i++)
+            foreach (var chrBuffer in svgPath)
             {
-                char chrBuffer = svgPath[i];
                 if (chrBuffer > 64 && chrBuffer < 91 ||
                     chrBuffer > 96 && chrBuffer < 123)
                 {
@@ -45,11 +53,18 @@ namespace OSECircuitRender.Instructions
                         foreach (var textCoordinate in textCoordinates.Where(s => s != "" && s != " "))
                         {
                             var xypair = textCoordinate.Split(',');
-                            coordinates.Add(new Coordinate(
+                            var coordinate = new Coordinate(
                                 float.Parse(xypair[0].Replace(".", ",")),
                                 float.Parse(xypair[1].Replace(".", ",")),
                                 0
-                                ));
+                            );
+
+                            if (coordinate.X > width)
+                                width = coordinate.X;
+                            if (coordinate.Y > height)
+                                height = coordinate.Y;
+
+                            coordinates.Add(coordinate);
                         }
 
                         _pathParts.Add(new PathPart(type, coordinates));
@@ -68,6 +83,16 @@ namespace OSECircuitRender.Instructions
         public List<PathPart> GetPathParts()
         {
             return _pathParts;
+        }
+
+        public float GetWidth()
+        {
+            return width;
+        }
+
+        public float GetHeight()
+        {
+            return height;
         }
     }
 

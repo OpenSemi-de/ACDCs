@@ -69,8 +69,10 @@ namespace OSECircuitRender.Scene
                 if (instruction is PathInstruction path)
                 {
                     Log.L("path");
+
                     SetStrokeColor(canvas, instruction.StrokeColor);
-                    DrawPath(canvas, drawPos, path);
+
+                    DrawPath(canvas, drawPos, drawSize, path);
                 }
             }
 
@@ -85,10 +87,12 @@ namespace OSECircuitRender.Scene
             }
         }
 
-        private static void DrawPath(ICanvas canvas, Coordinate drawPos, PathInstruction path)
+        private static void DrawPath(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, PathInstruction path)
         {
             PathF pathF = new(drawPos.X, drawPos.Y);
 
+            float scaleX = drawSize.X / path.Width;
+            float scaleY = drawSize.Y / path.Height / 2;
             foreach (var part in path.GetParts())
             {
                 switch (part.Type)
@@ -99,25 +103,25 @@ namespace OSECircuitRender.Scene
                     case PathPartType.C:
                         {
                             pathF.CurveTo(
-                                drawPos.X + part.Coordinates[0].X,
-                                drawPos.Y + part.Coordinates[0].Y,
-                                drawPos.X + part.Coordinates[1].X,
-                                drawPos.Y + part.Coordinates[1].Y,
-                                drawPos.X + part.Coordinates[2].X,
-                                drawPos.Y + part.Coordinates[2].Y
+                                drawPos.X + (part.Coordinates[0].X * scaleX),
+                                drawPos.Y + part.Coordinates[0].Y * scaleY,
+                                drawPos.X + part.Coordinates[1].X * scaleX,
+                                drawPos.Y + part.Coordinates[1].Y * scaleY,
+                                drawPos.X + part.Coordinates[2].X * scaleX,
+                                drawPos.Y + part.Coordinates[2].Y * scaleY
                             );
                         }
                         break;
 
                     case PathPartType.M:
                         {
-                            pathF.MoveTo(drawPos.X + part.Coordinates[0].X, drawPos.Y + part.Coordinates[0].Y);
+                            pathF.MoveTo(drawPos.X + part.Coordinates[0].X * scaleX, drawPos.Y + part.Coordinates[0].Y * scaleY);
                         }
                         break;
 
                     case PathPartType.L:
                         {
-                            pathF.LineTo(drawPos.X + part.Coordinates[0].X, drawPos.Y + part.Coordinates[0].Y);
+                            pathF.LineTo(drawPos.X + part.Coordinates[0].X * scaleX, drawPos.Y + part.Coordinates[0].Y * scaleY);
                         }
                         break;
 

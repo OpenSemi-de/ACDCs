@@ -45,17 +45,17 @@ namespace OSECircuitWebrender.Controllers
             ws.Items.AddItem(res3);
             ws.Items.AddItem(res4);
 
-            var gnd1 = new PinItem(PinDrawableType.Gnd, 3, 1);
-            var gnd2 = new PinItem(PinDrawableType.Gnd, 3, 4);
-            var gnd3 = new PinItem(PinDrawableType.Gnd, 3, 7);
-            var gnd4 = new PinItem(PinDrawableType.Gnd, 3, 10);
+            var gnd1 = new PinItem(PinDrawableType.Gnd, 6, 1);
+            var gnd2 = new PinItem(PinDrawableType.Gnd, 6, 4);
+            var gnd3 = new PinItem(PinDrawableType.Gnd, 6, 7);
+            var gnd4 = new PinItem(PinDrawableType.Gnd, 6, 10);
 
             ws.Items.AddItem(gnd1);
             ws.Items.AddItem(gnd2);
             ws.Items.AddItem(gnd3);
             ws.Items.AddItem(gnd4);
 
-            var ind = new InductorItem("10m", 5, 1);
+            var ind = new InductorItem("10m", 10, 1);
             ws.Items.AddItem(ind);
 
             if (System.IO.File.Exists(wwwPath + "/input.json"))

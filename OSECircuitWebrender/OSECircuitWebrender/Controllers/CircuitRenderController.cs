@@ -46,9 +46,9 @@ namespace OSECircuitWebrender.Controllers
             ws.Items.AddItem(res4);
 
             var gnd1 = new PinItem(PinDrawableType.Gnd, 6, 1);
-            var gnd2 = new PinItem(PinDrawableType.Gnd, 6, 4);
-            var gnd3 = new PinItem(PinDrawableType.Gnd, 6, 7);
-            var gnd4 = new PinItem(PinDrawableType.Gnd, 6, 10);
+            var gnd2 = new PinItem(PinDrawableType.Pin, 6, 4);
+            var gnd3 = new PinItem(PinDrawableType.None, 6, 7);
+            var gnd4 = new PinItem(PinDrawableType.Null, 6, 10);
 
             ws.Items.AddItem(gnd1);
             ws.Items.AddItem(gnd2);
@@ -57,6 +57,12 @@ namespace OSECircuitWebrender.Controllers
 
             var ind = new InductorItem("10m", 10, 1);
             ws.Items.AddItem(ind);
+
+            var dio = new DiodeItem("0.7", 10, 4);
+            ws.Items.AddItem(dio);
+
+            var pnp = new TransistorItem(TransistorDrawableType.PNP, 10, 7);
+            ws.Items.AddItem(pnp);
 
             var caps = new CapacitorItem("10u", CapacitorDrawableType.Standard, 14, 1);
             ws.Items.AddItem(caps);

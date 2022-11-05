@@ -2,6 +2,7 @@
 using OSECircuitRender.Definitions;
 using OSECircuitRender.Instructions;
 using OSECircuitRender.Interfaces;
+using Color = OSECircuitRender.Definitions.Color;
 
 namespace OSECircuitRender.Scene
 {
@@ -47,7 +48,7 @@ namespace OSECircuitRender.Scene
                     var lowerRight = new Coordinate(box.Size);
                     SetStrokeColor(canvas, box.StrokeColor);
                     SetFillColor(canvas, box.FillColor);
-                    DrawRectangle(canvas, drawPos, drawSize, upperLeft, lowerRight);
+                    DrawRectangle(canvas, drawPos, drawSize, upperLeft, lowerRight, box.FillColor);
                 }
 
                 if (instruction is TextInstruction text)
@@ -74,6 +75,13 @@ namespace OSECircuitRender.Scene
 
                     DrawPath(canvas, drawPos, drawSize, path);
                 }
+
+                if (instruction is CurveInstruction curve)
+                {
+                    Log.L("curve");
+                    SetStrokeColor(canvas, curve.StrokeColor);
+                    DrawCurve(canvas, drawPos, drawSize, curve.Position, curve.End, curve.AngleStart, curve.AngleEnd);
+                }
             }
 
             foreach (var pin in drawable.DrawablePins)
@@ -85,6 +93,24 @@ namespace OSECircuitRender.Scene
                 SetStrokeColor(canvas, pin.DrawInstructions[0].StrokeColor);
                 canvas.DrawCircle(posCenter.X, posCenter.Y, Zoom * BaseGridSize * 0.1f);
             }
+        }
+
+        private void DrawCurve(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, Coordinate curvePosition,
+            Coordinate curveEnd, float curveAngleStart, float curveAngleEnd)
+        {
+            var startX = GetAbs(drawPos.X, drawSize.X, curvePosition.X);
+            var startY = GetAbs(drawPos.Y, drawSize.Y, curvePosition.Y);
+            var width = GetAbs(drawPos.X, drawSize.X, curveEnd.X) - startX;
+            var height = GetAbs(drawPos.Y, drawSize.Y, curveEnd.Y) - startY;
+
+            // canvas.DrawRectangle(startX, startY, width, height);
+            canvas.DrawArc(
+                x: startX,
+                y: startY,
+                width: width,
+                height: height,
+                startAngle: curveAngleStart,
+                endAngle: curveAngleEnd, false, false);
         }
 
         private static void DrawPath(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, PathInstruction path)
@@ -115,13 +141,15 @@ namespace OSECircuitRender.Scene
 
                     case PathPartType.M:
                         {
-                            pathF.MoveTo(drawPos.X + part.Coordinates[0].X * scaleX, drawPos.Y + part.Coordinates[0].Y * scaleY);
+                            pathF.MoveTo(drawPos.X + part.Coordinates[0].X * scaleX,
+                                drawPos.Y + part.Coordinates[0].Y * scaleY);
                         }
                         break;
 
                     case PathPartType.L:
                         {
-                            pathF.LineTo(drawPos.X + part.Coordinates[0].X * scaleX, drawPos.Y + part.Coordinates[0].Y * scaleY);
+                            pathF.LineTo(drawPos.X + part.Coordinates[0].X * scaleX,
+                                drawPos.Y + part.Coordinates[0].Y * scaleY);
                         }
                         break;
 
@@ -158,7 +186,8 @@ namespace OSECircuitRender.Scene
             canvas.DrawCircle(x, y, Zoom * BaseGridSize * 0.1f);
         }
 
-        private static void DrawText(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, TextInstruction text, Coordinate centerPos, IDrawInstruction instruction)
+        private static void DrawText(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, TextInstruction text,
+            Coordinate centerPos, IDrawInstruction instruction)
         {
             var x = GetAbs(drawPos.X, drawSize.X, centerPos.X);
             var y = GetAbs(drawPos.Y, drawSize.Y, centerPos.Y);
@@ -172,13 +201,22 @@ namespace OSECircuitRender.Scene
         }
 
         private static void DrawRectangle(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, Coordinate upperLeft,
-            Coordinate lowerRight)
+            Coordinate lowerRight, Color fillColor = null)
         {
+            if (fillColor != null)
+            {
+                canvas.FillRectangle(
+                    GetAbs(drawPos.X, drawSize.X, upperLeft.X),
+                    GetAbs(drawPos.Y, drawSize.Y, upperLeft.Y),
+                    GetScale(drawSize.X, lowerRight.X),
+                    GetScale(drawSize.Y, lowerRight.Y));
+            }
+
             canvas.DrawRectangle(
-                GetAbs(drawPos.X, drawSize.X, upperLeft.X),
-                GetAbs(drawPos.Y, drawSize.Y, upperLeft.Y),
-                GetScale(drawSize.X, lowerRight.X),
-                GetScale(drawSize.Y, lowerRight.Y));
+                    GetAbs(drawPos.X, drawSize.X, upperLeft.X),
+                    GetAbs(drawPos.Y, drawSize.Y, upperLeft.Y),
+                    GetScale(drawSize.X, lowerRight.X),
+                    GetScale(drawSize.Y, lowerRight.Y));
         }
 
         private static void DrawLine(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, LineInstruction line)

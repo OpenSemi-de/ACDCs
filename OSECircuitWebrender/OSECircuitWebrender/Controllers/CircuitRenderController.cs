@@ -58,6 +58,11 @@ namespace OSECircuitWebrender.Controllers
             var ind = new InductorItem("10m", 10, 1);
             ws.Items.AddItem(ind);
 
+            var caps = new CapacitorItem("10u", CapacitorDrawableType.Standard, 14, 1);
+            ws.Items.AddItem(caps);
+            var caps2 = new CapacitorItem("10u", CapacitorDrawableType.Polarized, 14, 4);
+            ws.Items.AddItem(caps2);
+
             if (System.IO.File.Exists(wwwPath + "/input.json"))
             {
                 ws = wb.LoadSheet(wwwPath + "/input.json");

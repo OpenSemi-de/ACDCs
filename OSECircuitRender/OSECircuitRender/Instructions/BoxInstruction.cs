@@ -9,12 +9,12 @@ namespace OSECircuitRender.Instructions
     {
         public Coordinate Size { get; set; }
 
-        public BoxInstruction(float x1, float y1, float width, float height) : base(typeof(BoxInstruction))
+        public BoxInstruction(float x1, float y1, float width, float height, Color fillColor = null) : base(typeof(BoxInstruction))
         {
             Position = new(x1, y1, 0);
             Size = new Coordinate(width, height, 0);
             StrokeColor = new Color(0, 0, 0);
-            FillColor = new Color(255, 255, 255);
+            FillColor = fillColor ?? new Color(255, 255, 255);
         }
 
         public Color FillColor { get; set; }

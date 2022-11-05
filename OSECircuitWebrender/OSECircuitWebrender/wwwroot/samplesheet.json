@@ -12,7 +12,7 @@
           "Z": 0.0
         },
         "Size": {
-          "X": 3.0,
+          "X": 2.0,
           "Y": 1.0,
           "Z": 0.0
         },
@@ -199,7 +199,7 @@
           "Z": 0.0
         },
         "Size": {
-          "X": 3.0,
+          "X": 2.0,
           "Y": 1.0,
           "Z": 0.0
         },
@@ -386,7 +386,7 @@
           "Z": 0.0
         },
         "Size": {
-          "X": 3.0,
+          "X": 2.0,
           "Y": 1.0,
           "Z": 0.0
         },
@@ -573,7 +573,7 @@
           "Z": 0.0
         },
         "Size": {
-          "X": 3.0,
+          "X": 2.0,
           "Y": 1.0,
           "Z": 0.0
         },
@@ -1395,7 +1395,7 @@
           "Z": 0.0
         },
         "Size": {
-          "X": 3.0,
+          "X": 2.0,
           "Y": 1.0,
           "Z": 0.0
         },
@@ -1497,10 +1497,448 @@
               "B": 0
             },
             "Type": "PathInstruction"
+          },
+          {
+            "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+            "Text": "10m",
+            "Orientation": 0.0,
+            "Size": 12.0,
+            "Position": {
+              "X": 0.5,
+              "Y": 1.35,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
+            "Type": "TextInstruction"
           }
         ],
         "Type": "ResistorDrawable",
         "RefName": "InductorItem1"
+      }
+    },
+    {
+      "$type": "OSECircuitRender.Items.CapacitorItem, OSECircuitRender",
+      "Value": "10u",
+      "RefName": "CapacitorItem1",
+      "DrawableComponent": {
+        "$type": "OSECircuitRender.Drawables.CapacitorDrawable, OSECircuitRender",
+        "CapacitorType": 0,
+        "Position": {
+          "X": 14.0,
+          "Y": 1.0,
+          "Z": 0.0
+        },
+        "Size": {
+          "X": 2.0,
+          "Y": 1.0,
+          "Z": 0.0
+        },
+        "DrawablePins": [
+          {
+            "PinType": 0,
+            "Position": {
+              "X": 0.0,
+              "Y": 0.5,
+              "Z": 0.0
+            },
+            "Size": {
+              "X": 1.0,
+              "Y": 1.0,
+              "Z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.0
+                },
+                "FillColor": {
+                  "R": 255,
+                  "G": 255,
+                  "B": 255
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "CircleInstruction"
+              }
+            ],
+            "Type": "PinDrawable",
+            "RefName": "CapacitorItem1"
+          },
+          {
+            "PinType": 0,
+            "Position": {
+              "X": 1.0,
+              "Y": 0.5,
+              "Z": 0.0
+            },
+            "Size": {
+              "X": 1.0,
+              "Y": 1.0,
+              "Z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.0
+                },
+                "FillColor": {
+                  "R": 255,
+                  "G": 255,
+                  "B": 255
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "CircleInstruction"
+              }
+            ],
+            "Type": "PinDrawable",
+            "RefName": "CapacitorItem1"
+          }
+        ],
+        "DrawInstructions": [
+          {
+            "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+            "End": {
+              "X": 0.3,
+              "Y": 0.5,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.0,
+              "Y": 0.5,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
+            "Type": "LineInstruction"
+          },
+          {
+            "$type": "OSECircuitRender.Instructions.BoxInstruction, OSECircuitRender",
+            "Size": {
+              "X": 0.15,
+              "Y": 0.8,
+              "Z": 0.0
+            },
+            "FillColor": {
+              "R": 255,
+              "G": 255,
+              "B": 255
+            },
+            "Position": {
+              "X": 0.3,
+              "Y": 0.1,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
+            "Type": "BoxInstruction"
+          },
+          {
+            "$type": "OSECircuitRender.Instructions.BoxInstruction, OSECircuitRender",
+            "Size": {
+              "X": 0.15,
+              "Y": 0.8,
+              "Z": 0.0
+            },
+            "FillColor": {
+              "R": 255,
+              "G": 255,
+              "B": 255
+            },
+            "Position": {
+              "X": 0.55,
+              "Y": 0.1,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
+            "Type": "BoxInstruction"
+          },
+          {
+            "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+            "End": {
+              "X": 1.0,
+              "Y": 0.5,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.7,
+              "Y": 0.5,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
+            "Type": "LineInstruction"
+          },
+          {
+            "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+            "Text": "10u",
+            "Orientation": 0.0,
+            "Size": 12.0,
+            "Position": {
+              "X": 0.5,
+              "Y": 1.35,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
+            "Type": "TextInstruction"
+          }
+        ],
+        "Type": "CapacitorDrawable",
+        "RefName": "CapacitorItem1"
+      }
+    },
+    {
+      "$type": "OSECircuitRender.Items.CapacitorItem, OSECircuitRender",
+      "Value": "10u",
+      "RefName": "CapacitorItem2",
+      "DrawableComponent": {
+        "$type": "OSECircuitRender.Drawables.CapacitorDrawable, OSECircuitRender",
+        "CapacitorType": 1,
+        "Position": {
+          "X": 14.0,
+          "Y": 4.0,
+          "Z": 0.0
+        },
+        "Size": {
+          "X": 2.0,
+          "Y": 1.0,
+          "Z": 0.0
+        },
+        "DrawablePins": [
+          {
+            "PinType": 0,
+            "Position": {
+              "X": 0.0,
+              "Y": 0.5,
+              "Z": 0.0
+            },
+            "Size": {
+              "X": 1.0,
+              "Y": 1.0,
+              "Z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.0
+                },
+                "FillColor": {
+                  "R": 255,
+                  "G": 255,
+                  "B": 255
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "CircleInstruction"
+              }
+            ],
+            "Type": "PinDrawable",
+            "RefName": "CapacitorItem2"
+          },
+          {
+            "PinType": 0,
+            "Position": {
+              "X": 1.0,
+              "Y": 0.5,
+              "Z": 0.0
+            },
+            "Size": {
+              "X": 1.0,
+              "Y": 1.0,
+              "Z": 0.0
+            },
+            "DrawablePins": [],
+            "DrawInstructions": [
+              {
+                "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+                "Size": {
+                  "X": 1.0,
+                  "Y": 1.0,
+                  "Z": 0.0
+                },
+                "FillColor": {
+                  "R": 255,
+                  "G": 255,
+                  "B": 255
+                },
+                "Position": {
+                  "X": 0.0,
+                  "Y": 0.0,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "CircleInstruction"
+              }
+            ],
+            "Type": "PinDrawable",
+            "RefName": "CapacitorItem2"
+          }
+        ],
+        "DrawInstructions": [
+          {
+            "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+            "End": {
+              "X": 0.3,
+              "Y": 0.5,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.0,
+              "Y": 0.5,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
+            "Type": "LineInstruction"
+          },
+          {
+            "$type": "OSECircuitRender.Instructions.BoxInstruction, OSECircuitRender",
+            "Size": {
+              "X": 0.1,
+              "Y": 0.8,
+              "Z": 0.0
+            },
+            "FillColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
+            "Position": {
+              "X": 0.3,
+              "Y": 0.1,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
+            "Type": "BoxInstruction"
+          },
+          {
+            "$type": "OSECircuitRender.Instructions.CurveInstruction, OSECircuitRender",
+            "End": {
+              "X": 0.8,
+              "Y": 0.9,
+              "Z": 0.0
+            },
+            "AngleEnd": 270.0,
+            "AngleStart": 90.0,
+            "Position": {
+              "X": 0.5,
+              "Y": 0.1,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
+            "Type": "CurveInstruction"
+          },
+          {
+            "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+            "End": {
+              "X": 1.0,
+              "Y": 0.5,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
+            "Type": "LineInstruction"
+          },
+          {
+            "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+            "Text": "10u",
+            "Orientation": 0.0,
+            "Size": 12.0,
+            "Position": {
+              "X": 0.5,
+              "Y": 1.35,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
+            "Type": "TextInstruction"
+          }
+        ],
+        "Type": "CapacitorDrawable",
+        "RefName": "CapacitorItem2"
       }
     }
   ],

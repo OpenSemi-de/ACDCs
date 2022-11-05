@@ -33,7 +33,7 @@ namespace OSECircuitRender.Drawables
             DrawInstructions.Add(new BoxInstruction(0.2f, 0.2f, 0.6f, 0.6f));
             DrawInstructions.Add(new LineInstruction(0.8f, 0.5f, 1f, 0.5f));
             DrawInstructions.Add(new TextInstruction(value, 0f, 12f, 0.5f, 0.7f));
-            SetSize(3, 1);
+            SetSize(2, 1);
             SetPosition(x, y);
             SetRef(backRef);
         }

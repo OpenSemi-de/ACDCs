@@ -3,7 +3,6 @@
     {
       "$type": "OSECircuitRender.Items.ResistorItem, OSECircuitRender",
       "Value": "1k",
-      "RefName": "ResistorItem1",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.ResistorDrawable, OSECircuitRender",
         "Position": {
@@ -185,12 +184,15 @@
         ],
         "Type": "ResistorDrawable",
         "RefName": "ResistorItem1"
-      }
+      },
+      "X": 0.0,
+      "Y": 0.0,
+      "Rotation": 0.0,
+      "RefName": "ResistorItem1"
     },
     {
       "$type": "OSECircuitRender.Items.ResistorItem, OSECircuitRender",
       "Value": "1k",
-      "RefName": "ResistorItem2",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.ResistorDrawable, OSECircuitRender",
         "Position": {
@@ -372,12 +374,15 @@
         ],
         "Type": "ResistorDrawable",
         "RefName": "ResistorItem2"
-      }
+      },
+      "X": 0.0,
+      "Y": 0.0,
+      "Rotation": 0.0,
+      "RefName": "ResistorItem2"
     },
     {
       "$type": "OSECircuitRender.Items.ResistorItem, OSECircuitRender",
       "Value": "1k",
-      "RefName": "ResistorItem3",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.ResistorDrawable, OSECircuitRender",
         "Position": {
@@ -559,12 +564,15 @@
         ],
         "Type": "ResistorDrawable",
         "RefName": "ResistorItem3"
-      }
+      },
+      "X": 0.0,
+      "Y": 0.0,
+      "Rotation": 0.0,
+      "RefName": "ResistorItem3"
     },
     {
       "$type": "OSECircuitRender.Items.ResistorItem, OSECircuitRender",
       "Value": "1k",
-      "RefName": "ResistorItem4",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.ResistorDrawable, OSECircuitRender",
         "Position": {
@@ -746,11 +754,14 @@
         ],
         "Type": "ResistorDrawable",
         "RefName": "ResistorItem4"
-      }
+      },
+      "X": 0.0,
+      "Y": 0.0,
+      "Rotation": 0.0,
+      "RefName": "ResistorItem4"
     },
     {
       "$type": "OSECircuitRender.Items.PinItem, OSECircuitRender",
-      "RefName": "PinItem1",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.PinDrawable, OSECircuitRender",
         "PinType": 2,
@@ -905,11 +916,14 @@
         ],
         "Type": "PinDrawable",
         "RefName": "PinItem1"
-      }
+      },
+      "X": 0.0,
+      "Y": 0.0,
+      "Rotation": 0.0,
+      "RefName": "PinItem1"
     },
     {
       "$type": "OSECircuitRender.Items.PinItem, OSECircuitRender",
-      "RefName": "PinItem2",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.PinDrawable, OSECircuitRender",
         "PinType": 3,
@@ -927,11 +941,14 @@
         "DrawInstructions": [],
         "Type": "PinDrawable",
         "RefName": "PinItem2"
-      }
+      },
+      "X": 0.0,
+      "Y": 0.0,
+      "Rotation": 0.0,
+      "RefName": "PinItem2"
     },
     {
       "$type": "OSECircuitRender.Items.PinItem, OSECircuitRender",
-      "RefName": "PinItem3",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.PinDrawable, OSECircuitRender",
         "PinType": 0,
@@ -974,11 +991,14 @@
         ],
         "Type": "PinDrawable",
         "RefName": "PinItem3"
-      }
+      },
+      "X": 0.0,
+      "Y": 0.0,
+      "Rotation": 0.0,
+      "RefName": "PinItem3"
     },
     {
       "$type": "OSECircuitRender.Items.PinItem, OSECircuitRender",
-      "RefName": "PinItem4",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.PinDrawable, OSECircuitRender",
         "PinType": 1,
@@ -1133,11 +1153,14 @@
         ],
         "Type": "PinDrawable",
         "RefName": "PinItem4"
-      }
+      },
+      "X": 0.0,
+      "Y": 0.0,
+      "Rotation": 0.0,
+      "RefName": "PinItem4"
     },
     {
       "$type": "OSECircuitRender.Items.InductorItem, OSECircuitRender",
-      "RefName": "InductorItem1",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.InductorDrawable, OSECircuitRender",
         "Position": {
@@ -1269,12 +1292,15 @@
         ],
         "Type": "ResistorDrawable",
         "RefName": "InductorItem1"
-      }
+      },
+      "X": 0.0,
+      "Y": 0.0,
+      "Rotation": 0.0,
+      "RefName": "InductorItem1"
     },
     {
       "$type": "OSECircuitRender.Items.DiodeItem, OSECircuitRender",
       "Value": "0.7",
-      "RefName": "DiodeItem1",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.DiodeDrawable, OSECircuitRender",
         "Position": {
@@ -1489,12 +1515,15 @@
         ],
         "Type": "DiodeDrawable",
         "RefName": "DiodeItem1"
-      }
+      },
+      "X": 0.0,
+      "Y": 0.0,
+      "Rotation": 0.0,
+      "RefName": "DiodeItem1"
     },
     {
       "$type": "OSECircuitRender.Items.TransistorItem, OSECircuitRender",
       "Type": 0,
-      "RefName": "TransistorItem1",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.TransistorDrawable, OSECircuitRender",
         "Position": {
@@ -1832,12 +1861,15 @@
         ],
         "Type": "TransistorDrawable",
         "RefName": "TransistorItem1"
-      }
+      },
+      "X": 0.0,
+      "Y": 0.0,
+      "Rotation": 0.0,
+      "RefName": "TransistorItem1"
     },
     {
       "$type": "OSECircuitRender.Items.TransistorItem, OSECircuitRender",
       "Type": 1,
-      "RefName": "TransistorItem2",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.TransistorDrawable, OSECircuitRender",
         "Position": {
@@ -2175,12 +2207,15 @@
         ],
         "Type": "TransistorDrawable",
         "RefName": "TransistorItem2"
-      }
+      },
+      "X": 0.0,
+      "Y": 0.0,
+      "Rotation": 0.0,
+      "RefName": "TransistorItem2"
     },
     {
       "$type": "OSECircuitRender.Items.CapacitorItem, OSECircuitRender",
       "Value": "10u",
-      "RefName": "CapacitorItem1",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.CapacitorDrawable, OSECircuitRender",
         "CapacitorType": 0,
@@ -2387,12 +2422,15 @@
         ],
         "Type": "CapacitorDrawable",
         "RefName": "CapacitorItem1"
-      }
+      },
+      "X": 0.0,
+      "Y": 0.0,
+      "Rotation": 0.0,
+      "RefName": "CapacitorItem1"
     },
     {
       "$type": "OSECircuitRender.Items.CapacitorItem, OSECircuitRender",
       "Value": "10u",
-      "RefName": "CapacitorItem2",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.CapacitorDrawable, OSECircuitRender",
         "CapacitorType": 1,
@@ -2596,7 +2634,11 @@
         ],
         "Type": "CapacitorDrawable",
         "RefName": "CapacitorItem2"
-      }
+      },
+      "X": 0.0,
+      "Y": 0.0,
+      "Rotation": 0.0,
+      "RefName": "CapacitorItem2"
     }
   ],
   "SheetNum": 1

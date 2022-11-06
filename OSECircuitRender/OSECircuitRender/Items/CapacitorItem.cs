@@ -1,9 +1,8 @@
 ﻿using OSECircuitRender.Drawables;
-using OSECircuitRender.Interfaces;
 
 namespace OSECircuitRender.Items
 {
-    public sealed class CapacitorItem : IWorksheetItem
+    public sealed class CapacitorItem : WorksheetItem
     {
         public string Value { get; set; }
 
@@ -17,8 +16,5 @@ namespace OSECircuitRender.Items
             DrawableComponent = new CapacitorDrawable(this, value, type, x, y);
             Value = value;
         }
-
-        public string RefName { get; set; }
-        public IDrawableComponent DrawableComponent { get; set; }
     }
 }

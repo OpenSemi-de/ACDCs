@@ -3,7 +3,7 @@ using OSECircuitRender.Interfaces;
 
 namespace OSECircuitRender.Items
 {
-    public sealed class ResistorItem : IWorksheetItem
+    public sealed class ResistorItem : WorksheetItem
     {
         public string Value { get; set; }
 
@@ -17,8 +17,5 @@ namespace OSECircuitRender.Items
             DrawableComponent = new ResistorDrawable(this, value, x, y);
             Value = value;
         }
-
-        public string RefName { get; set; }
-        public IDrawableComponent DrawableComponent { get; set; }
     }
 }

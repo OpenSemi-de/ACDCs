@@ -4,7 +4,7 @@ using OSECircuitRender.Sheet;
 
 namespace OSECircuitRender.Items
 {
-    public sealed class WorksheetItems : List<IWorksheetItem>
+    public sealed class WorksheetItemList : List<IWorksheetItem>
     {
         public ReferenceManager ReferenceManager { get; } = new();
 

@@ -4,7 +4,7 @@ using OSECircuitRender.Interfaces;
 
 namespace OSECircuitRender.Items;
 
-public sealed class TransistorItem : IWorksheetItem
+public sealed class TransistorItem : WorksheetItem
 {
     public TransistorDrawableType Type { get; set; }
 
@@ -18,7 +18,4 @@ public sealed class TransistorItem : IWorksheetItem
         DrawableComponent = new TransistorDrawable(this, type, x, y);
         Type = type;
     }
-
-    public string RefName { get; set; }
-    public IDrawableComponent DrawableComponent { get; set; }
 }

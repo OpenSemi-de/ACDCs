@@ -3,7 +3,7 @@ using OSECircuitRender.Interfaces;
 
 namespace OSECircuitRender.Items
 {
-    public sealed class InductorItem : IWorksheetItem
+    public sealed class InductorItem : WorksheetItem
     {
         public InductorItem()
         {
@@ -14,8 +14,5 @@ namespace OSECircuitRender.Items
         {
             DrawableComponent = new InductorDrawable(this, value, x, y);
         }
-
-        public string RefName { get; set; }
-        public IDrawableComponent DrawableComponent { get; set; }
     }
 }

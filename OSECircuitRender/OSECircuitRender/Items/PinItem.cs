@@ -3,7 +3,7 @@ using OSECircuitRender.Interfaces;
 
 namespace OSECircuitRender.Items
 {
-    public sealed class PinItem : IWorksheetItem
+    public sealed class PinItem : WorksheetItem
     {
         public PinItem()
         {
@@ -14,8 +14,5 @@ namespace OSECircuitRender.Items
         {
             DrawableComponent = new PinDrawable(this, x, y, pinType);
         }
-
-        public string RefName { get; set; }
-        public IDrawableComponent DrawableComponent { get; set; }
     }
 }

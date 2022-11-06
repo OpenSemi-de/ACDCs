@@ -3,6 +3,12 @@
     public interface IWorksheetItem
     {
         IDrawableComponent DrawableComponent { get; set; }
-        string RefName { get; internal set; }
+
+        float X { get; set; }
+        float Y { get; set; }
+
+        float Rotation { get; set; }
+
+        string RefName { get; set; }
     }
 }

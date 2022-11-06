@@ -14,7 +14,7 @@ namespace OSECircuitRender.Sheet
         [JsonIgnore]
         public ISceneManager SceneManager { get; set; }
 
-        public WorksheetItems Items = new();
+        public WorksheetItemList Items = new();
 
         public DrawableComponentList GetDrawableComponents()
         {

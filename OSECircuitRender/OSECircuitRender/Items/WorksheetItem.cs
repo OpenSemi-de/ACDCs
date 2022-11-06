@@ -1,9 +1,12 @@
-﻿using OSECircuitRender.Interfaces;
+﻿using System;
+using OSECircuitRender.Interfaces;
 
 namespace OSECircuitRender.Items;
 
 public class WorksheetItem : IWorksheetItem
 {
+    public Guid ItemGuid { get; set; } = Guid.NewGuid();
+    public string Name { get; set; }
     public IDrawableComponent DrawableComponent { get; set; }
     public float X { get; set; }
     public float Y { get; set; }

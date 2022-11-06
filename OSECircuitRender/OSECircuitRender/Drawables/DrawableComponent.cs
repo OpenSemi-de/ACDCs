@@ -13,6 +13,7 @@ namespace OSECircuitRender.Drawables
         public Coordinate Size { get; set; } = new(1, 1, 0);
         public float Rotation { get; set; }
         public DrawablePinList DrawablePins { get; set; } = new();
+        public Guid ComponentGuid { get; set; } = Guid.NewGuid();
         public DrawInstructionsList DrawInstructions { get; set; } = new();
 
         public DrawableComponent(Type type)

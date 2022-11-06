@@ -28,13 +28,13 @@ namespace OSECircuitRender.Drawables
                 case PinDrawableType.Null:
                 case PinDrawableType.Gnd:
                     {
-                        DrawablePins.Add(new PinDrawable(backRef, 0.5f, 0.0f));
+                        DrawablePins.Add(new PinDrawable(backRef, 0.5f, 0.5f));
 
-                        DrawInstructions.Add(new LineInstruction(0.5f, 0f, 0.5f, 0.2f));
-                        DrawInstructions.Add(new LineInstruction(0.2f, 0.2f, 0.8f, 0.2f));
-                        DrawInstructions.Add(new LineInstruction(0.3f, 0.4f, 0.7f, 0.4f));
-                        DrawInstructions.Add(new LineInstruction(0.4f, 0.6f, 0.6f, 0.6f));
-                        DrawInstructions.Add(new TextInstruction(PinText, 0, 12, 0.5f, 1.2f));
+                        DrawInstructions.Add(new LineInstruction(0.5f, 0.5f, 0.5f, 0.9f));
+                        DrawInstructions.Add(new LineInstruction(0.2f, 0.9f, 0.8f, 0.9f));
+                        DrawInstructions.Add(new LineInstruction(0.3f, 1.1f, 0.7f, 1.1f));
+                        DrawInstructions.Add(new LineInstruction(0.4f, 1.3f, 0.6f, 1.3f));
+                        DrawInstructions.Add(new TextInstruction(PinText, 0, 12, 0.5f, 1.9f));
 
                         break;
                     }
@@ -47,6 +47,7 @@ namespace OSECircuitRender.Drawables
         private void Setup(IWorksheetItem backRef, float x, float y)
         {
             backRef.Pins.Add(this);
+            SetSize(1, 1);
             SetPosition(x, y);
             SetRef(backRef);
         }

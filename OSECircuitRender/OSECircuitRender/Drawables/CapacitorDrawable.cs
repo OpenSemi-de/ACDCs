@@ -26,12 +26,13 @@ namespace OSECircuitRender.Drawables
         private void Setup(IWorksheetItem backRef, string value = "N/A", CapacitorDrawableType capacitorType = CapacitorDrawableType.Standard, float x = 0, float y = 0)
         {
             CapacitorType = capacitorType;
-            DrawablePins.Add(new PinDrawable(backRef, 0, 0.5f));
-            DrawablePins.Add(new PinDrawable(backRef, 1f, 0.5f));
             DrawInstructions.Add(new LineInstruction(0f, 0.5f, 0.3f, 0.5f));
 
             if (CapacitorType == CapacitorDrawableType.Standard)
             {
+                DrawablePins.Add(new PinDrawable(backRef, 0, 0.5f));
+                DrawablePins.Add(new PinDrawable(backRef, 1f, 0.5f));
+
                 DrawInstructions.Add(new BoxInstruction(0.3f, 0.1f, 0.15f, 0.8f));
                 DrawInstructions.Add(new BoxInstruction(0.55f, 0.1f, 0.15f, 0.8f));
                 DrawInstructions.Add(new LineInstruction(0.7f, 0.5f, 1f, 0.5f));
@@ -39,6 +40,8 @@ namespace OSECircuitRender.Drawables
 
             if (CapacitorType == CapacitorDrawableType.Polarized)
             {
+                DrawablePins.Add(new PinDrawable(backRef, 0, 0.5f, pinName: "+"));
+                DrawablePins.Add(new PinDrawable(backRef, 1f, 0.5f, pinName: "-"));
                 DrawInstructions.Add(new BoxInstruction(0.3f, 0.1f, 0.1f, 0.8f, new Color(0, 0, 0)));
                 DrawInstructions.Add(new CurveInstruction(0.5f, 0.1f, 0.8f, 0.9f, 90f, 270f));
                 DrawInstructions.Add(new LineInstruction(0.5f, 0.5f, 1f, 0.5f));

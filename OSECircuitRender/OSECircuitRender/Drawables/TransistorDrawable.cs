@@ -33,7 +33,7 @@ public sealed class TransistorDrawable : DrawableComponent
         DrawInstructions.Add(new LineInstruction(1f, 0f, 1f, 0.2f));
         DrawInstructions.Add(new LineInstruction(1f, 0.8f, 1f, 1f));
         DrawInstructions.Add(new LineInstruction(0.5f, 0.5f, 1f, 0.8f));
-        DrawInstructions.Add(new BoxInstruction(0.5f, 0.2f, 0.05f, 0.6f, new Color(0, 0, 0)));
+        DrawInstructions.Add(new BoxInstruction(0.5f, 0.3f, 0.05f, 0.4f, new Color(0, 0, 0)));
         DrawInstructions.Add(new TextInstruction(type.ToString(), 0f, 12f, 0.3f, 1f));
 
         if (type == TransistorDrawableType.PNP)

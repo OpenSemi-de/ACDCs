@@ -28,9 +28,6 @@ public sealed class TransistorDrawable : DrawableComponent
 
     private void Setup(IWorksheetItem backRef, TransistorDrawableType type = TransistorDrawableType.PNP, float x = 0, float y = 0)
     {
-        DrawablePins.Add(new PinDrawable(backRef, 0, 0.5f));
-        DrawablePins.Add(new PinDrawable(backRef, 1f, 0f));
-        DrawablePins.Add(new PinDrawable(backRef, 1f, 1f));
         DrawInstructions.Add(new LineInstruction(0f, 0.5f, 0.5f, 0.5f));
         DrawInstructions.Add(new LineInstruction(0.5f, 0.5f, 1f, 0.2f));
         DrawInstructions.Add(new LineInstruction(1f, 0f, 1f, 0.2f));
@@ -41,6 +38,10 @@ public sealed class TransistorDrawable : DrawableComponent
 
         if (type == TransistorDrawableType.PNP)
         {
+            DrawablePins.Add(new PinDrawable(backRef, 0, 0.5f, pinName: "B"));
+            DrawablePins.Add(new PinDrawable(backRef, 1f, 0f, pinName: "E"));
+            DrawablePins.Add(new PinDrawable(backRef, 1f, 1f, pinName: "C"));
+
             DrawInstructions.Add(new LineInstruction(0.7f, 0.4f, 0.7f, 0.25f));
             DrawInstructions.Add(new LineInstruction(0.7f, 0.4f, 0.85f, 0.4f));
             DrawInstructions.Add(new LineInstruction(0.7f, 0.25f, 0.85f, 0.4f));
@@ -48,6 +49,10 @@ public sealed class TransistorDrawable : DrawableComponent
 
         if (type == TransistorDrawableType.NPN)
         {
+            DrawablePins.Add(new PinDrawable(backRef, 0, 0.5f, pinName: "B"));
+            DrawablePins.Add(new PinDrawable(backRef, 1f, 0f, pinName: "C"));
+            DrawablePins.Add(new PinDrawable(backRef, 1f, 1f, pinName: "E"));
+
             DrawInstructions.Add(new LineInstruction(0.8f, 0.7f, 0.8f, 0.55f));
             DrawInstructions.Add(new LineInstruction(0.8f, 0.7f, 0.65f, 0.7f));
             DrawInstructions.Add(new LineInstruction(0.65f, 0.7f, 0.8f, 0.55f));

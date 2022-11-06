@@ -1,4 +1,5 @@
 ﻿using System;
+using OSECircuitRender.Items;
 
 namespace OSECircuitRender.Interfaces
 {
@@ -14,5 +15,7 @@ namespace OSECircuitRender.Interfaces
         float Rotation { get; set; }
 
         string RefName { get; set; }
+
+        public DrawablePinList Pins { get; set; }
     }
 }

@@ -3,8 +3,8 @@
     {
       "$type": "OSECircuitRender.Items.ResistorItem, OSECircuitRender",
       "Value": "1k",
-      "ItemGuid": "65338b69-aa35-4960-8274-03baa1db1d50",
-      "Name": null,
+      "ItemGuid": "5b953e36-d468-4386-8d09-b310b8bef400",
+      "Name": "",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.ResistorDrawable, OSECircuitRender",
         "Position": {
@@ -21,6 +21,7 @@
         "DrawablePins": [
           {
             "PinType": 0,
+            "PinText": "None",
             "Position": {
               "X": 0.0,
               "Y": 0.5,
@@ -33,7 +34,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "ba7c7d20-9ced-4f34-b8ac-f96509ee6821",
+            "ComponentGuid": "36a17439-b1be-40d7-8d6f-bbca4ebcb733",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -58,6 +59,23 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "None",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
@@ -65,6 +83,7 @@
           },
           {
             "PinType": 0,
+            "PinText": "None",
             "Position": {
               "X": 1.0,
               "Y": 0.5,
@@ -77,7 +96,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "ddff0497-36cb-4e99-9787-ca0d68eb69db",
+            "ComponentGuid": "f48aafbf-627e-44ef-92a9-503c9ce33142",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -102,13 +121,30 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "None",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
             "RefName": "ResistorItem1"
           }
         ],
-        "ComponentGuid": "2de67f62-12ca-4c0d-af5e-9bd9502adb1d",
+        "ComponentGuid": "b58d5934-8123-4516-9e02-9b952f4dc979",
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
@@ -196,13 +232,139 @@
       "X": 0.0,
       "Y": 0.0,
       "Rotation": 180.0,
-      "RefName": "ResistorItem1"
+      "RefName": "ResistorItem1",
+      "Pins": [
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 0.0,
+            "Y": 0.5,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "36a17439-b1be-40d7-8d6f-bbca4ebcb733",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "ResistorItem1"
+        },
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 1.0,
+            "Y": 0.5,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "f48aafbf-627e-44ef-92a9-503c9ce33142",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "ResistorItem1"
+        }
+      ]
     },
     {
       "$type": "OSECircuitRender.Items.ResistorItem, OSECircuitRender",
       "Value": "1k",
-      "ItemGuid": "1fee9bd4-6e18-44ae-910f-d1225565a493",
-      "Name": null,
+      "ItemGuid": "f2924a16-0c5b-4be5-add3-b087744f0762",
+      "Name": "",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.ResistorDrawable, OSECircuitRender",
         "Position": {
@@ -219,6 +381,7 @@
         "DrawablePins": [
           {
             "PinType": 0,
+            "PinText": "None",
             "Position": {
               "X": 0.0,
               "Y": 0.5,
@@ -231,7 +394,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "530c9d3c-4867-4075-a995-dec93a7bd840",
+            "ComponentGuid": "d0ceec5c-11c2-401b-9730-b90e78e0bb57",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -256,6 +419,23 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "None",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
@@ -263,6 +443,7 @@
           },
           {
             "PinType": 0,
+            "PinText": "None",
             "Position": {
               "X": 1.0,
               "Y": 0.5,
@@ -275,7 +456,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "a6c71241-8110-449a-a5d2-a756db7000e5",
+            "ComponentGuid": "d1a716f8-91aa-4e31-8d48-9d34ea5a28ca",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -300,13 +481,30 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "None",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
             "RefName": "ResistorItem2"
           }
         ],
-        "ComponentGuid": "0960a745-375c-4d75-b630-688a89586733",
+        "ComponentGuid": "e03ba2e0-074d-4223-8df8-e65ac7524022",
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
@@ -394,13 +592,139 @@
       "X": 0.0,
       "Y": 0.0,
       "Rotation": -90.0,
-      "RefName": "ResistorItem2"
+      "RefName": "ResistorItem2",
+      "Pins": [
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 0.0,
+            "Y": 0.5,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "d0ceec5c-11c2-401b-9730-b90e78e0bb57",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "ResistorItem2"
+        },
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 1.0,
+            "Y": 0.5,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "d1a716f8-91aa-4e31-8d48-9d34ea5a28ca",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "ResistorItem2"
+        }
+      ]
     },
     {
       "$type": "OSECircuitRender.Items.ResistorItem, OSECircuitRender",
       "Value": "1k",
-      "ItemGuid": "a73cb23e-3ad8-413c-9051-8eb0112ba53d",
-      "Name": null,
+      "ItemGuid": "a0af85f6-92bb-409c-a54b-43f33fce2009",
+      "Name": "",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.ResistorDrawable, OSECircuitRender",
         "Position": {
@@ -417,6 +741,7 @@
         "DrawablePins": [
           {
             "PinType": 0,
+            "PinText": "None",
             "Position": {
               "X": 0.0,
               "Y": 0.5,
@@ -429,7 +754,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "b45788e1-b9f0-4be3-8121-df0f709c89cb",
+            "ComponentGuid": "8da529cd-15b2-4d92-86d9-5bfa43841268",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -454,6 +779,23 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "None",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
@@ -461,6 +803,7 @@
           },
           {
             "PinType": 0,
+            "PinText": "None",
             "Position": {
               "X": 1.0,
               "Y": 0.5,
@@ -473,7 +816,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "76031a6e-acfa-4718-93da-93ac234b2c49",
+            "ComponentGuid": "471482b3-68c5-4206-8e74-8fea05ee3d74",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -498,13 +841,30 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "None",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
             "RefName": "ResistorItem3"
           }
         ],
-        "ComponentGuid": "11c02934-bc14-4674-904b-f8fb1a8dae7a",
+        "ComponentGuid": "53f7026d-37a2-4619-bd8d-ad959751d71a",
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
@@ -592,13 +952,139 @@
       "X": 0.0,
       "Y": 0.0,
       "Rotation": 0.0,
-      "RefName": "ResistorItem3"
+      "RefName": "ResistorItem3",
+      "Pins": [
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 0.0,
+            "Y": 0.5,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "8da529cd-15b2-4d92-86d9-5bfa43841268",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "ResistorItem3"
+        },
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 1.0,
+            "Y": 0.5,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "471482b3-68c5-4206-8e74-8fea05ee3d74",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "ResistorItem3"
+        }
+      ]
     },
     {
       "$type": "OSECircuitRender.Items.ResistorItem, OSECircuitRender",
       "Value": "1k",
-      "ItemGuid": "77f7e477-4df9-4a50-9169-b376dd2bc547",
-      "Name": null,
+      "ItemGuid": "2487195b-3413-4a18-b3d0-53c881f30262",
+      "Name": "",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.ResistorDrawable, OSECircuitRender",
         "Position": {
@@ -615,6 +1101,7 @@
         "DrawablePins": [
           {
             "PinType": 0,
+            "PinText": "None",
             "Position": {
               "X": 0.0,
               "Y": 0.5,
@@ -627,7 +1114,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "28dd4671-c8f1-45ab-a4e4-62bf992d6e3b",
+            "ComponentGuid": "fc8b78c3-b2be-4df0-9878-d43decfe603c",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -652,6 +1139,23 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "None",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
@@ -659,6 +1163,7 @@
           },
           {
             "PinType": 0,
+            "PinText": "None",
             "Position": {
               "X": 1.0,
               "Y": 0.5,
@@ -671,7 +1176,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "4f5dd82e-69a7-413b-a292-0c6b19d33806",
+            "ComponentGuid": "d7dbebc4-d365-4774-a026-d0aac65a7db8",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -696,13 +1201,30 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "None",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
             "RefName": "ResistorItem4"
           }
         ],
-        "ComponentGuid": "05b0a0ed-4d0e-4f8d-be76-7a6f8c706417",
+        "ComponentGuid": "bfe4a5bf-3a17-4b35-8d97-abd9fbf43b44",
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
@@ -790,15 +1312,142 @@
       "X": 0.0,
       "Y": 0.0,
       "Rotation": 0.0,
-      "RefName": "ResistorItem4"
+      "RefName": "ResistorItem4",
+      "Pins": [
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 0.0,
+            "Y": 0.5,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "fc8b78c3-b2be-4df0-9878-d43decfe603c",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "ResistorItem4"
+        },
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 1.0,
+            "Y": 0.5,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "d7dbebc4-d365-4774-a026-d0aac65a7db8",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "ResistorItem4"
+        }
+      ]
     },
     {
       "$type": "OSECircuitRender.Items.PinItem, OSECircuitRender",
-      "ItemGuid": "95bdea0e-7ed3-4341-83fc-7e144e97ffcd",
-      "Name": null,
+      "ItemGuid": "f813e7a3-c377-49d1-8f21-be0e6441e9cc",
+      "Name": "",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.PinDrawable, OSECircuitRender",
         "PinType": 2,
+        "PinText": "Gnd",
         "Position": {
           "X": 6.0,
           "Y": 1.0,
@@ -813,6 +1462,7 @@
         "DrawablePins": [
           {
             "PinType": 0,
+            "PinText": "None",
             "Position": {
               "X": 0.5,
               "Y": 0.0,
@@ -825,7 +1475,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "2801f9b2-06c0-4719-bdb2-619632bd3688",
+            "ComponentGuid": "1227025a-3379-4d2e-9ed7-9aa5b4902f79",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -850,13 +1500,30 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "None",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
             "RefName": "PinItem1"
           }
         ],
-        "ComponentGuid": "c79d228b-5cd9-4fd3-8bbd-da53da07f564",
+        "ComponentGuid": "cf9d83a8-63f0-44ee-9d1b-c3d0998f4670",
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
@@ -958,15 +1625,257 @@
       "X": 0.0,
       "Y": 0.0,
       "Rotation": 0.0,
-      "RefName": "PinItem1"
+      "RefName": "PinItem1",
+      "Pins": [
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 0.5,
+            "Y": 0.0,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "1227025a-3379-4d2e-9ed7-9aa5b4902f79",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "PinItem1"
+        },
+        {
+          "PinType": 2,
+          "PinText": "Gnd",
+          "Position": {
+            "X": 6.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [
+            {
+              "PinType": 0,
+              "PinText": "None",
+              "Position": {
+                "X": 0.5,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "Rotation": 0.0,
+              "DrawablePins": [],
+              "ComponentGuid": "1227025a-3379-4d2e-9ed7-9aa5b4902f79",
+              "DrawInstructions": [
+                {
+                  "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+                  "Size": {
+                    "X": 1.0,
+                    "Y": 1.0,
+                    "Z": 0.0
+                  },
+                  "FillColor": {
+                    "R": 255,
+                    "G": 255,
+                    "B": 255
+                  },
+                  "Position": {
+                    "X": 0.0,
+                    "Y": 0.0,
+                    "Z": 0.0
+                  },
+                  "StrokeColor": {
+                    "R": 0,
+                    "G": 0,
+                    "B": 0
+                  },
+                  "Type": "CircleInstruction"
+                },
+                {
+                  "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                  "Text": "None",
+                  "Orientation": 0.0,
+                  "Size": 12.0,
+                  "Position": {
+                    "X": 0.5,
+                    "Y": 1.2,
+                    "Z": 0.0
+                  },
+                  "StrokeColor": {
+                    "R": 0,
+                    "G": 0,
+                    "B": 0
+                  },
+                  "Type": "TextInstruction"
+                }
+              ],
+              "Type": "PinDrawable",
+              "RefName": "PinItem1"
+            }
+          ],
+          "ComponentGuid": "cf9d83a8-63f0-44ee-9d1b-c3d0998f4670",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+              "End": {
+                "X": 0.5,
+                "Y": 0.2,
+                "Z": 0.0
+              },
+              "Position": {
+                "X": 0.5,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "LineInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+              "End": {
+                "X": 0.8,
+                "Y": 0.2,
+                "Z": 0.0
+              },
+              "Position": {
+                "X": 0.2,
+                "Y": 0.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "LineInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+              "End": {
+                "X": 0.7,
+                "Y": 0.4,
+                "Z": 0.0
+              },
+              "Position": {
+                "X": 0.3,
+                "Y": 0.4,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "LineInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+              "End": {
+                "X": 0.6,
+                "Y": 0.6,
+                "Z": 0.0
+              },
+              "Position": {
+                "X": 0.4,
+                "Y": 0.6,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "LineInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "Gnd",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "PinItem1"
+        }
+      ]
     },
     {
       "$type": "OSECircuitRender.Items.PinItem, OSECircuitRender",
-      "ItemGuid": "cc396965-9f03-46ef-bbf9-c8ed00167d1c",
-      "Name": null,
+      "ItemGuid": "b7d29daf-f4c1-4d3d-be5f-b24afafe67cd",
+      "Name": "",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.PinDrawable, OSECircuitRender",
         "PinType": 3,
+        "PinText": "Pin",
         "Position": {
           "X": 6.0,
           "Y": 4.0,
@@ -979,7 +1888,7 @@
         },
         "Rotation": 0.0,
         "DrawablePins": [],
-        "ComponentGuid": "33dc560d-4465-43f3-8993-00999e2910dc",
+        "ComponentGuid": "74296578-7449-496a-9102-caa544b5418b",
         "DrawInstructions": [],
         "Type": "PinDrawable",
         "RefName": "PinItem2"
@@ -987,15 +1896,38 @@
       "X": 0.0,
       "Y": 0.0,
       "Rotation": 0.0,
-      "RefName": "PinItem2"
+      "RefName": "PinItem2",
+      "Pins": [
+        {
+          "PinType": 3,
+          "PinText": "Pin",
+          "Position": {
+            "X": 6.0,
+            "Y": 4.0,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "74296578-7449-496a-9102-caa544b5418b",
+          "DrawInstructions": [],
+          "Type": "PinDrawable",
+          "RefName": "PinItem2"
+        }
+      ]
     },
     {
       "$type": "OSECircuitRender.Items.PinItem, OSECircuitRender",
-      "ItemGuid": "e9f1f1ce-6680-46c4-b352-7ddec367f2da",
-      "Name": null,
+      "ItemGuid": "f115e822-2629-4c68-bca9-2d41c911588e",
+      "Name": "",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.PinDrawable, OSECircuitRender",
         "PinType": 0,
+        "PinText": "None",
         "Position": {
           "X": 6.0,
           "Y": 7.0,
@@ -1008,7 +1940,7 @@
         },
         "Rotation": 0.0,
         "DrawablePins": [],
-        "ComponentGuid": "b84a31bd-a936-40e2-975d-6381c02d2ba8",
+        "ComponentGuid": "21d33dbf-ad56-49a0-940b-10bcd25ded15",
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -1033,6 +1965,23 @@
               "B": 0
             },
             "Type": "CircleInstruction"
+          },
+          {
+            "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+            "Text": "None",
+            "Orientation": 0.0,
+            "Size": 12.0,
+            "Position": {
+              "X": 0.5,
+              "Y": 1.2,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "R": 0,
+              "G": 0,
+              "B": 0
+            },
+            "Type": "TextInstruction"
           }
         ],
         "Type": "PinDrawable",
@@ -1041,15 +1990,80 @@
       "X": 0.0,
       "Y": 0.0,
       "Rotation": 0.0,
-      "RefName": "PinItem3"
+      "RefName": "PinItem3",
+      "Pins": [
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 6.0,
+            "Y": 7.0,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "21d33dbf-ad56-49a0-940b-10bcd25ded15",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "PinItem3"
+        }
+      ]
     },
     {
       "$type": "OSECircuitRender.Items.PinItem, OSECircuitRender",
-      "ItemGuid": "66b8e5ce-f733-4508-8be0-a47ca55cc7df",
-      "Name": null,
+      "ItemGuid": "a465cd22-15ff-4023-abf7-9863fa4fb22d",
+      "Name": "",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.PinDrawable, OSECircuitRender",
         "PinType": 1,
+        "PinText": "",
         "Position": {
           "X": 6.0,
           "Y": 10.0,
@@ -1064,6 +2078,7 @@
         "DrawablePins": [
           {
             "PinType": 0,
+            "PinText": "None",
             "Position": {
               "X": 0.5,
               "Y": 0.0,
@@ -1076,7 +2091,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "46615d32-b411-4ff0-980b-085271d9cc40",
+            "ComponentGuid": "891968d1-ea85-4cdd-9bee-44f4fea1315b",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -1101,13 +2116,30 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "None",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
             "RefName": "PinItem4"
           }
         ],
-        "ComponentGuid": "e47314f7-3ab7-455a-b7db-3558e1c729b6",
+        "ComponentGuid": "0f8aa04f-a086-4e0b-aaea-c398b029e5de",
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
@@ -1209,12 +2241,253 @@
       "X": 0.0,
       "Y": 0.0,
       "Rotation": 0.0,
-      "RefName": "PinItem4"
+      "RefName": "PinItem4",
+      "Pins": [
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 0.5,
+            "Y": 0.0,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "891968d1-ea85-4cdd-9bee-44f4fea1315b",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "PinItem4"
+        },
+        {
+          "PinType": 1,
+          "PinText": "",
+          "Position": {
+            "X": 6.0,
+            "Y": 10.0,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [
+            {
+              "PinType": 0,
+              "PinText": "None",
+              "Position": {
+                "X": 0.5,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "Rotation": 0.0,
+              "DrawablePins": [],
+              "ComponentGuid": "891968d1-ea85-4cdd-9bee-44f4fea1315b",
+              "DrawInstructions": [
+                {
+                  "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+                  "Size": {
+                    "X": 1.0,
+                    "Y": 1.0,
+                    "Z": 0.0
+                  },
+                  "FillColor": {
+                    "R": 255,
+                    "G": 255,
+                    "B": 255
+                  },
+                  "Position": {
+                    "X": 0.0,
+                    "Y": 0.0,
+                    "Z": 0.0
+                  },
+                  "StrokeColor": {
+                    "R": 0,
+                    "G": 0,
+                    "B": 0
+                  },
+                  "Type": "CircleInstruction"
+                },
+                {
+                  "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                  "Text": "None",
+                  "Orientation": 0.0,
+                  "Size": 12.0,
+                  "Position": {
+                    "X": 0.5,
+                    "Y": 1.2,
+                    "Z": 0.0
+                  },
+                  "StrokeColor": {
+                    "R": 0,
+                    "G": 0,
+                    "B": 0
+                  },
+                  "Type": "TextInstruction"
+                }
+              ],
+              "Type": "PinDrawable",
+              "RefName": "PinItem4"
+            }
+          ],
+          "ComponentGuid": "0f8aa04f-a086-4e0b-aaea-c398b029e5de",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+              "End": {
+                "X": 0.5,
+                "Y": 0.2,
+                "Z": 0.0
+              },
+              "Position": {
+                "X": 0.5,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "LineInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+              "End": {
+                "X": 0.8,
+                "Y": 0.2,
+                "Z": 0.0
+              },
+              "Position": {
+                "X": 0.2,
+                "Y": 0.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "LineInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+              "End": {
+                "X": 0.7,
+                "Y": 0.4,
+                "Z": 0.0
+              },
+              "Position": {
+                "X": 0.3,
+                "Y": 0.4,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "LineInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+              "End": {
+                "X": 0.6,
+                "Y": 0.6,
+                "Z": 0.0
+              },
+              "Position": {
+                "X": 0.4,
+                "Y": 0.6,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "LineInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "PinItem4"
+        }
+      ]
     },
     {
       "$type": "OSECircuitRender.Items.InductorItem, OSECircuitRender",
-      "ItemGuid": "0d598ea4-fc76-4850-a3cf-ff840ede0537",
-      "Name": null,
+      "ItemGuid": "fbf3b40c-c2f0-47a3-a768-e8ff2a4935eb",
+      "Name": "",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.InductorDrawable, OSECircuitRender",
         "Position": {
@@ -1231,6 +2504,7 @@
         "DrawablePins": [
           {
             "PinType": 0,
+            "PinText": "None",
             "Position": {
               "X": 0.0,
               "Y": 0.5,
@@ -1243,7 +2517,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "aaa49625-35d2-4c08-ab40-1e84ba1aa4ba",
+            "ComponentGuid": "95b4ae59-1334-49a0-9612-b613c8a7766f",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -1268,6 +2542,23 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "None",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
@@ -1275,6 +2566,7 @@
           },
           {
             "PinType": 0,
+            "PinText": "None",
             "Position": {
               "X": 1.0,
               "Y": 0.5,
@@ -1287,7 +2579,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "d8aa57d1-f3e3-4e99-880c-5bf487f235b0",
+            "ComponentGuid": "0255672d-e7c2-46ba-9c64-f1c2e6ee6101",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -1312,13 +2604,30 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "None",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
             "RefName": "InductorItem1"
           }
         ],
-        "ComponentGuid": "71e968b0-6b1d-47ba-b856-353041804a8c",
+        "ComponentGuid": "1db7ca07-cd47-4ae6-8b53-42eb8e7bf075",
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.PathInstruction, OSECircuitRender",
@@ -1356,13 +2665,139 @@
       "X": 0.0,
       "Y": 0.0,
       "Rotation": 0.0,
-      "RefName": "InductorItem1"
+      "RefName": "InductorItem1",
+      "Pins": [
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 0.0,
+            "Y": 0.5,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "95b4ae59-1334-49a0-9612-b613c8a7766f",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "InductorItem1"
+        },
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 1.0,
+            "Y": 0.5,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "0255672d-e7c2-46ba-9c64-f1c2e6ee6101",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "InductorItem1"
+        }
+      ]
     },
     {
       "$type": "OSECircuitRender.Items.DiodeItem, OSECircuitRender",
       "Value": "0.7",
-      "ItemGuid": "a067b7bf-002b-47a5-bd61-c55a7c102fea",
-      "Name": null,
+      "ItemGuid": "233326e1-58ea-447e-b4e1-52d75ac0aec2",
+      "Name": "",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.DiodeDrawable, OSECircuitRender",
         "Position": {
@@ -1379,6 +2814,7 @@
         "DrawablePins": [
           {
             "PinType": 0,
+            "PinText": "None",
             "Position": {
               "X": 0.0,
               "Y": 0.5,
@@ -1391,7 +2827,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "548a6382-6400-4518-94e3-358f9413f3c8",
+            "ComponentGuid": "2f85562b-193a-4ade-a785-c59af1216c19",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -1416,6 +2852,23 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "None",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
@@ -1423,6 +2876,7 @@
           },
           {
             "PinType": 0,
+            "PinText": "None",
             "Position": {
               "X": 1.0,
               "Y": 0.5,
@@ -1435,7 +2889,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "4d5137b6-468e-4b29-890b-9ef50210f451",
+            "ComponentGuid": "a353e921-22cb-43f9-92ec-d8f8e73422cb",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -1460,13 +2914,30 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "None",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
             "RefName": "DiodeItem1"
           }
         ],
-        "ComponentGuid": "480ae8fc-c0ad-4488-9bf7-c7180bc5de7f",
+        "ComponentGuid": "ba933ca8-ab2e-44d2-ad4e-74f21ccadcf8",
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
@@ -1587,13 +3058,139 @@
       "X": 0.0,
       "Y": 0.0,
       "Rotation": 0.0,
-      "RefName": "DiodeItem1"
+      "RefName": "DiodeItem1",
+      "Pins": [
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 0.0,
+            "Y": 0.5,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "2f85562b-193a-4ade-a785-c59af1216c19",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "DiodeItem1"
+        },
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 1.0,
+            "Y": 0.5,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "a353e921-22cb-43f9-92ec-d8f8e73422cb",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "DiodeItem1"
+        }
+      ]
     },
     {
       "$type": "OSECircuitRender.Items.TransistorItem, OSECircuitRender",
       "Type": 0,
-      "ItemGuid": "74e634dd-0fbb-4217-81af-e801ea4f1740",
-      "Name": null,
+      "ItemGuid": "10036b90-829d-4579-9190-0089cbd65b5f",
+      "Name": "",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.TransistorDrawable, OSECircuitRender",
         "Position": {
@@ -1610,6 +3207,7 @@
         "DrawablePins": [
           {
             "PinType": 0,
+            "PinText": "B",
             "Position": {
               "X": 0.0,
               "Y": 0.5,
@@ -1622,7 +3220,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "de548bee-19d3-451d-bb80-f0c6e3c6db44",
+            "ComponentGuid": "a2417660-c5b9-40cb-bb21-1ca1e6d4be0f",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -1647,6 +3245,23 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "B",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
@@ -1654,6 +3269,7 @@
           },
           {
             "PinType": 0,
+            "PinText": "E",
             "Position": {
               "X": 1.0,
               "Y": 0.0,
@@ -1666,7 +3282,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "99587e7f-b593-42a9-be3c-8b9e9654458d",
+            "ComponentGuid": "c11ba7ac-f7d5-4b75-9329-e0ba6a0ac5ac",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -1691,6 +3307,23 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "E",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
@@ -1698,6 +3331,7 @@
           },
           {
             "PinType": 0,
+            "PinText": "C",
             "Position": {
               "X": 1.0,
               "Y": 1.0,
@@ -1710,7 +3344,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "1e81705d-6774-4dd2-8c6c-4220e88b4b60",
+            "ComponentGuid": "d44d213e-d347-4dd9-88ad-d9bf463714b0",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -1735,13 +3369,30 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "C",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
             "RefName": "TransistorItem1"
           }
         ],
-        "ComponentGuid": "0012f9ac-4451-420d-9960-b46b611d58a6",
+        "ComponentGuid": "90d03892-5101-473a-b76d-67c0438a0fc3",
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
@@ -1943,13 +3594,201 @@
       "X": 0.0,
       "Y": 0.0,
       "Rotation": 0.0,
-      "RefName": "TransistorItem1"
+      "RefName": "TransistorItem1",
+      "Pins": [
+        {
+          "PinType": 0,
+          "PinText": "B",
+          "Position": {
+            "X": 0.0,
+            "Y": 0.5,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "a2417660-c5b9-40cb-bb21-1ca1e6d4be0f",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "B",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "TransistorItem1"
+        },
+        {
+          "PinType": 0,
+          "PinText": "E",
+          "Position": {
+            "X": 1.0,
+            "Y": 0.0,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "c11ba7ac-f7d5-4b75-9329-e0ba6a0ac5ac",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "E",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "TransistorItem1"
+        },
+        {
+          "PinType": 0,
+          "PinText": "C",
+          "Position": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "d44d213e-d347-4dd9-88ad-d9bf463714b0",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "C",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "TransistorItem1"
+        }
+      ]
     },
     {
       "$type": "OSECircuitRender.Items.TransistorItem, OSECircuitRender",
       "Type": 1,
-      "ItemGuid": "a54de030-4603-48d4-92b9-dc135df26aad",
-      "Name": null,
+      "ItemGuid": "54c63410-eb9d-4fd7-bc61-1bc6ea4ab62f",
+      "Name": "",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.TransistorDrawable, OSECircuitRender",
         "Position": {
@@ -1966,6 +3805,7 @@
         "DrawablePins": [
           {
             "PinType": 0,
+            "PinText": "B",
             "Position": {
               "X": 0.0,
               "Y": 0.5,
@@ -1978,7 +3818,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "02ed2199-7021-4395-aaf4-2ea1d87f0b41",
+            "ComponentGuid": "b79a3f33-51b0-4900-b50f-cb7702090582",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -2003,6 +3843,23 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "B",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
@@ -2010,6 +3867,7 @@
           },
           {
             "PinType": 0,
+            "PinText": "C",
             "Position": {
               "X": 1.0,
               "Y": 0.0,
@@ -2022,7 +3880,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "c39b5e75-885c-4353-8b8e-d935dc96e3e7",
+            "ComponentGuid": "9006cad1-560f-4d46-9e59-f5fc12611683",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -2047,6 +3905,23 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "C",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
@@ -2054,6 +3929,7 @@
           },
           {
             "PinType": 0,
+            "PinText": "E",
             "Position": {
               "X": 1.0,
               "Y": 1.0,
@@ -2066,7 +3942,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "c949abf9-c075-4217-9833-66f1e83323d2",
+            "ComponentGuid": "90d04ccb-72b0-4458-ba33-6f5e8585f836",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -2091,13 +3967,30 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "E",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
             "RefName": "TransistorItem2"
           }
         ],
-        "ComponentGuid": "7c8609c7-8c87-48b1-99be-f2c01c030164",
+        "ComponentGuid": "e4cfa7f9-794b-4fa8-83fa-39ca92f78e50",
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
@@ -2299,13 +4192,201 @@
       "X": 0.0,
       "Y": 0.0,
       "Rotation": 0.0,
-      "RefName": "TransistorItem2"
+      "RefName": "TransistorItem2",
+      "Pins": [
+        {
+          "PinType": 0,
+          "PinText": "B",
+          "Position": {
+            "X": 0.0,
+            "Y": 0.5,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "b79a3f33-51b0-4900-b50f-cb7702090582",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "B",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "TransistorItem2"
+        },
+        {
+          "PinType": 0,
+          "PinText": "C",
+          "Position": {
+            "X": 1.0,
+            "Y": 0.0,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "9006cad1-560f-4d46-9e59-f5fc12611683",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "C",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "TransistorItem2"
+        },
+        {
+          "PinType": 0,
+          "PinText": "E",
+          "Position": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "90d04ccb-72b0-4458-ba33-6f5e8585f836",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "E",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "TransistorItem2"
+        }
+      ]
     },
     {
       "$type": "OSECircuitRender.Items.CapacitorItem, OSECircuitRender",
       "Value": "10u",
-      "ItemGuid": "bcf43a83-0d4a-46ea-8e6b-59059889c8f1",
-      "Name": null,
+      "ItemGuid": "ed96511b-f529-4070-95a0-36e3eeec019c",
+      "Name": "",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.CapacitorDrawable, OSECircuitRender",
         "CapacitorType": 0,
@@ -2323,6 +4404,7 @@
         "DrawablePins": [
           {
             "PinType": 0,
+            "PinText": "None",
             "Position": {
               "X": 0.0,
               "Y": 0.5,
@@ -2335,7 +4417,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "45b66a68-9deb-42af-9902-f130154473e6",
+            "ComponentGuid": "db6cd9f7-0945-4f54-9b51-0aff8ed9e243",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -2360,6 +4442,23 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "None",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
@@ -2367,6 +4466,7 @@
           },
           {
             "PinType": 0,
+            "PinText": "None",
             "Position": {
               "X": 1.0,
               "Y": 0.5,
@@ -2379,7 +4479,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "d482d0ff-26a9-4522-ac3c-425bddb34c9b",
+            "ComponentGuid": "b22cda13-0a91-47ac-b6fb-9e47886af16f",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -2404,13 +4504,30 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "None",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
             "RefName": "CapacitorItem1"
           }
         ],
-        "ComponentGuid": "019e26c4-ebcb-415c-851f-1798d6ab7ea7",
+        "ComponentGuid": "1bad361e-7746-4231-b1ec-8510d2e5f1c3",
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
@@ -2522,13 +4639,139 @@
       "X": 0.0,
       "Y": 0.0,
       "Rotation": 0.0,
-      "RefName": "CapacitorItem1"
+      "RefName": "CapacitorItem1",
+      "Pins": [
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 0.0,
+            "Y": 0.5,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "db6cd9f7-0945-4f54-9b51-0aff8ed9e243",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "CapacitorItem1"
+        },
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 1.0,
+            "Y": 0.5,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "b22cda13-0a91-47ac-b6fb-9e47886af16f",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "CapacitorItem1"
+        }
+      ]
     },
     {
       "$type": "OSECircuitRender.Items.CapacitorItem, OSECircuitRender",
       "Value": "10u",
-      "ItemGuid": "be995558-d0f1-4283-a4b7-18e76123192d",
-      "Name": null,
+      "ItemGuid": "65710122-0fc1-4c47-93df-3ee3d0dc0eb8",
+      "Name": "",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.CapacitorDrawable, OSECircuitRender",
         "CapacitorType": 1,
@@ -2546,6 +4789,7 @@
         "DrawablePins": [
           {
             "PinType": 0,
+            "PinText": "None",
             "Position": {
               "X": 0.0,
               "Y": 0.5,
@@ -2558,7 +4802,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "315cdf13-0d9f-4739-89bc-a8c79dc68db5",
+            "ComponentGuid": "c0361545-4705-40d0-bb72-d9fd568bce8b",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -2583,6 +4827,23 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "None",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
@@ -2590,6 +4851,7 @@
           },
           {
             "PinType": 0,
+            "PinText": "None",
             "Position": {
               "X": 1.0,
               "Y": 0.5,
@@ -2602,7 +4864,7 @@
             },
             "Rotation": 0.0,
             "DrawablePins": [],
-            "ComponentGuid": "176cdc5a-fd39-46f1-9336-b59be48b2cd6",
+            "ComponentGuid": "5bf994de-1c1e-497a-a91d-fccc8d9eb2ae",
             "DrawInstructions": [
               {
                 "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
@@ -2627,13 +4889,30 @@
                   "B": 0
                 },
                 "Type": "CircleInstruction"
+              },
+              {
+                "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+                "Text": "None",
+                "Orientation": 0.0,
+                "Size": 12.0,
+                "Position": {
+                  "X": 0.5,
+                  "Y": 1.2,
+                  "Z": 0.0
+                },
+                "StrokeColor": {
+                  "R": 0,
+                  "G": 0,
+                  "B": 0
+                },
+                "Type": "TextInstruction"
               }
             ],
             "Type": "PinDrawable",
             "RefName": "CapacitorItem2"
           }
         ],
-        "ComponentGuid": "b8906b6e-22da-4431-87ab-1c7beb8250b4",
+        "ComponentGuid": "37bc7f4e-76bc-4011-b0ea-4bcbe3efa1a5",
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
@@ -2742,7 +5021,133 @@
       "X": 0.0,
       "Y": 0.0,
       "Rotation": 0.0,
-      "RefName": "CapacitorItem2"
+      "RefName": "CapacitorItem2",
+      "Pins": [
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 0.0,
+            "Y": 0.5,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "c0361545-4705-40d0-bb72-d9fd568bce8b",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "CapacitorItem2"
+        },
+        {
+          "PinType": 0,
+          "PinText": "None",
+          "Position": {
+            "X": 1.0,
+            "Y": 0.5,
+            "Z": 0.0
+          },
+          "Size": {
+            "X": 1.0,
+            "Y": 1.0,
+            "Z": 0.0
+          },
+          "Rotation": 0.0,
+          "DrawablePins": [],
+          "ComponentGuid": "5bf994de-1c1e-497a-a91d-fccc8d9eb2ae",
+          "DrawInstructions": [
+            {
+              "$type": "OSECircuitRender.Instructions.CircleInstruction, OSECircuitRender",
+              "Size": {
+                "X": 1.0,
+                "Y": 1.0,
+                "Z": 0.0
+              },
+              "FillColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+              },
+              "Position": {
+                "X": 0.0,
+                "Y": 0.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "CircleInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.TextInstruction, OSECircuitRender",
+              "Text": "None",
+              "Orientation": 0.0,
+              "Size": 12.0,
+              "Position": {
+                "X": 0.5,
+                "Y": 1.2,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+              },
+              "Type": "TextInstruction"
+            }
+          ],
+          "Type": "PinDrawable",
+          "RefName": "CapacitorItem2"
+        }
+      ]
     }
   ],
   "SheetNum": 1

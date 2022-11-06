@@ -6,10 +6,10 @@ namespace OSECircuitRender.Items;
 public class WorksheetItem : IWorksheetItem
 {
     public Guid ItemGuid { get; set; } = Guid.NewGuid();
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     public IDrawableComponent DrawableComponent { get; set; }
-    public float X { get; set; }
-    public float Y { get; set; }
+    public float X { get; set; } = 0f;
+    public float Y { get; set; } = 0f;
 
     public float Rotation
     {
@@ -17,5 +17,7 @@ public class WorksheetItem : IWorksheetItem
         set => DrawableComponent.Rotation = value;
     }
 
-    public string RefName { get; set; }
+    public string RefName { get; set; } = string.Empty;
+
+    public DrawablePinList Pins { get; set; } = new();
 }

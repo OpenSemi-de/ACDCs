@@ -9,10 +9,11 @@ namespace OSECircuitRender.Drawables
 {
     public class DrawableComponent : IDrawableComponent
     {
-        public Coordinate Position { get; } = new(0, 0, 0);
-        public Coordinate Size { get; } = new(1, 1, 0);
-        public DrawablePinList DrawablePins { get; } = new();
-        public DrawInstructionsList DrawInstructions { get; } = new();
+        public Coordinate Position { get; set; } = new(0, 0, 0);
+        public Coordinate Size { get; set; } = new(1, 1, 0);
+        public float Rotation { get; set; }
+        public DrawablePinList DrawablePins { get; set; } = new();
+        public DrawInstructionsList DrawInstructions { get; set; } = new();
 
         public DrawableComponent(Type type)
         {

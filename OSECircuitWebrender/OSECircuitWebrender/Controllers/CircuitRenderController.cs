@@ -35,8 +35,14 @@ namespace OSECircuitWebrender.Controllers
             string wwwPath = environment.WebRootPath;
             string contentPath = environment.ContentRootPath;
 
-            var res1 = new ResistorItem("1k", 1, 1);
-            var res2 = new ResistorItem("1k", 1, 4);
+            var res1 = new ResistorItem("1k", 1, 1)
+            {
+                Rotation = 180f
+            };
+            var res2 = new ResistorItem("1k", 1, 4)
+            {
+                Rotation = -90f
+            };
             var res3 = new ResistorItem("1k", 1, 7);
             var res4 = new ResistorItem("1k", 1, 10);
 

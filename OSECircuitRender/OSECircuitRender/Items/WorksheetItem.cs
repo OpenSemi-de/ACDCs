@@ -7,6 +7,12 @@ public class WorksheetItem : IWorksheetItem
     public IDrawableComponent DrawableComponent { get; set; }
     public float X { get; set; }
     public float Y { get; set; }
-    public float Rotation { get; set; }
+
+    public float Rotation
+    {
+        get => DrawableComponent.Rotation;
+        set => DrawableComponent.Rotation = value;
+    }
+
     public string RefName { get; set; }
 }

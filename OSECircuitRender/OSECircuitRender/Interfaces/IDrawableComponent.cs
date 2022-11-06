@@ -6,9 +6,11 @@ namespace OSECircuitRender.Interfaces
 {
     public interface IDrawableComponent
     {
-        DrawInstructionsList DrawInstructions { get; }
-        DrawablePinList DrawablePins { get; }
-        Coordinate Position { get; }
-        Coordinate Size { get; }
+        DrawInstructionsList DrawInstructions { get; set; }
+        DrawablePinList DrawablePins { get; set; }
+        Coordinate Position { get; set; }
+        Coordinate Size { get; set; }
+
+        float Rotation { get; set; }
     }
 }

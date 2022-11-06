@@ -64,6 +64,9 @@ namespace OSECircuitWebrender.Controllers
             var pnp = new TransistorItem(TransistorDrawableType.PNP, 10, 7);
             ws.Items.AddItem(pnp);
 
+            var npn = new TransistorItem(TransistorDrawableType.NPN, 10, 11);
+            ws.Items.AddItem(npn);
+
             var caps = new CapacitorItem("10u", CapacitorDrawableType.Standard, 14, 1);
             ws.Items.AddItem(caps);
             var caps2 = new CapacitorItem("10u", CapacitorDrawableType.Polarized, 14, 4);

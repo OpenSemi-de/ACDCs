@@ -1,4 +1,5 @@
-﻿using OSECircuitRender.Instructions;
+﻿using OSECircuitRender.Definitions;
+using OSECircuitRender.Instructions;
 using OSECircuitRender.Interfaces;
 
 namespace OSECircuitRender.Drawables;
@@ -35,9 +36,24 @@ public sealed class TransistorDrawable : DrawableComponent
         DrawInstructions.Add(new LineInstruction(1f, 0f, 1f, 0.2f));
         DrawInstructions.Add(new LineInstruction(1f, 0.8f, 1f, 1f));
         DrawInstructions.Add(new LineInstruction(0.5f, 0.5f, 1f, 0.8f));
-        DrawInstructions.Add(new LineInstruction(0.5f, 0.2f, 0.5f, 0.8f));
+        DrawInstructions.Add(new BoxInstruction(0.5f, 0.2f, 0.05f, 0.6f, new Color(0, 0, 0)));
         DrawInstructions.Add(new TextInstruction(type.ToString(), 0f, 12f, 0.5f, 1.3f));
-        SetSize(1, 2);
+
+        if (type == TransistorDrawableType.PNP)
+        {
+            DrawInstructions.Add(new LineInstruction(0.7f, 0.4f, 0.7f, 0.25f));
+            DrawInstructions.Add(new LineInstruction(0.7f, 0.4f, 0.85f, 0.4f));
+            DrawInstructions.Add(new LineInstruction(0.7f, 0.25f, 0.85f, 0.4f));
+        }
+
+        if (type == TransistorDrawableType.NPN)
+        {
+            DrawInstructions.Add(new LineInstruction(0.8f, 0.7f, 0.8f, 0.55f));
+            DrawInstructions.Add(new LineInstruction(0.8f, 0.7f, 0.65f, 0.7f));
+            DrawInstructions.Add(new LineInstruction(0.65f, 0.7f, 0.8f, 0.55f));
+        }
+
+        SetSize(2, 2);
         SetPosition(x, y);
         SetRef(backRef);
     }

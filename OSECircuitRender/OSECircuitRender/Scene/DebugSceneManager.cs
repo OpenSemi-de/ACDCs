@@ -12,6 +12,7 @@ namespace OSECircuitRender.Scene
         {
             Scene = new SheetScene();
             Scene.SetDrawables(drawables);
+            Scene.ShowGrid = true;
             return true;
         }
 

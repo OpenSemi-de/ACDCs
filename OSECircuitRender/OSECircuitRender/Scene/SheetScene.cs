@@ -11,5 +11,7 @@ namespace OSECircuitRender.Scene
             Drawables = drawables;
             return true;
         }
+
+        public bool ShowGrid { get; set; }
     }
 }

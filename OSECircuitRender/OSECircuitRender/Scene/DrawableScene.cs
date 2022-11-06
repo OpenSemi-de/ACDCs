@@ -22,6 +22,19 @@ namespace OSECircuitRender.Scene
             canvas.FillColor = Colors.WhiteSmoke;
             canvas.FillRectangle(0, 0, 10000, 10000);
             if (Scene == null) return;
+            canvas.SaveState();
+            canvas.StrokeSize = 0.2f;
+            canvas.StrokeColor = Colors.SlateGray;
+            if (Scene.ShowGrid)
+            {
+                for (float x = 0; x < 1000; x = x + Zoom * BaseGridSize)
+                {
+                    canvas.DrawLine(x, 0, x, 10000);
+                    canvas.DrawLine(0, x, 10000, x);
+                }
+            }
+
+            canvas.RestoreState();
             Scene.Drawables.ForEach(
                 component => Render(canvas, component)
             );
@@ -256,6 +269,7 @@ namespace OSECircuitRender.Scene
             drawSize.Y = drawSize.Y * Zoom * BaseGridSize;
             drawPos.X = drawPos.X * Zoom * BaseGridSize;
             drawPos.Y = drawPos.Y * Zoom * BaseGridSize;
+            drawPos.Y = drawPos.Y + ((Zoom * BaseGridSize) * (drawable.Size.Y % 2)) / 2;
         }
 
         public static void SetFillColor(ICanvas canvas, Definitions.Color fillColor)

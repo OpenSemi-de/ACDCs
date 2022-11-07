@@ -1,4 +1,5 @@
-﻿using OSECircuitRender.Drawables;
+﻿using OSECircuitRender.Definitions;
+using OSECircuitRender.Drawables;
 
 namespace OSECircuitRender.Scene
 {
@@ -13,5 +14,7 @@ namespace OSECircuitRender.Scene
         }
 
         public bool ShowGrid { get; set; }
+        public float GridSize { get; set; }
+        public Coordinate SheetSize { get; set; }
     }
 }

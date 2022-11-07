@@ -100,6 +100,7 @@ namespace OSECircuitWebrender.Controllers
                     ms.Position = 0;
                     imageBytes = ms.ToArray();
                 }
+                context.Dispose();
 
                 wb.SaveSheet(ws, wwwPath + "/samplesheet.json");
             }

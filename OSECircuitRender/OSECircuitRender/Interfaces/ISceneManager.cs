@@ -1,4 +1,5 @@
-﻿using OSECircuitRender.Drawables;
+﻿using OSECircuitRender.Definitions;
+using OSECircuitRender.Drawables;
 using OSECircuitRender.Scene;
 
 namespace OSECircuitRender.Interfaces
@@ -12,5 +13,7 @@ namespace OSECircuitRender.Interfaces
         object GetSceneForBackend();
 
         bool SendToBackend(object backendScene);
+
+        void SetSizeAndScale(Coordinate sheetSize, float gridSize);
     }
 }

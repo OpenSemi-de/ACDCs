@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using OSECircuitRender.Definitions;
 using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
@@ -9,12 +10,22 @@ namespace OSECircuitRender.Sheet
 {
     public sealed class Worksheet
     {
+        public Worksheet()
+        {
+            Router = new TwoDPathRouter(SheetSize, GridSize);
+        }
+
         public int SheetNum { get; set; }
 
         [JsonIgnore]
         public ISceneManager SceneManager { get; set; }
 
+        public Coordinate SheetSize { get; set; } = new(100, 100, 0);
+        public float GridSize { get; set; }
+
         public WorksheetItemList Items = new();
+
+        public IPathRouter Router { get; set; }
 
         public DrawableComponentList GetDrawableComponents()
         {
@@ -35,6 +46,7 @@ namespace OSECircuitRender.Sheet
 
             if (SceneManager.SetScene(GetDrawableComponents()))
             {
+                SceneManager.SetSizeAndScale(SheetSize, GridSize);
                 Log.L("Getting backend scene");
                 object backendScene = SceneManager.GetSceneForBackend();
                 if (backendScene != null)

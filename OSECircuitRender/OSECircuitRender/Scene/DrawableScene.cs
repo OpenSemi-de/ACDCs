@@ -15,7 +15,12 @@ namespace OSECircuitRender.Scene
         public DrawableScene(SheetScene scene)
         {
             Scene = scene;
+            if (scene.GridSize != 0)
+                BaseGridSize = scene.GridSize;
+            SheetSize = scene.SheetSize;
         }
+
+        public Coordinate SheetSize { get; set; }
 
         public void Draw(ICanvas canvas, RectF dirtyRect)
         {
@@ -27,7 +32,7 @@ namespace OSECircuitRender.Scene
             canvas.StrokeColor = Colors.SlateGray;
             if (Scene.ShowGrid)
             {
-                for (float x = 0; x < 1000; x = x + Zoom * BaseGridSize)
+                for (float x = 0; x < BaseGridSize * Zoom * SheetSize.X; x = x + Zoom * BaseGridSize)
                 {
                     canvas.DrawLine(x, 0, x, 10000);
                     canvas.DrawLine(0, x, 10000, x);

@@ -20,6 +20,8 @@ namespace OSECircuitRender
             };
         }
 
+        public static string BasePath { get; set; }
+
         public Worksheet AddNewSheet()
         {
             Worksheet ws = new();

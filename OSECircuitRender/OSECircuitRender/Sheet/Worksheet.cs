@@ -13,6 +13,7 @@ namespace OSECircuitRender.Sheet
         public Worksheet()
         {
             Router = new TwoDPathRouter(SheetSize, GridSize);
+            Items.OnAdded(OnItemAdded);
         }
 
         public int SheetNum { get; set; }
@@ -21,11 +22,17 @@ namespace OSECircuitRender.Sheet
         public ISceneManager SceneManager { get; set; }
 
         public Coordinate SheetSize { get; set; } = new(100, 100, 0);
-        public float GridSize { get; set; }
+        public float GridSize { get; set; } = 2.54f;
 
-        public WorksheetItemList Items = new();
-
+        public WorksheetItemList Items { get; set; } = new();
+        public WorksheetItemList Traces { get; set; } = new();
         public IPathRouter Router { get; set; }
+        public WorksheetItemList Nets { get; set; } = new();
+
+        private void OnItemAdded(IWorksheetItem item)
+        {
+            Router.SetItems(Items, Nets);
+        }
 
         public DrawableComponentList GetDrawableComponents()
         {
@@ -38,6 +45,9 @@ namespace OSECircuitRender.Sheet
         public bool CalculateScene()
         {
             Log.L("Calculating scene");
+
+            Traces = Router.GetTraces();
+
             if (SceneManager == null)
             {
                 Log.L("Creating Manager");

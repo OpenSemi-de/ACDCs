@@ -5,7 +5,9 @@ using Microsoft.Maui.Graphics.Skia;
 using Microsoft.Maui.Graphics;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using OSECircuitRender.Drawables;
+using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
 using OSECircuitRender.Sheet;
@@ -31,18 +33,20 @@ namespace OSECircuitWebrender.Controllers
 
             OSECircuitRender.Log.Method = Console.WriteLine;
             Workbook wb = new();
+
             Worksheet ws = wb.AddNewSheet();
             string wwwPath = environment.WebRootPath;
             string contentPath = environment.ContentRootPath;
 
-            var res1 = new ResistorItem("1k", 1, 1)
-            {
-                Rotation = 180f
-            };
+            Workbook.BasePath = wwwPath;
+
+            var res1 = new ResistorItem("1k", 1, 1);
+
             var res2 = new ResistorItem("1k", 1, 4)
             {
                 Rotation = -90f
             };
+
             var res3 = new ResistorItem("1k", 1, 7);
             var res4 = new ResistorItem("1k", 1, 10);
 
@@ -76,6 +80,13 @@ namespace OSECircuitWebrender.Controllers
 
             npnr.Rotation = -90f;
             ws.Items.AddItem(npnr);
+
+            var net2 = new NetItem();
+            net2.Pins.Add(res1.Pins[0]);
+            net2.Pins.Add(res2.Pins[1]);
+            net2.Pins.Add(pnp.Pins[0]);
+            net2.Pins.Add(npn.Pins[2]);
+            ws.Nets.AddItem(net2);
 
             var caps = new CapacitorItem("10u", CapacitorDrawableType.Standard, 14, 1);
             ws.Items.AddItem(caps);

@@ -275,9 +275,9 @@ namespace OSECircuitRender.Scene
             drawSize.X = drawSize.X * Zoom * BaseGridSize;
             drawSize.Y = drawSize.Y * Zoom * BaseGridSize;
             drawPos.X = drawPos.X * Zoom * BaseGridSize;
-            drawPos.X = drawPos.X + ((Zoom * BaseGridSize) * (drawable.Size.X % 2)) / 2;
+            drawPos.X = drawPos.X - Zoom * BaseGridSize * ((drawable.Size.X % 2) / 2);
             drawPos.Y = drawPos.Y * Zoom * BaseGridSize;
-            drawPos.Y = drawPos.Y + ((Zoom * BaseGridSize) * (drawable.Size.Y % 2)) / 2;
+            drawPos.Y = drawPos.Y - Zoom * BaseGridSize * ((drawable.Size.Y % 2) / 2);
         }
 
         public static void SetFillColor(ICanvas canvas, Definitions.Color fillColor)

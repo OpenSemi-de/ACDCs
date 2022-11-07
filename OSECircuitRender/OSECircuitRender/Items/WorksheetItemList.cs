@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Sheet;
 
@@ -13,7 +14,15 @@ namespace OSECircuitRender.Items
             int refNum = ReferenceManager.GetRefNum(item.GetType().Name);
             item.RefName = $"{item.GetType().Name}{refNum}";
             Add(item);
+            OnItemAdded?.Invoke(item);
             return refNum;
         }
+
+        public void OnAdded(Action<IWorksheetItem> onItemAdded)
+        {
+            OnItemAdded = onItemAdded;
+        }
+
+        public Action<IWorksheetItem> OnItemAdded { get; set; }
     }
 }

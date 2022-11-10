@@ -1,6 +1,4 @@
-﻿using System;
-using OSECircuitRender.Drawables;
-using OSECircuitRender.Interfaces;
+﻿using OSECircuitRender.Drawables;
 
 namespace OSECircuitRender.Items;
 

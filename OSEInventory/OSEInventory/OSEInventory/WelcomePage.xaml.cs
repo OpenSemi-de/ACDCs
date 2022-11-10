@@ -19,7 +19,7 @@ public partial class WelcomePage : ContentPage
         Worksheet ws = wb.AddNewSheet();
         ResistorItem ri = new("10k", 10, 2);
         ws.Items.AddItem(ri);
-        PinItem pi = new(PinDrawableType.Gnd, 10, 8);
+        TerminalItem pi = new(TerminalDrawableType.Gnd, 10, 8);
 
         ws.Items.AddItem(pi);
 

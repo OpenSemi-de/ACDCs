@@ -51,7 +51,7 @@ namespace OSECircuitRender.Scene
             GetScaleAndZoom(drawable, out Coordinate drawPos, out Coordinate drawSize);
 
             canvas.SaveState();
-            canvas.Translate(drawPos.X, drawPos.Y);
+            canvas.Translate(drawPos.X + drawSize.X / 2, drawPos.Y + drawSize.Y / 2);
             canvas.Rotate(drawable.Rotation, drawSize.X / 2, drawSize.Y / 2);
 
             foreach (var instruction in drawable.DrawInstructions)
@@ -116,7 +116,7 @@ namespace OSECircuitRender.Scene
                 SetStrokeColor(canvas, pin.DrawInstructions[0].StrokeColor);
                 canvas.FillCircle(posCenter.X, posCenter.Y, Zoom * BaseGridSize * 0.2f);
 
-                if (pin.PinText != pin.PinType.ToString())
+                if (pin.PinText != "")
                 {
                     canvas.SaveState();
                     canvas.FontSize = 9;
@@ -272,12 +272,18 @@ namespace OSECircuitRender.Scene
         {
             drawPos = new Coordinate(drawable.Position);
             drawSize = new Coordinate(drawable.Size);
+            drawPos.X--;
+            drawPos.Y--;
+            var offX = (drawSize.X - 2) / 2 * (Zoom * BaseGridSize);
+            var offY = (drawSize.Y - 2) / 2 * (Zoom * BaseGridSize);
             drawSize.X = drawSize.X * Zoom * BaseGridSize;
             drawSize.Y = drawSize.Y * Zoom * BaseGridSize;
             drawPos.X = drawPos.X * Zoom * BaseGridSize;
-            drawPos.X = drawPos.X - Zoom * BaseGridSize * ((drawable.Size.X % 2) / 2);
             drawPos.Y = drawPos.Y * Zoom * BaseGridSize;
-            drawPos.Y = drawPos.Y - Zoom * BaseGridSize * ((drawable.Size.Y % 2) / 2);
+            //drawPos.X += offX;
+            //  drawPos.Y += offY;
+            //  drawPos.X = drawPos.X - Zoom * BaseGridSize * ((drawable.Size.X % 2) / 2);
+            //  drawPos.Y = drawPos.Y - Zoom * BaseGridSize * ((drawable.Size.Y % 2) / 2);
         }
 
         public static void SetFillColor(ICanvas canvas, Definitions.Color fillColor)

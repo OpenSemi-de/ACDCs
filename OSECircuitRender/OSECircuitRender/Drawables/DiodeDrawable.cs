@@ -1,5 +1,4 @@
-﻿using System;
-using OSECircuitRender.Instructions;
+﻿using OSECircuitRender.Instructions;
 using OSECircuitRender.Interfaces;
 
 namespace OSECircuitRender.Drawables

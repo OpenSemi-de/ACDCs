@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using Microsoft.Maui.Graphics;
-using OSECircuitRender.Definitions;
+﻿using OSECircuitRender.Definitions;
 using Color = OSECircuitRender.Definitions.Color;
 
 namespace OSECircuitRender.Instructions

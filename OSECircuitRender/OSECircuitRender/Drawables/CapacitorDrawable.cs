@@ -40,8 +40,8 @@ namespace OSECircuitRender.Drawables
 
             if (CapacitorType == CapacitorDrawableType.Polarized)
             {
-                DrawablePins.Add(new PinDrawable(backRef, 0, 0.5f, pinName: "+"));
-                DrawablePins.Add(new PinDrawable(backRef, 1f, 0.5f, pinName: "-"));
+                DrawablePins.Add(new PinDrawable(backRef, 0, 0.5f, pinText: "+"));
+                DrawablePins.Add(new PinDrawable(backRef, 1f, 0.5f, pinText: "-"));
                 DrawInstructions.Add(new BoxInstruction(0.3f, 0.1f, 0.1f, 0.8f, new Color(0, 0, 0)));
                 DrawInstructions.Add(new CurveInstruction(0.5f, 0.1f, 0.8f, 0.9f, 90f, 270f));
                 DrawInstructions.Add(new LineInstruction(0.5f, 0.5f, 1f, 0.5f));

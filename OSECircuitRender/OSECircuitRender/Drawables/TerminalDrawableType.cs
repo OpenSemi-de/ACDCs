@@ -1,6 +1,6 @@
 ﻿namespace OSECircuitRender.Drawables
 {
-    public enum PinDrawableType
+    public enum TerminalDrawableType
     {
         None = 0,
         Null = 1,

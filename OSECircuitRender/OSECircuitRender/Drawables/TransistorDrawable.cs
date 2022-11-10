@@ -38,9 +38,9 @@ public sealed class TransistorDrawable : DrawableComponent
 
         if (type == TransistorDrawableType.PNP)
         {
-            DrawablePins.Add(new PinDrawable(backRef, 0, 0.5f, pinName: "B"));
-            DrawablePins.Add(new PinDrawable(backRef, 1f, 0f, pinName: "E"));
-            DrawablePins.Add(new PinDrawable(backRef, 1f, 1f, pinName: "C"));
+            DrawablePins.Add(new PinDrawable(backRef, 0, 0.5f, pinText: "B"));
+            DrawablePins.Add(new PinDrawable(backRef, 1f, 0f, pinText: "E"));
+            DrawablePins.Add(new PinDrawable(backRef, 1f, 1f, pinText: "C"));
 
             DrawInstructions.Add(new LineInstruction(0.7f, 0.4f, 0.7f, 0.25f));
             DrawInstructions.Add(new LineInstruction(0.7f, 0.4f, 0.85f, 0.4f));
@@ -49,9 +49,9 @@ public sealed class TransistorDrawable : DrawableComponent
 
         if (type == TransistorDrawableType.NPN)
         {
-            DrawablePins.Add(new PinDrawable(backRef, 0, 0.5f, pinName: "B"));
-            DrawablePins.Add(new PinDrawable(backRef, 1f, 0f, pinName: "C"));
-            DrawablePins.Add(new PinDrawable(backRef, 1f, 1f, pinName: "E"));
+            DrawablePins.Add(new PinDrawable(backRef, 0, 0.5f, pinText: "B"));
+            DrawablePins.Add(new PinDrawable(backRef, 1f, 0f, pinText: "C"));
+            DrawablePins.Add(new PinDrawable(backRef, 1f, 1f, pinText: "E"));
 
             DrawInstructions.Add(new LineInstruction(0.8f, 0.7f, 0.8f, 0.55f));
             DrawInstructions.Add(new LineInstruction(0.8f, 0.7f, 0.65f, 0.7f));

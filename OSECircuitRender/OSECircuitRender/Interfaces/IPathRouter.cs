@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using OSECircuitRender.Items;
+﻿using OSECircuitRender.Items;
 
 namespace OSECircuitRender.Interfaces;
 

@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui;
-using OSECircuitRender.Definitions;
+﻿using OSECircuitRender.Definitions;
 
 namespace OSECircuitRender.Instructions
 {

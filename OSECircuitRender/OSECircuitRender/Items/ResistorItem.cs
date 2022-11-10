@@ -1,5 +1,4 @@
 ﻿using OSECircuitRender.Drawables;
-using OSECircuitRender.Interfaces;
 
 namespace OSECircuitRender.Items
 {

@@ -30,8 +30,10 @@ namespace OSECircuitWebrender.Controllers
         public FileContentResult Image()
         {
             byte[]? imageBytes = null;
+            SkiaBitmapExportContext debugcontext = new(100, 100, 10);
 
             OSECircuitRender.Log.Method = Console.WriteLine;
+            OSECircuitRender.Workbook.DebugContext = debugcontext;
             Workbook wb = new();
 
             Worksheet ws = wb.AddNewSheet();
@@ -44,10 +46,14 @@ namespace OSECircuitWebrender.Controllers
 
             var res2 = new ResistorItem("1k", 1, 4)
             {
-                Rotation = -90f
+                Rotation = 90f
             };
 
-            var res3 = new ResistorItem("1k", 1, 7);
+            var res3 = new ResistorItem("1k", 1, 7)
+            {
+                Rotation = 135f
+            };
+
             var res4 = new ResistorItem("1k", 1, 10);
 
             ws.Items.AddItem(res1);
@@ -55,14 +61,14 @@ namespace OSECircuitWebrender.Controllers
             ws.Items.AddItem(res3);
             ws.Items.AddItem(res4);
 
-            var gnd1 = new PinItem(PinDrawableType.Gnd, 6, 1);
-            var gnd2 = new PinItem(PinDrawableType.Pin, 6, 4);
-            var gnd3 = new PinItem(PinDrawableType.None, 6, 7);
-            var gnd4 = new PinItem(PinDrawableType.Null, 6, 10);
+            //var gnd1 = new PinItem(PinDrawableType.Gnd, 6, 1);
+            //   var gnd2 = new PinItem(PinDrawableType.Pin, 6, 4);
+            //  var gnd3 = new PinItem(PinDrawableType.None, 6, 7);
+            var gnd4 = new TerminalItem(TerminalDrawableType.Null, 6, 10);
 
-            ws.Items.AddItem(gnd1);
-            ws.Items.AddItem(gnd2);
-            ws.Items.AddItem(gnd3);
+            //       ws.Items.AddItem(gnd1);
+            //  ws.Items.AddItem(gnd2);
+            //  ws.Items.AddItem(gnd3);
             ws.Items.AddItem(gnd4);
 
             var ind = new InductorItem("10m", 10, 1);

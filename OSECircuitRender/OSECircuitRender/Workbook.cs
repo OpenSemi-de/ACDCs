@@ -1,7 +1,7 @@
-﻿using Microsoft.Maui.Storage;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.IO;
+using Microsoft.Maui.Graphics.Skia;
 using OSECircuitRender.Sheet;
 
 namespace OSECircuitRender
@@ -21,6 +21,7 @@ namespace OSECircuitRender
         }
 
         public static string BasePath { get; set; }
+        public static SkiaBitmapExportContext DebugContext { get; set; }
 
         public Worksheet AddNewSheet()
         {

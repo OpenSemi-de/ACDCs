@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net.Mime;
-using Microsoft.Maui;
-using Microsoft.Maui.Platform;
+﻿using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Graphics.Skia;
 using OSECircuitRender.Definitions;
 using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
+using System;
+using System.IO;
 
 namespace OSECircuitRender.Sheet;
 
@@ -37,92 +35,120 @@ public class TwoDPathRouter : IPathRouter
         Nets = nets;
     }
 
+    private static Coordinate RotateCoordinate(float posX, float posY, float centerX, float centerY, double angleInDegrees)
+    {
+        double angleInRadians = angleInDegrees * (Math.PI / 180);
+        double cosTheta = Math.Cos(angleInRadians);
+        double sinTheta = Math.Sin(angleInRadians);
+        return new Coordinate()
+        {
+            X =
+                (int)
+                (cosTheta * (posX - centerX) -
+                    sinTheta * (posY - centerY) + centerX),
+            Y =
+                (int)
+                (sinTheta * (posX - centerX) +
+                 cosTheta * (posY - centerY) + centerY)
+        };
+    }
+
     public WorksheetItemList GetTraces()
     {
+        SkiaBitmapExportContext map = Workbook.DebugContext ?? new(0, 0, 10);
         WorksheetItemList traces = new();
 
         RouteMap = new int[sheetWidth + 2, sheetHeight + 2];
+        ICanvas canvas = map.Canvas;
+
+        int pinNr = 0;
 
         foreach (var item in Items)
         {
-            int itemX = item.X;
-            int itemY = item.Y;
-            for (var x = itemX; x < itemX + item.Width; x++)
-            {
-                for (var y = itemY; y < itemY + item.Height; y++)
+            float centerX = item.X + (item.Width / 2);
+            float centerY = item.Y + (item.Height / 2);
+            for (var x = Convert.ToInt32(item.X); x < item.X + item.Width; x++)
+                for (var y = Convert.ToInt32(item.Y); y < item.Y + item.Height; y++)
                 {
-                    RouteMap[x, y] = 9;
+                    var rotatedCoordinate = RotateCoordinate(
+                        x, y,
+                        centerX, centerY, item.Rotation
+                    );
+                    RouteMap[
+                        Convert.ToInt32(Math.Round(rotatedCoordinate.X)),
+                        Convert.ToInt32(Math.Round(rotatedCoordinate.Y))
+                    ] = 255;
                 }
+            foreach (var pin in item.Pins)
+            {
+                pinNr++;
+                float pinX = item.X + (pin.Position.X * item.Width);
+                float pinY = item.Y + (pin.Position.Y * item.Height);
+                var rotatedCoordinate = RotateCoordinate(
+                    pinX, pinY,
+                    centerX, centerY, item.Rotation
+                );
+                RouteMap[
+                    Convert.ToInt32(Math.Round(rotatedCoordinate.X)),
+                    Convert.ToInt32(Math.Round(rotatedCoordinate.Y))
+                ] = pinNr;
             }
         }
+
+        string mapText = "";
+        for (var y = 0; y < sheetHeight; y++)
+        {
+            for (var x = 0; x < sheetWidth; x++)
+                mapText += RouteMap[x, y] + ":";
+            mapText += Environment.NewLine;
+        }
+
+        File.WriteAllText(Workbook.BasePath + "/lastmap.txt", mapText);
 
         foreach (var worksheetItem in Nets)
         {
-            var net = (NetItem)worksheetItem;
-            for (var i = 0; i < net.Pins.Count - 1; i++)
-            {
-                var pin = net.Pins[i];
-                var nextPin = net.Pins[i + 1];
-                string direction = GetDirection(pin);
-                string directionNext = GetDirection(nextPin);
-
-                int pathX = 0;
-                int pathY = 0;
-
-                switch (direction)
-                {
-                    case "down":
-                        {
-                            pathX = Convert.ToInt32(pin.BackRef.X + pin.Position.X);
-                            pathY = Convert.ToInt32(pin.BackRef.Y + pin.Position.Y + pin.BackRef.Height);
-                            RouteMap[pathX, pathY] = 1;
-                        }
-                        break;
-
-                    case "up":
-                        {
-                            pathX = Convert.ToInt32(pin.BackRef.X + pin.Position.X);
-                            pathY = Convert.ToInt32(pin.BackRef.Y + pin.Position.Y - 1);
-                            RouteMap[pathX, pathY] = 2;
-                        }
-                        break;
-
-                    case "left":
-                        {
-                            pathX = Convert.ToInt32(pin.Position.X - 1);
-                            pathY = Convert.ToInt32(pin.Position.Y + 1);
-                            RouteMap[pathX, pathY] = 3;
-                        }
-                        break;
-
-                    case "right":
-                        {
-                            pathX = Convert.ToInt32(pin.Position.X + pin.Size.X + 1);
-                            pathY = Convert.ToInt32(pin.Position.Y - 1);
-                            RouteMap[pathX, pathY] = 4;
-                        }
-                        break;
-                }
-            }
         }
-
-        string map = "";
-        for (var y = 0; y < sheetHeight; y++)
-        {
-            for (var x = 0; x < sheetHeight; x++)
-            {
-                map = map + "" + RouteMap[x, y];
-            }
-            map += Environment.NewLine;
-        }
-
-        File.WriteAllText(Workbook.BasePath + "/lastmap.txt", map);
 
         Traces = traces;
         return traces;
     }
 
-    private static string GetDirection(PinDrawable pin)
+    private int[,] MapItem(IWorksheetItem item)
+    {
+        int[,] outputArray;
+        float rotation = item.Rotation;
+
+        int heightInt = item.Height;
+        int widthInt = item.Width;
+        int fieldSize = Math.Max(widthInt, heightInt) + 1;
+        outputArray = new int[fieldSize, fieldSize];
+        int offsetX = Convert.ToInt32(Math.Round((fieldSize - widthInt) / 2.0));
+        int offsetY = Convert.ToInt32(Math.Round((fieldSize - heightInt) / 2.0));
+        int ninetyDegreesSteps = Convert.ToInt32((rotation - rotation % 90) / 90);
+        if (ninetyDegreesSteps > 3)
+        {
+            ninetyDegreesSteps %= 4;
+        }
+
+        if (ninetyDegreesSteps == 1 || ninetyDegreesSteps == 3)
+        {
+            for (var y = offsetY; y < heightInt; y++)
+                for (var x = offsetX; x < widthInt; x++)
+                    outputArray[y, x] = int.MaxValue;
+        }
+        else
+        {
+            for (var y = offsetY; y < heightInt + offsetY; y++)
+                for (var x = offsetX; x < widthInt + offsetX; x++)
+                    outputArray[x, y] = int.MaxValue;
+        }
+
+        double realRotation = (rotation % 90) + (ninetyDegreesSteps * 90);
+
+        return outputArray;
+    }
+
+    private static string GetDirection(TerminalDrawable pin)
     {
         if (pin.Position.X == 0)
         {

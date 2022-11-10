@@ -23,5 +23,14 @@
         public float X;
         public float Y;
         public float Z;
+
+        public Coordinate Add(Coordinate drawableComponentPosition)
+        {
+            return new Coordinate(
+                this.X + drawableComponentPosition.X,
+                this.Y + drawableComponentPosition.Y,
+                this.Z + drawableComponentPosition.Z
+            );
+        }
     }
 }

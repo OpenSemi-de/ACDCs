@@ -5,6 +5,8 @@ using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -126,6 +128,57 @@ public class TwoDPathRouter : IPathRouter
             }
         }
 
+        foreach (var net in Nets)
+        {
+
+            var pins = net.Pins.OrderBy(p => p.Position.X).ThenBy(p => p.Position.Y)
+                .Select<PinDrawable, PinDrawable>(p => new PinDrawable(p)).ToList();
+            pins.ForEach(p =>
+            {
+                p.Position.X *= 2;
+                p.Position.Y *= 2;
+                p.Size.X *= 2;
+                p.Size.Y *= 2;
+                
+            });
+
+            for (var i = 0; i < pins.Count - 1; i++)
+            {
+                var pin1 = pins[i];
+                var pin2 = pins[i + 1];
+                int tx = 1;
+                int ty = 1;
+
+                if (DistanceX(pin1, pin2) > DistanceY(pin1, pin2))
+                {
+                    ty = 0;
+                }
+                else
+                {
+                    tx = 0;
+                }
+
+                bool pathFound = false;
+                int maxTries = 10000;
+                int tries = 0;
+                for (int x = Convert.ToInt32(pin1.Position.X); !pathFound; x += tx)
+                    for (int y =Convert.ToInt32(pin1.Position.Y); !pathFound; x += ty)
+                    {
+                        
+
+
+
+                        if (tries > maxTries)
+                        {
+                            pathFound = true;
+                        }
+
+                        tries++;
+                    }
+            }
+        }
+
+
         string mapText = "";
         for (var y = 0; y < sheetHeight; y++)
         {
@@ -136,11 +189,18 @@ public class TwoDPathRouter : IPathRouter
 
         File.WriteAllText(Workbook.BasePath + "/lastmap.txt", mapText);
 
-        foreach (var worksheetItem in Nets)
-        {
-        }
 
         Traces = traces;
         return traces;
+    }
+
+    private float DistanceY(PinDrawable pin1, PinDrawable pin2)
+    {
+        return pin2.Position.Y - pin1.Position.Y;
+    }
+
+    private float DistanceX(PinDrawable pin1, PinDrawable pin2)
+    {
+        return pin2.Position.X - pin1.Position.X;
     }
 }

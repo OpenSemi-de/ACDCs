@@ -61,14 +61,11 @@ namespace OSECircuitWebrender.Controllers
             ws.Items.AddItem(res3);
             ws.Items.AddItem(res4);
 
-            //var gnd1 = new PinItem(PinDrawableType.Gnd, 6, 1);
-            //   var gnd2 = new PinItem(PinDrawableType.Pin, 6, 4);
-            //  var gnd3 = new PinItem(PinDrawableType.None, 6, 7);
+            var gnd1 = new TerminalItem(TerminalDrawableType.Gnd, 6, 1);
+
             var gnd4 = new TerminalItem(TerminalDrawableType.Null, 6, 10);
 
-            //       ws.Items.AddItem(gnd1);
-            //  ws.Items.AddItem(gnd2);
-            //  ws.Items.AddItem(gnd3);
+            ws.Items.AddItem(gnd1);
             ws.Items.AddItem(gnd4);
 
             var ind = new InductorItem("10m", 10, 1);

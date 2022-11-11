@@ -1,4 +1,6 @@
-﻿using Microsoft.Maui.Graphics;
+﻿using System;
+using System.Linq;
+using Microsoft.Maui.Graphics;
 using OSECircuitRender.Definitions;
 using OSECircuitRender.Instructions;
 using OSECircuitRender.Interfaces;
@@ -51,7 +53,18 @@ namespace OSECircuitRender.Scene
             GetScaleAndZoom(drawable, out Coordinate drawPos, out Coordinate drawSize);
 
             canvas.SaveState();
-            canvas.Translate(drawPos.X + drawSize.X / 2, drawPos.Y + drawSize.Y / 2);
+
+            int lowestPinX = 0;
+            int lowestPinY = 0;
+
+            if (drawable.DrawablePins.Any())
+            {
+                lowestPinX = Convert.ToInt32(Math.Round(drawable.DrawablePins.Min(p => p.Position.X) * drawSize.X));
+                lowestPinY = Convert.ToInt32(Math.Round(drawable.DrawablePins.Min(p => p.Position.Y) * drawSize.Y));
+            }
+
+            canvas.Translate(drawPos.X - lowestPinX, drawPos.Y - lowestPinY);
+
             canvas.Rotate(drawable.Rotation, drawSize.X / 2, drawSize.Y / 2);
 
             foreach (var instruction in drawable.DrawInstructions)
@@ -272,8 +285,6 @@ namespace OSECircuitRender.Scene
         {
             drawPos = new Coordinate(drawable.Position);
             drawSize = new Coordinate(drawable.Size);
-            drawPos.X--;
-            drawPos.Y--;
             var offX = (drawSize.X - 2) / 2 * (Zoom * BaseGridSize);
             var offY = (drawSize.Y - 2) / 2 * (Zoom * BaseGridSize);
             drawSize.X = drawSize.X * Zoom * BaseGridSize;

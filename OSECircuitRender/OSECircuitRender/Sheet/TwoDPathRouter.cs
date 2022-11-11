@@ -6,6 +6,7 @@ using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace OSECircuitRender.Sheet;
 
@@ -65,32 +66,43 @@ public class TwoDPathRouter : IPathRouter
 
         foreach (var item in Items)
         {
-            float centerX = item.X + (item.Width / 2);
-            float centerY = item.Y + (item.Height / 2);
-            for (var x = Convert.ToInt32(item.X); x < item.X + item.Width; x++)
-                for (var y = Convert.ToInt32(item.Y); y < item.Y + item.Height; y++)
+            float lowestPinX = 0;
+            float lowestPinY = 0;
+
+            if (item.Pins.Any())
+            {
+                lowestPinX = item.Pins.Min(p => p.Position.X);
+                lowestPinY = item.Pins.Min(p => p.Position.Y);
+            }
+
+            float centerX = item.X + (item.Width / 2) - lowestPinX;
+            float centerY = item.Y + (item.Height / 2) - lowestPinY;
+
+            for (float x = item.X; x < item.X + item.Width; x++)
+                for (float y = item.Y; y < item.Y + item.Height; y++)
                 {
                     var rotatedCoordinate = RotateCoordinate(
                         x, y,
                         centerX, centerY, item.Rotation
                     );
                     RouteMap[
-                        Convert.ToInt32(Math.Round(rotatedCoordinate.X)),
-                        Convert.ToInt32(Math.Round(rotatedCoordinate.Y))
+                        Convert.ToInt32(Math.Ceiling(rotatedCoordinate.X)),
+                        Convert.ToInt32(Math.Ceiling(rotatedCoordinate.Y))
                     ] = 255;
                 }
+
             foreach (var pin in item.Pins)
             {
                 pinNr++;
-                float pinX = item.X + (pin.Position.X * item.Width);
-                float pinY = item.Y + (pin.Position.Y * item.Height);
+                float pinX = item.X + (pin.Position.X * item.Width) - lowestPinX;
+                float pinY = item.Y + (pin.Position.Y * item.Height) - lowestPinY;
                 var rotatedCoordinate = RotateCoordinate(
                     pinX, pinY,
                     centerX, centerY, item.Rotation
                 );
                 RouteMap[
-                    Convert.ToInt32(Math.Round(rotatedCoordinate.X)),
-                    Convert.ToInt32(Math.Round(rotatedCoordinate.Y))
+                    Convert.ToInt32(Math.Ceiling(rotatedCoordinate.X)),
+                    Convert.ToInt32(Math.Ceiling(rotatedCoordinate.Y))
                 ] = pinNr;
             }
         }
@@ -111,83 +123,5 @@ public class TwoDPathRouter : IPathRouter
 
         Traces = traces;
         return traces;
-    }
-
-    private int[,] MapItem(IWorksheetItem item)
-    {
-        int[,] outputArray;
-        float rotation = item.Rotation;
-
-        int heightInt = item.Height;
-        int widthInt = item.Width;
-        int fieldSize = Math.Max(widthInt, heightInt) + 1;
-        outputArray = new int[fieldSize, fieldSize];
-        int offsetX = Convert.ToInt32(Math.Round((fieldSize - widthInt) / 2.0));
-        int offsetY = Convert.ToInt32(Math.Round((fieldSize - heightInt) / 2.0));
-        int ninetyDegreesSteps = Convert.ToInt32((rotation - rotation % 90) / 90);
-        if (ninetyDegreesSteps > 3)
-        {
-            ninetyDegreesSteps %= 4;
-        }
-
-        if (ninetyDegreesSteps == 1 || ninetyDegreesSteps == 3)
-        {
-            for (var y = offsetY; y < heightInt; y++)
-                for (var x = offsetX; x < widthInt; x++)
-                    outputArray[y, x] = int.MaxValue;
-        }
-        else
-        {
-            for (var y = offsetY; y < heightInt + offsetY; y++)
-                for (var x = offsetX; x < widthInt + offsetX; x++)
-                    outputArray[x, y] = int.MaxValue;
-        }
-
-        double realRotation = (rotation % 90) + (ninetyDegreesSteps * 90);
-
-        return outputArray;
-    }
-
-    private static string GetDirection(TerminalDrawable pin)
-    {
-        if (pin.Position.X == 0)
-        {
-            return "up";
-        }
-
-        if (Convert.ToInt32(Math.Round(pin.Position.X)) == 1)
-        {
-            return "down";
-        }
-
-        if (Convert.ToInt32(Math.Round(pin.Position.Y)) == 0)
-        {
-            return "left";
-        }
-
-        if (Convert.ToInt32(Math.Round(pin.Position.Y)) == 1)
-        {
-            return "right";
-        }
-
-        return "";
-    }
-}
-
-public class TwoDPathTurtle
-{
-    public int X { get; }
-    public int Y { get; }
-    public int TargetX { get; }
-    public int TargetY { get; }
-    public int[,] CurrentMatrix { get; }
-
-    public TwoDPathTurtle(int x, int y, int targetX, int targetY, int[,] currentMatrix)
-    {
-        X = x;
-        Y = y;
-        TargetX = targetX;
-        TargetY = targetY;
-        CurrentMatrix = currentMatrix;
     }
 }

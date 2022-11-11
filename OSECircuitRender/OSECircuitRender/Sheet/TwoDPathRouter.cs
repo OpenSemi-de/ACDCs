@@ -7,6 +7,7 @@ using OSECircuitRender.Items;
 using System;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace OSECircuitRender.Sheet;
 
@@ -59,13 +60,31 @@ public class TwoDPathRouter : IPathRouter
         SkiaBitmapExportContext map = Workbook.DebugContext ?? new(0, 0, 10);
         WorksheetItemList traces = new();
 
-        RouteMap = new int[sheetWidth + 2, sheetHeight + 2];
+        RouteMap = new int[sheetWidth * 2, sheetHeight * 2];
         ICanvas canvas = map.Canvas;
 
         int pinNr = 0;
 
-        foreach (var item in Items)
+        foreach (var origItem in Items)
         {
+            var item = new WorksheetItem();
+            item.DrawableComponent = new DrawableComponent(typeof(DrawableComponent))
+            {
+                Position = new Coordinate(origItem.DrawableComponent.Position),
+                Size = new Coordinate(origItem.DrawableComponent.Size),
+                Rotation = origItem.Rotation
+            };
+            item.DrawableComponent.Position.X *= 2;
+            item.DrawableComponent.Position.Y *= 2;
+            item.DrawableComponent.Size.X *= 2;
+            item.DrawableComponent.Size.Y *= 2;
+
+            item.Pins.AddRange(
+                origItem.Pins.ToList().Select(
+                    p =>
+                        new PinDrawable(p.BackRef, p.Position.X * 2, p.Position.Y * 2)
+                ));
+
             float lowestPinX = 0;
             float lowestPinY = 0;
 
@@ -94,8 +113,8 @@ public class TwoDPathRouter : IPathRouter
             foreach (var pin in item.Pins)
             {
                 pinNr++;
-                float pinX = item.X + (pin.Position.X * item.Width) - lowestPinX;
-                float pinY = item.Y + (pin.Position.Y * item.Height) - lowestPinY;
+                float pinX = item.X + pin.Position.X * (item.Width / 2) - lowestPinX;
+                float pinY = item.Y + pin.Position.Y * (item.Height / 2) - lowestPinY;
                 var rotatedCoordinate = RotateCoordinate(
                     pinX, pinY,
                     centerX, centerY, item.Rotation

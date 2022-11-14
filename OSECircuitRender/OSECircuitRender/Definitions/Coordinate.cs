@@ -15,6 +15,13 @@ public sealed class Coordinate
         Z = z;
     }
 
+    public Coordinate(float x, float y)
+    {
+        X = x;
+        Y = y;
+        Z = 0;
+    }
+
     public Coordinate(Coordinate coordinate)
     {
         X = coordinate.X;

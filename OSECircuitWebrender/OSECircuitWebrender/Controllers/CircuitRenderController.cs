@@ -24,10 +24,10 @@ namespace OSECircuitWebrender.Controllers
         public FileContentResult Image()
         {
             byte[]? imageBytes = null;
-            SkiaBitmapExportContext debugcontext = new(100, 100, 10);
+            SkiaBitmapExportContext debugContext = new(1000, 1000, 10);
 
             OSECircuitRender.Log.Method = Console.WriteLine;
-            OSECircuitRender.Workbook.DebugContext = debugcontext;
+            OSECircuitRender.Workbook.DebugContext = debugContext;
             Workbook wb = new();
 
             Worksheet ws = wb.AddNewSheet();
@@ -112,6 +112,15 @@ namespace OSECircuitWebrender.Controllers
 
                 wb.SaveSheet(ws, wwwPath + "/samplesheet.json");
             }
+
+            using (MemoryStream ms = new())
+            {
+                debugContext.WriteToStream(ms);
+                ms.Position = 0;
+                var mapImageBytes = ms.ToArray();
+                System.IO.File.WriteAllBytes(wwwPath + "/map.bmp", mapImageBytes);
+            }
+
             return File(imageBytes, "application/octet-stream", "img.bmp");
         }
     }

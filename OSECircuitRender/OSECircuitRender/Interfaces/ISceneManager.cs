@@ -2,18 +2,17 @@
 using OSECircuitRender.Drawables;
 using OSECircuitRender.Scene;
 
-namespace OSECircuitRender.Interfaces
+namespace OSECircuitRender.Interfaces;
+
+public interface ISceneManager
 {
-    public interface ISceneManager
-    {
-        bool SetScene(DrawableComponentList drawables);
+    SheetScene Scene { get; set; }
 
-        SheetScene Scene { get; set; }
+    object GetSceneForBackend();
 
-        object GetSceneForBackend();
+    bool SendToBackend(object backendScene);
 
-        bool SendToBackend(object backendScene);
+    bool SetScene(DrawableComponentList drawables);
 
-        void SetSizeAndScale(Coordinate sheetSize, float gridSize);
-    }
+    void SetSizeAndScale(Coordinate sheetSize, float gridSize);
 }

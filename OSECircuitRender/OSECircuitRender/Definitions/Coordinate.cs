@@ -1,36 +1,46 @@
-﻿namespace OSECircuitRender.Definitions
+﻿namespace OSECircuitRender.Definitions;
+
+public sealed class Coordinate
 {
-    public sealed class Coordinate
+    public float X;
+
+    public float Y;
+
+    public float Z;
+
+    public Coordinate(float x, float y, float z)
     {
-        public Coordinate(float x, float y, float z)
-        {
-            X = x;
-            Y = y;
-            Y = y;
-        }
+        X = x;
+        Y = y;
+        Z = z;
+    }
 
-        public Coordinate(Coordinate coordinate)
-        {
-            X = coordinate.X;
-            Y = coordinate.Y;
-            Z = coordinate.Z;
-        }
+    public Coordinate(Coordinate coordinate)
+    {
+        X = coordinate.X;
+        Y = coordinate.Y;
+        Z = coordinate.Z;
+    }
 
-        public Coordinate()
-        {
-        }
+    public Coordinate()
+    {
+    }
 
-        public float X;
-        public float Y;
-        public float Z;
+    public Coordinate Add(Coordinate drawableComponentPosition)
+    {
+        return new Coordinate(
+            X + drawableComponentPosition.X,
+            Y + drawableComponentPosition.Y,
+            Z + drawableComponentPosition.Z
+        );
+    }
 
-        public Coordinate Add(Coordinate drawableComponentPosition)
-        {
-            return new Coordinate(
-                this.X + drawableComponentPosition.X,
-                this.Y + drawableComponentPosition.Y,
-                this.Z + drawableComponentPosition.Z
-            );
-        }
+    public Coordinate Substract(Coordinate drawableComponentPosition)
+    {
+        return new Coordinate(
+            X - drawableComponentPosition.X,
+            Y - drawableComponentPosition.Y,
+            Z - drawableComponentPosition.Z
+        );
     }
 }

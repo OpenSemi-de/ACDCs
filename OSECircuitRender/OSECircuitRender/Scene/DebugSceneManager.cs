@@ -2,37 +2,36 @@
 using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
 
-namespace OSECircuitRender.Scene
+namespace OSECircuitRender.Scene;
+
+public sealed class DebugSceneManager : ISceneManager
 {
-    public sealed class DebugSceneManager : ISceneManager
+    public object DrawableScene { get; set; }
+    public SheetScene Scene { get; set; }
+
+    public object GetSceneForBackend()
     {
-        public SheetScene Scene { get; set; }
-        public object DrawableScene { get; set; }
+        DrawableScene drawableScene = new(Scene);
+        DrawableScene = drawableScene;
+        return drawableScene;
+    }
 
-        public bool SetScene(DrawableComponentList drawables)
-        {
-            Scene = new SheetScene();
-            Scene.SetDrawables(drawables);
-            Scene.ShowGrid = true;
-            return true;
-        }
+    public bool SendToBackend(object backendScene)
+    {
+        return true;
+    }
 
-        public object GetSceneForBackend()
-        {
-            DrawableScene drawableScene = new(Scene);
-            DrawableScene = drawableScene;
-            return drawableScene;
-        }
+    public bool SetScene(DrawableComponentList drawables)
+    {
+        Scene = new SheetScene();
+        Scene.SetDrawables(drawables);
+        Scene.ShowGrid = true;
+        return true;
+    }
 
-        public bool SendToBackend(object backendScene)
-        {
-            return true;
-        }
-
-        public void SetSizeAndScale(Coordinate sheetSize, float gridSize)
-        {
-            Scene.GridSize = gridSize;
-            Scene.SheetSize = sheetSize;
-        }
+    public void SetSizeAndScale(Coordinate sheetSize, float gridSize)
+    {
+        Scene.GridSize = gridSize;
+        Scene.SheetSize = sheetSize;
     }
 }

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSEData", "..\..\OSEData\OS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSEImportSpice", "..\..\OSEImportSpice\OSEImportSpice.csproj", "{97FB263D-3A74-4BCB-861E-E5A78A29E7F1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "´libs", "´libs", "{D5860FCD-DA89-4F75-B900-F48BCE360A80}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{D5860FCD-DA89-4F75-B900-F48BCE360A80}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpiceSharp", "..\..\libs\SpiceSharp\SpiceSharp\SpiceSharp.csproj", "{BB309C0B-2523-44F4-BC6E-033833E23B46}"
 EndProject
@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSECircuitWebrender", "..\..\OSECircuitWebrender\OSECircuitWebrender\OSECircuitWebrender.csproj", "{3120E5D8-D80D-41AF-9331-7A5D632CB5EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSECircuitWebrender", "..\..\OSECircuitWebrender\OSECircuitWebrender\OSECircuitWebrender.csproj", "{3120E5D8-D80D-41AF-9331-7A5D632CB5EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

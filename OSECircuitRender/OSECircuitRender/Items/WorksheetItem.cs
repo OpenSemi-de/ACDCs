@@ -1,17 +1,17 @@
-﻿using System;
-using OSECircuitRender.Drawables;
+﻿using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
+using System;
 
 namespace OSECircuitRender.Items;
 
 public class WorksheetItem : IWorksheetItem
 {
+    public IDrawableComponent DrawableComponent { get; set; } = new DrawableComponent(typeof(DrawableComponent));
+    public int Height => Convert.ToInt32(DrawableComponent.Size.Y);
     public Guid ItemGuid { get; set; } = Guid.NewGuid();
     public string Name { get; set; } = string.Empty;
-    public IDrawableComponent DrawableComponent { get; set; } = new DrawableComponent(typeof(DrawableComponent));
-
-    public int X => Convert.ToInt32(DrawableComponent.Position.X);
-    public int Y => Convert.ToInt32(DrawableComponent.Position.Y);
+    public DrawablePinList Pins { get; set; } = new();
+    public string RefName { get; set; } = string.Empty;
 
     public float Rotation
     {
@@ -19,9 +19,7 @@ public class WorksheetItem : IWorksheetItem
         set => DrawableComponent.Rotation = value;
     }
 
-    public string RefName { get; set; } = string.Empty;
-
-    public DrawablePinList Pins { get; set; } = new();
     public int Width => Convert.ToInt32(DrawableComponent.Size.X);
-    public int Height => Convert.ToInt32(DrawableComponent.Size.Y);
+    public int X => Convert.ToInt32(DrawableComponent.Position.X);
+    public int Y => Convert.ToInt32(DrawableComponent.Position.Y);
 }

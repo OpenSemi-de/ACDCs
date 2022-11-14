@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using OSECircuitRender.Drawables;
+﻿using OSECircuitRender.Drawables;
+using System.Collections.Generic;
 
-namespace OSECircuitRender.Items
+namespace OSECircuitRender.Items;
+
+public sealed class DrawablePinList : List<PinDrawable>
 {
-    public sealed class DrawablePinList : List<PinDrawable>
-    {
-    }
 }

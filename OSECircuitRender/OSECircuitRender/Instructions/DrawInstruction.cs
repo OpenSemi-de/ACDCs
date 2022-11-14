@@ -1,22 +1,21 @@
-﻿using System;
-using OSECircuitRender.Definitions;
+﻿using OSECircuitRender.Definitions;
 using OSECircuitRender.Interfaces;
+using System;
 
-namespace OSECircuitRender.Instructions
+namespace OSECircuitRender.Instructions;
+
+public class DrawInstruction : IDrawInstruction
 {
-    public class DrawInstruction : IDrawInstruction
+    public DrawInstruction(Type type)
     {
-        public DrawInstruction(Type type)
-        {
-            Type = type.Name;
-        }
-
-        //public List<Coordinate> Coordinates { get; set; } = new();
-
-        //public List<Color> Colors { get; } = new();
-        public Coordinate Position { get; set; }
-
-        public Color StrokeColor { get; set; }
-        public string Type { get; }
+        Type = type.Name;
     }
+
+    //public List<Color> Colors { get; } = new();
+    public Coordinate Position { get; set; }
+
+    //public List<Coordinate> Coordinates { get; set; } = new();
+    public Color StrokeColor { get; set; }
+
+    public string Type { get; }
 }

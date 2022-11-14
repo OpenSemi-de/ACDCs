@@ -4,8 +4,6 @@ namespace OSECircuitRender.Items;
 
 public sealed class TransistorItem : WorksheetItem
 {
-    public TransistorDrawableType Type { get; set; }
-
     public TransistorItem()
     {
         DrawableComponent = new TransistorDrawable(this);
@@ -16,4 +14,6 @@ public sealed class TransistorItem : WorksheetItem
         DrawableComponent = new TransistorDrawable(this, type, x, y);
         Type = type;
     }
+
+    public TransistorDrawableType Type { get; set; }
 }

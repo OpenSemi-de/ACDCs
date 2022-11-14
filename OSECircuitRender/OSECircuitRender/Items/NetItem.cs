@@ -2,7 +2,4 @@
 
 public class NetItem : WorksheetItem
 {
-    public NetItem()
-    {
-    }
 }

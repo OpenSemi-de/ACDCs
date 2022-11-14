@@ -1,17 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using OSECircuitRender;
-using Microsoft.Maui.Graphics.Skia;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Maui.Graphics;
-using System.Net;
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
+using Microsoft.Maui.Graphics.Skia;
+using OSECircuitRender;
 using OSECircuitRender.Drawables;
-using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
 using OSECircuitRender.Sheet;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace OSECircuitWebrender.Controllers
 {
@@ -74,12 +68,12 @@ namespace OSECircuitWebrender.Controllers
             var dio = new DiodeItem("0.7", 10, 4);
             ws.Items.AddItem(dio);
 
-            var pnp = new TransistorItem(TransistorDrawableType.PNP, 10, 7);
+            var pnp = new TransistorItem(TransistorDrawableType.Pnp, 10, 7);
             ws.Items.AddItem(pnp);
 
-            var npn = new TransistorItem(TransistorDrawableType.NPN, 10, 11);
+            var npn = new TransistorItem(TransistorDrawableType.Npn, 10, 11);
             ws.Items.AddItem(npn);
-            var npnr = new TransistorItem(TransistorDrawableType.NPN, 10, 15);
+            var npnr = new TransistorItem(TransistorDrawableType.Npn, 10, 15);
 
             npnr.Rotation = -90f;
             ws.Items.AddItem(npnr);

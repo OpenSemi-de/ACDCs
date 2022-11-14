@@ -4,7 +4,7 @@ namespace OSECircuitRender.Interfaces;
 
 public interface IPathRouter
 {
-    void SetItems(WorksheetItemList items, WorksheetItemList nets);
-
     WorksheetItemList GetTraces();
+
+    void SetItems(WorksheetItemList items, WorksheetItemList nets);
 }

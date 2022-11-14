@@ -1,124 +1,121 @@
-﻿using System;
+﻿using OSECircuitRender.Definitions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using OSECircuitRender.Definitions;
 
-namespace OSECircuitRender.Instructions
+namespace OSECircuitRender.Instructions;
+
+public enum PathPartType
 {
-    public sealed class PathInstruction : DrawInstruction
+    M = 0,
+    L = 1,
+    H = 2,
+    V = 3,
+    C = 4,
+    S = 5,
+    Q = 6,
+    T = 7,
+    A = 8,
+    Z = 9
+}
+
+public sealed class PathInstruction : DrawInstruction
+{
+    private readonly List<PathPart> _pathParts;
+
+    public PathInstruction(string svgPath) : base(typeof(PathInstruction))
     {
-        private readonly List<PathPart> _pathParts;
-
-        public float Width { get; set; }
-        public float Height { get; set; }
-
-        public PathInstruction(string svgPath) : base(typeof(PathInstruction))
-        {
-            StrokeColor = new Color(0, 0, 0);
-            PathReader pr = new(svgPath);
-            _pathParts = pr.GetPathParts();
-            Width = pr.GetWidth();
-            Height = pr.GetHeight();
-        }
-
-        public List<PathPart> GetParts()
-        {
-            return _pathParts;
-        }
+        StrokeColor = new Color(0, 0, 0);
+        PathReader pr = new(svgPath);
+        _pathParts = pr.GetPathParts();
+        Width = pr.GetWidth();
+        Height = pr.GetHeight();
     }
 
-    public sealed class PathReader
+    public float Height { get; set; }
+    public float Width { get; set; }
+
+    public List<PathPart> GetParts()
     {
-        private readonly List<PathPart> _pathParts = new();
-        private float width;
-        private float height;
+        return _pathParts;
+    }
+}
 
-        public PathReader(string svgPath)
-        {
-            width = 0;
-            height = 0;
-            svgPath += "Z";
-            string buffer = "";
-            string command = "";
-            foreach (var chrBuffer in svgPath)
+public sealed class PathPart
+{
+    public PathPart(PathPartType type, List<Coordinate> coordinates)
+    {
+        Coordinates = coordinates;
+        Type = type;
+    }
+
+    public List<Coordinate> Coordinates { get; }
+    public PathPartType Type { get; }
+}
+
+public sealed class PathReader
+{
+    private readonly float _height;
+    private readonly List<PathPart> _pathParts = new();
+    private readonly float _width;
+
+    public PathReader(string svgPath)
+    {
+        _width = 0;
+        _height = 0;
+        svgPath += "Z";
+        var buffer = "";
+        var command = "";
+        foreach (var chrBuffer in svgPath)
+            if ((chrBuffer > 64 && chrBuffer < 91) ||
+                (chrBuffer > 96 && chrBuffer < 123))
             {
-                if (chrBuffer > 64 && chrBuffer < 91 ||
-                    chrBuffer > 96 && chrBuffer < 123)
+                if (command != "")
                 {
-                    if (command != "")
+                    List<Coordinate> coordinates = new();
+                    var type = (PathPartType)Enum.Parse(typeof(PathPartType), command);
+                    var textCoordinates = buffer.Split(" ").ToList();
+                    foreach (var textCoordinate in textCoordinates.Where(s => s != "" && s != " "))
                     {
-                        List<Coordinate> coordinates = new();
-                        PathPartType type = (PathPartType)Enum.Parse(typeof(PathPartType), command);
-                        List<string> textCoordinates = buffer.Split(" ").ToList();
-                        foreach (var textCoordinate in textCoordinates.Where(s => s != "" && s != " "))
-                        {
-                            var xypair = textCoordinate.Split(',');
-                            var coordinate = new Coordinate(
-                                float.Parse(xypair[0].Replace(".", ",")),
-                                float.Parse(xypair[1].Replace(".", ",")),
-                                0
-                            );
+                        var xypair = textCoordinate.Split(',');
+                        var coordinate = new Coordinate(
+                            float.Parse(xypair[0].Replace(".", ",")),
+                            float.Parse(xypair[1].Replace(".", ",")),
+                            0
+                        );
 
-                            if (coordinate.X > width)
-                                width = coordinate.X;
-                            if (coordinate.Y > height)
-                                height = coordinate.Y;
+                        if (coordinate.X > _width)
+                            _width = coordinate.X;
+                        if (coordinate.Y > _height)
+                            _height = coordinate.Y;
 
-                            coordinates.Add(coordinate);
-                        }
-
-                        _pathParts.Add(new PathPart(type, coordinates));
+                        coordinates.Add(coordinate);
                     }
 
-                    command = chrBuffer.ToString();
-                    buffer = "";
+                    _pathParts.Add(new PathPart(type, coordinates));
                 }
-                else
-                {
-                    buffer += chrBuffer;
-                }
+
+                command = chrBuffer.ToString();
+                buffer = "";
             }
-        }
-
-        public List<PathPart> GetPathParts()
-        {
-            return _pathParts;
-        }
-
-        public float GetWidth()
-        {
-            return width;
-        }
-
-        public float GetHeight()
-        {
-            return height;
-        }
+            else
+            {
+                buffer += chrBuffer;
+            }
     }
 
-    public sealed class PathPart
+    public float GetHeight()
     {
-        public PathPart(PathPartType type, List<Coordinate> coordinates)
-        {
-            Coordinates = coordinates;
-            Type = type;
-        }
-
-        public List<Coordinate> Coordinates { get; }
-        public PathPartType Type { get; }
+        return _height;
     }
 
-    public enum PathPartType
+    public List<PathPart> GetPathParts()
     {
-        M = 0,
-        L = 1,
-        H = 2,
-        V = 3,
-        C = 4,
-        S = 5,
-        Q = 6,
-        T = 7,
-        A = 8,
-        Z = 9,
+        return _pathParts;
+    }
+
+    public float GetWidth()
+    {
+        return _width;
     }
 }

@@ -2,6 +2,6 @@
 
 public enum TransistorDrawableType
 {
-    PNP=0,
-    NPN=1,
+    Pnp = 0,
+    Npn = 1
 }

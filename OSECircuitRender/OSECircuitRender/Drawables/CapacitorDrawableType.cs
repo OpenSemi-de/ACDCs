@@ -1,8 +1,7 @@
-﻿namespace OSECircuitRender.Drawables
+﻿namespace OSECircuitRender.Drawables;
+
+public enum CapacitorDrawableType
 {
-    public enum CapacitorDrawableType
-    {
-        Standard = 0,
-        Polarized = 1,
-    }
+    Standard = 0,
+    Polarized = 1
 }

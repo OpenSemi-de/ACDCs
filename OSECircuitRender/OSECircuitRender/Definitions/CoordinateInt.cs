@@ -1,43 +1,43 @@
 ﻿namespace OSECircuitRender.Definitions;
 
-public sealed class Coordinate
+public sealed class CoordinateInt
 {
-    public float X;
+    public int X;
 
-    public float Y;
+    public int Y;
 
-    public float Z;
+    public int Z;
 
-    public Coordinate(float x, float y, float z)
+    public CoordinateInt(int x, int y, int z)
     {
         X = x;
         Y = y;
         Z = z;
     }
 
-    public Coordinate(Coordinate coordinate)
+    public CoordinateInt(CoordinateInt coordinate)
     {
         X = coordinate.X;
         Y = coordinate.Y;
         Z = coordinate.Z;
     }
 
-    public Coordinate()
+    public CoordinateInt()
     {
     }
 
-    public Coordinate Add(Coordinate coordinate)
+    public CoordinateInt Add(CoordinateInt coordinate)
     {
-        return new Coordinate(
+        return new CoordinateInt(
             X + coordinate.X,
             Y + coordinate.Y,
             Z + coordinate.Z
         );
     }
 
-    public Coordinate Substract(Coordinate coordinate)
+    public CoordinateInt Substract(CoordinateInt coordinate)
     {
-        return new Coordinate(
+        return new CoordinateInt(
             X - coordinate.X,
             Y - coordinate.Y,
             Z - coordinate.Z

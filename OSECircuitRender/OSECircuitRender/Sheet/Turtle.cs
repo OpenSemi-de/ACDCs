@@ -13,6 +13,7 @@ using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
 using Color = Microsoft.Maui.Graphics.Color;
 using System.Net.NetworkInformation;
+using Microsoft.VisualBasic;
 using static Microsoft.Maui.Controls.Internals.GIFBitmap;
 
 namespace OSECircuitRender.Sheet;
@@ -230,22 +231,55 @@ public class Turtle
                             Convert.ToSingle(currentPoint.X + _directionPoints[(int)nextDirection].X / 2),
                             Convert.ToSingle(currentPoint.Y + _directionPoints[(int)nextDirection].Y / 2));
 
-                        List<Direction> intersections = new();
-                        foreach (var inputRect in _collisionRectangles)
+                        var collisionRect = _collisionRectangles
+                            .FirstOrDefault(cr =>
+                                LineIntersectsRect(currentPoint, stepPoint, cr) != Direction.None);
+                        int breakTries = 0;
+                        while (collisionRect != default)
                         {
-                            var rect = new RectF(inputRect.Location, inputRect.Size);
-                            intersections.Add(LineIntersectsRect(currentPoint, stepPoint, rect));
+                            var collisionDirection = LineIntersectsRect(currentPoint, stepPoint, collisionRect);
+
+                            Direction newDirection = Direction.None;
+                            switch (collisionDirection)
+                            {
+                                case Direction.Right:
+                                case Direction.Left:
+                                    newDirection = currentPoint.Y < targetPoint.Y ? Direction.Bottom : Direction.Top;
+                                    break;
+
+                                case Direction.Bottom:
+                                case Direction.Top:
+                                    newDirection = currentPoint.X < targetPoint.X ? Direction.Right : Direction.Left;
+                                    break;
+
+                                case Direction.Contains:
+                                    break;
+
+                                default:
+                                case Direction.None:
+                                    break;
+                            }
+
+                            stepPoint = new Point(
+                                    Convert.ToSingle(currentPoint.X + _directionPoints[(int)newDirection].X / 2),
+                                    Convert.ToSingle(currentPoint.Y + _directionPoints[(int)newDirection].Y / 2));
+
+                            collisionRect = _collisionRectangles
+                                .FirstOrDefault(cr =>
+                                    LineIntersectsRect(currentPoint, stepPoint, cr) != Direction.None);
+                            breakTries++;
+                            if (breakTries > 100)
+                                break;
                         }
-                        if (intersections.All(intersection => intersection == Direction.None))
-                        {
-                            DebugDrawLine(Convert.ToSingle(currentPoint.X),
+
+                        DebugDrawLine(Convert.ToSingle(currentPoint.X),
                                 Convert.ToSingle(currentPoint.Y),
                                 Convert.ToSingle(stepPoint.X), Convert.ToSingle(stepPoint.Y));
-                        }
 
                         currentPoint = stepPoint;
                     }
                 }
+
                 //foreach (var inputRect in _collisionRectangles)
                 //{
                 //    var rect = new RectF(inputRect.Location, inputRect.Size);

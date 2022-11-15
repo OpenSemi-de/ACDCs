@@ -220,12 +220,15 @@ public class Turtle
                     Convert.ToSingle(position2Y + _directionPoints[(int)direction2].Y / 2));
                 if (i != net.Pins.Count - 1)
                 {
+                    Direction nextDirection = GetDirectionMax(currentPoint, targetPoint);
+
                     bool found = false;
                     for (var f = 0; f < 1000000 && !found; f++)
                     {
                         if (currentPoint == targetPoint)
                             found = true;
-                        var nextDirection = GetDirectionMax(currentPoint, targetPoint);
+
+                        nextDirection = GetDirectionMax(currentPoint, targetPoint, nextDirection);
 
                         var stepPoint = new Point(
                             Convert.ToSingle(currentPoint.X + _directionPoints[(int)nextDirection].X / 2),
@@ -260,6 +263,7 @@ public class Turtle
                                     break;
                             }
 
+                            nextDirection = newDirection;
                             stepPoint = new Point(
                                     Convert.ToSingle(currentPoint.X + _directionPoints[(int)newDirection].X / 2),
                                     Convert.ToSingle(currentPoint.Y + _directionPoints[(int)newDirection].Y / 2));
@@ -425,13 +429,19 @@ public class Turtle
         return direction;
     }
 
-    private Direction GetDirectionMax(Point centerPoint, Point measurePoint)
+    private Direction GetDirectionMax(Point centerPoint, Point measurePoint, Direction lastDirection = Direction.None)
     {
         Direction direction = Direction.None;
 
         var posX = measurePoint.X - centerPoint.X;
         var posY = measurePoint.Y - centerPoint.Y;
         int pos = 0;
+
+        if (lastDirection != Direction.None)
+        {
+            if (posX == posY && posY != 0)
+                return lastDirection;
+        }
 
         foreach (var triangle in Turtle._directionalTrianglesMax)
         {

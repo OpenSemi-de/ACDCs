@@ -3,17 +3,95 @@
 using OSECircuitRender.Definitions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Platform;
+using OSECircuitRender.Drawables;
+using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
 using Color = Microsoft.Maui.Graphics.Color;
+using System.Net.NetworkInformation;
+using static Microsoft.Maui.Controls.Internals.GIFBitmap;
 
 namespace OSECircuitRender.Sheet;
 
+public enum Direction
+{
+    Top = 0,
+    Right = 1,
+    Bottom = 2,
+    Left = 3,
+    Contains = 4,
+    None = 999,
+}
+
 public class Turtle
 {
+    private static Point[][] _directionalTriangles = new[]
+    {
+        new Point[]
+        {
+            new(0,0),
+            new(1,0),
+            new(0.5f,0.5f),
+        },
+        new Point[]
+        {
+            new(1,0),
+            new(1,1),
+            new(0.5f,0.5f),
+        },
+        new Point[]
+        {
+            new(1,1),
+            new(0,1),
+            new(0.5f,0.5f),
+        },
+        new Point[]
+        {
+            new(0,1),
+            new(0,0),
+            new(0.5f,0.5f),
+        },
+    };
+
+    private static Point[][] _directionalTrianglesMax = new[]
+    {
+        new Point[]
+        {
+            new(-float.MaxValue,-float.MaxValue),
+            new(float.MaxValue,-float.MaxValue),
+            new(0,0),
+        },
+        new Point[]
+        {
+            new(float.MaxValue,-float.MaxValue),
+            new(float.MaxValue, float.MaxValue),
+            new(0, 0),
+        },
+        new Point[]
+        {
+            new(float.MaxValue,float.MaxValue),
+            new(-float.MaxValue,float.MaxValue),
+            new(0,0),
+        },
+        new Point[]
+        {
+            new(-float.MaxValue,float.MaxValue),
+            new(-float.MaxValue, -float.MaxValue),
+            new(0,0),
+        },
+    };
+
+    private static Point[] _directionPoints = {
+        new Point(0,-1),
+        new Point(1,0),
+        new Point(0,1),
+        new Point(-1,0),
+    };
+
     private readonly List<RectF> _collisionRectangles = new();
     private readonly WorksheetItemList _items;
     private readonly WorksheetItemList _nets;
@@ -68,6 +146,23 @@ public class Turtle
         return Direction.None;
     }
 
+    public static bool PointInTriangle(Point pt, Point v1, Point v2, Point v3)
+    {
+        var d1 = Sign(pt, v1, v2);
+        var d2 = Sign(pt, v2, v3);
+        var d3 = Sign(pt, v3, v1);
+
+        var hasNeg = (d1 < 0) || (d2 < 0) || (d3 < 0);
+        var hasPos = (d1 > 0) || (d2 > 0) || (d3 > 0);
+
+        return !(hasNeg && hasPos);
+    }
+
+    public static float Sign(Point p1, Point p2, Point p3)
+    {
+        return Convert.ToSingle((p1.X - p3.X) * (p2.Y - p3.Y) - (p2.X - p3.X) * (p1.Y - p3.Y));
+    }
+
     public WorksheetItemList GetTraces()
     {
         foreach (var item in _items)
@@ -79,20 +174,20 @@ public class Turtle
                 Width = item.Width,
                 Height = item.Height
             };
-            rect.X += 0.1f;
-            rect.Y += 0.1f;
-            rect.Width -= 0.1f;
-            rect.Height -= 0.1f;
+            rect.X -= 0.2f;
+            rect.Y -= 0.2f;
+            rect.Width += 0.4f;
+            rect.Height += 0.4f;
             _collisionRectangles.Add(rect);
             DebugDrawRectangle(rect);
         }
 
         foreach (var net in _nets)
         {
-            for (var i = 0; i < net.Pins.Count - 1; i++)
+            for (var i = 0; i < net.Pins.Count; i++)
             {
                 var pin1 = net.Pins[i];
-                var pin2 = net.Pins[i + 1];
+                var pin2 = i < net.Pins.Count - 1 ? net.Pins[i + 1] : net.Pins[0];
                 var pin1drawable = pin1.BackRef.DrawableComponent;
                 var pin2drawable = pin2.BackRef.DrawableComponent;
 
@@ -103,71 +198,119 @@ public class Turtle
 
                 var position1X = pin1drawable.Position.X + (pin1.Position.X * pin1drawable.Size.X);
                 var position1Y = pin1drawable.Position.Y + (pin1.Position.Y * pin1drawable.Size.Y);
+                Direction direction1 = GetDirection(pin1);
                 var position2X = pin2drawable.Position.X + (pin2.Position.X * pin2drawable.Size.X);
                 var position2Y = pin2drawable.Position.Y + (pin2.Position.Y * pin2drawable.Size.Y);
+                Direction direction2 = GetDirection(pin2);
 
                 DebugDrawLine(
                     position1X,
                     position1Y,
-                    position2X,
-                    position1Y
-                    );
+                    Convert.ToSingle(position1X + _directionPoints[(int)direction1].X / 2),
+                    Convert.ToSingle(position1Y + _directionPoints[(int)direction1].Y / 2)
+                );
 
-                DebugDrawLine(
-                    position2X,
-                    position1Y,
-                    position2X,
-                    position2Y
-                    );
+                var currentPoint = new Point(
+                    Convert.ToSingle(position1X + _directionPoints[(int)direction1].X / 2),
+                    Convert.ToSingle(position1Y + _directionPoints[(int)direction1].Y / 2));
 
-                foreach (var inputRect in _collisionRectangles)
+                var targetPoint = new Point(
+                    Convert.ToSingle(position2X + _directionPoints[(int)direction2].X / 2),
+                    Convert.ToSingle(position2Y + _directionPoints[(int)direction2].Y / 2));
+                if (i != net.Pins.Count - 1)
                 {
-                    var rect = new RectF(inputRect.Location, inputRect.Size);
-
-                    Point p1 = new Point(position1X, position1Y);
-                    Point p2 = new Point(position2X, position1Y);
-                    Point p3 = new Point(position2X, position2Y);
-
-                    var intersect1 = LineIntersectsRect(p1, p2, rect);
-                    var intersect2 = LineIntersectsRect(p2, p3, rect);
-
-                    ((ScalingCanvas)DebugCanvas).FillColor = color;
-                    RectF dirRect;
-                    switch (intersect1)
+                    bool found = false;
+                    for (var f = 0; f < 1000000 && !found; f++)
                     {
-                        case Direction.Top:
-                            dirRect = new RectF(rect.X, rect.Y, rect.Width, 0.2f);
-                            DebugFillRect(dirRect, 1);
-                            break;
+                        if (currentPoint == targetPoint)
+                            found = true;
+                        var nextDirection = GetDirectionMax(currentPoint, targetPoint);
 
-                        case Direction.Right:
+                        var stepPoint = new Point(
+                            Convert.ToSingle(currentPoint.X + _directionPoints[(int)nextDirection].X / 2),
+                            Convert.ToSingle(currentPoint.Y + _directionPoints[(int)nextDirection].Y / 2));
 
-                            dirRect = new RectF(rect.X + rect.Width, rect.Y, 0.2f, rect.Height);
-                            DebugFillRect(dirRect, 1);
-                            break;
+                        List<Direction> intersections = new();
+                        foreach (var inputRect in _collisionRectangles)
+                        {
+                            var rect = new RectF(inputRect.Location, inputRect.Size);
+                            intersections.Add(LineIntersectsRect(currentPoint, stepPoint, rect));
+                        }
+                        if (intersections.All(intersection => intersection == Direction.None))
+                        {
+                            DebugDrawLine(Convert.ToSingle(currentPoint.X),
+                                Convert.ToSingle(currentPoint.Y),
+                                Convert.ToSingle(stepPoint.X), Convert.ToSingle(stepPoint.Y));
+                        }
 
-                        case Direction.Bottom:
-                            dirRect = new RectF(rect.X, rect.Y + rect.Height, rect.Width, 0.2f);
-                            DebugFillRect(dirRect, 1);
-                            break;
-
-                        case Direction.Left:
-                            dirRect = new RectF(rect.X, rect.Y, 0.2f, rect.Height);
-                            DebugFillRect(dirRect, 1);
-                            break;
-
-                        case Direction.Contains:
-                            dirRect = new RectF(rect.X, rect.Y, rect.Width, 0.2f);
-                            DebugDrawRectangle(dirRect);
-                            break;
-
-                        case Direction.None:
-                            break;
-
-                        default:
-                            break;
+                        currentPoint = stepPoint;
                     }
                 }
+                //foreach (var inputRect in _collisionRectangles)
+                //{
+                //    var rect = new RectF(inputRect.Location, inputRect.Size);
+
+                //    Point p1 = new Point(position1X, position1Y);
+                //    Point p2 = new Point(Convert.ToSingle(position1X + _directionPoints[(int)direction1].X), Convert.ToSingle(position1Y + _directionPoints[(int)direction1].Y));
+                //    Point p3 = new Point(position2X, position2Y);
+                //    if (i != net.Pins.Count - 1)
+                //    {
+                //        DebugDrawLine(
+                //            Convert.ToSingle(position1X + _directionPoints[(int)direction1].X / 2),
+                //            Convert.ToSingle(position1Y + _directionPoints[(int)direction1].Y / 2),
+                //            Convert.ToSingle(position2X + _directionPoints[(int)direction2].X / 2),
+                //            Convert.ToSingle(position2Y + _directionPoints[(int)direction2].Y / 2)
+                //        );
+
+                //        // var intersect1 = LineIntersectsRect(p1, p2, rect);
+                //        var intersect2 = LineIntersectsRect(p2, p3, rect);
+
+                //        List<Direction> intersections = new() { intersect2 };
+                //        ((ScalingCanvas)DebugCanvas).FillColor = color;
+                //        RectF dirRect;
+                //        float sizeMarker = 0.2f;
+
+                //        foreach (var intersect in intersections)
+                //        {
+                //            switch (intersect)
+                //            {
+                //                case Direction.Top:
+                //                    dirRect = new RectF(rect.X, rect.Y, rect.Width, sizeMarker);
+                //                    DebugFillRect(dirRect, 1);
+                //                    break;
+
+                //                case Direction.Right:
+
+                //                    dirRect = new RectF(rect.X + rect.Width - sizeMarker, rect.Y, sizeMarker,
+                //                        rect.Height);
+                //                    DebugFillRect(dirRect, 1);
+                //                    break;
+
+                //                case Direction.Bottom:
+                //                    dirRect = new RectF(rect.X, rect.Y + rect.Height - sizeMarker, rect.Width,
+                //                        sizeMarker);
+                //                    DebugFillRect(dirRect, 1);
+                //                    break;
+
+                //                case Direction.Left:
+                //                    dirRect = new RectF(rect.X, rect.Y, sizeMarker, rect.Height);
+                //                    DebugFillRect(dirRect, 1);
+                //                    break;
+
+                //                case Direction.Contains:
+                //                    dirRect = new RectF(rect.X, rect.Y, rect.Width, sizeMarker);
+                //                    DebugDrawRectangle(dirRect);
+                //                    break;
+
+                //                case Direction.None:
+                //                    break;
+
+                //                default:
+                //                    break;
+                //            }
+                //        }
+                //    }
+                //}
             }
         }
 
@@ -222,14 +365,54 @@ public class Turtle
 
             );
     }
-}
 
-public enum Direction
-{
-    Top = 0,
-    Right = 1,
-    Bottom = 2,
-    Left = 3,
-    Contains = 4,
-    None = 999,
+    private Direction GetDirection(PinDrawable pin1)
+    {
+        Direction direction = Direction.None;
+
+        var posX = pin1.Position.X;
+        var posY = pin1.Position.Y;
+
+        int pos = 0;
+        foreach (var triangle in Turtle._directionalTriangles)
+        {
+            if (PointInTriangle(
+                    new Point(posX, posY),
+                    triangle[0],
+                    triangle[1],
+                    triangle[2]
+                ))
+            {
+                return (Direction)pos;
+            }
+            pos++;
+        }
+
+        return direction;
+    }
+
+    private Direction GetDirectionMax(Point centerPoint, Point measurePoint)
+    {
+        Direction direction = Direction.None;
+
+        var posX = measurePoint.X - centerPoint.X;
+        var posY = measurePoint.Y - centerPoint.Y;
+        int pos = 0;
+
+        foreach (var triangle in Turtle._directionalTrianglesMax)
+        {
+            if (PointInTriangle(
+                    new Point(posX, posY),
+                    triangle[0],
+                    triangle[1],
+                    triangle[2]
+                ))
+            {
+                return (Direction)pos;
+            }
+            pos++;
+        }
+
+        return direction;
+    }
 }

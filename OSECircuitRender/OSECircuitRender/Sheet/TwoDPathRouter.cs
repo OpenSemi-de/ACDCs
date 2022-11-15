@@ -66,33 +66,4 @@ public class TwoDPathRouter : IPathRouter
                  cosTheta * (posY - centerY) + centerY)
         };
     }
-
-    private float DistanceX(PinDrawable pin1, PinDrawable pin2)
-    {
-        return pin2.Position.X - pin1.Position.X;
-    }
-
-    private float DistanceY(PinDrawable pin1, PinDrawable pin2)
-    {
-        return pin2.Position.Y - pin1.Position.Y;
-    }
-}
-
-public static class TurtleDirection
-{
-    public static Coordinate Down = new(0, 1, 0);
-
-    public static Coordinate Left = new(-1, 0, 0);
-
-    public static Coordinate Right = new(1, 0, 0);
-
-    public static Coordinate[] Rotation = new Coordinate[4]
-    {
-        Up,
-        Down,
-        Left,
-        Right
-    };
-
-    public static Coordinate Up = new(0, -1, 0);
 }

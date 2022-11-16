@@ -62,27 +62,30 @@ public class Turtle
     {
         new Point[]
         {
-            new(-float.MaxValue,-float.MaxValue),
-            new(float.MaxValue,-float.MaxValue),
             new(0,0),
+            new(int.MaxValue,0),
+            new(int.MaxValue /2,int.MaxValue /2),
         },
         new Point[]
         {
-            new(float.MaxValue,-float.MaxValue),
-            new(float.MaxValue, float.MaxValue),
+            new(int.MaxValue,0),
+            new(int.MaxValue, int.MaxValue),
+
+            new(int.MaxValue /2,int.MaxValue /2),
+        },
+        new Point[]
+        {
+            new(int.MaxValue,int.MaxValue),
+            new(0,int.MaxValue),
+
+            new(int.MaxValue /2,int.MaxValue /2),
+        },
+        new Point[]
+        {
+            new(0,int.MaxValue),
             new(0, 0),
-        },
-        new Point[]
-        {
-            new(float.MaxValue,float.MaxValue),
-            new(-float.MaxValue,float.MaxValue),
-            new(0,0),
-        },
-        new Point[]
-        {
-            new(-float.MaxValue,float.MaxValue),
-            new(-float.MaxValue, -float.MaxValue),
-            new(0,0),
+
+            new(int.MaxValue /2,int.MaxValue /2),
         },
     };
 
@@ -93,6 +96,7 @@ public class Turtle
         new Point(-1,0),
     };
 
+    private static int horOffset = 1000;
     private readonly List<RectF> _collisionRectangles = new();
     private readonly WorksheetItemList _items;
     private readonly WorksheetItemList _nets;
@@ -231,50 +235,10 @@ public class Turtle
                         nextDirection = GetDirectionMax(currentPoint, targetPoint, nextDirection);
 
                         var stepPoint = new Point(
-                            Convert.ToSingle(currentPoint.X + _directionPoints[(int)nextDirection].X / 2),
-                            Convert.ToSingle(currentPoint.Y + _directionPoints[(int)nextDirection].Y / 2));
+                             Convert.ToSingle(currentPoint.X + _directionPoints[(int)nextDirection].X / 2),
+                             Convert.ToSingle(currentPoint.Y + _directionPoints[(int)nextDirection].Y / 2));
 
-                        var collisionRect = _collisionRectangles
-                            .FirstOrDefault(cr =>
-                                LineIntersectsRect(currentPoint, stepPoint, cr) != Direction.None);
-                        int breakTries = 0;
-                        while (collisionRect != default)
-                        {
-                            var collisionDirection = LineIntersectsRect(currentPoint, stepPoint, collisionRect);
-
-                            Direction newDirection = Direction.None;
-                            switch (collisionDirection)
-                            {
-                                case Direction.Right:
-                                case Direction.Left:
-                                    newDirection = currentPoint.Y < targetPoint.Y ? Direction.Bottom : Direction.Top;
-                                    break;
-
-                                case Direction.Bottom:
-                                case Direction.Top:
-                                    newDirection = currentPoint.X < targetPoint.X ? Direction.Right : Direction.Left;
-                                    break;
-
-                                case Direction.Contains:
-                                    break;
-
-                                default:
-                                case Direction.None:
-                                    break;
-                            }
-
-                            nextDirection = newDirection;
-                            stepPoint = new Point(
-                                    Convert.ToSingle(currentPoint.X + _directionPoints[(int)newDirection].X / 2),
-                                    Convert.ToSingle(currentPoint.Y + _directionPoints[(int)newDirection].Y / 2));
-
-                            collisionRect = _collisionRectangles
-                                .FirstOrDefault(cr =>
-                                    LineIntersectsRect(currentPoint, stepPoint, cr) != Direction.None);
-                            breakTries++;
-                            if (breakTries > 100)
-                                break;
-                        }
+                        stepPoint = GetNextStepPoint(currentPoint, stepPoint, targetPoint, ref nextDirection);
 
                         DebugDrawLine(Convert.ToSingle(currentPoint.X),
                                 Convert.ToSingle(currentPoint.Y),
@@ -283,72 +247,6 @@ public class Turtle
                         currentPoint = stepPoint;
                     }
                 }
-
-                //foreach (var inputRect in _collisionRectangles)
-                //{
-                //    var rect = new RectF(inputRect.Location, inputRect.Size);
-
-                //    Point p1 = new Point(position1X, position1Y);
-                //    Point p2 = new Point(Convert.ToSingle(position1X + _directionPoints[(int)direction1].X), Convert.ToSingle(position1Y + _directionPoints[(int)direction1].Y));
-                //    Point p3 = new Point(position2X, position2Y);
-                //    if (i != net.Pins.Count - 1)
-                //    {
-                //        DebugDrawLine(
-                //            Convert.ToSingle(position1X + _directionPoints[(int)direction1].X / 2),
-                //            Convert.ToSingle(position1Y + _directionPoints[(int)direction1].Y / 2),
-                //            Convert.ToSingle(position2X + _directionPoints[(int)direction2].X / 2),
-                //            Convert.ToSingle(position2Y + _directionPoints[(int)direction2].Y / 2)
-                //        );
-
-                //        // var intersect1 = LineIntersectsRect(p1, p2, rect);
-                //        var intersect2 = LineIntersectsRect(p2, p3, rect);
-
-                //        List<Direction> intersections = new() { intersect2 };
-                //        ((ScalingCanvas)DebugCanvas).FillColor = color;
-                //        RectF dirRect;
-                //        float sizeMarker = 0.2f;
-
-                //        foreach (var intersect in intersections)
-                //        {
-                //            switch (intersect)
-                //            {
-                //                case Direction.Top:
-                //                    dirRect = new RectF(rect.X, rect.Y, rect.Width, sizeMarker);
-                //                    DebugFillRect(dirRect, 1);
-                //                    break;
-
-                //                case Direction.Right:
-
-                //                    dirRect = new RectF(rect.X + rect.Width - sizeMarker, rect.Y, sizeMarker,
-                //                        rect.Height);
-                //                    DebugFillRect(dirRect, 1);
-                //                    break;
-
-                //                case Direction.Bottom:
-                //                    dirRect = new RectF(rect.X, rect.Y + rect.Height - sizeMarker, rect.Width,
-                //                        sizeMarker);
-                //                    DebugFillRect(dirRect, 1);
-                //                    break;
-
-                //                case Direction.Left:
-                //                    dirRect = new RectF(rect.X, rect.Y, sizeMarker, rect.Height);
-                //                    DebugFillRect(dirRect, 1);
-                //                    break;
-
-                //                case Direction.Contains:
-                //                    dirRect = new RectF(rect.X, rect.Y, rect.Width, sizeMarker);
-                //                    DebugDrawRectangle(dirRect);
-                //                    break;
-
-                //                case Direction.None:
-                //                    break;
-
-                //                default:
-                //                    break;
-                //            }
-                //        }
-                //    }
-                //}
             }
         }
 
@@ -431,32 +329,84 @@ public class Turtle
 
     private Direction GetDirectionMax(Point centerPoint, Point measurePoint, Direction lastDirection = Direction.None)
     {
-        Direction direction = Direction.None;
+        Direction direction = default;
 
         var posX = measurePoint.X - centerPoint.X;
         var posY = measurePoint.Y - centerPoint.Y;
         int pos = 0;
 
-        if (lastDirection != Direction.None)
-        {
-            if (posX == posY && posY != 0)
-                return lastDirection;
-        }
-
+        var directions = new List<Direction>();
         foreach (var triangle in Turtle._directionalTrianglesMax)
         {
             if (PointInTriangle(
-                    new Point(posX, posY),
+                    new Point(posX + int.MaxValue / 2, posY + int.MaxValue / 2),
                     triangle[0],
                     triangle[1],
                     triangle[2]
                 ))
             {
-                return (Direction)pos;
+                directions.Add((Direction)pos);
             }
             pos++;
         }
 
+        if (directions.Any(dir => dir == lastDirection) && posX > 0.5 && posY > 0.5)
+        {
+            direction = lastDirection;
+        }
+
+        if (direction == default)
+        {
+            direction = directions.FirstOrDefault();
+        }
+
         return direction;
+    }
+
+    private Point GetNextStepPoint(Point currentPoint, Point stepPoint, Point targetPoint, ref Direction nextDirection)
+    {
+        var collisionRect = _collisionRectangles
+            .FirstOrDefault(cr =>
+                LineIntersectsRect(currentPoint, stepPoint, cr) != Direction.None);
+        int breakTries = 0;
+        while (collisionRect != default)
+        {
+            var collisionDirection = LineIntersectsRect(currentPoint, stepPoint, collisionRect);
+
+            Direction newDirection = Direction.None;
+            switch (collisionDirection)
+            {
+                case Direction.Right:
+                case Direction.Left:
+                    newDirection = currentPoint.Y < targetPoint.Y ? Direction.Bottom : Direction.Top;
+                    break;
+
+                case Direction.Bottom:
+                case Direction.Top:
+                    newDirection = currentPoint.X < targetPoint.X ? Direction.Right : Direction.Left;
+                    break;
+
+                case Direction.Contains:
+                    break;
+
+                default:
+                case Direction.None:
+                    break;
+            }
+
+            nextDirection = newDirection;
+            stepPoint = new Point(
+                Convert.ToSingle(currentPoint.X + _directionPoints[(int)newDirection].X / 2),
+                Convert.ToSingle(currentPoint.Y + _directionPoints[(int)newDirection].Y / 2));
+
+            collisionRect = _collisionRectangles
+                .FirstOrDefault(cr =>
+                    LineIntersectsRect(currentPoint, stepPoint, cr) != Direction.None);
+            breakTries++;
+            if (breakTries > 100)
+                break;
+        }
+
+        return stepPoint;
     }
 }

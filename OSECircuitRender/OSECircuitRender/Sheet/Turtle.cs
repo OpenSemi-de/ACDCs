@@ -225,20 +225,44 @@ public class Turtle
                 if (i != net.Pins.Count - 1)
                 {
                     Direction nextDirection = GetDirectionMax(currentPoint, targetPoint);
-
+                    Direction lastDirection;
                     bool found = false;
-                    for (var f = 0; f < 1000000 && !found; f++)
+                    for (var f = 0; f < 10000 && !found; f++)
                     {
                         if (currentPoint == targetPoint)
                             found = true;
-
+                        lastDirection = nextDirection;
                         nextDirection = GetDirectionMax(currentPoint, targetPoint, nextDirection);
 
                         var stepPoint = new Point(
-                             Convert.ToSingle(currentPoint.X + _directionPoints[(int)nextDirection].X / 2),
-                             Convert.ToSingle(currentPoint.Y + _directionPoints[(int)nextDirection].Y / 2));
+                            Convert.ToSingle(currentPoint.X + _directionPoints[(int)lastDirection].X / 2),
+                            Convert.ToSingle(currentPoint.Y + _directionPoints[(int)lastDirection].Y / 2));
 
-                        stepPoint = GetNextStepPoint(currentPoint, stepPoint, targetPoint, ref nextDirection);
+                        bool tryLastDirection = false;
+                        if (lastDirection != nextDirection && lastDirection != Direction.Bottom && lastDirection != Direction.Top)
+                        {
+                            if (currentPoint.X != targetPoint.X && currentPoint.Y != targetPoint.Y)
+                            {
+                                var collisionRect = _collisionRectangles
+                                    .FirstOrDefault(cr =>
+                                        LineIntersectsRect(currentPoint, stepPoint, cr) != Direction.None);
+                                if (collisionRect == default)
+                                    tryLastDirection = true;
+                            }
+                        }
+
+                        if (!tryLastDirection)
+                        {
+                            stepPoint = new Point(
+                                Convert.ToSingle(currentPoint.X + _directionPoints[(int)nextDirection].X / 2),
+                                Convert.ToSingle(currentPoint.Y + _directionPoints[(int)nextDirection].Y / 2));
+
+                            stepPoint = GetNextStepPoint(currentPoint, stepPoint, targetPoint, ref nextDirection);
+                        }
+                        else
+                        {
+                            nextDirection = lastDirection;
+                        }
 
                         DebugDrawLine(Convert.ToSingle(currentPoint.X),
                                 Convert.ToSingle(currentPoint.Y),
@@ -350,9 +374,16 @@ public class Turtle
             pos++;
         }
 
-        if (directions.Any(dir => dir == lastDirection) && posX > 0.5 && posY > 0.5)
+        var preferHorizontal = directions.FirstOrDefault(dir => dir == Direction.Left || dir == Direction.Right);
+
+        if (preferHorizontal == default && directions.Any(dir => dir == lastDirection) && posX > 0.5 && posY > 0.5)
         {
             direction = lastDirection;
+        }
+
+        if (preferHorizontal != default)
+        {
+            direction = preferHorizontal;
         }
 
         if (direction == default)

@@ -189,6 +189,7 @@ public class Turtle
 
         foreach (var net in _nets)
         {
+            var trace = new TraceItem();
             for (var i = 0; i < net.Pins.Count; i++)
             {
                 var pin1 = net.Pins[i];
@@ -218,6 +219,7 @@ public class Turtle
                 var currentPoint = new Point(
                     Convert.ToSingle(position1X + _directionPoints[(int)direction1].X / 2),
                     Convert.ToSingle(position1Y + _directionPoints[(int)direction1].Y / 2));
+                trace.AddPart(new Coordinate(position1X, position1Y, 0), Coordinate.FromPoint(currentPoint));
 
                 var targetPoint = new Point(
                     Convert.ToSingle(position2X + _directionPoints[(int)direction2].X / 2),
@@ -267,11 +269,14 @@ public class Turtle
                         DebugDrawLine(Convert.ToSingle(currentPoint.X),
                                 Convert.ToSingle(currentPoint.Y),
                                 Convert.ToSingle(stepPoint.X), Convert.ToSingle(stepPoint.Y));
+                        trace.AddPart(Coordinate.FromPoint(currentPoint), Coordinate.FromPoint(stepPoint));
 
                         currentPoint = stepPoint;
                     }
                 }
             }
+
+            _traces.AddItem(trace);
         }
 
         return _traces;

@@ -1,4 +1,7 @@
-﻿namespace OSECircuitRender.Definitions;
+﻿using System;
+using Microsoft.Maui.Graphics;
+
+namespace OSECircuitRender.Definitions;
 
 public sealed class Coordinate
 {
@@ -31,6 +34,11 @@ public sealed class Coordinate
 
     public Coordinate()
     {
+    }
+
+    public static Coordinate FromPoint(Point stepPoint)
+    {
+        return new Coordinate(Convert.ToSingle(stepPoint.X), Convert.ToSingle(stepPoint.Y), 0);
     }
 
     public Coordinate Add(Coordinate coordinate)

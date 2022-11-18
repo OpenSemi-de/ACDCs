@@ -1,5 +1,5 @@
-﻿using OSECircuitRender.Items;
-using System;
+﻿using System;
+using OSECircuitRender.Items;
 
 namespace OSECircuitRender.Interfaces;
 

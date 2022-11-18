@@ -1,7 +1,7 @@
-﻿using OSECircuitRender.Definitions;
+﻿using System;
+using OSECircuitRender.Definitions;
 using OSECircuitRender.Instructions;
 using OSECircuitRender.Items;
-using System;
 
 namespace OSECircuitRender.Interfaces;
 

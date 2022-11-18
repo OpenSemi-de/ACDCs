@@ -1,9 +1,9 @@
-﻿using Microsoft.Maui.Graphics;
+﻿using System;
+using System.Linq;
+using Microsoft.Maui.Graphics;
 using OSECircuitRender.Definitions;
 using OSECircuitRender.Instructions;
 using OSECircuitRender.Interfaces;
-using System;
-using System.Linq;
 using Color = OSECircuitRender.Definitions.Color;
 
 namespace OSECircuitRender.Scene;

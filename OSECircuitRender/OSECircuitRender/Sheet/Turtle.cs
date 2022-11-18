@@ -1,37 +1,21 @@
 ﻿#nullable enable
 
-using OSECircuitRender.Definitions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Platform;
+using OSECircuitRender.Definitions;
 using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
 using Color = Microsoft.Maui.Graphics.Color;
-using System.Net.NetworkInformation;
-using Microsoft.VisualBasic;
-using static Microsoft.Maui.Controls.Internals.GIFBitmap;
 
 namespace OSECircuitRender.Sheet;
 
-public enum Direction
-{
-    Top = 0,
-    Right = 1,
-    Bottom = 2,
-    Left = 3,
-    Contains = 4,
-    None = 999,
-}
-
 public class Turtle
 {
-    private static readonly Point[][] DirectionalTriangles = new[]
-    {
+    private static readonly Point[][] DirectionalTriangles = {
         new Point[]
         {
             new(0,0),
@@ -58,8 +42,7 @@ public class Turtle
         },
     };
 
-    private static readonly Point[][] DirectionalTrianglesMax = new[]
-    {
+    private static readonly Point[][] DirectionalTrianglesMax = {
         new Point[]
         {
             new(0,0),
@@ -118,34 +101,44 @@ public class Turtle
              p1,
              p2,
              new Point(r.X1, r.Y1),
-             new Point(r.X2, r.Y1)))
+             new Point(r.X2, r.Y2)))
             return Direction.Top;
 
         if (LineIntersectsLine(
             p1,
             p2,
-            new Point(r.X2, r.Y1),
-            new Point(r.X2, r.Y2)))
+            new Point(r.X2, r.Y2),
+            new Point(r.X3, r.Y3)))
             return Direction.Right;
 
         if (LineIntersectsLine(
                 p1,
                 p2,
-                new Point(r.X2, r.Y2),
-                new Point(r.X1, r.Y2)))
+                new Point(r.X3, r.Y3),
+                new Point(r.X4, r.Y4)))
             return Direction.Bottom;
 
         if (LineIntersectsLine(
                 p1,
                 p2,
-                new Point(r.X1, r.Y2),
+                new Point(r.X4, r.Y4),
                 new Point(r.X1, r.Y1)))
             return Direction.Left;
 
-        //if (r.Contains(p1) && r.Contains(p2))
-        //{
-        //    return Direction.Contains;
-        //}
+        int hitContains = 0;
+        if (PointInTriangle(p1, new Point(r.X1, r.Y1), new Point(r.X2, r.Y2), new Point(r.X4, r.Y4)))
+            hitContains++;
+        if (PointInTriangle(p2, new Point(r.X1, r.Y1), new Point(r.X2, r.Y2), new Point(r.X4, r.Y4)))
+            hitContains++;
+        if (PointInTriangle(p1, new Point(r.X1, r.Y1), new Point(r.X2, r.Y2), new Point(r.X3, r.Y3)))
+            hitContains++;
+        if (PointInTriangle(p2, new Point(r.X1, r.Y1), new Point(r.X2, r.Y2), new Point(r.X3, r.Y3)))
+            hitContains++;
+
+        if (hitContains > 1)
+        {
+            return Direction.Contains;
+        }
 
         return Direction.None;
     }
@@ -176,23 +169,44 @@ public class Turtle
                 X1 = item.X,
                 Y1 = item.Y,
                 X2 = item.X + item.Width,
-                Y2 = item.Y + item.Height
+                Y2 = item.Y,
+                X3 = item.X + item.Width,
+                Y3 = item.Y + item.Height,
+                X4 = item.X,
+                Y4 = item.Y + item.Height
             };
-            DebugDrawRectangle(rect);
+
             if (item.Rotation != 0)
             {
                 var rotation = item.Rotation;
+                float centerX = rect.X1 + (rect.X3 - rect.X1) / 2;
+                float centerY = rect.Y1 + (rect.Y3 - rect.Y1) / 2;
 
-                Coordinate rotatedItemPos1 = RotateCoordinate(rect.X1, rect.Y1, rect.X1 + (rect.X2 - rect.X1) / 2,
-                    rect.Y1 + (rect.Y2 - rect.Y1) / 2, rotation);
+                Coordinate rotatedItemPos1 =
+                    RotateCoordinate(rect.X1, rect.Y1, centerX, centerY, rotation);
+                Coordinate rotatedItemPos2 =
+                    RotateCoordinate(rect.X2, rect.Y2, centerX, centerY, rotation);
+                Coordinate rotatedItemPos3 =
+                    RotateCoordinate(rect.X3, rect.Y3, centerX, centerY, rotation);
+                Coordinate rotatedItemPos4 =
+                    RotateCoordinate(rect.X4, rect.Y4, centerX, centerY, rotation);
 
-                Coordinate rotatedItemPos2 = RotateCoordinate(rect.X2, rect.Y2, rect.X1 + (rect.X2 - rect.X1) / 2,
-                    rect.Y1 + (rect.Y2 - rect.Y1) / 2, rotation);
+                var itemPositions = new List<Coordinate>()
+                {
+                    rotatedItemPos1,
+                    rotatedItemPos2,
+                    rotatedItemPos3,
+                    rotatedItemPos4
+                };
 
-                rect.X1 = rotatedItemPos1.X;
-                rect.Y1 = rotatedItemPos1.Y;
-                rect.X2 = rotatedItemPos2.X;
-                rect.Y2 = rotatedItemPos2.Y;
+                rect.X1 = itemPositions[0].X;
+                rect.Y1 = itemPositions[0].Y;
+                rect.X2 = itemPositions[1].X;
+                rect.Y2 = itemPositions[1].Y;
+                rect.X3 = itemPositions[2].X;
+                rect.Y3 = itemPositions[2].Y;
+                rect.X4 = itemPositions[3].X;
+                rect.Y4 = itemPositions[3].Y;
             }
 
             _collisionRectangles.Add(rect);
@@ -210,14 +224,44 @@ public class Turtle
                 var pin2drawable = pin2.BackRef.DrawableComponent;
 
                 SetColorAndScaling(pin1drawable, pin2drawable);
-
+                var pin1X = pin1.Position.X;
+                var pin1Y = pin1.Position.Y;
                 var position1X = pin1drawable.Position.X + (pin1.Position.X * pin1drawable.Size.X);
                 var position1Y = pin1drawable.Position.Y + (pin1.Position.Y * pin1drawable.Size.Y);
-                Direction direction1 = GetDirection(pin1);
+                if (pin1drawable.Rotation != 0)
+                {
+                    float centerX = pin1drawable.Position.X + pin1drawable.Size.X / 2;
+                    float centerY = pin1drawable.Position.Y + pin1drawable.Size.Y / 2;
+                    Coordinate rotatedPinPos =
+                        RotateCoordinate(position1X, position1Y, centerX, centerY, pin1drawable.Rotation);
+                    position1X = rotatedPinPos.X;
+                    position1Y = rotatedPinPos.Y;
+                    Coordinate rotatedPinRelPos = RotateCoordinate(pin1X, pin1Y, 0.5f, 0.5f, pin1drawable.Rotation);
+                    pin1X = rotatedPinRelPos.X;
+                    pin1Y = rotatedPinRelPos.Y;
+                }
 
+                Direction direction1 = GetDirection(pin1X, pin1Y);
+
+                var pin2X = pin2.Position.X;
+                var pin2Y = pin2.Position.Y;
                 var position2X = pin2drawable.Position.X + (pin2.Position.X * pin2drawable.Size.X);
                 var position2Y = pin2drawable.Position.Y + (pin2.Position.Y * pin2drawable.Size.Y);
-                Direction direction2 = GetDirection(pin2);
+
+                if (pin2drawable.Rotation != 0)
+                {
+                    float centerX = pin2drawable.Position.X + pin2drawable.Size.X / 2;
+                    float centerY = pin2drawable.Position.Y + pin2drawable.Size.Y / 2;
+                    Coordinate rotatedPinPos =
+                        RotateCoordinate(position2X, position2Y, centerX, centerY, pin2drawable.Rotation);
+                    position2X = rotatedPinPos.X;
+                    position2Y = rotatedPinPos.Y;
+                    Coordinate rotatedPinRelPos = RotateCoordinate(pin2X, pin2Y, 0.5f, 0.5f, pin1drawable.Rotation);
+                    pin2X = rotatedPinRelPos.X;
+                    pin2Y = rotatedPinRelPos.Y;
+                }
+
+                Direction direction2 = GetDirection(pin2X, pin2Y);
 
                 DebugDrawLine(
                     position1X,
@@ -232,52 +276,21 @@ public class Turtle
                 trace.AddPart(new Coordinate(position1X, position1Y, 0), Coordinate.FromPoint(currentPoint));
 
                 var targetPoint = new Point(
-                    Convert.ToSingle(position2X + DirectionPoints[(int)direction2].X / 2),
-                    Convert.ToSingle(position2Y + DirectionPoints[(int)direction2].Y / 2));
+                    Convert.ToSingle(Math.Ceiling(position2X + DirectionPoints[(int)direction2].X / 2)),
+                    Convert.ToSingle(Math.Ceiling(position2Y + DirectionPoints[(int)direction2].Y / 2)));
                 if (i != net.Pins.Count - 1)
                 {
-                    Direction nextDirection = GetDirectionMax(currentPoint, targetPoint);
-                    Direction lastDirection;
+                    Direction nextDirection = GetDirection(pin1.Position.X, pin1.Position.Y);
+
                     bool found = false;
-                    for (var f = 0; f < 10000 && !found; f++)
+                    for (var f = 0; f < 1000 && !found; f++)
                     {
                         if (currentPoint == targetPoint)
                             found = true;
 
-                        lastDirection = nextDirection;
-                        nextDirection = GetDirectionMax(currentPoint, targetPoint, nextDirection);
+                        var stepPoint = GetNextStepPoint(currentPoint, targetPoint, ref nextDirection);
 
-                        var stepPoint = new Point(
-                            Convert.ToSingle(currentPoint.X + DirectionPoints[(int)lastDirection].X / 2),
-                            Convert.ToSingle(currentPoint.Y + DirectionPoints[(int)lastDirection].Y / 2));
-
-                        bool tryLastDirection = false;
-                        if ((stepPoint.X != targetPoint.X && stepPoint.Y != targetPoint.Y) &&
-                            lastDirection != nextDirection && lastDirection != Direction.Bottom && lastDirection != Direction.Top)
-                        {
-                            if (currentPoint.X != targetPoint.X && currentPoint.Y != targetPoint.Y)
-                            {
-                                var collisionRect = _collisionRectangles
-                                    .FirstOrDefault(cr =>
-                                        LineIntersectsRect(currentPoint, stepPoint, cr) != Direction.None);
-                                if (collisionRect == default)
-                                    tryLastDirection = true;
-                            }
-                        }
-
-                        if (!tryLastDirection)
-                        {
-                            stepPoint = new Point(
-                                Convert.ToSingle(currentPoint.X + DirectionPoints[(int)nextDirection].X / 2),
-                                Convert.ToSingle(currentPoint.Y + DirectionPoints[(int)nextDirection].Y / 2));
-
-                            stepPoint = GetNextStepPoint(currentPoint, stepPoint, targetPoint, ref nextDirection);
-                        }
-                        else
-                        {
-                            nextDirection = lastDirection;
-                        }
-
+                        Console.WriteLine(pin1.ComponentGuid + "-" + nextDirection);
                         DebugDrawLine(Convert.ToSingle(currentPoint.X),
                                 Convert.ToSingle(currentPoint.Y),
                                 Convert.ToSingle(stepPoint.X), Convert.ToSingle(stepPoint.Y));
@@ -336,6 +349,25 @@ public class Turtle
         };
     }
 
+    private Point CheckCollision(Point currentPoint, Direction direction, out RectFr? collisionRect)
+    {
+        var globalStepPoint = new Point(Convert.ToSingle(currentPoint.X + DirectionPoints[(int)direction].X / 2),
+            Convert.ToSingle(currentPoint.Y + DirectionPoints[(int)direction].Y / 2));
+
+        collisionRect = _collisionRectangles
+            .FirstOrDefault(cr =>
+            {
+                var intersect = LineIntersectsRect(currentPoint, globalStepPoint, cr);
+                if (intersect == Direction.None)
+                {
+                    return false;
+                }
+
+                return true;
+            });
+        return globalStepPoint;
+    }
+
     private void DebugDrawLine(float position1X, float position1Y, float position2X, float position2Y)
     {
         DebugCanvas?.DrawLine(position1X * DrawableScene.Zoom * DrawableScene.BaseGridSize, position1Y * DrawableScene.Zoom * DrawableScene.BaseGridSize, position2X * DrawableScene.Zoom * DrawableScene.BaseGridSize, position2Y * DrawableScene.Zoom * DrawableScene.BaseGridSize);
@@ -347,26 +379,26 @@ public class Turtle
             rect.X1 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
             rect.Y1 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
             rect.X2 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.Y1 * DrawableScene.Zoom * DrawableScene.BaseGridSize
-        );
-
-        DebugCanvas?.DrawLine(
-            rect.X2 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.Y1 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.X2 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
             rect.Y2 * DrawableScene.Zoom * DrawableScene.BaseGridSize
         );
 
         DebugCanvas?.DrawLine(
             rect.X2 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
             rect.Y2 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.X1 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.Y2 * DrawableScene.Zoom * DrawableScene.BaseGridSize
+            rect.X3 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
+            rect.Y3 * DrawableScene.Zoom * DrawableScene.BaseGridSize
         );
 
         DebugCanvas?.DrawLine(
-            rect.X1 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.Y2 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
+            rect.X3 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
+            rect.Y3 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
+            rect.X4 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
+            rect.Y4 * DrawableScene.Zoom * DrawableScene.BaseGridSize
+        );
+
+        DebugCanvas?.DrawLine(
+            rect.X4 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
+            rect.Y4 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
             rect.X1 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
             rect.Y1 * DrawableScene.Zoom * DrawableScene.BaseGridSize
         );
@@ -393,15 +425,12 @@ public class Turtle
             );
     }
 
-    private Direction GetDirection(PinDrawable pin1)
+    private Direction GetDirection(float posX, float posY)
     {
         Direction direction = Direction.None;
 
-        var posX = pin1.Position.X;
-        var posY = pin1.Position.Y;
-
         int pos = 0;
-        foreach (var triangle in Turtle.DirectionalTriangles)
+        foreach (var triangle in DirectionalTriangles)
         {
             if (PointInTriangle(
                     new Point(posX, posY),
@@ -427,7 +456,7 @@ public class Turtle
         int pos = 0;
 
         var directions = new List<Direction>();
-        foreach (var triangle in Turtle.DirectionalTrianglesMax)
+        foreach (var triangle in DirectionalTrianglesMax)
         {
             if (PointInTriangle(
                     new Point(posX + int.MaxValue / 2, posY + int.MaxValue / 2),
@@ -441,18 +470,6 @@ public class Turtle
             pos++;
         }
 
-        var preferHorizontal = directions.FirstOrDefault(dir => dir == Direction.Left || dir == Direction.Right);
-
-        if (preferHorizontal == default && directions.Any(dir => dir == lastDirection) && posX > 0.5 && posY > 0.5)
-        {
-            direction = lastDirection;
-        }
-
-        if (preferHorizontal != default)
-        {
-            direction = preferHorizontal;
-        }
-
         if (direction == default)
         {
             direction = directions.FirstOrDefault();
@@ -461,48 +478,38 @@ public class Turtle
         return direction;
     }
 
-    private Point GetNextStepPoint(Point currentPoint, Point stepPoint, Point targetPoint, ref Direction nextDirection)
+    private Point GetNextStepPoint(Point currentPoint, Point targetPoint, ref Direction nextDirection)
     {
-        var collisionRect = _collisionRectangles
-            .FirstOrDefault(cr =>
-                LineIntersectsRect(currentPoint, stepPoint, cr) != Direction.None);
-        int breakTries = 0;
-        while (collisionRect != default)
+        Point stepPoint;
+        var globalDirection = GetDirectionMax(currentPoint, targetPoint);
+        RectFr? collisionRect;
+        var globalStepPoint = CheckCollision(currentPoint, globalDirection, out collisionRect);
+        var lastDirection = nextDirection;
+        stepPoint = globalStepPoint;
+
+        if (collisionRect != null)
         {
-            var collisionDirection = LineIntersectsRect(currentPoint, stepPoint, collisionRect);
-
-            Direction newDirection = Direction.None;
-            switch (collisionDirection)
+            var testStepPoint = CheckCollision(currentPoint, lastDirection, out collisionRect);
+            if (collisionRect == null)
             {
-                case Direction.Right:
-                case Direction.Left:
-                    newDirection = currentPoint.Y < targetPoint.Y ? Direction.Bottom : Direction.Top;
-                    break;
-
-                case Direction.Bottom:
-                case Direction.Top:
-                    newDirection = currentPoint.X < targetPoint.X ? Direction.Right : Direction.Left;
-                    break;
-
-                case Direction.Contains:
-                    break;
-
-                default:
-                case Direction.None:
-                    break;
+                nextDirection = lastDirection;
+                return testStepPoint;
             }
 
-            nextDirection = newDirection;
-            stepPoint = new Point(
-                Convert.ToSingle(currentPoint.X + DirectionPoints[(int)newDirection].X / 2),
-                Convert.ToSingle(currentPoint.Y + DirectionPoints[(int)newDirection].Y / 2));
-
-            collisionRect = _collisionRectangles
-                .FirstOrDefault(cr =>
-                    LineIntersectsRect(currentPoint, stepPoint, cr) != Direction.None);
-            breakTries++;
-            if (breakTries > 100)
-                break;
+            var collisionDirection = LineIntersectsRect(currentPoint, testStepPoint, collisionRect);
+            while (collisionRect != null)
+            {
+                Direction newDirection =
+                    (int)lastDirection < (int)globalDirection ? nextDirection + 1 : nextDirection - 1;
+                testStepPoint = CheckCollision(currentPoint, newDirection, out collisionRect);
+                nextDirection = newDirection;
+                stepPoint = testStepPoint;
+            }
+        }
+        else
+        {
+            nextDirection = globalDirection;
+            stepPoint = globalStepPoint;
         }
 
         return stepPoint;
@@ -515,12 +522,4 @@ public class Turtle
         ((ScalingCanvas)DebugCanvas).StrokeColor = color;
         ((ScalingCanvas)DebugCanvas).StrokeSize = 3;
     }
-}
-
-public class RectFr
-{
-    public float X1 { get; set; }
-    public float X2 { get; set; }
-    public float Y1 { get; set; }
-    public float Y2 { get; set; }
 }

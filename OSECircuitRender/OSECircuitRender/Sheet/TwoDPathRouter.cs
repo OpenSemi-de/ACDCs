@@ -1,11 +1,8 @@
-﻿using Microsoft.Maui.Graphics.Skia;
+﻿using System;
+using Microsoft.Maui.Graphics.Skia;
 using OSECircuitRender.Definitions;
-using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
-using System;
-using System.IO;
-using System.Linq;
 
 namespace OSECircuitRender.Sheet;
 
@@ -46,24 +43,5 @@ public class TwoDPathRouter : IPathRouter
     {
         Items = items;
         Nets = nets;
-    }
-
-    private static Coordinate RotateCoordinate(float posX, float posY, float centerX, float centerY,
-        double angleInDegrees)
-    {
-        var angleInRadians = angleInDegrees * (Math.PI / 180);
-        var cosTheta = Math.Cos(angleInRadians);
-        var sinTheta = Math.Sin(angleInRadians);
-        return new Coordinate
-        {
-            X =
-                (int)
-                (cosTheta * (posX - centerX) -
-                    sinTheta * (posY - centerY) + centerX),
-            Y =
-                (int)
-                (sinTheta * (posX - centerX) +
-                 cosTheta * (posY - centerY) + centerY)
-        };
     }
 }

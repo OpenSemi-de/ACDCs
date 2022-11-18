@@ -487,7 +487,7 @@ public class Turtle
         var lastDirectionStepPoint = CheckCollision(currentPoint, nextDirection, out collisionRect);
         if (lastDirectionStepPoint.X != targetPoint.X && lastDirectionStepPoint.Y != targetPoint.Y && currentPoint.X != targetPoint.X && currentPoint.Y != targetPoint.Y)
         {
-            if (collisionRect == null)
+            if (collisionRect == null || (lastDirectionStepPoint.X == targetPoint.X && lastDirectionStepPoint.Y == targetPoint.Y))
             {
                 return lastDirectionStepPoint;
             }
@@ -498,6 +498,11 @@ public class Turtle
         var globalStepPoint = CheckCollision(currentPoint, globalDirection, out collisionRect);
         var lastDirection = nextDirection;
         stepPoint = globalStepPoint;
+
+        if (globalStepPoint.X == targetPoint.X && globalStepPoint.Y == targetPoint.Y)
+        {
+            return globalStepPoint;
+        }
 
         if (collisionRect != null)
         {

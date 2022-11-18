@@ -280,8 +280,7 @@ public class Turtle
                     Convert.ToSingle(Math.Ceiling(position2Y + DirectionPoints[(int)direction2].Y / 2)));
                 if (i != net.Pins.Count - 1)
                 {
-                    Direction nextDirection = GetDirection(pin1.Position.X, pin1.Position.Y);
-
+                    Direction nextDirection = GetDirectionMax(currentPoint, targetPoint);
                     bool found = false;
                     for (var f = 0; f < 1000 && !found; f++)
                     {
@@ -290,10 +289,12 @@ public class Turtle
 
                         var stepPoint = GetNextStepPoint(currentPoint, targetPoint, ref nextDirection);
 
-                        Console.WriteLine(pin1.ComponentGuid + "-" + nextDirection);
+                        Console.WriteLine(f + "-" + pin1.ComponentGuid + "-" + nextDirection);
+
                         DebugDrawLine(Convert.ToSingle(currentPoint.X),
                                 Convert.ToSingle(currentPoint.Y),
                                 Convert.ToSingle(stepPoint.X), Convert.ToSingle(stepPoint.Y));
+
                         trace.AddPart(Coordinate.FromPoint(currentPoint), Coordinate.FromPoint(stepPoint));
 
                         currentPoint = stepPoint;
@@ -481,27 +482,37 @@ public class Turtle
     private Point GetNextStepPoint(Point currentPoint, Point targetPoint, ref Direction nextDirection)
     {
         Point stepPoint;
-        var globalDirection = GetDirectionMax(currentPoint, targetPoint);
         RectFr? collisionRect;
+
+        var lastDirectionStepPoint = CheckCollision(currentPoint, nextDirection, out collisionRect);
+        if (lastDirectionStepPoint.X != targetPoint.X && lastDirectionStepPoint.Y != targetPoint.Y && currentPoint.X != targetPoint.X && currentPoint.Y != targetPoint.Y)
+        {
+            if (collisionRect == null)
+            {
+                return lastDirectionStepPoint;
+            }
+        }
+
+        var globalDirection = GetDirectionMax(currentPoint, targetPoint);
+
         var globalStepPoint = CheckCollision(currentPoint, globalDirection, out collisionRect);
         var lastDirection = nextDirection;
         stepPoint = globalStepPoint;
 
         if (collisionRect != null)
         {
-            var testStepPoint = CheckCollision(currentPoint, lastDirection, out collisionRect);
-            if (collisionRect == null)
-            {
-                nextDirection = lastDirection;
-                return testStepPoint;
-            }
-
-            var collisionDirection = LineIntersectsRect(currentPoint, testStepPoint, collisionRect);
-            while (collisionRect != null)
+            while (collisionRect != null && nextDirection != lastDirection)
             {
                 Direction newDirection =
-                    (int)lastDirection < (int)globalDirection ? nextDirection + 1 : nextDirection - 1;
-                testStepPoint = CheckCollision(currentPoint, newDirection, out collisionRect);
+                    (int)globalDirection < (int)lastDirection ? nextDirection + 1 : nextDirection - 1;
+                var testStepPoint = CheckCollision(currentPoint, newDirection, out collisionRect);
+
+                if (testStepPoint.X == targetPoint.X && testStepPoint.Y == targetPoint.Y)
+                {
+                    return testStepPoint;
+                }
+
+                lastDirection = newDirection;
                 nextDirection = newDirection;
                 stepPoint = testStepPoint;
             }

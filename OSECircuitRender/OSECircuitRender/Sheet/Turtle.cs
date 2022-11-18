@@ -53,7 +53,6 @@ public class Turtle
         {
             new(int.MaxValue,0),
             new(int.MaxValue, int.MaxValue),
-
             new(int.MaxValue /2,int.MaxValue /2),
         },
         new Point[]
@@ -228,18 +227,8 @@ public class Turtle
                 var pin1Y = pin1.Position.Y;
                 var position1X = pin1drawable.Position.X + (pin1.Position.X * pin1drawable.Size.X);
                 var position1Y = pin1drawable.Position.Y + (pin1.Position.Y * pin1drawable.Size.Y);
-                if (pin1drawable.Rotation != 0)
-                {
-                    float centerX = pin1drawable.Position.X + pin1drawable.Size.X / 2;
-                    float centerY = pin1drawable.Position.Y + pin1drawable.Size.Y / 2;
-                    Coordinate rotatedPinPos =
-                        RotateCoordinate(position1X, position1Y, centerX, centerY, pin1drawable.Rotation);
-                    position1X = rotatedPinPos.X;
-                    position1Y = rotatedPinPos.Y;
-                    Coordinate rotatedPinRelPos = RotateCoordinate(pin1X, pin1Y, 0.5f, 0.5f, pin1drawable.Rotation);
-                    pin1X = rotatedPinRelPos.X;
-                    pin1Y = rotatedPinRelPos.Y;
-                }
+
+                Rotate(pin1drawable, ref position1X, ref position1Y, ref pin1X, ref pin1Y);
 
                 Direction direction1 = GetDirection(pin1X, pin1Y);
 
@@ -248,36 +237,18 @@ public class Turtle
                 var position2X = pin2drawable.Position.X + (pin2.Position.X * pin2drawable.Size.X);
                 var position2Y = pin2drawable.Position.Y + (pin2.Position.Y * pin2drawable.Size.Y);
 
-                if (pin2drawable.Rotation != 0)
-                {
-                    float centerX = pin2drawable.Position.X + pin2drawable.Size.X / 2;
-                    float centerY = pin2drawable.Position.Y + pin2drawable.Size.Y / 2;
-                    Coordinate rotatedPinPos =
-                        RotateCoordinate(position2X, position2Y, centerX, centerY, pin2drawable.Rotation);
-                    position2X = rotatedPinPos.X;
-                    position2Y = rotatedPinPos.Y;
-                    Coordinate rotatedPinRelPos = RotateCoordinate(pin2X, pin2Y, 0.5f, 0.5f, pin1drawable.Rotation);
-                    pin2X = rotatedPinRelPos.X;
-                    pin2Y = rotatedPinRelPos.Y;
-                }
+                Rotate(pin2drawable, ref position2X, ref position2Y, ref pin2X, ref pin2Y);
 
                 Direction direction2 = GetDirection(pin2X, pin2Y);
 
-                DebugDrawLine(
-                    position1X,
-                    position1Y,
-                    Convert.ToSingle(position1X + DirectionPoints[(int)direction1].X / 2),
-                    Convert.ToSingle(position1Y + DirectionPoints[(int)direction1].Y / 2)
-                );
+                var currentPoint = GetPoint(position1X, position1Y, direction1);
 
-                var currentPoint = new Point(
-                    Convert.ToSingle(position1X + DirectionPoints[(int)direction1].X / 2),
-                    Convert.ToSingle(position1Y + DirectionPoints[(int)direction1].Y / 2));
+                DebugDrawLine(position1X, position1Y, Convert.ToSingle(currentPoint.X), Convert.ToSingle(currentPoint.Y));
+
                 trace.AddPart(new Coordinate(position1X, position1Y, 0), Coordinate.FromPoint(currentPoint));
 
-                var targetPoint = new Point(
-                    Convert.ToSingle(Math.Ceiling(position2X + DirectionPoints[(int)direction2].X / 2)),
-                    Convert.ToSingle(Math.Ceiling(position2Y + DirectionPoints[(int)direction2].Y / 2)));
+                var targetPoint = GetPoint(position2X, position2Y, direction2);
+
                 if (i != net.Pins.Count - 1)
                 {
                     Direction nextDirection = GetDirectionMax(currentPoint, targetPoint);
@@ -308,6 +279,14 @@ public class Turtle
         return _traces;
     }
 
+    private static Point GetPoint(float positionX, float positionY, Direction direction)
+    {
+        var targetPoint = new Point(
+            Convert.ToSingle(Math.Ceiling(positionX + DirectionPoints[(int)direction].X / 2)),
+            Convert.ToSingle(Math.Ceiling(positionY + DirectionPoints[(int)direction].Y / 2)));
+        return targetPoint;
+    }
+
     private static bool LineIntersectsLine(Point line1Point1, Point line1Point2, Point line2Point1, Point line2Point2)
     {
         float q = Convert.ToSingle((line1Point1.Y - line2Point1.Y) * (line2Point2.X - line2Point1.X) - (line1Point1.X - line2Point1.X) * (line2Point2.Y - line2Point1.Y));
@@ -329,6 +308,23 @@ public class Turtle
         }
 
         return true;
+    }
+
+    private static void Rotate(IDrawableComponent pindrawable, ref float positionX, ref float positionY, ref float pinX,
+                ref float pinY)
+    {
+        if (pindrawable.Rotation != 0)
+        {
+            float centerX = pindrawable.Position.X + pindrawable.Size.X / 2;
+            float centerY = pindrawable.Position.Y + pindrawable.Size.Y / 2;
+            Coordinate rotatedPinPos =
+                RotateCoordinate(positionX, positionY, centerX, centerY, pindrawable.Rotation);
+            positionX = rotatedPinPos.X;
+            positionY = rotatedPinPos.Y;
+            Coordinate rotatedPinRelPos = RotateCoordinate(pinX, pinY, 0.5f, 0.5f, pindrawable.Rotation);
+            pinX = rotatedPinRelPos.X;
+            pinY = rotatedPinRelPos.Y;
+        }
     }
 
     private static Coordinate RotateCoordinate(float posX, float posY, float centerX, float centerY,

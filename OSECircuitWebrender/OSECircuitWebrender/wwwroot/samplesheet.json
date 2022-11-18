@@ -6,11 +6,11 @@
       "Value": "1k",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.ResistorDrawable, OSECircuitRender",
-        "ComponentGuid": "e857de66-db02-471c-912a-66df0937ccdd",
+        "ComponentGuid": "c952ad8b-d46a-4b09-bd64-2be1720d9522",
         "DrawablePins": [
           {
             "PinText": "",
-            "ComponentGuid": "a85c4354-1ad0-420c-8ecf-8d0e99c5f9d5",
+            "ComponentGuid": "371928c7-51b2-4d51-870f-7eb2f9c1d20e",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -71,7 +71,7 @@
           },
           {
             "PinText": "",
-            "ComponentGuid": "4ec99bb5-9ddb-400b-b6b5-3cd89e0903ab",
+            "ComponentGuid": "ca5e1ff6-5e4c-4509-968f-1a3751271876",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -227,12 +227,12 @@
         "Type": "ResistorDrawable"
       },
       "Height": 1,
-      "ItemGuid": "512ff74e-144e-4235-9831-98512ceee5cc",
+      "ItemGuid": "a6727d1f-37d3-492d-a625-a91565a1ca37",
       "Name": "",
       "Pins": [
         {
           "PinText": "",
-          "ComponentGuid": "a85c4354-1ad0-420c-8ecf-8d0e99c5f9d5",
+          "ComponentGuid": "371928c7-51b2-4d51-870f-7eb2f9c1d20e",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -293,7 +293,7 @@
         },
         {
           "PinText": "",
-          "ComponentGuid": "4ec99bb5-9ddb-400b-b6b5-3cd89e0903ab",
+          "ComponentGuid": "ca5e1ff6-5e4c-4509-968f-1a3751271876",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -364,11 +364,11 @@
       "Value": "1k",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.ResistorDrawable, OSECircuitRender",
-        "ComponentGuid": "2b41aa21-c6d9-45b8-9426-65820e76f746",
+        "ComponentGuid": "2ea80d21-d2df-4f9c-86ec-bfcbcc6a43bd",
         "DrawablePins": [
           {
             "PinText": "",
-            "ComponentGuid": "18065f40-506c-4ea1-935c-ec7aed88a227",
+            "ComponentGuid": "e35df3b6-c3bf-4952-b07b-379495b504d7",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -429,7 +429,7 @@
           },
           {
             "PinText": "",
-            "ComponentGuid": "40a81c6f-9c9a-4eba-b800-3886fc2dd075",
+            "ComponentGuid": "69ff4220-c36b-4182-a9a8-ed042ae755fd",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -585,12 +585,12 @@
         "Type": "ResistorDrawable"
       },
       "Height": 1,
-      "ItemGuid": "30619632-29fb-4272-921f-571216cd4312",
+      "ItemGuid": "5a1214b3-883a-4a6d-8804-0b88832b2410",
       "Name": "",
       "Pins": [
         {
           "PinText": "",
-          "ComponentGuid": "18065f40-506c-4ea1-935c-ec7aed88a227",
+          "ComponentGuid": "e35df3b6-c3bf-4952-b07b-379495b504d7",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -651,7 +651,7 @@
         },
         {
           "PinText": "",
-          "ComponentGuid": "40a81c6f-9c9a-4eba-b800-3886fc2dd075",
+          "ComponentGuid": "69ff4220-c36b-4182-a9a8-ed042ae755fd",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -722,11 +722,11 @@
       "Value": "1k",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.ResistorDrawable, OSECircuitRender",
-        "ComponentGuid": "60f0219b-7abc-41fa-b4df-1ba4d712b4db",
+        "ComponentGuid": "f9a5de2b-8d8c-4608-843c-e482053e4a05",
         "DrawablePins": [
           {
             "PinText": "",
-            "ComponentGuid": "ba1abc97-91ad-480b-a64f-ea52d593c595",
+            "ComponentGuid": "2c33a54f-2c51-4d19-a756-e922945b3cec",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -787,7 +787,7 @@
           },
           {
             "PinText": "",
-            "ComponentGuid": "de39ea46-e64b-4632-a46f-fdc1ce9e0141",
+            "ComponentGuid": "fc223448-2e5f-41cb-aea9-15a10e8240ed",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -943,12 +943,12 @@
         "Type": "ResistorDrawable"
       },
       "Height": 1,
-      "ItemGuid": "73feed6d-67de-4118-b125-bcfe72e40b12",
+      "ItemGuid": "67627759-9766-46b6-b0cf-8797f85aa600",
       "Name": "",
       "Pins": [
         {
           "PinText": "",
-          "ComponentGuid": "ba1abc97-91ad-480b-a64f-ea52d593c595",
+          "ComponentGuid": "2c33a54f-2c51-4d19-a756-e922945b3cec",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -1009,7 +1009,7 @@
         },
         {
           "PinText": "",
-          "ComponentGuid": "de39ea46-e64b-4632-a46f-fdc1ce9e0141",
+          "ComponentGuid": "fc223448-2e5f-41cb-aea9-15a10e8240ed",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -1080,11 +1080,11 @@
       "Value": "1k",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.ResistorDrawable, OSECircuitRender",
-        "ComponentGuid": "b201ca3e-1cf7-4fc5-b313-1b102d310d0f",
+        "ComponentGuid": "c44a7cbb-4ed7-4093-bd64-bc35e7fb58bd",
         "DrawablePins": [
           {
             "PinText": "",
-            "ComponentGuid": "215980f1-1c4d-423d-a215-f003a5c73cd4",
+            "ComponentGuid": "9ae88d2c-fcf1-4e7e-bd51-a2f5f24dfc2a",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -1145,7 +1145,7 @@
           },
           {
             "PinText": "",
-            "ComponentGuid": "fd6ba468-1540-4b16-bccf-e69f5717fdbd",
+            "ComponentGuid": "87e98f5f-2571-4b89-a8b5-2f6ee9bfe647",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -1301,12 +1301,12 @@
         "Type": "ResistorDrawable"
       },
       "Height": 1,
-      "ItemGuid": "5dbdf696-3394-410e-87c9-299e27d5f09d",
+      "ItemGuid": "3b28b582-805a-4e74-b2cf-6a87736ff199",
       "Name": "",
       "Pins": [
         {
           "PinText": "",
-          "ComponentGuid": "215980f1-1c4d-423d-a215-f003a5c73cd4",
+          "ComponentGuid": "9ae88d2c-fcf1-4e7e-bd51-a2f5f24dfc2a",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -1367,7 +1367,7 @@
         },
         {
           "PinText": "",
-          "ComponentGuid": "fd6ba468-1540-4b16-bccf-e69f5717fdbd",
+          "ComponentGuid": "87e98f5f-2571-4b89-a8b5-2f6ee9bfe647",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -1439,11 +1439,11 @@
         "$type": "OSECircuitRender.Drawables.TerminalDrawable, OSECircuitRender",
         "TerminalText": "Gnd",
         "TerminalType": 2,
-        "ComponentGuid": "a3bd0e86-5066-4fa6-bb4d-4776e8a72693",
+        "ComponentGuid": "279260fc-c30e-44b3-b2ea-c752b7f88231",
         "DrawablePins": [
           {
             "PinText": "",
-            "ComponentGuid": "d24ca671-a4b4-4dcb-a56c-b158ec89cef6",
+            "ComponentGuid": "96c60535-af4f-42a6-9a3c-5e10faedcd61",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -1613,12 +1613,12 @@
         "Type": "TerminalDrawable"
       },
       "Height": 1,
-      "ItemGuid": "89bf7587-fbf7-41ad-b105-8902fd579d2c",
+      "ItemGuid": "f2aa9538-006d-45b7-8216-9282b838994b",
       "Name": "",
       "Pins": [
         {
           "PinText": "",
-          "ComponentGuid": "d24ca671-a4b4-4dcb-a56c-b158ec89cef6",
+          "ComponentGuid": "96c60535-af4f-42a6-9a3c-5e10faedcd61",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -1690,11 +1690,11 @@
         "$type": "OSECircuitRender.Drawables.TerminalDrawable, OSECircuitRender",
         "TerminalText": "",
         "TerminalType": 1,
-        "ComponentGuid": "c87bdb34-7160-4a28-aad5-6d21e9f870c6",
+        "ComponentGuid": "a81d9928-9699-4c92-98f0-482799a266d9",
         "DrawablePins": [
           {
             "PinText": "",
-            "ComponentGuid": "0185d79b-39e7-459c-90d3-31b054570cd4",
+            "ComponentGuid": "8bd23568-faf5-409b-b955-2fd25443d093",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -1864,12 +1864,12 @@
         "Type": "TerminalDrawable"
       },
       "Height": 1,
-      "ItemGuid": "d578246e-1ea1-4a9a-817b-daecab13d889",
+      "ItemGuid": "f7abd08b-b52f-4455-989a-1cb386679bdf",
       "Name": "",
       "Pins": [
         {
           "PinText": "",
-          "ComponentGuid": "0185d79b-39e7-459c-90d3-31b054570cd4",
+          "ComponentGuid": "8bd23568-faf5-409b-b955-2fd25443d093",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -1939,11 +1939,11 @@
       "$type": "OSECircuitRender.Items.InductorItem, OSECircuitRender",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.InductorDrawable, OSECircuitRender",
-        "ComponentGuid": "e5935cc2-bac9-4bc4-b39c-454c99ad4b1e",
+        "ComponentGuid": "65b1f410-774a-4560-ae6b-38de8c5f4ce9",
         "DrawablePins": [
           {
             "PinText": "",
-            "ComponentGuid": "739b5aca-a577-4f20-a7db-f40992d157c2",
+            "ComponentGuid": "d256f6a7-e05f-4ffa-b2dc-82f7c32115ad",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -2004,7 +2004,7 @@
           },
           {
             "PinText": "",
-            "ComponentGuid": "e1eed565-e5ef-4bc4-b83a-2d67b0b2dac4",
+            "ComponentGuid": "7ba12ba9-a66d-4698-8e98-7e3e23cc6ec2",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -2110,12 +2110,12 @@
         "Type": "ResistorDrawable"
       },
       "Height": 1,
-      "ItemGuid": "8392e461-e5c5-4dfc-966b-a82a7e4c3445",
+      "ItemGuid": "c6e67c3a-e863-4ccf-911c-6c3cf250231f",
       "Name": "",
       "Pins": [
         {
           "PinText": "",
-          "ComponentGuid": "739b5aca-a577-4f20-a7db-f40992d157c2",
+          "ComponentGuid": "d256f6a7-e05f-4ffa-b2dc-82f7c32115ad",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -2176,7 +2176,7 @@
         },
         {
           "PinText": "",
-          "ComponentGuid": "e1eed565-e5ef-4bc4-b83a-2d67b0b2dac4",
+          "ComponentGuid": "7ba12ba9-a66d-4698-8e98-7e3e23cc6ec2",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -2247,11 +2247,11 @@
       "Value": "0.7",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.DiodeDrawable, OSECircuitRender",
-        "ComponentGuid": "89e3c61e-d4a3-4ee1-84ca-ef3ecf90d3e3",
+        "ComponentGuid": "5e70e4da-e984-4a01-9c1d-f0ec1b408371",
         "DrawablePins": [
           {
             "PinText": "",
-            "ComponentGuid": "8e766b85-23e2-4021-80ac-71ef5b9860d7",
+            "ComponentGuid": "8904f3c1-1d62-4482-999e-03ff9c3ca1c5",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -2312,7 +2312,7 @@
           },
           {
             "PinText": "",
-            "ComponentGuid": "f2834ba7-c9dc-4b82-b71b-1859642a1d84",
+            "ComponentGuid": "f3732bd4-a3d6-4d30-b683-f6c17e839ad6",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -2501,12 +2501,12 @@
         "Type": "DiodeDrawable"
       },
       "Height": 1,
-      "ItemGuid": "8fb2cdbe-537b-42da-b5ce-bf43090324dd",
+      "ItemGuid": "c5d22717-0cf8-4580-a427-28e0d409f4f5",
       "Name": "",
       "Pins": [
         {
           "PinText": "",
-          "ComponentGuid": "8e766b85-23e2-4021-80ac-71ef5b9860d7",
+          "ComponentGuid": "8904f3c1-1d62-4482-999e-03ff9c3ca1c5",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -2567,7 +2567,7 @@
         },
         {
           "PinText": "",
-          "ComponentGuid": "f2834ba7-c9dc-4b82-b71b-1859642a1d84",
+          "ComponentGuid": "f3732bd4-a3d6-4d30-b683-f6c17e839ad6",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -2638,11 +2638,11 @@
       "Type": 0,
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.TransistorDrawable, OSECircuitRender",
-        "ComponentGuid": "c7c515e2-0772-445f-876b-cc37a958dac1",
+        "ComponentGuid": "4ef25c4a-93c8-4631-bb75-b50b24f8e40e",
         "DrawablePins": [
           {
             "PinText": "B",
-            "ComponentGuid": "2a676b9a-3ca2-480b-89c8-5998e5bd443e",
+            "ComponentGuid": "bf732258-33f4-4287-ae25-9a3c222a3038",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -2703,7 +2703,7 @@
           },
           {
             "PinText": "E",
-            "ComponentGuid": "48f4e8e0-3b74-4434-8a79-4672c387524d",
+            "ComponentGuid": "a133beda-8fa7-479a-93cd-e2926b0049b5",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -2764,7 +2764,7 @@
           },
           {
             "PinText": "C",
-            "ComponentGuid": "448dfb61-bba1-4636-aef9-db68f0cddfe9",
+            "ComponentGuid": "7bc3e11b-92cb-43cc-a933-c2039cb4d257",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -3034,12 +3034,12 @@
         "Type": "TransistorDrawable"
       },
       "Height": 2,
-      "ItemGuid": "870f31b6-b97f-4932-bfc3-ff5d37adcbea",
+      "ItemGuid": "6db00c54-57aa-4862-a592-6e4eec116dc9",
       "Name": "",
       "Pins": [
         {
           "PinText": "B",
-          "ComponentGuid": "2a676b9a-3ca2-480b-89c8-5998e5bd443e",
+          "ComponentGuid": "bf732258-33f4-4287-ae25-9a3c222a3038",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -3100,7 +3100,7 @@
         },
         {
           "PinText": "E",
-          "ComponentGuid": "48f4e8e0-3b74-4434-8a79-4672c387524d",
+          "ComponentGuid": "a133beda-8fa7-479a-93cd-e2926b0049b5",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -3161,7 +3161,7 @@
         },
         {
           "PinText": "C",
-          "ComponentGuid": "448dfb61-bba1-4636-aef9-db68f0cddfe9",
+          "ComponentGuid": "7bc3e11b-92cb-43cc-a933-c2039cb4d257",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -3232,11 +3232,11 @@
       "Type": 1,
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.TransistorDrawable, OSECircuitRender",
-        "ComponentGuid": "91bc23e6-6fb4-41eb-8af2-b3407bf1e23a",
+        "ComponentGuid": "b1836405-073c-4deb-9391-58d0ad6b1817",
         "DrawablePins": [
           {
             "PinText": "B",
-            "ComponentGuid": "4584d369-a946-40df-8fc7-3b6838949286",
+            "ComponentGuid": "d9a5bec5-fbff-4096-aed8-47351e021b36",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -3297,7 +3297,7 @@
           },
           {
             "PinText": "C",
-            "ComponentGuid": "b2172ef2-575d-4408-8ad5-cd33d17abfb6",
+            "ComponentGuid": "d2a1514d-4458-46ab-9564-d52e66d0b683",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -3358,7 +3358,7 @@
           },
           {
             "PinText": "E",
-            "ComponentGuid": "06d8ddfb-e321-410a-afd1-8ff6c9bce800",
+            "ComponentGuid": "0df97b76-96bc-4aa9-ae3a-a25b6d6055ab",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -3628,12 +3628,12 @@
         "Type": "TransistorDrawable"
       },
       "Height": 2,
-      "ItemGuid": "cc79a089-2c78-4dfc-94af-c7a9ff0ab3b1",
+      "ItemGuid": "40601f3e-8b9a-45ba-a66a-1bb0e8dfb42a",
       "Name": "",
       "Pins": [
         {
           "PinText": "B",
-          "ComponentGuid": "4584d369-a946-40df-8fc7-3b6838949286",
+          "ComponentGuid": "d9a5bec5-fbff-4096-aed8-47351e021b36",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -3694,7 +3694,7 @@
         },
         {
           "PinText": "C",
-          "ComponentGuid": "b2172ef2-575d-4408-8ad5-cd33d17abfb6",
+          "ComponentGuid": "d2a1514d-4458-46ab-9564-d52e66d0b683",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -3755,7 +3755,7 @@
         },
         {
           "PinText": "E",
-          "ComponentGuid": "06d8ddfb-e321-410a-afd1-8ff6c9bce800",
+          "ComponentGuid": "0df97b76-96bc-4aa9-ae3a-a25b6d6055ab",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -3826,11 +3826,11 @@
       "Type": 1,
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.TransistorDrawable, OSECircuitRender",
-        "ComponentGuid": "cb64ab4f-cb54-460f-bedb-13331048969a",
+        "ComponentGuid": "9068b3ef-cff5-4e25-88b1-3c72fe9ccd5d",
         "DrawablePins": [
           {
             "PinText": "B",
-            "ComponentGuid": "e4513b1d-c225-4d21-a9df-2a5f1a51927a",
+            "ComponentGuid": "5109d0de-7271-4c31-abd0-cb729d157b93",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -3891,7 +3891,7 @@
           },
           {
             "PinText": "C",
-            "ComponentGuid": "379b3fad-3871-42ed-bb68-6b6de30aa989",
+            "ComponentGuid": "d6a7276c-fd28-42c1-96d7-2c2e2411d9ca",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -3952,7 +3952,7 @@
           },
           {
             "PinText": "E",
-            "ComponentGuid": "024bb540-447c-4396-9e30-23d9cd09e123",
+            "ComponentGuid": "20bdbd57-c71d-4bf6-bc8d-11f5d53debdc",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -4222,12 +4222,12 @@
         "Type": "TransistorDrawable"
       },
       "Height": 2,
-      "ItemGuid": "4258cd86-4723-43b9-a49b-cd3a9c475d5e",
+      "ItemGuid": "187dc3b0-8a62-46eb-b94b-acc694dac684",
       "Name": "",
       "Pins": [
         {
           "PinText": "B",
-          "ComponentGuid": "e4513b1d-c225-4d21-a9df-2a5f1a51927a",
+          "ComponentGuid": "5109d0de-7271-4c31-abd0-cb729d157b93",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -4288,7 +4288,7 @@
         },
         {
           "PinText": "C",
-          "ComponentGuid": "379b3fad-3871-42ed-bb68-6b6de30aa989",
+          "ComponentGuid": "d6a7276c-fd28-42c1-96d7-2c2e2411d9ca",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -4349,7 +4349,7 @@
         },
         {
           "PinText": "E",
-          "ComponentGuid": "024bb540-447c-4396-9e30-23d9cd09e123",
+          "ComponentGuid": "20bdbd57-c71d-4bf6-bc8d-11f5d53debdc",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -4421,11 +4421,11 @@
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.CapacitorDrawable, OSECircuitRender",
         "CapacitorType": 0,
-        "ComponentGuid": "334e80ca-fe95-40e7-ac96-06d9b0d7f1af",
+        "ComponentGuid": "57557a24-2850-49af-911e-e08113c0d3e3",
         "DrawablePins": [
           {
             "PinText": "",
-            "ComponentGuid": "c40f9f5e-6b2a-48f3-8f16-a58aa50a8cc2",
+            "ComponentGuid": "56e3f489-bb9c-4022-8d23-a37d2aa165e3",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -4486,7 +4486,7 @@
           },
           {
             "PinText": "",
-            "ComponentGuid": "fca68c40-bc66-428d-a30d-860249b44f8c",
+            "ComponentGuid": "238ebe48-28a3-418c-b061-a3502811f529",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -4666,12 +4666,12 @@
         "Type": "CapacitorDrawable"
       },
       "Height": 1,
-      "ItemGuid": "d293772d-099b-476a-a979-db2a17133bce",
+      "ItemGuid": "65468a06-8c5a-436f-b66c-f53eab76675b",
       "Name": "",
       "Pins": [
         {
           "PinText": "",
-          "ComponentGuid": "c40f9f5e-6b2a-48f3-8f16-a58aa50a8cc2",
+          "ComponentGuid": "56e3f489-bb9c-4022-8d23-a37d2aa165e3",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -4732,7 +4732,7 @@
         },
         {
           "PinText": "",
-          "ComponentGuid": "fca68c40-bc66-428d-a30d-860249b44f8c",
+          "ComponentGuid": "238ebe48-28a3-418c-b061-a3502811f529",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -4804,11 +4804,11 @@
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.CapacitorDrawable, OSECircuitRender",
         "CapacitorType": 1,
-        "ComponentGuid": "8da47222-d169-4702-a1f2-6a8a6f783966",
+        "ComponentGuid": "cac61e55-ec3b-4ae9-bc45-5564547f46d1",
         "DrawablePins": [
           {
             "PinText": "+",
-            "ComponentGuid": "ac44d337-ee9b-4b80-800a-1e74a83ed1a8",
+            "ComponentGuid": "ccebd02b-c4f8-4e40-9540-7c900dc41d36",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -4869,7 +4869,7 @@
           },
           {
             "PinText": "-",
-            "ComponentGuid": "6f0967a6-7426-44da-b854-b7ac21856589",
+            "ComponentGuid": "e302cbef-7bc4-405d-b207-d0ed7073b393",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -5046,12 +5046,12 @@
         "Type": "CapacitorDrawable"
       },
       "Height": 1,
-      "ItemGuid": "9a0395b6-aa8c-4393-bb4c-5d0de960ae6c",
+      "ItemGuid": "0a6abdd9-81cf-481e-aba5-9effc0eee90f",
       "Name": "",
       "Pins": [
         {
           "PinText": "+",
-          "ComponentGuid": "ac44d337-ee9b-4b80-800a-1e74a83ed1a8",
+          "ComponentGuid": "ccebd02b-c4f8-4e40-9540-7c900dc41d36",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -5112,7 +5112,7 @@
         },
         {
           "PinText": "-",
-          "ComponentGuid": "6f0967a6-7426-44da-b854-b7ac21856589",
+          "ComponentGuid": "e302cbef-7bc4-405d-b207-d0ed7073b393",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -5184,7 +5184,7 @@
       "$type": "OSECircuitRender.Items.NetItem, OSECircuitRender",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.DrawableComponent, OSECircuitRender",
-        "ComponentGuid": "2a5ec3dd-19a0-4afa-b8e2-bae756d8b287",
+        "ComponentGuid": "ea9dbd81-b622-45a1-8d0b-2fb3ad0f9c64",
         "DrawablePins": [],
         "DrawInstructions": [],
         "Position": {
@@ -5202,12 +5202,12 @@
         "Type": "DrawableComponent"
       },
       "Height": 1,
-      "ItemGuid": "405222c2-fe51-4222-81d5-f52e567310cb",
+      "ItemGuid": "31070b9d-4779-4162-bcbc-19df37f0d533",
       "Name": "",
       "Pins": [
         {
           "PinText": "",
-          "ComponentGuid": "a85c4354-1ad0-420c-8ecf-8d0e99c5f9d5",
+          "ComponentGuid": "371928c7-51b2-4d51-870f-7eb2f9c1d20e",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -5268,7 +5268,7 @@
         },
         {
           "PinText": "",
-          "ComponentGuid": "40a81c6f-9c9a-4eba-b800-3886fc2dd075",
+          "ComponentGuid": "69ff4220-c36b-4182-a9a8-ed042ae755fd",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -5329,7 +5329,7 @@
         },
         {
           "PinText": "B",
-          "ComponentGuid": "2a676b9a-3ca2-480b-89c8-5998e5bd443e",
+          "ComponentGuid": "bf732258-33f4-4287-ae25-9a3c222a3038",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -5390,7 +5390,7 @@
         },
         {
           "PinText": "E",
-          "ComponentGuid": "06d8ddfb-e321-410a-afd1-8ff6c9bce800",
+          "ComponentGuid": "0df97b76-96bc-4aa9-ae3a-a25b6d6055ab",
           "DrawablePins": [],
           "DrawInstructions": [
             {
@@ -5466,11 +5466,11 @@
         "Value": "1k",
         "DrawableComponent": {
           "$type": "OSECircuitRender.Drawables.ResistorDrawable, OSECircuitRender",
-          "ComponentGuid": "e857de66-db02-471c-912a-66df0937ccdd",
+          "ComponentGuid": "c952ad8b-d46a-4b09-bd64-2be1720d9522",
           "DrawablePins": [
             {
               "PinText": "",
-              "ComponentGuid": "a85c4354-1ad0-420c-8ecf-8d0e99c5f9d5",
+              "ComponentGuid": "371928c7-51b2-4d51-870f-7eb2f9c1d20e",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -5531,7 +5531,7 @@
             },
             {
               "PinText": "",
-              "ComponentGuid": "4ec99bb5-9ddb-400b-b6b5-3cd89e0903ab",
+              "ComponentGuid": "ca5e1ff6-5e4c-4509-968f-1a3751271876",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -5687,12 +5687,12 @@
           "Type": "ResistorDrawable"
         },
         "Height": 1,
-        "ItemGuid": "512ff74e-144e-4235-9831-98512ceee5cc",
+        "ItemGuid": "a6727d1f-37d3-492d-a625-a91565a1ca37",
         "Name": "",
         "Pins": [
           {
             "PinText": "",
-            "ComponentGuid": "a85c4354-1ad0-420c-8ecf-8d0e99c5f9d5",
+            "ComponentGuid": "371928c7-51b2-4d51-870f-7eb2f9c1d20e",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -5753,7 +5753,7 @@
           },
           {
             "PinText": "",
-            "ComponentGuid": "4ec99bb5-9ddb-400b-b6b5-3cd89e0903ab",
+            "ComponentGuid": "ca5e1ff6-5e4c-4509-968f-1a3751271876",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -5824,11 +5824,11 @@
         "Value": "1k",
         "DrawableComponent": {
           "$type": "OSECircuitRender.Drawables.ResistorDrawable, OSECircuitRender",
-          "ComponentGuid": "2b41aa21-c6d9-45b8-9426-65820e76f746",
+          "ComponentGuid": "2ea80d21-d2df-4f9c-86ec-bfcbcc6a43bd",
           "DrawablePins": [
             {
               "PinText": "",
-              "ComponentGuid": "18065f40-506c-4ea1-935c-ec7aed88a227",
+              "ComponentGuid": "e35df3b6-c3bf-4952-b07b-379495b504d7",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -5889,7 +5889,7 @@
             },
             {
               "PinText": "",
-              "ComponentGuid": "40a81c6f-9c9a-4eba-b800-3886fc2dd075",
+              "ComponentGuid": "69ff4220-c36b-4182-a9a8-ed042ae755fd",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -6045,12 +6045,12 @@
           "Type": "ResistorDrawable"
         },
         "Height": 1,
-        "ItemGuid": "30619632-29fb-4272-921f-571216cd4312",
+        "ItemGuid": "5a1214b3-883a-4a6d-8804-0b88832b2410",
         "Name": "",
         "Pins": [
           {
             "PinText": "",
-            "ComponentGuid": "18065f40-506c-4ea1-935c-ec7aed88a227",
+            "ComponentGuid": "e35df3b6-c3bf-4952-b07b-379495b504d7",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -6111,7 +6111,7 @@
           },
           {
             "PinText": "",
-            "ComponentGuid": "40a81c6f-9c9a-4eba-b800-3886fc2dd075",
+            "ComponentGuid": "69ff4220-c36b-4182-a9a8-ed042ae755fd",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -6182,11 +6182,11 @@
         "Value": "1k",
         "DrawableComponent": {
           "$type": "OSECircuitRender.Drawables.ResistorDrawable, OSECircuitRender",
-          "ComponentGuid": "60f0219b-7abc-41fa-b4df-1ba4d712b4db",
+          "ComponentGuid": "f9a5de2b-8d8c-4608-843c-e482053e4a05",
           "DrawablePins": [
             {
               "PinText": "",
-              "ComponentGuid": "ba1abc97-91ad-480b-a64f-ea52d593c595",
+              "ComponentGuid": "2c33a54f-2c51-4d19-a756-e922945b3cec",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -6247,7 +6247,7 @@
             },
             {
               "PinText": "",
-              "ComponentGuid": "de39ea46-e64b-4632-a46f-fdc1ce9e0141",
+              "ComponentGuid": "fc223448-2e5f-41cb-aea9-15a10e8240ed",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -6403,12 +6403,12 @@
           "Type": "ResistorDrawable"
         },
         "Height": 1,
-        "ItemGuid": "73feed6d-67de-4118-b125-bcfe72e40b12",
+        "ItemGuid": "67627759-9766-46b6-b0cf-8797f85aa600",
         "Name": "",
         "Pins": [
           {
             "PinText": "",
-            "ComponentGuid": "ba1abc97-91ad-480b-a64f-ea52d593c595",
+            "ComponentGuid": "2c33a54f-2c51-4d19-a756-e922945b3cec",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -6469,7 +6469,7 @@
           },
           {
             "PinText": "",
-            "ComponentGuid": "de39ea46-e64b-4632-a46f-fdc1ce9e0141",
+            "ComponentGuid": "fc223448-2e5f-41cb-aea9-15a10e8240ed",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -6540,11 +6540,11 @@
         "Value": "1k",
         "DrawableComponent": {
           "$type": "OSECircuitRender.Drawables.ResistorDrawable, OSECircuitRender",
-          "ComponentGuid": "b201ca3e-1cf7-4fc5-b313-1b102d310d0f",
+          "ComponentGuid": "c44a7cbb-4ed7-4093-bd64-bc35e7fb58bd",
           "DrawablePins": [
             {
               "PinText": "",
-              "ComponentGuid": "215980f1-1c4d-423d-a215-f003a5c73cd4",
+              "ComponentGuid": "9ae88d2c-fcf1-4e7e-bd51-a2f5f24dfc2a",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -6605,7 +6605,7 @@
             },
             {
               "PinText": "",
-              "ComponentGuid": "fd6ba468-1540-4b16-bccf-e69f5717fdbd",
+              "ComponentGuid": "87e98f5f-2571-4b89-a8b5-2f6ee9bfe647",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -6761,12 +6761,12 @@
           "Type": "ResistorDrawable"
         },
         "Height": 1,
-        "ItemGuid": "5dbdf696-3394-410e-87c9-299e27d5f09d",
+        "ItemGuid": "3b28b582-805a-4e74-b2cf-6a87736ff199",
         "Name": "",
         "Pins": [
           {
             "PinText": "",
-            "ComponentGuid": "215980f1-1c4d-423d-a215-f003a5c73cd4",
+            "ComponentGuid": "9ae88d2c-fcf1-4e7e-bd51-a2f5f24dfc2a",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -6827,7 +6827,7 @@
           },
           {
             "PinText": "",
-            "ComponentGuid": "fd6ba468-1540-4b16-bccf-e69f5717fdbd",
+            "ComponentGuid": "87e98f5f-2571-4b89-a8b5-2f6ee9bfe647",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -6899,11 +6899,11 @@
           "$type": "OSECircuitRender.Drawables.TerminalDrawable, OSECircuitRender",
           "TerminalText": "Gnd",
           "TerminalType": 2,
-          "ComponentGuid": "a3bd0e86-5066-4fa6-bb4d-4776e8a72693",
+          "ComponentGuid": "279260fc-c30e-44b3-b2ea-c752b7f88231",
           "DrawablePins": [
             {
               "PinText": "",
-              "ComponentGuid": "d24ca671-a4b4-4dcb-a56c-b158ec89cef6",
+              "ComponentGuid": "96c60535-af4f-42a6-9a3c-5e10faedcd61",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -7073,12 +7073,12 @@
           "Type": "TerminalDrawable"
         },
         "Height": 1,
-        "ItemGuid": "89bf7587-fbf7-41ad-b105-8902fd579d2c",
+        "ItemGuid": "f2aa9538-006d-45b7-8216-9282b838994b",
         "Name": "",
         "Pins": [
           {
             "PinText": "",
-            "ComponentGuid": "d24ca671-a4b4-4dcb-a56c-b158ec89cef6",
+            "ComponentGuid": "96c60535-af4f-42a6-9a3c-5e10faedcd61",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -7150,11 +7150,11 @@
           "$type": "OSECircuitRender.Drawables.TerminalDrawable, OSECircuitRender",
           "TerminalText": "",
           "TerminalType": 1,
-          "ComponentGuid": "c87bdb34-7160-4a28-aad5-6d21e9f870c6",
+          "ComponentGuid": "a81d9928-9699-4c92-98f0-482799a266d9",
           "DrawablePins": [
             {
               "PinText": "",
-              "ComponentGuid": "0185d79b-39e7-459c-90d3-31b054570cd4",
+              "ComponentGuid": "8bd23568-faf5-409b-b955-2fd25443d093",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -7324,12 +7324,12 @@
           "Type": "TerminalDrawable"
         },
         "Height": 1,
-        "ItemGuid": "d578246e-1ea1-4a9a-817b-daecab13d889",
+        "ItemGuid": "f7abd08b-b52f-4455-989a-1cb386679bdf",
         "Name": "",
         "Pins": [
           {
             "PinText": "",
-            "ComponentGuid": "0185d79b-39e7-459c-90d3-31b054570cd4",
+            "ComponentGuid": "8bd23568-faf5-409b-b955-2fd25443d093",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -7399,11 +7399,11 @@
         "$type": "OSECircuitRender.Items.InductorItem, OSECircuitRender",
         "DrawableComponent": {
           "$type": "OSECircuitRender.Drawables.InductorDrawable, OSECircuitRender",
-          "ComponentGuid": "e5935cc2-bac9-4bc4-b39c-454c99ad4b1e",
+          "ComponentGuid": "65b1f410-774a-4560-ae6b-38de8c5f4ce9",
           "DrawablePins": [
             {
               "PinText": "",
-              "ComponentGuid": "739b5aca-a577-4f20-a7db-f40992d157c2",
+              "ComponentGuid": "d256f6a7-e05f-4ffa-b2dc-82f7c32115ad",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -7464,7 +7464,7 @@
             },
             {
               "PinText": "",
-              "ComponentGuid": "e1eed565-e5ef-4bc4-b83a-2d67b0b2dac4",
+              "ComponentGuid": "7ba12ba9-a66d-4698-8e98-7e3e23cc6ec2",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -7570,12 +7570,12 @@
           "Type": "ResistorDrawable"
         },
         "Height": 1,
-        "ItemGuid": "8392e461-e5c5-4dfc-966b-a82a7e4c3445",
+        "ItemGuid": "c6e67c3a-e863-4ccf-911c-6c3cf250231f",
         "Name": "",
         "Pins": [
           {
             "PinText": "",
-            "ComponentGuid": "739b5aca-a577-4f20-a7db-f40992d157c2",
+            "ComponentGuid": "d256f6a7-e05f-4ffa-b2dc-82f7c32115ad",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -7636,7 +7636,7 @@
           },
           {
             "PinText": "",
-            "ComponentGuid": "e1eed565-e5ef-4bc4-b83a-2d67b0b2dac4",
+            "ComponentGuid": "7ba12ba9-a66d-4698-8e98-7e3e23cc6ec2",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -7707,11 +7707,11 @@
         "Value": "0.7",
         "DrawableComponent": {
           "$type": "OSECircuitRender.Drawables.DiodeDrawable, OSECircuitRender",
-          "ComponentGuid": "89e3c61e-d4a3-4ee1-84ca-ef3ecf90d3e3",
+          "ComponentGuid": "5e70e4da-e984-4a01-9c1d-f0ec1b408371",
           "DrawablePins": [
             {
               "PinText": "",
-              "ComponentGuid": "8e766b85-23e2-4021-80ac-71ef5b9860d7",
+              "ComponentGuid": "8904f3c1-1d62-4482-999e-03ff9c3ca1c5",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -7772,7 +7772,7 @@
             },
             {
               "PinText": "",
-              "ComponentGuid": "f2834ba7-c9dc-4b82-b71b-1859642a1d84",
+              "ComponentGuid": "f3732bd4-a3d6-4d30-b683-f6c17e839ad6",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -7961,12 +7961,12 @@
           "Type": "DiodeDrawable"
         },
         "Height": 1,
-        "ItemGuid": "8fb2cdbe-537b-42da-b5ce-bf43090324dd",
+        "ItemGuid": "c5d22717-0cf8-4580-a427-28e0d409f4f5",
         "Name": "",
         "Pins": [
           {
             "PinText": "",
-            "ComponentGuid": "8e766b85-23e2-4021-80ac-71ef5b9860d7",
+            "ComponentGuid": "8904f3c1-1d62-4482-999e-03ff9c3ca1c5",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -8027,7 +8027,7 @@
           },
           {
             "PinText": "",
-            "ComponentGuid": "f2834ba7-c9dc-4b82-b71b-1859642a1d84",
+            "ComponentGuid": "f3732bd4-a3d6-4d30-b683-f6c17e839ad6",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -8098,11 +8098,11 @@
         "Type": 0,
         "DrawableComponent": {
           "$type": "OSECircuitRender.Drawables.TransistorDrawable, OSECircuitRender",
-          "ComponentGuid": "c7c515e2-0772-445f-876b-cc37a958dac1",
+          "ComponentGuid": "4ef25c4a-93c8-4631-bb75-b50b24f8e40e",
           "DrawablePins": [
             {
               "PinText": "B",
-              "ComponentGuid": "2a676b9a-3ca2-480b-89c8-5998e5bd443e",
+              "ComponentGuid": "bf732258-33f4-4287-ae25-9a3c222a3038",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -8163,7 +8163,7 @@
             },
             {
               "PinText": "E",
-              "ComponentGuid": "48f4e8e0-3b74-4434-8a79-4672c387524d",
+              "ComponentGuid": "a133beda-8fa7-479a-93cd-e2926b0049b5",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -8224,7 +8224,7 @@
             },
             {
               "PinText": "C",
-              "ComponentGuid": "448dfb61-bba1-4636-aef9-db68f0cddfe9",
+              "ComponentGuid": "7bc3e11b-92cb-43cc-a933-c2039cb4d257",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -8494,12 +8494,12 @@
           "Type": "TransistorDrawable"
         },
         "Height": 2,
-        "ItemGuid": "870f31b6-b97f-4932-bfc3-ff5d37adcbea",
+        "ItemGuid": "6db00c54-57aa-4862-a592-6e4eec116dc9",
         "Name": "",
         "Pins": [
           {
             "PinText": "B",
-            "ComponentGuid": "2a676b9a-3ca2-480b-89c8-5998e5bd443e",
+            "ComponentGuid": "bf732258-33f4-4287-ae25-9a3c222a3038",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -8560,7 +8560,7 @@
           },
           {
             "PinText": "E",
-            "ComponentGuid": "48f4e8e0-3b74-4434-8a79-4672c387524d",
+            "ComponentGuid": "a133beda-8fa7-479a-93cd-e2926b0049b5",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -8621,7 +8621,7 @@
           },
           {
             "PinText": "C",
-            "ComponentGuid": "448dfb61-bba1-4636-aef9-db68f0cddfe9",
+            "ComponentGuid": "7bc3e11b-92cb-43cc-a933-c2039cb4d257",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -8692,11 +8692,11 @@
         "Type": 1,
         "DrawableComponent": {
           "$type": "OSECircuitRender.Drawables.TransistorDrawable, OSECircuitRender",
-          "ComponentGuid": "91bc23e6-6fb4-41eb-8af2-b3407bf1e23a",
+          "ComponentGuid": "b1836405-073c-4deb-9391-58d0ad6b1817",
           "DrawablePins": [
             {
               "PinText": "B",
-              "ComponentGuid": "4584d369-a946-40df-8fc7-3b6838949286",
+              "ComponentGuid": "d9a5bec5-fbff-4096-aed8-47351e021b36",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -8757,7 +8757,7 @@
             },
             {
               "PinText": "C",
-              "ComponentGuid": "b2172ef2-575d-4408-8ad5-cd33d17abfb6",
+              "ComponentGuid": "d2a1514d-4458-46ab-9564-d52e66d0b683",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -8818,7 +8818,7 @@
             },
             {
               "PinText": "E",
-              "ComponentGuid": "06d8ddfb-e321-410a-afd1-8ff6c9bce800",
+              "ComponentGuid": "0df97b76-96bc-4aa9-ae3a-a25b6d6055ab",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -9088,12 +9088,12 @@
           "Type": "TransistorDrawable"
         },
         "Height": 2,
-        "ItemGuid": "cc79a089-2c78-4dfc-94af-c7a9ff0ab3b1",
+        "ItemGuid": "40601f3e-8b9a-45ba-a66a-1bb0e8dfb42a",
         "Name": "",
         "Pins": [
           {
             "PinText": "B",
-            "ComponentGuid": "4584d369-a946-40df-8fc7-3b6838949286",
+            "ComponentGuid": "d9a5bec5-fbff-4096-aed8-47351e021b36",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -9154,7 +9154,7 @@
           },
           {
             "PinText": "C",
-            "ComponentGuid": "b2172ef2-575d-4408-8ad5-cd33d17abfb6",
+            "ComponentGuid": "d2a1514d-4458-46ab-9564-d52e66d0b683",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -9215,7 +9215,7 @@
           },
           {
             "PinText": "E",
-            "ComponentGuid": "06d8ddfb-e321-410a-afd1-8ff6c9bce800",
+            "ComponentGuid": "0df97b76-96bc-4aa9-ae3a-a25b6d6055ab",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -9286,11 +9286,11 @@
         "Type": 1,
         "DrawableComponent": {
           "$type": "OSECircuitRender.Drawables.TransistorDrawable, OSECircuitRender",
-          "ComponentGuid": "cb64ab4f-cb54-460f-bedb-13331048969a",
+          "ComponentGuid": "9068b3ef-cff5-4e25-88b1-3c72fe9ccd5d",
           "DrawablePins": [
             {
               "PinText": "B",
-              "ComponentGuid": "e4513b1d-c225-4d21-a9df-2a5f1a51927a",
+              "ComponentGuid": "5109d0de-7271-4c31-abd0-cb729d157b93",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -9351,7 +9351,7 @@
             },
             {
               "PinText": "C",
-              "ComponentGuid": "379b3fad-3871-42ed-bb68-6b6de30aa989",
+              "ComponentGuid": "d6a7276c-fd28-42c1-96d7-2c2e2411d9ca",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -9412,7 +9412,7 @@
             },
             {
               "PinText": "E",
-              "ComponentGuid": "024bb540-447c-4396-9e30-23d9cd09e123",
+              "ComponentGuid": "20bdbd57-c71d-4bf6-bc8d-11f5d53debdc",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -9682,12 +9682,12 @@
           "Type": "TransistorDrawable"
         },
         "Height": 2,
-        "ItemGuid": "4258cd86-4723-43b9-a49b-cd3a9c475d5e",
+        "ItemGuid": "187dc3b0-8a62-46eb-b94b-acc694dac684",
         "Name": "",
         "Pins": [
           {
             "PinText": "B",
-            "ComponentGuid": "e4513b1d-c225-4d21-a9df-2a5f1a51927a",
+            "ComponentGuid": "5109d0de-7271-4c31-abd0-cb729d157b93",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -9748,7 +9748,7 @@
           },
           {
             "PinText": "C",
-            "ComponentGuid": "379b3fad-3871-42ed-bb68-6b6de30aa989",
+            "ComponentGuid": "d6a7276c-fd28-42c1-96d7-2c2e2411d9ca",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -9809,7 +9809,7 @@
           },
           {
             "PinText": "E",
-            "ComponentGuid": "024bb540-447c-4396-9e30-23d9cd09e123",
+            "ComponentGuid": "20bdbd57-c71d-4bf6-bc8d-11f5d53debdc",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -9881,11 +9881,11 @@
         "DrawableComponent": {
           "$type": "OSECircuitRender.Drawables.CapacitorDrawable, OSECircuitRender",
           "CapacitorType": 0,
-          "ComponentGuid": "334e80ca-fe95-40e7-ac96-06d9b0d7f1af",
+          "ComponentGuid": "57557a24-2850-49af-911e-e08113c0d3e3",
           "DrawablePins": [
             {
               "PinText": "",
-              "ComponentGuid": "c40f9f5e-6b2a-48f3-8f16-a58aa50a8cc2",
+              "ComponentGuid": "56e3f489-bb9c-4022-8d23-a37d2aa165e3",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -9946,7 +9946,7 @@
             },
             {
               "PinText": "",
-              "ComponentGuid": "fca68c40-bc66-428d-a30d-860249b44f8c",
+              "ComponentGuid": "238ebe48-28a3-418c-b061-a3502811f529",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -10126,12 +10126,12 @@
           "Type": "CapacitorDrawable"
         },
         "Height": 1,
-        "ItemGuid": "d293772d-099b-476a-a979-db2a17133bce",
+        "ItemGuid": "65468a06-8c5a-436f-b66c-f53eab76675b",
         "Name": "",
         "Pins": [
           {
             "PinText": "",
-            "ComponentGuid": "c40f9f5e-6b2a-48f3-8f16-a58aa50a8cc2",
+            "ComponentGuid": "56e3f489-bb9c-4022-8d23-a37d2aa165e3",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -10192,7 +10192,7 @@
           },
           {
             "PinText": "",
-            "ComponentGuid": "fca68c40-bc66-428d-a30d-860249b44f8c",
+            "ComponentGuid": "238ebe48-28a3-418c-b061-a3502811f529",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -10264,11 +10264,11 @@
         "DrawableComponent": {
           "$type": "OSECircuitRender.Drawables.CapacitorDrawable, OSECircuitRender",
           "CapacitorType": 1,
-          "ComponentGuid": "8da47222-d169-4702-a1f2-6a8a6f783966",
+          "ComponentGuid": "cac61e55-ec3b-4ae9-bc45-5564547f46d1",
           "DrawablePins": [
             {
               "PinText": "+",
-              "ComponentGuid": "ac44d337-ee9b-4b80-800a-1e74a83ed1a8",
+              "ComponentGuid": "ccebd02b-c4f8-4e40-9540-7c900dc41d36",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -10329,7 +10329,7 @@
             },
             {
               "PinText": "-",
-              "ComponentGuid": "6f0967a6-7426-44da-b854-b7ac21856589",
+              "ComponentGuid": "e302cbef-7bc4-405d-b207-d0ed7073b393",
               "DrawablePins": [],
               "DrawInstructions": [
                 {
@@ -10506,12 +10506,12 @@
           "Type": "CapacitorDrawable"
         },
         "Height": 1,
-        "ItemGuid": "9a0395b6-aa8c-4393-bb4c-5d0de960ae6c",
+        "ItemGuid": "0a6abdd9-81cf-481e-aba5-9effc0eee90f",
         "Name": "",
         "Pins": [
           {
             "PinText": "+",
-            "ComponentGuid": "ac44d337-ee9b-4b80-800a-1e74a83ed1a8",
+            "ComponentGuid": "ccebd02b-c4f8-4e40-9540-7c900dc41d36",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -10572,7 +10572,7 @@
           },
           {
             "PinText": "-",
-            "ComponentGuid": "6f0967a6-7426-44da-b854-b7ac21856589",
+            "ComponentGuid": "e302cbef-7bc4-405d-b207-d0ed7073b393",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -10644,7 +10644,7 @@
         "$type": "OSECircuitRender.Items.NetItem, OSECircuitRender",
         "DrawableComponent": {
           "$type": "OSECircuitRender.Drawables.DrawableComponent, OSECircuitRender",
-          "ComponentGuid": "2a5ec3dd-19a0-4afa-b8e2-bae756d8b287",
+          "ComponentGuid": "ea9dbd81-b622-45a1-8d0b-2fb3ad0f9c64",
           "DrawablePins": [],
           "DrawInstructions": [],
           "Position": {
@@ -10662,12 +10662,12 @@
           "Type": "DrawableComponent"
         },
         "Height": 1,
-        "ItemGuid": "405222c2-fe51-4222-81d5-f52e567310cb",
+        "ItemGuid": "31070b9d-4779-4162-bcbc-19df37f0d533",
         "Name": "",
         "Pins": [
           {
             "PinText": "",
-            "ComponentGuid": "a85c4354-1ad0-420c-8ecf-8d0e99c5f9d5",
+            "ComponentGuid": "371928c7-51b2-4d51-870f-7eb2f9c1d20e",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -10728,7 +10728,7 @@
           },
           {
             "PinText": "",
-            "ComponentGuid": "40a81c6f-9c9a-4eba-b800-3886fc2dd075",
+            "ComponentGuid": "69ff4220-c36b-4182-a9a8-ed042ae755fd",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -10789,7 +10789,7 @@
           },
           {
             "PinText": "B",
-            "ComponentGuid": "2a676b9a-3ca2-480b-89c8-5998e5bd443e",
+            "ComponentGuid": "bf732258-33f4-4287-ae25-9a3c222a3038",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -10850,7 +10850,7 @@
           },
           {
             "PinText": "E",
-            "ComponentGuid": "06d8ddfb-e321-410a-afd1-8ff6c9bce800",
+            "ComponentGuid": "0df97b76-96bc-4aa9-ae3a-a25b6d6055ab",
             "DrawablePins": [],
             "DrawInstructions": [
               {
@@ -10927,14 +10927,14 @@
         "$type": "OSECircuitRender.Items.TraceItem, OSECircuitRender",
         "DrawableComponent": {
           "$type": "OSECircuitRender.Drawables.TraceDrawable, OSECircuitRender",
-          "ComponentGuid": "9170d9a3-529d-4cc9-8bfa-b30273243aa8",
+          "ComponentGuid": "23ddfb8a-56e9-40f3-8b48-5e7a17d074f1",
           "DrawablePins": [],
           "DrawInstructions": [
             {
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
-                "X": 0.5,
-                "Y": 1.5,
+                "X": 1.0,
+                "Y": 2.0,
                 "Z": 0.0
               },
               "Position": {
@@ -10952,31 +10952,12 @@
             {
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
-                "X": 0.5,
-                "Y": 2.0,
-                "Z": 0.0
-              },
-              "Position": {
-                "X": 0.5,
-                "Y": 1.5,
-                "Z": 0.0
-              },
-              "StrokeColor": {
-                "B": 0,
-                "G": 0,
-                "R": 0
-              },
-              "Type": "LineInstruction"
-            },
-            {
-              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-              "End": {
-                "X": 0.5,
+                "X": 1.0,
                 "Y": 2.5,
                 "Z": 0.0
               },
               "Position": {
-                "X": 0.5,
+                "X": 1.0,
                 "Y": 2.0,
                 "Z": 0.0
               },
@@ -10990,12 +10971,12 @@
             {
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
-                "X": 0.5,
+                "X": 1.0,
                 "Y": 3.0,
                 "Z": 0.0
               },
               "Position": {
-                "X": 0.5,
+                "X": 1.0,
                 "Y": 2.5,
                 "Z": 0.0
               },
@@ -11009,12 +10990,12 @@
             {
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
-                "X": 0.5,
+                "X": 1.0,
                 "Y": 3.5,
                 "Z": 0.0
               },
               "Position": {
-                "X": 0.5,
+                "X": 1.0,
                 "Y": 3.0,
                 "Z": 0.0
               },
@@ -11028,12 +11009,12 @@
             {
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
-                "X": 0.5,
+                "X": 1.0,
                 "Y": 4.0,
                 "Z": 0.0
               },
               "Position": {
-                "X": 0.5,
+                "X": 1.0,
                 "Y": 3.5,
                 "Z": 0.0
               },
@@ -11047,12 +11028,12 @@
             {
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
-                "X": 0.5,
+                "X": 1.0,
                 "Y": 4.5,
                 "Z": 0.0
               },
               "Position": {
-                "X": 0.5,
+                "X": 1.0,
                 "Y": 4.0,
                 "Z": 0.0
               },
@@ -11066,32 +11047,13 @@
             {
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
-                "X": 0.5,
+                "X": 1.0,
                 "Y": 5.0,
                 "Z": 0.0
               },
               "Position": {
-                "X": 0.5,
+                "X": 1.0,
                 "Y": 4.5,
-                "Z": 0.0
-              },
-              "StrokeColor": {
-                "B": 0,
-                "G": 0,
-                "R": 0
-              },
-              "Type": "LineInstruction"
-            },
-            {
-              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-              "End": {
-                "X": 0.5,
-                "Y": 5.5,
-                "Z": 0.0
-              },
-              "Position": {
-                "X": 0.5,
-                "Y": 5.0,
                 "Z": 0.0
               },
               "StrokeColor": {
@@ -11109,8 +11071,8 @@
                 "Z": 0.0
               },
               "Position": {
-                "X": 0.5,
-                "Y": 5.5,
+                "X": 1.0,
+                "Y": 5.0,
                 "Z": 0.0
               },
               "StrokeColor": {
@@ -11161,50 +11123,12 @@
             {
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
-                "X": 2.5,
-                "Y": 5.5,
-                "Z": 0.0
-              },
-              "Position": {
                 "X": 2.0,
-                "Y": 5.5,
-                "Z": 0.0
-              },
-              "StrokeColor": {
-                "B": 0,
-                "G": 0,
-                "R": 0
-              },
-              "Type": "LineInstruction"
-            },
-            {
-              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-              "End": {
-                "X": 3.0,
-                "Y": 5.5,
-                "Z": 0.0
-              },
-              "Position": {
-                "X": 2.5,
-                "Y": 5.5,
-                "Z": 0.0
-              },
-              "StrokeColor": {
-                "B": 0,
-                "G": 0,
-                "R": 0
-              },
-              "Type": "LineInstruction"
-            },
-            {
-              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-              "End": {
-                "X": 3.0,
                 "Y": 6.0,
                 "Z": 0.0
               },
               "Position": {
-                "X": 3.0,
+                "X": 2.0,
                 "Y": 5.5,
                 "Z": 0.0
               },
@@ -11218,12 +11142,12 @@
             {
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
-                "X": 3.0,
+                "X": 2.0,
                 "Y": 5.5,
                 "Z": 0.0
               },
               "Position": {
-                "X": 3.0,
+                "X": 2.0,
                 "Y": 6.0,
                 "Z": 0.0
               },
@@ -11655,7 +11579,7 @@
             {
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
-                "X": 9.5,
+                "X": 10.0,
                 "Y": 8.0,
                 "Z": 0.0
               },
@@ -11674,12 +11598,12 @@
             {
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
-                "X": 9.5,
+                "X": 10.0,
                 "Y": 8.5,
                 "Z": 0.0
               },
               "Position": {
-                "X": 9.5,
+                "X": 10.0,
                 "Y": 8.0,
                 "Z": 0.0
               },
@@ -11693,12 +11617,12 @@
             {
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
-                "X": 9.5,
+                "X": 10.0,
                 "Y": 9.0,
                 "Z": 0.0
               },
               "Position": {
-                "X": 9.5,
+                "X": 10.0,
                 "Y": 8.5,
                 "Z": 0.0
               },
@@ -11712,12 +11636,12 @@
             {
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
-                "X": 9.5,
+                "X": 10.0,
                 "Y": 9.5,
                 "Z": 0.0
               },
               "Position": {
-                "X": 9.5,
+                "X": 10.0,
                 "Y": 9.0,
                 "Z": 0.0
               },
@@ -11731,12 +11655,12 @@
             {
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
-                "X": 9.5,
+                "X": 10.0,
                 "Y": 10.0,
                 "Z": 0.0
               },
               "Position": {
-                "X": 9.5,
+                "X": 10.0,
                 "Y": 9.5,
                 "Z": 0.0
               },
@@ -11750,108 +11674,13 @@
             {
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
-                "X": 9.5,
-                "Y": 10.5,
-                "Z": 0.0
-              },
-              "Position": {
-                "X": 9.5,
-                "Y": 10.0,
-                "Z": 0.0
-              },
-              "StrokeColor": {
-                "B": 0,
-                "G": 0,
-                "R": 0
-              },
-              "Type": "LineInstruction"
-            },
-            {
-              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-              "End": {
-                "X": 9.5,
-                "Y": 11.0,
-                "Z": 0.0
-              },
-              "Position": {
-                "X": 9.5,
-                "Y": 10.5,
-                "Z": 0.0
-              },
-              "StrokeColor": {
-                "B": 0,
-                "G": 0,
-                "R": 0
-              },
-              "Type": "LineInstruction"
-            },
-            {
-              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-              "End": {
-                "X": 9.5,
-                "Y": 11.5,
-                "Z": 0.0
-              },
-              "Position": {
-                "X": 9.5,
-                "Y": 11.0,
-                "Z": 0.0
-              },
-              "StrokeColor": {
-                "B": 0,
-                "G": 0,
-                "R": 0
-              },
-              "Type": "LineInstruction"
-            },
-            {
-              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-              "End": {
-                "X": 9.5,
-                "Y": 12.0,
-                "Z": 0.0
-              },
-              "Position": {
-                "X": 9.5,
-                "Y": 11.5,
-                "Z": 0.0
-              },
-              "StrokeColor": {
-                "B": 0,
-                "G": 0,
-                "R": 0
-              },
-              "Type": "LineInstruction"
-            },
-            {
-              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-              "End": {
-                "X": 9.5,
-                "Y": 12.5,
-                "Z": 0.0
-              },
-              "Position": {
-                "X": 9.5,
-                "Y": 12.0,
-                "Z": 0.0
-              },
-              "StrokeColor": {
-                "B": 0,
-                "G": 0,
-                "R": 0
-              },
-              "Type": "LineInstruction"
-            },
-            {
-              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-              "End": {
                 "X": 10.0,
-                "Y": 12.5,
+                "Y": 10.5,
                 "Z": 0.0
               },
               "Position": {
-                "X": 9.5,
-                "Y": 12.5,
+                "X": 10.0,
+                "Y": 10.0,
                 "Z": 0.0
               },
               "StrokeColor": {
@@ -11865,12 +11694,12 @@
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
                 "X": 10.5,
-                "Y": 12.5,
+                "Y": 10.5,
                 "Z": 0.0
               },
               "Position": {
                 "X": 10.0,
-                "Y": 12.5,
+                "Y": 10.5,
                 "Z": 0.0
               },
               "StrokeColor": {
@@ -11884,12 +11713,12 @@
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
                 "X": 11.0,
-                "Y": 12.5,
+                "Y": 10.5,
                 "Z": 0.0
               },
               "Position": {
                 "X": 10.5,
-                "Y": 12.5,
+                "Y": 10.5,
                 "Z": 0.0
               },
               "StrokeColor": {
@@ -11903,12 +11732,12 @@
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
                 "X": 11.5,
-                "Y": 12.5,
+                "Y": 10.5,
                 "Z": 0.0
               },
               "Position": {
                 "X": 11.0,
-                "Y": 12.5,
+                "Y": 10.5,
                 "Z": 0.0
               },
               "StrokeColor": {
@@ -11922,12 +11751,88 @@
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
                 "X": 12.0,
-                "Y": 12.5,
+                "Y": 10.5,
                 "Z": 0.0
               },
               "Position": {
                 "X": 11.5,
-                "Y": 12.5,
+                "Y": 10.5,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "B": 0,
+                "G": 0,
+                "R": 0
+              },
+              "Type": "LineInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+              "End": {
+                "X": 12.5,
+                "Y": 10.5,
+                "Z": 0.0
+              },
+              "Position": {
+                "X": 12.0,
+                "Y": 10.5,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "B": 0,
+                "G": 0,
+                "R": 0
+              },
+              "Type": "LineInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+              "End": {
+                "X": 12.5,
+                "Y": 11.0,
+                "Z": 0.0
+              },
+              "Position": {
+                "X": 12.5,
+                "Y": 10.5,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "B": 0,
+                "G": 0,
+                "R": 0
+              },
+              "Type": "LineInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+              "End": {
+                "X": 12.5,
+                "Y": 11.5,
+                "Z": 0.0
+              },
+              "Position": {
+                "X": 12.5,
+                "Y": 11.0,
+                "Z": 0.0
+              },
+              "StrokeColor": {
+                "B": 0,
+                "G": 0,
+                "R": 0
+              },
+              "Type": "LineInstruction"
+            },
+            {
+              "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+              "End": {
+                "X": 12.5,
+                "Y": 12.0,
+                "Z": 0.0
+              },
+              "Position": {
+                "X": 12.5,
+                "Y": 11.5,
                 "Z": 0.0
               },
               "StrokeColor": {
@@ -11945,8 +11850,8 @@
                 "Z": 0.0
               },
               "Position": {
-                "X": 12.0,
-                "Y": 12.5,
+                "X": 12.5,
+                "Y": 12.0,
                 "Z": 0.0
               },
               "StrokeColor": {
@@ -12016,7 +11921,7 @@
             {
               "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
               "End": {
-                "X": 12.5,
+                "X": 13.0,
                 "Y": 13.0,
                 "Z": 0.0
               },
@@ -12048,7 +11953,7 @@
           "Type": "TraceDrawable"
         },
         "Height": 1,
-        "ItemGuid": "7ec50e6d-ed1d-4c8a-b81a-32575b00e6cd",
+        "ItemGuid": "302f9016-7a99-4276-afe1-a1ffab20967d",
         "Name": "",
         "Pins": [],
         "RefName": "TraceItem1",
@@ -12070,14 +11975,14 @@
       "$type": "OSECircuitRender.Items.TraceItem, OSECircuitRender",
       "DrawableComponent": {
         "$type": "OSECircuitRender.Drawables.TraceDrawable, OSECircuitRender",
-        "ComponentGuid": "9170d9a3-529d-4cc9-8bfa-b30273243aa8",
+        "ComponentGuid": "23ddfb8a-56e9-40f3-8b48-5e7a17d074f1",
         "DrawablePins": [],
         "DrawInstructions": [
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 0.5,
-              "Y": 1.5,
+              "X": 1.0,
+              "Y": 2.0,
               "Z": 0.0
             },
             "Position": {
@@ -12095,31 +12000,12 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 0.5,
-              "Y": 2.0,
-              "Z": 0.0
-            },
-            "Position": {
-              "X": 0.5,
-              "Y": 1.5,
-              "Z": 0.0
-            },
-            "StrokeColor": {
-              "B": 0,
-              "G": 0,
-              "R": 0
-            },
-            "Type": "LineInstruction"
-          },
-          {
-            "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "End": {
-              "X": 0.5,
+              "X": 1.0,
               "Y": 2.5,
               "Z": 0.0
             },
             "Position": {
-              "X": 0.5,
+              "X": 1.0,
               "Y": 2.0,
               "Z": 0.0
             },
@@ -12133,12 +12019,12 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 0.5,
+              "X": 1.0,
               "Y": 3.0,
               "Z": 0.0
             },
             "Position": {
-              "X": 0.5,
+              "X": 1.0,
               "Y": 2.5,
               "Z": 0.0
             },
@@ -12152,12 +12038,12 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 0.5,
+              "X": 1.0,
               "Y": 3.5,
               "Z": 0.0
             },
             "Position": {
-              "X": 0.5,
+              "X": 1.0,
               "Y": 3.0,
               "Z": 0.0
             },
@@ -12171,12 +12057,12 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 0.5,
+              "X": 1.0,
               "Y": 4.0,
               "Z": 0.0
             },
             "Position": {
-              "X": 0.5,
+              "X": 1.0,
               "Y": 3.5,
               "Z": 0.0
             },
@@ -12190,12 +12076,12 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 0.5,
+              "X": 1.0,
               "Y": 4.5,
               "Z": 0.0
             },
             "Position": {
-              "X": 0.5,
+              "X": 1.0,
               "Y": 4.0,
               "Z": 0.0
             },
@@ -12209,32 +12095,13 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 0.5,
+              "X": 1.0,
               "Y": 5.0,
               "Z": 0.0
             },
             "Position": {
-              "X": 0.5,
+              "X": 1.0,
               "Y": 4.5,
-              "Z": 0.0
-            },
-            "StrokeColor": {
-              "B": 0,
-              "G": 0,
-              "R": 0
-            },
-            "Type": "LineInstruction"
-          },
-          {
-            "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "End": {
-              "X": 0.5,
-              "Y": 5.5,
-              "Z": 0.0
-            },
-            "Position": {
-              "X": 0.5,
-              "Y": 5.0,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -12252,8 +12119,8 @@
               "Z": 0.0
             },
             "Position": {
-              "X": 0.5,
-              "Y": 5.5,
+              "X": 1.0,
+              "Y": 5.0,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -12304,50 +12171,12 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 2.5,
-              "Y": 5.5,
-              "Z": 0.0
-            },
-            "Position": {
               "X": 2.0,
-              "Y": 5.5,
-              "Z": 0.0
-            },
-            "StrokeColor": {
-              "B": 0,
-              "G": 0,
-              "R": 0
-            },
-            "Type": "LineInstruction"
-          },
-          {
-            "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "End": {
-              "X": 3.0,
-              "Y": 5.5,
-              "Z": 0.0
-            },
-            "Position": {
-              "X": 2.5,
-              "Y": 5.5,
-              "Z": 0.0
-            },
-            "StrokeColor": {
-              "B": 0,
-              "G": 0,
-              "R": 0
-            },
-            "Type": "LineInstruction"
-          },
-          {
-            "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "End": {
-              "X": 3.0,
               "Y": 6.0,
               "Z": 0.0
             },
             "Position": {
-              "X": 3.0,
+              "X": 2.0,
               "Y": 5.5,
               "Z": 0.0
             },
@@ -12361,12 +12190,12 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 3.0,
+              "X": 2.0,
               "Y": 5.5,
               "Z": 0.0
             },
             "Position": {
-              "X": 3.0,
+              "X": 2.0,
               "Y": 6.0,
               "Z": 0.0
             },
@@ -12798,7 +12627,7 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 9.5,
+              "X": 10.0,
               "Y": 8.0,
               "Z": 0.0
             },
@@ -12817,12 +12646,12 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 9.5,
+              "X": 10.0,
               "Y": 8.5,
               "Z": 0.0
             },
             "Position": {
-              "X": 9.5,
+              "X": 10.0,
               "Y": 8.0,
               "Z": 0.0
             },
@@ -12836,12 +12665,12 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 9.5,
+              "X": 10.0,
               "Y": 9.0,
               "Z": 0.0
             },
             "Position": {
-              "X": 9.5,
+              "X": 10.0,
               "Y": 8.5,
               "Z": 0.0
             },
@@ -12855,12 +12684,12 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 9.5,
+              "X": 10.0,
               "Y": 9.5,
               "Z": 0.0
             },
             "Position": {
-              "X": 9.5,
+              "X": 10.0,
               "Y": 9.0,
               "Z": 0.0
             },
@@ -12874,12 +12703,12 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 9.5,
+              "X": 10.0,
               "Y": 10.0,
               "Z": 0.0
             },
             "Position": {
-              "X": 9.5,
+              "X": 10.0,
               "Y": 9.5,
               "Z": 0.0
             },
@@ -12893,108 +12722,13 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 9.5,
-              "Y": 10.5,
-              "Z": 0.0
-            },
-            "Position": {
-              "X": 9.5,
-              "Y": 10.0,
-              "Z": 0.0
-            },
-            "StrokeColor": {
-              "B": 0,
-              "G": 0,
-              "R": 0
-            },
-            "Type": "LineInstruction"
-          },
-          {
-            "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "End": {
-              "X": 9.5,
-              "Y": 11.0,
-              "Z": 0.0
-            },
-            "Position": {
-              "X": 9.5,
-              "Y": 10.5,
-              "Z": 0.0
-            },
-            "StrokeColor": {
-              "B": 0,
-              "G": 0,
-              "R": 0
-            },
-            "Type": "LineInstruction"
-          },
-          {
-            "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "End": {
-              "X": 9.5,
-              "Y": 11.5,
-              "Z": 0.0
-            },
-            "Position": {
-              "X": 9.5,
-              "Y": 11.0,
-              "Z": 0.0
-            },
-            "StrokeColor": {
-              "B": 0,
-              "G": 0,
-              "R": 0
-            },
-            "Type": "LineInstruction"
-          },
-          {
-            "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "End": {
-              "X": 9.5,
-              "Y": 12.0,
-              "Z": 0.0
-            },
-            "Position": {
-              "X": 9.5,
-              "Y": 11.5,
-              "Z": 0.0
-            },
-            "StrokeColor": {
-              "B": 0,
-              "G": 0,
-              "R": 0
-            },
-            "Type": "LineInstruction"
-          },
-          {
-            "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "End": {
-              "X": 9.5,
-              "Y": 12.5,
-              "Z": 0.0
-            },
-            "Position": {
-              "X": 9.5,
-              "Y": 12.0,
-              "Z": 0.0
-            },
-            "StrokeColor": {
-              "B": 0,
-              "G": 0,
-              "R": 0
-            },
-            "Type": "LineInstruction"
-          },
-          {
-            "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
-            "End": {
               "X": 10.0,
-              "Y": 12.5,
+              "Y": 10.5,
               "Z": 0.0
             },
             "Position": {
-              "X": 9.5,
-              "Y": 12.5,
+              "X": 10.0,
+              "Y": 10.0,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -13008,12 +12742,12 @@
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
               "X": 10.5,
-              "Y": 12.5,
+              "Y": 10.5,
               "Z": 0.0
             },
             "Position": {
               "X": 10.0,
-              "Y": 12.5,
+              "Y": 10.5,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -13027,12 +12761,12 @@
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
               "X": 11.0,
-              "Y": 12.5,
+              "Y": 10.5,
               "Z": 0.0
             },
             "Position": {
               "X": 10.5,
-              "Y": 12.5,
+              "Y": 10.5,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -13046,12 +12780,12 @@
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
               "X": 11.5,
-              "Y": 12.5,
+              "Y": 10.5,
               "Z": 0.0
             },
             "Position": {
               "X": 11.0,
-              "Y": 12.5,
+              "Y": 10.5,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -13065,12 +12799,88 @@
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
               "X": 12.0,
-              "Y": 12.5,
+              "Y": 10.5,
               "Z": 0.0
             },
             "Position": {
               "X": 11.5,
-              "Y": 12.5,
+              "Y": 10.5,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "B": 0,
+              "G": 0,
+              "R": 0
+            },
+            "Type": "LineInstruction"
+          },
+          {
+            "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+            "End": {
+              "X": 12.5,
+              "Y": 10.5,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 12.0,
+              "Y": 10.5,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "B": 0,
+              "G": 0,
+              "R": 0
+            },
+            "Type": "LineInstruction"
+          },
+          {
+            "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+            "End": {
+              "X": 12.5,
+              "Y": 11.0,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 12.5,
+              "Y": 10.5,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "B": 0,
+              "G": 0,
+              "R": 0
+            },
+            "Type": "LineInstruction"
+          },
+          {
+            "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+            "End": {
+              "X": 12.5,
+              "Y": 11.5,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 12.5,
+              "Y": 11.0,
+              "Z": 0.0
+            },
+            "StrokeColor": {
+              "B": 0,
+              "G": 0,
+              "R": 0
+            },
+            "Type": "LineInstruction"
+          },
+          {
+            "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
+            "End": {
+              "X": 12.5,
+              "Y": 12.0,
+              "Z": 0.0
+            },
+            "Position": {
+              "X": 12.5,
+              "Y": 11.5,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -13088,8 +12898,8 @@
               "Z": 0.0
             },
             "Position": {
-              "X": 12.0,
-              "Y": 12.5,
+              "X": 12.5,
+              "Y": 12.0,
               "Z": 0.0
             },
             "StrokeColor": {
@@ -13159,7 +12969,7 @@
           {
             "$type": "OSECircuitRender.Instructions.LineInstruction, OSECircuitRender",
             "End": {
-              "X": 12.5,
+              "X": 13.0,
               "Y": 13.0,
               "Z": 0.0
             },
@@ -13191,7 +13001,7 @@
         "Type": "TraceDrawable"
       },
       "Height": 1,
-      "ItemGuid": "7ec50e6d-ed1d-4c8a-b81a-32575b00e6cd",
+      "ItemGuid": "302f9016-7a99-4276-afe1-a1ffab20967d",
       "Name": "",
       "Pins": [],
       "RefName": "TraceItem1",

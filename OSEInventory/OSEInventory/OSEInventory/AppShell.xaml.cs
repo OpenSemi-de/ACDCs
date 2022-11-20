@@ -6,12 +6,11 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
         RegisterRoutes();
-
-        BindingContext = this;
     }
 
     private void RegisterRoutes()
     {
+        Routing.RegisterRoute(nameof(WelcomePage), typeof(WelcomePage));
         /*        Routes.Add("monkeydetails", typeof(MonkeyDetailPage));
 
                 foreach (var item in Routes)

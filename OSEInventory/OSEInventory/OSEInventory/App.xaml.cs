@@ -4,8 +4,6 @@ using Microsoft.Maui.Platform;
 
 public partial class App : Application
 {
-    public static App Instance { get; private set; }
-
     public App()
     {
         InitializeComponent();
@@ -13,4 +11,6 @@ public partial class App : Application
 
         MainPage = new AppShell();
     }
+
+    public static App Instance { get; private set; }
 }

@@ -4,9 +4,18 @@
              x:Class="OSEInventory.WelcomePage"
              Title="WelcomePage">
     <StackLayout Orientation="Vertical">
+        <Image Source="ose.png"></Image>
+        <StackLayout Orientation="Vertical" WidthRequest="300">
+            <Button Text="New project"></Button>
+            <Button Text="New database"></Button>
+            <Button Text="New scheme"></Button>
+        </StackLayout>
+
+        <!--<StackLayout HorizontalOptions="Fill">
+            <GraphicsView  BackgroundColor="Blue" x:Name="graphicsView" MinimumHeightRequest="500" VerticalOptions="Fill" HorizontalOptions="Fill" ></GraphicsView>
+        </StackLayout>
         <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" BackgroundColor="AliceBlue" HeightRequest="35">
             <Button Pressed="Button_Clicked" Text="test" Clicked="Button_Clicked" IsEnabled="True"></Button>
-        </StackLayout>
-        <GraphicsView  BackgroundColor="Blue" x:Name="graphicsView" HeightRequest="1000" ></GraphicsView>
+        </StackLayout>-->
     </StackLayout>
 </ContentPage>

@@ -33,4 +33,8 @@ public partial class WelcomePage : ContentPage
     //    //Console.WriteLine(JsonConvert.SerializeObject(wb.Sheets[0].SceneManager.GetSceneForBackend(), Formatting.Indented));
     //    graphicsView.Drawable = (IDrawable)ws.SceneManager.GetSceneForBackend();
     //}
+    private void Button_OnClicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new SheetPage());
+    }
 }

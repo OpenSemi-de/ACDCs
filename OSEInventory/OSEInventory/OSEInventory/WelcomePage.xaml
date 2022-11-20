@@ -8,7 +8,7 @@
         <StackLayout Orientation="Vertical" WidthRequest="300">
             <Button Text="New project"></Button>
             <Button Text="New database"></Button>
-            <Button Text="New scheme"></Button>
+            <Button Text="New scheme" Clicked="Button_OnClicked"></Button>
         </StackLayout>
 
         <!--<StackLayout HorizontalOptions="Fill">

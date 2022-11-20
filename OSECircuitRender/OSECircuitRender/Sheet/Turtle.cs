@@ -84,12 +84,12 @@ public class Turtle
     private readonly Coordinate _sheetSize;
     private readonly WorksheetItemList _traces;
 
-    public Turtle(WorksheetItemList items, WorksheetItemList nets, Coordinate sheetSize, WorksheetItemList traces)
+    public Turtle(WorksheetItemList? items, WorksheetItemList? nets, Coordinate? sheetSize, WorksheetItemList? traces)
     {
-        _items = items;
-        _nets = nets;
-        _sheetSize = sheetSize;
-        _traces = traces;
+        _items = items ?? new WorksheetItemList();
+        _nets = nets ?? new WorksheetItemList();
+        _sheetSize = sheetSize ?? new Coordinate();
+        _traces = traces ?? new WorksheetItemList();
     }
 
     public ICanvas? DebugCanvas { get; set; }
@@ -399,27 +399,6 @@ public class Turtle
             rect.X1 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
             rect.Y1 * DrawableScene.Zoom * DrawableScene.BaseGridSize
         );
-    }
-
-    private void DebugDrawRectangle(RectF rect)
-    {
-        DebugCanvas?.DrawRectangle(
-            rect.X * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.Y * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.Width * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.Height * DrawableScene.Zoom * DrawableScene.BaseGridSize
-            );
-    }
-
-    private void DebugFillRect(RectF rect, int offset = 0)
-    {
-        DebugCanvas?.FillRectangle(
-            rect.X * DrawableScene.Zoom * DrawableScene.BaseGridSize + offset,
-            rect.Y * DrawableScene.Zoom * DrawableScene.BaseGridSize + offset,
-            rect.Width * DrawableScene.Zoom * DrawableScene.BaseGridSize - 2 * offset,
-            rect.Height * DrawableScene.Zoom * DrawableScene.BaseGridSize - 2 * offset
-
-            );
     }
 
     private Direction GetDirection(float posX, float posY)

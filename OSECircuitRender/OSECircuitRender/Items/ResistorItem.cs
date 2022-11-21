@@ -15,5 +15,11 @@ public sealed class ResistorItem : WorksheetItem
         Value = value;
     }
 
+    public ResistorItem(string value)
+    {
+        DrawableComponent = new ResistorDrawable(this, value, 0, 0);
+        Value = value;
+    }
+
     public string Value { get; set; }
 }

@@ -1,4 +1,7 @@
-﻿namespace OSEInventory;
+﻿using Microsoft.Maui.Controls.Hosting;
+using Microsoft.Maui.Hosting;
+
+namespace OSEInventory;
 
 public static class MauiProgram
 {
@@ -6,12 +9,7 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         builder
-            .UseMauiApp<App>()
-            .ConfigureFonts(fonts =>
-            {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            });
+            .UseMauiApp<App>();
 
         return builder.Build();
     }

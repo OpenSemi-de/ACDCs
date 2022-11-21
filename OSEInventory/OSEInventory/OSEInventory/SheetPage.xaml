@@ -19,6 +19,8 @@
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
                     <Button Text="R" x:Name="bnResistor" Clicked="BnResistor_OnClicked" ></Button>
                     <Button Text="C" x:Name="bnCapacitor" Clicked="BnCapacitor_OnClicked"></Button>
+                    <Button Text="L" x:Name="bnInductor" Clicked="BnInductor_OnClicked"></Button>
+                    <Button Text="D" x:Name="bnDiode" Clicked="BnDiode_OnClicked"></Button>
                 </StackLayout>
             </ScrollView>
         </Frame>

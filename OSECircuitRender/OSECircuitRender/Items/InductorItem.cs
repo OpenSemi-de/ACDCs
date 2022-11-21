@@ -4,6 +4,8 @@ namespace OSECircuitRender.Items;
 
 public sealed class InductorItem : WorksheetItem
 {
+    public string Value { get; }
+
     public InductorItem()
     {
         DrawableComponent = new InductorDrawable(this);
@@ -11,6 +13,13 @@ public sealed class InductorItem : WorksheetItem
 
     public InductorItem(string value, float x, float y)
     {
+        Value = value;
         DrawableComponent = new InductorDrawable(this, value, x, y);
+    }
+
+    public InductorItem(string value)
+    {
+        Value = value;
+        DrawableComponent = new InductorDrawable(this, value, 0, 0);
     }
 }

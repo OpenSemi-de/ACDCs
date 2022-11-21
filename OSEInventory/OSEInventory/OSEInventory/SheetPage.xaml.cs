@@ -9,13 +9,21 @@ using OSECircuitRender.Scene;
 
 namespace OSEInventory;
 
-public partial class SheetPage : ContentPage
+public partial class SheetPage
 {
     public SheetPage()
     {
         InitializeComponent();
         SetupSheet();
     }
+
+    public Button? SelectedButton { get; set; }
+
+    public Color SelectedButtonColor { get; set; }
+
+    public Func<float, float, WorksheetItem> DoInsert { get; set; }
+
+    public bool IsInserting { get; set; }
 
     private void SetupSheet()
     {
@@ -33,13 +41,18 @@ public partial class SheetPage : ContentPage
             App.CurrentSheet.SceneManager.GetSceneForBackend();
 
 
-
         sheetGraphicsView.Drawable = scene;
-
     }
 
     private void OnSheetItemAdded(IWorksheetItem obj)
     {
+        Paint();
+    }
+
+    private void Paint()
+    {
+        if (IsInserting)
+            return;
         App.CurrentSheet.CalculateScene();
         DrawableScene scene = (DrawableScene)
             App.CurrentSheet.SceneManager.GetSceneForBackend();
@@ -53,43 +66,56 @@ public partial class SheetPage : ContentPage
         InsertItem<ResistorItem>(bnResistor);
     }
 
-    public Button? SelectedButton { get; set; }
-
     private void InsertItem<T>(Button selectedButton)
     {
         bool justDeselectAndReturn = SelectedButton == selectedButton;
         IsInserting = false;
-        DoInsert = (x,y) => null;
+        DoInsert = (x, y) => null;
         DeselectSelectedButton();
         if (justDeselectAndReturn) return;
 
         SelectButton<T>(selectedButton);
 
+        WorksheetItem? item = null;
+
         if (typeof(T) == typeof(ResistorItem))
         {
-            DoInsert = ((float x, float y) =>
-            {
-                var item = new ResistorItem("10k", x, y);
-                App.CurrentSheet.Items.AddItem(item);
-                return item;
-            });
-            IsInserting = true;
+            item = new ResistorItem("10k");
+
+        }
+        else if (typeof(T) == typeof(CapacitorItem))
+        {
+            item = new CapacitorItem("10u", CapacitorDrawableType.Polarized);
+
+        }
+        else if (typeof(T) == typeof(InductorItem))
+        {
+            item = new InductorItem("1m");
+        }
+        else if (typeof(T) == typeof(DiodeItem))
+        {
+            item = new DiodeItem("");
         }
 
-
-        if (typeof(T) == typeof(CapacitorItem))
+        if (item != null)
         {
-            DoInsert = ((float x, float y) =>
-            {
-                var item = new CapacitorItem("10u", CapacitorDrawableType.Polarized, x, y);
-                App.CurrentSheet.Items.AddItem(item);
-                return item;
-            });
-            IsInserting = true;
+            Insert<T>(item);
         }
 
         if (!IsInserting)
             DeselectSelectedButton();
+    }
+
+    private void Insert<T>(WorksheetItem item)
+    {
+        DoInsert = ((float x, float y) =>
+        {
+            item.DrawableComponent.Position.X = x;
+            item.DrawableComponent.Position.Y = y;
+            App.CurrentSheet.Items.AddItem(item);
+            return item;
+        });
+        IsInserting = true;
     }
 
     private void SelectButton<T>(Button selectedButton)
@@ -102,10 +128,6 @@ public partial class SheetPage : ContentPage
         }
     }
 
-    public Color SelectedButtonColor { get; set; }
-
-    public Func<float, float, WorksheetItem> DoInsert { get; set; }
-
 
     private void SheetGraphicsView_OnStartInteraction(object sender, TouchEventArgs e)
     {
@@ -117,6 +139,7 @@ public partial class SheetPage : ContentPage
                 var newItem = DoInsert(touch.X / 25, touch.Y / 25);
                 DeselectSelectedButton();
                 IsInserting = false;
+                Paint();
             }
         }
     }
@@ -131,15 +154,22 @@ public partial class SheetPage : ContentPage
         SelectedButton = null;
     }
 
-    public bool IsInserting { get; set; }
-
     private void SheetGraphicsView_OnEndInteraction(object sender, TouchEventArgs e)
     {
-
     }
 
     private void BnCapacitor_OnClicked(object sender, EventArgs e)
     {
         InsertItem<CapacitorItem>(bnCapacitor);
+    }
+
+    private void BnInductor_OnClicked(object sender, EventArgs e)
+    {
+        InsertItem<InductorItem>(bnInductor);
+    }
+
+    private void BnDiode_OnClicked(object sender, EventArgs e)
+    {
+        InsertItem<DiodeItem>(bnDiode);
     }
 }

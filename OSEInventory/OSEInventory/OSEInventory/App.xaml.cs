@@ -1,9 +1,10 @@
-﻿using OSECircuitRender;
+﻿using Microsoft.Maui.Controls;
+using OSECircuitRender;
 using OSECircuitRender.Sheet;
 
 namespace OSEInventory;
 
-using Microsoft.Maui.Platform;
+
 
 public partial class App : Application
 {

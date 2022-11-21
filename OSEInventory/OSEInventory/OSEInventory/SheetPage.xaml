@@ -4,21 +4,30 @@
              x:Class="OSEInventory.SheetPage"
              Title="New sheet">
     <AbsoluteLayout>
+
         <Frame AbsoluteLayout.LayoutFlags="SizeProportional" AbsoluteLayout.LayoutBounds="0,0,1,1">
-            <GraphicsView x:Name="sheetGraphicsView" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="DarkBlue"></GraphicsView>
+            <GraphicsView x:Name="sheetGraphicsView" StartInteraction="SheetGraphicsView_OnStartInteraction" EndInteraction="SheetGraphicsView_OnEndInteraction">
+                <GraphicsView.HorizontalOptions>Fill</GraphicsView.HorizontalOptions>
+                <GraphicsView.BackgroundColor>DarkBlue</GraphicsView.BackgroundColor>
+                <GraphicsView.VerticalOptions>Fill</GraphicsView.VerticalOptions>
+                
+            </GraphicsView>
         </Frame>
 
         <Frame AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,0,AutoSize,40">
             <ScrollView VerticalScrollBarVisibility="Never" HorizontalOptions="Fill">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
-                    <Button Text="R"></Button>
+                    <Button Text="R" x:Name="bnResistor" Clicked="BnResistor_OnClicked" ></Button>
+                    <Button Text="C" x:Name="bnCapacitor" Clicked="BnCapacitor_OnClicked"></Button>
                 </StackLayout>
             </ScrollView>
         </Frame>
         <Frame AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,1,AutoSize,40">
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
-                <Button Text=">"></Button>
-            </StackLayout>
+            <ScrollView VerticalScrollBarVisibility="Never" HorizontalOptions="Fill">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
+                    <Button Text=">"></Button>
+                </StackLayout>
+            </ScrollView>
         </Frame>
     </AbsoluteLayout>
 </ContentPage>

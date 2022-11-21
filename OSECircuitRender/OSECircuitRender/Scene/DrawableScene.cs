@@ -10,8 +10,8 @@ namespace OSECircuitRender.Scene;
 
 public class DrawableScene : IDrawable
 {
-    public static float BaseGridSize = 2.54f;
-    public static float Zoom = 10f;
+    public static float BaseGridSize = Workbook.BaseGridSize;
+    public static float Zoom = Workbook.Zoom;
 
     public DrawableScene(SheetScene scene)
     {

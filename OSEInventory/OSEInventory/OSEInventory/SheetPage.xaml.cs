@@ -136,7 +136,9 @@ public partial class SheetPage
             if (IsInserting)
             {
                 var touch = e.Touches[0];
-                var newItem = DoInsert(touch.X / 25, touch.Y / 25);
+                var newItem = DoInsert(
+                    Convert.ToSingle(Math.Round(touch.X / (Workbook.BaseGridSize * Workbook.Zoom))),
+                   Convert.ToSingle(Math.Round( touch.Y / (Workbook.BaseGridSize * Workbook.Zoom))));
                 DeselectSelectedButton();
                 IsInserting = false;
                 Paint();

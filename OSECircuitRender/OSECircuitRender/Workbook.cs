@@ -11,6 +11,8 @@ public sealed class Workbook
     public WorksheetsList Sheets = new();
     private readonly JsonSerializerSettings _jsonSerializerSettings;
 
+    public static float BaseGridSize = 2.54f;
+    public static float Zoom = 10f;
     public Workbook()
     {
         _jsonSerializerSettings = new JsonSerializerSettings

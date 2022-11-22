@@ -136,42 +136,63 @@ public partial class SheetPage
             if (IsInserting)
             {
                 var touch = e.Touches[0];
-                var newItem = DoInsert(
-                    Convert.ToSingle(Math.Round(touch.X / (Workbook.BaseGridSize * Workbook.Zoom))),
-                   Convert.ToSingle(Math.Round( touch.Y / (Workbook.BaseGridSize * Workbook.Zoom))));
+                var newItem = DoInsert?.Invoke(
+                    GetRelPos(touch.X),
+                    GetRelPos(touch.Y));
+
                 DeselectSelectedButton();
                 IsInserting = false;
                 Paint();
             }
+            else
+            {
+                var touch = e.Touches[0];
+                var selectedItem = App.CurrentSheet.GetItemAt(
+                    GetRelPos(touch.X),
+                    GetRelPos(touch.Y)
+                );
+
+                if (selectedItem != null)
+                {
+                    App.CurrentSheet.ToggleSelectItem(selectedItem);
+                    Paint();
+                }
+            }
+
         }
     }
 
-    private void DeselectSelectedButton()
-    {
-        if (SelectedButton != null)
+        private float GetRelPos(double pos)
         {
-            SelectedButton.BackgroundColor = SelectedButtonColor;
+            return Convert.ToSingle(Math.Round(pos / (Workbook.BaseGridSize * Workbook.Zoom)));
         }
 
-        SelectedButton = null;
-    }
+        private void DeselectSelectedButton()
+        {
+            if (SelectedButton != null)
+            {
+                SelectedButton.BackgroundColor = SelectedButtonColor;
+            }
 
-    private void SheetGraphicsView_OnEndInteraction(object sender, TouchEventArgs e)
-    {
-    }
+            SelectedButton = null;
+        }
 
-    private void BnCapacitor_OnClicked(object sender, EventArgs e)
-    {
-        InsertItem<CapacitorItem>(bnCapacitor);
-    }
+        private void SheetGraphicsView_OnEndInteraction(object sender, TouchEventArgs e)
+        {
+        }
 
-    private void BnInductor_OnClicked(object sender, EventArgs e)
-    {
-        InsertItem<InductorItem>(bnInductor);
-    }
+        private void BnCapacitor_OnClicked(object sender, EventArgs e)
+        {
+            InsertItem<CapacitorItem>(bnCapacitor);
+        }
 
-    private void BnDiode_OnClicked(object sender, EventArgs e)
-    {
-        InsertItem<DiodeItem>(bnDiode);
+        private void BnInductor_OnClicked(object sender, EventArgs e)
+        {
+            InsertItem<InductorItem>(bnInductor);
+        }
+
+        private void BnDiode_OnClicked(object sender, EventArgs e)
+        {
+            InsertItem<DiodeItem>(bnDiode);
+        }
     }
-}

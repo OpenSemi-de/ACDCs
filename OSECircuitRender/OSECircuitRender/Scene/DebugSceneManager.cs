@@ -21,10 +21,10 @@ public sealed class DebugSceneManager : ISceneManager
         return true;
     }
 
-    public bool SetScene(DrawableComponentList drawables)
+    public bool SetScene(DrawableComponentList drawables, DrawableComponentList selected)
     {
         Scene = new SheetScene();
-        Scene.SetDrawables(drawables);
+        Scene.SetDrawables(drawables, selected);
         Scene.ShowGrid = true;
         return true;
     }

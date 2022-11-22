@@ -82,6 +82,17 @@ public class DrawableScene : IDrawable
 
         canvas.Rotate(drawable.Rotation, drawSize.X / 2, drawSize.Y / 2);
 
+        if (Scene.IsSelected(drawable))
+        {
+            canvas.SaveState();
+            Log.L("selected");
+            var upperLeft = new Coordinate(0,0);
+            SetStrokeColor(canvas, new Color(255,0,0));
+            var lowerRight = new Coordinate(drawable.Size);
+            DrawRectangle(canvas, drawPos, drawSize, upperLeft, lowerRight, null);
+            canvas.RestoreState();
+        }
+
         foreach (var instruction in drawable.DrawInstructions)
         {
             if (instruction is LineInstruction line)

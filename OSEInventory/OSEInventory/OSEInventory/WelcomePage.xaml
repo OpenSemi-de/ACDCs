@@ -4,7 +4,7 @@
              x:Class="OSEInventory.WelcomePage"
              Title="WelcomePage">
     <StackLayout Orientation="Vertical">
-        <Image Source="ose.png"></Image>
+        <Image Source="ose.png" WidthRequest="300"></Image>
         <StackLayout Orientation="Vertical" WidthRequest="300">
             <Button Text="New project"></Button>
             <Button Text="New database"></Button>

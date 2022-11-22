@@ -4,6 +4,8 @@ using Microsoft.Maui.Graphics.Skia;
 using OSECircuitRender;
 using OSECircuitRender.Drawables;
 using OSECircuitRender.Items;
+using OSECircuitRender.Items.Capacitors;
+using OSECircuitRender.Items.Transistors;
 using OSECircuitRender.Scene;
 using OSECircuitRender.Sheet;
 

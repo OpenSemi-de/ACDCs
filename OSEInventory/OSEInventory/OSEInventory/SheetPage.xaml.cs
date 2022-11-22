@@ -1,11 +1,11 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
+﻿using System.Dynamic;
+using System.Reflection;
 using OSECircuitRender;
 using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
+using OSEInventory.Components;
 
 namespace OSEInventory;
 
@@ -14,7 +14,43 @@ public partial class SheetPage
     public SheetPage()
     {
         InitializeComponent();
+        SetupPage();
         SetupSheet();
+    }
+
+    private void SetupPage()
+    {
+        foreach (var type in typeof(IWorksheetItem).Assembly.GetTypes())
+        {
+            TypeFilter typeFilter = new((filterType, criteria) => filterType == typeof(IWorksheetItem));
+            if (type.FindInterfaces(typeFilter, null).Length > 0)
+            {
+                var IsInsertableProp = type.GetProperty("IsInsertable");
+                if (IsInsertableProp != null)
+                {
+                    bool IsInsertable = (bool) (IsInsertableProp.GetValue(null, BindingFlags.Static, null, null, null) ?? false);
+                    if (IsInsertable)
+                    {
+                        ItemButton button = new() { ItemType = type, Text = "" + type.Name.First() };
+                        button.Clicked += OnItemButtonClicked;
+                        slComponentButtons.Add(
+                            button
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    private void OnItemButtonClicked(object? sender, EventArgs e)
+    {
+        if (sender is ItemButton button)
+        {
+            if (button.ItemType != null)
+            {
+                InsertItem(button.ItemType, button);
+            }
+        }
     }
 
     public Button? SelectedButton { get; set; }
@@ -61,12 +97,8 @@ public partial class SheetPage
         sheetGraphicsView.Invalidate();
     }
 
-    private void BnResistor_OnClicked(object sender, EventArgs e)
-    {
-        InsertItem<ResistorItem>(bnResistor);
-    }
 
-    private void InsertItem<T>(Button selectedButton)
+    private void InsertItem(Type itemType, Button selectedButton)
     {
         bool justDeselectAndReturn = SelectedButton == selectedButton;
         IsInserting = false;
@@ -74,39 +106,18 @@ public partial class SheetPage
         DeselectSelectedButton();
         if (justDeselectAndReturn) return;
 
-        SelectButton<T>(selectedButton);
+        SelectButton(selectedButton);
 
-        WorksheetItem? item = null;
-
-        if (typeof(T) == typeof(ResistorItem))
+        if (Activator.CreateInstance(itemType) is WorksheetItem item)
         {
-            item = new ResistorItem("10k");
-
-        }
-        else if (typeof(T) == typeof(CapacitorItem))
-        {
-            item = new CapacitorItem("10u", CapacitorDrawableType.Polarized);
-
-        }
-        else if (typeof(T) == typeof(InductorItem))
-        {
-            item = new InductorItem("1m");
-        }
-        else if (typeof(T) == typeof(DiodeItem))
-        {
-            item = new DiodeItem("");
-        }
-
-        if (item != null)
-        {
-            Insert<T>(item);
+            Insert(item);
         }
 
         if (!IsInserting)
             DeselectSelectedButton();
     }
 
-    private void Insert<T>(WorksheetItem item)
+    private void Insert(WorksheetItem item)
     {
         DoInsert = ((float x, float y) =>
         {
@@ -118,7 +129,7 @@ public partial class SheetPage
         IsInserting = true;
     }
 
-    private void SelectButton<T>(Button selectedButton)
+    private void SelectButton(Button selectedButton)
     {
         SelectedButton = selectedButton;
         SelectedButtonColor = SelectedButton?.BackgroundColor;
@@ -147,10 +158,26 @@ public partial class SheetPage
             else
             {
                 var touch = e.Touches[0];
-                var selectedItem = App.CurrentSheet.GetItemAt(
+                WorksheetItem? selectedItem = App.CurrentSheet.GetItemAt(
                     GetRelPos(touch.X),
                     GetRelPos(touch.Y)
                 );
+
+                List<int> offsets = new List<int>() { 0, -1, 1 };
+
+                foreach (int row in offsets)
+                    foreach (int column in offsets)
+                    {
+                        if (selectedItem == null)
+                        {
+
+                            selectedItem = App.CurrentSheet.GetItemAt(
+                                GetRelPos(touch.X) + column,
+                                GetRelPos(touch.Y) + row);
+                        }
+                        else break;
+                    }
+
 
                 if (selectedItem != null)
                 {
@@ -162,37 +189,23 @@ public partial class SheetPage
         }
     }
 
-        private float GetRelPos(double pos)
-        {
-            return Convert.ToSingle(Math.Round(pos / (Workbook.BaseGridSize * Workbook.Zoom)));
-        }
-
-        private void DeselectSelectedButton()
-        {
-            if (SelectedButton != null)
-            {
-                SelectedButton.BackgroundColor = SelectedButtonColor;
-            }
-
-            SelectedButton = null;
-        }
-
-        private void SheetGraphicsView_OnEndInteraction(object sender, TouchEventArgs e)
-        {
-        }
-
-        private void BnCapacitor_OnClicked(object sender, EventArgs e)
-        {
-            InsertItem<CapacitorItem>(bnCapacitor);
-        }
-
-        private void BnInductor_OnClicked(object sender, EventArgs e)
-        {
-            InsertItem<InductorItem>(bnInductor);
-        }
-
-        private void BnDiode_OnClicked(object sender, EventArgs e)
-        {
-            InsertItem<DiodeItem>(bnDiode);
-        }
+    private float GetRelPos(double pos)
+    {
+        return Convert.ToSingle(Math.Round(pos / (Workbook.BaseGridSize * Workbook.Zoom)));
     }
+
+    private void DeselectSelectedButton()
+    {
+        if (SelectedButton != null)
+        {
+            SelectedButton.BackgroundColor = SelectedButtonColor;
+        }
+
+        SelectedButton = null;
+    }
+
+    private void SheetGraphicsView_OnEndInteraction(object sender, TouchEventArgs e)
+    {
+    }
+
+}

@@ -1,2 +1,0 @@
-
-# SpiceSharpParser API documentation

@@ -1,4 +1,5 @@
-﻿using OSECircuitRender.Drawables;
+﻿using System.ComponentModel;
+using OSECircuitRender.Drawables;
 
 namespace OSECircuitRender.Items;
 
@@ -8,8 +9,13 @@ public sealed class InductorItem : WorksheetItem
 
     public InductorItem()
     {
-        DrawableComponent = new InductorDrawable(this);
+        DrawableComponent = new InductorDrawable(this, DefaultValue,0,0 );
     }
+
+    public string DefaultValue { get; set; } = "1m";
+
+    public new static bool IsInsertable { get; set; } = true;
+
 
     public InductorItem(string value, float x, float y)
     {

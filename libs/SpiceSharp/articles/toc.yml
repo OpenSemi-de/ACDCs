@@ -1,9 +1,0 @@
-- name: Getting started
-  href: tutorials/toc.yml
-  topicHref: tutorials/gettingstarted.md
-- name: Spice# structure
-  href: structure/toc.yml
-  topicHref: structure/flow.md
-- name: Custom components
-  href: custom_components/toc.yml
-  topicHref: custom_components/custom_models.md

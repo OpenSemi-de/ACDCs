@@ -6,6 +6,8 @@ namespace OSECircuitRender.Items;
 
 public class WorksheetItem : IWorksheetItem
 {
+    public static bool IsInsertable { get; set; } = false;
+    public string DefaultValue { get; set; }
     public IDrawableComponent DrawableComponent { get; set; } = new DrawableComponent(typeof(DrawableComponent));
     public int Height => Convert.ToInt32(DrawableComponent.Size.Y);
     public Guid ItemGuid { get; set; } = Guid.NewGuid();

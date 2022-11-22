@@ -1,8 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:OSEInventory.Components"
+             xmlns:items="clr-namespace:OSECircuitRender.Items;assembly=OSECircuitRender"
              x:Class="OSEInventory.SheetPage"
-             Title="New sheet">
+             Title="New sheet"
+             >
     <AbsoluteLayout>
 
         <Frame AbsoluteLayout.LayoutFlags="SizeProportional" AbsoluteLayout.LayoutBounds="0,0,1,1">
@@ -10,17 +13,13 @@
                 <GraphicsView.HorizontalOptions>Fill</GraphicsView.HorizontalOptions>
                 <GraphicsView.BackgroundColor>DarkBlue</GraphicsView.BackgroundColor>
                 <GraphicsView.VerticalOptions>Fill</GraphicsView.VerticalOptions>
-                
+
             </GraphicsView>
         </Frame>
 
         <Frame AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,0,AutoSize,40">
             <ScrollView VerticalScrollBarVisibility="Never" HorizontalOptions="Fill">
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
-                    <Button Text="R" x:Name="bnResistor" Clicked="BnResistor_OnClicked" ></Button>
-                    <Button Text="C" x:Name="bnCapacitor" Clicked="BnCapacitor_OnClicked"></Button>
-                    <Button Text="L" x:Name="bnInductor" Clicked="BnInductor_OnClicked"></Button>
-                    <Button Text="D" x:Name="bnDiode" Clicked="BnDiode_OnClicked"></Button>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" x:Name="slComponentButtons">
                 </StackLayout>
             </ScrollView>
         </Frame>

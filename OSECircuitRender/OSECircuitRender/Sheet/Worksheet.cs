@@ -125,15 +125,17 @@ public sealed class Worksheet
         }
     }
 
-    public void ToggleSelectItem(WorksheetItem selectedItem)
+    public bool ToggleSelectItem(WorksheetItem selectedItem)
     {
         if (SelectedItems.Contains(selectedItem))
         {
             SelectedItems.Remove(selectedItem);
+            return false;
         }
         else
         {
             SelectedItems.AddItem(selectedItem);
+            return true;
         }
     }
 }

@@ -13,6 +13,8 @@ namespace OSEInventory;
 
 public partial class SheetPage
 {
+    private List<WorksheetItem> selectedItems = new();
+
     public SheetPage()
     {
         InitializeComponent();
@@ -146,7 +148,7 @@ public partial class SheetPage
 
     private void SheetGraphicsView_OnStartInteraction(object sender, TouchEventArgs e)
     {
-      
+
     }
 
     private float GetRelPos(double pos)
@@ -187,30 +189,45 @@ public partial class SheetPage
                     GetRelPos(touch.Y)
                 );
 
-                List<int> offsets = new() { 0, -1, 1 };
-
-                foreach (int row in offsets)
-                foreach (int column in offsets)
-                {
-                    if (selectedItem == null)
-                    {
-
-                        selectedItem = App.CurrentSheet.GetItemAt(
-                            GetRelPos(touch.X) + column,
-                            GetRelPos(touch.Y) + row);
-                    }
-                    else break;
-                }
+                selectedItem = WorksheetItem(selectedItem, touch);
 
 
                 if (selectedItem != null)
                 {
-                    App.CurrentSheet.ToggleSelectItem(selectedItem);
+                    if (App.CurrentSheet.ToggleSelectItem(selectedItem))
+                    {
+                        if (!selectedItems.Contains(selectedItem))
+                            selectedItems.Add(selectedItem);
+                    }
+                    else
+                    {
+                        if (selectedItems.Contains(selectedItem))
+                            selectedItems.Remove(selectedItem);
+                    }
                     Paint();
                 }
             }
 
         }
+    }
+
+    private WorksheetItem WorksheetItem(WorksheetItem selectedItem, PointF touch)
+    {
+        List<int> offsets = new() { 0, -1, 1 };
+
+        foreach (int row in offsets)
+            foreach (int column in offsets)
+            {
+                if (selectedItem == null)
+                {
+                    selectedItem = App.CurrentSheet.GetItemAt(
+                        GetRelPos(touch.X) + column,
+                        GetRelPos(touch.Y) + row);
+                }
+                else break;
+            }
+
+        return selectedItem;
     }
 
 
@@ -220,6 +237,7 @@ public partial class SheetPage
         {
             LastDisplayOffset = App.CurrentSheet.DisplayOffset;
         }
+
         if (e.StatusType == GestureStatus.Running)
         {
             App.CurrentSheet.DisplayOffset =

@@ -47,19 +47,19 @@ public class DrawableScene : IDrawable
 
         fontSize = Convert.ToInt32(Math.Round(BaseGridSize * Zoom / 2));
 
-        canvas.FillColor = Scene.BackgroundColor != null ?
-            new Microsoft.Maui.Graphics.Color(
+        canvas.FillColor = Scene.BackgroundColor != null
+            ? new Microsoft.Maui.Graphics.Color(
                 Scene.BackgroundColor.R,
                 Scene.BackgroundColor.G,
                 Scene.BackgroundColor.B,
                 Scene.BackgroundColor.A
-                )
+            )
             : Colors.WhiteSmoke;
 
         canvas.FillRectangle(0, 0, 10000, 10000);
         if (Scene == null) return;
         canvas.SaveState();
-       
+
         if (DisplayOffset != null)
         {
             canvas.Translate(DisplayOffset.X, DisplayOffset.Y);
@@ -68,11 +68,13 @@ public class DrawableScene : IDrawable
         canvas.StrokeSize = 0.2f;
         canvas.StrokeColor = Colors.SlateGray;
         if (Scene.ShowGrid)
-            for (float x = 0; x < BaseGridSize * Zoom * SheetSize.X; x = x + Zoom * BaseGridSize)
-            {
-                canvas.DrawLine(x, 0, x, 10000);
-                canvas.DrawLine(0, x, 10000, x);
-            }
+        {
+            for (float x = 0; x < BaseGridSize * Zoom * SheetSize.X; x += Zoom * BaseGridSize)
+                canvas.DrawLine(x, 0, x, BaseGridSize * Zoom * SheetSize.Y);
+
+            for (float y = 0; y < BaseGridSize * Zoom * SheetSize.Y; y += Zoom * BaseGridSize)
+                canvas.DrawLine(0, y, BaseGridSize * Zoom * SheetSize.X, y);
+        }
 
         canvas.RestoreState();
         Scene.Drawables

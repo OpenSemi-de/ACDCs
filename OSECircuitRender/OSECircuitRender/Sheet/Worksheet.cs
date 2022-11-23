@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Linq;
 using Newtonsoft.Json;
 using OSECircuitRender.Definitions;
@@ -36,7 +37,7 @@ public sealed class Worksheet
     public WorksheetItemList Traces { get; set; } = new();
     public Color BackgroundColor { get; set; }
     public bool ShowGrid { get; set; } = true;
-    public Coordinate DisplayOffset { get; set; }
+    public Coordinate? DisplayOffset { get; set; }
 
     public bool CalculateScene()
     {
@@ -98,16 +99,15 @@ public sealed class Worksheet
         Router.SetItems(Items, Nets);
     }
 
-    public WorksheetItem GetItemAt(float x, float y)
+    public WorksheetItem? GetItemAt(float x, float y)
     {
-        IWorksheetItem selectedItem = null;
         int iX = Convert.ToInt32(Math.Round(x));
         int iY = Convert.ToInt32(Math.Round(y));
 
-        selectedItem = Items.FirstOrDefault(
+        var selectedItem = Items.FirstOrDefault(
             item => item.X == iX && item.Y == iY);
 
-        return (WorksheetItem)selectedItem;
+        return (WorksheetItem?)selectedItem;
     }
 
     public void SelectItem(WorksheetItem item)

@@ -9,24 +9,41 @@
     <AbsoluteLayout>
 
         <Frame BackgroundColor="LightGray" BorderColor="WhiteSmoke" AbsoluteLayout.LayoutFlags="SizeProportional" AbsoluteLayout.LayoutBounds="0,0,1,1">
-
-
             <GraphicsView x:Name="sheetGraphicsView" StartInteraction="SheetGraphicsView_OnStartInteraction" EndInteraction="SheetGraphicsView_OnEndInteraction">
                 <GraphicsView.HorizontalOptions>Fill</GraphicsView.HorizontalOptions>
                 <GraphicsView.BackgroundColor>DarkBlue</GraphicsView.BackgroundColor>
                 <GraphicsView.VerticalOptions>Fill</GraphicsView.VerticalOptions>
                 <GraphicsView.GestureRecognizers>
-<PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated"></PanGestureRecognizer>
+                    <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated"></PanGestureRecognizer>
                 </GraphicsView.GestureRecognizers>
             </GraphicsView>
         </Frame>
 
-        <Frame BackgroundColor="LightGray" BorderColor="WhiteSmoke" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,0,AutoSize,44">
+        <Frame BackgroundColor="White" BorderColor="WhiteSmoke" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,0,AutoSize,62">
             <ScrollView VerticalScrollBarVisibility="Never" HorizontalOptions="Fill">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" x:Name="slComponentButtons">
                 </StackLayout>
             </ScrollView>
         </Frame>
+
+
+        <Frame BackgroundColor="White" BorderColor="WhiteSmoke" AbsoluteLayout.LayoutFlags="XProportional" AbsoluteLayout.LayoutBounds="1,100,240,400">
+            <ScrollView VerticalScrollBarVisibility="Never" HorizontalOptions="Fill">
+                <ListView BindingContext="{x:Reference selectedItems}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal">
+                                <Image ></Image>
+                                <Label Text="{Binding RefName}"></Label>
+                            </StackLayout>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollView>
+        </Frame>
+
+
+
         <Frame BackgroundColor="LightGray" BorderColor="WhiteSmoke" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,1,AutoSize,40">
             <ScrollView VerticalScrollBarVisibility="Never" HorizontalOptions="Fill">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">

@@ -1,5 +1,6 @@
 ﻿using System.Dynamic;
 using System.Reflection;
+using Microsoft.UI.Xaml;
 using OSECircuitRender;
 using OSECircuitRender.Definitions;
 using OSECircuitRender.Drawables;
@@ -7,6 +8,7 @@ using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
 using OSEInventory.Components;
+using Application = Microsoft.Maui.Controls.Application;
 using Color = Microsoft.Maui.Graphics.Color;
 
 namespace OSEInventory;
@@ -35,7 +37,7 @@ public partial class SheetPage
                     bool IsInsertable = (bool)(IsInsertableProp.GetValue(null, BindingFlags.Static, null, null, null) ?? false);
                     if (IsInsertable)
                     {
-                        ItemButton button = new(type);
+                        ItemButton button = new(type) { WidthRequest = 60, HeightRequest = 60 };
                         button.Clicked += OnItemButtonClicked;
                         slComponentButtons.Add(
                             button
@@ -61,9 +63,9 @@ public partial class SheetPage
 
     public ItemButton? SelectedButton { get; set; }
 
-    public Color SelectedButtonColor { get; set; }
+    public Color? SelectedButtonColor { get; set; }
 
-    public Func<float, float, WorksheetItem> DoInsert { get; set; }
+    public Func<float, float, WorksheetItem?> DoInsert { get; set; }
 
     public bool IsInserting { get; set; }
 
@@ -95,9 +97,9 @@ public partial class SheetPage
     {
         if (IsInserting)
             return;
-        App.CurrentSheet.CalculateScene();
-        DrawableScene scene = (DrawableScene)
-            App.CurrentSheet.SceneManager.GetSceneForBackend();
+        App.CurrentSheet?.CalculateScene();
+        DrawableScene? scene = (DrawableScene?)
+            App.CurrentSheet?.SceneManager.GetSceneForBackend();
         sheetGraphicsView.Drawable = scene;
 
         sheetGraphicsView.Invalidate();
@@ -123,15 +125,19 @@ public partial class SheetPage
             DeselectSelectedButton();
     }
 
-    private void Insert(WorksheetItem item)
+    private void Insert(WorksheetItem? item)
     {
-        DoInsert = ((float x, float y) =>
+        if (item != null)
         {
-            item.DrawableComponent.Position.X = x;
-            item.DrawableComponent.Position.Y = y;
-            App.CurrentSheet.Items.AddItem(item);
-            return item;
-        });
+            DoInsert = (float x, float y) =>
+            {
+                item.DrawableComponent.Position.X = x;
+                item.DrawableComponent.Position.Y = y;
+                App.CurrentSheet?.Items.AddItem(item);
+                return item;
+            };
+        }
+
         IsInserting = true;
     }
 
@@ -139,11 +145,15 @@ public partial class SheetPage
     {
         SelectedButton = selectedButton;
         SelectedButtonColor = SelectedButton?.BackgroundColor;
+        SelectedButtonBorderColor = SelectedButton?.BorderColor;
         if (SelectedButton != null)
         {
+            SelectedButton.BorderColor = Colors.SlateGray;
             SelectedButton.BackgroundColor = Application.AccentColor;
         }
     }
+
+    public Color? SelectedButtonBorderColor { get; set; }
 
 
     private void SheetGraphicsView_OnStartInteraction(object sender, TouchEventArgs e)
@@ -170,12 +180,21 @@ public partial class SheetPage
     {
         if (e.Touches.Length > 0)
         {
+            float offsetX = 0;
+            float offsetY = 0;
+            if (LastDisplayOffset != null)
+            {
+                offsetX = LastDisplayOffset.X;
+                offsetY = LastDisplayOffset.Y;
+            }
             if (IsInserting)
             {
+
+
                 var touch = e.Touches[0];
                 var newItem = DoInsert?.Invoke(
-                    GetRelPos(touch.X),
-                    GetRelPos(touch.Y));
+                    GetRelPos(touch.X -offsetX),
+                    GetRelPos(touch.Y -offsetY));
 
                 DeselectSelectedButton();
                 IsInserting = false;
@@ -184,17 +203,15 @@ public partial class SheetPage
             else
             {
                 var touch = e.Touches[0];
-                WorksheetItem? selectedItem = App.CurrentSheet.GetItemAt(
-                    GetRelPos(touch.X),
-                    GetRelPos(touch.Y)
-                );
+                touch.X -= offsetX;
+                touch.Y -= offsetY;
 
-                selectedItem = WorksheetItem(selectedItem, touch);
+                var selectedItem = GetWorksheetItemaAt(touch);
 
 
                 if (selectedItem != null)
                 {
-                    if (App.CurrentSheet.ToggleSelectItem(selectedItem))
+                    if (App.CurrentSheet != null && App.CurrentSheet.ToggleSelectItem(selectedItem))
                     {
                         if (!selectedItems.Contains(selectedItem))
                             selectedItems.Add(selectedItem);
@@ -204,6 +221,7 @@ public partial class SheetPage
                         if (selectedItems.Contains(selectedItem))
                             selectedItems.Remove(selectedItem);
                     }
+
                     Paint();
                 }
             }
@@ -211,8 +229,13 @@ public partial class SheetPage
         }
     }
 
-    private WorksheetItem WorksheetItem(WorksheetItem selectedItem, PointF touch)
+    private WorksheetItem? GetWorksheetItemaAt(PointF position)
     {
+        WorksheetItem? selectedItem = App.CurrentSheet?.GetItemAt(
+            GetRelPos(position.X),
+            GetRelPos(position.Y)
+        );
+
         List<int> offsets = new() { 0, -1, 1 };
 
         foreach (int row in offsets)
@@ -220,9 +243,9 @@ public partial class SheetPage
             {
                 if (selectedItem == null)
                 {
-                    selectedItem = App.CurrentSheet.GetItemAt(
-                        GetRelPos(touch.X) + column,
-                        GetRelPos(touch.Y) + row);
+                    selectedItem = App.CurrentSheet?.GetItemAt(
+                        GetRelPos(position.X) + column,
+                        GetRelPos(position.Y) + row);
                 }
                 else break;
             }
@@ -233,20 +256,25 @@ public partial class SheetPage
 
     private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
     {
-        if (e.StatusType == GestureStatus.Started)
+        if (e.StatusType == GestureStatus.Started || e.StatusType == GestureStatus.Completed)
         {
-            LastDisplayOffset = App.CurrentSheet.DisplayOffset;
+            LastDisplayOffset = App.CurrentSheet?.DisplayOffset;
         }
 
         if (e.StatusType == GestureStatus.Running)
         {
-            App.CurrentSheet.DisplayOffset =
-                new Coordinate(
-                    Convert.ToSingle(e.TotalX),
-                    Convert.ToSingle(e.TotalY)).Add(LastDisplayOffset ?? new Coordinate());
+            if (App.CurrentSheet != null)
+            {
+                App.CurrentSheet.DisplayOffset =
+                    new Coordinate(
+                        Convert.ToSingle(e.TotalX),
+                        Convert.ToSingle(e.TotalY)).Add(LastDisplayOffset ?? new Coordinate());
+            }
+
             Paint();
         }
+
     }
 
-    public Coordinate LastDisplayOffset { get; set; }
+    public Coordinate? LastDisplayOffset { get; set; }
 }

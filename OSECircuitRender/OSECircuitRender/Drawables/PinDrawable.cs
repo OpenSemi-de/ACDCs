@@ -20,6 +20,7 @@ public class PinDrawable : DrawableComponent
         Position = new Coordinate(Position);
         Size = new Coordinate(Size);
         BackRef = pin.BackRef;
+        Setup(BackRef, 1,1);
     }
 
     public string PinText { get; }

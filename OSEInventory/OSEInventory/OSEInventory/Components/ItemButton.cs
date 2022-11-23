@@ -15,21 +15,28 @@ namespace OSEInventory.Components
         public ItemButton(Type? itemType)
         {
             ItemType = itemType;
-            WidthRequest = 42;
-            HeightRequest = 42;
-            
+            if (WidthRequest == 0)
+                WidthRequest = 42;
+            if (HeightRequest == 0)
+                HeightRequest = 42;
+
             if (itemType != null)
             {
                 var sheet = wb.AddNewSheet();
 
-                BorderWidth = 1;
-                BorderColor = Colors.LightGray;
-                sheet.GridSize = 1f;
-                sheet.BackgroundColor = new Color(255, 255, 255,  0 );
+                BorderWidth = 2;
+                BorderColor = Colors.WhiteSmoke;
+                sheet.GridSize = Convert.ToSingle(WidthRequest / Workbook.BaseGridSize * Workbook.Zoom);
+                sheet.BackgroundColor = new Color(255, 255, 255, 40);
                 sheet.ShowGrid = false;
+                sheet.DisplayOffset = new Coordinate(-10, -10);
 
                 if (Activator.CreateInstance(itemType) is WorksheetItem item)
+                {
                     sheet.Items.AddItem(item);
+                    sheet.GridSize = 3f / item.Width;
+                    sheet.DisplayOffset.Y = 7 * (3 / item.Height - 1) - 7;
+                }
 
                 if (sheet.CalculateScene())
                 {
@@ -37,7 +44,7 @@ namespace OSEInventory.Components
                     drawableSheet = sheet.SceneManager.GetSceneForBackend() as IDrawable;
                     if (drawableSheet != null)
                     {
-                        
+
                         using SkiaBitmapExportContext context = new(42, 42, 1);
 
                         drawableSheet?.Draw(context.Canvas, RectF.Zero);
@@ -46,7 +53,7 @@ namespace OSEInventory.Components
                         {
                             context.Image.Save(stream);
                             stream.Position = 0;
-                            
+
 
                             FakeLocalFile fl = new(stream, "imagebutton_source_" + itemType.Name + ".bmp");
 

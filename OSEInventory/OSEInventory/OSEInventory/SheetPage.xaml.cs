@@ -1,11 +1,13 @@
 ﻿using System.Dynamic;
 using System.Reflection;
 using OSECircuitRender;
+using OSECircuitRender.Definitions;
 using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
 using OSEInventory.Components;
+using Color = Microsoft.Maui.Graphics.Color;
 
 namespace OSEInventory;
 
@@ -28,10 +30,10 @@ public partial class SheetPage
                 var IsInsertableProp = type.GetProperty("IsInsertable");
                 if (IsInsertableProp != null)
                 {
-                    bool IsInsertable = (bool) (IsInsertableProp.GetValue(null, BindingFlags.Static, null, null, null) ?? false);
+                    bool IsInsertable = (bool)(IsInsertableProp.GetValue(null, BindingFlags.Static, null, null, null) ?? false);
                     if (IsInsertable)
                     {
-                        ItemButton button = new() { ItemType = type, Text = "" + type.Name.First() };
+                        ItemButton button = new(type);
                         button.Clicked += OnItemButtonClicked;
                         slComponentButtons.Add(
                             button
@@ -41,6 +43,8 @@ public partial class SheetPage
             }
         }
     }
+
+
 
     private void OnItemButtonClicked(object? sender, EventArgs e)
     {
@@ -53,7 +57,7 @@ public partial class SheetPage
         }
     }
 
-    public Button? SelectedButton { get; set; }
+    public ItemButton? SelectedButton { get; set; }
 
     public Color SelectedButtonColor { get; set; }
 
@@ -98,7 +102,7 @@ public partial class SheetPage
     }
 
 
-    private void InsertItem(Type itemType, Button selectedButton)
+    private void InsertItem(Type itemType, ItemButton selectedButton)
     {
         bool justDeselectAndReturn = SelectedButton == selectedButton;
         IsInserting = false;
@@ -129,7 +133,7 @@ public partial class SheetPage
         IsInserting = true;
     }
 
-    private void SelectButton(Button selectedButton)
+    private void SelectButton(ItemButton selectedButton)
     {
         SelectedButton = selectedButton;
         SelectedButtonColor = SelectedButton?.BackgroundColor;
@@ -141,6 +145,26 @@ public partial class SheetPage
 
 
     private void SheetGraphicsView_OnStartInteraction(object sender, TouchEventArgs e)
+    {
+      
+    }
+
+    private float GetRelPos(double pos)
+    {
+        return Convert.ToSingle(Math.Round(pos / (Workbook.BaseGridSize * Workbook.Zoom)));
+    }
+
+    private void DeselectSelectedButton()
+    {
+        if (SelectedButton != null)
+        {
+            SelectedButton.BackgroundColor = SelectedButtonColor;
+        }
+
+        SelectedButton = null;
+    }
+
+    private void SheetGraphicsView_OnEndInteraction(object sender, TouchEventArgs e)
     {
         if (e.Touches.Length > 0)
         {
@@ -163,20 +187,20 @@ public partial class SheetPage
                     GetRelPos(touch.Y)
                 );
 
-                List<int> offsets = new List<int>() { 0, -1, 1 };
+                List<int> offsets = new() { 0, -1, 1 };
 
                 foreach (int row in offsets)
-                    foreach (int column in offsets)
+                foreach (int column in offsets)
+                {
+                    if (selectedItem == null)
                     {
-                        if (selectedItem == null)
-                        {
 
-                            selectedItem = App.CurrentSheet.GetItemAt(
-                                GetRelPos(touch.X) + column,
-                                GetRelPos(touch.Y) + row);
-                        }
-                        else break;
+                        selectedItem = App.CurrentSheet.GetItemAt(
+                            GetRelPos(touch.X) + column,
+                            GetRelPos(touch.Y) + row);
                     }
+                    else break;
+                }
 
 
                 if (selectedItem != null)
@@ -189,23 +213,22 @@ public partial class SheetPage
         }
     }
 
-    private float GetRelPos(double pos)
-    {
-        return Convert.ToSingle(Math.Round(pos / (Workbook.BaseGridSize * Workbook.Zoom)));
-    }
 
-    private void DeselectSelectedButton()
+    private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
     {
-        if (SelectedButton != null)
+        if (e.StatusType == GestureStatus.Started)
         {
-            SelectedButton.BackgroundColor = SelectedButtonColor;
+            LastDisplayOffset = App.CurrentSheet.DisplayOffset;
         }
-
-        SelectedButton = null;
+        if (e.StatusType == GestureStatus.Running)
+        {
+            App.CurrentSheet.DisplayOffset =
+                new Coordinate(
+                    Convert.ToSingle(e.TotalX),
+                    Convert.ToSingle(e.TotalY)).Add(LastDisplayOffset ?? new Coordinate());
+            Paint();
+        }
     }
 
-    private void SheetGraphicsView_OnEndInteraction(object sender, TouchEventArgs e)
-    {
-    }
-
+    public Coordinate LastDisplayOffset { get; set; }
 }

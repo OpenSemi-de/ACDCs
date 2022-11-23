@@ -4,14 +4,18 @@ using OSECircuitRender.Interfaces;
 
 namespace OSECircuitRender.Scene;
 
-public sealed class DebugSceneManager : ISceneManager
+public sealed class DefaultSceneManager : ISceneManager
 {
     public object DrawableScene { get; set; }
     public SheetScene Scene { get; set; }
+    public bool ShowGrid { get; set; } = true;
+
+    public Coordinate DisplayOffset { get; set; }
 
     public object GetSceneForBackend()
     {
         DrawableScene drawableScene = new(Scene);
+        drawableScene.DisplayOffset = DisplayOffset;
         DrawableScene = drawableScene;
         return drawableScene;
     }
@@ -25,9 +29,13 @@ public sealed class DebugSceneManager : ISceneManager
     {
         Scene = new SheetScene();
         Scene.SetDrawables(drawables, selected);
-        Scene.ShowGrid = true;
+        Scene.ShowGrid = ShowGrid;
+        Scene.BackgroundColor = BackgroundColor;
+        Scene.DisplayOffset = DisplayOffset;
         return true;
     }
+
+    public Color BackgroundColor { get; set; }
 
     public void SetSizeAndScale(Coordinate sheetSize, float gridSize)
     {

@@ -34,6 +34,9 @@ public sealed class Worksheet
     public int SheetNum { get; set; }
     public Coordinate SheetSize { get; set; } = new(100, 100, 0);
     public WorksheetItemList Traces { get; set; } = new();
+    public Color BackgroundColor { get; set; }
+    public bool ShowGrid { get; set; } = true;
+    public Coordinate DisplayOffset { get; set; }
 
     public bool CalculateScene()
     {
@@ -44,11 +47,15 @@ public sealed class Worksheet
         if (SceneManager == null)
         {
             Log.L("Creating Manager");
-            SceneManager = new DebugSceneManager();
+            SceneManager = new DefaultSceneManager();
+            SceneManager.ShowGrid = ShowGrid;
+            SceneManager.BackgroundColor = BackgroundColor;
         }
 
         if (SceneManager.SetScene(GetDrawableComponents(), GetSelectedComponents()))
         {
+            SceneManager.DisplayOffset = DisplayOffset;
+
             SceneManager.SetSizeAndScale(SheetSize, GridSize);
             Log.L("Getting backend scene");
             var backendScene = SceneManager.GetSceneForBackend();

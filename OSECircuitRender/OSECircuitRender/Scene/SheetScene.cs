@@ -11,7 +11,10 @@ public sealed class SheetScene
 
     public float GridSize { get; set; }
     public Coordinate SheetSize { get; set; }
-    public bool ShowGrid { get; set; }
+    public bool ShowGrid { get; set; } = true;
+
+    public Color BackgroundColor { get; set; }
+    public Coordinate DisplayOffset { get; set; }
 
     public bool SetDrawables(DrawableComponentList drawables, DrawableComponentList selected)
     {

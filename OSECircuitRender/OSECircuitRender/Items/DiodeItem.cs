@@ -8,7 +8,7 @@ public sealed class DiodeItem : WorksheetItem
 {
     public DiodeItem()
     {
-        DrawableComponent = new DiodeDrawable(this, DefaultValue, 0, 0);
+        DrawableComponent = new DiodeDrawable(this, DefaultValue, 1,1);
     }
 
     public string DefaultValue { get; set; } = "";
@@ -23,7 +23,7 @@ public sealed class DiodeItem : WorksheetItem
 
     public DiodeItem(string value)
     {
-        DrawableComponent = new DiodeDrawable(this, value, 0, 0);
+        DrawableComponent = new DiodeDrawable(this, value, 1, 1);
         Value = value;
     }
 

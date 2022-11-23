@@ -6,7 +6,7 @@ public sealed class ResistorItem : WorksheetItem
 {
     public ResistorItem()
     {
-        DrawableComponent = new ResistorDrawable(this, DefaultValue, 0, 0 );
+        DrawableComponent = new ResistorDrawable(this, DefaultValue, 1, 1);
     }
 
     public static string DefaultValue { get; set; } = "10k";
@@ -22,7 +22,7 @@ public sealed class ResistorItem : WorksheetItem
 
     public ResistorItem(string value)
     {
-        DrawableComponent = new ResistorDrawable(this, value, 0, 0);
+        DrawableComponent = new ResistorDrawable(this, value, 1, 1);
         Value = value;
     }
 

@@ -1,16 +1,16 @@
 ﻿using OSECircuitRender.Drawables;
 
-namespace OSECircuitRender.Items.Capacitors;
+namespace OSECircuitRender.Items;
 
-public  class CapacitorItem : WorksheetItem
+public class CapacitorItem : WorksheetItem
 {
     public CapacitorItem()
     {
-        DrawableComponent = new CapacitorDrawable(this, DefaultValue, DefaultType, 0, 0);
+        DrawableComponent = new CapacitorDrawable(this, DefaultValue, DefaultType, 1, 1);
     }
-    
+
     public CapacitorDrawableType DefaultType { get; set; }
-    
+
     public CapacitorItem(string value, CapacitorDrawableType type, float x, float y)
     {
         DrawableComponent = new CapacitorDrawable(this, value, type, x, y);
@@ -22,7 +22,7 @@ public  class CapacitorItem : WorksheetItem
     {
         Value = value;
         Type = type;
-        DrawableComponent = new CapacitorDrawable(this, value, type, 0, 0);
+        DrawableComponent = new CapacitorDrawable(this, value, type, 1, 1);
     }
 
     public string Value { get; set; }

@@ -1,12 +1,12 @@
 ﻿using OSECircuitRender.Drawables;
 
-namespace OSECircuitRender.Items.Transistors;
+namespace OSECircuitRender.Items;
 
 public class TransistorItem : WorksheetItem
 {
     public TransistorItem()
     {
-        DrawableComponent = new TransistorDrawable(this, DefaultType, 0, 0);
+        DrawableComponent = new TransistorDrawable(this, DefaultType, 1, 1);
     }
 
     public TransistorDrawableType DefaultType { get; set; }
@@ -21,7 +21,7 @@ public class TransistorItem : WorksheetItem
 
     public TransistorItem(TransistorDrawableType type)
     {
-        DrawableComponent = new TransistorDrawable(this, type, 0, 0);
+        DrawableComponent = new TransistorDrawable(this, type, 1, 1);
         Type = type;
     }
 

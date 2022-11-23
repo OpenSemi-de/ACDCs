@@ -7,10 +7,13 @@ public sealed class Color
 
     public int R;
 
-    public Color(int r, int g, int b)
+    public Color(int r, int g, int b, int a = 100)
     {
         R = r;
         G = g;
         B = b;
+        A = a;
     }
+
+    public int A;
 }

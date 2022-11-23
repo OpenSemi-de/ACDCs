@@ -9,7 +9,7 @@ public sealed class InductorItem : WorksheetItem
 
     public InductorItem()
     {
-        DrawableComponent = new InductorDrawable(this, DefaultValue,0,0 );
+        DrawableComponent = new InductorDrawable(this, DefaultValue, 1, 1);
     }
 
     public string DefaultValue { get; set; } = "1m";
@@ -26,6 +26,6 @@ public sealed class InductorItem : WorksheetItem
     public InductorItem(string value)
     {
         Value = value;
-        DrawableComponent = new InductorDrawable(this, value, 0, 0);
+        DrawableComponent = new InductorDrawable(this, value, 1, 1);
     }
 }

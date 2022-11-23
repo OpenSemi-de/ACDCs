@@ -6,24 +6,5 @@
        x:Class="OSEInventory.AppShell"
        FlyoutBehavior="Disabled">
 
-    <Shell.MenuBarItems>
-        <MenuBarItem Text="File">
-            <MenuFlyoutSubItem Text="New">
-                <MenuFlyoutItem Text="Project"></MenuFlyoutItem>
-            </MenuFlyoutSubItem>
-            <MenuFlyoutItem Text="Open..."></MenuFlyoutItem>
-            <MenuFlyoutItem Text="Save"></MenuFlyoutItem>
-            <MenuFlyoutItem Text="Save as..."></MenuFlyoutItem>
-        </MenuBarItem>
-        <MenuBarItem Text="Edit">
-            <MenuFlyoutItem Text="Undo"></MenuFlyoutItem>
-            <MenuFlyoutItem Text="Redo"></MenuFlyoutItem>
-            <MenuFlyoutItem ></MenuFlyoutItem>
-            <MenuFlyoutItem Text="Copy"></MenuFlyoutItem>
-            <MenuFlyoutItem Text="Cut"></MenuFlyoutItem>
-            <MenuFlyoutItem Text="Paste"></MenuFlyoutItem>
-        </MenuBarItem>
-        <MenuBarItem  Text="Insert" />
-    </Shell.MenuBarItems>
     <ShellContent Title="Welcome" ContentTemplate="{DataTemplate views:WelcomePage}"></ShellContent>
 </Shell>

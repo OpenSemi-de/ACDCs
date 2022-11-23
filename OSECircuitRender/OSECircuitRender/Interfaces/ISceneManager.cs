@@ -7,6 +7,9 @@ namespace OSECircuitRender.Interfaces;
 public interface ISceneManager
 {
     SheetScene Scene { get; set; }
+    bool ShowGrid { get; set; }
+    Color BackgroundColor { get; set; }
+    Coordinate DisplayOffset { get; set; }
 
     object GetSceneForBackend();
 

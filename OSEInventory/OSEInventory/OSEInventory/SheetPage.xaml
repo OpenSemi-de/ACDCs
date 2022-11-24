@@ -163,10 +163,12 @@
             </StackLayout>
         </Frame>
 
-        <Frame BackgroundColor="LightGray" BorderColor="WhiteSmoke" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,1,AutoSize,40">
+        <Frame BackgroundColor="LightGray" BorderColor="WhiteSmoke" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,1,AutoSize,62">
             <ScrollView VerticalScrollBarVisibility="Never" HorizontalOptions="Fill">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
-                    <Button Text=">" />
+                    <ImageButton BorderColor="WhiteSmoke" BorderWidth="2" Source="arrow_cursor.png" HeightRequest="58" WidthRequest="58"></ImageButton>
+                    <ImageButton BorderColor="WhiteSmoke" BorderWidth="2" Source="arrow_move.png" HeightRequest="58" WidthRequest="58"></ImageButton>
+                    <ImageButton BorderColor="WhiteSmoke" BorderWidth="2" Source="arrow_circle.png" HeightRequest="58" WidthRequest="58"></ImageButton>
                 </StackLayout>
             </ScrollView>
         </Frame>

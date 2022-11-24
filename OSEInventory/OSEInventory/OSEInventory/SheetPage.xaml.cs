@@ -194,8 +194,10 @@ public partial class SheetPage
 
     private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
     {
+        
         Try(async () =>
          {
+             
              if (e.StatusType == GestureStatus.Started || e.StatusType == GestureStatus.Completed)
              {
                  LastDisplayOffset = App.CurrentSheet?.DisplayOffset;
@@ -364,9 +366,11 @@ public partial class SheetPage
             {
                 case true:
 
-                    var bounds = new Rect((Point)_allItemsBounds?.Location, (Size)_allItemsBounds?.Size);
-                    bounds.Width = 30;
-                    bounds.Height = 30;
+                    var bounds = new Rect((Point)_allItemsBounds?.Location, (Size)_allItemsBounds?.Size)
+                        {
+                            Width = 30,
+                            Height = 30
+                        };
 
                     await fAllItems.LayoutTo(bounds, 500U, Easing.Linear);
                     AbsoluteLayout.SetLayoutBounds(fAllItems, bounds);
@@ -396,9 +400,11 @@ public partial class SheetPage
             {
                 case true:
 
-                    var bounds = new Rect((Point)_selectedItemsBounds?.Location, (Size)_selectedItemsBounds?.Size);
-                    bounds.Width = 30;
-                    bounds.Height = 30;
+                    var bounds = new Rect((Point)_selectedItemsBounds?.Location, (Size)_selectedItemsBounds?.Size)
+                    {
+                        Width = 30,
+                        Height = 30
+                    };
 
                     await fSelectedItems.LayoutTo(bounds, 500U, Easing.Linear);
                     AbsoluteLayout.SetLayoutBounds(fSelectedItems, bounds);

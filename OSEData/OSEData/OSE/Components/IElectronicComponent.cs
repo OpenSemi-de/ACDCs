@@ -2,7 +2,7 @@
 {
     public interface IElectronicComponent
     {
-        public IComponentRuntimeParameters ParametersRuntime { get; }
         public IComponentParameters ParametersModel { get; }
+        public IComponentRuntimeParameters ParametersRuntime { get; }
     }
 }

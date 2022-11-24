@@ -1,18 +1,18 @@
-﻿using System;
-using System.IO;
-using Microsoft.Maui.Graphics.Skia;
+﻿using Microsoft.Maui.Graphics.Skia;
 using Newtonsoft.Json;
 using OSECircuitRender.Sheet;
+using System;
+using System.IO;
 
 namespace OSECircuitRender;
 
 public sealed class Workbook
 {
+    public static float BaseGridSize = 2.54f;
+    public static float Zoom = 10f;
     public WorksheetsList Sheets = new();
     private readonly JsonSerializerSettings _jsonSerializerSettings;
 
-    public static float BaseGridSize = 2.54f;
-    public static float Zoom = 10f;
     public Workbook()
     {
         _jsonSerializerSettings = new JsonSerializerSettings

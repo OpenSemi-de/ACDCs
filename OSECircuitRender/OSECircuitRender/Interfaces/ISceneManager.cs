@@ -1,4 +1,5 @@
-﻿using OSECircuitRender.Definitions;
+﻿using System.Threading.Tasks;
+using OSECircuitRender.Definitions;
 using OSECircuitRender.Drawables;
 using OSECircuitRender.Scene;
 
@@ -6,10 +7,10 @@ namespace OSECircuitRender.Interfaces;
 
 public interface ISceneManager
 {
-    SheetScene Scene { get; set; }
-    bool ShowGrid { get; set; }
     Color BackgroundColor { get; set; }
     Coordinate DisplayOffset { get; set; }
+    SheetScene Scene { get; set; }
+    bool ShowGrid { get; set; }
 
     object GetSceneForBackend();
 

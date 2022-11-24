@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using Newtonsoft.Json.Linq;
-using OSECircuitRender.Drawables;
+﻿using OSECircuitRender.Drawables;
 
 namespace OSECircuitRender.Items;
 
@@ -8,12 +6,9 @@ public sealed class DiodeItem : WorksheetItem
 {
     public DiodeItem()
     {
-        DrawableComponent = new DiodeDrawable(this, DefaultValue, 1,1);
+        DrawableComponent = new DiodeDrawable(this, DefaultValue, 1, 1);
+        Value = DefaultValue;
     }
-
-    public string DefaultValue { get; set; } = "";
-
-    public new static bool IsInsertable { get; set; } = true;
 
     public DiodeItem(string value, float x, float y)
     {
@@ -27,5 +22,7 @@ public sealed class DiodeItem : WorksheetItem
         Value = value;
     }
 
-    public string Value { get; set; }
+    public new static bool IsInsertable { get; set; } = true;
+    public new string DefaultValue { get; set; } = "0.7";
+
 }

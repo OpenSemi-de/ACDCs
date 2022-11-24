@@ -4,11 +4,11 @@
              x:Class="OSEInventory.WelcomePage"
              Title="WelcomePage">
     <StackLayout Orientation="Vertical">
-        <Image Source="ose.png" WidthRequest="300"></Image>
+        <Image Source="ose.png" WidthRequest="300" />
         <StackLayout Orientation="Vertical" WidthRequest="300">
-            <Button Text="New project"></Button>
-            <Button Text="New database"></Button>
-            <Button Text="New scheme" Clicked="Button_OnClicked"></Button>
+            <Button Text="New project" />
+            <Button Text="New database" />
+            <Button Text="New scheme" Clicked="Button_OnClicked" />
         </StackLayout>
 
         <!--<StackLayout HorizontalOptions="Fill">

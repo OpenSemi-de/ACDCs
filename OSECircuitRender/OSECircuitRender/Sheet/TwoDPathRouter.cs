@@ -1,8 +1,8 @@
-﻿using System;
-using Microsoft.Maui.Graphics.Skia;
+﻿using Microsoft.Maui.Graphics.Skia;
 using OSECircuitRender.Definitions;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
+using System;
 
 namespace OSECircuitRender.Sheet;
 
@@ -32,8 +32,10 @@ public class TwoDPathRouter : IPathRouter
 
         var canvas = map.Canvas;
 
-        Turtle turtle = new Turtle(Items, Nets, SheetSize, Traces);
-        turtle.DebugCanvas = canvas;
+        Turtle turtle = new Turtle(Items, Nets, SheetSize, Traces)
+        {
+            DebugCanvas = canvas
+        };
         turtle.GetTraces();
 
         return Traces;

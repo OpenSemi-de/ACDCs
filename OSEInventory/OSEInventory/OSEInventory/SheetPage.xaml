@@ -1,71 +1,102 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:components="clr-namespace:OSEInventory.Components"
-             xmlns:local="clr-namespace:OSEInventory"
-             xmlns:items="clr-namespace:OSECircuitRender.Items;assembly=OSECircuitRender"
              x:Class="OSEInventory.SheetPage"
-             Title="New sheet"
-             >
+             Title="New sheet">
     <AbsoluteLayout>
 
         <Frame BackgroundColor="LightGray" BorderColor="WhiteSmoke" AbsoluteLayout.LayoutFlags="SizeProportional" AbsoluteLayout.LayoutBounds="0,0,1,1">
-            <GraphicsView x:Name="sheetGraphicsView" StartInteraction="SheetGraphicsView_OnStartInteraction" EndInteraction="SheetGraphicsView_OnEndInteraction">
+            <GraphicsView x:Name="sheetGraphicsView">
                 <GraphicsView.HorizontalOptions>Fill</GraphicsView.HorizontalOptions>
                 <GraphicsView.BackgroundColor>DarkBlue</GraphicsView.BackgroundColor>
                 <GraphicsView.VerticalOptions>Fill</GraphicsView.VerticalOptions>
                 <GraphicsView.GestureRecognizers>
-                    <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated"></PanGestureRecognizer>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped"></TapGestureRecognizer>
+                    <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated" />
                 </GraphicsView.GestureRecognizers>
             </GraphicsView>
         </Frame>
 
         <Frame BackgroundColor="White" BorderColor="WhiteSmoke" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,0,AutoSize,62">
             <ScrollView VerticalScrollBarVisibility="Never" HorizontalOptions="Fill">
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" x:Name="slComponentButtons">
-                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" x:Name="slComponentButtons" />
             </ScrollView>
         </Frame>
 
-
-        <Frame BackgroundColor="White" BorderColor="WhiteSmoke" AbsoluteLayout.LayoutFlags="XProportional" AbsoluteLayout.LayoutBounds="1,100,240,400">
-            <ScrollView VerticalScrollBarVisibility="Never" HorizontalOptions="Fill">
+        <Frame BackgroundColor="White" BorderColor="Black" AbsoluteLayout.LayoutFlags="XProportional" AbsoluteLayout.LayoutBounds="1,100,240,400" CornerRadius="0" x:Name="fSelectedItems">
+            <StackLayout Orientation="Vertical" HorizontalOptions="Fill">
+                <Frame HorizontalOptions="Fill" HeightRequest="30" BackgroundColor="LightGray" CornerRadius="0">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
+                        <Button x:Name="bnShowHideSelectedItems"  Clicked="BnShowHideSelectedItems_OnClicked">
+                            <Button.WidthRequest>30</Button.WidthRequest>
+                            <Button.HeightRequest>30</Button.HeightRequest>
+                            <Button.Text>&gt;</Button.Text>
+                            <Button.Padding>0</Button.Padding>
+                            <Button.BorderColor>LightGray</Button.BorderColor>
+                            <Button.TextColor>White</Button.TextColor>
+                            <Button.FontAttributes>Bold</Button.FontAttributes>
+                            <Button.FontSize>14</Button.FontSize>
+                            <Button.BackgroundColor>SlateGray</Button.BackgroundColor>
+                        </Button>
+                        <Label Text="Selected items" TextColor="Black" HorizontalTextAlignment="Center" FontAttributes="Bold" WidthRequest="200" HorizontalOptions="Fill"></Label>
+                    </StackLayout>
+                </Frame>
+                <Frame HorizontalOptions="Fill" VerticalOptions="Fill" CornerRadius="0">
+                    <StackLayout Orientation="Horizontal">
+                        <Label HeightRequest="30" WidthRequest="100" VerticalTextAlignment="Center" FontSize="10" Text="Type" FontAttributes="Bold">
+                            <Label.TextColor>Black</Label.TextColor>
+                            <Label.BackgroundColor>Transparent</Label.BackgroundColor>
+                        </Label>
+                        <Label HeightRequest="30" WidthRequest="30" VerticalTextAlignment="Center" FontSize="10" Text="Value" FontAttributes="Bold">
+                            <Label.TextColor>Black</Label.TextColor>
+                            <Label.BackgroundColor>Transparent</Label.BackgroundColor>
+                        </Label>
+                        <Label HeightRequest="30"  VerticalTextAlignment="Center" HorizontalOptions="Fill" HorizontalTextAlignment="Center" FontSize="10" Text="RefName" FontAttributes="Bold">
+                            <Label.TextColor>Black</Label.TextColor>
+                            <Label.BackgroundColor>Transparent</Label.BackgroundColor>
+                        </Label>
+                    </StackLayout>
+                </Frame>
                 <ListView x:Name="lvSelected" RowHeight="32" SelectionMode="Single" SeparatorVisibility="Default" SeparatorColor="WhiteSmoke">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell Height="32">
                                 <Frame HorizontalOptions="Fill" VerticalOptions="Fill" CornerRadius="0">
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label HeightRequest="30" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center">
+                                    <StackLayout Orientation="Horizontal" VerticalOptions="Fill">
+                                        <Label HeightRequest="30" WidthRequest="100" VerticalTextAlignment="Center" FontSize="9" FontAutoScalingEnabled="True">
                                             <Label.Text>
-                                                <Binding Path="RefName" />
+                                                <Binding Path="TypeName" />
                                             </Label.Text>
                                             <Label.TextColor>Black</Label.TextColor>
-                                            <Label.BackgroundColor>LightBlue</Label.BackgroundColor>
+                                            <Label.BackgroundColor>Transparent</Label.BackgroundColor>
                                         </Label>
-                                        <Label HeightRequest="30" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center">
+                                        <Label HeightRequest="30" WidthRequest="30" VerticalTextAlignment="Center" FontSize="9" FontAutoScalingEnabled="True">
+                                            <Label.Text>
+                                                <Binding Path="Value" />
+                                            </Label.Text>
+                                            <Label.TextColor>Black</Label.TextColor>
+                                            <Label.BackgroundColor>Transparent</Label.BackgroundColor>
+                                        </Label>
+                                        <Label HeightRequest="30" VerticalTextAlignment="Center" HorizontalOptions="Fill" HorizontalTextAlignment="Center" FontSize="9" FontAutoScalingEnabled="True">
                                             <Label.Text>
                                                 <Binding Path="RefName" />
                                             </Label.Text>
                                             <Label.TextColor>Black</Label.TextColor>
-                                            <Label.BackgroundColor>LightBlue</Label.BackgroundColor>
+                                            <Label.BackgroundColor>Transparent</Label.BackgroundColor>
                                         </Label>
                                     </StackLayout>
-
                                 </Frame>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-            </ScrollView>
+            </StackLayout>
         </Frame>
-
-
 
         <Frame BackgroundColor="LightGray" BorderColor="WhiteSmoke" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,1,AutoSize,40">
             <ScrollView VerticalScrollBarVisibility="Never" HorizontalOptions="Fill">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
-                    <Button Text=">"></Button>
+                    <Button Text=">" />
                 </StackLayout>
             </ScrollView>
         </Frame>

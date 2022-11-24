@@ -2,6 +2,7 @@
 
 public sealed class Color
 {
+    public int A;
     public int B;
     public int G;
 
@@ -14,6 +15,4 @@ public sealed class Color
         B = b;
         A = a;
     }
-
-    public int A;
 }

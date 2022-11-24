@@ -6,18 +6,20 @@ namespace OSECircuitRender.Scene;
 
 public sealed class DefaultSceneManager : ISceneManager
 {
+    public Color BackgroundColor { get; set; }
+    public Coordinate DisplayOffset { get; set; }
     public object DrawableScene { get; set; }
     public SheetScene Scene { get; set; }
     public bool ShowGrid { get; set; } = true;
 
-    public Coordinate DisplayOffset { get; set; }
-
     public object GetSceneForBackend()
     {
-        DrawableScene drawableScene = new(Scene);
-        drawableScene.DisplayOffset = DisplayOffset;
-        DrawableScene = drawableScene;
-        return drawableScene;
+        DrawableScene = new DrawableScene(Scene)
+        {
+            DisplayOffset = DisplayOffset
+        };
+
+        return DrawableScene;
     }
 
     public bool SendToBackend(object backendScene)
@@ -34,8 +36,6 @@ public sealed class DefaultSceneManager : ISceneManager
         Scene.DisplayOffset = DisplayOffset;
         return true;
     }
-
-    public Color BackgroundColor { get; set; }
 
     public void SetSizeAndScale(Coordinate sheetSize, float gridSize)
     {

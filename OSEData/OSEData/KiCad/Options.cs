@@ -2,7 +2,7 @@
 {
     public class Options
     {
-        public string clearance { get; set; }
         public string anchor { get; set; }
+        public string clearance { get; set; }
     }
 }

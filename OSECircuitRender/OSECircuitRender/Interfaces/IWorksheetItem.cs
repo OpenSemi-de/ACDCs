@@ -1,12 +1,12 @@
-﻿using System;
-using OSECircuitRender.Items;
+﻿using OSECircuitRender.Items;
+using System;
 
 namespace OSECircuitRender.Interfaces;
 
 public interface IWorksheetItem
 {
-    static bool IsInsertable { get; }
-    string DefaultValue { get; set; }
+    static bool IsInsertable { get; set; }
+    static string DefaultValue { get; set; }
     IDrawableComponent DrawableComponent { get; set; }
     int Height { get; }
     public Guid ItemGuid { get; set; }

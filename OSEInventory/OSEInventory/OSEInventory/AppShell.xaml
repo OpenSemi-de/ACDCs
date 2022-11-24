@@ -6,5 +6,5 @@
        x:Class="OSEInventory.AppShell"
        FlyoutBehavior="Disabled">
 
-    <ShellContent Title="Welcome" ContentTemplate="{DataTemplate views:WelcomePage}"></ShellContent>
+    <ShellContent Title="Welcome" ContentTemplate="{DataTemplate views:WelcomePage}" />
 </Shell>

@@ -2,10 +2,10 @@
 {
     public class Model
     {
+        public At at { get; set; }
         public string filename { get; set; }
         public Offset offset { get; set; }
-        public Scale scale { get; set; }
         public Rotate rotate { get; set; }
-        public At at { get; set; }
+        public Scale scale { get; set; }
     }
 }

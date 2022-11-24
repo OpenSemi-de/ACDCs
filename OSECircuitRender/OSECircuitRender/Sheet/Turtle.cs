@@ -1,14 +1,13 @@
 ﻿#nullable enable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Maui.Graphics;
 using OSECircuitRender.Definitions;
-using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Color = Microsoft.Maui.Graphics.Color;
 
 namespace OSECircuitRender.Sheet;
@@ -72,10 +71,10 @@ public class Turtle
     };
 
     private static readonly Point[] DirectionPoints = {
-        new Point(0,-1),
-        new Point(1,0),
-        new Point(0,1),
-        new Point(-1,0),
+        new(0,-1),
+        new(1,0),
+        new(0,1),
+        new(-1,0),
     };
 
     private readonly List<RectFr> _collisionRectangles = new();
@@ -457,9 +456,8 @@ public class Turtle
     private Point GetNextStepPoint(Point currentPoint, Point targetPoint, ref Direction nextDirection)
     {
         Point stepPoint;
-        RectFr? collisionRect;
 
-        var lastDirectionStepPoint = CheckCollision(currentPoint, nextDirection, out collisionRect);
+        var lastDirectionStepPoint = CheckCollision(currentPoint, nextDirection, out var collisionRect);
         if (lastDirectionStepPoint.X != targetPoint.X && lastDirectionStepPoint.Y != targetPoint.Y && currentPoint.X != targetPoint.X && currentPoint.Y != targetPoint.Y)
         {
             if (collisionRect == null || (lastDirectionStepPoint.X == targetPoint.X && lastDirectionStepPoint.Y == targetPoint.Y))
@@ -510,7 +508,10 @@ public class Turtle
     {
         var color = Color.FromRgb(red: Convert.ToInt32(pin2drawable.Position.X * 100 % 256),
             Convert.ToInt32(pin2drawable.Position.Y * 100 % 256), Convert.ToInt32(pin1drawable.Position.X * 100 % 256));
-        ((ScalingCanvas)DebugCanvas).StrokeColor = color;
-        ((ScalingCanvas)DebugCanvas).StrokeSize = 3;
+        if (DebugCanvas is ScalingCanvas canvas)
+        {
+            canvas.StrokeColor = color;
+            canvas.StrokeSize = 3;
+        }
     }
 }

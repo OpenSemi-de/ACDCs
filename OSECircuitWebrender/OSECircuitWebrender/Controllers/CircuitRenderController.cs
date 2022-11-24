@@ -4,8 +4,6 @@ using Microsoft.Maui.Graphics.Skia;
 using OSECircuitRender;
 using OSECircuitRender.Drawables;
 using OSECircuitRender.Items;
-using OSECircuitRender.Items.Capacitors;
-using OSECircuitRender.Items.Transistors;
 using OSECircuitRender.Scene;
 using OSECircuitRender.Sheet;
 
@@ -15,11 +13,11 @@ namespace OSECircuitWebrender.Controllers
     [ApiController]
     public class CircuitRenderController : Controller
     {
-        private IWebHostEnvironment environment;
+        private readonly IWebHostEnvironment _environment;
 
-        public CircuitRenderController(IWebHostEnvironment _environment)
+        public CircuitRenderController(IWebHostEnvironment environment)
         {
-            environment = _environment;
+            _environment = environment;
         }
 
         [HttpGet]
@@ -28,13 +26,13 @@ namespace OSECircuitWebrender.Controllers
             byte[]? imageBytes = null;
             SkiaBitmapExportContext debugContext = new(1000, 1000, 10);
 
-            OSECircuitRender.Log.Method = Console.WriteLine;
-            OSECircuitRender.Workbook.DebugContext = debugContext;
+            Log.Method = Console.WriteLine;
+            Workbook.DebugContext = debugContext;
             Workbook wb = new();
 
             Worksheet ws = wb.AddNewSheet();
-            string wwwPath = environment.WebRootPath;
-            string contentPath = environment.ContentRootPath;
+            string wwwPath = _environment.WebRootPath;
+            string contentPath = _environment.ContentRootPath;
 
             Workbook.BasePath = wwwPath;
 
@@ -75,9 +73,11 @@ namespace OSECircuitWebrender.Controllers
 
             var npn = new TransistorItem(TransistorDrawableType.Npn, 10, 11);
             ws.Items.AddItem(npn);
-            var npnr = new TransistorItem(TransistorDrawableType.Npn, 10, 15);
+            var npnr = new TransistorItem(TransistorDrawableType.Npn, 10, 15)
+            {
+                Rotation = -90f
+            };
 
-            npnr.Rotation = -90f;
             ws.Items.AddItem(npnr);
 
             var net2 = new NetItem();
@@ -99,10 +99,10 @@ namespace OSECircuitWebrender.Controllers
             if (ws != null)
             {
                 ws.CalculateScene();
-                DrawableScene scene = (DrawableScene)ws.SceneManager.GetSceneForBackend();
+                DrawableScene? scene = (DrawableScene?)ws.SceneManager?.GetSceneForBackend();
 
                 SkiaBitmapExportContext context = new(1000, 1000, 1);
-                scene.Draw(context.Canvas, RectF.Zero);
+                scene?.Draw(context.Canvas, RectF.Zero);
 
                 using (MemoryStream ms = new())
                 {
@@ -123,7 +123,7 @@ namespace OSECircuitWebrender.Controllers
                 System.IO.File.WriteAllBytes(wwwPath + "/map.bmp", mapImageBytes);
             }
 
-            return File(imageBytes, "application/octet-stream", "img.bmp");
+            return File(imageBytes ?? Array.Empty<byte>(), "application/octet-stream", "img.bmp");
         }
     }
 }

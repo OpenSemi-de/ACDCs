@@ -1,10 +1,7 @@
-﻿using Microsoft.Maui.Controls;
-using OSECircuitRender;
+﻿using OSECircuitRender;
 using OSECircuitRender.Sheet;
 
 namespace OSEInventory;
-
-
 
 public partial class App : Application
 {
@@ -16,7 +13,7 @@ public partial class App : Application
         MainPage = new AppShell();
     }
 
-    public static App? Instance { get; private set; }
-    public static Workbook? CurrentWorkbook { get; set; }
     public static Worksheet? CurrentSheet { get; set; }
+    public static Workbook? CurrentWorkbook { get; set; }
+    public static App? Instance { get; private set; }
 }

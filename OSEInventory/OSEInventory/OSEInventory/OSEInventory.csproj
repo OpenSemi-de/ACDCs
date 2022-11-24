@@ -87,4 +87,6 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadGenericExceptionInfoBarOSEInventoryHideInfoBar="True" /></VisualStudio></ProjectExtensions>
+
 </Project>

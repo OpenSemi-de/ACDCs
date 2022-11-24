@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using Microsoft.Maui.Graphics;
+﻿using Microsoft.Maui.Graphics;
 using OSECircuitRender.Definitions;
 using OSECircuitRender.Instructions;
 using OSECircuitRender.Interfaces;
+using System;
+using System.Linq;
 using Color = OSECircuitRender.Definitions.Color;
 
 namespace OSECircuitRender.Scene;
@@ -12,20 +12,18 @@ public class DrawableScene : IDrawable
 {
     public static float BaseGridSize = Workbook.BaseGridSize;
     public static float Zoom = Workbook.Zoom;
-    private static int fontSize;
+    private static int _fontSize;
 
     public DrawableScene(SheetScene scene)
     {
-        Scene = scene;
-        if (scene.GridSize != 0)
-            BaseGridSize = scene.GridSize;
-        SheetSize = scene.SheetSize;
+        SetScene(scene);
     }
 
-    public SheetScene Scene { get; }
+    public Coordinate DisplayOffset { get; set; }
+    public bool IsRendering { get; private set; } = false;
+    public SheetScene Scene { get; private set; }
 
     public Coordinate SheetSize { get; set; }
-    public Coordinate DisplayOffset { get; set; }
 
     public static float GetScale(float size, float scale)
     {
@@ -44,8 +42,9 @@ public class DrawableScene : IDrawable
 
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
-
-        fontSize = Convert.ToInt32(Math.Round(BaseGridSize * Zoom / 2));
+        IsRendering = true;
+        _fontSize = Convert.ToInt32(Math.Round(BaseGridSize * Zoom / 2));
+        canvas.Antialias = true;
 
         canvas.FillColor = Scene.BackgroundColor != null
             ? new Microsoft.Maui.Graphics.Color(
@@ -65,8 +64,8 @@ public class DrawableScene : IDrawable
             canvas.Translate(DisplayOffset.X, DisplayOffset.Y);
         }
 
-        canvas.StrokeSize = 0.2f;
-        canvas.StrokeColor = Colors.SlateGray;
+        canvas.StrokeSize = 0.5f;
+        canvas.StrokeColor = new Microsoft.Maui.Graphics.Color(0.7f);
         if (Scene.ShowGrid)
         {
             for (float x = 0; x < BaseGridSize * Zoom * SheetSize.X; x += Zoom * BaseGridSize)
@@ -81,6 +80,7 @@ public class DrawableScene : IDrawable
             .ForEach(
                 component => Render(canvas, component)
             );
+        IsRendering = false;
     }
 
     public void Render(ICanvas canvas, IDrawableComponent drawable)
@@ -104,7 +104,6 @@ public class DrawableScene : IDrawable
             lowestPinY = Convert.ToInt32(Math.Round(drawable.DrawablePins.Min(p => p.Position.Y) * drawSize.Y));
         }
 
-
         canvas.Translate(drawPos.X - lowestPinX, drawPos.Y - lowestPinY);
 
         canvas.Rotate(drawable.Rotation, drawSize.X / 2, drawSize.Y / 2);
@@ -116,7 +115,7 @@ public class DrawableScene : IDrawable
             var upperLeft = new Coordinate(0, 0);
             SetStrokeColor(canvas, new Color(255, 0, 0));
             var lowerRight = new Coordinate(drawable.Size);
-            DrawRectangle(canvas, drawPos, drawSize, upperLeft, lowerRight, null);
+            DrawRectangle(canvas, drawPos, drawSize, upperLeft, lowerRight);
             canvas.RestoreState();
         }
 
@@ -185,7 +184,7 @@ public class DrawableScene : IDrawable
             if (pin.PinText != "")
             {
                 canvas.SaveState();
-                canvas.FontSize = Convert.ToSingle(fontSize * 0.75);
+                canvas.FontSize = Convert.ToSingle(_fontSize * 0.75);
                 canvas.FillColor = Colors.White;
                 canvas.FillCircle(posCenter.X, posCenter.Y, Zoom * BaseGridSize * 0.2f);
 
@@ -198,6 +197,15 @@ public class DrawableScene : IDrawable
         }
 
         canvas.RestoreState();
+    }
+
+    public void SetScene(SheetScene scene)
+    {
+        Scene = scene; 
+        if (scene.GridSize != 0)
+            BaseGridSize = scene.GridSize;
+        SheetSize = scene.SheetSize;
+
     }
 
     private static void DrawCircle(ICanvas canvas, Coordinate centerPos, Coordinate drawPos, Coordinate drawSize)
@@ -304,7 +312,7 @@ public class DrawableScene : IDrawable
         var x = GetScale(drawSize.X, centerPos.X);
         var y = GetScale(drawSize.Y, centerPos.Y);
         canvas.SaveState();
-        canvas.FontSize = (fontSize / text.Size) * 12;
+        canvas.FontSize = (_fontSize / text.Size) * 12;
         canvas.Translate(x, y);
         canvas.Rotate(text.Orientation);
         canvas.DrawString(text.Text, 0, 0, HorizontalAlignment.Center);

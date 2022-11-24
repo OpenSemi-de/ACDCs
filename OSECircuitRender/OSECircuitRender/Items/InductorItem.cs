@@ -1,21 +1,14 @@
-﻿using System.ComponentModel;
-using OSECircuitRender.Drawables;
+﻿using OSECircuitRender.Drawables;
 
 namespace OSECircuitRender.Items;
 
 public sealed class InductorItem : WorksheetItem
 {
-    public string Value { get; }
-
     public InductorItem()
     {
         DrawableComponent = new InductorDrawable(this, DefaultValue, 1, 1);
+        Value = DefaultValue;
     }
-
-    public string DefaultValue { get; set; } = "1m";
-
-    public new static bool IsInsertable { get; set; } = true;
-
 
     public InductorItem(string value, float x, float y)
     {
@@ -28,4 +21,8 @@ public sealed class InductorItem : WorksheetItem
         Value = value;
         DrawableComponent = new InductorDrawable(this, value, 1, 1);
     }
+
+    public new static bool IsInsertable { get; set; } = true;
+    public new string DefaultValue { get; set; } = "1m";
+
 }

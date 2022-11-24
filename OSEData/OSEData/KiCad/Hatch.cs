@@ -2,7 +2,7 @@
 {
     public class Hatch
     {
-        public string style { get; set; }
         public float pitch { get; set; }
+        public string style { get; set; }
     }
 }

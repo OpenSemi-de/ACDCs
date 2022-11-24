@@ -1,16 +1,15 @@
 ﻿using Microsoft.Maui.Graphics.Skia;
 using OSECircuitRender;
 using OSECircuitRender.Definitions;
-using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
+using OSECircuitRender.Sheet;
 using Color = OSECircuitRender.Definitions.Color;
 
 namespace OSEInventory.Components
 {
     public class ItemButton : ImageButton
     {
-        private static Workbook wb = new();
-        private readonly IDrawable? drawableSheet;
+        private readonly IDrawable? _drawableSheet;
 
         public ItemButton(Type? itemType)
         {
@@ -22,7 +21,7 @@ namespace OSEInventory.Components
 
             if (itemType != null)
             {
-                var sheet = wb.AddNewSheet();
+                Worksheet? sheet = new Workbook().AddNewSheet();
 
                 BorderWidth = 2;
                 BorderColor = Colors.WhiteSmoke;
@@ -40,37 +39,32 @@ namespace OSEInventory.Components
 
                 if (sheet.CalculateScene())
                 {
-
-                    drawableSheet = sheet.SceneManager.GetSceneForBackend() as IDrawable;
-                    if (drawableSheet != null)
+                    _drawableSheet = sheet.SceneManager?.GetSceneForBackend() as IDrawable;
+                    if (_drawableSheet != null)
                     {
-
                         using SkiaBitmapExportContext context = new(42, 42, 1);
 
-                        drawableSheet?.Draw(context.Canvas, RectF.Zero);
+                        _drawableSheet?.Draw(context.Canvas, RectF.Zero);
 
-                        using (Stream stream = new MemoryStream())
-                        {
-                            context.Image.Save(stream);
-                            stream.Position = 0;
+                        using Stream stream = new MemoryStream();
+                        context.Image.Save(stream);
+                        stream.Position = 0;
 
+                        FakeLocalFile fl = new(stream, "imagebutton_source_" + itemType.Name + ".bmp");
 
-                            FakeLocalFile fl = new(stream, "imagebutton_source_" + itemType.Name + ".bmp");
-
-                            Source = ImageSource.FromFile(fl.FilePath);
-                        }
-
+                        Source = ImageSource.FromFile(fl.FilePath);
                     }
                 }
-
             }
         }
+
+        public Type? ItemType { get; set; }
 
         private Task<Stream> StreamImage(CancellationToken arg)
         {
             using SkiaBitmapExportContext context = new(40, 40, 1);
 
-            drawableSheet?.Draw(context.Canvas, RectF.Zero);
+            _drawableSheet?.Draw(context.Canvas, RectF.Zero);
 
             using Stream stream = new MemoryStream();
 
@@ -78,15 +72,10 @@ namespace OSEInventory.Components
 
             return Task.FromResult(stream);
         }
-
-        public Type? ItemType { get; set; }
     }
-
 
     internal class FakeLocalFile : IDisposable
     {
-        public string FilePath { get; }
-
         /// <summary>
         /// Currently ImageSource.FromStream is not working on windows devices.
         /// This class saves the passed stream in a cache directory, returns the local path and deletes it on dispose.
@@ -94,9 +83,11 @@ namespace OSEInventory.Components
         public FakeLocalFile(Stream source, string idFilePath)
         {
             FilePath = Path.Combine(FileSystem.Current.CacheDirectory, $"{idFilePath}");
-            using var fs = new FileStream(FilePath, FileMode.Create);
+            using FileStream fs = new(FilePath, FileMode.Create);
             source.CopyTo(fs);
         }
+
+        public string FilePath { get; }
 
         public void Dispose()
         {
@@ -104,6 +95,4 @@ namespace OSEInventory.Components
                 File.Delete(FilePath);
         }
     }
-
-
 }

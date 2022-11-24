@@ -1,7 +1,7 @@
-﻿using System;
+﻿using OSECircuitRender.Definitions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using OSECircuitRender.Definitions;
 
 namespace OSECircuitRender.Instructions;
 

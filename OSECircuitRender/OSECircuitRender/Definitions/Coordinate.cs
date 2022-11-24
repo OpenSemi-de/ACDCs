@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.Maui.Graphics;
+﻿using Microsoft.Maui.Graphics;
+using System;
 
 namespace OSECircuitRender.Definitions;
 

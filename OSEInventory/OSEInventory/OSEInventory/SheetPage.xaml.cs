@@ -13,273 +13,372 @@ namespace OSEInventory;
 
 public partial class SheetPage
 {
-    private List<WorksheetItem> selectedItems = new();
-    private ObservableCollection<WorksheetItem> selectedItemsObservable = new();
+    private readonly List<WorksheetItem> _selectedItems = new();
+    private readonly ObservableCollection<WorksheetItem> _selectedItemsObservable = new();
+    private Rect? _selectedItemsBounds;
+    private Action<string>? _log;
 
     public SheetPage()
     {
         InitializeComponent();
         SetupPage();
         SetupSheet();
+        _log = Console.WriteLine;
     }
 
-    private void SetupPage()
-    {
-        foreach (var type in typeof(IWorksheetItem).Assembly.GetTypes())
-        {
-            TypeFilter typeFilter = new((filterType, criteria) => filterType == typeof(IWorksheetItem));
-            if (type.FindInterfaces(typeFilter, null).Length > 0)
-            {
-                var IsInsertableProp = type.GetProperty("IsInsertable");
-                if (IsInsertableProp != null)
-                {
-                    bool IsInsertable = (bool)(IsInsertableProp.GetValue(null, BindingFlags.Static, null, null, null) ?? false);
-                    if (IsInsertable)
-                    {
-                        ItemButton button = new(type) { WidthRequest = 60, HeightRequest = 60 };
-                        button.Clicked += OnItemButtonClicked;
-                        slComponentButtons.Add(
-                            button
-                        );
-                    }
-                }
-            }
-        }
-    }
-
-
-
-    private void OnItemButtonClicked(object? sender, EventArgs e)
-    {
-        if (sender is ItemButton button)
-        {
-            if (button.ItemType != null)
-            {
-                InsertItem(button.ItemType, button);
-            }
-        }
-    }
-
-    public ItemButton? SelectedButton { get; set; }
-
-    public Color? SelectedButtonColor { get; set; }
-
-    public Func<float, float, WorksheetItem?> DoInsert { get; set; }
+    public Func<float, float, WorksheetItem?>? DoInsert { get; set; }
 
     public bool IsInserting { get; set; }
 
-    
-    private void SetupSheet()
-    {
-        if (App.CurrentWorkbook == null)
-        {
-            App.CurrentWorkbook = new Workbook();
-        }
+    public bool IsSelectedItemsVisible { get; set; } = true;
+    public Coordinate? LastDisplayOffset { get; set; }
 
-        App.CurrentSheet = App.CurrentWorkbook.AddNewSheet();
-        App.CurrentSheet.Items.OnItemAdded = OnSheetItemAdded;
-
-
-        App.CurrentSheet.CalculateScene();
-        DrawableScene scene = (DrawableScene)
-            App.CurrentSheet.SceneManager.GetSceneForBackend();
-
-
-        sheetGraphicsView.Drawable = scene;
-    }
-
-    private void OnSheetItemAdded(IWorksheetItem obj)
-    {
-        Paint();
-    }
-
-    private void Paint()
-    {
-        if (IsInserting)
-            return;
-        App.CurrentSheet?.CalculateScene();
-        DrawableScene? scene = (DrawableScene?)
-            App.CurrentSheet?.SceneManager.GetSceneForBackend();
-        sheetGraphicsView.Drawable = scene;
-
-        sheetGraphicsView.Invalidate();
-    }
-
-
-    private void InsertItem(Type itemType, ItemButton selectedButton)
-    {
-        bool justDeselectAndReturn = SelectedButton == selectedButton;
-        IsInserting = false;
-        DoInsert = (x, y) => null;
-        DeselectSelectedButton();
-        if (justDeselectAndReturn) return;
-
-        SelectButton(selectedButton);
-
-        if (Activator.CreateInstance(itemType) is WorksheetItem item)
-        {
-            Insert(item);
-        }
-
-        if (!IsInserting)
-            DeselectSelectedButton();
-    }
-
-    private void Insert(WorksheetItem? item)
-    {
-        if (item != null)
-        {
-            DoInsert = (float x, float y) =>
-            {
-                item.DrawableComponent.Position.X = x;
-                item.DrawableComponent.Position.Y = y;
-                App.CurrentSheet?.Items.AddItem(item);
-                return item;
-            };
-        }
-
-        IsInserting = true;
-    }
-
-    private void SelectButton(ItemButton selectedButton)
-    {
-        SelectedButton = selectedButton;
-        SelectedButtonColor = SelectedButton?.BackgroundColor;
-        SelectedButtonBorderColor = SelectedButton?.BorderColor;
-        if (SelectedButton != null)
-        {
-            SelectedButton.BorderColor = Colors.SlateGray;
-            SelectedButton.BackgroundColor = Application.AccentColor;
-        }
-    }
+    public ItemButton? SelectedButton { get; set; }
 
     public Color? SelectedButtonBorderColor { get; set; }
 
+    public Color? SelectedButtonColor { get; set; }
 
-    private void SheetGraphicsView_OnStartInteraction(object sender, TouchEventArgs e)
+    private async void BnShowHideSelectedItems_OnClicked(object? sender, EventArgs e)
     {
+        await Try(ToggleSelectedItemsVisibility);
+    }
 
+    private async Task ToggleSelectedItemsVisibility()
+    {
+        await Try(() =>
+        {
+            _selectedItemsBounds ??= AbsoluteLayout.GetLayoutBounds(fSelectedItems);
+
+            switch (IsSelectedItemsVisible)
+            {
+                case true:
+
+                    var bounds = new Rect((Point)_selectedItemsBounds?.Location, (Size)_selectedItemsBounds?.Size);
+                    bounds.Width = 30;
+                    bounds.Height = 30;
+
+                    fSelectedItems.LayoutTo(bounds, 500U);
+                    AbsoluteLayout.SetLayoutBounds(fSelectedItems, bounds);
+
+                    bnShowHideSelectedItems.Text = "<";
+                    IsSelectedItemsVisible = false;
+                    break;
+                default:
+
+                    fSelectedItems.LayoutTo(_selectedItemsBounds.Value, 500U);
+                    AbsoluteLayout.SetLayoutBounds(fSelectedItems, _selectedItemsBounds.Value);
+                    bnShowHideSelectedItems.Text = ">";
+                    IsSelectedItemsVisible = true;
+                    break;
+            }
+
+            return Task.CompletedTask;
+        });
+    }
+
+    private async Task DeselectSelectedButton()
+    {
+        await Try(() =>
+        {
+            if (SelectedButton != null)
+            {
+                SelectedButton.BackgroundColor = SelectedButtonColor;
+            }
+
+            SelectedButton = null;
+            return Task.CompletedTask;
+        });
     }
 
     private float GetRelPos(double pos)
     {
-        return Convert.ToSingle(Math.Round(pos / (Workbook.BaseGridSize * Workbook.Zoom)));
-    }
-
-    private void DeselectSelectedButton()
-    {
-        if (SelectedButton != null)
+        float relPos = 0f;
+        Try(() =>
         {
-            SelectedButton.BackgroundColor = SelectedButtonColor;
-        }
-
-        SelectedButton = null;
-    }
-
-    private void SheetGraphicsView_OnEndInteraction(object sender, TouchEventArgs e)
-    {
-        if (e.Touches.Length > 0)
-        {
-            float offsetX = 0;
-            float offsetY = 0;
-            if (LastDisplayOffset != null)
-            {
-                offsetX = LastDisplayOffset.X;
-                offsetY = LastDisplayOffset.Y;
-            }
-            if (IsInserting)
-            {
-
-
-                var touch = e.Touches[0];
-                var newItem = DoInsert?.Invoke(
-                    GetRelPos(touch.X -offsetX),
-                    GetRelPos(touch.Y -offsetY));
-
-                DeselectSelectedButton();
-                IsInserting = false;
-                Paint();
-            }
-            else
-            {
-                var touch = e.Touches[0];
-                touch.X -= offsetX;
-                touch.Y -= offsetY;
-
-                var selectedItem = GetWorksheetItemaAt(touch);
-
-
-                if (selectedItem != null)
-                {
-                    if (App.CurrentSheet != null && App.CurrentSheet.ToggleSelectItem(selectedItem))
-                    {
-                        if (!selectedItems.Contains(selectedItem))
-                            selectedItems.Add(selectedItem);
-                    }
-                    else
-                    {
-                        if (selectedItems.Contains(selectedItem))
-                            selectedItems.Remove(selectedItem);
-                    }
-
-                    selectedItemsObservable.Clear();
-                    selectedItems.OrderBy(i=> i.RefName).ToList().ForEach(i=> selectedItemsObservable.Add(i));
-                    lvSelected.ItemsSource = selectedItemsObservable;
-
-                    Paint();
-                }
-            }
-
-        }
+            relPos = Convert.ToSingle(Math.Round(pos / (Workbook.BaseGridSize * Workbook.Zoom)));
+            return Task.CompletedTask;
+        }).Wait();
+        return relPos;
     }
 
     private WorksheetItem? GetWorksheetItemaAt(PointF position)
     {
-        WorksheetItem? selectedItem = App.CurrentSheet?.GetItemAt(
-            GetRelPos(position.X),
-            GetRelPos(position.Y)
-        );
+        WorksheetItem? selectedItem = null;
+        Try(() =>
+        {
+            selectedItem = App.CurrentSheet?.GetItemAt(
+                GetRelPos(position.X),
+                GetRelPos(position.Y)
+            );
 
-        List<int> offsets = new() { 0, -1, 1 };
+            List<int> offsets = new() { 0, -1, 1 };
 
-        foreach (int row in offsets)
-            foreach (int column in offsets)
-            {
-                if (selectedItem == null)
+            foreach (int row in offsets)
+                foreach (int column in offsets)
                 {
-                    selectedItem = App.CurrentSheet?.GetItemAt(
-                        GetRelPos(position.X) + column,
-                        GetRelPos(position.Y) + row);
+                    if (selectedItem == null)
+                    {
+                        selectedItem = App.CurrentSheet?.GetItemAt(
+                            GetRelPos(position.X) + column,
+                            GetRelPos(position.Y) + row);
+                    }
+                    else break;
                 }
-                else break;
-            }
+            return Task.CompletedTask;
+        }).Wait();
 
         return selectedItem;
+
     }
 
+    private async Task Insert(WorksheetItem? item)
+    {
+        await Try(() =>
+        {
+            if (item != null)
+            {
+                DoInsert = (x, y) =>
+                {
+                    item.DrawableComponent.Position.X = x;
+                    item.DrawableComponent.Position.Y = y;
+                    App.CurrentSheet?.Items.AddItem(item);
+                    return item;
+                };
+            }
+
+            IsInserting = true;
+            return Task.CompletedTask;
+        });
+    }
+
+    private async Task InsertItem(Type itemType, ItemButton selectedButton)
+    {
+        await Try(async () =>
+        {
+            bool justDeselectAndReturn = SelectedButton == selectedButton;
+            IsInserting = false;
+            DoInsert = (x, y) => null;
+            await DeselectSelectedButton();
+            if (justDeselectAndReturn) return;
+
+            await SelectButton(selectedButton);
+
+            if (Activator.CreateInstance(itemType) is WorksheetItem item)
+            {
+                await Insert(item);
+            }
+
+            if (!IsInserting)
+                await DeselectSelectedButton();
+
+        });
+    }
+
+    private void OnItemButtonClicked(object? sender, EventArgs e)
+    {
+        Try(async () =>
+        {
+            if (sender is ItemButton button)
+            {
+                if (button.ItemType != null)
+                {
+                    await InsertItem(button.ItemType, button);
+                }
+            }
+        }).Wait();
+    }
+
+    private void OnSheetItemAdded(IWorksheetItem obj)
+    {
+        Paint().Wait();
+    }
+
+    private async Task Paint()
+    {
+        await Try(() =>
+        {
+            if (IsInserting)
+                return Task.CompletedTask;
+
+            sheetGraphicsView.Drawable = null;
+            App.CurrentSheet?.CalculateScene();
+            DrawableScene? scene = (DrawableScene?)
+                App.CurrentSheet?.SceneManager?.GetSceneForBackend();
+            sheetGraphicsView.Drawable = scene;
+
+            sheetGraphicsView.Invalidate();
+            return Task.CompletedTask;
+        });
+    }
 
     private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
     {
-        if (e.StatusType == GestureStatus.Started || e.StatusType == GestureStatus.Completed)
-        {
-            LastDisplayOffset = App.CurrentSheet?.DisplayOffset;
-        }
+        Try(async () =>
+         {
+             if (e.StatusType == GestureStatus.Started || e.StatusType == GestureStatus.Completed)
+             {
+                 LastDisplayOffset = App.CurrentSheet?.DisplayOffset;
+             }
 
-        if (e.StatusType == GestureStatus.Running)
-        {
-            if (App.CurrentSheet != null)
-            {
-                App.CurrentSheet.DisplayOffset =
-                    new Coordinate(
-                        Convert.ToSingle(e.TotalX),
-                        Convert.ToSingle(e.TotalY)).Add(LastDisplayOffset ?? new Coordinate());
-            }
+             if (e.StatusType == GestureStatus.Running)
+             {
+                 if (App.CurrentSheet != null)
+                 {
+                     App.CurrentSheet.DisplayOffset =
+                         new Coordinate(
+                             Convert.ToSingle(e.TotalX),
+                             Convert.ToSingle(e.TotalY)).Add(LastDisplayOffset ?? new Coordinate());
+                 }
 
-            Paint();
-        }
-
+                 await Paint();
+             }
+         }).Wait();
     }
 
-    public Coordinate? LastDisplayOffset { get; set; }
-}
+    private async Task SelectButton(ItemButton selectedButton)
+    {
+        await Try(() =>
+        {
+            SelectedButton = selectedButton;
+            SelectedButtonColor = SelectedButton?.BackgroundColor;
+            SelectedButtonBorderColor = SelectedButton?.BorderColor;
+            if (SelectedButton != null)
+            {
+                SelectedButton.BorderColor = Colors.SlateGray;
+                SelectedButton.BackgroundColor = Application.AccentColor;
+            }
 
+            return Task.CompletedTask;
+        });
+    }
+
+    private async Task SetupPage()
+    {
+        await Try(() =>
+        {
+            foreach (Type type in typeof(IWorksheetItem).Assembly.GetTypes())
+            {
+                bool TypeFilter(Type filterType, object? criteria) => filterType == typeof(IWorksheetItem);
+
+                if (type.FindInterfaces(TypeFilter, null).Length <= 0)
+                {
+                    continue;
+                }
+
+                PropertyInfo? isInsertableProp = type.GetProperty("IsInsertable");
+                if (isInsertableProp == null)
+                {
+                    continue;
+                }
+
+                bool isInsertable =
+                    (bool)(isInsertableProp.GetValue(null, BindingFlags.Static, null, null, null) ?? false);
+
+                if (!isInsertable)
+                {
+                    continue;
+                }
+
+                ItemButton button = new(type) { WidthRequest = 60, HeightRequest = 60 };
+                button.Clicked += OnItemButtonClicked;
+                slComponentButtons.Add(
+                    button
+                );
+            }
+
+            return Task.CompletedTask;
+        });
+    }
+
+    private async void SetupSheet()
+    {
+        await Try(async () =>
+        {
+            App.CurrentWorkbook ??= new Workbook();
+
+            App.CurrentSheet = App.CurrentWorkbook.AddNewSheet();
+            App.CurrentSheet.Items.OnItemAdded = OnSheetItemAdded;
+
+            App.CurrentSheet.CalculateScene();
+            DrawableScene? scene = (DrawableScene?)
+                App.CurrentSheet.SceneManager?.GetSceneForBackend();
+
+            if (scene != null)
+            {
+                sheetGraphicsView.Drawable = scene;
+            }
+
+            await ToggleSelectedItemsVisibility();
+        });
+    }
+
+    private async void TapGestureRecognizer_OnTapped(object? sender, TappedEventArgs e)
+    {
+        await Try(async () =>
+        {
+            Point touch = e.GetPosition(null) ?? Point.Zero;
+            if (touch != Point.Zero)
+            {
+                float offsetX = 0;
+                float offsetY = 0;
+                if (LastDisplayOffset != null)
+                {
+                    offsetX = LastDisplayOffset.X;
+                    offsetY = LastDisplayOffset.Y;
+                }
+
+                if (IsInserting)
+                {
+                    WorksheetItem? newItem = DoInsert?.Invoke(
+                        GetRelPos(touch.X - offsetX),
+                        GetRelPos(touch.Y - offsetY));
+
+                    await DeselectSelectedButton();
+                    IsInserting = false;
+                    await Paint();
+                }
+                else
+                {
+                    touch.X -= offsetX;
+                    touch.Y -= offsetY;
+
+                    WorksheetItem? selectedItem = GetWorksheetItemaAt(touch);
+
+                    if (selectedItem != null)
+                    {
+                        if (App.CurrentSheet != null && App.CurrentSheet.ToggleSelectItem(selectedItem))
+                        {
+                            if (!_selectedItems.Contains(selectedItem))
+                                _selectedItems.Add(selectedItem);
+                        }
+                        else
+                        {
+                            if (_selectedItems.Contains(selectedItem))
+                                _selectedItems.Remove(selectedItem);
+                        }
+
+                        _selectedItemsObservable.Clear();
+                        _selectedItems.OrderBy(i => i.RefName).ToList().ForEach(i => _selectedItemsObservable.Add(i));
+                        lvSelected.ItemsSource = _selectedItemsObservable;
+
+                        await Paint();
+                    }
+                }
+            }
+
+        });
+    }
+
+    private async Task Try(Func<Task> action)
+    {
+        try
+        {
+            await action().ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            _log?.Invoke(ex.ToString());
+        }
+    }
+}

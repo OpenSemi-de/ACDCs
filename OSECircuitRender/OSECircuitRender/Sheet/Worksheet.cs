@@ -1,12 +1,13 @@
 ﻿#nullable enable
-using System;
-using System.Linq;
+
 using Newtonsoft.Json;
 using OSECircuitRender.Definitions;
 using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
+using System;
+using System.Linq;
 
 namespace OSECircuitRender.Sheet;
 
@@ -19,25 +20,31 @@ public sealed class Worksheet
         SelectedItems.OnAdded(OnSelectionAdded);
     }
 
-    private void OnSelectionAdded(IWorksheetItem obj)
-    {
-        OnSelectionChange?.Invoke(SelectedItems);
-    }
+    public Color? BackgroundColor { get; set; }
 
-    public Action<WorksheetItemList> OnSelectionChange { get; set; }
+    public Coordinate? DisplayOffset { get; set; }
 
     public float GridSize { get; set; } = 2.54f;
+
     public WorksheetItemList Items { get; set; } = new();
-    public WorksheetItemList  SelectedItems { get; set; } = new();
+
     public WorksheetItemList Nets { get; set; } = new();
+
+    public Action<WorksheetItemList>? OnSelectionChange { get; set; }
+
     public IPathRouter Router { get; set; }
-    [JsonIgnore] public ISceneManager SceneManager { get; set; }
+
+    [JsonIgnore] public ISceneManager? SceneManager { get; set; }
+
+    public WorksheetItemList SelectedItems { get; set; } = new();
+
     public int SheetNum { get; set; }
+
     public Coordinate SheetSize { get; set; } = new(100, 100, 0);
-    public WorksheetItemList Traces { get; set; } = new();
-    public Color BackgroundColor { get; set; }
+
     public bool ShowGrid { get; set; } = true;
-    public Coordinate? DisplayOffset { get; set; }
+
+    public WorksheetItemList Traces { get; set; } = new();
 
     public bool CalculateScene()
     {
@@ -71,12 +78,12 @@ public sealed class Worksheet
         return false;
     }
 
-    private DrawableComponentList GetSelectedComponents()
+    public void DeselectItem(WorksheetItem item)
     {
-        return new DrawableComponentList(
-            SelectedItems.Select(item => item.DrawableComponent)
-        );
-
+        if (SelectedItems.Contains(item))
+        {
+            SelectedItems.Remove(item);
+        }
     }
 
     public DrawableComponentList GetDrawableComponents()
@@ -92,11 +99,6 @@ public sealed class Worksheet
                             item.DrawableComponent
                         )
                 ));
-    }
-
-    private void OnItemAdded(IWorksheetItem item)
-    {
-        Router.SetItems(Items, Nets);
     }
 
     public WorksheetItem? GetItemAt(float x, float y)
@@ -117,13 +119,6 @@ public sealed class Worksheet
             SelectedItems.AddItem(item);
         }
     }
-    public void DeselectItem(WorksheetItem item)
-    {
-        if (SelectedItems.Contains(item))
-        {
-            SelectedItems.Remove(item);
-        }
-    }
 
     public bool ToggleSelectItem(WorksheetItem selectedItem)
     {
@@ -137,5 +132,22 @@ public sealed class Worksheet
             SelectedItems.AddItem(selectedItem);
             return true;
         }
+    }
+
+    private DrawableComponentList GetSelectedComponents()
+    {
+        return new DrawableComponentList(
+            SelectedItems.Select(item => item.DrawableComponent)
+        );
+    }
+
+    private void OnItemAdded(IWorksheetItem item)
+    {
+        Router.SetItems(Items, Nets);
+    }
+
+    private void OnSelectionAdded(IWorksheetItem obj)
+    {
+        OnSelectionChange?.Invoke(SelectedItems);
     }
 }

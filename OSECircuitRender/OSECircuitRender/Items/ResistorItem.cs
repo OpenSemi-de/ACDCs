@@ -7,12 +7,8 @@ public sealed class ResistorItem : WorksheetItem
     public ResistorItem()
     {
         DrawableComponent = new ResistorDrawable(this, DefaultValue, 1, 1);
+        Value = DefaultValue;
     }
-
-    public static string DefaultValue { get; set; } = "10k";
-
-    public new static bool IsInsertable { get; set; } = true;
-
 
     public ResistorItem(string value, float x, float y)
     {
@@ -26,5 +22,8 @@ public sealed class ResistorItem : WorksheetItem
         Value = value;
     }
 
-    public string Value { get; set; }
+    public new static string DefaultValue { get; set; } = "10k";
+
+    public new static bool IsInsertable { get; set; } = true;
+
 }

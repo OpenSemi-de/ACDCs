@@ -1,15 +1,33 @@
-﻿using System;
+﻿#nullable enable
 using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
+using System;
+using System.Runtime.CompilerServices;
 
 namespace OSECircuitRender.Items;
 
 public class WorksheetItem : IWorksheetItem
 {
+    private string? _value;
+
+    public string? Value
+    {
+        get => _value ?? DefaultValue;
+        set => _value = value ?? DefaultValue;
+    }
+
+    public string TypeName => this.GetType().Name.Replace("Item", "");
+
     public static bool IsInsertable { get; set; } = false;
-    public string DefaultValue { get; set; }
+    public static string? DefaultValue { get; set; }
     public IDrawableComponent DrawableComponent { get; set; } = new DrawableComponent(typeof(DrawableComponent));
-    public int Height => Convert.ToInt32(DrawableComponent.Size.Y);
+
+    public int Height
+    {
+        get => Convert.ToInt32(DrawableComponent.Size.Y);
+        set => DrawableComponent.Size.Y = value;
+    }
+
     public Guid ItemGuid { get; set; } = Guid.NewGuid();
     public string Name { get; set; } = string.Empty;
     public DrawablePinList Pins { get; set; } = new();
@@ -21,7 +39,21 @@ public class WorksheetItem : IWorksheetItem
         set => DrawableComponent.Rotation = value;
     }
 
-    public int Width => Convert.ToInt32(DrawableComponent.Size.X);
-    public int X => Convert.ToInt32(DrawableComponent.Position.X);
-    public int Y => Convert.ToInt32(DrawableComponent.Position.Y);
+    public int Width
+    {
+        get => Convert.ToInt32(DrawableComponent.Size.X);
+        set => DrawableComponent.Size.X = value;
+    }
+
+    public int X
+    {
+        get => Convert.ToInt32(DrawableComponent.Position.X);
+        set => DrawableComponent.Position.X = value;
+    }
+
+    public int Y
+    {
+        get => Convert.ToInt32(DrawableComponent.Position.Y);
+        set => DrawableComponent.Position.Y = value;
+    }
 }

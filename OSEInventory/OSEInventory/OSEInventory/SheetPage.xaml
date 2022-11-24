@@ -23,6 +23,76 @@
             </ScrollView>
         </Frame>
 
+        <Frame BackgroundColor="White" BorderColor="Black" AbsoluteLayout.LayoutFlags="XProportional" AbsoluteLayout.LayoutBounds="1,132,240,400" CornerRadius="0" x:Name="fAllItems">
+            <StackLayout Orientation="Vertical" HorizontalOptions="Fill">
+                <Frame HorizontalOptions="Fill" HeightRequest="30" BackgroundColor="LightGray" CornerRadius="0">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
+                        <Button x:Name="bnShowHideAllItems"  Clicked="BnShowHideAllItems_OnClicked">
+                            <Button.WidthRequest>30</Button.WidthRequest>
+                            <Button.HeightRequest>30</Button.HeightRequest>
+                            <Button.Text>&gt;</Button.Text>
+                            <Button.Padding>0</Button.Padding>
+                            <Button.BorderColor>LightGray</Button.BorderColor>
+                            <Button.TextColor>White</Button.TextColor>
+                            <Button.FontAttributes>Bold</Button.FontAttributes>
+                            <Button.FontSize>14</Button.FontSize>
+                            <Button.BackgroundColor>SlateGray</Button.BackgroundColor>
+                        </Button>
+                        <Label Text="All items" TextColor="Black" HorizontalTextAlignment="Center" FontAttributes="Bold" WidthRequest="200" HorizontalOptions="Fill"></Label>
+                    </StackLayout>
+                </Frame>
+                <Frame HorizontalOptions="Fill" VerticalOptions="Fill" CornerRadius="0">
+                    <StackLayout Orientation="Horizontal">
+                        <Label HeightRequest="30" WidthRequest="100" VerticalTextAlignment="Center" FontSize="10" Text="Type" FontAttributes="Bold">
+                            <Label.TextColor>Black</Label.TextColor>
+                            <Label.BackgroundColor>Transparent</Label.BackgroundColor>
+                        </Label>
+                        <Label HeightRequest="30" WidthRequest="30" VerticalTextAlignment="Center" FontSize="10" Text="Value" FontAttributes="Bold">
+                            <Label.TextColor>Black</Label.TextColor>
+                            <Label.BackgroundColor>Transparent</Label.BackgroundColor>
+                        </Label>
+                        <Label HeightRequest="30"  VerticalTextAlignment="Center" HorizontalOptions="Fill" HorizontalTextAlignment="Center" FontSize="10" Text="RefName" FontAttributes="Bold">
+                            <Label.TextColor>Black</Label.TextColor>
+                            <Label.BackgroundColor>Transparent</Label.BackgroundColor>
+                        </Label>
+                    </StackLayout>
+                </Frame>
+                <ListView x:Name="lvAllItems" RowHeight="32" SelectionMode="Single" SeparatorVisibility="Default" SeparatorColor="WhiteSmoke">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell Height="32">
+                                <Frame HorizontalOptions="Fill" VerticalOptions="Fill" CornerRadius="0">
+                                    <StackLayout Orientation="Horizontal" VerticalOptions="Fill">
+                                        <Label HeightRequest="30" WidthRequest="100" VerticalTextAlignment="Center" FontSize="9" FontAutoScalingEnabled="True">
+                                            <Label.Text>
+                                                <Binding Path="TypeName" />
+                                            </Label.Text>
+                                            <Label.TextColor>Black</Label.TextColor>
+                                            <Label.BackgroundColor>Transparent</Label.BackgroundColor>
+                                        </Label>
+                                        <Label HeightRequest="30" WidthRequest="30" VerticalTextAlignment="Center" FontSize="9" FontAutoScalingEnabled="True">
+                                            <Label.Text>
+                                                <Binding Path="Value" />
+                                            </Label.Text>
+                                            <Label.TextColor>Black</Label.TextColor>
+                                            <Label.BackgroundColor>Transparent</Label.BackgroundColor>
+                                        </Label>
+                                        <Label HeightRequest="30" VerticalTextAlignment="Center" HorizontalOptions="Fill" HorizontalTextAlignment="Center" FontSize="9" FontAutoScalingEnabled="True">
+                                            <Label.Text>
+                                                <Binding Path="RefName" />
+                                            </Label.Text>
+                                            <Label.TextColor>Black</Label.TextColor>
+                                            <Label.BackgroundColor>Transparent</Label.BackgroundColor>
+                                        </Label>
+                                    </StackLayout>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </Frame>
+
         <Frame BackgroundColor="White" BorderColor="Black" AbsoluteLayout.LayoutFlags="XProportional" AbsoluteLayout.LayoutBounds="1,100,240,400" CornerRadius="0" x:Name="fSelectedItems">
             <StackLayout Orientation="Vertical" HorizontalOptions="Fill">
                 <Frame HorizontalOptions="Fill" HeightRequest="30" BackgroundColor="LightGray" CornerRadius="0">
@@ -57,7 +127,7 @@
                         </Label>
                     </StackLayout>
                 </Frame>
-                <ListView x:Name="lvSelected" RowHeight="32" SelectionMode="Single" SeparatorVisibility="Default" SeparatorColor="WhiteSmoke">
+                <ListView x:Name="lvSelectedItems" RowHeight="32" SelectionMode="Single" SeparatorVisibility="Default" SeparatorColor="WhiteSmoke">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell Height="32">

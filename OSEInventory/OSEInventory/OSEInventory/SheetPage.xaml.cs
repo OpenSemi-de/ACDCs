@@ -15,8 +15,11 @@ public partial class SheetPage
 {
     private readonly List<WorksheetItem> _selectedItems = new();
     private readonly ObservableCollection<WorksheetItem> _selectedItemsObservable = new();
-    private Rect? _selectedItemsBounds;
+    private readonly ObservableCollection<WorksheetItem> _allItemsObservable = new();
+    private Rect? _allItemsBounds;
     private Action<string>? _log;
+    private Rect? _selectedItemsBounds;
+    private readonly List<WorksheetItem> _allItems = new();
 
     public SheetPage()
     {
@@ -28,6 +31,7 @@ public partial class SheetPage
 
     public Func<float, float, WorksheetItem?>? DoInsert { get; set; }
 
+    public bool IsAllItemsVisible { get; set; }
     public bool IsInserting { get; set; }
 
     public bool IsSelectedItemsVisible { get; set; } = true;
@@ -39,41 +43,14 @@ public partial class SheetPage
 
     public Color? SelectedButtonColor { get; set; }
 
+    private async void BnShowHideAllItems_OnClicked(object? sender, EventArgs e)
+    {
+        await Try(ToggleAllItemsVisibility);
+    }
+
     private async void BnShowHideSelectedItems_OnClicked(object? sender, EventArgs e)
     {
         await Try(ToggleSelectedItemsVisibility);
-    }
-
-    private async Task ToggleSelectedItemsVisibility()
-    {
-        await Try(async () =>
-        {
-            _selectedItemsBounds ??= AbsoluteLayout.GetLayoutBounds(fSelectedItems);
-
-            switch (IsSelectedItemsVisible)
-            {
-                case true:
-
-                    var bounds = new Rect((Point)_selectedItemsBounds?.Location, (Size)_selectedItemsBounds?.Size);
-                    bounds.Width = 30;
-                    bounds.Height = 30;
-
-                    await fSelectedItems.LayoutTo(bounds, 500U, Easing.Linear);
-                    AbsoluteLayout.SetLayoutBounds(fSelectedItems, bounds);
-
-                    bnShowHideSelectedItems.Text = "<";
-                    IsSelectedItemsVisible = false;
-                    break;
-                default:
-
-                    await fSelectedItems.LayoutTo(_selectedItemsBounds.Value, 500U, Easing.Linear);
-                    AbsoluteLayout.SetLayoutBounds(fSelectedItems, _selectedItemsBounds.Value);
-                    bnShowHideSelectedItems.Text = ">";
-                    IsSelectedItemsVisible = true;
-                    break;
-            }
-
-        });
     }
 
     private async Task DeselectSelectedButton()
@@ -128,7 +105,6 @@ public partial class SheetPage
         }).Wait();
 
         return selectedItem;
-
     }
 
     private async Task Insert(WorksheetItem? item)
@@ -170,7 +146,6 @@ public partial class SheetPage
 
             if (!IsInserting)
                 await DeselectSelectedButton();
-
         });
     }
 
@@ -190,6 +165,12 @@ public partial class SheetPage
 
     private void OnSheetItemAdded(IWorksheetItem obj)
     {
+        _allItemsObservable.Clear();
+        _allItems.Clear();
+        _allItems.AddRange(App.CurrentSheet?.Items.Cast<WorksheetItem>() ?? Array.Empty<WorksheetItem>());
+        _allItems.OrderBy(i => i.RefName).ToList().ForEach(i => _allItemsObservable.Add(i));
+        lvAllItems.ItemsSource = _allItemsObservable;
+
         Paint().Wait();
     }
 
@@ -364,13 +345,76 @@ public partial class SheetPage
 
                         _selectedItemsObservable.Clear();
                         _selectedItems.OrderBy(i => i.RefName).ToList().ForEach(i => _selectedItemsObservable.Add(i));
-                        lvSelected.ItemsSource = _selectedItemsObservable;
+                        lvSelectedItems.ItemsSource = _selectedItemsObservable;
 
                         await Paint();
                     }
                 }
             }
+        });
+    }
 
+    private async Task ToggleAllItemsVisibility()
+    {
+        await Try(async () =>
+        {
+            _allItemsBounds ??= AbsoluteLayout.GetLayoutBounds(fAllItems);
+
+            switch (IsAllItemsVisible)
+            {
+                case true:
+
+                    var bounds = new Rect((Point)_allItemsBounds?.Location, (Size)_allItemsBounds?.Size);
+                    bounds.Width = 30;
+                    bounds.Height = 30;
+
+                    await fAllItems.LayoutTo(bounds, 500U, Easing.Linear);
+                    AbsoluteLayout.SetLayoutBounds(fAllItems, bounds);
+
+                    bnShowHideAllItems.Text = "<";
+                    IsAllItemsVisible = false;
+                    break;
+
+                default:
+
+                    await fAllItems.LayoutTo(_allItemsBounds.Value, 500U, Easing.Linear);
+                    AbsoluteLayout.SetLayoutBounds(fAllItems, _allItemsBounds.Value);
+                    bnShowHideAllItems.Text = ">";
+                    IsAllItemsVisible = true;
+                    break;
+            }
+        });
+    }
+
+    private async Task ToggleSelectedItemsVisibility()
+    {
+        await Try(async () =>
+        {
+            _selectedItemsBounds ??= AbsoluteLayout.GetLayoutBounds(fSelectedItems);
+
+            switch (IsSelectedItemsVisible)
+            {
+                case true:
+
+                    var bounds = new Rect((Point)_selectedItemsBounds?.Location, (Size)_selectedItemsBounds?.Size);
+                    bounds.Width = 30;
+                    bounds.Height = 30;
+
+                    await fSelectedItems.LayoutTo(bounds, 500U, Easing.Linear);
+                    AbsoluteLayout.SetLayoutBounds(fSelectedItems, bounds);
+
+                    bnShowHideSelectedItems.Text = "<";
+                    IsSelectedItemsVisible = false;
+                    break;
+
+                default:
+
+                    await fSelectedItems.LayoutTo(_selectedItemsBounds.Value, 500U, Easing.Linear);
+                    AbsoluteLayout.SetLayoutBounds(fSelectedItems, _selectedItemsBounds.Value);
+                    bnShowHideSelectedItems.Text = ">";
+                    IsSelectedItemsVisible = true;
+                    break;
+            }
         });
     }
 

@@ -46,7 +46,7 @@ public partial class SheetPage
 
     private async Task ToggleSelectedItemsVisibility()
     {
-        await Try(() =>
+        await Try(async () =>
         {
             _selectedItemsBounds ??= AbsoluteLayout.GetLayoutBounds(fSelectedItems);
 
@@ -58,7 +58,7 @@ public partial class SheetPage
                     bounds.Width = 30;
                     bounds.Height = 30;
 
-                    fSelectedItems.LayoutTo(bounds, 500U);
+                    await fSelectedItems.LayoutTo(bounds, 500U, Easing.Linear);
                     AbsoluteLayout.SetLayoutBounds(fSelectedItems, bounds);
 
                     bnShowHideSelectedItems.Text = "<";
@@ -66,14 +66,13 @@ public partial class SheetPage
                     break;
                 default:
 
-                    fSelectedItems.LayoutTo(_selectedItemsBounds.Value, 500U);
+                    await fSelectedItems.LayoutTo(_selectedItemsBounds.Value, 500U, Easing.Linear);
                     AbsoluteLayout.SetLayoutBounds(fSelectedItems, _selectedItemsBounds.Value);
                     bnShowHideSelectedItems.Text = ">";
                     IsSelectedItemsVisible = true;
                     break;
             }
 
-            return Task.CompletedTask;
         });
     }
 
@@ -317,7 +316,7 @@ public partial class SheetPage
     {
         await Try(async () =>
         {
-            Point touch = e.GetPosition(null) ?? Point.Zero;
+            Point touch = e.GetPosition(sheetGraphicsView) ?? Point.Zero;
             if (touch != Point.Zero)
             {
                 float offsetX = 0;
@@ -333,6 +332,11 @@ public partial class SheetPage
                     WorksheetItem? newItem = DoInsert?.Invoke(
                         GetRelPos(touch.X - offsetX),
                         GetRelPos(touch.Y - offsetY));
+                    if (newItem != null)
+                    {
+                        newItem.X -= newItem.Width / 2;
+                        newItem.Y -= newItem.Height / 2;
+                    }
 
                     await DeselectSelectedButton();
                     IsInserting = false;

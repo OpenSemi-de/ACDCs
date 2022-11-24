@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:components="clr-namespace:OSEInventory.Components"
+             xmlns:local="clr-namespace:OSEInventory"
              xmlns:items="clr-namespace:OSECircuitRender.Items;assembly=OSECircuitRender"
              x:Class="OSEInventory.SheetPage"
              Title="New sheet"
@@ -29,13 +30,30 @@
 
         <Frame BackgroundColor="White" BorderColor="WhiteSmoke" AbsoluteLayout.LayoutFlags="XProportional" AbsoluteLayout.LayoutBounds="1,100,240,400">
             <ScrollView VerticalScrollBarVisibility="Never" HorizontalOptions="Fill">
-                <ListView BindingContext="{x:Reference selectedItems}">
+                <ListView x:Name="lvSelected" RowHeight="32" SelectionMode="Single" SeparatorVisibility="Default" SeparatorColor="WhiteSmoke">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout Orientation="Horizontal">
-                                <Image ></Image>
-                                <Label Text="{Binding RefName}"></Label>
-                            </StackLayout>
+                            <ViewCell Height="32">
+                                <Frame HorizontalOptions="Fill" VerticalOptions="Fill" CornerRadius="0">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label HeightRequest="30" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center">
+                                            <Label.Text>
+                                                <Binding Path="RefName" />
+                                            </Label.Text>
+                                            <Label.TextColor>Black</Label.TextColor>
+                                            <Label.BackgroundColor>LightBlue</Label.BackgroundColor>
+                                        </Label>
+                                        <Label HeightRequest="30" HorizontalOptions="Fill" VerticalOptions="Fill" VerticalTextAlignment="Center">
+                                            <Label.Text>
+                                                <Binding Path="RefName" />
+                                            </Label.Text>
+                                            <Label.TextColor>Black</Label.TextColor>
+                                            <Label.BackgroundColor>LightBlue</Label.BackgroundColor>
+                                        </Label>
+                                    </StackLayout>
+
+                                </Frame>
+                            </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

@@ -1,9 +1,7 @@
-﻿using System.Dynamic;
+﻿using System.Collections.ObjectModel;
 using System.Reflection;
-using Microsoft.UI.Xaml;
 using OSECircuitRender;
 using OSECircuitRender.Definitions;
-using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
@@ -16,6 +14,7 @@ namespace OSEInventory;
 public partial class SheetPage
 {
     private List<WorksheetItem> selectedItems = new();
+    private ObservableCollection<WorksheetItem> selectedItemsObservable = new();
 
     public SheetPage()
     {
@@ -69,6 +68,7 @@ public partial class SheetPage
 
     public bool IsInserting { get; set; }
 
+    
     private void SetupSheet()
     {
         if (App.CurrentWorkbook == null)
@@ -222,6 +222,10 @@ public partial class SheetPage
                             selectedItems.Remove(selectedItem);
                     }
 
+                    selectedItemsObservable.Clear();
+                    selectedItems.OrderBy(i=> i.RefName).ToList().ForEach(i=> selectedItemsObservable.Add(i));
+                    lvSelected.ItemsSource = selectedItemsObservable;
+
                     Paint();
                 }
             }
@@ -278,3 +282,4 @@ public partial class SheetPage
 
     public Coordinate? LastDisplayOffset { get; set; }
 }
+

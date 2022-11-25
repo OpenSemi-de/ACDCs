@@ -12,9 +12,9 @@
                 <GraphicsView.BackgroundColor>DarkBlue</GraphicsView.BackgroundColor>
                 <GraphicsView.VerticalOptions>Fill</GraphicsView.VerticalOptions>
                 <GraphicsView.GestureRecognizers>
-                    <PointerGestureRecognizer PointerMoved="PointerGestureRecognizer_OnPointerMoved"></PointerGestureRecognizer>
-                    <TapGestureRecognizer  Tapped="TapGestureRecognizer_OnTapped"></TapGestureRecognizer>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped"></TapGestureRecognizer>
                     <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated"  />
+                    <PointerGestureRecognizer PointerMoved="PointerGestureRecognizer_OnPointerMoved"></PointerGestureRecognizer>
                 </GraphicsView.GestureRecognizers>
             </GraphicsView>
         </Frame>

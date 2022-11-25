@@ -17,6 +17,7 @@ public partial class SheetPage
     private Rect? _allItemsBounds;
     private Rect? _selectedItemsBounds;
     private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions;
+    private Point _cursorPosition;
 
     public SheetPage()
     {
@@ -112,56 +113,56 @@ public partial class SheetPage
     {
         App.Try(async () =>
         {
-            if (sender != null)
+            if (e.StatusType == GestureStatus.Started || e.StatusType == GestureStatus.Completed)
             {
-                PanGestureRecognizer? recognizer = (PanGestureRecognizer)sender;
-                
+                LastDisplayOffset = App.CurrentSheet?.DisplayOffset ??
+                                    new Coordinate(
+                                        Convert.ToSingle(e.TotalX),
+                                        Convert.ToSingle(e.TotalY));
+                _selectedItemsBasePositions = new(_selectedItems.Select(selectedItem =>
+                    new KeyValuePair<WorksheetItem, Coordinate>(selectedItem, selectedItem.DrawableComponent.Position)));
+                IsDraggingItem = false;
             }
 
-            if (e.StatusType == GestureStatus.Started || e.StatusType == GestureStatus.Completed)
-             {
-                 LastDisplayOffset = App.CurrentSheet?.DisplayOffset;
+            if (e.StatusType == GestureStatus.Running)
+            {
+                if (App.CurrentSheet != null)
+                {
+                    var checkPosition = new PointF(Convert.ToSingle(_cursorPosition.X - LastDisplayOffset?.X),
+                        Convert.ToSingle(_cursorPosition.Y - LastDisplayOffset?.Y));
+                    var testForItem = GetWorksheetItemaAt(checkPosition);
+                    if (IsDraggingItem || (testForItem != null && _selectedItems.Contains(testForItem)))
+                    {
+                        IsDraggingItem = true;
+                        _selectedItems.ForEach(item =>
+                            {
+                                item.DrawableComponent.Position.X = Convert.ToSingle(Math.Round(
+                                    (Convert.ToSingle(_cursorPosition.X) - LastDisplayOffset.X)
+                                    / (Workbook.Zoom * Workbook.BaseGridSize)));
 
-                 if (ControlButtonView.SelectedControlType == SelectedControlType.ItemMovement)
-                 {
-                     _selectedItemsBasePositions = new(_selectedItems.Select(selectedItem =>
-                         new KeyValuePair<WorksheetItem, Coordinate>(selectedItem, selectedItem.DrawableComponent.Position)));
-                 }
-             }
+                                item.DrawableComponent.Position.Y = Convert.ToSingle(Math.Round(
+                                    (Convert.ToSingle(_cursorPosition.Y) - LastDisplayOffset.Y)
+                                    / (Workbook.Zoom * Workbook.BaseGridSize)));
+                            }
+                            );
+                    }
+                    else
+                    {
+                        App.CurrentSheet.DisplayOffset =
+                                new Coordinate(
+                                    Convert.ToSingle(e.TotalX),
+                                    Convert.ToSingle(e.TotalY)).Add(LastDisplayOffset ?? new Coordinate());
+                    }
+                }
 
-             if (e.StatusType == GestureStatus.Running)
-             {
-                 if (ControlButtonView.SelectedControlType == SelectedControlType.ItemSelection
-                     || ControlButtonView.SelectedControlType == SelectedControlType.ItemMovement)
-                 {
-                     if (App.CurrentSheet != null)
-                     {
-                         App.CurrentSheet.DisplayOffset =
-                             new Coordinate(
-                                 Convert.ToSingle(e.TotalX),
-                                 Convert.ToSingle(e.TotalY)).Add(LastDisplayOffset ?? new Coordinate());
-                     }
-                 }
 
-                 if (ControlButtonView.SelectedControlType == SelectedControlType.ItemMovement)
-                 {
-                     Coordinate itemOffset = new(Convert.ToSingle(e.TotalX), Convert.ToSingle(e.TotalY));
+                await Paint();
+            }
 
-                     itemOffset.X /= (Workbook.Zoom * Workbook.BaseGridSize);
-                     itemOffset.Y /= (Workbook.Zoom * Workbook.BaseGridSize);
-
-                     _selectedItems.ForEach(item =>
-                     {
-                         item.X = Convert.ToInt32(Math.Round(_selectedItemsBasePositions[item].X - itemOffset.X));
-                         item.Y = Convert.ToInt32(Math.Round(_selectedItemsBasePositions[item].Y - itemOffset.Y));
-                     });
-                 }
-
-                 await Paint();
-             }
-
-         }).Wait();
+        }).Wait();
     }
+
+    public bool IsDraggingItem { get; set; }
 
     private async Task SetupPage()
     {
@@ -318,10 +319,11 @@ public partial class SheetPage
         });
     }
 
-
-
-
     private void PointerGestureRecognizer_OnPointerMoved(object? sender, PointerEventArgs e)
     {
+        
+
+        _cursorPosition = e.GetPosition(sheetGraphicsView) ?? new Point();
+
     }
 }

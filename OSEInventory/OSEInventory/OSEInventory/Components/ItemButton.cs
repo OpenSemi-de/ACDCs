@@ -14,17 +14,11 @@ namespace OSEInventory.Components
         public ItemButton(Type? itemType)
         {
             ItemType = itemType;
-            if (WidthRequest == 0)
-                WidthRequest = 42;
-            if (HeightRequest == 0)
-                HeightRequest = 42;
-
+    
             if (itemType != null)
             {
                 Worksheet? sheet = new Workbook().AddNewSheet();
 
-                BorderWidth = 2;
-                BorderColor = Colors.WhiteSmoke;
                 sheet.GridSize = Convert.ToSingle(WidthRequest / Workbook.BaseGridSize * Workbook.Zoom);
                 sheet.BackgroundColor = new Color(255, 255, 255, 40);
                 sheet.ShowGrid = false;

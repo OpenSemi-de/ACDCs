@@ -1,76 +1,38 @@
 ﻿using System.Collections.ObjectModel;
-using System.Reflection;
 using OSECircuitRender;
 using OSECircuitRender.Definitions;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
-using OSEInventory.Components;
-using Application = Microsoft.Maui.Controls.Application;
-using Color = Microsoft.Maui.Graphics.Color;
+using OSEInventory.Views;
 
 namespace OSEInventory;
 
 public partial class SheetPage
 {
+    private readonly List<WorksheetItem> _allItems = new();
+    private readonly ObservableCollection<WorksheetItem> _allItemsObservable = new();
     private readonly List<WorksheetItem> _selectedItems = new();
     private readonly ObservableCollection<WorksheetItem> _selectedItemsObservable = new();
-    private readonly ObservableCollection<WorksheetItem> _allItemsObservable = new();
     private Rect? _allItemsBounds;
-    private Action<string>? _log;
     private Rect? _selectedItemsBounds;
-    private readonly List<WorksheetItem> _allItems = new();
+    private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions;
 
     public SheetPage()
     {
         InitializeComponent();
-        SetupPage();
+        SetupPage().Wait();
         SetupSheet();
-        _log = Console.WriteLine;
     }
 
-    public Func<float, float, WorksheetItem?>? DoInsert { get; set; }
-
     public bool IsAllItemsVisible { get; set; }
-    public bool IsInserting { get; set; }
-
     public bool IsSelectedItemsVisible { get; set; } = true;
     public Coordinate? LastDisplayOffset { get; set; }
 
-    public ItemButton? SelectedButton { get; set; }
-
-    public Color? SelectedButtonBorderColor { get; set; }
-
-    public Color? SelectedButtonColor { get; set; }
-
-    private async void BnShowHideAllItems_OnClicked(object? sender, EventArgs e)
-    {
-        await Try(ToggleAllItemsVisibility);
-    }
-
-    private async void BnShowHideSelectedItems_OnClicked(object? sender, EventArgs e)
-    {
-        await Try(ToggleSelectedItemsVisibility);
-    }
-
-    private async Task DeselectSelectedButton()
-    {
-        await Try(() =>
-        {
-            if (SelectedButton != null)
-            {
-                SelectedButton.BackgroundColor = SelectedButtonColor;
-            }
-
-            SelectedButton = null;
-            return Task.CompletedTask;
-        });
-    }
-
-    private float GetRelPos(double pos)
+    private static float GetRelPos(double pos)
     {
         float relPos = 0f;
-        Try(() =>
+        App.Try(() =>
         {
             relPos = Convert.ToSingle(Math.Round(pos / (Workbook.BaseGridSize * Workbook.Zoom)));
             return Task.CompletedTask;
@@ -78,10 +40,20 @@ public partial class SheetPage
         return relPos;
     }
 
+    private async void BnShowHideAllItems_OnClicked(object? sender, EventArgs e)
+    {
+        await App.Try(ToggleAllItemsVisibility);
+    }
+
+    private async void BnShowHideSelectedItems_OnClicked(object? sender, EventArgs e)
+    {
+        await App.Try(ToggleSelectedItemsVisibility);
+    }
+
     private WorksheetItem? GetWorksheetItemaAt(PointF position)
     {
         WorksheetItem? selectedItem = null;
-        Try(() =>
+        App.Try(() =>
         {
             selectedItem = App.CurrentSheet?.GetItemAt(
                 GetRelPos(position.X),
@@ -107,62 +79,6 @@ public partial class SheetPage
         return selectedItem;
     }
 
-    private async Task Insert(WorksheetItem? item)
-    {
-        await Try(() =>
-        {
-            if (item != null)
-            {
-                DoInsert = (x, y) =>
-                {
-                    item.DrawableComponent.Position.X = x;
-                    item.DrawableComponent.Position.Y = y;
-                    App.CurrentSheet?.Items.AddItem(item);
-                    return item;
-                };
-            }
-
-            IsInserting = true;
-            return Task.CompletedTask;
-        });
-    }
-
-    private async Task InsertItem(Type itemType, ItemButton selectedButton)
-    {
-        await Try(async () =>
-        {
-            bool justDeselectAndReturn = SelectedButton == selectedButton;
-            IsInserting = false;
-            DoInsert = (x, y) => null;
-            await DeselectSelectedButton();
-            if (justDeselectAndReturn) return;
-
-            await SelectButton(selectedButton);
-
-            if (Activator.CreateInstance(itemType) is WorksheetItem item)
-            {
-                await Insert(item);
-            }
-
-            if (!IsInserting)
-                await DeselectSelectedButton();
-        });
-    }
-
-    private void OnItemButtonClicked(object? sender, EventArgs e)
-    {
-        Try(async () =>
-        {
-            if (sender is ItemButton button)
-            {
-                if (button.ItemType != null)
-                {
-                    await InsertItem(button.ItemType, button);
-                }
-            }
-        }).Wait();
-    }
-
     private void OnSheetItemAdded(IWorksheetItem obj)
     {
         _allItemsObservable.Clear();
@@ -176,9 +92,9 @@ public partial class SheetPage
 
     private async Task Paint()
     {
-        await Try(() =>
+        await App.Try(() =>
         {
-            if (IsInserting)
+            if (ItemButtonView.IsInserting)
                 return Task.CompletedTask;
 
             sheetGraphicsView.Drawable = null;
@@ -194,88 +110,70 @@ public partial class SheetPage
 
     private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
     {
-        
-        Try(async () =>
-         {
-             
-             if (e.StatusType == GestureStatus.Started || e.StatusType == GestureStatus.Completed)
+        App.Try(async () =>
+        {
+            if (sender != null)
+            {
+                PanGestureRecognizer? recognizer = (PanGestureRecognizer)sender;
+                
+            }
+
+            if (e.StatusType == GestureStatus.Started || e.StatusType == GestureStatus.Completed)
              {
                  LastDisplayOffset = App.CurrentSheet?.DisplayOffset;
+
+                 if (ControlButtonView.SelectedControlType == SelectedControlType.ItemMovement)
+                 {
+                     _selectedItemsBasePositions = new(_selectedItems.Select(selectedItem =>
+                         new KeyValuePair<WorksheetItem, Coordinate>(selectedItem, selectedItem.DrawableComponent.Position)));
+                 }
              }
 
              if (e.StatusType == GestureStatus.Running)
              {
-                 if (App.CurrentSheet != null)
+                 if (ControlButtonView.SelectedControlType == SelectedControlType.ItemSelection
+                     || ControlButtonView.SelectedControlType == SelectedControlType.ItemMovement)
                  {
-                     App.CurrentSheet.DisplayOffset =
-                         new Coordinate(
-                             Convert.ToSingle(e.TotalX),
-                             Convert.ToSingle(e.TotalY)).Add(LastDisplayOffset ?? new Coordinate());
+                     if (App.CurrentSheet != null)
+                     {
+                         App.CurrentSheet.DisplayOffset =
+                             new Coordinate(
+                                 Convert.ToSingle(e.TotalX),
+                                 Convert.ToSingle(e.TotalY)).Add(LastDisplayOffset ?? new Coordinate());
+                     }
+                 }
+
+                 if (ControlButtonView.SelectedControlType == SelectedControlType.ItemMovement)
+                 {
+                     Coordinate itemOffset = new(Convert.ToSingle(e.TotalX), Convert.ToSingle(e.TotalY));
+
+                     itemOffset.X /= (Workbook.Zoom * Workbook.BaseGridSize);
+                     itemOffset.Y /= (Workbook.Zoom * Workbook.BaseGridSize);
+
+                     _selectedItems.ForEach(item =>
+                     {
+                         item.X = Convert.ToInt32(Math.Round(_selectedItemsBasePositions[item].X - itemOffset.X));
+                         item.Y = Convert.ToInt32(Math.Round(_selectedItemsBasePositions[item].Y - itemOffset.Y));
+                     });
                  }
 
                  await Paint();
              }
+
          }).Wait();
-    }
-
-    private async Task SelectButton(ItemButton selectedButton)
-    {
-        await Try(() =>
-        {
-            SelectedButton = selectedButton;
-            SelectedButtonColor = SelectedButton?.BackgroundColor;
-            SelectedButtonBorderColor = SelectedButton?.BorderColor;
-            if (SelectedButton != null)
-            {
-                SelectedButton.BorderColor = Colors.SlateGray;
-                SelectedButton.BackgroundColor = Application.AccentColor;
-            }
-
-            return Task.CompletedTask;
-        });
     }
 
     private async Task SetupPage()
     {
-        await Try(() =>
+        await App.Try(async () =>
         {
-            foreach (Type type in typeof(IWorksheetItem).Assembly.GetTypes())
-            {
-                bool TypeFilter(Type filterType, object? criteria) => filterType == typeof(IWorksheetItem);
-
-                if (type.FindInterfaces(TypeFilter, null).Length <= 0)
-                {
-                    continue;
-                }
-
-                PropertyInfo? isInsertableProp = type.GetProperty("IsInsertable");
-                if (isInsertableProp == null)
-                {
-                    continue;
-                }
-
-                bool isInsertable =
-                    (bool)(isInsertableProp.GetValue(null, BindingFlags.Static, null, null, null) ?? false);
-
-                if (!isInsertable)
-                {
-                    continue;
-                }
-
-                ItemButton button = new(type) { WidthRequest = 60, HeightRequest = 60 };
-                button.Clicked += OnItemButtonClicked;
-                slComponentButtons.Add(
-                    button
-                );
-            }
-
-            return Task.CompletedTask;
+            await App.Try(ItemButtonView.SetupView);
         });
     }
 
     private async void SetupSheet()
     {
-        await Try(async () =>
+        await App.Try(async () =>
         {
             App.CurrentWorkbook ??= new Workbook();
 
@@ -297,7 +195,7 @@ public partial class SheetPage
 
     private async void TapGestureRecognizer_OnTapped(object? sender, TappedEventArgs e)
     {
-        await Try(async () =>
+        await App.Try(async () =>
         {
             Point touch = e.GetPosition(sheetGraphicsView) ?? Point.Zero;
             if (touch != Point.Zero)
@@ -310,46 +208,42 @@ public partial class SheetPage
                     offsetY = LastDisplayOffset.Y;
                 }
 
-                if (IsInserting)
+                if (ItemButtonView.IsInserting)
                 {
-                    WorksheetItem? newItem = DoInsert?.Invoke(
-                        GetRelPos(touch.X - offsetX),
-                        GetRelPos(touch.Y - offsetY));
-                    if (newItem != null)
-                    {
-                        newItem.X -= newItem.Width / 2;
-                        newItem.Y -= newItem.Height / 2;
-                    }
-
-                    await DeselectSelectedButton();
-                    IsInserting = false;
+                    float x = GetRelPos(touch.X - offsetX);
+                    float y = GetRelPos(touch.Y - offsetY);
+                    await ItemButtonView.InsertToPosition(x, y);
                     await Paint();
                 }
                 else
                 {
-                    touch.X -= offsetX;
-                    touch.Y -= offsetY;
-
-                    WorksheetItem? selectedItem = GetWorksheetItemaAt(touch);
-
-                    if (selectedItem != null)
+                    if (ControlButtonView.SelectedControlType == SelectedControlType.ItemSelection)
                     {
-                        if (App.CurrentSheet != null && App.CurrentSheet.ToggleSelectItem(selectedItem))
-                        {
-                            if (!_selectedItems.Contains(selectedItem))
-                                _selectedItems.Add(selectedItem);
-                        }
-                        else
-                        {
-                            if (_selectedItems.Contains(selectedItem))
-                                _selectedItems.Remove(selectedItem);
-                        }
+                        touch.X -= offsetX;
+                        touch.Y -= offsetY;
 
-                        _selectedItemsObservable.Clear();
-                        _selectedItems.OrderBy(i => i.RefName).ToList().ForEach(i => _selectedItemsObservable.Add(i));
-                        lvSelectedItems.ItemsSource = _selectedItemsObservable;
+                        WorksheetItem? selectedItem = GetWorksheetItemaAt(touch);
 
-                        await Paint();
+                        if (selectedItem != null)
+                        {
+                            if (App.CurrentSheet != null && App.CurrentSheet.ToggleSelectItem(selectedItem))
+                            {
+                                if (!_selectedItems.Contains(selectedItem))
+                                    _selectedItems.Add(selectedItem);
+                            }
+                            else
+                            {
+                                if (_selectedItems.Contains(selectedItem))
+                                    _selectedItems.Remove(selectedItem);
+                            }
+
+                            _selectedItemsObservable.Clear();
+                            _selectedItems.OrderBy(i => i.RefName).ToList()
+                                .ForEach(i => _selectedItemsObservable.Add(i));
+                            lvSelectedItems.ItemsSource = _selectedItemsObservable;
+
+                            await Paint();
+                        }
                     }
                 }
             }
@@ -358,7 +252,7 @@ public partial class SheetPage
 
     private async Task ToggleAllItemsVisibility()
     {
-        await Try(async () =>
+        await App.Try(async () =>
         {
             _allItemsBounds ??= AbsoluteLayout.GetLayoutBounds(fAllItems);
 
@@ -367,10 +261,10 @@ public partial class SheetPage
                 case true:
 
                     var bounds = new Rect((Point)_allItemsBounds?.Location, (Size)_allItemsBounds?.Size)
-                        {
-                            Width = 30,
-                            Height = 30
-                        };
+                    {
+                        Width = 30,
+                        Height = 30
+                    };
 
                     await fAllItems.LayoutTo(bounds, 500U, Easing.Linear);
                     AbsoluteLayout.SetLayoutBounds(fAllItems, bounds);
@@ -392,7 +286,7 @@ public partial class SheetPage
 
     private async Task ToggleSelectedItemsVisibility()
     {
-        await Try(async () =>
+        await App.Try(async () =>
         {
             _selectedItemsBounds ??= AbsoluteLayout.GetLayoutBounds(fSelectedItems);
 
@@ -424,15 +318,11 @@ public partial class SheetPage
         });
     }
 
-    private async Task Try(Func<Task> action)
+
+
+
+    private void PointerGestureRecognizer_OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        try
-        {
-            await action().ConfigureAwait(false);
-        }
-        catch (Exception ex)
-        {
-            _log?.Invoke(ex.ToString());
-        }
+        throw new NotImplementedException();
     }
 }

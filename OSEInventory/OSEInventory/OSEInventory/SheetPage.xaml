@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:OSEInventory.Views"
              x:Class="OSEInventory.SheetPage"
              Title="New sheet">
     <AbsoluteLayout>
@@ -11,17 +12,14 @@
                 <GraphicsView.BackgroundColor>DarkBlue</GraphicsView.BackgroundColor>
                 <GraphicsView.VerticalOptions>Fill</GraphicsView.VerticalOptions>
                 <GraphicsView.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped"></TapGestureRecognizer>
-                    <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated" />
+                    <PointerGestureRecognizer PointerMoved="PointerGestureRecognizer_OnPointerMoved"></PointerGestureRecognizer>
+                    <TapGestureRecognizer  Tapped="TapGestureRecognizer_OnTapped"></TapGestureRecognizer>
+                    <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated"  />
                 </GraphicsView.GestureRecognizers>
             </GraphicsView>
         </Frame>
 
-        <Frame BackgroundColor="White" BorderColor="WhiteSmoke" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,0,AutoSize,62">
-            <ScrollView VerticalScrollBarVisibility="Never" HorizontalOptions="Fill">
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" x:Name="slComponentButtons" />
-            </ScrollView>
-        </Frame>
+        <views:ItemButtonView x:Name="ItemButtonView"></views:ItemButtonView>
 
         <Frame BackgroundColor="White" BorderColor="Black" AbsoluteLayout.LayoutFlags="XProportional" AbsoluteLayout.LayoutBounds="1,132,240,400" CornerRadius="0" x:Name="fAllItems">
             <StackLayout Orientation="Vertical" HorizontalOptions="Fill">
@@ -162,15 +160,6 @@
                 </ListView>
             </StackLayout>
         </Frame>
-
-        <Frame BackgroundColor="LightGray" BorderColor="WhiteSmoke" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,1,AutoSize,62">
-            <ScrollView VerticalScrollBarVisibility="Never" HorizontalOptions="Fill">
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
-                    <ImageButton BorderColor="WhiteSmoke" BorderWidth="2" Source="arrow_cursor.png" HeightRequest="58" WidthRequest="58"></ImageButton>
-                    <ImageButton BorderColor="WhiteSmoke" BorderWidth="2" Source="arrow_move.png" HeightRequest="58" WidthRequest="58"></ImageButton>
-                    <ImageButton BorderColor="WhiteSmoke" BorderWidth="2" Source="arrow_circle.png" HeightRequest="58" WidthRequest="58"></ImageButton>
-                </StackLayout>
-            </ScrollView>
-        </Frame>
+        <views:ControlButtonView x:Name="ControlButtonView"></views:ControlButtonView>
     </AbsoluteLayout>
 </ContentPage>

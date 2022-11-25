@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using OSECircuitRender.Definitions;
+﻿using OSECircuitRender.Definitions;
 using OSECircuitRender.Drawables;
 using OSECircuitRender.Scene;
 

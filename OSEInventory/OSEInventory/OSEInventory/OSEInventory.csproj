@@ -73,6 +73,9 @@
 	  <Compile Update="SheetPage.xaml.cs">
 	    <DependentUpon>SheetPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\ItemButtonView.xaml.cs">
+	    <DependentUpon>ItemButtonView.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -80,6 +83,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="SheetPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ControlButtonView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="WelcomePage.xaml">

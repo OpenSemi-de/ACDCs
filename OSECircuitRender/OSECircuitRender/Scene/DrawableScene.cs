@@ -201,11 +201,10 @@ public class DrawableScene : IDrawable
 
     public void SetScene(SheetScene scene)
     {
-        Scene = scene; 
+        Scene = scene;
         if (scene.GridSize != 0)
             BaseGridSize = scene.GridSize;
         SheetSize = scene.SheetSize;
-
     }
 
     private static void DrawCircle(ICanvas canvas, Coordinate centerPos, Coordinate drawPos, Coordinate drawSize)

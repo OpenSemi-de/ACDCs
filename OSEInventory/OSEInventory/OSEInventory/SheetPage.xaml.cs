@@ -323,6 +323,5 @@ public partial class SheetPage
 
     private void PointerGestureRecognizer_OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        throw new NotImplementedException();
     }
 }

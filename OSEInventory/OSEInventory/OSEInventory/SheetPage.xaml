@@ -160,6 +160,6 @@
                 </ListView>
             </StackLayout>
         </Frame>
-        <views:ControlButtonView x:Name="ControlButtonView"></views:ControlButtonView>
+        <!--<views:ControlButtonView x:Name="ControlButtonView"></views:ControlButtonView>-->
     </AbsoluteLayout>
 </ContentPage>

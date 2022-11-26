@@ -27,7 +27,7 @@ public partial class SheetPage
         SetupSheet();
     }
 
-    public bool IsAllItemsVisible { get; set; }
+    public bool IsAllItemsVisible { get; set; } = true;
     public bool IsSelectedItemsVisible { get; set; } = true;
     public Coordinate? LastDisplayOffset { get; set; }
 
@@ -57,24 +57,17 @@ public partial class SheetPage
         WorksheetItem? selectedItem = null;
         App.Try(() =>
         {
-            selectedItem = App.CurrentSheet?.GetItemAt(
-                GetRelPos(position.X),
-                GetRelPos(position.Y)
+            float x = GetRelPos(position.X);
+            float y = GetRelPos(position.Y);
+
+            var hitItems = App.CurrentSheet.Items.Where(
+                item =>
+                    x >= item.X && x <= item.X + item.Width &&
+                    y >= item.Y && y <= item.Y + item.Height
+
             );
 
-            List<int> offsets = new() { 0, -1, 1 };
-
-            foreach (int row in offsets)
-                foreach (int column in offsets)
-                {
-                    if (selectedItem == null)
-                    {
-                        selectedItem = App.CurrentSheet?.GetItemAt(
-                            GetRelPos(position.X) + column,
-                            GetRelPos(position.Y) + row);
-                    }
-                    else break;
-                }
+            selectedItem = (WorksheetItem?)hitItems.First();
             return Task.CompletedTask;
         }).Wait();
 
@@ -124,7 +117,7 @@ public partial class SheetPage
                 {
                     _selectedItemsBasePositions = new(_selectedItems.Select(selectedItem =>
                         new KeyValuePair<WorksheetItem, Coordinate>(selectedItem,
-                           new Coordinate( selectedItem.DrawableComponent.Position))));
+                           new Coordinate(selectedItem.DrawableComponent.Position))));
 
 
                     _dragStartPosition = new PointF(Convert.ToSingle(_cursorPosition.X - LastDisplayOffset?.X),
@@ -146,19 +139,19 @@ public partial class SheetPage
                 {
                     if (IsDraggingItem)
                     {
-                       var cursorPosition = new PointF(Convert.ToSingle(_cursorPosition.X - LastDisplayOffset?.X),
-                            Convert.ToSingle(_cursorPosition.Y - LastDisplayOffset?.Y));
+                        var cursorPosition = new PointF(Convert.ToSingle(_cursorPosition.X - LastDisplayOffset?.X),
+                             Convert.ToSingle(_cursorPosition.Y - LastDisplayOffset?.Y));
 
-                        PointF differenceBetweenCursorPoints =new PointF( _dragStartPosition.X - cursorPosition.X,
+                        PointF differenceBetweenCursorPoints = new PointF(_dragStartPosition.X - cursorPosition.X,
                                 _dragStartPosition.Y - cursorPosition.Y);
                         _selectedItems.ForEach(item =>
                             {
                                 item.DrawableComponent.Position.X = Convert.ToSingle(Math.Round(
-                                    (  (_selectedItemsBasePositions[item].X * Workbook.Zoom * Workbook.BaseGridSize) - differenceBetweenCursorPoints.X)
+                                    ((_selectedItemsBasePositions[item].X * Workbook.Zoom * Workbook.BaseGridSize) - differenceBetweenCursorPoints.X)
                                     / (Workbook.Zoom * Workbook.BaseGridSize)));
 
                                 item.DrawableComponent.Position.Y = Convert.ToSingle(Math.Round(
-                                    (  (_selectedItemsBasePositions[item].Y * Workbook.Zoom * Workbook.BaseGridSize) - differenceBetweenCursorPoints.Y)
+                                    ((_selectedItemsBasePositions[item].Y * Workbook.Zoom * Workbook.BaseGridSize) - differenceBetweenCursorPoints.Y)
                                     / (Workbook.Zoom * Workbook.BaseGridSize)));
                             }
                             );
@@ -208,6 +201,7 @@ public partial class SheetPage
             }
 
             await ToggleSelectedItemsVisibility();
+            await ToggleAllItemsVisibility();
         });
     }
 
@@ -235,33 +229,30 @@ public partial class SheetPage
                 }
                 else
                 {
-                    if (ControlButtonView.SelectedControlType == SelectedControlType.ItemSelection)
+                    touch.X -= offsetX;
+                    touch.Y -= offsetY;
+
+                    WorksheetItem? selectedItem = GetWorksheetItemaAt(touch);
+
+                    if (selectedItem != null)
                     {
-                        touch.X -= offsetX;
-                        touch.Y -= offsetY;
-
-                        WorksheetItem? selectedItem = GetWorksheetItemaAt(touch);
-
-                        if (selectedItem != null)
+                        if (App.CurrentSheet != null && App.CurrentSheet.ToggleSelectItem(selectedItem))
                         {
-                            if (App.CurrentSheet != null && App.CurrentSheet.ToggleSelectItem(selectedItem))
-                            {
-                                if (!_selectedItems.Contains(selectedItem))
-                                    _selectedItems.Add(selectedItem);
-                            }
-                            else
-                            {
-                                if (_selectedItems.Contains(selectedItem))
-                                    _selectedItems.Remove(selectedItem);
-                            }
-
-                            _selectedItemsObservable.Clear();
-                            _selectedItems.OrderBy(i => i.RefName).ToList()
-                                .ForEach(i => _selectedItemsObservable.Add(i));
-                            lvSelectedItems.ItemsSource = _selectedItemsObservable;
-
-                            await Paint();
+                            if (!_selectedItems.Contains(selectedItem))
+                                _selectedItems.Add(selectedItem);
                         }
+                        else
+                        {
+                            if (_selectedItems.Contains(selectedItem))
+                                _selectedItems.Remove(selectedItem);
+                        }
+
+                        _selectedItemsObservable.Clear();
+                        _selectedItems.OrderBy(i => i.RefName).ToList()
+                            .ForEach(i => _selectedItemsObservable.Add(i));
+                        lvSelectedItems.ItemsSource = _selectedItemsObservable;
+
+                        await Paint();
                     }
                 }
             }

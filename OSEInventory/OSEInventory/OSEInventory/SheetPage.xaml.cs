@@ -350,32 +350,40 @@ public partial class SheetPage
 
     private void PanGestureRecognizerZoom_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
     {
-        if (e.StatusType == GestureStatus.Started || e.StatusType == GestureStatus.Completed)
+        App.Try(async () =>
         {
-            _zoomSliderFrameBouds = AbsoluteLayout.GetLayoutBounds(ZoomSliderFrame);
-        }
-        else
+            if (e.StatusType == GestureStatus.Started || e.StatusType == GestureStatus.Completed)
+            {
+                _zoomSliderFrameBouds = AbsoluteLayout.GetLayoutBounds(ZoomSliderFrame);
+            }
+            else
+            {
+                Rect offset = _zoomSliderFrameBouds.Offset(0, e.TotalY);
+                SetZoomToPoint(offset);
+                await Paint();
+
+            }
+        }).Wait();
+    }
+
+    private void SetZoomToPoint(Rect point)
+    {
+        if (point.Y < 0)
         {
-            Rect offset = _zoomSliderFrameBouds.Offset(0, e.TotalY);
-            if (offset.Y < 0)
-            {
-                offset.Y = 0;
-            }
-
-            if (offset.Y > 339)
-            {
-                offset.Y = 339;
-            }
-
-            AbsoluteLayout.SetLayoutBounds(ZoomSliderFrame,
-                offset
-            );
-
-            var zoom = 20*(offset.Y / 340);
-
-            Workbook.Zoom = Convert.ToSingle(zoom);
-            Paint();
-
+            point.Y = 0;
         }
+
+        if (point.Y > 339)
+        {
+            point.Y = 339;
+        }
+
+        AbsoluteLayout.SetLayoutBounds(ZoomSliderFrame,
+            point
+        );
+
+        double zoom = 20 * ((point.Y + 10) / 340);
+
+        Workbook.Zoom = Convert.ToSingle(zoom);
     }
 }

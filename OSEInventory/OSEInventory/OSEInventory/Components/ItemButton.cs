@@ -14,7 +14,7 @@ namespace OSEInventory.Components
         public ItemButton(Type? itemType)
         {
             ItemType = itemType;
-    
+
             if (itemType != null)
             {
                 Worksheet? sheet = new Workbook().AddNewSheet();

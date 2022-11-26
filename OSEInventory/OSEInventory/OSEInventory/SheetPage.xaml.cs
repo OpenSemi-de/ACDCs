@@ -15,10 +15,10 @@ public partial class SheetPage
     private readonly List<WorksheetItem> _selectedItems = new();
     private readonly ObservableCollection<WorksheetItem> _selectedItemsObservable = new();
     private Rect? _allItemsBounds;
-    private Rect? _selectedItemsBounds;
-    private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions;
     private Point _cursorPosition;
     private PointF _dragStartPosition;
+    private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions;
+    private Rect? _selectedItemsBounds;
 
     public SheetPage()
     {
@@ -28,6 +28,7 @@ public partial class SheetPage
     }
 
     public bool IsAllItemsVisible { get; set; } = true;
+    public bool IsDraggingItem { get; set; }
     public bool IsSelectedItemsVisible { get; set; } = true;
     public Coordinate? LastDisplayOffset { get; set; }
 
@@ -119,7 +120,6 @@ public partial class SheetPage
                         new KeyValuePair<WorksheetItem, Coordinate>(selectedItem,
                            new Coordinate(selectedItem.DrawableComponent.Position))));
 
-
                     _dragStartPosition = new PointF(Convert.ToSingle(_cursorPosition.X - LastDisplayOffset?.X),
                         Convert.ToSingle(_cursorPosition.Y - LastDisplayOffset?.Y));
                     var testForItem = GetWorksheetItemaAt(_dragStartPosition);
@@ -146,15 +146,32 @@ public partial class SheetPage
                                 _dragStartPosition.Y - cursorPosition.Y);
                         _selectedItems.ForEach(item =>
                             {
-                                item.DrawableComponent.Position.X = Convert.ToSingle(Math.Round(
-                                    ((_selectedItemsBasePositions[item].X * Workbook.Zoom * Workbook.BaseGridSize) - differenceBetweenCursorPoints.X)
-                                    / (Workbook.Zoom * Workbook.BaseGridSize)));
+                                if (item != null)
+                                {
+                                    Point newPosition = new()
+                                    {
+                                        X = _selectedItemsBasePositions[item].X,
+                                        Y = _selectedItemsBasePositions[item].Y
+                                    };
 
-                                item.DrawableComponent.Position.Y = Convert.ToSingle(Math.Round(
-                                    ((_selectedItemsBasePositions[item].Y * Workbook.Zoom * Workbook.BaseGridSize) - differenceBetweenCursorPoints.Y)
-                                    / (Workbook.Zoom * Workbook.BaseGridSize)));
+                                    newPosition.X *= Workbook.Zoom * Workbook.BaseGridSize;
+                                    newPosition.X -= differenceBetweenCursorPoints.X;
+                                    newPosition.X /= Workbook.Zoom * Workbook.BaseGridSize;
+                                    newPosition.X -= item.DrawableComponent.Size.X / 2;
+
+                                    newPosition.Y *= Workbook.Zoom * Workbook.BaseGridSize;
+                                    newPosition.Y -= differenceBetweenCursorPoints.Y;
+                                    newPosition.Y /= Workbook.Zoom * Workbook.BaseGridSize;
+                                    newPosition.Y -= item.DrawableComponent.Size.Y / 2;
+
+                                    newPosition.X = Math.Floor(newPosition.X);
+                                    newPosition.Y = Math.Floor(newPosition.Y);
+
+                                    item.X = Convert.ToInt32(newPosition.X);
+                                    item.Y = Convert.ToInt32(newPosition.Y);
+                                }
                             }
-                            );
+                        );
                     }
                     else
                     {
@@ -165,14 +182,15 @@ public partial class SheetPage
                     }
                 }
 
-
                 await Paint();
             }
-
         }).Wait();
     }
 
-    public bool IsDraggingItem { get; set; }
+    private void PointerGestureRecognizer_OnPointerMoved(object? sender, PointerEventArgs e)
+    {
+        _cursorPosition = e.GetPosition(sheetGraphicsView) ?? new Point();
+    }
 
     private async Task SetupPage()
     {
@@ -327,11 +345,4 @@ public partial class SheetPage
         });
     }
 
-    private void PointerGestureRecognizer_OnPointerMoved(object? sender, PointerEventArgs e)
-    {
-
-
-        _cursorPosition = e.GetPosition(sheetGraphicsView) ?? new Point();
-
-    }
 }

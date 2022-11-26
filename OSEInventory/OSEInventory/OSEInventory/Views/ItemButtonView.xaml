@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OSEInventory.Views.ItemButtonView"
              AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,0,AutoSize,62">
-    <Frame BackgroundColor="White" BorderColor="WhiteSmoke" >
+    <Frame BackgroundColor="White" BorderColor="WhiteSmoke">
         <ScrollView VerticalScrollBarVisibility="Never" HorizontalOptions="Fill">
             <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" x:Name="slComponentButtons" />
         </ScrollView>

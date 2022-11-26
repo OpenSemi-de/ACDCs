@@ -108,16 +108,7 @@ public class DrawableScene : IDrawable
 
         canvas.Rotate(drawable.Rotation, drawSize.X / 2, drawSize.Y / 2);
 
-        if (Scene.IsSelected(drawable))
-        {
-            canvas.SaveState();
-            Log.L("selected");
-            var upperLeft = new Coordinate(0, 0);
-            SetStrokeColor(canvas, new Color(255, 0, 0));
-            var lowerRight = new Coordinate(drawable.Size);
-            DrawRectangle(canvas, drawPos, drawSize, upperLeft, lowerRight);
-            canvas.RestoreState();
-        }
+
 
         foreach (var instruction in drawable.DrawInstructions)
         {
@@ -194,6 +185,18 @@ public class DrawableScene : IDrawable
             }
 
             canvas.DrawCircle(posCenter.X, posCenter.Y, Zoom * BaseGridSize * 0.2f);
+        }
+
+        if (Scene.IsSelected(drawable))
+        {
+            canvas.SaveState();
+            Log.L("selected");
+            var upperLeft = new Coordinate(-0.15f, -0.15f);
+            SetStrokeColor(canvas, new Color(255, 100, 30));
+            canvas.StrokeSize = 2;
+            var lowerRight = new Coordinate(1.3f,1.3f);
+            DrawRectangle(canvas, drawPos, drawSize, upperLeft, lowerRight);
+            canvas.RestoreState();
         }
 
         canvas.RestoreState();

@@ -18,6 +18,7 @@ public partial class SheetPage
     private Rect? _selectedItemsBounds;
     private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions;
     private Point _cursorPosition;
+    private PointF _dragStartPosition;
 
     public SheetPage()
     {
@@ -119,29 +120,45 @@ public partial class SheetPage
                                     new Coordinate(
                                         Convert.ToSingle(e.TotalX),
                                         Convert.ToSingle(e.TotalY));
-                _selectedItemsBasePositions = new(_selectedItems.Select(selectedItem =>
-                    new KeyValuePair<WorksheetItem, Coordinate>(selectedItem, selectedItem.DrawableComponent.Position)));
-                IsDraggingItem = false;
+                if (e.StatusType == GestureStatus.Started)
+                {
+                    _selectedItemsBasePositions = new(_selectedItems.Select(selectedItem =>
+                        new KeyValuePair<WorksheetItem, Coordinate>(selectedItem,
+                           new Coordinate( selectedItem.DrawableComponent.Position))));
+
+
+                    _dragStartPosition = new PointF(Convert.ToSingle(_cursorPosition.X - LastDisplayOffset?.X),
+                        Convert.ToSingle(_cursorPosition.Y - LastDisplayOffset?.Y));
+                    var testForItem = GetWorksheetItemaAt(_dragStartPosition);
+                    if (testForItem != null)
+                    {
+                        IsDraggingItem = true;
+                    }
+                }
+
+                if (e.StatusType == GestureStatus.Completed)
+                    IsDraggingItem = false;
             }
 
             if (e.StatusType == GestureStatus.Running)
             {
                 if (App.CurrentSheet != null)
                 {
-                    var checkPosition = new PointF(Convert.ToSingle(_cursorPosition.X - LastDisplayOffset?.X),
-                        Convert.ToSingle(_cursorPosition.Y - LastDisplayOffset?.Y));
-                    var testForItem = GetWorksheetItemaAt(checkPosition);
-                    if (IsDraggingItem || (testForItem != null && _selectedItems.Contains(testForItem)))
+                    if (IsDraggingItem)
                     {
-                        IsDraggingItem = true;
+                       var cursorPosition = new PointF(Convert.ToSingle(_cursorPosition.X - LastDisplayOffset?.X),
+                            Convert.ToSingle(_cursorPosition.Y - LastDisplayOffset?.Y));
+
+                        PointF differenceBetweenCursorPoints =new PointF( _dragStartPosition.X - cursorPosition.X,
+                                _dragStartPosition.Y - cursorPosition.Y);
                         _selectedItems.ForEach(item =>
                             {
                                 item.DrawableComponent.Position.X = Convert.ToSingle(Math.Round(
-                                    (Convert.ToSingle(_cursorPosition.X) - LastDisplayOffset.X)
+                                    (  (_selectedItemsBasePositions[item].X * Workbook.Zoom * Workbook.BaseGridSize) - differenceBetweenCursorPoints.X)
                                     / (Workbook.Zoom * Workbook.BaseGridSize)));
 
                                 item.DrawableComponent.Position.Y = Convert.ToSingle(Math.Round(
-                                    (Convert.ToSingle(_cursorPosition.Y) - LastDisplayOffset.Y)
+                                    (  (_selectedItemsBasePositions[item].Y * Workbook.Zoom * Workbook.BaseGridSize) - differenceBetweenCursorPoints.Y)
                                     / (Workbook.Zoom * Workbook.BaseGridSize)));
                             }
                             );
@@ -321,7 +338,7 @@ public partial class SheetPage
 
     private void PointerGestureRecognizer_OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        
+
 
         _cursorPosition = e.GetPosition(sheetGraphicsView) ?? new Point();
 

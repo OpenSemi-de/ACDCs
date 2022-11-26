@@ -4,6 +4,7 @@ using OSECircuitRender.Definitions;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
+using OSECircuitRender.Sheet;
 using OSEInventory.Views;
 
 namespace OSEInventory;
@@ -19,6 +20,7 @@ public partial class SheetPage
     private PointF _dragStartPosition;
     private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions;
     private Rect? _selectedItemsBounds;
+    private Rect _zoomSliderFrameBouds;
 
     public SheetPage()
     {
@@ -345,4 +347,35 @@ public partial class SheetPage
         });
     }
 
+
+    private void PanGestureRecognizerZoom_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
+    {
+        if (e.StatusType == GestureStatus.Started || e.StatusType == GestureStatus.Completed)
+        {
+            _zoomSliderFrameBouds = AbsoluteLayout.GetLayoutBounds(ZoomSliderFrame);
+        }
+        else
+        {
+            Rect offset = _zoomSliderFrameBouds.Offset(0, e.TotalY);
+            if (offset.Y < 0)
+            {
+                offset.Y = 0;
+            }
+
+            if (offset.Y > 339)
+            {
+                offset.Y = 339;
+            }
+
+            AbsoluteLayout.SetLayoutBounds(ZoomSliderFrame,
+                offset
+            );
+
+            var zoom = 20*(offset.Y / 340);
+
+            Workbook.Zoom = Convert.ToSingle(zoom);
+            Paint();
+
+        }
+    }
 }

@@ -43,6 +43,7 @@ public class DrawableScene : IDrawable
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
         IsRendering = true;
+        Zoom = Workbook.Zoom;
         _fontSize = Convert.ToInt32(Math.Round(BaseGridSize * Zoom / 2));
         canvas.Antialias = true;
 

@@ -19,10 +19,26 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 7.0
-    - name: Restore dependencies
-      run: dotnet restore
+        dotnet-version: 7.x
+        include-prerelease: true
+        
+    - uses: actions/setup-java@v2
+      with:
+        distribution: 'microsoft'
+        java-version: '11'
+
+    - name: Install MAUI Workloads
+      run: |
+          dotnet workload install android --ignore-failed-sources
+        
+    - name: Restore
+      run: dotnet restore ./OSEInventory/OSEInventory/OSEInventory.csproj
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore OSEInventory
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal OSEInventory
+      
+env:
+  DOTNET_NOLOGO: true                     # Disable the .NET logo
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true # Disable the .NET first time experience
+  DOTNET_CLI_TELEMETRY_OPTOUT: true       # Disable sending .NET CLI telemetry

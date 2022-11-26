@@ -359,31 +359,44 @@ public partial class SheetPage
             else
             {
                 Rect offset = _zoomSliderFrameBouds.Offset(0, e.TotalY);
-                SetZoomToPoint(offset);
+                SetZoomToPoint(Convert.ToSingle(offset.Y));
                 await Paint();
 
             }
         }).Wait();
     }
 
-    private void SetZoomToPoint(Rect point)
+    private void SetZoomToPoint(float y)
     {
-        if (point.Y < 0)
+        if (y < 0)
         {
-            point.Y = 0;
+            y = 0;
         }
 
-        if (point.Y > 339)
+        if (y > 339)
         {
-            point.Y = 339;
+            y = 339;
         }
 
         AbsoluteLayout.SetLayoutBounds(ZoomSliderFrame,
-            point
+            new Rect(0, y, 60, 60)
         );
 
-        double zoom = 20 * ((point.Y + 10) / 340);
+        double zoom = 20 * ((y + 10) / 340);
 
         Workbook.Zoom = Convert.ToSingle(zoom);
+    }
+
+    private void TapGestureRecognizerZoom_OnTapped(object? sender, TappedEventArgs e)
+    {
+        App.Try(async () =>
+        {
+            Point clickPoint = e.GetPosition(AbsoluteLayoutZoom) ?? Point.Zero;
+            float y = Convert.ToSingle(clickPoint.Y);
+            y -= 30;
+
+            SetZoomToPoint(y);
+            await Paint();
+        }).Wait();
     }
 }

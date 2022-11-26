@@ -22,7 +22,12 @@
         <views:ItemButtonView x:Name="ItemButtonView"></views:ItemButtonView>
 
         <Frame BackgroundColor="White" BorderColor="Black" AbsoluteLayout.LayoutFlags="XProportional" AbsoluteLayout.LayoutBounds="1,300,60,400" CornerRadius="0">
-            <AbsoluteLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer x:Name="TapGestureRecognizerZoom" Tapped="TapGestureRecognizerZoom_OnTapped"></TapGestureRecognizer>
+            </Frame.GestureRecognizers>
+
+            <AbsoluteLayout HorizontalOptions="Fill" VerticalOptions="Fill" x:Name="AbsoluteLayoutZoom">
+
                 <Frame AbsoluteLayout.LayoutBounds="0,170,60,60" BackgroundColor="LightSeaGreen" BorderColor="LightGreen" x:Name="ZoomSliderFrame">
                     <Frame.GestureRecognizers>
                         <PanGestureRecognizer x:Name="PanGestureRecognizerZoom" PanUpdated="PanGestureRecognizerZoom_OnPanUpdated"></PanGestureRecognizer>

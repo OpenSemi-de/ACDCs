@@ -24,7 +24,7 @@ namespace OSEInventory.Views
 
         public async Task InsertToPosition(float x, float y)
         {
-            await App.Try(async () =>
+            await App.Call(async () =>
             {
                 WorksheetItem? newItem = DoInsert?.Invoke(x, y);
                 if (newItem != null)
@@ -40,7 +40,7 @@ namespace OSEInventory.Views
 
         public async Task SetupView()
         {
-            await App.Try(() =>
+            await App.Call(() =>
             {
                 foreach (Type type in typeof(IWorksheetItem).Assembly.GetTypes())
                 {
@@ -78,7 +78,7 @@ namespace OSEInventory.Views
 
         private async Task DeselectSelectedButton()
         {
-            await App.Try(() =>
+            await App.Call(() =>
             {
                 if (SelectedButton != null)
                 {
@@ -92,7 +92,7 @@ namespace OSEInventory.Views
 
         private async Task Insert(WorksheetItem? item)
         {
-            await App.Try(() =>
+            await App.Call(() =>
             {
                 if (item != null)
                 {
@@ -112,7 +112,7 @@ namespace OSEInventory.Views
 
         private async Task InsertItem(Type itemType, ItemButton selectedButton)
         {
-            await App.Try(async () =>
+            await App.Call(async () =>
             {
                 bool justDeselectAndReturn = SelectedButton == selectedButton;
                 IsInserting = false;
@@ -134,7 +134,7 @@ namespace OSEInventory.Views
 
         private void OnItemButtonClicked(object? sender, EventArgs e)
         {
-            App.Try(async () =>
+            App.Call(async () =>
             {
                 if (sender is ItemButton button)
                 {
@@ -151,7 +151,7 @@ namespace OSEInventory.Views
 
         private async Task SelectButton(ItemButton selectedButton)
         {
-            await App.Try(() =>
+            await App.Call(() =>
             {
                 SelectedButton = selectedButton;
                 SelectedButtonColor = SelectedButton?.BackgroundColor;

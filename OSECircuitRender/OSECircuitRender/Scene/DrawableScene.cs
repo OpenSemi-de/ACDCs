@@ -109,8 +109,6 @@ public class DrawableScene : IDrawable
 
         canvas.Rotate(drawable.Rotation, drawSize.X / 2, drawSize.Y / 2);
 
-
-
         foreach (var instruction in drawable.DrawInstructions)
         {
             if (instruction is LineInstruction line)
@@ -195,7 +193,7 @@ public class DrawableScene : IDrawable
             var upperLeft = new Coordinate(-0.15f, -0.15f);
             SetStrokeColor(canvas, new Color(255, 100, 30));
             canvas.StrokeSize = 2;
-            var lowerRight = new Coordinate(1.3f,1.3f);
+            var lowerRight = new Coordinate(1.3f, 1.3f);
             DrawRectangle(canvas, drawPos, drawSize, upperLeft, lowerRight);
             canvas.RestoreState();
         }

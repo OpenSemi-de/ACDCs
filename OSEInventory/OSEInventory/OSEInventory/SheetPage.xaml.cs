@@ -4,8 +4,6 @@ using OSECircuitRender.Definitions;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
-using OSECircuitRender.Sheet;
-using OSEInventory.Views;
 
 namespace OSEInventory;
 
@@ -37,7 +35,7 @@ public partial class SheetPage
     private static float GetRelPos(double pos)
     {
         float relPos = 0f;
-        App.Try(() =>
+        App.Call(() =>
         {
             relPos = Convert.ToSingle(Math.Round(pos / (Workbook.BaseGridSize * Workbook.Zoom)));
             return Task.CompletedTask;
@@ -47,18 +45,18 @@ public partial class SheetPage
 
     private async void BnShowHideAllItems_OnClicked(object? sender, EventArgs e)
     {
-        await App.Try(ToggleAllItemsVisibility);
+        await App.Call(ToggleAllItemsVisibility);
     }
 
     private async void BnShowHideSelectedItems_OnClicked(object? sender, EventArgs e)
     {
-        await App.Try(ToggleSelectedItemsVisibility);
+        await App.Call(ToggleSelectedItemsVisibility);
     }
 
     private WorksheetItem? GetWorksheetItemaAt(PointF position)
     {
         WorksheetItem? selectedItem = null;
-        App.Try(() =>
+        App.Call(() =>
         {
             float x = GetRelPos(position.X);
             float y = GetRelPos(position.Y);
@@ -90,7 +88,7 @@ public partial class SheetPage
 
     private async Task Paint()
     {
-        await App.Try(() =>
+        await App.Call(() =>
         {
             if (ItemButtonView.IsInserting)
                 return Task.CompletedTask;
@@ -108,7 +106,7 @@ public partial class SheetPage
 
     private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
     {
-        App.Try(async () =>
+        App.Call(async () =>
         {
             if (e.StatusType == GestureStatus.Started || e.StatusType == GestureStatus.Completed)
             {
@@ -144,7 +142,7 @@ public partial class SheetPage
                         var cursorPosition = new PointF(Convert.ToSingle(_cursorPosition.X - LastDisplayOffset?.X),
                              Convert.ToSingle(_cursorPosition.Y - LastDisplayOffset?.Y));
 
-                        PointF differenceBetweenCursorPoints = new PointF(_dragStartPosition.X - cursorPosition.X,
+                        PointF differenceBetweenCursorPoints = new(_dragStartPosition.X - cursorPosition.X,
                                 _dragStartPosition.Y - cursorPosition.Y);
                         _selectedItems.ForEach(item =>
                             {
@@ -189,6 +187,23 @@ public partial class SheetPage
         }).Wait();
     }
 
+    private void PanGestureRecognizerZoom_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
+    {
+        App.Call(async () =>
+        {
+            if (e.StatusType == GestureStatus.Started || e.StatusType == GestureStatus.Completed)
+            {
+                _zoomSliderFrameBouds = AbsoluteLayout.GetLayoutBounds(ZoomSliderFrame);
+            }
+            else
+            {
+                Rect offset = _zoomSliderFrameBouds.Offset(0, e.TotalY);
+                SetZoomToPoint(Convert.ToSingle(offset.Y));
+                await Paint();
+            }
+        }).Wait();
+    }
+
     private void PointerGestureRecognizer_OnPointerMoved(object? sender, PointerEventArgs e)
     {
         _cursorPosition = e.GetPosition(sheetGraphicsView) ?? new Point();
@@ -196,15 +211,15 @@ public partial class SheetPage
 
     private async Task SetupPage()
     {
-        await App.Try(async () =>
+        await App.Call(async () =>
         {
-            await App.Try(ItemButtonView.SetupView);
+            await App.Call(ItemButtonView.SetupView);
         });
     }
 
     private async void SetupSheet()
     {
-        await App.Try(async () =>
+        await App.Call(async () =>
         {
             App.CurrentWorkbook ??= new Workbook();
 
@@ -225,9 +240,32 @@ public partial class SheetPage
         });
     }
 
+    private void SetZoomToPoint(float y)
+    {
+        if (y < 0)
+        {
+            y = 0;
+        }
+
+        if (y > 339)
+        {
+            y = 339;
+        }
+
+        AbsoluteLayout.SetLayoutBounds(ZoomSliderFrame,
+            new Rect(0, y, 60, 60)
+        );
+
+        double zoom = 20 * ((y + 10) / 340);
+
+        Workbook.Zoom = Convert.ToSingle(zoom);
+
+        // todo: rescale the displayoffset
+    }
+
     private async void TapGestureRecognizer_OnTapped(object? sender, TappedEventArgs e)
     {
-        await App.Try(async () =>
+        await App.Call(async () =>
         {
             Point touch = e.GetPosition(sheetGraphicsView) ?? Point.Zero;
             if (touch != Point.Zero)
@@ -279,9 +317,27 @@ public partial class SheetPage
         });
     }
 
+    private void TapGestureRecognizerSheetPage_OnTapped(object? sender, TappedEventArgs e)
+    {
+        MenuButtonView.HideAllMenus();
+    }
+
+    private void TapGestureRecognizerZoom_OnTapped(object? sender, TappedEventArgs e)
+    {
+        App.Call(async () =>
+        {
+            Point clickPoint = e.GetPosition(AbsoluteLayoutZoom) ?? Point.Zero;
+            float y = Convert.ToSingle(clickPoint.Y);
+            y -= 30;
+
+            SetZoomToPoint(y);
+            await Paint();
+        }).Wait();
+    }
+
     private async Task ToggleAllItemsVisibility()
     {
-        await App.Try(async () =>
+        await App.Call(async () =>
         {
             _allItemsBounds ??= AbsoluteLayout.GetLayoutBounds(fAllItems);
 
@@ -315,7 +371,7 @@ public partial class SheetPage
 
     private async Task ToggleSelectedItemsVisibility()
     {
-        await App.Try(async () =>
+        await App.Call(async () =>
         {
             _selectedItemsBounds ??= AbsoluteLayout.GetLayoutBounds(fSelectedItems);
 
@@ -345,58 +401,5 @@ public partial class SheetPage
                     break;
             }
         });
-    }
-
-
-    private void PanGestureRecognizerZoom_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
-    {
-        App.Try(async () =>
-        {
-            if (e.StatusType == GestureStatus.Started || e.StatusType == GestureStatus.Completed)
-            {
-                _zoomSliderFrameBouds = AbsoluteLayout.GetLayoutBounds(ZoomSliderFrame);
-            }
-            else
-            {
-                Rect offset = _zoomSliderFrameBouds.Offset(0, e.TotalY);
-                SetZoomToPoint(Convert.ToSingle(offset.Y));
-                await Paint();
-
-            }
-        }).Wait();
-    }
-
-    private void SetZoomToPoint(float y)
-    {
-        if (y < 0)
-        {
-            y = 0;
-        }
-
-        if (y > 339)
-        {
-            y = 339;
-        }
-
-        AbsoluteLayout.SetLayoutBounds(ZoomSliderFrame,
-            new Rect(0, y, 60, 60)
-        );
-
-        double zoom = 20 * ((y + 10) / 340);
-
-        Workbook.Zoom = Convert.ToSingle(zoom);
-    }
-
-    private void TapGestureRecognizerZoom_OnTapped(object? sender, TappedEventArgs e)
-    {
-        App.Try(async () =>
-        {
-            Point clickPoint = e.GetPosition(AbsoluteLayoutZoom) ?? Point.Zero;
-            float y = Convert.ToSingle(clickPoint.Y);
-            y -= 30;
-
-            SetZoomToPoint(y);
-            await Paint();
-        }).Wait();
     }
 }

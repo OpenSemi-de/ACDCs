@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OSEInventory.Views.MenuButtonView"
+             AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,1,AutoSize,40">
+    <Frame BackgroundColor="LightSkyBlue"
+           BorderColor="SlateGray"
+           CornerRadius="2"
+           HorizontalOptions="Fill"
+           VerticalOptions="Fill"
+           HeightRequest="40">
+        <StackLayout Orientation="Horizontal" BackgroundColor="Transparent" HorizontalOptions="Fill" VerticalOptions="Fill">
+            <Button CornerRadius="2" Text="File" x:Name="ButtonFileMenu" />
+            <Button CornerRadius="2" Text="Edit" x:Name="ButtonEditMenu" />
+        </StackLayout>
+    </Frame>
+</ContentView>

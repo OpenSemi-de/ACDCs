@@ -73,9 +73,12 @@
 	  <Compile Update="SheetPage.xaml.cs">
 	    <DependentUpon>SheetPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\ItemButtonView.xaml.cs">
-	    <DependentUpon>ItemButtonView.xaml</DependentUpon>
-	  </Compile>
+    <Compile Update="Views\ItemButtonView.xaml.cs">
+      <DependentUpon>ItemButtonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MenuButtonView.xaml.cs">
+      <DependentUpon>MenuButtonView.xaml</DependentUpon>
+    </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -85,10 +88,7 @@
 	  <MauiXaml Update="SheetPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\ControlButtonView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="WelcomePage.xaml">
+    <MauiXaml Update="WelcomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

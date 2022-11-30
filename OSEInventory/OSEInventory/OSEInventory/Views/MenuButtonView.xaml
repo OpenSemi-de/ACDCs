@@ -10,8 +10,8 @@
            VerticalOptions="Fill"
            HeightRequest="40">
         <StackLayout Orientation="Horizontal" BackgroundColor="Transparent" HorizontalOptions="Fill" VerticalOptions="Fill">
-            <Button CornerRadius="2" Text="File" x:Name="ButtonFileMenu" />
-            <Button CornerRadius="2" Text="Edit" x:Name="ButtonEditMenu" />
+            <Button CornerRadius="2" BackgroundColor="WhiteSmoke" Text="File" x:Name="ButtonFileMenu" WidthRequest="100" />
+            <Button CornerRadius="2" BackgroundColor="WhiteSmoke" Text="Edit" x:Name="ButtonEditMenu" WidthRequest="100" />
         </StackLayout>
     </Frame>
 </ContentView>

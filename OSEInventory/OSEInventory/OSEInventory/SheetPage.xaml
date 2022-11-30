@@ -177,5 +177,6 @@
         </Frame>
         <views:MenuButtonView x:Name="MenuButtonView"></views:MenuButtonView>
         <views:FileDialogView></views:FileDialogView>
+        <views:EditDialogView></views:EditDialogView>
     </AbsoluteLayout>
 </ContentPage>

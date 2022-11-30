@@ -25,6 +25,7 @@ public partial class SheetPage
         InitializeComponent();
         SetupPage().Wait();
         SetupSheet();
+        App.CurrentSheetPage = this;
     }
 
     public bool IsAllItemsVisible { get; set; } = true;
@@ -86,7 +87,7 @@ public partial class SheetPage
         Paint().Wait();
     }
 
-    private async Task Paint()
+    public async Task Paint()
     {
         await App.Call(() =>
         {

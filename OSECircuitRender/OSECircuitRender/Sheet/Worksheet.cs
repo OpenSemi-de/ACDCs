@@ -150,4 +150,13 @@ public sealed class Worksheet
     {
         OnSelectionChange?.Invoke(SelectedItems);
     }
+
+    public void DeleteItem(IWorksheetItem item)
+    {
+        if (SelectedItems.Contains(item))
+            SelectedItems.Remove(item);
+
+        if (Items.Contains(item))
+            Items.Remove(item);
+    }
 }

@@ -23,6 +23,7 @@ public partial class App : Application
     public static Workbook? CurrentWorkbook { get; set; }
     public static App? Instance { get; private set; }
     public static MenuButtonView MenuButtonView { get; set; }
+    public static SheetPage CurrentSheetPage { get; set; }
 
     public static async Task Call(Func<Task> action)
     {

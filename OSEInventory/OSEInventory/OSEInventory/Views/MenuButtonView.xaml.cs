@@ -22,6 +22,8 @@ public partial class MenuButtonView : ContentView
     public void HideAllMenus()
     {
         _menus.ForEach(m => m.IsVisible = false);
+        ButtonEditMenu.BackgroundColor = Colors.WhiteSmoke;
+        ButtonFileMenu.BackgroundColor = Colors.WhiteSmoke;
     }
 
     public static Action? GetHandler(string? menuCommand)
@@ -38,9 +40,22 @@ public partial class MenuButtonView : ContentView
         HideAllMenus();
     }
 
-    private void AttachClick(List<MenuButton> fileMenu)
+    private void AttachClick(List<IMenuItem> menu)
     {
-        fileMenu.ForEach(menu => menu.Clicked = OnClick);
+        menu.ForEach(menuItem =>
+        {
+            if (menuItem is MenuButton button)
+            {
+                button.Clicked = OnClick;
+
+                if (button.MenuCommand == "")
+                {
+                    var menuCommand = button.Text;
+                    menuCommand = menuCommand.Replace(".", "").Replace(" ", "").ToLower();
+                    button.MenuCommand = menuCommand;
+                }
+            }
+        });
     }
 
     private MenuPopup CreateMenu(AbsoluteLayout absoluteLayout, Button button)
@@ -51,6 +66,7 @@ public partial class MenuButtonView : ContentView
         {
             HideAllMenus();
             menuPopup.IsVisible = true;
+            BackgroundColor = Colors.LightSkyBlue;
         };
         _menus.Add(menuPopup);
         ZIndex++;
@@ -60,27 +76,41 @@ public partial class MenuButtonView : ContentView
     private void OnClick(string? menuCommand)
     {
         MenuButtonView.GetHandler(menuCommand)?.Invoke();
+        HideAllMenus();
     }
 
     private void OnLoaded(object? sender, EventArgs e)
     {
         if (Parent is AbsoluteLayout absoluteLayout)
         {
-            List<MenuButton> fileMenu = new()
+            List<IMenuItem> fileMenu = new()
             {
-                new () { Text = "Open...", MenuCommand = "open"},
-                new () { Text = "Save", MenuCommand = " save"},
-                new () { Text = "Save as...", MenuCommand = "saveas"},
+                new MenuButton() { Text = "Open..."},
+                new MenuButton() { Text = "Save" },
+                new MenuButton() { Text = "Save as..." },
             };
             AttachClick(fileMenu);
+
+            List<IMenuItem> editMenu = new()
+            {
+                new MenuButton(){Text = "Duplicate"},
+                new MenuButton() { Text = "Delete" },
+                new MenuDivider(),
+                new MenuButton() { Text = "Copy" },
+                new MenuButton() { Text = "Cut" },
+                new MenuButton() { Text = "Paste" }
+            };
+            AttachClick(editMenu);
+
             CreateMenu(absoluteLayout, ButtonFileMenu).SetItems(fileMenu);
-            CreateMenu(absoluteLayout, ButtonEditMenu);
+            CreateMenu(absoluteLayout, ButtonEditMenu).SetItems(editMenu);
         }
     }
 
     public void SetHandler(string command, Action commandAction)
     {
-        Handlers.Add(command, commandAction);
+        if (!Handlers.ContainsKey(command))
+            Handlers.Add(command, commandAction);
     }
 }
 
@@ -89,7 +119,7 @@ public class MenuPopup : Frame
     private readonly StackLayout _baseLayout;
     private readonly string _name;
     private readonly ScrollView _scroll;
-    private List<MenuButton>? _buttons;
+    private List<IMenuItem>? _items;
     private Rect _hookPosition;
 
     public MenuPopup(string name, Button openButton, MenuButtonView controlButtonView)
@@ -98,66 +128,71 @@ public class MenuPopup : Frame
         {
             Top = 1,
             Left = openButton.X,
-            Width = 100,
+            Width = openButton.Width,
             Height = 100
         };
 
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.YProportional);
         AbsoluteLayout.SetLayoutBounds(this, _hookPosition);
-
-        BorderColor = Application.AccentColor;
-        CornerRadius = 2;
-        Padding = 1;
+        Padding = 0;
         IsVisible = false;
 
         _name = name;
         _scroll = new ScrollView();
         _baseLayout = new StackLayout();
         _scroll.Content = _baseLayout;
-
+        
         Content = _scroll;
     }
 
     public Action<string>? Clicked { get; set; }
 
-    public void SetItems(IEnumerable<MenuButton>? buttons)
+    public void SetItems(IEnumerable<IMenuItem>? items)
     {
-        if (buttons != null)
+        if (items != null)
         {
-            IEnumerable<MenuButton> menuButtons = buttons.ToList();
-            _buttons = menuButtons.ToList();
-            foreach (MenuButton menuButton in menuButtons)
+            IEnumerable<IMenuItem> menuItems = items.ToList();
+            _items = menuItems.ToList();
+
+            double height = 0;
+            foreach (IMenuItem item in _items)
             {
-                _baseLayout.Add(menuButton);
+                height += ((IView)item).Height;
+                _baseLayout.Add((IView)item);
             }
 
-            var backButton = new MenuButton
-            {
-                Text = " < Back",
-                Clicked = (menuCommand) =>
-                {
-                    IsVisible = false;
-                    if (menuCommand != null)
-                    {
-                        this.Clicked?.Invoke(menuCommand);
-                    }
-                }
-            };
-            _baseLayout.Add(backButton);
-            HeightRequest = 40 * menuButtons.Count() + 120;
+            HeightRequest = height + 80;
             _hookPosition.Height = HeightRequest;
             AbsoluteLayout.SetLayoutBounds(this, _hookPosition);
         }
     }
 }
 
-public class MenuButton : Label, IBorder
+public interface IMenuItem
+{
+}
+
+public class MenuDivider : Label, IBorder, IMenuItem
+{
+    public MenuDivider()
+    {
+        HeightRequest = 1;
+        BackgroundColor = Colors.Black;
+        Padding = 0;
+        Margin = 1;
+        
+    }
+
+    public IBorderStroke Border { get; } = new Border();
+}
+
+public class MenuButton : Label, IBorder, IMenuItem
 {
     private readonly TapGestureRecognizer _tapRecognizer;
 
     public MenuButton()
     {
-        Padding = 2;
+        Padding = new Thickness(6, 2, 2, 2);
         HeightRequest = 40;
         HorizontalTextAlignment = TextAlignment.Start;
         VerticalTextAlignment = TextAlignment.Center;
@@ -173,6 +208,6 @@ public class MenuButton : Label, IBorder
 
     public IBorderStroke Border { get; } = new Border();
     public Action<string?>? Clicked { get; set; }
-    public string MenuCommand { get; set; }
+    public string MenuCommand { get; set; } = "";
     public MenuPopup? Popup { get; set; }
 }

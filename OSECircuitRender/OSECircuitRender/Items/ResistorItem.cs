@@ -25,5 +25,4 @@ public sealed class ResistorItem : WorksheetItem
     public new static string DefaultValue { get; set; } = "10k";
 
     public new static bool IsInsertable { get; set; } = true;
-
 }

@@ -26,4 +26,5 @@ public class CapacitorItem : WorksheetItem
 
     public CapacitorDrawableType DefaultType { get; set; }
     public CapacitorDrawableType Type { get; }
+
 }

@@ -14,7 +14,7 @@ public sealed class TerminalItem : WorksheetItem
     {
         DrawableComponent = new TerminalDrawable(this, x, y, terminalType);
         Value = terminalType.ToString();
-        if (Value == "Null")
+        if(Value == "Null") 
             Value = "0";
     }
 

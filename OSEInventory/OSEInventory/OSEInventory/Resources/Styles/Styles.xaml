@@ -47,7 +47,10 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
-    </Style>
+
+</Style>
+
+
 
     <Style TargetType="components:ItemButton">
         <Setter Property="WidthRequest" Value="42"></Setter>

@@ -33,24 +33,6 @@ public partial class SheetPage
     public bool IsSelectedItemsVisible { get; set; } = true;
     public Coordinate? LastDisplayOffset { get; set; }
 
-    public async Task Paint()
-    {
-        await App.Call(() =>
-        {
-            if (ItemButtonView.IsInserting)
-                return Task.CompletedTask;
-
-            sheetGraphicsView.Drawable = null;
-            App.CurrentSheet?.CalculateScene();
-            DrawableScene? scene = (DrawableScene?)
-                App.CurrentSheet?.SceneManager?.GetSceneForBackend();
-            sheetGraphicsView.Drawable = scene;
-
-            sheetGraphicsView.Invalidate();
-            return Task.CompletedTask;
-        });
-    }
-
     private static float GetRelPos(double pos)
     {
         float relPos = 0f;
@@ -103,6 +85,24 @@ public partial class SheetPage
         lvAllItems.ItemsSource = _allItemsObservable;
 
         Paint().Wait();
+    }
+
+    public async Task Paint()
+    {
+        await App.Call(() =>
+        {
+            if (ItemButtonView.IsInserting)
+                return Task.CompletedTask;
+
+            sheetGraphicsView.Drawable = null;
+            App.CurrentSheet?.CalculateScene();
+            DrawableScene? scene = (DrawableScene?)
+                App.CurrentSheet?.SceneManager?.GetSceneForBackend();
+            sheetGraphicsView.Drawable = scene;
+
+            sheetGraphicsView.Invalidate();
+            return Task.CompletedTask;
+        });
     }
 
     private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)

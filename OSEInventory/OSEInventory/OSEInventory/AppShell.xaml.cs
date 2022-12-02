@@ -6,6 +6,7 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
         RegisterRoutes();
+
     }
 
     private void RegisterRoutes()

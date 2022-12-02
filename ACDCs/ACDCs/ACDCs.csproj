@@ -33,9 +33,9 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\acdcs.svg">
-		  <Color>#85a2b6</Color>
-		  <ForegroundFile>Resources\AppIcon\acdcsfr.svg</ForegroundFile>
+		<MauiIcon Include="Resources\AppIcon\appicon.svg">
+			<Color>#00000000</Color>
+			<ForegroundFile>Resources\AppIcon\appiconfr.svg</ForegroundFile>
 		</MauiIcon>
 
 		<!-- Splash Screen -->
@@ -74,6 +74,10 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\OSECircuitRender\OSECircuitRender\OSECircuitRender.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Microsoft.Maui.Controls;
+using System.Collections.Generic;
 
 namespace ACDCs.Views.Components.Menu;
 
@@ -12,8 +12,9 @@ public class MenuDivider : Frame, IMenuItem
         Margin = 1;
         Padding = 1;
     }
-    public string Text { get; set; } = "";
-    public List<IMenuItem> MenuItems { get; set; } = new();
-    public string MenuCommand { get; set; } = "";
+
     public double ItemHeight { get; set; } = 4;
+    public string MenuCommand { get; set; } = "";
+    public List<IMenuItem> MenuItems { get; set; } = new();
+    public string Text { get; set; } = "";
 }

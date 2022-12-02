@@ -1,5 +1,7 @@
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Layouts;
 
 namespace ACDCs.Views.Components.DragContainer;
 
@@ -7,7 +9,7 @@ public partial class DragContainer : ContentView
 {
     public static readonly BindableProperty TitleProperty =
         BindableProperty.Create(nameof(Title), typeof(string), typeof(DragContainer), "Title", propertyChanged: propertyChanged);
-    
+
     public static readonly BindableProperty LayoutProperty =
         BindableProperty.Create(nameof(Layout), typeof(IView), typeof(DragContainer), null, propertyChanged: propertyChanged);
 
@@ -22,7 +24,7 @@ public partial class DragContainer : ContentView
                     container.TitleLabel.Rotation = 270;
                     container.TitleLabel.HorizontalOptions = LayoutOptions.Start;
                     container.TitleLabel.VerticalOptions = LayoutOptions.Fill;
-                    
+
                 }
                 else
                 {
@@ -41,6 +43,9 @@ public partial class DragContainer : ContentView
 
     public static readonly BindableProperty OrientationProperty =
         BindableProperty.Create(nameof(Orientation), typeof(StackOrientation), typeof(DragContainer), StackOrientation.Vertical, propertyChanged: propertyChanged);
+
+    private Rect _lastBounds = Rect.Zero;
+    private PanGestureRecognizer _dragRecognizer;
 
 
     public StackOrientation Orientation
@@ -62,7 +67,66 @@ public partial class DragContainer : ContentView
     }
 
     public DragContainer()
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
+        this.Loaded += (sender, args) => StartDragging();
+    }
+
+    private void StartDragging()
+    {
+        _dragRecognizer = new PanGestureRecognizer();
+        
+        _dragRecognizer.PanUpdated += PanGestureRecognizer_OnPanUpdated;
+        this.GestureRecognizers.Add(_dragRecognizer);
+        TitleFrame.GestureRecognizers.Add(_dragRecognizer);
+    }
+
+    private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
+    {
+        if (e.StatusType == GestureStatus.Running || e.StatusType == GestureStatus.Canceled)
+        {
+            Rect newBounds = new Rect(_lastBounds.Location, _lastBounds.Size);
+            newBounds.Top += e.TotalY;// - TitleLabel.Height / 2;
+            newBounds.Left += e.TotalX;// - TitleLabel.Width / 2;
+
+            if (newBounds.Top > 5)
+            {
+                newBounds.Width = AbsoluteLayout.AutoSize;
+              //  newBounds.Height = AbsoluteLayout.AutoSize;
+            }
+            else
+            {
+                newBounds.Width = 1;
+                newBounds.Top = 0;
+            }
+
+            if (newBounds.Left > 5)
+            {
+                newBounds.Width = AbsoluteLayout.AutoSize;
+                //newBounds.Height = AbsoluteLayout.AutoSize;
+            }
+            else
+            {
+                newBounds.Width = 1;
+                newBounds.Left = 0;
+            }
+
+            AbsoluteLayout.SetLayoutBounds(this, newBounds);
+
+            if (newBounds.Width == AbsoluteLayout.AutoSize)
+            {
+                AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
+            }
+            else
+            {
+
+                AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional);
+            }
+
+        }
+        else
+        {
+            _lastBounds = AbsoluteLayout.GetLayoutBounds(this);
+        }
     }
 }

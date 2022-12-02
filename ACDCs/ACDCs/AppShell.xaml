@@ -10,12 +10,8 @@
 
     <ShellContent
         Title="New circuit"
-        ContentTemplate="{DataTemplate views:CircuitSheetPage}"
-         />
+        ContentTemplate="{DataTemplate views:CircuitSheetPage}" />
     <ShellContent
         Title="StartCenter"
-        ContentTemplate="{DataTemplate views:StartCenterPage}"
-         />
-    
-
+        ContentTemplate="{DataTemplate views:StartCenterPage}" />
 </Shell>

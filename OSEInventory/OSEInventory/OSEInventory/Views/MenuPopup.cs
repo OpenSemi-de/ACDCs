@@ -10,8 +10,8 @@ namespace OSEInventory.Views
         private readonly StackLayout _baseLayout;
         private readonly string _name;
         private readonly ScrollView _scroll;
-        private List<IMenuItem>? _items;
         private Rect _hookPosition;
+        private List<IMenuItem>? _items;
 
         public MenuPopup(string name, Button openButton, MenuButtonView controlButtonView)
         {
@@ -32,7 +32,7 @@ namespace OSEInventory.Views
             _scroll = new ScrollView();
             _baseLayout = new StackLayout();
             _scroll.Content = _baseLayout;
-        
+
             Content = _scroll;
         }
 

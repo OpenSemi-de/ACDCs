@@ -17,13 +17,6 @@ public partial class MenuButtonView : ContentView
 
     public static Dictionary<string, Action> Handlers { get; set; } = new();
 
-    public void HideAllMenus()
-    {
-        _menus.ForEach(m => m.IsVisible = false);
-        ButtonEditMenu.BackgroundColor = Colors.WhiteSmoke;
-        ButtonFileMenu.BackgroundColor = Colors.WhiteSmoke;
-    }
-
     public static Action? GetHandler(string? menuCommand)
     {
         if (menuCommand != null && Handlers.ContainsKey(menuCommand))
@@ -31,6 +24,19 @@ public partial class MenuButtonView : ContentView
             return Handlers[menuCommand];
         }
         return null;
+    }
+
+    public void HideAllMenus()
+    {
+        _menus.ForEach(m => m.IsVisible = false);
+        ButtonEditMenu.BackgroundColor = Colors.WhiteSmoke;
+        ButtonFileMenu.BackgroundColor = Colors.WhiteSmoke;
+    }
+
+    public void SetHandler(string command, Action commandAction)
+    {
+        if (!Handlers.ContainsKey(command))
+            Handlers.Add(command, commandAction);
     }
 
     private void App_DoReset(DoResetArgs? args)
@@ -103,11 +109,5 @@ public partial class MenuButtonView : ContentView
             CreateMenu(absoluteLayout, ButtonFileMenu).SetItems(fileMenu);
             CreateMenu(absoluteLayout, ButtonEditMenu).SetItems(editMenu);
         }
-    }
-
-    public void SetHandler(string command, Action commandAction)
-    {
-        if (!Handlers.ContainsKey(command))
-            Handlers.Add(command, commandAction);
     }
 }

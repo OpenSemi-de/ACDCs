@@ -1,12 +1,12 @@
-﻿using System;
-using Microsoft.Maui.Accessibility;
+﻿using Microsoft.Maui.Accessibility;
 using Microsoft.Maui.Controls;
+using System;
 
 namespace ACDCs.Views;
 
 public partial class StartCenterPage : ContentPage
 {
-    int count = 0;
+    private int count = 0;
 
     public StartCenterPage()
     {

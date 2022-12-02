@@ -11,7 +11,6 @@ namespace OSEInventory.Views
             BackgroundColor = Colors.Black;
             Padding = 0;
             Margin = 1;
-        
         }
 
         public IBorderStroke Border { get; } = new Border();

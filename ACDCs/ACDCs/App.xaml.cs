@@ -1,17 +1,15 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-using Microsoft.Maui.ApplicationModel;
+﻿using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace ACDCs;
 
 public partial class App : Application
 {
-
     public App()
     {
-
         InitializeComponent();
         this.UserAppTheme = AppTheme.Dark;
         MainPage = new AppShell();
@@ -25,5 +23,4 @@ public partial class App : Application
         var contents = await reader.ReadToEndAsync();
         return contents;
     }
-
 }

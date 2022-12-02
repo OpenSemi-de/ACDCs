@@ -1,36 +1,8 @@
-using OSECircuitRender.Interfaces;
-using OSECircuitRender.Items;
 using CommunityToolkit.Maui.Markup;
+using OSECircuitRender.Items;
 
 namespace OSEInventory.Views
 {
-    public class FileDialogView : ContentView
-    {
-        public static readonly BindableProperty SheetPageProperty =
-            BindableProperty.Create("SheetPage", typeof(SheetPage), typeof(FileDialogView), null);
-        public SheetPage? SheetPage { get; set; }
-        public FileDialogView()
-        {
-            this.Bind(SheetPageProperty, "SheetPage");
-            App.MenuButtonView.SetHandler("open", OpenFile);
-        }
-
-        public async void OpenFile()
-        {
-            PickOptions options = new();
-            var result = await FilePicker.Default.PickAsync(options);
-            if (result != null)
-            {
-                if (result.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) ||
-                    result.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase))
-                {
-                    //                    using var stream = await result.OpenReadAsync();
-                    //                    var image = ImageSource.FromStream(() => stream);
-                }
-            }
-        }
-    }
-
     public class EditDialogView : ContentView
     {
         public EditDialogView()
@@ -66,6 +38,35 @@ namespace OSEInventory.Views
             });
 
             App.CurrentSheetPage?.Paint();
+        }
+    }
+
+    public class FileDialogView : ContentView
+    {
+        public static readonly BindableProperty SheetPageProperty =
+            BindableProperty.Create("SheetPage", typeof(SheetPage), typeof(FileDialogView), null);
+
+        public FileDialogView()
+        {
+            this.Bind(SheetPageProperty, "SheetPage");
+            App.MenuButtonView.SetHandler("open", OpenFile);
+        }
+
+        public SheetPage? SheetPage { get; set; }
+
+        public async void OpenFile()
+        {
+            PickOptions options = new();
+            var result = await FilePicker.Default.PickAsync(options);
+            if (result != null)
+            {
+                if (result.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) ||
+                    result.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase))
+                {
+                    //                    using var stream = await result.OpenReadAsync();
+                    //                    var image = ImageSource.FromStream(() => stream);
+                }
+            }
         }
     }
 }

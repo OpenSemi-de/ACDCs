@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 
@@ -18,18 +17,19 @@ public class MenuButton : Button, IMenuItem
         ItemHeight = MinimumHeightRequest + Margin.Top + Margin.Bottom;
     }
 
+    public double ItemHeight { get; set; }
+
+    public string MenuCommand { get; set; }
+
+    public MenuFrame? MenuFrame { get; set; }
+
     private void MenuButton_Clicked(object? sender, System.EventArgs e)
     {
         MenuFrame.HideAllMenus();
         if (MenuFrame != null)
         {
-
-           MenuFrame.SetPosition(this);
+            MenuFrame.SetPosition(this);
             MenuFrame.IsVisible = true;
         }
     }
-
-    public string MenuCommand { get; set; }
-    public double ItemHeight { get; set; }
-    public MenuFrame? MenuFrame { get; set; }
 }

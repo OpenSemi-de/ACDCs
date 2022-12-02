@@ -11,9 +11,8 @@
             <StackLayout.BindingContext>
                 <x:Reference Name="DragContentView" />
             </StackLayout.BindingContext>
-            <Frame>
-                <Label x:Name="TitleLabel" FontSize="10" FontAutoScalingEnabled="True" BackgroundColor="Transparent" HorizontalOptions="Fill" HeightRequest="30">
-                    <Label.Padding>3,3,3,3</Label.Padding>
+            <Frame x:Name="TitleFrame" Margin="0" Padding="0" HorizontalOptions="Fill" VerticalOptions="Fill" MinimumHeightRequest="40" MinimumWidthRequest="40">
+                <Label x:Name="TitleLabel" FontSize="10" FontAutoScalingEnabled="True" BackgroundColor="Transparent" HorizontalOptions="Fill" VerticalOptions="Fill" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
                     <Label.BindingContext>
                         <x:Reference Name="DragContentView" />
                     </Label.BindingContext>

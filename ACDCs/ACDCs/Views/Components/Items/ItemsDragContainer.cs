@@ -10,25 +10,16 @@ namespace ACDCs.Views.Components.Items;
 public class ItemsDragContainer: DragContainer.DragContainer
 {
     private static readonly BindableProperty PopupTargetProperty = BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
-    private readonly MenuFrame _menuFrame;
+    private readonly StackLayout _layout;
 
     public ItemsDragContainer()
     {
+        Title = "Items";
         Orientation = StackOrientation.Horizontal;
-        AbsoluteLayout.SetLayoutBounds(this, new Rect(0,0,1,60));
-        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional);
-        _menuFrame = new MenuFrame();
-        _menuFrame.PopupTarget = PopupTarget;
-        _menuFrame.MainContainer = this;
-        Layout = _menuFrame;
-        LoadMenu("menu_main.json");
-    }
-
-    private async void LoadMenu(string menuMainJson)
-    {
-        var jsonData = await App.LoadMauiAssetAsString(menuMainJson);
-        var items = JsonConvert.DeserializeObject<List<MenuItemDefinition>>(jsonData);
-        if (items != null) _menuFrame.LoadMenu(items, true);
+        AbsoluteLayout.SetLayoutBounds(this, new Rect(0,1,1,60));
+        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.YProportional);
+        _layout = new StackLayout();
+        Layout = _layout;
     }
 
     public AbsoluteLayout PopupTarget
@@ -38,7 +29,6 @@ public class ItemsDragContainer: DragContainer.DragContainer
         set
         {
             SetValue(PopupTargetProperty, value);
-            _menuFrame.PopupTarget = value;
         }
     }
 }

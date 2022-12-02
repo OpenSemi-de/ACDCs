@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="540"
+   height="540"
+   viewBox="0 0 142.875 142.875"
+   version="1.1"
+   id="svg267"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   sodipodi:docname="appicon.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview269"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="1.2938725"
+     inkscape:cx="90.426222"
+     inkscape:cy="282.0989"
+     inkscape:window-width="3440"
+     inkscape:window-height="1377"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs264">
+    <filter
+       inkscape:label="Basic Two Lights Bump"
+       inkscape:menu="Bumps"
+       inkscape:menu-tooltip="Two types of lighting emboss effect"
+       style="color-interpolation-filters:sRGB;"
+       id="filter735"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1000 -500 "
+         id="feColorMatrix733"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix737" />
+      <feColorMatrix
+         id="feColorMatrix739"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1000 -500 "
+         in="fbSourceGraphic"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix2212" />
+      <feTurbulence
+         id="feTurbulence2214"
+         type="turbulence"
+         baseFrequency="0.87 0"
+         numOctaves="1"
+         seed="1"
+         result="turbulence"
+         in="fbSourceGraphic" />
+      <feComposite
+         in2="turbulence"
+         id="feComposite2216"
+         in="fbSourceGraphic"
+         operator="in"
+         result="composite1" />
+      <feColorMatrix
+         id="feColorMatrix2218"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 18.8598 -0 "
+         result="color" />
+      <feFlood
+         id="feFlood2220"
+         flood-opacity="1"
+         flood-color="rgb(133,162,182)"
+         result="flood" />
+      <feMerge
+         id="feMerge2222"
+         result="merge">
+        <feMergeNode
+           id="feMergeNode2224"
+           in="flood" />
+        <feMergeNode
+           id="feMergeNode2226"
+           in="color" />
+      </feMerge>
+      <feComposite
+         in2="fbSourceGraphic"
+         id="feComposite2228"
+         operator="in"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix2230" />
+      <feTurbulence
+         id="feTurbulence2232"
+         type="turbulence"
+         baseFrequency="0 8.1761"
+         numOctaves="1"
+         seed="1"
+         result="turbulence"
+         in="fbSourceGraphic" />
+      <feComposite
+         in2="turbulence"
+         id="feComposite2234"
+         in="fbSourceGraphic"
+         operator="in"
+         result="composite1" />
+      <feColorMatrix
+         id="feColorMatrix2236"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 18.86 -0 "
+         result="color" />
+      <feFlood
+         id="feFlood2238"
+         flood-opacity="1"
+         flood-color="rgb(133,162,182)"
+         result="flood" />
+      <feMerge
+         id="feMerge2240"
+         result="merge">
+        <feMergeNode
+           id="feMergeNode2242"
+           in="flood" />
+        <feMergeNode
+           id="feMergeNode2244"
+           in="color" />
+      </feMerge>
+      <feComposite
+         in2="fbSourceGraphic"
+         id="feComposite2246"
+         operator="in"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix2248" />
+      <feColorMatrix
+         id="feColorMatrix2250"
+         result="result2"
+         type="luminanceToAlpha"
+         in="fbSourceGraphic" />
+      <feSpecularLighting
+         id="feSpecularLighting2252"
+         specularConstant="0.5"
+         surfaceScale="-15"
+         specularExponent="10"
+         result="result10">
+        <feDistantLight
+           id="feDistantLight2254"
+           elevation="20"
+           azimuth="225" />
+      </feSpecularLighting>
+      <feDiffuseLighting
+         id="feDiffuseLighting2256"
+         diffuseConstant="0.5"
+         surfaceScale="15"
+         result="result11">
+        <feDistantLight
+           id="feDistantLight2258"
+           azimuth="225"
+           elevation="20" />
+      </feDiffuseLighting>
+      <feComposite
+         in2="result10"
+         id="feComposite2260"
+         result="result11"
+         operator="arithmetic"
+         k2="0.5"
+         k3="0.5" />
+      <feComposite
+         in2="fbSourceGraphic"
+         id="feComposite2262"
+         in="result11"
+         result="result9"
+         operator="arithmetic"
+         k2="1"
+         k3="1" />
+      <feComposite
+         in2="fbSourceGraphic"
+         id="feComposite2264"
+         operator="in"
+         in="result9" />
+    </filter>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-size:8.92305px;fill:#000000;stroke-width:0.743587;filter:url(#filter735);image-rendering:auto"
+       x="1.6214917"
+       y="6.6319518"
+       id="text325"
+       transform="matrix(5.4712324,0,0,21.658057,-9.3866611,-4.9438535)"><tspan
+         sodipodi:role="line"
+         id="tspan323"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Maple Mono';-inkscape-font-specification:'Maple Mono';stroke-width:0.743587"
+         x="1.6214917"
+         y="6.6319518">ACDCs</tspan></text>
+  </g>
+</svg>

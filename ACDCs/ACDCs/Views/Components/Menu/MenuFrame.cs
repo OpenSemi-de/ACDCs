@@ -17,7 +17,7 @@ public class MenuFrame : StackLayout
         Orientation = StackOrientation.Horizontal;
     }
 
-    public AbsoluteLayout PopupTarget { get; set; }
+    public AbsoluteLayout? PopupTarget { get; set; }
     public View MainContainer { get; set; }
     public async void LoadMenu(List<MenuItemDefinition> items, bool isRoot = false)
     {
@@ -50,8 +50,8 @@ public class MenuFrame : StackLayout
 
                         menuButton.MenuFrame.LoadMenu(menuItem.MenuItems);
 
-                        PopupTarget.Add(menuButton.MenuFrame);
-                       // menuButton.MenuFrame.Loaded += (sender, args) => { SetPosition(menuButton); };
+                        PopupTarget?.Add(menuButton.MenuFrame);
+                       
                       
                     }
                 }

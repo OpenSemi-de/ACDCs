@@ -1,8 +1,8 @@
 ﻿#nullable enable
+
 using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
 using System;
-using System.Runtime.CompilerServices;
 
 namespace OSECircuitRender.Items;
 
@@ -10,16 +10,10 @@ public class WorksheetItem : IWorksheetItem
 {
     private string? _value;
 
-    public string? Value
-    {
-        get => _value ?? DefaultValue;
-        set => _value = value ?? DefaultValue;
-    }
-
-    public string TypeName => this.GetType().Name.Replace("Item", "");
+    public static string? DefaultValue { get; set; }
 
     public static bool IsInsertable { get; set; } = false;
-    public static string? DefaultValue { get; set; }
+
     public IDrawableComponent DrawableComponent { get; set; } = new DrawableComponent(typeof(DrawableComponent));
 
     public int Height
@@ -29,14 +23,25 @@ public class WorksheetItem : IWorksheetItem
     }
 
     public Guid ItemGuid { get; set; } = Guid.NewGuid();
+
     public string Name { get; set; } = string.Empty;
+
     public DrawablePinList Pins { get; set; } = new();
+
     public string RefName { get; set; } = string.Empty;
 
     public float Rotation
     {
         get => DrawableComponent.Rotation;
         set => DrawableComponent.Rotation = value;
+    }
+
+    public string TypeName => this.GetType().Name.Replace("Item", "");
+
+    public string? Value
+    {
+        get => _value ?? DefaultValue;
+        set => _value = value ?? DefaultValue;
     }
 
     public int Width

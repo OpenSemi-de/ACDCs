@@ -1,5 +1,6 @@
 ﻿#nullable enable
 
+using AnyClone;
 using Newtonsoft.Json;
 using OSECircuitRender.Definitions;
 using OSECircuitRender.Drawables;
@@ -8,7 +9,6 @@ using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
 using System;
 using System.Linq;
-using AnyClone;
 
 namespace OSECircuitRender.Sheet;
 
@@ -79,12 +79,27 @@ public sealed class Worksheet
         return false;
     }
 
+    public void DeleteItem(WorksheetItem item)
+    {
+        if (SelectedItems.Contains(item))
+            SelectedItems.Remove(item);
+
+        if (Items.Contains(item))
+            Items.Remove(item);
+    }
+
     public void DeselectItem(WorksheetItem item)
     {
         if (SelectedItems.Contains(item))
         {
             SelectedItems.Remove(item);
         }
+    }
+
+    public WorksheetItem DuplicateItem(WorksheetItem item)
+    {
+        WorksheetItem? newItem = item.Clone<WorksheetItem>();
+        return newItem;
     }
 
     public DrawableComponentList GetDrawableComponents()
@@ -150,20 +165,5 @@ public sealed class Worksheet
     private void OnSelectionAdded(IWorksheetItem obj)
     {
         OnSelectionChange?.Invoke(SelectedItems);
-    }
-
-    public void DeleteItem(WorksheetItem item)
-    {
-        if (SelectedItems.Contains(item))
-            SelectedItems.Remove(item);
-
-        if (Items.Contains(item))
-            Items.Remove(item);
-    }
-
-    public WorksheetItem DuplicateItem(WorksheetItem item)
-    {
-        WorksheetItem? newItem = item.Clone<WorksheetItem>();
-        return newItem;
     }
 }

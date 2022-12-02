@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:OSEInventory.Views"
              xmlns:components="clr-namespace:OSEInventory.Components"
+             xmlns:oseInventory="clr-namespace:OSEInventory"
              x:Class="OSEInventory.SheetPage"
+             x:Name="SheetPageInstance"
              Title="New sheet">
     <AbsoluteLayout>
         <Frame BackgroundColor="LightGray" BorderColor="WhiteSmoke" AbsoluteLayout.LayoutFlags="SizeProportional" AbsoluteLayout.LayoutBounds="0,0,1,1">
@@ -176,7 +178,7 @@
             </StackLayout>
         </Frame>
         <views:MenuButtonView x:Name="MenuButtonView"></views:MenuButtonView>
-        <views:FileDialogView></views:FileDialogView>
+        <views:FileDialogView SheetPage="{x:Bind} }"></views:FileDialogView>
         <views:EditDialogView></views:EditDialogView>
     </AbsoluteLayout>
 </ContentPage>

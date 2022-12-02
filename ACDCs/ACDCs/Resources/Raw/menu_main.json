@@ -1,0 +1,64 @@
+[
+  {
+    "Text": "File",
+    "MenuItems": [
+      {
+        "Text": "Open...",
+        "MenuCommand": "openfile"
+      },
+      {
+        "Text": "Save",
+        "MenuCommand": "savefile"
+      },
+      {
+        "Text": "Save as..",
+        "MenuCommand": "saveasile"
+      },
+      {
+        "Text": "Export",
+        "MenuCommand": "",
+        "MenuItems": [
+          {
+            "Text": "PDF",
+            "MenuCommand": "exportpdf"
+          },
+          {
+            "Text": "BMP",
+            "MenuCommand": "exportbmp"
+          },
+          {
+            "Text": "JPG",
+            "MenuCommand": "exportjpg"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Text": "Edit",
+    "MenuItems": [
+      {
+        "Text": "Copy",
+        "MenuCommand": "copy"
+      },
+      {
+        "Text": "Cut",
+        "MenuCommand": "cut"
+      },
+      {
+        "Text": "Paste",
+        "MenuCommand": "paste"
+      },
+      {},
+      {
+        "Text": "Duplicate",
+        "MenuCommand": "duplicate"
+      },
+      {},
+      {
+        "Text": "Delete",
+        "MenuCommand": "delete"
+      }
+    ]
+  }
+]

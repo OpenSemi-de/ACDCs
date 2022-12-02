@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ACDCs.Views.Components.DragContainer.DragContainer"
+             x:Name="DragContentView">
+    <Frame HorizontalOptions="Fill" VerticalOptions="Fill">
+        <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+            <StackLayout.Orientation>
+                <x:Binding Path="Orientation" />
+            </StackLayout.Orientation>
+            <StackLayout.BindingContext>
+                <x:Reference Name="DragContentView" />
+            </StackLayout.BindingContext>
+            <Frame>
+                <Label x:Name="TitleLabel" FontSize="10" FontAutoScalingEnabled="True" BackgroundColor="Transparent" HorizontalOptions="Fill" HeightRequest="30">
+                    <Label.Padding>3,3,3,3</Label.Padding>
+                    <Label.BindingContext>
+                        <x:Reference Name="DragContentView" />
+                    </Label.BindingContext>
+                    <Label.Text>
+                        <Binding Path="Title" />
+                    </Label.Text>
+                </Label>
+            </Frame>
+            <ContentView x:Name="MainContentView" HorizontalOptions="Fill" VerticalOptions="Fill" />
+        </StackLayout>
+    </Frame>
+</ContentView>

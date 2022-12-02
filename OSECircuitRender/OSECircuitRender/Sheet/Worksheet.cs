@@ -8,6 +8,7 @@ using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
 using System;
 using System.Linq;
+using AnyClone;
 
 namespace OSECircuitRender.Sheet;
 
@@ -151,12 +152,18 @@ public sealed class Worksheet
         OnSelectionChange?.Invoke(SelectedItems);
     }
 
-    public void DeleteItem(IWorksheetItem item)
+    public void DeleteItem(WorksheetItem item)
     {
         if (SelectedItems.Contains(item))
             SelectedItems.Remove(item);
 
         if (Items.Contains(item))
             Items.Remove(item);
+    }
+
+    public WorksheetItem DuplicateItem(WorksheetItem item)
+    {
+        WorksheetItem? newItem = item.Clone<WorksheetItem>();
+        return newItem;
     }
 }

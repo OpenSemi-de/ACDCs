@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
@@ -25,7 +26,9 @@ public partial class DragContainer : ContentView
                 if (container.Orientation == StackOrientation.Horizontal)
                 {
                     container.TitleLabel.Rotation = 270;
-                    container.TitleLabel.HorizontalOptions = LayoutOptions.Start;
+                    container.TitleLabel.WidthRequest = 40;
+                    container.TitleLabel.HeightRequest = 40;
+                    container.TitleLabel.HorizontalOptions = LayoutOptions.Fill;
                     container.TitleLabel.VerticalOptions = LayoutOptions.Fill;
                 }
                 else
@@ -82,6 +85,8 @@ public partial class DragContainer : ContentView
         _dragRecognizer.PanUpdated += PanGestureRecognizer_OnPanUpdated;
         this.GestureRecognizers.Add(_dragRecognizer);
         TitleFrame.GestureRecognizers.Add(_dragRecognizer);
+        if (ButtonHide.IsVisible)
+            ButtonHide_OnClicked(this, EventArgs.Empty);
     }
 
     private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
@@ -90,6 +95,11 @@ public partial class DragContainer : ContentView
         {
             if (e.StatusType == GestureStatus.Running || e.StatusType == GestureStatus.Canceled)
             {
+                if (ButtonHide.IsVisible)
+                {
+                    Orientation = StackOrientation.Vertical;
+                    propertyChanged(this, Orientation, Orientation);
+                }
                 Rect newBounds = new(_lastBounds.Location, _lastBounds.Size);
                 newBounds.Top += e.TotalY; // - TitleLabel.Height / 2;
                 newBounds.Left += e.TotalX; // - TitleLabel.Width / 2;
@@ -134,5 +144,18 @@ public partial class DragContainer : ContentView
 
             return Task.CompletedTask;
         }).Wait();
+    }
+
+    public void ShowButtonHide()
+    {
+        ButtonHide.IsVisible = true;
+    }
+
+    public void ButtonHide_OnClicked(object? sender, EventArgs e)
+    {
+        Orientation = StackOrientation.Horizontal;
+        propertyChanged(this, Orientation, Orientation);
+        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.XProportional);
+        AbsoluteLayout.SetLayoutBounds(this, new(1, 200, 40, 300));
     }
 }

@@ -20,6 +20,7 @@ public class ItemsListDragContainer : DragContainer.DragContainer
     {
         Title = "Items / selection";
         Orientation = StackOrientation.Vertical;
+        ShowButtonHide();
      
         AbsoluteLayout.SetLayoutBounds(this, new(1, 100, 300, 400));
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.XProportional);
@@ -27,7 +28,8 @@ public class ItemsListDragContainer : DragContainer.DragContainer
         _layout = new()
         {
             HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill
+            VerticalOptions = LayoutOptions.Fill,
+            MinimumWidthRequest = 300
         };
 
         DataTemplate itemTemplate = new(typeof(ViewCell))
@@ -47,7 +49,8 @@ public class ItemsListDragContainer : DragContainer.DragContainer
             ItemTemplate = itemTemplate,
             HeaderTemplate = headerTemplate,
             Header = LoadHeader(),
-            ItemsSource = null
+            ItemsSource = null,
+            MinimumWidthRequest = 300
         };
 
         _listViewItems.ItemsSource = new List<ItemsListItem>();
@@ -62,8 +65,8 @@ public class ItemsListDragContainer : DragContainer.DragContainer
         {
             Orientation = StackOrientation.Horizontal
         };
-        layout.Add(new Label().Text("Type"));
-        layout.Add(new Label().Text("Name"));
+        layout.Add(new Label().Text("Type").Width(120));
+        layout.Add(new Label().Text("Name").Width(160));
         return layout;
     }
 
@@ -73,14 +76,14 @@ public class ItemsListDragContainer : DragContainer.DragContainer
         {
             Orientation = StackOrientation.Horizontal
         };
-        AddLabelToTemplate(layout, "TypeName");
-        AddLabelToTemplate(layout, "RefName");
+        AddLabelToTemplate(layout, "TypeName", 120);
+        AddLabelToTemplate(layout, "RefName", 160);
         return layout;
     }
 
-    private void AddLabelToTemplate(StackLayout layout, string bindingPath)
+    private void AddLabelToTemplate(StackLayout layout, string bindingPath, double width)
     {
-        layout.Add(new Label().Bind(bindingPath));
+        layout.Add(new Label().Bind(bindingPath).Width(width));
     }
 
     public void SetItems(WorksheetItemList items, WorksheetItemList selected)

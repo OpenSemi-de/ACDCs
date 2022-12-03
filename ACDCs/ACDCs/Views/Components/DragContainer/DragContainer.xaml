@@ -13,17 +13,20 @@
                 <x:Reference Name="DragContentView" />
             </StackLayout.BindingContext>
             <Frame x:Name="TitleFrame" Margin="0" Padding="0" HorizontalOptions="Fill" VerticalOptions="Fill"
-                   MinimumHeightRequest="40" MinimumWidthRequest="40">
-                <Label x:Name="TitleLabel" FontSize="10" FontAutoScalingEnabled="True" BackgroundColor="Transparent"
+                   MinimumHeightRequest="40" MinimumWidthRequest="20">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" VerticalOptions="Fill">
+                    <Label x:Name="TitleLabel" FontSize="10" FontAutoScalingEnabled="True" BackgroundColor="Transparent"
                        HorizontalOptions="Fill" VerticalOptions="Fill" HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center">
-                    <Label.BindingContext>
-                        <x:Reference Name="DragContentView" />
-                    </Label.BindingContext>
-                    <Label.Text>
-                        <Binding Path="Title" />
-                    </Label.Text>
-                </Label>
+                        <Label.BindingContext>
+                            <x:Reference Name="DragContentView" />
+                        </Label.BindingContext>
+                        <Label.Text>
+                            <Binding Path="Title" />
+                        </Label.Text>
+                    </Label>
+                    <Button x:Name="ButtonHide" IsVisible="False" Text="X" Clicked="ButtonHide_OnClicked" HorizontalOptions="End"></Button>
+                </StackLayout>
             </Frame>
             <ContentView x:Name="MainContentView" HorizontalOptions="Fill" VerticalOptions="Fill" />
         </StackLayout>

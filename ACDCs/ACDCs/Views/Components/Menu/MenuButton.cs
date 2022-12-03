@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 
@@ -10,8 +11,8 @@ public class MenuButton : Button, IMenuItem
         Text = text;
         MenuCommand = menuCommand;
         Clicked += MenuButton_Clicked;
-        Padding = new Thickness(2, 2, 2, 2);
-        Margin = new Thickness(2, 2, 2, 2);
+        Padding = new(2, 2, 2, 2);
+        Margin = new(2, 2, 2, 2);
         MinimumWidthRequest = 80;
         MinimumHeightRequest = 32;
         ItemHeight = MinimumHeightRequest + Margin.Top + Margin.Bottom;
@@ -25,11 +26,14 @@ public class MenuButton : Button, IMenuItem
 
     private void MenuButton_Clicked(object? sender, System.EventArgs e)
     {
-        MenuFrame.HideAllMenus();
-        if (MenuFrame != null)
+        App.Call(() =>
         {
-            MenuFrame.SetPosition(this);
-            MenuFrame.IsVisible = true;
-        }
+            if (MenuFrame != null)
+            {
+                MenuFrame.SetPosition(this);
+                MenuFrame.IsVisible = true;
+            }
+            return Task.CompletedTask;
+        }).Wait();
     }
 }

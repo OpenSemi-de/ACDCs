@@ -14,8 +14,7 @@ namespace OSEInventory.Views
 
         public Func<float, float, WorksheetItem?>? DoInsert { get; set; }
 
-        public bool IsInserting { get; set; }
-
+   
         public ItemButton? SelectedButton { get; set; }
 
         public Color? SelectedButtonBorderColor { get; set; }

@@ -1,12 +1,16 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:menu="using:ACDCs.Views.Components.Menu"
-             xmlns:items="using:ACDCs.Views.Components.Items"
-             xmlns:itemsList="using:ACDCs.Views.Components.ItemsList"
+             xmlns:menu="clr-namespace:ACDCs.Views.Components.Menu"
+             xmlns:itemsList="clr-namespace:ACDCs.Views.Components.ItemsList"
+             xmlns:items="clr-namespace:ACDCs.Views.Components.Items"
+             xmlns:circuitView="clr-namespace:ACDCs.Views.Components.CircuitView"
              x:Class="ACDCs.Views.CircuitSheetPage"
              Title="New sheet">
     <AbsoluteLayout x:Name="AbsoluteLayoutSheetPage">
+        <circuitView:CircuitView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
+        </circuitView:CircuitView>
         <menu:MenuDragContainer Title="Menu" PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" />
         <itemsList:ItemsListDragContainer></itemsList:ItemsListDragContainer>
 

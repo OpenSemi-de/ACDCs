@@ -8,17 +8,21 @@ namespace ACDCs.Views.Components.Menu;
 
 public class MenuDragContainer : DragContainer.DragContainer
 {
-    private static readonly BindableProperty PopupTargetProperty = BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
+    private static readonly BindableProperty PopupTargetProperty =
+        BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
+
     private readonly MenuFrame _menuFrame;
 
     public MenuDragContainer()
     {
         Orientation = StackOrientation.Horizontal;
-        AbsoluteLayout.SetLayoutBounds(this, new Rect(0, 0, 1, 50));
+        AbsoluteLayout.SetLayoutBounds(this, new(0, 0, 1, 50));
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional);
-        _menuFrame = new MenuFrame();
-        _menuFrame.PopupTarget = PopupTarget;
-        _menuFrame.MainContainer = this;
+        _menuFrame = new()
+        {
+            PopupTarget = PopupTarget,
+            MainContainer = this
+        };
         Layout = _menuFrame;
         LoadMenu("menu_main.json");
     }
@@ -36,8 +40,11 @@ public class MenuDragContainer : DragContainer.DragContainer
 
     private async void LoadMenu(string menuMainJson)
     {
-        var jsonData = await App.LoadMauiAssetAsString(menuMainJson);
-        var items = JsonConvert.DeserializeObject<List<MenuItemDefinition>>(jsonData);
-        if (items != null) _menuFrame.LoadMenu(items, true);
+        await App.Call(async () =>
+        {
+            var jsonData = await App.LoadMauiAssetAsString(menuMainJson);
+            var items = JsonConvert.DeserializeObject<List<MenuItemDefinition>>(jsonData);
+            if (items != null) _menuFrame.LoadMenu(items, true);
+        });
     }
 }

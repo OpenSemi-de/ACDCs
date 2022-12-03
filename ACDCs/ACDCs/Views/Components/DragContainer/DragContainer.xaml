@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ACDCs.Views.Components.DragContainer.DragContainer"
@@ -11,8 +12,11 @@
             <StackLayout.BindingContext>
                 <x:Reference Name="DragContentView" />
             </StackLayout.BindingContext>
-            <Frame x:Name="TitleFrame" Margin="0" Padding="0" HorizontalOptions="Fill" VerticalOptions="Fill" MinimumHeightRequest="40" MinimumWidthRequest="40">
-                <Label x:Name="TitleLabel" FontSize="10" FontAutoScalingEnabled="True" BackgroundColor="Transparent" HorizontalOptions="Fill" VerticalOptions="Fill" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
+            <Frame x:Name="TitleFrame" Margin="0" Padding="0" HorizontalOptions="Fill" VerticalOptions="Fill"
+                   MinimumHeightRequest="40" MinimumWidthRequest="40">
+                <Label x:Name="TitleLabel" FontSize="10" FontAutoScalingEnabled="True" BackgroundColor="Transparent"
+                       HorizontalOptions="Fill" VerticalOptions="Fill" HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center">
                     <Label.BindingContext>
                         <x:Reference Name="DragContentView" />
                     </Label.BindingContext>

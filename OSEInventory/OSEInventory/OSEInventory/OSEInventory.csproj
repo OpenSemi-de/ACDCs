@@ -65,7 +65,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\OSECircuitRender\OSECircuitRender\OSECircuitRender.csproj" />
-	  <ProjectReference Include="..\..\..\OSEData\OSEData\OSEData.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -178,7 +178,7 @@
             </StackLayout>
         </Frame>
         <views:MenuButtonView x:Name="MenuButtonView"></views:MenuButtonView>
-        <views:FileDialogView SheetPage="{x:Bind} }"></views:FileDialogView>
+        <views:FileDialogView></views:FileDialogView>
         <views:EditDialogView></views:EditDialogView>
     </AbsoluteLayout>
 </ContentPage>

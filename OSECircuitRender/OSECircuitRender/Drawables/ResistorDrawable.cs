@@ -10,12 +10,12 @@ public sealed class ResistorDrawable : DrawableComponent
         Setup(null);
     }
 
-    public ResistorDrawable(IWorksheetItem backRef) : base(typeof(ResistorDrawable))
+    public ResistorDrawable(IWorksheetItem? backRef) : base(typeof(ResistorDrawable))
     {
         Setup(backRef);
     }
 
-    public ResistorDrawable(IWorksheetItem backRef, string value, float x, float y) : base(typeof(ResistorDrawable))
+    public ResistorDrawable(IWorksheetItem? backRef, string value, float x, float y) : base(typeof(ResistorDrawable))
     {
         Setup(backRef, value, x, y);
     }
@@ -25,7 +25,7 @@ public sealed class ResistorDrawable : DrawableComponent
         Setup(null, value, x, y);
     }
 
-    private void Setup(IWorksheetItem backRef, string value = "N/A", float x = 0, float y = 0)
+    private void Setup(IWorksheetItem? backRef, string value = "N/A", float x = 0, float y = 0)
     {
         DrawablePins.Add(new PinDrawable(backRef, 0, 0.5f));
         DrawablePins.Add(new PinDrawable(backRef, 1f, 0.5f));

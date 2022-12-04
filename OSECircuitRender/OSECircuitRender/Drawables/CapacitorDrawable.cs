@@ -11,12 +11,12 @@ public sealed class CapacitorDrawable : DrawableComponent
         Setup(null);
     }
 
-    public CapacitorDrawable(IWorksheetItem backRef) : base(typeof(CapacitorDrawable))
+    public CapacitorDrawable(IWorksheetItem? backRef) : base(typeof(CapacitorDrawable))
     {
         Setup(backRef);
     }
 
-    public CapacitorDrawable(IWorksheetItem backRef, string value, CapacitorDrawableType type, float x, float y) : base(
+    public CapacitorDrawable(IWorksheetItem? backRef, string value, CapacitorDrawableType type, float x, float y) : base(
         typeof(CapacitorDrawable))
     {
         Setup(backRef, value, type, x, y);
@@ -24,7 +24,7 @@ public sealed class CapacitorDrawable : DrawableComponent
 
     public CapacitorDrawableType CapacitorType { get; set; }
 
-    private void Setup(IWorksheetItem backRef, string value = "N/A",
+    private void Setup(IWorksheetItem? backRef, string value = "N/A",
         CapacitorDrawableType capacitorType = CapacitorDrawableType.Standard, float x = 0, float y = 0)
     {
         CapacitorType = capacitorType;

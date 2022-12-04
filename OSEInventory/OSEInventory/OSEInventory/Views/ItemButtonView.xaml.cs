@@ -20,6 +20,7 @@ namespace OSEInventory.Views
         public Color? SelectedButtonBorderColor { get; set; }
 
         public Color? SelectedButtonColor { get; set; }
+        public bool IsInserting { get; set; }
 
         public async Task InsertToPosition(float x, float y)
         {

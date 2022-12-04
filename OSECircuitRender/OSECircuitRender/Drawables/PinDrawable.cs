@@ -6,7 +6,7 @@ namespace OSECircuitRender.Drawables;
 
 public class PinDrawable : DrawableComponent
 {
-    public PinDrawable(IWorksheetItem backRef, float x, float y, string pinText = "") : base(typeof(PinDrawable))
+    public PinDrawable(IWorksheetItem? backRef, float x, float y, string pinText = "") : base(typeof(PinDrawable))
     {
         PinText = pinText;
         DrawInstructions.Add(new CircleInstruction(0, 0, 1, 1));
@@ -19,13 +19,13 @@ public class PinDrawable : DrawableComponent
         PinText = pin.PinText;
         Position = new Coordinate(Position);
         Size = new Coordinate(Size);
-        BackRef = pin.BackRef;
+        //BackRef = pin.BackRef;
         Setup(BackRef, 1, 1);
     }
 
     public string PinText { get; }
 
-    private void Setup(IWorksheetItem backRef, float x, float y)
+    private void Setup(IWorksheetItem? backRef, float x, float y)
     {
         if (!backRef.Pins.Contains(this))
             backRef.Pins.Add(this);

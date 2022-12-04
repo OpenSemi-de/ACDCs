@@ -5,17 +5,17 @@ namespace OSECircuitRender.Drawables;
 
 public sealed class InductorDrawable : DrawableComponent
 {
-    public InductorDrawable(IWorksheetItem backRef) : base(typeof(InductorDrawable))
+    public InductorDrawable(IWorksheetItem? backRef) : base(typeof(InductorDrawable))
     {
         Setup(backRef);
     }
 
-    public InductorDrawable(IWorksheetItem backRef, string value, float x, float y) : base(typeof(ResistorDrawable))
+    public InductorDrawable(IWorksheetItem? backRef, string value, float x, float y) : base(typeof(ResistorDrawable))
     {
         Setup(backRef, value, x, y);
     }
 
-    private void Setup(IWorksheetItem backRef, string value = "N/A", float x = 0, float y = 0)
+    private void Setup(IWorksheetItem? backRef, string value = "N/A", float x = 0, float y = 0)
     {
         DrawablePins.Add(new PinDrawable(backRef, 0f, 0.5f));
         DrawablePins.Add(new PinDrawable(backRef, 1f, 0.5f));

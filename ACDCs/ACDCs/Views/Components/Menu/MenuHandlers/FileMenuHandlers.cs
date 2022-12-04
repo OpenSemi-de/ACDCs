@@ -2,7 +2,7 @@
 
 namespace ACDCs.Views.Components.Menu.MenuHandlers;
 
-public class FileMenuHandlers: ContentView
+public class FileMenuHandlers: MenuHandlerView
 {
     public FileMenuHandlers()
     {

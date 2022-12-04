@@ -2,6 +2,7 @@
 using OSECircuitRender.Instructions;
 using OSECircuitRender.Items;
 using System;
+using OSECircuitRender.Sheet;
 
 namespace OSECircuitRender.Interfaces;
 
@@ -13,4 +14,5 @@ public interface IDrawableComponent
     Coordinate Position { get; set; }
     float Rotation { get; set; }
     Coordinate Size { get; set; }
+    Worksheet? Worksheet { get; set; }
 }

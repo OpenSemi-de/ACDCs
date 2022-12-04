@@ -5,7 +5,7 @@ namespace OSECircuitRender.Drawables;
 
 public sealed class TerminalDrawable : DrawableComponent
 {
-    public TerminalDrawable(IWorksheetItem backRef, float x, float y,
+    public TerminalDrawable(IWorksheetItem? backRef, float x, float y,
         TerminalDrawableType terminalType = TerminalDrawableType.None, string terminalName = "") : base(
         typeof(TerminalDrawable))
     {
@@ -41,7 +41,7 @@ public sealed class TerminalDrawable : DrawableComponent
     public string TerminalText { get; set; }
     public TerminalDrawableType TerminalType { get; set; }
 
-    private void Setup(IWorksheetItem backRef, float x, float y)
+    private void Setup(IWorksheetItem? backRef, float x, float y)
     {
         SetSize(1, 1);
         SetPosition(x, y);

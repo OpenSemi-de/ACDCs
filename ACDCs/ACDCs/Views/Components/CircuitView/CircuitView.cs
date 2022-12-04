@@ -29,6 +29,10 @@ public class CircuitView : ContentView
     private bool _isDraggingItem;
     private Point _cursorPosition;
     private Action<WorksheetItemList, WorksheetItemList> ListSetItems { get => App.Com<Action<WorksheetItemList, WorksheetItemList>>("ItemList", "SetItems"); }
+    public Worksheet CurrentWorksheet
+    {
+        get => _currentSheet;
+    }
 
     public CircuitView()
     {

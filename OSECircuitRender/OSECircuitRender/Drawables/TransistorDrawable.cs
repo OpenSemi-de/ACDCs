@@ -11,12 +11,12 @@ public sealed class TransistorDrawable : DrawableComponent
         Setup(null);
     }
 
-    public TransistorDrawable(IWorksheetItem backRef) : base(typeof(TransistorDrawable))
+    public TransistorDrawable(IWorksheetItem? backRef) : base(typeof(TransistorDrawable))
     {
         Setup(backRef);
     }
 
-    public TransistorDrawable(IWorksheetItem backRef, TransistorDrawableType type, float x, float y) : base(
+    public TransistorDrawable(IWorksheetItem? backRef, TransistorDrawableType type, float x, float y) : base(
         typeof(TransistorDrawable))
     {
         Setup(backRef, type, x, y);
@@ -27,7 +27,7 @@ public sealed class TransistorDrawable : DrawableComponent
         Setup(null, type, x, y);
     }
 
-    private void Setup(IWorksheetItem backRef, TransistorDrawableType type = TransistorDrawableType.Pnp, float x = 0,
+    private void Setup(IWorksheetItem? backRef, TransistorDrawableType type = TransistorDrawableType.Pnp, float x = 0,
         float y = 0)
     {
         DrawInstructions.Add(new LineInstruction(0f, 0.5f, 0.5f, 0.5f));

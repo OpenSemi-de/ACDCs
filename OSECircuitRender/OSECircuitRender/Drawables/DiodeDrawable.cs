@@ -10,12 +10,12 @@ public sealed class DiodeDrawable : DrawableComponent
         Setup(null);
     }
 
-    public DiodeDrawable(IWorksheetItem backRef) : base(typeof(DiodeDrawable))
+    public DiodeDrawable(IWorksheetItem? backRef) : base(typeof(DiodeDrawable))
     {
         Setup(backRef);
     }
 
-    public DiodeDrawable(IWorksheetItem backRef, string value, float x, float y) : base(typeof(DiodeDrawable))
+    public DiodeDrawable(IWorksheetItem? backRef, string value, float x, float y) : base(typeof(DiodeDrawable))
     {
         Setup(backRef, value, x, y);
     }
@@ -25,7 +25,7 @@ public sealed class DiodeDrawable : DrawableComponent
         Setup(null, value, x, y);
     }
 
-    private void Setup(IWorksheetItem backRef, string value = "N/A", float x = 0, float y = 0)
+    private void Setup(IWorksheetItem? backRef, string value = "N/A", float x = 0, float y = 0)
     {
         DrawablePins.Add(new PinDrawable(backRef, 0, 0.5f));
         DrawablePins.Add(new PinDrawable(backRef, 1f, 0.5f));

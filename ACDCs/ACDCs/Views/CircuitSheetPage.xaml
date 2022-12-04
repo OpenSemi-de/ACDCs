@@ -10,10 +10,10 @@
              x:Class="ACDCs.Views.CircuitSheetPage"
              Title="New sheet">
     <AbsoluteLayout x:Name="AbsoluteLayoutSheetPage">
-        <circuitView:CircuitView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional"></circuitView:CircuitView>
+        <circuitView:CircuitView x:Name="CircuitView" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional"></circuitView:CircuitView>
         <menu:MenuDragContainer Title="Menu" PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" />
-        <menuHandlers:FileMenuHandlers></menuHandlers:FileMenuHandlers>
-       <menuHandlers:EditMenuHandlers></menuHandlers:EditMenuHandlers>
+        <menuHandlers:FileMenuHandlers CircuitView="{x:Reference CircuitView}"></menuHandlers:FileMenuHandlers>
+        <menuHandlers:EditMenuHandlers CircuitView="{x:Reference CircuitView}"></menuHandlers:EditMenuHandlers>
         <itemsList:ItemsListDragContainer></itemsList:ItemsListDragContainer>
 
 

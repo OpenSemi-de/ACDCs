@@ -27,7 +27,7 @@ public class PinDrawable : DrawableComponent
 
     private void Setup(IWorksheetItem? backRef, float x, float y)
     {
-        if (!backRef.Pins.Contains(this))
+        if (backRef != null && !backRef.Pins.Contains(this))
             backRef.Pins.Add(this);
         SetSize(1, 1);
         SetPosition(x, y);

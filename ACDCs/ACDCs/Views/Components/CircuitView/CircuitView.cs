@@ -28,7 +28,8 @@ public class CircuitView : ContentView
     private PointF _dragStartPosition;
     private bool _isDraggingItem;
     private Point _cursorPosition;
-   
+    private Action<WorksheetItemList, WorksheetItemList> ListSetItems { get => App.Com<Action<WorksheetItemList, WorksheetItemList>>("ItemList", "SetItems"); }
+
     public CircuitView()
     {
         _currentWorkbook = new Workbook();
@@ -53,6 +54,8 @@ public class CircuitView : ContentView
         _graphicsView.GestureRecognizers.Add(_pointerRecognizer);
 
         Content = _graphicsView;
+        App.Com<CircuitView>(nameof(CircuitView), "Instance", this);
+        App.Com<Worksheet>(nameof(CircuitView), "CurrentWorksheet", _currentSheet);
         Paint();
     }
 
@@ -60,15 +63,18 @@ public class CircuitView : ContentView
     {
         await App.Call(() =>
         {
-            Func<float, float, Worksheet, WorksheetItem?>? doInsert = App.Com<Func<float, float,Worksheet, WorksheetItem?>?>("Items", "DoInsert");
-            WorksheetItem ? newItem = doInsert?.Invoke(x, y, _currentSheet);
+            Func<float, float, Worksheet, WorksheetItem?>? doInsert = App.Com<Func<float, float, Worksheet, WorksheetItem?>?>("Items", "DoInsert");
+            WorksheetItem? newItem = doInsert?.Invoke(x, y, _currentSheet);
             if (newItem != null)
             {
                 newItem.X -= newItem.Width / 2;
                 newItem.Y -= newItem.Height / 2;
             }
-            
+
             App.Com<bool>("Items", "IsInserting", false);
+
+            ListSetItems(_currentSheet.Items, _currentSheet.SelectedItems);
+
             return Task.CompletedTask;
         });
     }
@@ -114,7 +120,6 @@ public class CircuitView : ContentView
                             if (_selectedItems.Contains(selectedItem))
                                 _selectedItems.Remove(selectedItem);
                         }
-
                         await Paint();
                     }
                 }

@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui.Markup;
+﻿using System;
+using CommunityToolkit.Maui.Markup;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
@@ -57,6 +58,7 @@ public class ItemsListDragContainer : DragContainer.DragContainer
 
         _layout.Add(_listViewItems);
         Layout = _layout;
+        App.Com<Action<WorksheetItemList, WorksheetItemList>>("ItemList", "SetItems", SetItems);
     }
 
     private object LoadHeader()
@@ -72,13 +74,15 @@ public class ItemsListDragContainer : DragContainer.DragContainer
 
     private object LoadTemplate()
     {
+        var viewcell = new ViewCell();
         var layout = new StackLayout
         {
             Orientation = StackOrientation.Horizontal
         };
+        viewcell.View = layout;
         AddLabelToTemplate(layout, "TypeName", 120);
         AddLabelToTemplate(layout, "RefName", 160);
-        return layout;
+        return viewcell;
     }
 
     private void AddLabelToTemplate(StackLayout layout, string bindingPath, double width)

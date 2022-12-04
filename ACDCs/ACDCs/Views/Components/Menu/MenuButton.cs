@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using ACDCs.Views.Components.Menu.MenuHandlers;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 
@@ -33,6 +34,12 @@ public class MenuButton : Button, IMenuItem
                 MenuFrame.SetPosition(this);
                 MenuFrame.IsVisible = true;
             }
+
+            if (MenuCommand != "")
+            {
+                MenuHandler.Call(MenuCommand);
+            }
+
             return Task.CompletedTask;
         }).Wait();
     }

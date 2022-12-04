@@ -6,12 +6,14 @@
              xmlns:itemsList="clr-namespace:ACDCs.Views.Components.ItemsList"
              xmlns:items="clr-namespace:ACDCs.Views.Components.Items"
              xmlns:circuitView="clr-namespace:ACDCs.Views.Components.CircuitView"
+             xmlns:menuHandlers="using:ACDCs.Views.Components.Menu.MenuHandlers"
              x:Class="ACDCs.Views.CircuitSheetPage"
              Title="New sheet">
     <AbsoluteLayout x:Name="AbsoluteLayoutSheetPage">
-        <circuitView:CircuitView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
-        </circuitView:CircuitView>
+        <circuitView:CircuitView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional"></circuitView:CircuitView>
         <menu:MenuDragContainer Title="Menu" PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" />
+        <menuHandlers:FileMenuHandlers></menuHandlers:FileMenuHandlers>
+       <menuHandlers:EditMenuHandlers></menuHandlers:EditMenuHandlers>
         <itemsList:ItemsListDragContainer></itemsList:ItemsListDragContainer>
 
 

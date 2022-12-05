@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 
 namespace ACDCs.Views.Components.Menu.MenuHandlers;
@@ -10,15 +11,28 @@ public class MenuHandler
 
     public static void Add(string name, Action action)
     {
-        if(!_menuHandlers.ContainsKey(name))
-            _menuHandlers.Add(name, action);
+        App.Call(() =>
+        {
+            if (!_menuHandlers.ContainsKey(name))
+            {
+                _menuHandlers.Add(name, action);
+            }
+
+            return Task.CompletedTask;
+        }).Wait();
     }
 
     public static void Call(string menuCommand)
     {
-        if (_menuHandlers.ContainsKey(menuCommand))
+        App.Call(() =>
         {
-            _menuHandlers[menuCommand].Invoke();
-        }
+            if (_menuHandlers.ContainsKey(menuCommand))
+            {
+                _menuHandlers[menuCommand].Invoke();
+            }
+
+            return Task.CompletedTask;
+        }).Wait();
+
     }
 }

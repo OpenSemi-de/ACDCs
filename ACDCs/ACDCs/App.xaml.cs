@@ -52,6 +52,8 @@ public partial class App : Application
         catch (Exception ex)
         {
             Debug.WriteLine(ex);
+
+            await AppShell.Current.CurrentPage.DisplayAlert("Internal exception", ex.Message.ToString(), "ok");
             //_log?.Invoke(ex.ToString());
         }
     }
@@ -81,7 +83,7 @@ public partial class App : Application
 
         if (_comValues.ContainsKey(name) && _comValues[name].ContainsKey(property))
         {
-            return  (T)_comValues[name][property]!;
+            return (T)_comValues[name][property]!;
         }
 
         return default;

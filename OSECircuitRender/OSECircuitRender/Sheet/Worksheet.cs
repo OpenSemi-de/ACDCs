@@ -102,7 +102,7 @@ public sealed class Worksheet
 
     public WorksheetItem DuplicateItem(WorksheetItem item)
     {
-        WorksheetItem? newItem = item.Clone<WorksheetItem>();
+        WorksheetItem? newItem = item.Clone<WorksheetItem>(CloneOptions.DisableIgnoreAttributes);
         return newItem;
     }
 

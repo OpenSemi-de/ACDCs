@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using OSECircuitRender.Items;
 using OSECircuitRender.Sheet;
 
@@ -13,27 +14,33 @@ public class EditMenuHandlers : MenuHandlerView
         MenuHandler.Add("duplicate", Duplicate);
     }
 
-    private void Delete()
+    private async void Delete()
     {
 
         Worksheet sheet = CircuitView.CurrentWorksheet;
         sheet.SelectedItems.ToList().ForEach(
             item => { sheet.DeleteItem((WorksheetItem)item); });
-        CircuitView.Paint();
+        await CircuitView.Paint();
     }
 
-    private void Duplicate()
+    private async void Duplicate()
     {
         Worksheet sheet = CircuitView.CurrentWorksheet;
 
         List<WorksheetItem?> newItems = new();
         sheet.SelectedItems.ToList().ForEach(
-            item => { newItems.Add(sheet.DuplicateItem((WorksheetItem)item)); }
+            item =>
+            {
+                newItems.Add(sheet.DuplicateItem((WorksheetItem)item));
+            }
         );
 
-        newItems.ForEach(item => sheet.Items.Add(item));
+        newItems.ForEach(item =>
+        {
+            if (item != null) sheet.Items.Add(item);
+        });
 
-        sheet.SelectedItems.ForEach(item => sheet.DeselectItem((WorksheetItem)item));
+        sheet.SelectedItems.ToList().ForEach(item => sheet.DeselectItem((WorksheetItem)item));
         newItems.ForEach(item =>
         {
             if (item != null)
@@ -44,7 +51,7 @@ public class EditMenuHandlers : MenuHandlerView
             }
         });
 
-        CircuitView.Paint();
+        await CircuitView.Paint();
     }
 
 }

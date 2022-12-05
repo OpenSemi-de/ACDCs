@@ -9,6 +9,7 @@ using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
 using System;
 using System.Linq;
+using System.Net.NetworkInformation;
 
 namespace OSECircuitRender.Sheet;
 
@@ -96,6 +97,10 @@ public sealed class Worksheet
     {
         if (SelectedItems.Contains(item))
         {
+            foreach (var pin in item.Pins)
+            {
+                pin.Size = new(1, 1, 0);
+            }
             SelectedItems.Remove(item);
         }
     }
@@ -136,6 +141,11 @@ public sealed class Worksheet
     {
         if (!SelectedItems.Contains(item))
         {
+            foreach (var pin in item.Pins)
+            {
+                pin.Size = new(10, 10, 0);
+            }
+
             SelectedItems.AddItem(item);
         }
     }

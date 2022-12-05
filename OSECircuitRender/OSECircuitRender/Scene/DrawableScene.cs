@@ -169,21 +169,22 @@ public class DrawableScene : IDrawable
             posCenter.Y = GetScale(drawSize.Y, posCenter.Y);
             //canvas.Translate(posCenter.X, posCenter.Y);
             SetStrokeColor(canvas, pin.DrawInstructions[0].StrokeColor);
-            canvas.FillCircle(posCenter.X, posCenter.Y, Zoom * BaseGridSize * 0.2f);
+            float selectedSize = Scene.IsSelected(drawable) ? 3f : 1f;
+            canvas.FillCircle(posCenter.X, posCenter.Y, Zoom * BaseGridSize * 0.2f * selectedSize);
 
             if (pin.PinText != "")
             {
                 canvas.SaveState();
-                canvas.FontSize = Convert.ToSingle(_fontSize * 0.75);
+                canvas.FontSize = Convert.ToSingle(_fontSize * 0.75 * (selectedSize /2));
                 canvas.FillColor = Colors.White;
-                canvas.FillCircle(posCenter.X, posCenter.Y, Zoom * BaseGridSize * 0.2f);
+                canvas.FillCircle(posCenter.X, posCenter.Y, Zoom * BaseGridSize * 0.2f * selectedSize);
 
                 canvas.DrawString(pin.PinText, posCenter.X, posCenter.Y + Zoom * BaseGridSize * 0.12f,
                     HorizontalAlignment.Center);
                 canvas.RestoreState();
             }
 
-            canvas.DrawCircle(posCenter.X, posCenter.Y, Zoom * BaseGridSize * 0.2f);
+            canvas.DrawCircle(posCenter.X, posCenter.Y, Zoom * BaseGridSize * 0.2f * selectedSize);
         }
 
         if (Scene.IsSelected(drawable))

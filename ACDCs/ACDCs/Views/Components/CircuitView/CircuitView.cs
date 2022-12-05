@@ -26,7 +26,7 @@ public class CircuitView : ContentView
     private readonly PointerGestureRecognizer _pointerRecognizer;
     private readonly Workbook _currentWorkbook;
     private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions;
-    private readonly List<WorksheetItem> _selectedItems = new();
+  //  private readonly List<WorksheetItem> _selectedItems = new();
     private Worksheet _currentSheet;
     private Coordinate? _lastDisplayOffset;
     private PointF _dragStartPosition;
@@ -118,16 +118,18 @@ public class CircuitView : ContentView
 
                     if (selectedItem != null)
                     {
-                        if (_currentSheet != null && _currentSheet.ToggleSelectItem(selectedItem))
-                        {
-                            if (!_selectedItems.Contains(selectedItem))
-                                _selectedItems.Add(selectedItem);
-                        }
-                        else
-                        {
-                            if (_selectedItems.Contains(selectedItem))
-                                _selectedItems.Remove(selectedItem);
-                        }
+                        //if (_currentSheet != null &&
+
+                        _currentSheet.ToggleSelectItem(selectedItem);
+                        // {
+                        //     if (!_selectedItems.Contains(selectedItem))
+                        //         _selectedItems.Add(selectedItem);
+                        // }
+                        // else
+                        // {
+                        //     if (_selectedItems.Contains(selectedItem))
+                        //         _selectedItems.Remove(selectedItem);
+                        // }
                         await Paint();
                     }
                 }
@@ -201,8 +203,8 @@ public class CircuitView : ContentView
                                          Convert.ToSingle(e.TotalY));
                 if (e.StatusType == GestureStatus.Started)
                 {
-                    _selectedItemsBasePositions = new(_selectedItems.Select(selectedItem =>
-                        new KeyValuePair<WorksheetItem, Coordinate>(selectedItem,
+                    _selectedItemsBasePositions = new(_currentSheet.SelectedItems.Select(selectedItem =>
+                        new KeyValuePair<WorksheetItem, Coordinate>((WorksheetItem)selectedItem,
                            new Coordinate(selectedItem.DrawableComponent.Position))));
 
                     _dragStartPosition = new PointF(Convert.ToSingle(_cursorPosition.X - _lastDisplayOffset?.X),
@@ -229,14 +231,14 @@ public class CircuitView : ContentView
 
                         PointF differenceBetweenCursorPoints = new(_dragStartPosition.X - cursorPosition.X,
                                 _dragStartPosition.Y - cursorPosition.Y);
-                        _selectedItems.ForEach(item =>
+                        _currentSheet.SelectedItems.ForEach(item =>
                         {
                             if (item != null)
                             {
                                 Point newPosition = new()
                                 {
-                                    X = _selectedItemsBasePositions[item].X,
-                                    Y = _selectedItemsBasePositions[item].Y
+                                    X = _selectedItemsBasePositions[(WorksheetItem)item].X,
+                                    Y = _selectedItemsBasePositions[(WorksheetItem)item].Y
                                 };
 
                                 newPosition.X *= Workbook.Zoom * Workbook.BaseGridSize;

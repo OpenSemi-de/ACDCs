@@ -10,10 +10,17 @@ public class FileMenuHandlers: MenuHandlerView
 {
     public FileMenuHandlers()
     {
+        MenuHandler.Add("new", NewFile);
         MenuHandler.Add("openfile", OpenFile);
         MenuHandler.Add("savefile", SaveFile);
         MenuHandler.Add("saveasfile", SaveFileAs);
 
+    }
+
+    private async void NewFile()
+    {
+        CircuitView.Clear();
+        await CircuitView.Paint();
     }
 
     private async void SaveFileAs()
@@ -26,6 +33,7 @@ public class FileMenuHandlers: MenuHandlerView
             var fileName = result;
             string mainDir = FileSystem.Current.AppDataDirectory;
             CircuitView.SaveAs(Path.Combine(mainDir, fileName));
+
         }
     }
 

@@ -3,6 +3,10 @@
     "Text": "File",
     "MenuItems": [
       {
+        "Text": "Nee",
+        "MenuCommand": "new"
+      },
+      {
         "Text": "Open...",
         "MenuCommand": "openfile"
       },

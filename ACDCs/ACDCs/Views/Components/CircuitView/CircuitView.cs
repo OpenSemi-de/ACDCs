@@ -290,10 +290,10 @@ public class CircuitView : ContentView
             TypeNameHandling = TypeNameHandling.All
         };
         string jsonData = JsonConvert.SerializeObject(_currentSheet, settings: settings);
-
+        _currentSheet.Filename = Path.GetFileName(fileName);
         await File.WriteAllTextAsync(fileName, jsonData);
         //                    var image = ImageSource.FromStream(() => stream);
-
+        OnSavedSheet();
     }
 
     public async void Open(string fileName)
@@ -315,13 +315,37 @@ public class CircuitView : ContentView
             _currentWorkbook.Sheets.AddSheet(newSheet);
             _currentSheet = newSheet;
 
-            App.Com<Worksheet>(nameof(CircuitView), "CurrentWorksheet", _currentSheet);
+            App.Com<Worksheet>(nameof(CircuitView), "CurrentWorksheet", _currentSheet); 
+            _currentSheet.Filename = Path.GetFileName(fileName);
             Paint();
         }
+
+        OnLoadedSheet();
     }
 
     private void JsonError(object? sender, ErrorEventArgs e)
     {
         Console.WriteLine(e.ErrorContext.Error.ToString());
+    }
+
+    public void Clear()
+    {
+
+        _currentWorkbook.Sheets.Clear();
+        _currentSheet = _currentWorkbook.AddNewSheet();
+    }
+
+    public event EventHandler<EventArgs> LoadedSheet;
+
+    protected virtual void OnLoadedSheet()
+    {
+        LoadedSheet?.Invoke(this, EventArgs.Empty);
+    }
+
+    public event EventHandler<EventArgs> SavedSheet;
+
+    protected virtual void OnSavedSheet()
+    {
+        SavedSheet?.Invoke(this, EventArgs.Empty);
     }
 }

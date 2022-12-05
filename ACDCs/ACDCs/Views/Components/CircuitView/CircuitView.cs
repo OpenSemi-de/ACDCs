@@ -6,11 +6,15 @@ using OSECircuitRender.Sheet;
 using Microsoft.Maui;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using CommunityToolkit.Maui.Markup;
 using Microsoft.Maui.Graphics;
+using Newtonsoft.Json;
 using OSECircuitRender.Definitions;
+using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
+using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
 
 namespace ACDCs.Views.Components.CircuitView;
 
@@ -23,7 +27,7 @@ public class CircuitView : ContentView
     private readonly Workbook _currentWorkbook;
     private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions;
     private readonly List<WorksheetItem> _selectedItems = new();
-    private readonly Worksheet _currentSheet;
+    private Worksheet _currentSheet;
     private Coordinate? _lastDisplayOffset;
     private PointF _dragStartPosition;
     private bool _isDraggingItem;
@@ -157,8 +161,9 @@ public class CircuitView : ContentView
                     y >= item.Y && y <= item.Y + item.Height
 
             );
-
-            selectedItem = (WorksheetItem?)hitItems.First();
+            var worksheetItems = hitItems as IWorksheetItem[] ?? hitItems.ToArray();
+            if (worksheetItems.Any())
+                selectedItem = (WorksheetItem?)worksheetItems.First();
             return Task.CompletedTask;
         }).Wait();
 
@@ -273,4 +278,48 @@ public class CircuitView : ContentView
     }
 
 
+    public async void SaveAs(string fileName)
+    {
+        JsonSerializerSettings settings = new JsonSerializerSettings()
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.All,
+            ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+            Formatting = Formatting.Indented,
+            TypeNameHandling = TypeNameHandling.All
+        };
+        string jsonData = JsonConvert.SerializeObject(_currentSheet, settings: settings);
+
+        await File.WriteAllTextAsync(fileName, jsonData);
+        //                    var image = ImageSource.FromStream(() => stream);
+
+    }
+
+    public async void Open(string fileName)
+    {
+        JsonSerializerSettings settings = new JsonSerializerSettings()
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.All,
+            ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+            Formatting = Formatting.Indented,
+            Error = JsonError,
+            TypeNameHandling = TypeNameHandling.Objects
+        };
+
+        string jsonData = await File.ReadAllTextAsync(fileName);
+        Worksheet? newSheet = JsonConvert.DeserializeObject<Worksheet>(jsonData, settings);
+        if (newSheet != null)
+        {
+            _currentWorkbook.Sheets.Clear();
+            _currentWorkbook.Sheets.AddSheet(newSheet);
+            _currentSheet = newSheet;
+
+            App.Com<Worksheet>(nameof(CircuitView), "CurrentWorksheet", _currentSheet);
+            Paint();
+        }
+    }
+
+    private void JsonError(object? sender, ErrorEventArgs e)
+    {
+        Console.WriteLine(e.ErrorContext.Error.ToString());
+    }
 }

@@ -12,7 +12,7 @@
       },
       {
         "Text": "Save as..",
-        "MenuCommand": "saveasile"
+        "MenuCommand": "saveasfile"
       },
       {
         "Text": "Export",

@@ -3,6 +3,7 @@
 using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
 using System;
+using Newtonsoft.Json;
 
 namespace OSECircuitRender.Items;
 
@@ -14,6 +15,7 @@ public class WorksheetItem : IWorksheetItem
 
     public static bool IsInsertable { get; set; } = false;
 
+    [JsonIgnore]
     public IDrawableComponent DrawableComponent { get; set; } = new DrawableComponent(typeof(DrawableComponent));
 
     public int Height
@@ -26,6 +28,7 @@ public class WorksheetItem : IWorksheetItem
 
     public string Name { get; set; } = string.Empty;
 
+    [JsonIgnore]
     public DrawablePinList Pins { get; set; } = new();
 
     public string RefName { get; set; } = string.Empty;

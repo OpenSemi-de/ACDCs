@@ -31,11 +31,14 @@ public sealed class Worksheet
 
     public WorksheetItemList Nets { get; set; } = new();
 
+    [JsonIgnore]
     public Action<WorksheetItemList>? OnSelectionChange { get; set; }
 
+    [JsonIgnore]
     public IPathRouter Router { get; set; }
 
-    [JsonIgnore] public ISceneManager? SceneManager { get; set; }
+    [JsonIgnore] 
+    public ISceneManager? SceneManager { get; set; }
 
     public WorksheetItemList SelectedItems { get; set; } = new();
 
@@ -46,6 +49,7 @@ public sealed class Worksheet
     public bool ShowGrid { get; set; } = true;
 
     public WorksheetItemList Traces { get; set; } = new();
+    public string Filename { get; set; } = "";
 
     public bool CalculateScene()
     {
@@ -166,4 +170,5 @@ public sealed class Worksheet
     {
         OnSelectionChange?.Invoke(SelectedItems);
     }
+
 }

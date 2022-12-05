@@ -8,11 +8,12 @@
              xmlns:circuitView="clr-namespace:ACDCs.Views.Components.CircuitView"
              xmlns:menuHandlers="using:ACDCs.Views.Components.Menu.MenuHandlers"
              x:Class="ACDCs.Views.CircuitSheetPage"
-             Title="New sheet">
+             Title="New sheet"
+             x:Name="CircuitSheetPageInstance">
     <AbsoluteLayout x:Name="AbsoluteLayoutSheetPage">
         <circuitView:CircuitView x:Name="CircuitView" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional"></circuitView:CircuitView>
         <menu:MenuDragContainer Title="Menu" PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" />
-        <menuHandlers:FileMenuHandlers CircuitView="{x:Reference CircuitView}"></menuHandlers:FileMenuHandlers>
+        <menuHandlers:FileMenuHandlers CircuitView="{x:Reference CircuitView}" PopupPage="{x:Reference CircuitSheetPageInstance}"></menuHandlers:FileMenuHandlers>
         <menuHandlers:EditMenuHandlers CircuitView="{x:Reference CircuitView}"></menuHandlers:EditMenuHandlers>
         <itemsList:ItemsListDragContainer></itemsList:ItemsListDragContainer>
 

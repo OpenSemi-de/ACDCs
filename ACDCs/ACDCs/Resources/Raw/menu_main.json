@@ -38,12 +38,12 @@
     "Text": "Edit",
     "MenuItems": [
       {
-        "Text": "Copy",
-        "MenuCommand": "copy"
+        "Text": "Deselect all",
+        "MenuCommand": "deselectall"
       },
       {
-        "Text": "Cut",
-        "MenuCommand": "cut"
+        "Text": "Select all",
+        "MenuCommand": "selectall"
       },
       {
         "Text": "Paste",

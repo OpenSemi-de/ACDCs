@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Maui.Graphics;
 using OSECircuitRender.Items;
 using OSECircuitRender.Sheet;
 
@@ -12,6 +13,21 @@ public class EditMenuHandlers : MenuHandlerView
     {
         MenuHandler.Add("delete", Delete);
         MenuHandler.Add("duplicate", Duplicate);
+        MenuHandler.Add("selectall", SelectAll);
+        MenuHandler.Add("deselectall", DeselectAll);
+    }
+
+    private async void DeselectAll()
+    {
+        CircuitView.CurrentWorksheet.SelectedItems.Clear();
+        await CircuitView.Paint();
+    }
+
+    private async void SelectAll()
+    {
+        CircuitView.CurrentWorksheet.SelectedItems.AddRange(
+            CircuitView.CurrentWorksheet.Items);
+        await CircuitView.Paint();
     }
 
     private async void Delete()

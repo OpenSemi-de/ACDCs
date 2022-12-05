@@ -12,6 +12,7 @@ using CommunityToolkit.Maui.Markup;
 using Microsoft.Maui.Graphics;
 using Newtonsoft.Json;
 using OSECircuitRender.Definitions;
+using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
@@ -26,7 +27,6 @@ public class CircuitView : ContentView
     private readonly PointerGestureRecognizer _pointerRecognizer;
     private readonly Workbook _currentWorkbook;
     private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions;
-  //  private readonly List<WorksheetItem> _selectedItems = new();
     private Worksheet _currentSheet;
     private Coordinate? _lastDisplayOffset;
     private PointF _dragStartPosition;
@@ -118,18 +118,38 @@ public class CircuitView : ContentView
 
                     if (selectedItem != null)
                     {
-                        //if (_currentSheet != null &&
+                        if (_currentSheet.IsSelected(selectedItem))
+                        {
 
-                        _currentSheet.ToggleSelectItem(selectedItem);
-                        // {
-                        //     if (!_selectedItems.Contains(selectedItem))
-                        //         _selectedItems.Add(selectedItem);
-                        // }
-                        // else
-                        // {
-                        //     if (_selectedItems.Contains(selectedItem))
-                        //         _selectedItems.Remove(selectedItem);
-                        // }
+                            float x = GetRelPos(touch.X);
+                            float y = GetRelPos(touch.Y);
+
+                            PinDrawable selectedPin = null;
+                            foreach (var pin in selectedItem.Pins)
+                            {
+                                var pinX = pin.Position.X * selectedItem.Width;
+                                var pinY = pin.Position.Y * selectedItem.Height;
+                                pinX += selectedItem.X;
+                                pinY += selectedItem.Y;
+                                if (pinX == x && pinY == y)
+                                {
+                                    selectedPin = pin;
+                                    _currentSheet.SelectedPin = selectedPin;
+                                    break;
+                                }
+                            }
+
+
+                            if (selectedPin == null)
+                            {
+                                _currentSheet.ToggleSelectItem(selectedItem);
+                            }
+                        }
+                        else
+                        {
+                            _currentSheet.ToggleSelectItem(selectedItem);
+                        }
+
                         await Paint();
                     }
                 }
@@ -292,7 +312,6 @@ public class CircuitView : ContentView
         string jsonData = JsonConvert.SerializeObject(_currentSheet, settings: settings);
         _currentSheet.Filename = Path.GetFileName(fileName);
         await File.WriteAllTextAsync(fileName, jsonData);
-        //                    var image = ImageSource.FromStream(() => stream);
         OnSavedSheet();
     }
 
@@ -315,7 +334,7 @@ public class CircuitView : ContentView
             _currentWorkbook.Sheets.AddSheet(newSheet);
             _currentSheet = newSheet;
 
-            App.Com<Worksheet>(nameof(CircuitView), "CurrentWorksheet", _currentSheet); 
+            App.Com<Worksheet>(nameof(CircuitView), "CurrentWorksheet", _currentSheet);
             _currentSheet.Filename = Path.GetFileName(fileName);
             Paint();
         }

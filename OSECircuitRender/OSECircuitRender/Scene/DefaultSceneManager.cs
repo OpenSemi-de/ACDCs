@@ -27,13 +27,14 @@ public sealed class DefaultSceneManager : ISceneManager
         return true;
     }
 
-    public bool SetScene(DrawableComponentList drawables, DrawableComponentList selected)
+    public bool SetScene(DrawableComponentList drawables, DrawableComponentList selected, PinDrawable selectedPin)
     {
         Scene = new SheetScene();
         Scene.SetDrawables(drawables, selected);
         Scene.ShowGrid = ShowGrid;
         Scene.BackgroundColor = BackgroundColor;
         Scene.DisplayOffset = DisplayOffset;
+        Scene.SelectedPin = selectedPin;
         return true;
     }
 

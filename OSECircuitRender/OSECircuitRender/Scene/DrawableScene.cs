@@ -167,6 +167,11 @@ public class DrawableScene : IDrawable
             var posCenter = new Coordinate(pin.Position);
             posCenter.X = GetScale(drawSize.X, posCenter.X);
             posCenter.Y = GetScale(drawSize.Y, posCenter.Y);
+
+            if (pin == Scene.SelectedPin)
+            {
+                canvas.FillColor = Colors.OrangeRed;
+            }
             //canvas.Translate(posCenter.X, posCenter.Y);
             SetStrokeColor(canvas, pin.DrawInstructions[0].StrokeColor);
             float selectedSize = Scene.IsSelected(drawable) ? 3f : 1f;
@@ -177,6 +182,11 @@ public class DrawableScene : IDrawable
                 canvas.SaveState();
                 canvas.FontSize = Convert.ToSingle(_fontSize * 0.75 * (selectedSize /2));
                 canvas.FillColor = Colors.White;
+
+                if (pin == Scene.SelectedPin)
+                {
+                    canvas.FillColor = Colors.OrangeRed;
+                }
                 canvas.FillCircle(posCenter.X, posCenter.Y, Zoom * BaseGridSize * 0.2f * selectedSize);
 
                 canvas.DrawString(pin.PinText, posCenter.X, posCenter.Y + Zoom * BaseGridSize * 0.12f,

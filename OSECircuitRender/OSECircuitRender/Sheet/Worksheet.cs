@@ -51,6 +51,7 @@ public sealed class Worksheet
 
     public WorksheetItemList Traces { get; set; } = new();
     public string Filename { get; set; } = "";
+    public PinDrawable SelectedPin { get; set; }
 
     public bool CalculateScene()
     {
@@ -66,7 +67,7 @@ public sealed class Worksheet
             SceneManager.BackgroundColor = BackgroundColor;
         }
 
-        if (SceneManager.SetScene(GetDrawableComponents(), GetSelectedComponents()))
+        if (SceneManager.SetScene(GetDrawableComponents(), GetSelectedComponents(), SelectedPin))
         {
             SceneManager.DisplayOffset = DisplayOffset;
 
@@ -181,4 +182,8 @@ public sealed class Worksheet
         OnSelectionChange?.Invoke(SelectedItems);
     }
 
+    public bool IsSelected(WorksheetItem selectedItem)
+    {
+        return SelectedItems.Contains(selectedItem);
+    }
 }

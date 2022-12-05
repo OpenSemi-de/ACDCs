@@ -6,6 +6,11 @@ namespace OSECircuitRender.Drawables;
 
 public class PinDrawable : DrawableComponent
 {
+    public PinDrawable() : base(typeof(PinDrawable))
+    {
+
+    }
+
     public PinDrawable(IWorksheetItem? backRef, float x, float y, string pinText = "") : base(typeof(PinDrawable))
     {
         PinText = pinText;

@@ -53,7 +53,7 @@ public partial class App : Application
         {
             Debug.WriteLine(ex);
 
-            await AppShell.Current.CurrentPage.DisplayAlert("Internal exception", ex.Message.ToString(), "ok");
+            await Shell.Current.CurrentPage.DisplayAlert("Internal exception", ex.Message.ToString(), "ok");
             //_log?.Invoke(ex.ToString());
         }
     }

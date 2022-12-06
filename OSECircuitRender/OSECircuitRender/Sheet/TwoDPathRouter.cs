@@ -8,11 +8,13 @@ namespace OSECircuitRender.Sheet;
 
 public class TwoDPathRouter : IPathRouter
 {
+    private readonly Worksheet _worksheet;
     private readonly int _sheetHeight;
     private readonly int _sheetWidth;
 
-    public TwoDPathRouter(Coordinate sheetSize, float gridSize)
+    public TwoDPathRouter(Worksheet worksheet, Coordinate sheetSize, float gridSize)
     {
+        _worksheet = worksheet;
         _sheetWidth = Convert.ToInt32(sheetSize.X);
         _sheetHeight = Convert.ToInt32(sheetSize.Y);
         SheetSize = sheetSize;
@@ -23,7 +25,7 @@ public class TwoDPathRouter : IPathRouter
     public WorksheetItemList Items { get; set; }
     public WorksheetItemList Nets { get; set; }
     public Coordinate SheetSize { get; set; }
-    public WorksheetItemList Traces { get; set; } = new();
+    public WorksheetItemList Traces { get; set; }
     private int[,] RouteMap { get; set; }
 
     public WorksheetItemList GetTraces()
@@ -32,7 +34,7 @@ public class TwoDPathRouter : IPathRouter
 
         var canvas = map.Canvas;
 
-        Turtle turtle = new Turtle(Items, Nets, SheetSize, Traces)
+        Turtle turtle = new Turtle(Items, Nets, SheetSize, _worksheet)
         {
             DebugCanvas = canvas
         };

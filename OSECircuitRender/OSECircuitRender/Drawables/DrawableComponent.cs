@@ -9,20 +9,19 @@ using OSECircuitRender.Sheet;
 
 namespace OSECircuitRender.Drawables;
 
-public class DrawableComponent : IDrawableComponent
+public class DrawableComponent : IDrawableComponent, IHaveAParent
 {
-    public DrawableComponent(Type type)
+    public DrawableComponent(Type type, IWorksheetItem? parentItem)
     {
+        ParentItem = parentItem;
         Type = type.Name;
     }
-
-    [JsonIgnore] public IWorksheetItem? BackRef => Worksheet?.Items.FirstOrDefault(item => item.DrawableComponent == this);
 
     public Guid ComponentGuid { get; set; } = Guid.NewGuid();
     public DrawablePinList DrawablePins { get; set; } = new();
     public DrawInstructionsList DrawInstructions { get; set; } = new();
     public Coordinate Position { get; set; } = new(0, 0, 0);
-  //  public string RefName => BackRef == null ? "" : BackRef.RefName;
+    public string RefName => ParentItem == null ? "" : ParentItem.RefName;
     public float Rotation { get; set; }
     public Coordinate Size { get; set; } = new(1, 1, 0);
     public Worksheet? Worksheet { get; set; }
@@ -34,11 +33,6 @@ public class DrawableComponent : IDrawableComponent
         Position.Y = y;
     }
 
-    public void SetRef(IWorksheetItem? backRef)
-    {
-  //      BackRef = backRef;
-  //      DrawablePins.ForEach(pin => pin.SetRef(backRef));
-    }
 
     public void SetSize(int width, int height)
     {
@@ -46,4 +40,5 @@ public class DrawableComponent : IDrawableComponent
         Size.Y = height;
     }
 
+    public IWorksheetItem? ParentItem { get; set; }
 }

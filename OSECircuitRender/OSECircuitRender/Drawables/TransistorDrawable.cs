@@ -6,28 +6,16 @@ namespace OSECircuitRender.Drawables;
 
 public sealed class TransistorDrawable : DrawableComponent
 {
-    public TransistorDrawable() : base(typeof(TransistorDrawable))
-    {
-        Setup(null);
-    }
 
-    public TransistorDrawable(IWorksheetItem? backRef) : base(typeof(TransistorDrawable))
-    {
-        Setup(backRef);
-    }
 
-    public TransistorDrawable(IWorksheetItem? backRef, TransistorDrawableType type, float x, float y) : base(
-        typeof(TransistorDrawable))
+    public TransistorDrawable(IWorksheetItem? parent, TransistorDrawableType type, float x, float y) : base(
+        typeof(TransistorDrawable), parent)
     {
-        Setup(backRef, type, x, y);
+        Setup(type, x, y);
     }
+    
 
-    public TransistorDrawable(TransistorDrawableType type, float x, float y) : base(typeof(TransistorDrawable))
-    {
-        Setup(null, type, x, y);
-    }
-
-    private void Setup(IWorksheetItem? backRef, TransistorDrawableType type = TransistorDrawableType.Pnp, float x = 0,
+    private void Setup(TransistorDrawableType type = TransistorDrawableType.Pnp, float x = 0,
         float y = 0)
     {
         DrawInstructions.Add(new LineInstruction(0f, 0.5f, 0.5f, 0.5f));
@@ -40,9 +28,9 @@ public sealed class TransistorDrawable : DrawableComponent
 
         if (type == TransistorDrawableType.Pnp)
         {
-            DrawablePins.Add(new PinDrawable(backRef, 0, 0.5f, "B"));
-            DrawablePins.Add(new PinDrawable(backRef, 1f, 0f, "E"));
-            DrawablePins.Add(new PinDrawable(backRef, 1f, 1f, "C"));
+            DrawablePins.Add(new PinDrawable(ParentItem, 0, 0.5f, "B"));
+            DrawablePins.Add(new PinDrawable(ParentItem, 1f, 0f, "E"));
+            DrawablePins.Add(new PinDrawable(ParentItem,1f, 1f, "C"));
 
             DrawInstructions.Add(new LineInstruction(0.7f, 0.4f, 0.7f, 0.25f));
             DrawInstructions.Add(new LineInstruction(0.7f, 0.4f, 0.85f, 0.4f));
@@ -51,9 +39,9 @@ public sealed class TransistorDrawable : DrawableComponent
 
         if (type == TransistorDrawableType.Npn)
         {
-            DrawablePins.Add(new PinDrawable(backRef, 0, 0.5f, "B"));
-            DrawablePins.Add(new PinDrawable(backRef, 1f, 0f, "C"));
-            DrawablePins.Add(new PinDrawable(backRef, 1f, 1f, "E"));
+            DrawablePins.Add(new PinDrawable(ParentItem,0, 0.5f, "B"));
+            DrawablePins.Add(new PinDrawable(ParentItem,1f, 0f, "C"));
+            DrawablePins.Add(new PinDrawable(ParentItem,1f, 1f, "E"));
 
             DrawInstructions.Add(new LineInstruction(0.8f, 0.7f, 0.8f, 0.55f));
             DrawInstructions.Add(new LineInstruction(0.8f, 0.7f, 0.65f, 0.7f));
@@ -62,6 +50,6 @@ public sealed class TransistorDrawable : DrawableComponent
 
         SetSize(2, 2);
         SetPosition(x, y);
-        SetRef(backRef);
+        
     }
 }

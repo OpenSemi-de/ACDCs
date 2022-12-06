@@ -17,7 +17,11 @@ public sealed class Worksheet
 {
     public Worksheet()
     {
-        Router = new TwoDPathRouter(SheetSize, GridSize);
+        Router = new TwoDPathRouter(this, SheetSize, GridSize);
+        Nets = new WorksheetItemList(this);
+        Items = new WorksheetItemList(this);
+        Traces = new WorksheetItemList(this);
+        SelectedItems = new WorksheetItemList(this);
         Items.OnAdded(OnItemAdded);
         SelectedItems.OnAdded(OnSelectionAdded);
     }
@@ -28,9 +32,9 @@ public sealed class Worksheet
 
     public float GridSize { get; set; } = 2.54f;
 
-    public WorksheetItemList Items { get; set; } = new();
+    public WorksheetItemList Items { get; set; }
 
-    public WorksheetItemList Nets { get; set; } = new();
+    public WorksheetItemList Nets { get; set; }
 
     [JsonIgnore]
     public Action<WorksheetItemList>? OnSelectionChange { get; set; }
@@ -38,10 +42,10 @@ public sealed class Worksheet
     [JsonIgnore]
     public IPathRouter Router { get; set; }
 
-    [JsonIgnore] 
+    [JsonIgnore]
     public ISceneManager? SceneManager { get; set; }
 
-    public WorksheetItemList SelectedItems { get; set; } = new();
+    public WorksheetItemList SelectedItems { get; set; }
 
     public int SheetNum { get; set; }
 
@@ -49,15 +53,15 @@ public sealed class Worksheet
 
     public bool ShowGrid { get; set; } = true;
 
-    public WorksheetItemList Traces { get; set; } = new();
+    public WorksheetItemList Traces { get; set; }
     public string Filename { get; set; } = "";
     public PinDrawable? SelectedPin { get; set; }
 
     public bool CalculateScene()
     {
         Log.L("Calculating scene");
-    
-        Router = new TwoDPathRouter(SheetSize, GridSize);
+
+        Router = new TwoDPathRouter(this, SheetSize, GridSize);
         Router.SetItems(Items, Nets);
         Traces = Router.GetTraces();
 
@@ -115,17 +119,24 @@ public sealed class Worksheet
 
     public DrawableComponentList GetDrawableComponents()
     {
-        return new DrawableComponentList(
-            Items
-                .Select(item =>
-                    item.DrawableComponent
-                )
-                .Union(
-                    Traces
-                        .Select(item =>
-                            item.DrawableComponent
-                        )
-                ));
+        var list = new DrawableComponentList(this);
+
+        foreach (var item in
+
+                 Items
+                     .Select(item =>
+                         item.DrawableComponent
+                     )
+                     .Union(
+                         Traces
+                             .Select(item =>
+                                 item.DrawableComponent
+                             )
+                     ))
+        {
+            list.Add(item);
+        }
+        return list;
     }
 
     public WorksheetItem? GetItemAt(float x, float y)
@@ -168,9 +179,13 @@ public sealed class Worksheet
 
     private DrawableComponentList GetSelectedComponents()
     {
-        return new DrawableComponentList(
-            SelectedItems.Select(item => item.DrawableComponent)
-        );
+        var list = new DrawableComponentList(this);
+
+        foreach (var item in SelectedItems.Select(item => item.DrawableComponent))
+        {
+            list.Add(item);
+        }
+        return list;
     }
 
     private void OnItemAdded(IWorksheetItem item)

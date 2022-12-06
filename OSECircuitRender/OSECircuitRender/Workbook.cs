@@ -8,8 +8,8 @@ namespace OSECircuitRender;
 
 public sealed class Workbook
 {
-    public static float BaseGridSize = 2.54f;
-    public static float Zoom = 10f;
+    public static readonly float BaseGridSize = 2.54f;
+    public static readonly float Zoom = 10f;
     public WorksheetsList Sheets = new();
     private readonly JsonSerializerSettings _jsonSerializerSettings;
 

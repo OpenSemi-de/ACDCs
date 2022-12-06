@@ -5,9 +5,9 @@ namespace OSECircuitRender.Drawables;
 
 public sealed class TerminalDrawable : DrawableComponent
 {
-    public TerminalDrawable(IWorksheetItem? backRef, float x, float y,
+    public TerminalDrawable(IWorksheetItem? parent, float x, float y,
         TerminalDrawableType terminalType = TerminalDrawableType.None, string terminalName = "") : base(
-        typeof(TerminalDrawable))
+        typeof(TerminalDrawable), parent)
     {
         TerminalType = terminalType;
         TerminalText = terminalName != "" ? terminalName : TerminalType.ToString();
@@ -23,7 +23,7 @@ public sealed class TerminalDrawable : DrawableComponent
             case TerminalDrawableType.Null:
             case TerminalDrawableType.Gnd:
                 {
-                    DrawablePins.Add(new PinDrawable(backRef, 0.5f, 0.5f));
+                    DrawablePins.Add(new PinDrawable(ParentItem, 0.5f, 0.5f));
 
                     DrawInstructions.Add(new LineInstruction(0.5f, 0.5f, 0.5f, 0.9f));
                     DrawInstructions.Add(new LineInstruction(0.2f, 0.9f, 0.8f, 0.9f));
@@ -35,16 +35,16 @@ public sealed class TerminalDrawable : DrawableComponent
                 }
         }
 
-        Setup(backRef, x, y);
+        Setup( x, y);
     }
 
     public string TerminalText { get; set; }
     public TerminalDrawableType TerminalType { get; set; }
 
-    private void Setup(IWorksheetItem? backRef, float x, float y)
+    private void Setup( float x, float y)
     {
         SetSize(1, 1);
         SetPosition(x, y);
-        SetRef(backRef);
+        
     }
 }

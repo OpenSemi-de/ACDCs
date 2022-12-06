@@ -16,6 +16,8 @@ namespace OSECircuitRender.Sheet;
 
 public class Turtle
 {
+    private readonly Worksheet _worksheet;
+
     private static readonly Point[][] DirectionalTriangles = {
         new Point[]
         {
@@ -83,14 +85,14 @@ public class Turtle
     private readonly WorksheetItemList _items;
     private readonly WorksheetItemList _nets;
     private readonly Coordinate _sheetSize;
-    private readonly WorksheetItemList _traces;
 
-    public Turtle(WorksheetItemList? items, WorksheetItemList? nets, Coordinate? sheetSize, WorksheetItemList? traces)
+    public Turtle(WorksheetItemList? items, WorksheetItemList? nets, Coordinate? sheetSize, Worksheet worksheet)
     {
-        _items = items ?? new WorksheetItemList();
-        _nets = nets ?? new WorksheetItemList();
+        _worksheet = worksheet;
+        _items = items ?? new WorksheetItemList(_worksheet);
+        _nets = nets ?? new WorksheetItemList(_worksheet);
         _sheetSize = sheetSize ?? new Coordinate();
-        _traces = traces ?? new WorksheetItemList();
+
     }
 
     public ICanvas? DebugCanvas { get; set; }
@@ -213,6 +215,8 @@ public class Turtle
             DebugDrawRectangle(rect);
         }
 
+        var traces = new WorksheetItemList(_worksheet);
+
         foreach (var net in _nets)
         {
             var trace = new TraceItem();
@@ -220,8 +224,8 @@ public class Turtle
             {
                 var pin1 = net.Pins[i];
                 var pin2 = i < net.Pins.Count - 1 ? net.Pins[i + 1] : net.Pins[0];
-                var pin1drawable = pin1.BackRef != null ? pin1.BackRef.DrawableComponent : pin1;
-                var pin2drawable = pin2.BackRef != null ? pin2.BackRef.DrawableComponent : pin2;
+                var pin1drawable = pin1.ParentItem != null ? pin1.ParentItem.DrawableComponent : pin1;
+                var pin2drawable = pin2.ParentItem != null ? pin2.ParentItem.DrawableComponent : pin2;
 
                 SetColorAndScaling(pin1drawable, pin2drawable);
                 var pin1X = pin1.Position.X;
@@ -274,23 +278,25 @@ public class Turtle
                 }
             }
 
-            _traces.AddItem(trace);
+            traces.AddItem(trace);
         }
 
-        foreach (var worksheetItem1 in _traces)
+        foreach (var worksheetItem in traces)
         {
-            var traceItem = (TraceItem)worksheetItem1;
-            foreach (var drawInstruction in ((TraceDrawable)traceItem.DrawableComponent).DrawInstructions)
-            {
-                var line = (LineInstruction)drawInstruction;
-                line.Position.X *=  Workbook.Zoom / 2;
-                line.Position.Y *= Workbook.Zoom / 2;
-                line.End.X *= Workbook.Zoom / 2;
-                line.End.Y *= Workbook.Zoom / 2;
-            }
+            // worksheetItem.X *= Convert.ToInt32(Workbook.Zoom);
+            // worksheetItem.Y *= Convert.ToInt32(Workbook.Zoom);
+            // var traceItem = (TraceItem)worksheetItem;
+            // foreach (var drawInstruction in ((TraceDrawable)traceItem.DrawableComponent).DrawInstructions)
+            // {
+            //     var line = (LineInstruction)drawInstruction;
+            //     line.Position.X *=  Workbook.Zoom ;
+            //     line.Position.Y *= Workbook.Zoom ;
+            //     line.End.X *= Workbook.Zoom;
+            //     line.End.Y *= Workbook.Zoom;
+            // }
         }
 
-        return _traces;
+        return traces;
     }
 
     private static Point GetPoint(float positionX, float positionY, Direction direction)

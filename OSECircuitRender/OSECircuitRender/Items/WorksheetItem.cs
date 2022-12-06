@@ -11,12 +11,17 @@ public class WorksheetItem : IWorksheetItem
 {
     private string? _value;
 
+    public WorksheetItem()
+    {
+        DrawableComponent = new DrawableComponent(typeof(DrawableComponent), this);
+    }
+
     public static string? DefaultValue { get; set; }
 
     public static bool IsInsertable { get; set; } = false;
 
     [JsonIgnore]
-    public IDrawableComponent DrawableComponent { get; set; } = new DrawableComponent(typeof(DrawableComponent));
+    public IDrawableComponent DrawableComponent { get; set; }
 
     public int Height
     {

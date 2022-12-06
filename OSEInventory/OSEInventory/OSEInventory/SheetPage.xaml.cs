@@ -259,7 +259,7 @@ public partial class SheetPage
 
         double zoom = 20 * ((y + 10) / 340);
 
-        Workbook.Zoom = Convert.ToSingle(zoom);
+      //  Workbook.Zoom = Convert.ToSingle(zoom);
 
         // todo: rescale the displayoffset
     }

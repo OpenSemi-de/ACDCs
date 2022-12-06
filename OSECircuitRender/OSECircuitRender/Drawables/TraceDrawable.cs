@@ -6,7 +6,7 @@ namespace OSECircuitRender.Drawables;
 
 public class TraceDrawable : DrawableComponent
 {
-    public TraceDrawable(IWorksheetItem? backRef) : base(typeof(TraceDrawable))
+    public TraceDrawable(IWorksheetItem? parent) : base(typeof(TraceDrawable), parent)
     {
         //BackRef = backRef;
         SetSize(1, 1);

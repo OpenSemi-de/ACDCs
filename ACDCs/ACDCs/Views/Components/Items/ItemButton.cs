@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Compatibility.Platform.UWP;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Graphics.Skia;
 using Microsoft.Maui.Storage;
@@ -24,14 +26,15 @@ namespace ACDCs.Views.Components.Items
 
             if (itemType != null)
             {
-                Worksheet? sheet = new Workbook().AddNewSheet();
+                Worksheet sheet = new Workbook().AddNewSheet();
 
                 sheet.GridSize = Convert.ToSingle(WidthRequest / Workbook.BaseGridSize * Workbook.Zoom);
                 sheet.BackgroundColor = new Color(255, 255, 255, 0);
                 sheet.ShowGrid = false;
                 sheet.DisplayOffset = new Coordinate(-10, -10);
 
-                if (Activator.CreateInstance(itemType) is WorksheetItem item)
+                object?[] arguments = { };
+                if (Activator.CreateInstance(itemType, args: arguments) is WorksheetItem item)
                 {
                     sheet.Items.AddItem(item);
                     sheet.GridSize = 3f / item.Width;

@@ -124,17 +124,28 @@ public class CircuitView : ContentView
                             float x = GetRelPos(touch.X);
                             float y = GetRelPos(touch.Y);
 
-                            PinDrawable selectedPin = null;
+                            PinDrawable? selectedPin = null;
                             foreach (var pin in selectedItem.Pins)
                             {
-                                var pinX = pin.Position.X * selectedItem.Width;
-                                var pinY = pin.Position.Y * selectedItem.Height;
+                                var pinX = Math.Floor(pin.Position.X * selectedItem.Width);
+                                var pinY = Math.Floor(pin.Position.Y * selectedItem.Height);
                                 pinX += selectedItem.X;
                                 pinY += selectedItem.Y;
                                 if (pinX == x && pinY == y)
                                 {
-                                    selectedPin = pin;
-                                    _currentSheet.SelectedPin = selectedPin;
+                                    if (_currentSheet.SelectedPin == pin)
+                                    {
+                                        selectedPin = null;
+                                        _currentSheet.SelectedPin = null;
+                                        await Paint();
+                                        return;
+                                    }
+                                    else
+                                    {
+                                        selectedPin = pin;
+                                        _currentSheet.SelectedPin = selectedPin;
+                                    }
+
                                     break;
                                 }
                             }

@@ -163,11 +163,12 @@ public class DrawableScene : IDrawable
 
         foreach (var pin in drawable.DrawablePins)
         {
+            canvas.SaveState();
             Log.L("pin");
             var posCenter = new Coordinate(pin.Position);
             posCenter.X = GetScale(drawSize.X, posCenter.X);
             posCenter.Y = GetScale(drawSize.Y, posCenter.Y);
-
+            canvas.FillColor = Colors.White;
             if (pin == Scene.SelectedPin)
             {
                 canvas.FillColor = Colors.OrangeRed;
@@ -195,6 +196,7 @@ public class DrawableScene : IDrawable
             }
 
             canvas.DrawCircle(posCenter.X, posCenter.Y, Zoom * BaseGridSize * 0.2f * selectedSize);
+            canvas.RestoreState();
         }
 
         if (Scene.IsSelected(drawable))

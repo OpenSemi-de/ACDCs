@@ -15,7 +15,7 @@ public interface ISceneManager
 
     bool SendToBackend(object backendScene);
 
-    bool SetScene(DrawableComponentList drawables, DrawableComponentList selected, PinDrawable selectedPin);
+    bool SetScene(DrawableComponentList drawables, DrawableComponentList selected, PinDrawable? selectedPin);
 
     void SetSizeAndScale(Coordinate sheetSize, float gridSize);
 }

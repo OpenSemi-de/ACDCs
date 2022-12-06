@@ -51,7 +51,7 @@ public sealed class Worksheet
 
     public WorksheetItemList Traces { get; set; } = new();
     public string Filename { get; set; } = "";
-    public PinDrawable SelectedPin { get; set; }
+    public PinDrawable? SelectedPin { get; set; }
 
     public bool CalculateScene()
     {

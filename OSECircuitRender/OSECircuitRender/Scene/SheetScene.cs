@@ -13,7 +13,7 @@ public sealed class SheetScene
     public DrawableComponentList Selected { get; set; }
     public Coordinate SheetSize { get; set; }
     public bool ShowGrid { get; set; } = true;
-    public PinDrawable SelectedPin { get; set; }
+    public PinDrawable? SelectedPin { get; set; }
 
     public bool IsSelected(IDrawableComponent drawable)
     {

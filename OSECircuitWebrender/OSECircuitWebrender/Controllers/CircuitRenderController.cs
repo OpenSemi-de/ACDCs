@@ -83,8 +83,6 @@ namespace OSECircuitWebrender.Controllers
             var net2 = new NetItem();
             net2.Pins.Add(res1.Pins[0]);
             net2.Pins.Add(res2.Pins[1]);
-            net2.Pins.Add(pnp.Pins[0]);
-            net2.Pins.Add(npn.Pins[2]);
             ws.Nets.AddItem(net2);
 
             var caps = new CapacitorItem("10u", CapacitorDrawableType.Standard, 14, 1);

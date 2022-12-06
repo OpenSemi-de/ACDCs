@@ -142,6 +142,11 @@ public class CircuitView : ContentView
                                     }
                                     else
                                     {
+                                        if (_currentSheet.SelectedPin != null)
+                                        {
+                                            await AddTrace(pin, _currentSheet.SelectedPin);
+                                        }
+
                                         selectedPin = pin;
                                         _currentSheet.SelectedPin = selectedPin;
                                     }
@@ -165,6 +170,34 @@ public class CircuitView : ContentView
                     }
                 }
             }
+        });
+    }
+
+    private async Task AddTrace(PinDrawable pinFrom, PinDrawable pinTo)
+    {
+        await App.Call(async () =>
+        {
+
+            IWorksheetItem? netFromPin = _currentSheet.Nets.FirstOrDefault(net => net.Pins.Contains(pinFrom));
+            IWorksheetItem? netToPin = _currentSheet.Nets.FirstOrDefault(net => net.Pins.Contains(pinTo));
+            if (netToPin == null & netFromPin == null)
+            {
+                _currentSheet.Nets.AddNet(pinFrom, pinTo);
+
+            }
+
+            if (netToPin == null && netFromPin != null)
+            {
+                netFromPin.Pins.Add(pinTo);
+            }
+
+
+            if (netToPin != null && netFromPin == null)
+            {
+                netToPin.Pins.Add(pinTo);
+            }
+
+            await Paint();
         });
     }
 

@@ -6,8 +6,8 @@ namespace OSECircuitRender.Scene;
 
 public sealed class SheetScene
 {
-    public Color BackgroundColor { get; set; }
-    public Coordinate DisplayOffset { get; set; }
+    public Color? BackgroundColor { get; set; }
+    public Coordinate? DisplayOffset { get; set; }
     public DrawableComponentList Drawables { get; set; }
     public float GridSize { get; set; }
     public DrawableComponentList Selected { get; set; }

@@ -10,32 +10,47 @@ namespace OSECircuitRender.Scene;
 
 public class DrawableScene : IDrawable
 {
-    public static float BaseGridSize = Workbook.BaseGridSize;
-    public static float Zoom = Workbook.Zoom;
-    private static int _fontSize;
+    public float BaseGridSize
+    {
+        get => CurrentGridSize ?? Workbook.BaseGridSize;
+    }
+
+    public float Zoom
+    {
+        get => Workbook.Zoom;
+    }
+
+    private int _fontSize;
+    private float? _currentGridSize;
 
     public DrawableScene(SheetScene scene)
     {
         SetScene(scene);
     }
 
-    public Coordinate DisplayOffset { get; set; }
+    public Coordinate? DisplayOffset { get; set; }
     public bool IsRendering { get; private set; } = false;
     public SheetScene Scene { get; private set; }
 
     public Coordinate SheetSize { get; set; }
 
-    public static float GetScale(float size, float scale)
+    public float? CurrentGridSize
+    {
+        get => _currentGridSize;
+        set => _currentGridSize = value;
+    }
+
+    public  float GetScale(float size, float scale)
     {
         return size * scale;
     }
 
-    public static void SetFillColor(ICanvas canvas, Color fillColor)
+    public  void SetFillColor(ICanvas canvas, Color fillColor)
     {
         canvas.FillColor = new Microsoft.Maui.Graphics.Color(fillColor.R, fillColor.G, fillColor.B);
     }
 
-    public static void SetStrokeColor(ICanvas canvas, Color penColor)
+    public  void SetStrokeColor(ICanvas canvas, Color penColor)
     {
         canvas.StrokeColor = new Microsoft.Maui.Graphics.Color(penColor.R, penColor.G, penColor.B);
     }
@@ -43,7 +58,6 @@ public class DrawableScene : IDrawable
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
         IsRendering = true;
-        Zoom = Workbook.Zoom;
         _fontSize = Convert.ToInt32(Math.Round(BaseGridSize * Zoom / 2));
         canvas.Antialias = true;
 
@@ -181,7 +195,7 @@ public class DrawableScene : IDrawable
             if (pin.PinText != "")
             {
                 canvas.SaveState();
-                canvas.FontSize = Convert.ToSingle(_fontSize * 0.75 * (selectedSize /2));
+                canvas.FontSize = Convert.ToSingle(_fontSize * 0.75 * (selectedSize / 2));
                 canvas.FillColor = Colors.White;
 
                 if (pin == Scene.SelectedPin)
@@ -218,18 +232,24 @@ public class DrawableScene : IDrawable
     {
         Scene = scene;
         if (scene.GridSize != 0)
-            BaseGridSize = scene.GridSize;
+        {
+            _currentGridSize = scene.GridSize;
+        }
+        else
+        {
+            _currentGridSize = Workbook.BaseGridSize;
+        }
         SheetSize = scene.SheetSize;
     }
 
-    private static void DrawCircle(ICanvas canvas, Coordinate centerPos, Coordinate drawPos, Coordinate drawSize)
+    private void DrawCircle(ICanvas canvas, Coordinate centerPos, Coordinate drawPos, Coordinate drawSize)
     {
         var x = GetScale(drawSize.X, centerPos.X);
         var y = GetScale(drawSize.Y, centerPos.Y);
         canvas.DrawCircle(x, y, Zoom * BaseGridSize * 0.1f);
     }
 
-    private static void DrawLine(ICanvas canvas, Coordinate drawSize, LineInstruction line)
+    private void DrawLine(ICanvas canvas, Coordinate drawSize, LineInstruction line)
     {
         canvas.DrawLine(
             GetScale(drawSize.X, line.Position.X),
@@ -238,7 +258,7 @@ public class DrawableScene : IDrawable
             GetScale(drawSize.Y, line.End.Y));
     }
 
-    private static void DrawPath(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, PathInstruction path)
+    private  void DrawPath(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, PathInstruction path)
     {
         PathF pathF = new();
 
@@ -303,7 +323,7 @@ public class DrawableScene : IDrawable
         canvas.DrawPath(pathF);
     }
 
-    private static void DrawRectangle(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, Coordinate upperLeft,
+    private  void DrawRectangle(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, Coordinate upperLeft,
         Coordinate lowerRight, Color fillColor = null)
     {
         if (fillColor != null)
@@ -320,7 +340,7 @@ public class DrawableScene : IDrawable
             GetScale(drawSize.Y, lowerRight.Y));
     }
 
-    private static void DrawText(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, TextInstruction text,
+    private  void DrawText(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, TextInstruction text,
         Coordinate centerPos, IDrawInstruction instruction)
     {
         var x = GetScale(drawSize.X, centerPos.X);
@@ -333,7 +353,7 @@ public class DrawableScene : IDrawable
         canvas.RestoreState();
     }
 
-    private static void GetScaleAndZoom(IDrawableComponent drawable, out Coordinate drawPos, out Coordinate drawSize)
+    private void GetScaleAndZoom(IDrawableComponent drawable, out Coordinate drawPos, out Coordinate drawSize)
     {
         drawPos = new Coordinate(drawable.Position);
         drawSize = new Coordinate(drawable.Size);

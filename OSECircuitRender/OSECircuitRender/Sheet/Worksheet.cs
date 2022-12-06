@@ -56,7 +56,9 @@ public sealed class Worksheet
     public bool CalculateScene()
     {
         Log.L("Calculating scene");
-
+    
+        Router = new TwoDPathRouter(SheetSize, GridSize);
+        Router.SetItems(Items, Nets);
         Traces = Router.GetTraces();
 
         if (SceneManager == null)
@@ -74,12 +76,11 @@ public sealed class Worksheet
             SceneManager.SetSizeAndScale(SheetSize, GridSize);
             Log.L("Getting backend scene");
             var backendScene = SceneManager.GetSceneForBackend();
-            if (backendScene != null)
-                if (SceneManager.SendToBackend(backendScene))
-                {
-                    Log.L("Backend received scene");
-                    return true;
-                }
+            if (SceneManager.SendToBackend(backendScene))
+            {
+                Log.L("Backend received scene");
+                return true;
+            }
         }
 
         return false;

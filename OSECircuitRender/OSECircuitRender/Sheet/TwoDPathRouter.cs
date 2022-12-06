@@ -36,7 +36,7 @@ public class TwoDPathRouter : IPathRouter
         {
             DebugCanvas = canvas
         };
-        turtle.GetTraces();
+        Traces = turtle.GetTraces();
 
         return Traces;
     }

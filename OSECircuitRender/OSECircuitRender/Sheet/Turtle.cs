@@ -8,6 +8,8 @@ using OSECircuitRender.Scene;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OSECircuitRender.Drawables;
+using OSECircuitRender.Instructions;
 using Color = Microsoft.Maui.Graphics.Color;
 
 namespace OSECircuitRender.Sheet;
@@ -218,8 +220,8 @@ public class Turtle
             {
                 var pin1 = net.Pins[i];
                 var pin2 = i < net.Pins.Count - 1 ? net.Pins[i + 1] : net.Pins[0];
-                var pin1drawable = pin1.BackRef.DrawableComponent;
-                var pin2drawable = pin2.BackRef.DrawableComponent;
+                var pin1drawable = pin1.BackRef != null ? pin1.BackRef.DrawableComponent : pin1;
+                var pin2drawable = pin2.BackRef != null ? pin2.BackRef.DrawableComponent : pin2;
 
                 SetColorAndScaling(pin1drawable, pin2drawable);
                 var pin1X = pin1.Position.X;
@@ -273,6 +275,19 @@ public class Turtle
             }
 
             _traces.AddItem(trace);
+        }
+
+        foreach (var worksheetItem1 in _traces)
+        {
+            var traceItem = (TraceItem)worksheetItem1;
+            foreach (var drawInstruction in ((TraceDrawable)traceItem.DrawableComponent).DrawInstructions)
+            {
+                var line = (LineInstruction)drawInstruction;
+                line.Position.X *=  Workbook.Zoom / 2;
+                line.Position.Y *= Workbook.Zoom / 2;
+                line.End.X *= Workbook.Zoom / 2;
+                line.End.Y *= Workbook.Zoom / 2;
+            }
         }
 
         return _traces;
@@ -366,37 +381,37 @@ public class Turtle
 
     private void DebugDrawLine(float position1X, float position1Y, float position2X, float position2Y)
     {
-        DebugCanvas?.DrawLine(position1X * DrawableScene.Zoom * DrawableScene.BaseGridSize, position1Y * DrawableScene.Zoom * DrawableScene.BaseGridSize, position2X * DrawableScene.Zoom * DrawableScene.BaseGridSize, position2Y * DrawableScene.Zoom * DrawableScene.BaseGridSize);
+        DebugCanvas?.DrawLine(position1X * Workbook.Zoom * Workbook.BaseGridSize, position1Y * Workbook.Zoom * Workbook.BaseGridSize, position2X * Workbook.Zoom * Workbook.BaseGridSize, position2Y * Workbook.Zoom * Workbook.BaseGridSize);
     }
 
     private void DebugDrawRectangle(RectFr rect)
     {
         DebugCanvas?.DrawLine(
-            rect.X1 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.Y1 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.X2 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.Y2 * DrawableScene.Zoom * DrawableScene.BaseGridSize
+            rect.X1 * Workbook.Zoom * Workbook.BaseGridSize,
+            rect.Y1 * Workbook.Zoom * Workbook.BaseGridSize,
+            rect.X2 * Workbook.Zoom * Workbook.BaseGridSize,
+            rect.Y2 * Workbook.Zoom * Workbook.BaseGridSize
         );
 
         DebugCanvas?.DrawLine(
-            rect.X2 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.Y2 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.X3 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.Y3 * DrawableScene.Zoom * DrawableScene.BaseGridSize
+            rect.X2 * Workbook.Zoom * Workbook.BaseGridSize,
+            rect.Y2 * Workbook.Zoom * Workbook.BaseGridSize,
+            rect.X3 * Workbook.Zoom * Workbook.BaseGridSize,
+            rect.Y3 * Workbook.Zoom * Workbook.BaseGridSize
         );
 
         DebugCanvas?.DrawLine(
-            rect.X3 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.Y3 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.X4 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.Y4 * DrawableScene.Zoom * DrawableScene.BaseGridSize
+            rect.X3 * Workbook.Zoom * Workbook.BaseGridSize,
+            rect.Y3 * Workbook.Zoom * Workbook.BaseGridSize,
+            rect.X4 * Workbook.Zoom * Workbook.BaseGridSize,
+            rect.Y4 * Workbook.Zoom * Workbook.BaseGridSize
         );
 
         DebugCanvas?.DrawLine(
-            rect.X4 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.Y4 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.X1 * DrawableScene.Zoom * DrawableScene.BaseGridSize,
-            rect.Y1 * DrawableScene.Zoom * DrawableScene.BaseGridSize
+            rect.X4 * Workbook.Zoom * Workbook.BaseGridSize,
+            rect.Y4 * Workbook.Zoom * Workbook.BaseGridSize,
+            rect.X1 * Workbook.Zoom * Workbook.BaseGridSize,
+            rect.Y1 * Workbook.Zoom * Workbook.BaseGridSize
         );
     }
 

@@ -6,8 +6,8 @@ namespace OSECircuitRender.Scene;
 
 public sealed class DefaultSceneManager : ISceneManager
 {
-    public Color BackgroundColor { get; set; }
-    public Coordinate DisplayOffset { get; set; }
+    public Color? BackgroundColor { get; set; }
+    public Coordinate? DisplayOffset { get; set; }
     public object DrawableScene { get; set; }
     public SheetScene Scene { get; set; }
     public bool ShowGrid { get; set; } = true;

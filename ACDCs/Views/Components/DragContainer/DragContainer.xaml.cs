@@ -4,6 +4,7 @@ using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 using System;
 using System.Threading.Tasks;
+using ACDCs.Views.Components.CircuitView;
 
 namespace ACDCs.Views.Components.DragContainer;
 
@@ -22,7 +23,7 @@ public partial class DragContainer : ContentView
             propertyChanged: propertyChanged);
 
     public static readonly BindableProperty CircuitViewProperty =
-        BindableProperty.Create(nameof(CircuitView), typeof(CircuitView.CircuitView), typeof(CircuitSheetPage));
+        BindableProperty.Create(nameof(CircuitView), typeof(CircuitViewContainer), typeof(CircuitSheetPage));
 
     private PanGestureRecognizer? _dragRecognizer;
 
@@ -31,12 +32,12 @@ public partial class DragContainer : ContentView
     public DragContainer()
     {
         InitializeComponent();
-        this.Loaded += (sender, args) => StartDragging();
+        Loaded += (sender, args) => StartDragging();
     }
 
-    public CircuitView.CircuitView? CircuitView
+    public CircuitViewContainer? CircuitView
     {
-        get => (CircuitView.CircuitView)GetValue(CircuitViewProperty);
+        get => (CircuitViewContainer)GetValue(CircuitViewProperty);
         set => SetValue(CircuitViewProperty, value);
     }
 
@@ -162,7 +163,7 @@ public partial class DragContainer : ContentView
         _dragRecognizer = new();
 
         _dragRecognizer.PanUpdated += PanGestureRecognizer_OnPanUpdated;
-        this.GestureRecognizers.Add(_dragRecognizer);
+        GestureRecognizers.Add(_dragRecognizer);
         TitleFrame.GestureRecognizers.Add(_dragRecognizer);
         if (ButtonHide.IsVisible)
             ButtonHide_OnClicked(this, EventArgs.Empty);

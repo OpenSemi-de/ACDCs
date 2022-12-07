@@ -1,0 +1,81 @@
+[
+  {
+    "Text": "File",
+    "MenuItems": [
+      {
+        "Text": "Nee",
+        "MenuCommand": "new"
+      },
+      {
+        "Text": "Open...",
+        "MenuCommand": "openfile"
+      },
+      {
+        "Text": "Save",
+        "MenuCommand": "savefile"
+      },
+      {
+        "Text": "Save as..",
+        "MenuCommand": "saveasfile"
+      },
+      {
+        "Text": "Export",
+        "MenuCommand": "",
+        "MenuItems": [
+          {
+            "Text": "PDF",
+            "MenuCommand": "exportpdf"
+          },
+          {
+            "Text": "BMP",
+            "MenuCommand": "exportbmp"
+          },
+          {
+            "Text": "JPG",
+            "MenuCommand": "exportjpg"
+          }
+        ]
+      }
+    ]
+  },
+    {
+        "Text": "Edit",
+        "MenuItems": [
+            {
+                "Text": "Deselect all",
+                "MenuCommand": "deselectall"
+            },
+            {
+                "Text": "Select all",
+                "MenuCommand": "selectall"
+            },
+            {},
+            {
+                "Text": "Duplicate",
+                "MenuCommand": "duplicate"
+            },
+            {},
+            {
+                "Text": "Delete",
+                "MenuCommand": "delete"
+            }
+        ]
+    },
+    {
+        "Text": "Info",
+        "MenuItems": [
+            {
+                "Text": "About",
+                "MenuCommand": "about"
+            },
+            {
+                "Text": "License",
+                "MenuCommand": "license"
+            },
+            {
+                "Text": "Debug",
+                "MenuCommand": "debug"
+            }
+        ]
+    }
+]

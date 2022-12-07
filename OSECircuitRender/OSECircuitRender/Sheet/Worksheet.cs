@@ -1,5 +1,7 @@
 ﻿#nullable enable
 
+using System;
+using System.Linq;
 using AnyClone;
 using Newtonsoft.Json;
 using OSECircuitRender.Definitions;
@@ -7,8 +9,6 @@ using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
-using System;
-using System.Linq;
 
 namespace OSECircuitRender.Sheet;
 
@@ -26,14 +26,12 @@ public sealed class Worksheet
     }
 
     public Color? BackgroundColor { get; set; }
-
+    public Color? BackgroundHighColor { get; set; }
     public Coordinate? DisplayOffset { get; set; }
-
     public string Filename { get; set; } = "";
+    public Color? ForegroundColor { get; set; }
     public float GridSize { get; set; } = 2.54f;
-
     public WorksheetItemList Items { get; set; }
-
     public WorksheetItemList Nets { get; set; }
 
     [JsonIgnore]
@@ -55,7 +53,6 @@ public sealed class Worksheet
     public bool ShowGrid { get; set; } = true;
 
     public WorksheetItemList Traces { get; set; }
-    public Color ForegroundColor { get; set; }
 
     public bool CalculateScene()
     {
@@ -71,10 +68,10 @@ public sealed class Worksheet
             SceneManager = new DefaultSceneManager();
         }
 
-
         SceneManager.ShowGrid = ShowGrid;
         SceneManager.BackgroundColor = BackgroundColor;
         SceneManager.ForegroundColor = ForegroundColor;
+        SceneManager.BackgroundHighColor = BackgroundHighColor;
         if (SceneManager.SetScene(GetDrawableComponents(), GetSelectedComponents(), SelectedPin))
         {
             SceneManager.DisplayOffset = DisplayOffset;

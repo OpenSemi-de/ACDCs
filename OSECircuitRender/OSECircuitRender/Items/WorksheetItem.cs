@@ -44,7 +44,7 @@ public class WorksheetItem : IWorksheetItem
         set => DrawableComponent.Rotation = value;
     }
 
-    public string TypeName => this.GetType().Name.Replace("Item", "");
+    public string TypeName => GetType().Name.Replace("Item", "");
 
     public string? Value
     {

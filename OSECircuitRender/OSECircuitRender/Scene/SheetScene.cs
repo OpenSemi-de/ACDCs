@@ -21,6 +21,7 @@ public sealed class SheetScene
     public Coordinate SheetSize { get; set; }
     public bool ShowGrid { get; set; } = true;
     public Color? ForegroundColor { get; set; }
+    public Color? BackgroundHighColor { get; set; }
 
     public bool IsSelected(IDrawableComponent drawable)
     {

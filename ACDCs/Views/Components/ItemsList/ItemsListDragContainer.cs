@@ -57,7 +57,9 @@ public class ItemsListDragContainer : DragContainer.DragContainer
 
         _layout.Add(_listViewItems);
         Layout = _layout;
+#pragma warning disable CS8974 // Converting method group to non-delegate type
         App.Com<Action<WorksheetItemList, WorksheetItemList>>("ItemList", "SetItems", SetItems);
+#pragma warning restore CS8974 // Converting method group to non-delegate type
     }
 
     public AbsoluteLayout PopupTarget

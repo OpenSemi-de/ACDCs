@@ -12,6 +12,7 @@ public sealed class DefaultSceneManager : ISceneManager
     public SheetScene? Scene { get; set; }
     public bool ShowGrid { get; set; } = true;
     public Color? ForegroundColor { get; set; }
+    public Color? BackgroundHighColor { get; set; }
 
     public object? GetSceneForBackend()
     {
@@ -35,6 +36,7 @@ public sealed class DefaultSceneManager : ISceneManager
         Scene.ShowGrid = ShowGrid;
         Scene.BackgroundColor = BackgroundColor;
         Scene.ForegroundColor = ForegroundColor;
+        Scene.BackgroundHighColor = BackgroundHighColor;
         Scene.DisplayOffset = DisplayOffset;
         Scene.SelectedPin = selectedPin;
         return true;

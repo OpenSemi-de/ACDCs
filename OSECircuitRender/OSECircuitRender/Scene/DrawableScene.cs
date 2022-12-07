@@ -15,34 +15,19 @@ public class DrawableScene : IDrawable
     public DrawableScene(SheetScene? scene)
     {
         Scene = scene;
-        if (scene?.SheetSize != null)
-        {
-            SheetSize = scene.SheetSize;
-        }
-        else
-        {
-            SheetSize = new(100, 100, 0);
-        }
+        SheetSize = scene?.SheetSize != null ? scene.SheetSize : new(100, 100, 0);
         SetScene(scene);
     }
 
     public Color? BackgroundColor { get; set; }
-
-    public float BaseGridSize
-    {
-        get => CurrentGridSize ?? Workbook.BaseGridSize;
-    }
-
+    public Color? BackgroundHighColor { get; set; }
+    public float BaseGridSize => CurrentGridSize ?? Workbook.BaseGridSize;
     public float? CurrentGridSize { get; set; }
-
     public Coordinate? DisplayOffset { get; set; }
     public Color? ForegroundColor { get; set; }
-    public bool IsRendering { get; private set; } = false;
-
+    public bool IsRendering { get; private set; }
     public SheetScene? Scene { get; private set; }
-
     public Coordinate SheetSize { get; set; }
-
     public float Zoom => Workbook.Zoom;
 
     public void Draw(ICanvas canvas, RectF dirtyRect)
@@ -64,8 +49,10 @@ public class DrawableScene : IDrawable
                 Scene.BackgroundColor.A
             )
             : Colors.WhiteSmoke;
+
         BackgroundColor = Scene?.BackgroundColor;
         ForegroundColor = Scene?.ForegroundColor ?? new Color(255, 255, 255);
+        BackgroundHighColor = Scene?.BackgroundHighColor ?? new Color(70, 70, 70);
 
         canvas.FillRectangle(0, 0, 10000, 10000);
         canvas.SaveState();
@@ -76,7 +63,7 @@ public class DrawableScene : IDrawable
         }
 
         canvas.StrokeSize = 0.5f;
-        canvas.StrokeColor = new Microsoft.Maui.Graphics.Color(0.7f);
+        canvas.StrokeColor = ForegroundColor.ToMauiColor();
         if (Scene != null && Scene.ShowGrid)
         {
             for (float x = 0; x < BaseGridSize * Zoom * SheetSize.X; x += Zoom * BaseGridSize)
@@ -139,7 +126,7 @@ public class DrawableScene : IDrawable
                 var lowerRight = new Coordinate(box.Size);
                 SetStrokeColor(canvas, ForegroundColor ?? box.StrokeColor);
                 SetFillColor(canvas, box.FillColor);
-                DrawRectangle(canvas, drawPos, drawSize, upperLeft, lowerRight, BackgroundColor ?? box.FillColor);
+                DrawRectangle(canvas, drawPos, drawSize, upperLeft, lowerRight, BackgroundHighColor ?? box.FillColor);
             }
 
             if (instruction is TextInstruction text)
@@ -181,7 +168,7 @@ public class DrawableScene : IDrawable
             var posCenter = new Coordinate(pin.Position);
             posCenter.X = GetScale(drawSize.X, posCenter.X);
             posCenter.Y = GetScale(drawSize.Y, posCenter.Y);
-            canvas.FillColor = BackgroundColor != null ? BackgroundColor.ToMauiColor() : new Microsoft.Maui.Graphics.Color(255, 255, 255);
+            canvas.FillColor = BackgroundHighColor != null ? BackgroundHighColor.ToMauiColor() : new Microsoft.Maui.Graphics.Color(255, 255, 255);
 
             if (pin == Scene?.SelectedPin)
             {
@@ -197,7 +184,7 @@ public class DrawableScene : IDrawable
                 canvas.SaveState();
                 canvas.FontSize = Convert.ToSingle(_fontSize * 0.75 * (selectedSize / 2));
                 canvas.FontColor = ForegroundColor != null ? ForegroundColor.ToMauiColor() : new Microsoft.Maui.Graphics.Color(0, 0, 0);
-                canvas.FillColor = BackgroundColor != null ? BackgroundColor.ToMauiColor() : new Microsoft.Maui.Graphics.Color(255, 255, 255);
+                canvas.FillColor = BackgroundHighColor != null ? BackgroundHighColor.ToMauiColor() : new Microsoft.Maui.Graphics.Color(255, 255, 255);
 
                 if (pin == Scene?.SelectedPin)
                 {

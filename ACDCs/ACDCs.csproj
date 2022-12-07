@@ -96,9 +96,5 @@
 		</MauiXaml>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Views\Components\CircuitView\" />
-	</ItemGroup>
-
 
 </Project>

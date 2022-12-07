@@ -17,14 +17,15 @@ using OSECircuitRender.Sheet;
 using Color = Microsoft.Maui.Graphics.Color;
 using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
 
-#pragma warning disable CS4014
-
 namespace ACDCs.Views.Components.CircuitView;
 
-public class CircuitView : ContentView
+public class CircuitViewContainer : ContentView
 {
     public static readonly BindableProperty ForegroundColorProperty =
         BindableProperty.Create(nameof(ForegroundColor), typeof(Color), typeof(CircuitSheetPage), null);
+
+    public static readonly BindableProperty BackgroundHighColorProperty =
+        BindableProperty.Create(nameof(BackgroundHighColor), typeof(Color), typeof(CircuitSheetPage), null);
 
     private readonly Workbook _currentWorkbook;
     private readonly GraphicsView _graphicsView;
@@ -38,7 +39,10 @@ public class CircuitView : ContentView
     private Coordinate? _lastDisplayOffset;
     private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions = new();
 
-    public CircuitView()
+    public event CursorPositionChangeEvent? CursorPositionChanged;
+    public event CursorPositionChangeEvent? TapPositionChanged;
+
+    public CircuitViewContainer()
     {
         _currentWorkbook = new Workbook();
         _currentWorkbook.SetBaseFont("Maple Mono");
@@ -64,7 +68,7 @@ public class CircuitView : ContentView
         _graphicsView.GestureRecognizers.Add(_pointerRecognizer);
 
         Content = _graphicsView;
-        App.Com<CircuitView>(nameof(CircuitView), "Instance", this);
+        App.Com<CircuitViewContainer>(nameof(CircuitView), "Instance", this);
         App.Com<Worksheet>(nameof(CircuitView), "CurrentWorksheet", _currentSheet);
         Loaded += OnLoaded;
     }
@@ -78,10 +82,15 @@ public class CircuitView : ContentView
         get => _currentSheet;
     }
 
-    public Color? ForegroundColor
+    public Color BackgroundHighColor
     {
-        get => (Color?)GetValue(ForegroundColorProperty);
+        get => (Color)GetValue(BackgroundHighColorProperty);
+        set => SetValue(BackgroundHighColorProperty, value);
+    }
 
+    public Color ForegroundColor
+    {
+        get => (Color)GetValue(ForegroundColorProperty);
         set => SetValue(ForegroundColorProperty, value);
     }
 
@@ -137,7 +146,7 @@ public class CircuitView : ContentView
 
             App.Com<Worksheet>(nameof(CircuitView), "CurrentWorksheet", _currentSheet);
             _currentSheet.Filename = Path.GetFileName(fileName);
-            Paint();
+            await Paint();
         }
 
         OnLoadedSheet();
@@ -149,6 +158,7 @@ public class CircuitView : ContentView
         {
             _currentSheet.BackgroundColor = new OSECircuitRender.Definitions.Color(BackgroundColor);
             _currentSheet.ForegroundColor = new OSECircuitRender.Definitions.Color(ForegroundColor);
+            _currentSheet.BackgroundHighColor = new OSECircuitRender.Definitions.Color(BackgroundHighColor);
 
             if (App.Com<bool>("Items", "IsInserting"))
                 return Task.CompletedTask;
@@ -253,9 +263,9 @@ public class CircuitView : ContentView
         Console.WriteLine(e.ErrorContext.Error.ToString());
     }
 
-    private void OnLoaded(object? sender, EventArgs e)
+    private async void OnLoaded(object? sender, EventArgs e)
     {
-        Paint();
+        await Paint();
     }
 
     private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
@@ -349,6 +359,7 @@ public class CircuitView : ContentView
     private void PointerGestureRecognizer_OnPointerMoved(object? sender, PointerEventArgs e)
     {
         _cursorPosition = e.GetPosition(_graphicsView) ?? new Point();
+        OnCursorPositionChanged(new CursorPositionChangeEventArgs(_cursorPosition));
     }
 
     private async void TapGestureRecognizer_OnTapped(object? sender, TappedEventArgs e)
@@ -365,6 +376,8 @@ public class CircuitView : ContentView
                     offsetX = _lastDisplayOffset.X;
                     offsetY = _lastDisplayOffset.Y;
                 }
+
+                OnTapPositionChanged(new CursorPositionChangeEventArgs(touch));
 
                 if (App.Com<bool>("Items", "IsInserting"))
                 {
@@ -433,5 +446,27 @@ public class CircuitView : ContentView
                 }
             }
         });
+    }
+
+    protected virtual void OnCursorPositionChanged(CursorPositionChangeEventArgs args)
+    {
+        CursorPositionChanged?.Invoke(this, args);
+    }
+
+    protected virtual void OnTapPositionChanged(CursorPositionChangeEventArgs args)
+    {
+        TapPositionChanged?.Invoke(this, args);
+    }
+}
+
+public delegate void CursorPositionChangeEvent(object sender, CursorPositionChangeEventArgs args);
+
+public class CursorPositionChangeEventArgs
+{
+    public Point CursorPosition { get; }
+
+    public CursorPositionChangeEventArgs(Point cursorPosition)
+    {
+        CursorPosition = cursorPosition;
     }
 }

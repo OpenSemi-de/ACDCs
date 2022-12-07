@@ -5,6 +5,8 @@ using Microsoft.Maui.Layouts;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using ACDCs.Views.Components.CircuitView;
+using ACDCs.Views.Components.DebugView;
 
 namespace ACDCs.Views.Components.Menu;
 
@@ -12,6 +14,9 @@ public class MenuDragContainer : DragContainer.DragContainer
 {
     private static readonly BindableProperty PopupTargetProperty =
         BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
+
+    private static readonly BindableProperty DebugViewProperty =
+        BindableProperty.Create(nameof(DebugView), typeof(DebugViewDragComtainer), typeof(CircuitSheetPage));
 
     private readonly Label _fileNameLabel;
     private readonly MenuFrame _menuFrame;
@@ -64,6 +69,12 @@ public class MenuDragContainer : DragContainer.DragContainer
         }
     }
 
+    public DebugViewDragComtainer DebugView
+    {
+        get => (DebugViewDragComtainer)GetValue(DebugViewProperty);
+        set => SetValue(DebugViewProperty, value);
+    }
+
     private async void LoadMenu(string menuMainJson)
     {
         await App.Call(async () =>
@@ -74,7 +85,7 @@ public class MenuDragContainer : DragContainer.DragContainer
         });
     }
 
-    private void MenuDragContainer_Loaded(object? sender, System.EventArgs e)
+    private void MenuDragContainer_Loaded(object? sender, EventArgs e)
     {
         if (CircuitView != null)
         {

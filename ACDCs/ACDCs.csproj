@@ -10,6 +10,7 @@
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>disable</ImplicitUsings>
+    <PublishTrimmed>false</PublishTrimmed>
 
 		<!-- Display name -->
 		<ApplicationTitle>ACDCs</ApplicationTitle>

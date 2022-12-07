@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net7.0-android</TargetFrameworks>
@@ -78,7 +78,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\OSECircuitRender\OSECircuitRender\OSECircuitRender.csproj" />
+		<ProjectReference Include="..\OSECircuitRender\OSECircuitRender\OSECircuitRender.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

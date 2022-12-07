@@ -11,32 +11,32 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
-
+    runs-on: windows-2022
+    name: Android Build
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 7.x
-        include-prerelease: true
-        
-    - uses: actions/setup-java@v2
-      with:
-        distribution: 'microsoft'
-        java-version: '11'
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Install MAUI Workloads
-      run: |
-          dotnet workload install android --ignore-failed-sources
-        
-    - name: Restore
-      run: dotnet restore ./OSEInventory/OSEInventory/OSEInventory.csproj
-    - name: Build
-      run: dotnet build --no-restore OSEInventory
-    - name: Test
-      run: dotnet test --no-build --verbosity normal OSEInventory
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Install MAUI Workload
+        run: dotnet workload install maui --ignore-failed-sources
+
+      - name: Restore Dependencies
+        run: dotnet restore src/MauiBeach/MauiBeach.csproj
+
+      - name: Build MAUI Android
+        run: dotnet publish src/MauiBeach/MauiBeach.csproj -c Release -f net6.0-android --no-restore
+
+      - name: Upload Android Artifact
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: mauibeach-android-ci-build
+          path: src/MauiBeach/bin/Release/net6.0-android/*Signed.a*
+
       
 env:
   DOTNET_NOLOGO: true                     # Disable the .NET logo

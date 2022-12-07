@@ -2,6 +2,6 @@
 {
     public interface IHaveAParent
     {
-        IWorksheetItem? ParentItem { get; set; }
+        IWorksheetItem ParentItem { get; set; }
     }
 }

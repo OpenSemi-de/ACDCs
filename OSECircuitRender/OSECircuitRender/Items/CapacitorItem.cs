@@ -24,6 +24,8 @@ public class CapacitorItem : WorksheetItem
         DrawableComponent = new CapacitorDrawable(this, value, type, 1, 1);
     }
 
-    public CapacitorDrawableType DefaultType { get; set; }
+    public new string DefaultValue { get; set; } = "10u";
+
+    public CapacitorDrawableType DefaultType { get; set; } = CapacitorDrawableType.Standard;
     public CapacitorDrawableType Type { get; }
 }

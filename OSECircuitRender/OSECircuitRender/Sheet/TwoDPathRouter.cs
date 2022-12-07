@@ -19,6 +19,9 @@ public class TwoDPathRouter : IPathRouter
         _sheetHeight = Convert.ToInt32(sheetSize.Y);
         SheetSize = sheetSize;
         GridSize = gridSize;
+        Traces = new WorksheetItemList(worksheet);
+        Nets = new WorksheetItemList(worksheet);
+        Items = new WorksheetItemList(worksheet);
     }
 
     public float GridSize { get; set; }
@@ -26,7 +29,6 @@ public class TwoDPathRouter : IPathRouter
     public WorksheetItemList Nets { get; set; }
     public Coordinate SheetSize { get; set; }
     public WorksheetItemList Traces { get; set; }
-    private int[,] RouteMap { get; set; }
 
     public WorksheetItemList GetTraces()
     {

@@ -24,14 +24,14 @@ namespace OSECircuitWebrender.Controllers
         public FileContentResult Image()
         {
             byte[]? imageBytes = null;
-            SkiaBitmapExportContext debugContext = new(1000, 1000, 10);
+            SkiaBitmapExportContext? debugContext = new(1000, 1000, 10);
 
             Log.Method = Console.WriteLine;
             Workbook.DebugContext = debugContext;
             Workbook wb = new();
 
             Worksheet ws = wb.AddNewSheet();
-            string wwwPath = _environment.WebRootPath;
+            string? wwwPath = _environment.WebRootPath;
             string contentPath = _environment.ContentRootPath;
 
             Workbook.BasePath = wwwPath;

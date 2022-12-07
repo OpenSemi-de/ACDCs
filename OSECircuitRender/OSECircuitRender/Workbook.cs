@@ -22,8 +22,8 @@ public sealed class Workbook
         };
     }
 
-    public static string BasePath { get; set; }
-    public static SkiaBitmapExportContext DebugContext { get; set; }
+    public static string? BasePath { get; set; }
+    public static SkiaBitmapExportContext? DebugContext { get; set; }
 
     public Worksheet AddNewSheet()
     {
@@ -38,8 +38,13 @@ public sealed class Workbook
         var json = File.ReadAllText(fileName);
         var ws = JsonConvert.DeserializeObject<Worksheet>(json, _jsonSerializerSettings);
 
-        Sheets.AddSheet(ws);
-        return ws;
+        if (ws != null)
+        {
+            Sheets.AddSheet(ws);
+            return ws;
+        }
+
+        return AddNewSheet();
     }
 
     public void SaveSheet(Worksheet ws, string fileName)
@@ -51,7 +56,7 @@ public sealed class Workbook
 
 public static class Log
 {
-    public static Action<string> Method;
+    public static Action<string>? Method;
 
     public static void L(string text)
     {

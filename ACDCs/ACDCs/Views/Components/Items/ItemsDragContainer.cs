@@ -16,7 +16,6 @@ public class ItemsDragContainer : DragContainer.DragContainer
         BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
 
     private readonly StackLayout _layout;
-    private bool _isInserting;
 
     public ItemsDragContainer()
     {
@@ -33,7 +32,9 @@ public class ItemsDragContainer : DragContainer.DragContainer
         };
         Layout = _layout;
 
+#pragma warning disable CS4014
         SetupView();
+#pragma warning restore CS4014
     }
 
     public Func<float, float, WorksheetItem?>? DoInsert { get; set; }

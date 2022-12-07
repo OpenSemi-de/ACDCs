@@ -5,7 +5,7 @@ namespace OSECircuitRender.Drawables;
 
 public sealed class TerminalDrawable : DrawableComponent
 {
-    public TerminalDrawable(IWorksheetItem? parent, float x, float y,
+    public TerminalDrawable(IWorksheetItem parent, float x, float y,
         TerminalDrawableType terminalType = TerminalDrawableType.None, string terminalName = "") : base(
         typeof(TerminalDrawable), parent)
     {

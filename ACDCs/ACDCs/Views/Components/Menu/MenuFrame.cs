@@ -9,7 +9,7 @@ namespace ACDCs.Views.Components.Menu;
 public class MenuFrame : StackLayout
 {
     public static List<MenuFrame> MenuFrameList = new();
-    private bool _eventSet;
+    private readonly bool _eventSet;
 
     public MenuFrame()
     {
@@ -23,7 +23,7 @@ public class MenuFrame : StackLayout
         }
     }
 
-    public View MainContainer { get; set; }
+    public View? MainContainer { get; set; }
 
     public AbsoluteLayout? PopupTarget { get; set; }
 
@@ -32,7 +32,7 @@ public class MenuFrame : StackLayout
         MenuFrameList.ForEach(menuFrame => { menuFrame.IsVisible = false; });
     }
 
-    public async void LoadMenu(List<MenuItemDefinition> items, bool isRoot = false)
+    public void LoadMenu(List<MenuItemDefinition> items, bool isRoot = false)
     {
         App.Call(() =>
         {
@@ -42,50 +42,46 @@ public class MenuFrame : StackLayout
             }
 
             List<IMenuItem> menuParts = new();
-            if (items != null)
+            foreach (var menuItem in items)
             {
-                foreach (var menuItem in items)
+                if (menuItem.Text != "")
                 {
-                    if (menuItem.Text != "")
-                    {
-                        var menuButton = new MenuButton(menuItem.Text, menuItem.MenuCommand);
+                    var menuButton = new MenuButton(menuItem.Text, menuItem.MenuCommand);
 
-                        menuParts.Add(menuButton);
-                        if (menuItem.MenuItems != null && menuItem.MenuItems.Count > 0)
+                    menuParts.Add(menuButton);
+                    if (menuItem.MenuItems != null && menuItem.MenuItems.Count > 0)
+                    {
+                        menuButton.MenuFrame = new()
                         {
-                            menuButton.MenuFrame = new()
-                            {
-                                PopupTarget = PopupTarget,
-                                Orientation = isRoot
-                                    ? Orientation == StackOrientation.Horizontal
-                                        ? StackOrientation.Vertical
-                                        : StackOrientation.Horizontal
-                                    : Orientation,
-                                MainContainer = MainContainer,
-                                IsVisible = false
-                            };
+                            PopupTarget = PopupTarget,
+                            Orientation = isRoot
+                                ? Orientation == StackOrientation.Horizontal
+                                    ? StackOrientation.Vertical
+                                    : StackOrientation.Horizontal
+                                : Orientation,
+                            MainContainer = MainContainer,
+                            IsVisible = false
+                        };
 
-                            menuButton.MenuFrame.LoadMenu(menuItem.MenuItems);
+                        menuButton.MenuFrame.LoadMenu(menuItem.MenuItems);
 
-                            PopupTarget?.Add(menuButton.MenuFrame);
-                        }
-                    }
-                    else
-                    {
-                        menuParts.Add(new MenuDivider());
+                        PopupTarget?.Add(menuButton.MenuFrame);
                     }
                 }
-
-                menuParts.ForEach(part => Add((IView)part));
+                else
+                {
+                    menuParts.Add(new MenuDivider());
+                }
             }
+
+            menuParts.ForEach(part => Add((IView)part));
             return Task.CompletedTask;
         }).Wait();
     }
 
     public void SetPosition(View menuButtonView)
     {
-        var menuButton = menuButtonView as MenuButton;
-        if (menuButton != null)
+        if (menuButtonView is MenuButton menuButton)
         {
             if (menuButton.MenuFrame != null)
             {
@@ -99,6 +95,6 @@ public class MenuFrame : StackLayout
 
     private void App_Reset(object sender, ResetEventArgs args)
     {
-        MenuFrame.HideAllMenus();
+        HideAllMenus();
     }
 }

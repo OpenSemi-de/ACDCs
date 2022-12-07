@@ -6,7 +6,7 @@ namespace OSECircuitRender.Drawables;
 
 public sealed class TransistorDrawable : DrawableComponent
 {
-    public TransistorDrawable(IWorksheetItem? parent, TransistorDrawableType type, float x, float y) : base(
+    public TransistorDrawable(IWorksheetItem parent, TransistorDrawableType type, float x, float y) : base(
         typeof(TransistorDrawable), parent)
     {
         Setup(type, x, y);

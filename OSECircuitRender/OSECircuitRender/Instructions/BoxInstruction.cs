@@ -4,7 +4,7 @@ namespace OSECircuitRender.Instructions;
 
 public sealed class BoxInstruction : DrawInstruction
 {
-    public BoxInstruction(float x1, float y1, float width, float height, Color fillColor = null) : base(
+    public BoxInstruction(float x1, float y1, float width, float height, Color? fillColor = null) : base(
         typeof(BoxInstruction))
     {
         Position = new Coordinate(x1, y1, 0);

@@ -5,7 +5,7 @@ namespace OSECircuitRender.Drawables;
 
 public sealed class ResistorDrawable : DrawableComponent
 {
-    public ResistorDrawable(IWorksheetItem? parent, string value, float x, float y) : base(typeof(ResistorDrawable), parent)
+    public ResistorDrawable(IWorksheetItem parent, string value, float x, float y) : base(typeof(ResistorDrawable), parent)
     {
         Setup(value, x, y);
     }

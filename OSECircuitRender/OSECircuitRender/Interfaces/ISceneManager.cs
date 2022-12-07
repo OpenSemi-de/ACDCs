@@ -8,12 +8,12 @@ public interface ISceneManager
 {
     Color? BackgroundColor { get; set; }
     Coordinate? DisplayOffset { get; set; }
-    SheetScene Scene { get; set; }
+    SheetScene? Scene { get; set; }
     bool ShowGrid { get; set; }
 
-    object GetSceneForBackend();
+    object? GetSceneForBackend();
 
-    bool SendToBackend(object backendScene);
+    bool SendToBackend(object? backendScene);
 
     bool SetScene(DrawableComponentList drawables, DrawableComponentList selected, PinDrawable? selectedPin);
 

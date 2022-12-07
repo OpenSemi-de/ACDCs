@@ -1,9 +1,7 @@
-﻿using Newtonsoft.Json;
-using OSECircuitRender.Definitions;
+﻿using OSECircuitRender.Definitions;
 using OSECircuitRender.Instructions;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Sheet;
-using System.Linq;
 
 namespace OSECircuitRender.Drawables;
 
@@ -29,9 +27,6 @@ public class PinDrawable : DrawableComponent
         //BackRef = pin.BackRef;
         Setup(1, 1);
     }
-
-    [JsonIgnore]
-    public new IWorksheetItem? BackRef => Worksheet?.Items.FirstOrDefault(item => item.Pins.Contains(this));
 
     public string PinText { get; }
 

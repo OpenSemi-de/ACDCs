@@ -5,7 +5,7 @@ namespace OSECircuitRender.Interfaces;
 
 public interface IWorksheetItem
 {
-    static string DefaultValue { get; set; }
+    static string DefaultValue { get; set; } = "";
     static bool IsInsertable { get; set; }
     IDrawableComponent DrawableComponent { get; set; }
     int Height { get; set; }

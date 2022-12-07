@@ -28,7 +28,7 @@ public partial class App : Application
         {
             try
             {
-                OnReset(null);
+                OnReset(new());
             }
             catch (Exception e)
             {
@@ -85,7 +85,7 @@ public partial class App : Application
 
     private static void OnReset(ResetEventArgs args)
     {
-        Reset?.Invoke(null, args);
+        Reset?.Invoke(new(), args);
     }
 }
 

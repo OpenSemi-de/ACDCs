@@ -24,7 +24,7 @@ public partial class DragContainer : ContentView
     private static readonly BindableProperty CircuitViewProperty =
         BindableProperty.Create(nameof(CircuitView), typeof(CircuitView.CircuitView), typeof(CircuitSheetPage));
 
-    private PanGestureRecognizer _dragRecognizer;
+    private PanGestureRecognizer? _dragRecognizer;
 
     private Rect _lastBounds = Rect.Zero;
 

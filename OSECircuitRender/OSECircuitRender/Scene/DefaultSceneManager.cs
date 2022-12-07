@@ -8,11 +8,11 @@ public sealed class DefaultSceneManager : ISceneManager
 {
     public Color? BackgroundColor { get; set; }
     public Coordinate? DisplayOffset { get; set; }
-    public object DrawableScene { get; set; }
-    public SheetScene Scene { get; set; }
+    public object? DrawableScene { get; set; }
+    public SheetScene? Scene { get; set; }
     public bool ShowGrid { get; set; } = true;
 
-    public object GetSceneForBackend()
+    public object? GetSceneForBackend()
     {
         DrawableScene = new DrawableScene(Scene)
         {
@@ -22,7 +22,7 @@ public sealed class DefaultSceneManager : ISceneManager
         return DrawableScene;
     }
 
-    public bool SendToBackend(object backendScene)
+    public bool SendToBackend(object? backendScene)
     {
         return true;
     }
@@ -40,7 +40,10 @@ public sealed class DefaultSceneManager : ISceneManager
 
     public void SetSizeAndScale(Coordinate sheetSize, float gridSize)
     {
-        Scene.GridSize = gridSize;
-        Scene.SheetSize = sheetSize;
+        if (Scene != null)
+        {
+            Scene.GridSize = gridSize;
+            Scene.SheetSize = sheetSize;
+        }
     }
 }

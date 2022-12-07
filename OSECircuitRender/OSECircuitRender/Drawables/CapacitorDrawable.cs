@@ -6,12 +6,12 @@ namespace OSECircuitRender.Drawables;
 
 public sealed class CapacitorDrawable : DrawableComponent
 {
-    public CapacitorDrawable(IWorksheetItem? parent) : base(typeof(CapacitorDrawable), parent)
+    public CapacitorDrawable(IWorksheetItem parent) : base(typeof(CapacitorDrawable), parent)
     {
         Setup();
     }
 
-    public CapacitorDrawable(IWorksheetItem? parent, string value, CapacitorDrawableType type, float x, float y) : base(typeof(CapacitorDrawable), parent)
+    public CapacitorDrawable(IWorksheetItem parent, string value, CapacitorDrawableType type, float x, float y) : base(typeof(CapacitorDrawable), parent)
     {
         Setup(value, type, x, y);
     }

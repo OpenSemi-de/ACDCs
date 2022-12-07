@@ -1,5 +1,4 @@
-﻿using System;
-using OSECircuitRender.Definitions;
+﻿using OSECircuitRender.Definitions;
 using OSECircuitRender.Instructions;
 using OSECircuitRender.Interfaces;
 using System.Linq;

@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using ACDCs.Views.Components.Menu.MenuHandlers;
-using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 
 namespace ACDCs.Views.Components.Menu;

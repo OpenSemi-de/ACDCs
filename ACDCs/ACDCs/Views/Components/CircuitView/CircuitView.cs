@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CommunityToolkit.Maui.Markup;
 using Microsoft.Maui.Graphics;
 using Newtonsoft.Json;
 using OSECircuitRender.Definitions;

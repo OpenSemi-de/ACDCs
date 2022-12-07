@@ -4,12 +4,9 @@ using Microsoft.Maui.Graphics;
 using OSECircuitRender.Definitions;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
-using OSECircuitRender.Scene;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OSECircuitRender.Drawables;
-using OSECircuitRender.Instructions;
 using Color = Microsoft.Maui.Graphics.Color;
 
 namespace OSECircuitRender.Sheet;

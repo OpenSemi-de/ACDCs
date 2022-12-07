@@ -2,7 +2,6 @@
 using Microsoft.Maui.Storage;
 using System.Collections.Generic;
 using System.IO;
-using Page = Microsoft.Maui.Controls.Page;
 
 namespace ACDCs.Views.Components.Menu.MenuHandlers;
 

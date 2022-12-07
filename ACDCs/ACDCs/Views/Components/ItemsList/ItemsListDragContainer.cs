@@ -1,7 +1,6 @@
 ﻿using System;
 using CommunityToolkit.Maui.Markup;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 using OSECircuitRender.Items;
 using System.Collections.Generic;

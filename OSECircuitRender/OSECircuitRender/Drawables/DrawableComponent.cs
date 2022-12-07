@@ -1,10 +1,8 @@
-﻿using Newtonsoft.Json;
-using OSECircuitRender.Definitions;
+﻿using OSECircuitRender.Definitions;
 using OSECircuitRender.Instructions;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using System;
-using System.Linq;
 using OSECircuitRender.Sheet;
 
 namespace OSECircuitRender.Drawables;

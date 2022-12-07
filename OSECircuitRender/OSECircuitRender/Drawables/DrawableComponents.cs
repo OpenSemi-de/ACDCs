@@ -1,6 +1,5 @@
 ﻿using OSECircuitRender.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 using OSECircuitRender.Sheet;
 
 namespace OSECircuitRender.Drawables;

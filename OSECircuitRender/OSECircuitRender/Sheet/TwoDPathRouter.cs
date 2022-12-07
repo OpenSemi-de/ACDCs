@@ -8,9 +8,9 @@ namespace OSECircuitRender.Sheet;
 
 public class TwoDPathRouter : IPathRouter
 {
-    private readonly Worksheet _worksheet;
     private readonly int _sheetHeight;
     private readonly int _sheetWidth;
+    private readonly Worksheet _worksheet;
 
     public TwoDPathRouter(Worksheet worksheet, Coordinate sheetSize, float gridSize)
     {

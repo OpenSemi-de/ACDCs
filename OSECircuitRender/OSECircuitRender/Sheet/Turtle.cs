@@ -13,8 +13,6 @@ namespace OSECircuitRender.Sheet;
 
 public class Turtle
 {
-    private readonly Worksheet _worksheet;
-
     private static readonly Point[][] DirectionalTriangles = {
         new Point[]
         {
@@ -82,6 +80,7 @@ public class Turtle
     private readonly WorksheetItemList _items;
     private readonly WorksheetItemList _nets;
     private readonly Coordinate _sheetSize;
+    private readonly Worksheet _worksheet;
 
     public Turtle(WorksheetItemList? items, WorksheetItemList? nets, Coordinate? sheetSize, Worksheet worksheet)
     {
@@ -89,7 +88,6 @@ public class Turtle
         _items = items ?? new WorksheetItemList(_worksheet);
         _nets = nets ?? new WorksheetItemList(_worksheet);
         _sheetSize = sheetSize ?? new Coordinate();
-
     }
 
     public ICanvas? DebugCanvas { get; set; }

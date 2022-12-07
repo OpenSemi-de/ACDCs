@@ -1,12 +1,12 @@
 ﻿using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
-using System.Reflection;
-using System.Threading.Tasks;
-using System;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using OSECircuitRender.Sheet;
+using System;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace ACDCs.Views.Components.Items;
 
@@ -36,19 +36,19 @@ public class ItemsDragContainer : DragContainer.DragContainer
         SetupView();
     }
 
-    public AbsoluteLayout PopupTarget
-    {
-        get => (AbsoluteLayout)GetValue(PopupTargetProperty);
-
-        set => SetValue(PopupTargetProperty, value);
-    }
-
     public Func<float, float, WorksheetItem?>? DoInsert { get; set; }
 
     public bool IsInserting
     {
         get => App.Com<bool>("Items", "IsInserting");
         set => App.Com<bool>("Items", "IsInserting", value);
+    }
+
+    public AbsoluteLayout PopupTarget
+    {
+        get => (AbsoluteLayout)GetValue(PopupTargetProperty);
+
+        set => SetValue(PopupTargetProperty, value);
     }
 
     public ItemButton? SelectedButton { get; set; }

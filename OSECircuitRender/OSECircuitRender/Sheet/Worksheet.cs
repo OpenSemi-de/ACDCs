@@ -29,6 +29,7 @@ public sealed class Worksheet
 
     public Coordinate? DisplayOffset { get; set; }
 
+    public string Filename { get; set; } = "";
     public float GridSize { get; set; } = 2.54f;
 
     public WorksheetItemList Items { get; set; }
@@ -46,6 +47,7 @@ public sealed class Worksheet
 
     public WorksheetItemList SelectedItems { get; set; }
 
+    public PinDrawable? SelectedPin { get; set; }
     public int SheetNum { get; set; }
 
     public Coordinate SheetSize { get; set; } = new(100, 100, 0);
@@ -53,8 +55,6 @@ public sealed class Worksheet
     public bool ShowGrid { get; set; } = true;
 
     public WorksheetItemList Traces { get; set; }
-    public string Filename { get; set; } = "";
-    public PinDrawable? SelectedPin { get; set; }
 
     public bool CalculateScene()
     {
@@ -149,6 +149,11 @@ public sealed class Worksheet
         return (WorksheetItem?)selectedItem;
     }
 
+    public bool IsSelected(WorksheetItem selectedItem)
+    {
+        return SelectedItems.Contains(selectedItem);
+    }
+
     public void SelectItem(WorksheetItem item)
     {
         if (!SelectedItems.Contains(item))
@@ -195,10 +200,5 @@ public sealed class Worksheet
     private void OnSelectionAdded(IWorksheetItem obj)
     {
         OnSelectionChange?.Invoke(SelectedItems);
-    }
-
-    public bool IsSelected(WorksheetItem selectedItem)
-    {
-        return SelectedItems.Contains(selectedItem);
     }
 }

@@ -23,13 +23,14 @@ public class MenuFrame : StackLayout
         }
     }
 
-    private void App_Reset(object sender, ResetEventArgs args)
-    {
-        MenuFrame.HideAllMenus();
-    }
+    public View MainContainer { get; set; }
 
     public AbsoluteLayout? PopupTarget { get; set; }
-    public View MainContainer { get; set; }
+
+    public static void HideAllMenus()
+    {
+        MenuFrameList.ForEach(menuFrame => { menuFrame.IsVisible = false; });
+    }
 
     public async void LoadMenu(List<MenuItemDefinition> items, bool isRoot = false)
     {
@@ -76,7 +77,6 @@ public class MenuFrame : StackLayout
                 }
 
                 menuParts.ForEach(part => Add((IView)part));
-                
             }
             return Task.CompletedTask;
         }).Wait();
@@ -97,8 +97,8 @@ public class MenuFrame : StackLayout
         }
     }
 
-    public static void HideAllMenus()
+    private void App_Reset(object sender, ResetEventArgs args)
     {
-        MenuFrameList.ForEach(menuFrame => { menuFrame.IsVisible = false; });
+        MenuFrame.HideAllMenus();
     }
 }

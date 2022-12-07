@@ -5,7 +5,6 @@ namespace OSECircuitRender.Drawables;
 
 public sealed class DiodeDrawable : DrawableComponent
 {
-
     public DiodeDrawable(IWorksheetItem parent, string value, float x, float y) : base(typeof(DiodeDrawable), parent)
     {
         Setup(value, x, y);
@@ -23,6 +22,5 @@ public sealed class DiodeDrawable : DrawableComponent
         DrawInstructions.Add(new TextInstruction(value, 0f, 12f, 0.5f, 1.3f));
         SetSize(2, 1);
         SetPosition(x, y);
-        
     }
 }

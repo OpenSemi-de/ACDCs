@@ -1,41 +1,38 @@
-﻿using Microsoft.Maui.Controls;
-using System.Threading.Tasks;
-using OSECircuitRender;
-using OSECircuitRender.Scene;
-using OSECircuitRender.Sheet;
-using Microsoft.Maui;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using Microsoft.Maui;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Newtonsoft.Json;
+using OSECircuitRender;
 using OSECircuitRender.Definitions;
 using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
+using OSECircuitRender.Scene;
+using OSECircuitRender.Sheet;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
+
+#pragma warning disable CS4014
 
 namespace ACDCs.Views.Components.CircuitView;
 
 public class CircuitView : ContentView
 {
+    private readonly Workbook _currentWorkbook;
     private readonly GraphicsView _graphicsView;
     private readonly PanGestureRecognizer _panRecognizer;
-    private readonly TapGestureRecognizer _tapRecognizer;
     private readonly PointerGestureRecognizer _pointerRecognizer;
-    private readonly Workbook _currentWorkbook;
-    private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions;
+    private readonly TapGestureRecognizer _tapRecognizer;
     private Worksheet _currentSheet;
-    private Coordinate? _lastDisplayOffset;
+    private Point _cursorPosition;
     private PointF _dragStartPosition;
     private bool _isDraggingItem;
-    private Point _cursorPosition;
-    private Action<WorksheetItemList, WorksheetItemList> ListSetItems { get => App.Com<Action<WorksheetItemList, WorksheetItemList>>("ItemList", "SetItems"); }
-    public Worksheet CurrentWorksheet
-    {
-        get => _currentSheet;
-    }
+    private Coordinate? _lastDisplayOffset;
+    private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions = new();
 
     public CircuitView()
     {
@@ -66,6 +63,26 @@ public class CircuitView : ContentView
         Paint();
     }
 
+    public event EventHandler<EventArgs>? LoadedSheet;
+
+    public event EventHandler<EventArgs>? SavedSheet;
+
+    public Worksheet CurrentWorksheet
+    {
+        get => _currentSheet;
+    }
+
+    private Action<WorksheetItemList, WorksheetItemList>? ListSetItems
+    {
+        get => App.Com<Action<WorksheetItemList, WorksheetItemList>>("ItemList", "SetItems");
+    }
+
+    public void Clear()
+    {
+        _currentWorkbook.Sheets.Clear();
+        _currentSheet = _currentWorkbook.AddNewSheet();
+    }
+
     public async Task InsertToPosition(float x, float y)
     {
         await App.Call(() =>
@@ -80,10 +97,237 @@ public class CircuitView : ContentView
 
             App.Com<bool>("Items", "IsInserting", false);
 
-            ListSetItems(_currentSheet.Items, _currentSheet.SelectedItems);
+            ListSetItems?.Invoke(_currentSheet.Items, _currentSheet.SelectedItems);
 
             return Task.CompletedTask;
         });
+    }
+
+    public async void Open(string fileName)
+    {
+        JsonSerializerSettings settings = new JsonSerializerSettings()
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.All,
+            ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+            Formatting = Formatting.Indented,
+            Error = JsonError,
+            TypeNameHandling = TypeNameHandling.Objects
+        };
+
+        string jsonData = await File.ReadAllTextAsync(fileName);
+        Worksheet? newSheet = JsonConvert.DeserializeObject<Worksheet>(jsonData, settings);
+        if (newSheet != null)
+        {
+            _currentWorkbook.Sheets.Clear();
+            _currentWorkbook.Sheets.AddSheet(newSheet);
+            _currentSheet = newSheet;
+
+            App.Com<Worksheet>(nameof(CircuitView), "CurrentWorksheet", _currentSheet);
+            _currentSheet.Filename = Path.GetFileName(fileName);
+            Paint();
+        }
+
+        OnLoadedSheet();
+    }
+
+    public async Task Paint()
+    {
+        await App.Call(() =>
+        {
+            if (App.Com<bool>("Items", "IsInserting"))
+                return Task.CompletedTask;
+
+            _graphicsView.Drawable = null;
+            _currentSheet?.CalculateScene();
+            DrawableScene? scene = (DrawableScene?)
+                _currentSheet?.SceneManager?.GetSceneForBackend();
+            _graphicsView.Drawable = scene;
+
+            _graphicsView.Invalidate();
+            return Task.CompletedTask;
+        });
+    }
+
+    public async void SaveAs(string fileName)
+    {
+        JsonSerializerSettings settings = new JsonSerializerSettings()
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.All,
+            ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+            Formatting = Formatting.Indented,
+            TypeNameHandling = TypeNameHandling.All
+        };
+        string jsonData = JsonConvert.SerializeObject(_currentSheet, settings: settings);
+        _currentSheet.Filename = Path.GetFileName(fileName);
+        await File.WriteAllTextAsync(fileName, jsonData);
+        OnSavedSheet();
+    }
+
+    protected virtual void OnLoadedSheet()
+    {
+        LoadedSheet?.Invoke(this, EventArgs.Empty);
+    }
+
+    protected virtual void OnSavedSheet()
+    {
+        SavedSheet?.Invoke(this, EventArgs.Empty);
+    }
+
+    private static float GetRelPos(double pos)
+    {
+        var relPos = 0f;
+        App.Call(() =>
+        {
+            relPos = Convert.ToSingle(Math.Round(pos / (Workbook.BaseGridSize * Workbook.Zoom)));
+            return Task.CompletedTask;
+        }).Wait();
+        return relPos;
+    }
+
+    private async Task AddTrace(PinDrawable pinFrom, PinDrawable pinTo)
+    {
+        await App.Call(async () =>
+        {
+            IWorksheetItem? netFromPin = _currentSheet.Nets.FirstOrDefault(net => net.Pins.Contains(pinFrom));
+            IWorksheetItem? netToPin = _currentSheet.Nets.FirstOrDefault(net => net.Pins.Contains(pinTo));
+            if (netToPin == null & netFromPin == null)
+            {
+                _currentSheet.Nets.AddNet(pinFrom, pinTo);
+            }
+
+            if (netToPin == null && netFromPin != null)
+            {
+                netFromPin.Pins.Add(pinTo);
+            }
+
+            if (netToPin != null && netFromPin == null)
+            {
+                netToPin.Pins.Add(pinTo);
+            }
+
+            await Paint();
+        });
+    }
+
+    private WorksheetItem? GetWorksheetItemaAt(PointF position)
+    {
+        WorksheetItem? selectedItem = null;
+        App.Call(() =>
+        {
+            float x = GetRelPos(position.X);
+            float y = GetRelPos(position.Y);
+
+            var hitItems = _currentSheet.Items.Where(
+                item =>
+                    x >= item.X && x <= item.X + item.Width &&
+                    y >= item.Y && y <= item.Y + item.Height
+
+            );
+            var worksheetItems = hitItems as IWorksheetItem[] ?? hitItems.ToArray();
+            if (worksheetItems.Any())
+                selectedItem = (WorksheetItem?)worksheetItems.First();
+            return Task.CompletedTask;
+        }).Wait();
+
+        return selectedItem;
+    }
+
+    private void JsonError(object? sender, ErrorEventArgs e)
+    {
+        Console.WriteLine(e.ErrorContext.Error.ToString());
+    }
+
+    private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
+    {
+        App.Call(async () =>
+        {
+            switch (e.StatusType)
+            {
+                case GestureStatus.Started:
+                case GestureStatus.Completed:
+                    {
+                        _lastDisplayOffset = _currentSheet?.DisplayOffset ??
+                                             new Coordinate(
+                                                 Convert.ToSingle(e.TotalX),
+                                                 Convert.ToSingle(e.TotalY));
+                        if (e.StatusType == GestureStatus.Started)
+                        {
+                            _selectedItemsBasePositions = new(_currentSheet?.SelectedItems.Select(selectedItem =>
+                                new KeyValuePair<WorksheetItem, Coordinate>((WorksheetItem)selectedItem,
+                                    new Coordinate(selectedItem.DrawableComponent.Position))) ?? Array.Empty<KeyValuePair<WorksheetItem, Coordinate>>());
+
+                            _dragStartPosition = new PointF(Convert.ToSingle(_cursorPosition.X - _lastDisplayOffset?.X),
+                                Convert.ToSingle(_cursorPosition.Y - _lastDisplayOffset?.Y));
+                            var testForItem = GetWorksheetItemaAt(_dragStartPosition);
+                            if (testForItem != null)
+                            {
+                                _isDraggingItem = true;
+                            }
+                        }
+
+                        if (e.StatusType == GestureStatus.Completed)
+                            _isDraggingItem = false;
+                        break;
+                    }
+                case GestureStatus.Running:
+                    {
+                        if (_currentSheet != null)
+                        {
+                            if (_isDraggingItem)
+                            {
+                                var cursorPosition = new PointF(Convert.ToSingle(_cursorPosition.X - _lastDisplayOffset?.X),
+                                    Convert.ToSingle(_cursorPosition.Y - _lastDisplayOffset?.Y));
+
+                                PointF differenceBetweenCursorPoints = new(_dragStartPosition.X - cursorPosition.X,
+                                    _dragStartPosition.Y - cursorPosition.Y);
+                                _currentSheet.SelectedItems.ForEach(item =>
+                                    {
+                                        if (item != null)
+                                        {
+                                            Point newPosition = new()
+                                            {
+                                                X = _selectedItemsBasePositions[(WorksheetItem)item].X,
+                                                Y = _selectedItemsBasePositions[(WorksheetItem)item].Y
+                                            };
+
+                                            newPosition.X *= Workbook.Zoom * Workbook.BaseGridSize;
+                                            newPosition.X -= differenceBetweenCursorPoints.X;
+                                            newPosition.X /= Workbook.Zoom * Workbook.BaseGridSize;
+                                            newPosition.X -= item.DrawableComponent.Size.X / 2;
+
+                                            newPosition.Y *= Workbook.Zoom * Workbook.BaseGridSize;
+                                            newPosition.Y -= differenceBetweenCursorPoints.Y;
+                                            newPosition.Y /= Workbook.Zoom * Workbook.BaseGridSize;
+                                            newPosition.Y -= item.DrawableComponent.Size.Y / 2;
+
+                                            newPosition.X = Math.Floor(newPosition.X);
+                                            newPosition.Y = Math.Floor(newPosition.Y);
+
+                                            item.X = Convert.ToInt32(newPosition.X);
+                                            item.Y = Convert.ToInt32(newPosition.Y);
+                                        }
+                                    }
+                                );
+                            }
+                            else
+                            {
+                                _currentSheet.DisplayOffset =
+                                    new Coordinate(
+                                        Convert.ToSingle(e.TotalX),
+                                        Convert.ToSingle(e.TotalY)).Add(_lastDisplayOffset ?? new Coordinate());
+                            }
+                        }
+
+                        await Paint();
+                        break;
+                    }
+            }
+        }).Wait();
+    }
+
+    private void PointerGestureRecognizer_OnPointerMoved(object? sender, PointerEventArgs e)
+    {
+        _cursorPosition = e.GetPosition(_graphicsView) ?? new Point();
     }
 
     private async void TapGestureRecognizer_OnTapped(object? sender, TappedEventArgs e)
@@ -119,7 +363,6 @@ public class CircuitView : ContentView
                     {
                         if (_currentSheet.IsSelected(selectedItem))
                         {
-
                             float x = GetRelPos(touch.X);
                             float y = GetRelPos(touch.Y);
 
@@ -154,7 +397,6 @@ public class CircuitView : ContentView
                                 }
                             }
 
-
                             if (selectedPin == null)
                             {
                                 _currentSheet.ToggleSelectItem(selectedItem);
@@ -170,244 +412,5 @@ public class CircuitView : ContentView
                 }
             }
         });
-    }
-
-    private async Task AddTrace(PinDrawable pinFrom, PinDrawable pinTo)
-    {
-        await App.Call(async () =>
-        {
-
-            IWorksheetItem? netFromPin = _currentSheet.Nets.FirstOrDefault(net => net.Pins.Contains(pinFrom));
-            IWorksheetItem? netToPin = _currentSheet.Nets.FirstOrDefault(net => net.Pins.Contains(pinTo));
-            if (netToPin == null & netFromPin == null)
-            {
-                _currentSheet.Nets.AddNet(pinFrom, pinTo);
-
-            }
-
-            if (netToPin == null && netFromPin != null)
-            {
-                netFromPin.Pins.Add(pinTo);
-            }
-
-
-            if (netToPin != null && netFromPin == null)
-            {
-                netToPin.Pins.Add(pinTo);
-            }
-
-            await Paint();
-        });
-    }
-
-
-    private static float GetRelPos(double pos)
-    {
-        var relPos = 0f;
-        App.Call(() =>
-        {
-            relPos = Convert.ToSingle(Math.Round(pos / (Workbook.BaseGridSize * Workbook.Zoom)));
-            return Task.CompletedTask;
-        }).Wait();
-        return relPos;
-    }
-
-    private WorksheetItem? GetWorksheetItemaAt(PointF position)
-    {
-        WorksheetItem? selectedItem = null;
-        App.Call(() =>
-        {
-            float x = GetRelPos(position.X);
-            float y = GetRelPos(position.Y);
-
-            var hitItems = _currentSheet.Items.Where(
-                item =>
-                    x >= item.X && x <= item.X + item.Width &&
-                    y >= item.Y && y <= item.Y + item.Height
-
-            );
-            var worksheetItems = hitItems as IWorksheetItem[] ?? hitItems.ToArray();
-            if (worksheetItems.Any())
-                selectedItem = (WorksheetItem?)worksheetItems.First();
-            return Task.CompletedTask;
-        }).Wait();
-
-        return selectedItem;
-    }
-
-
-    public async Task Paint()
-    {
-        await App.Call(() =>
-        {
-            if (App.Com<bool>("Items", "IsInserting"))
-                return Task.CompletedTask;
-
-            _graphicsView.Drawable = null;
-            _currentSheet?.CalculateScene();
-            DrawableScene? scene = (DrawableScene?)
-                _currentSheet?.SceneManager?.GetSceneForBackend();
-            _graphicsView.Drawable = scene;
-
-            _graphicsView.Invalidate();
-            return Task.CompletedTask;
-        });
-    }
-
-    private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
-    {
-        App.Call(async () =>
-        {
-            if (e.StatusType == GestureStatus.Started || e.StatusType == GestureStatus.Completed)
-            {
-                _lastDisplayOffset = _currentSheet?.DisplayOffset ??
-                                     new Coordinate(
-                                         Convert.ToSingle(e.TotalX),
-                                         Convert.ToSingle(e.TotalY));
-                if (e.StatusType == GestureStatus.Started)
-                {
-                    _selectedItemsBasePositions = new(_currentSheet.SelectedItems.Select(selectedItem =>
-                        new KeyValuePair<WorksheetItem, Coordinate>((WorksheetItem)selectedItem,
-                           new Coordinate(selectedItem.DrawableComponent.Position))));
-
-                    _dragStartPosition = new PointF(Convert.ToSingle(_cursorPosition.X - _lastDisplayOffset?.X),
-                        Convert.ToSingle(_cursorPosition.Y - _lastDisplayOffset?.Y));
-                    var testForItem = GetWorksheetItemaAt(_dragStartPosition);
-                    if (testForItem != null)
-                    {
-                        _isDraggingItem = true;
-                    }
-                }
-
-                if (e.StatusType == GestureStatus.Completed)
-                    _isDraggingItem = false;
-            }
-
-            if (e.StatusType == GestureStatus.Running)
-            {
-                if (_currentSheet != null)
-                {
-                    if (_isDraggingItem)
-                    {
-                        var cursorPosition = new PointF(Convert.ToSingle(_cursorPosition.X - _lastDisplayOffset?.X),
-                             Convert.ToSingle(_cursorPosition.Y - _lastDisplayOffset?.Y));
-
-                        PointF differenceBetweenCursorPoints = new(_dragStartPosition.X - cursorPosition.X,
-                                _dragStartPosition.Y - cursorPosition.Y);
-                        _currentSheet.SelectedItems.ForEach(item =>
-                        {
-                            if (item != null)
-                            {
-                                Point newPosition = new()
-                                {
-                                    X = _selectedItemsBasePositions[(WorksheetItem)item].X,
-                                    Y = _selectedItemsBasePositions[(WorksheetItem)item].Y
-                                };
-
-                                newPosition.X *= Workbook.Zoom * Workbook.BaseGridSize;
-                                newPosition.X -= differenceBetweenCursorPoints.X;
-                                newPosition.X /= Workbook.Zoom * Workbook.BaseGridSize;
-                                newPosition.X -= item.DrawableComponent.Size.X / 2;
-
-                                newPosition.Y *= Workbook.Zoom * Workbook.BaseGridSize;
-                                newPosition.Y -= differenceBetweenCursorPoints.Y;
-                                newPosition.Y /= Workbook.Zoom * Workbook.BaseGridSize;
-                                newPosition.Y -= item.DrawableComponent.Size.Y / 2;
-
-                                newPosition.X = Math.Floor(newPosition.X);
-                                newPosition.Y = Math.Floor(newPosition.Y);
-
-                                item.X = Convert.ToInt32(newPosition.X);
-                                item.Y = Convert.ToInt32(newPosition.Y);
-                            }
-                        }
-                        );
-                    }
-                    else
-                    {
-                        _currentSheet.DisplayOffset =
-                                new Coordinate(
-                                    Convert.ToSingle(e.TotalX),
-                                    Convert.ToSingle(e.TotalY)).Add(_lastDisplayOffset ?? new Coordinate());
-                    }
-                }
-
-                await Paint();
-            }
-        }).Wait();
-    }
-
-    private void PointerGestureRecognizer_OnPointerMoved(object? sender, PointerEventArgs e)
-    {
-        _cursorPosition = e.GetPosition(_graphicsView) ?? new Point();
-    }
-
-
-    public async void SaveAs(string fileName)
-    {
-        JsonSerializerSettings settings = new JsonSerializerSettings()
-        {
-            PreserveReferencesHandling = PreserveReferencesHandling.All,
-            ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
-            Formatting = Formatting.Indented,
-            TypeNameHandling = TypeNameHandling.All
-        };
-        string jsonData = JsonConvert.SerializeObject(_currentSheet, settings: settings);
-        _currentSheet.Filename = Path.GetFileName(fileName);
-        await File.WriteAllTextAsync(fileName, jsonData);
-        OnSavedSheet();
-    }
-
-    public async void Open(string fileName)
-    {
-        JsonSerializerSettings settings = new JsonSerializerSettings()
-        {
-            PreserveReferencesHandling = PreserveReferencesHandling.All,
-            ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
-            Formatting = Formatting.Indented,
-            Error = JsonError,
-            TypeNameHandling = TypeNameHandling.Objects
-        };
-
-        string jsonData = await File.ReadAllTextAsync(fileName);
-        Worksheet? newSheet = JsonConvert.DeserializeObject<Worksheet>(jsonData, settings);
-        if (newSheet != null)
-        {
-            _currentWorkbook.Sheets.Clear();
-            _currentWorkbook.Sheets.AddSheet(newSheet);
-            _currentSheet = newSheet;
-
-            App.Com<Worksheet>(nameof(CircuitView), "CurrentWorksheet", _currentSheet);
-            _currentSheet.Filename = Path.GetFileName(fileName);
-            Paint();
-        }
-
-        OnLoadedSheet();
-    }
-
-    private void JsonError(object? sender, ErrorEventArgs e)
-    {
-        Console.WriteLine(e.ErrorContext.Error.ToString());
-    }
-
-    public void Clear()
-    {
-
-        _currentWorkbook.Sheets.Clear();
-        _currentSheet = _currentWorkbook.AddNewSheet();
-    }
-
-    public event EventHandler<EventArgs> LoadedSheet;
-
-    protected virtual void OnLoadedSheet()
-    {
-        LoadedSheet?.Invoke(this, EventArgs.Empty);
-    }
-
-    public event EventHandler<EventArgs> SavedSheet;
-
-    protected virtual void OnSavedSheet()
-    {
-        SavedSheet?.Invoke(this, EventArgs.Empty);
     }
 }

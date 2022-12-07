@@ -5,7 +5,7 @@ using System.IO;
 
 namespace ACDCs.Views.Components.Menu.MenuHandlers;
 
-public class FileMenuHandlers: MenuHandlerView
+public class FileMenuHandlers : MenuHandlerView
 {
     public FileMenuHandlers()
     {
@@ -13,7 +13,6 @@ public class FileMenuHandlers: MenuHandlerView
         MenuHandler.Add("openfile", OpenFile);
         MenuHandler.Add("savefile", SaveFile);
         MenuHandler.Add("saveasfile", SaveFileAs);
-
     }
 
     private async void NewFile()
@@ -22,17 +21,23 @@ public class FileMenuHandlers: MenuHandlerView
         await CircuitView.Paint();
     }
 
-    private async void SaveFileAs()
+    private async void OpenFile()
     {
+        string fileName = "";
+        IDictionary<DevicePlatform, IEnumerable<string>> fileTypes =
+            new Dictionary<DevicePlatform, IEnumerable<string>>();
+        fileTypes.Add(DevicePlatform.WinUI, new List<string>() { ".acc" });
+        PickOptions options = new()
+        {
+            FileTypes = new FilePickerFileType(fileTypes),
+            PickerTitle = "Open circuit file"
+        };
 
-
-        var result = await PopupPage.DisplayPromptAsync("filename", "filename");
+        var result = await FilePicker.Default.PickAsync(options);
         if (result != null)
         {
-            var fileName = result;
-            string mainDir = FileSystem.Current.AppDataDirectory;
-            CircuitView.SaveAs(Path.Combine(mainDir, fileName));
-
+            fileName = result.FullPath;
+            CircuitView.Open(fileName);
         }
     }
 
@@ -48,23 +53,14 @@ public class FileMenuHandlers: MenuHandlerView
         }
     }
 
-    private async void OpenFile()
+    private async void SaveFileAs()
     {
-        string fileName = "";
-        IDictionary<DevicePlatform, IEnumerable<string>> fileTypes =
-            new Dictionary<DevicePlatform, IEnumerable<string>>();
-        fileTypes.Add(DevicePlatform.WinUI, new List<string>(){".acc"});
-        PickOptions options = new()
-        {
-            FileTypes = new FilePickerFileType(fileTypes),
-            PickerTitle = "Open circuit file"
-        };
-
-        var result = await FilePicker.Default.PickAsync(options);
+        var result = await PopupPage.DisplayPromptAsync("filename", "filename");
         if (result != null)
         {
-            fileName = result.FullPath;
-            CircuitView.Open(fileName);
+            var fileName = result;
+            string mainDir = FileSystem.Current.AppDataDirectory;
+            CircuitView.SaveAs(Path.Combine(mainDir, fileName));
         }
     }
 }

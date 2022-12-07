@@ -5,13 +5,10 @@ namespace OSECircuitRender.Drawables;
 
 public sealed class ResistorDrawable : DrawableComponent
 {
-
-
     public ResistorDrawable(IWorksheetItem? parent, string value, float x, float y) : base(typeof(ResistorDrawable), parent)
     {
         Setup(value, x, y);
     }
-
 
     private void Setup(string value = "N/A", float x = 0, float y = 0)
     {
@@ -23,6 +20,5 @@ public sealed class ResistorDrawable : DrawableComponent
         DrawInstructions.Add(new TextInstruction(value, 0f, 12f, 0.5f, 0.7f));
         SetSize(2, 1);
         SetPosition(x, y);
-
     }
 }

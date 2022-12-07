@@ -10,29 +10,19 @@ namespace OSECircuitRender.Scene;
 
 public class DrawableScene : IDrawable
 {
-    public float BaseGridSize
-    {
-        get => CurrentGridSize ?? Workbook.BaseGridSize;
-    }
-
-    public float Zoom
-    {
-        get => Workbook.Zoom;
-    }
+    private float? _currentGridSize;
 
     private int _fontSize;
-    private float? _currentGridSize;
 
     public DrawableScene(SheetScene scene)
     {
         SetScene(scene);
     }
 
-    public Coordinate? DisplayOffset { get; set; }
-    public bool IsRendering { get; private set; } = false;
-    public SheetScene Scene { get; private set; }
-
-    public Coordinate SheetSize { get; set; }
+    public float BaseGridSize
+    {
+        get => CurrentGridSize ?? Workbook.BaseGridSize;
+    }
 
     public float? CurrentGridSize
     {
@@ -40,19 +30,17 @@ public class DrawableScene : IDrawable
         set => _currentGridSize = value;
     }
 
-    public  float GetScale(float size, float scale)
-    {
-        return size * scale;
-    }
+    public Coordinate? DisplayOffset { get; set; }
 
-    public  void SetFillColor(ICanvas canvas, Color fillColor)
-    {
-        canvas.FillColor = new Microsoft.Maui.Graphics.Color(fillColor.R, fillColor.G, fillColor.B);
-    }
+    public bool IsRendering { get; private set; } = false;
 
-    public  void SetStrokeColor(ICanvas canvas, Color penColor)
+    public SheetScene Scene { get; private set; }
+
+    public Coordinate SheetSize { get; set; }
+
+    public float Zoom
     {
-        canvas.StrokeColor = new Microsoft.Maui.Graphics.Color(penColor.R, penColor.G, penColor.B);
+        get => Workbook.Zoom;
     }
 
     public void Draw(ICanvas canvas, RectF dirtyRect)
@@ -96,6 +84,11 @@ public class DrawableScene : IDrawable
                 component => Render(canvas, component)
             );
         IsRendering = false;
+    }
+
+    public float GetScale(float size, float scale)
+    {
+        return size * scale;
     }
 
     public void Render(ICanvas canvas, IDrawableComponent drawable)
@@ -228,6 +221,11 @@ public class DrawableScene : IDrawable
         canvas.RestoreState();
     }
 
+    public void SetFillColor(ICanvas canvas, Color fillColor)
+    {
+        canvas.FillColor = new Microsoft.Maui.Graphics.Color(fillColor.R, fillColor.G, fillColor.B);
+    }
+
     public void SetScene(SheetScene scene)
     {
         Scene = scene;
@@ -242,11 +240,34 @@ public class DrawableScene : IDrawable
         SheetSize = scene.SheetSize;
     }
 
+    public void SetStrokeColor(ICanvas canvas, Color penColor)
+    {
+        canvas.StrokeColor = new Microsoft.Maui.Graphics.Color(penColor.R, penColor.G, penColor.B);
+    }
+
     private void DrawCircle(ICanvas canvas, Coordinate centerPos, Coordinate drawPos, Coordinate drawSize)
     {
         var x = GetScale(drawSize.X, centerPos.X);
         var y = GetScale(drawSize.Y, centerPos.Y);
         canvas.DrawCircle(x, y, Zoom * BaseGridSize * 0.1f);
+    }
+
+    private void DrawCurve(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, Coordinate curvePosition,
+                                Coordinate curveEnd, float curveAngleStart, float curveAngleEnd)
+    {
+        var startX = GetScale(drawSize.X, curvePosition.X);
+        var startY = GetScale(drawSize.Y, curvePosition.Y);
+        var width = GetScale(drawSize.X, curveEnd.X) - startX;
+        var height = GetScale(drawSize.Y, curveEnd.Y) - startY;
+
+        // canvas.DrawRectangle(startX, startY, width, height);
+        canvas.DrawArc(
+            startX,
+            startY,
+            width,
+            height,
+            curveAngleStart,
+            curveAngleEnd, false, false);
     }
 
     private void DrawLine(ICanvas canvas, Coordinate drawSize, LineInstruction line)
@@ -258,7 +279,7 @@ public class DrawableScene : IDrawable
             GetScale(drawSize.Y, line.End.Y));
     }
 
-    private  void DrawPath(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, PathInstruction path)
+    private void DrawPath(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, PathInstruction path)
     {
         PathF pathF = new();
 
@@ -323,7 +344,7 @@ public class DrawableScene : IDrawable
         canvas.DrawPath(pathF);
     }
 
-    private  void DrawRectangle(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, Coordinate upperLeft,
+    private void DrawRectangle(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, Coordinate upperLeft,
         Coordinate lowerRight, Color fillColor = null)
     {
         if (fillColor != null)
@@ -340,7 +361,7 @@ public class DrawableScene : IDrawable
             GetScale(drawSize.Y, lowerRight.Y));
     }
 
-    private  void DrawText(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, TextInstruction text,
+    private void DrawText(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, TextInstruction text,
         Coordinate centerPos, IDrawInstruction instruction)
     {
         var x = GetScale(drawSize.X, centerPos.X);
@@ -367,23 +388,5 @@ public class DrawableScene : IDrawable
         //  drawPos.Y += offY;
         //  drawPos.X = drawPos.X - Zoom * BaseGridSize * ((drawable.Size.X % 2) / 2);
         //  drawPos.Y = drawPos.Y - Zoom * BaseGridSize * ((drawable.Size.Y % 2) / 2);
-    }
-
-    private void DrawCurve(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, Coordinate curvePosition,
-                                Coordinate curveEnd, float curveAngleStart, float curveAngleEnd)
-    {
-        var startX = GetScale(drawSize.X, curvePosition.X);
-        var startY = GetScale(drawSize.Y, curvePosition.Y);
-        var width = GetScale(drawSize.X, curveEnd.X) - startX;
-        var height = GetScale(drawSize.Y, curveEnd.Y) - startY;
-
-        // canvas.DrawRectangle(startX, startY, width, height);
-        canvas.DrawArc(
-            startX,
-            startY,
-            width,
-            height,
-            curveAngleStart,
-            curveAngleEnd, false, false);
     }
 }

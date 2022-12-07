@@ -1,18 +1,15 @@
-﻿using OSECircuitRender.Definitions;
+﻿using Newtonsoft.Json;
+using OSECircuitRender.Definitions;
 using OSECircuitRender.Instructions;
 using OSECircuitRender.Interfaces;
-using System.Linq;
-using Newtonsoft.Json;
 using OSECircuitRender.Sheet;
+using System.Linq;
 
 namespace OSECircuitRender.Drawables;
 
 public class PinDrawable : DrawableComponent
 {
     private Worksheet? _worksheet;
-
-    [JsonIgnore]
-    public new IWorksheetItem? BackRef => Worksheet?.Items.FirstOrDefault(item => item.Pins.Contains(this));
 
     public PinDrawable(IWorksheetItem parent, float x, float y, string pinText = "") : base(typeof(PinDrawable), parent)
     {
@@ -33,18 +30,10 @@ public class PinDrawable : DrawableComponent
         Setup(1, 1);
     }
 
+    [JsonIgnore]
+    public new IWorksheetItem? BackRef => Worksheet?.Items.FirstOrDefault(item => item.Pins.Contains(this));
+
     public string PinText { get; }
-
-    private void Setup(float x, float y)
-    {
-        if (ParentItem != null && !ParentItem.Pins.Contains(this))
-        {
-            ParentItem.Pins.Add(this);
-        }
-        SetSize(1, 1);
-        SetPosition(x, y);
-
-    }
 
     public new Worksheet? Worksheet
     {
@@ -54,5 +43,15 @@ public class PinDrawable : DrawableComponent
             _worksheet = value;
             Setup(Position.X, Position.Y);
         }
+    }
+
+    private void Setup(float x, float y)
+    {
+        if (ParentItem != null && !ParentItem.Pins.Contains(this))
+        {
+            ParentItem.Pins.Add(this);
+        }
+        SetSize(1, 1);
+        SetPosition(x, y);
     }
 }

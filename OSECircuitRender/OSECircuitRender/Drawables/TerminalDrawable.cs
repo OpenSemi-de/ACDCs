@@ -35,16 +35,15 @@ public sealed class TerminalDrawable : DrawableComponent
                 }
         }
 
-        Setup( x, y);
+        Setup(x, y);
     }
 
     public string TerminalText { get; set; }
     public TerminalDrawableType TerminalType { get; set; }
 
-    private void Setup( float x, float y)
+    private void Setup(float x, float y)
     {
         SetSize(1, 1);
         SetPosition(x, y);
-        
     }
 }

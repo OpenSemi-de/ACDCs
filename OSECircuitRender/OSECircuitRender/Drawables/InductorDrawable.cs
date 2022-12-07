@@ -5,7 +5,6 @@ namespace OSECircuitRender.Drawables;
 
 public sealed class InductorDrawable : DrawableComponent
 {
-
     public InductorDrawable(IWorksheetItem? parent, string value, float x, float y) : base(typeof(ResistorDrawable), parent)
     {
         Setup(value, x, y);
@@ -21,6 +20,5 @@ public sealed class InductorDrawable : DrawableComponent
 
         SetSize(2, 1);
         SetPosition(x, y);
-        
     }
 }

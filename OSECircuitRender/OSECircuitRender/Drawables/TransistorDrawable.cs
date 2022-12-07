@@ -6,14 +6,11 @@ namespace OSECircuitRender.Drawables;
 
 public sealed class TransistorDrawable : DrawableComponent
 {
-
-
     public TransistorDrawable(IWorksheetItem? parent, TransistorDrawableType type, float x, float y) : base(
         typeof(TransistorDrawable), parent)
     {
         Setup(type, x, y);
     }
-    
 
     private void Setup(TransistorDrawableType type = TransistorDrawableType.Pnp, float x = 0,
         float y = 0)
@@ -30,7 +27,7 @@ public sealed class TransistorDrawable : DrawableComponent
         {
             DrawablePins.Add(new PinDrawable(ParentItem, 0, 0.5f, "B"));
             DrawablePins.Add(new PinDrawable(ParentItem, 1f, 0f, "E"));
-            DrawablePins.Add(new PinDrawable(ParentItem,1f, 1f, "C"));
+            DrawablePins.Add(new PinDrawable(ParentItem, 1f, 1f, "C"));
 
             DrawInstructions.Add(new LineInstruction(0.7f, 0.4f, 0.7f, 0.25f));
             DrawInstructions.Add(new LineInstruction(0.7f, 0.4f, 0.85f, 0.4f));
@@ -39,9 +36,9 @@ public sealed class TransistorDrawable : DrawableComponent
 
         if (type == TransistorDrawableType.Npn)
         {
-            DrawablePins.Add(new PinDrawable(ParentItem,0, 0.5f, "B"));
-            DrawablePins.Add(new PinDrawable(ParentItem,1f, 0f, "C"));
-            DrawablePins.Add(new PinDrawable(ParentItem,1f, 1f, "E"));
+            DrawablePins.Add(new PinDrawable(ParentItem, 0, 0.5f, "B"));
+            DrawablePins.Add(new PinDrawable(ParentItem, 1f, 0f, "C"));
+            DrawablePins.Add(new PinDrawable(ParentItem, 1f, 1f, "E"));
 
             DrawInstructions.Add(new LineInstruction(0.8f, 0.7f, 0.8f, 0.55f));
             DrawInstructions.Add(new LineInstruction(0.8f, 0.7f, 0.65f, 0.7f));
@@ -50,6 +47,5 @@ public sealed class TransistorDrawable : DrawableComponent
 
         SetSize(2, 2);
         SetPosition(x, y);
-        
     }
 }

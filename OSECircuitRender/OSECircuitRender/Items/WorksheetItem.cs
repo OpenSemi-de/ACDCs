@@ -1,9 +1,9 @@
 ﻿#nullable enable
 
+using Newtonsoft.Json;
 using OSECircuitRender.Drawables;
 using OSECircuitRender.Interfaces;
 using System;
-using Newtonsoft.Json;
 
 namespace OSECircuitRender.Items;
 

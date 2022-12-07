@@ -1,8 +1,8 @@
-﻿using System;
-using CommunityToolkit.Maui.Markup;
+﻿using CommunityToolkit.Maui.Markup;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Layouts;
 using OSECircuitRender.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,10 +21,10 @@ public class ItemsListDragContainer : DragContainer.DragContainer
         Title = "Items / selection";
         Orientation = StackOrientation.Vertical;
         ShowButtonHide();
-     
+
         AbsoluteLayout.SetLayoutBounds(this, new(1, 100, 300, 400));
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.XProportional);
-     
+
         _layout = new()
         {
             HorizontalOptions = LayoutOptions.Fill,
@@ -41,7 +41,7 @@ public class ItemsListDragContainer : DragContainer.DragContainer
         {
             LoadTemplate = LoadHeader
         };
-    
+
         _listViewItems = new(ListViewCachingStrategy.RecycleElement)
         {
             HorizontalOptions = LayoutOptions.Fill,
@@ -58,6 +58,27 @@ public class ItemsListDragContainer : DragContainer.DragContainer
         _layout.Add(_listViewItems);
         Layout = _layout;
         App.Com<Action<WorksheetItemList, WorksheetItemList>>("ItemList", "SetItems", SetItems);
+    }
+
+    public AbsoluteLayout PopupTarget
+    {
+        get => (AbsoluteLayout)GetValue(PopupTargetProperty);
+
+        set => SetValue(PopupTargetProperty, value);
+    }
+
+    public void SetItems(WorksheetItemList items, WorksheetItemList selected)
+    {
+        var list = items.Select(item =>
+            new ItemsListItem(selected.Contains(item), item.GetType().Name.Replace("Item", ""), item.RefName, item)
+        ).ToList();
+        _listViewItems.ItemsSource = null;
+        _listViewItems.ItemsSource = list;
+    }
+
+    private void AddLabelToTemplate(StackLayout layout, string bindingPath, double width)
+    {
+        layout.Add(new Label().Bind(bindingPath).Width(width));
     }
 
     private object LoadHeader()
@@ -82,26 +103,5 @@ public class ItemsListDragContainer : DragContainer.DragContainer
         AddLabelToTemplate(layout, "TypeName", 120);
         AddLabelToTemplate(layout, "RefName", 160);
         return viewcell;
-    }
-
-    private void AddLabelToTemplate(StackLayout layout, string bindingPath, double width)
-    {
-        layout.Add(new Label().Bind(bindingPath).Width(width));
-    }
-
-    public void SetItems(WorksheetItemList items, WorksheetItemList selected)
-    {
-        var list = items.Select(item =>
-            new ItemsListItem(selected.Contains(item), item.GetType().Name.Replace("Item", ""), item.RefName, item)
-        ).ToList();
-        _listViewItems.ItemsSource = null;
-        _listViewItems.ItemsSource = list;
-    }
-
-    public AbsoluteLayout PopupTarget
-    {
-        get => (AbsoluteLayout)GetValue(PopupTargetProperty);
-
-        set => SetValue(PopupTargetProperty, value);
     }
 }

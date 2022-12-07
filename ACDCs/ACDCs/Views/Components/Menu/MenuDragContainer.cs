@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using Microsoft.Maui;
 
 namespace ACDCs.Views.Components.Menu;
 
@@ -13,9 +13,9 @@ public class MenuDragContainer : DragContainer.DragContainer
     private static readonly BindableProperty PopupTargetProperty =
         BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
 
-    private readonly StackLayout _menuLayout;
-    private readonly MenuFrame _menuFrame;
     private readonly Label _fileNameLabel;
+    private readonly MenuFrame _menuFrame;
+    private readonly StackLayout _menuLayout;
 
     public MenuDragContainer()
     {
@@ -46,34 +46,11 @@ public class MenuDragContainer : DragContainer.DragContainer
             BackgroundColor = Colors.Transparent,
         };
 
-
         _menuLayout.Add(_menuFrame);
         _menuLayout.Add(_fileNameLabel);
         Layout = _menuLayout;
         LoadMenu("menu_main.json");
         Loaded += MenuDragContainer_Loaded;
-
-    }
-
-    private void MenuDragContainer_Loaded(object? sender, System.EventArgs e)
-    {
-        if (CircuitView != null)
-        {
-            CircuitView.LoadedSheet += Sheet_Loaded;
-            CircuitView.SavedSheet += Sheet_Saved;
-        }
-    }
-
-    private void Sheet_Loaded(object? sender, EventArgs e)
-    {
-
-        _fileNameLabel.Text = CircuitView?.CurrentWorksheet.Filename;
-    }
-
-    private void Sheet_Saved(object? sender, EventArgs e)
-    {
-
-        _fileNameLabel.Text = CircuitView?.CurrentWorksheet.Filename;
     }
 
     public AbsoluteLayout PopupTarget
@@ -95,5 +72,24 @@ public class MenuDragContainer : DragContainer.DragContainer
             var items = JsonConvert.DeserializeObject<List<MenuItemDefinition>>(jsonData);
             if (items != null) _menuFrame.LoadMenu(items, true);
         });
+    }
+
+    private void MenuDragContainer_Loaded(object? sender, System.EventArgs e)
+    {
+        if (CircuitView != null)
+        {
+            CircuitView.LoadedSheet += Sheet_Loaded;
+            CircuitView.SavedSheet += Sheet_Saved;
+        }
+    }
+
+    private void Sheet_Loaded(object? sender, EventArgs e)
+    {
+        _fileNameLabel.Text = CircuitView?.CurrentWorksheet.Filename;
+    }
+
+    private void Sheet_Saved(object? sender, EventArgs e)
+    {
+        _fileNameLabel.Text = CircuitView?.CurrentWorksheet.Filename;
     }
 }

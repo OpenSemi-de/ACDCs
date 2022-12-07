@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using OSECircuitRender.Items;
+﻿using OSECircuitRender.Items;
 using OSECircuitRender.Sheet;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ACDCs.Views.Components.Menu.MenuHandlers;
 
@@ -15,25 +15,17 @@ public class EditMenuHandlers : MenuHandlerView
         MenuHandler.Add("deselectall", DeselectAll);
     }
 
-    private async void DeselectAll()
-    {
-        CircuitView.CurrentWorksheet.SelectedItems.Clear();
-        await CircuitView.Paint();
-    }
-
-    private async void SelectAll()
-    {
-        CircuitView.CurrentWorksheet.SelectedItems.AddRange(
-            CircuitView.CurrentWorksheet.Items);
-        await CircuitView.Paint();
-    }
-
     private async void Delete()
     {
-
         Worksheet sheet = CircuitView.CurrentWorksheet;
         sheet.SelectedItems.ToList().ForEach(
             item => { sheet.DeleteItem((WorksheetItem)item); });
+        await CircuitView.Paint();
+    }
+
+    private async void DeselectAll()
+    {
+        CircuitView.CurrentWorksheet.SelectedItems.Clear();
         await CircuitView.Paint();
     }
 
@@ -68,4 +60,10 @@ public class EditMenuHandlers : MenuHandlerView
         await CircuitView.Paint();
     }
 
+    private async void SelectAll()
+    {
+        CircuitView.CurrentWorksheet.SelectedItems.AddRange(
+            CircuitView.CurrentWorksheet.Items);
+        await CircuitView.Paint();
+    }
 }

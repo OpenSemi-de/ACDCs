@@ -32,6 +32,5 @@ public class MenuHandler
 
             return Task.CompletedTask;
         }).Wait();
-
     }
 }

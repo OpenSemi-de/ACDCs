@@ -13,7 +13,7 @@ public class ItemsListItem
     }
 
     public bool IsSelected { get; set; }
-    public string TypeName { get; set; }
-    public string RefName { get; set; }
     public IWorksheetItem Item { get; set; }
+    public string RefName { get; set; }
+    public string TypeName { get; set; }
 }

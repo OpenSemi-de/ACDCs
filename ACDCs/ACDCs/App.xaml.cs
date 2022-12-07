@@ -1,9 +1,9 @@
 ﻿using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
-using System.Diagnostics;
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -11,6 +11,8 @@ namespace ACDCs;
 
 public partial class App : Application
 {
+    private static readonly ConcurrentDictionary<string, ConcurrentDictionary<string, object?>> _comValues = new();
+
     public App()
     {
         InitializeComponent();
@@ -19,15 +21,6 @@ public partial class App : Application
     }
 
     public static event ResetEvent? Reset;
-
-    public static async Task<string> LoadMauiAssetAsString(string name)
-    {
-        await using var stream = await FileSystem.OpenAppPackageFileAsync(name);
-        using var reader = new StreamReader(stream);
-
-        var contents = await reader.ReadToEndAsync();
-        return contents;
-    }
 
     public static async Task Call(Func<Task> action, bool disableReset = false)
     {
@@ -57,13 +50,6 @@ public partial class App : Application
         }
     }
 
-    private static void OnReset(ResetEventArgs args)
-    {
-        Reset?.Invoke(null, args);
-    }
-
-    private static readonly ConcurrentDictionary<string, ConcurrentDictionary<string, object?>> _comValues = new();
-
     public static T? Com<T>(string name, string property, object? value = null)
     {
         if (value != null)
@@ -86,6 +72,20 @@ public partial class App : Application
         }
 
         return default;
+    }
+
+    public static async Task<string> LoadMauiAssetAsString(string name)
+    {
+        await using var stream = await FileSystem.OpenAppPackageFileAsync(name);
+        using var reader = new StreamReader(stream);
+
+        var contents = await reader.ReadToEndAsync();
+        return contents;
+    }
+
+    private static void OnReset(ResetEventArgs args)
+    {
+        Reset?.Invoke(null, args);
     }
 }
 

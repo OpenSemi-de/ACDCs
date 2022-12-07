@@ -8,13 +8,16 @@ namespace OSECircuitRender.Items;
 
 public sealed class WorksheetItemList : List<IWorksheetItem>
 {
-    public Action<IWorksheetItem>? OnItemAdded { get; set; }
-    public ReferenceManager ReferenceManager { get; } = new();
-
     public WorksheetItemList(Worksheet? worksheet)
     {
         Worksheet = worksheet;
     }
+
+    public Action<IWorksheetItem>? OnItemAdded { get; set; }
+    public ReferenceManager ReferenceManager { get; } = new();
+
+    public Worksheet? Worksheet
+    { get; set; }
 
     public int AddItem(IWorksheetItem item)
     {
@@ -24,14 +27,6 @@ public sealed class WorksheetItemList : List<IWorksheetItem>
         item.DrawableComponent.Worksheet = Worksheet;
         OnItemAdded?.Invoke(item);
         return refNum;
-    }
-
-    public Worksheet? Worksheet
-    { get; set; }
-
-    public void OnAdded(Action<IWorksheetItem>? onItemAdded)
-    {
-        OnItemAdded = onItemAdded;
     }
 
     public NetItem AddNet(PinDrawable pin1, PinDrawable pin2)
@@ -46,5 +41,10 @@ public sealed class WorksheetItemList : List<IWorksheetItem>
         Add(newNet);
         OnItemAdded?.Invoke(newNet);
         return newNet;
+    }
+
+    public void OnAdded(Action<IWorksheetItem>? onItemAdded)
+    {
+        OnItemAdded = onItemAdded;
     }
 }

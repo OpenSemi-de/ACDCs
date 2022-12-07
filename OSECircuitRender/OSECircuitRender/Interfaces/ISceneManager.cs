@@ -10,6 +10,7 @@ public interface ISceneManager
     Coordinate? DisplayOffset { get; set; }
     SheetScene? Scene { get; set; }
     bool ShowGrid { get; set; }
+    Color ForegroundColor { get; set; }
 
     object? GetSceneForBackend();
 

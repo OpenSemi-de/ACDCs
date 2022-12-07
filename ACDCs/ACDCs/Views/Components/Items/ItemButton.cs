@@ -16,26 +16,32 @@ namespace ACDCs.Views.Components.Items
 {
     public class ItemButton : ImageButton
     {
-        private readonly IDrawable? _drawableSheet;
+        private IDrawable? _drawableSheet;
 
         public ItemButton(Type? itemType)
         {
             ItemType = itemType;
-
-            if (itemType != null)
+            Padding = 0;
+        }
+        public void Draw()
+        {
+            if (ItemType != null)
             {
                 Worksheet sheet = new Workbook().AddNewSheet();
 
                 sheet.GridSize = Convert.ToSingle(WidthRequest / Workbook.BaseGridSize * Workbook.Zoom);
-                sheet.BackgroundColor = new Color(255, 255, 255, 0);
                 sheet.ShowGrid = false;
                 sheet.DisplayOffset = new Coordinate(-10, -10);
+                if (BackgroundColor != null)
+                {
+                    sheet.BackgroundColor = new Color(BackgroundColor.WithAlpha(0.2f));
+                }
 
                 object?[] arguments = { };
-                if (Activator.CreateInstance(itemType, args: arguments) is WorksheetItem item)
+                if (Activator.CreateInstance(ItemType, args: arguments) is WorksheetItem item)
                 {
                     sheet.Items.AddItem(item);
-                    sheet.GridSize = 3f / item.Width;
+                    sheet.GridSize = (float)(3f / item.Width * (HeightRequest / 50f));
                     sheet.DisplayOffset.Y = 7 * (3 / item.Height - 1) - 7;
                 }
 
@@ -44,7 +50,7 @@ namespace ACDCs.Views.Components.Items
                     _drawableSheet = sheet.SceneManager?.GetSceneForBackend() as IDrawable;
                     if (_drawableSheet != null)
                     {
-                        using SkiaBitmapExportContext context = new(42, 42, 1);
+                        using SkiaBitmapExportContext context = new((int)(WidthRequest -2), (int)(HeightRequest -2), 1);
 
                         _drawableSheet?.Draw(context.Canvas, RectF.Zero);
 
@@ -52,7 +58,7 @@ namespace ACDCs.Views.Components.Items
                         context.Image.Save(stream);
                         stream.Position = 0;
 
-                        FakeLocalFile fl = new(stream, "imagebutton_source_" + itemType.Name + ".bmp");
+                        FakeLocalFile fl = new(stream, "imagebutton_source_" + ItemType.Name + ".bmp");
 
                         Source = ImageSource.FromFile(fl.FilePath);
                     }
@@ -73,6 +79,11 @@ namespace ACDCs.Views.Components.Items
             context.WriteToStream(stream);
 
             return Task.FromResult(stream);
+        }
+
+        public void SetBackground(Microsoft.Maui.Graphics.Color backgroundColor)
+        {
+            BackgroundColor = backgroundColor;
         }
     }
 

@@ -21,7 +21,7 @@ public sealed class WorksheetItemList : List<IWorksheetItem>
 
     public int AddItem(IWorksheetItem item)
     {
-        var refNum = ReferenceManager.GetRefNum(item.GetType().Name);
+        int refNum = ReferenceManager.GetRefNum(item.GetType().Name);
         item.RefName = $"{item.GetType().Name}{refNum}";
         Add(item);
         item.DrawableComponent.Worksheet = Worksheet;
@@ -31,7 +31,7 @@ public sealed class WorksheetItemList : List<IWorksheetItem>
 
     public NetItem AddNet(PinDrawable pin1, PinDrawable pin2)
     {
-        var refNum = ReferenceManager.GetRefNum(nameof(NetItem));
+        int refNum = ReferenceManager.GetRefNum(nameof(NetItem));
 
         var newNet = new NetItem();
         newNet.Pins.Add(pin1);

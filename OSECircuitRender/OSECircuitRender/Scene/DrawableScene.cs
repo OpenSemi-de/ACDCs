@@ -1,17 +1,15 @@
-﻿using Microsoft.Maui.Graphics;
+﻿using System;
+using System.Linq;
+using Microsoft.Maui.Graphics;
 using OSECircuitRender.Definitions;
 using OSECircuitRender.Instructions;
 using OSECircuitRender.Interfaces;
-using System;
-using System.Linq;
 using Color = OSECircuitRender.Definitions.Color;
 
 namespace OSECircuitRender.Scene;
 
 public class DrawableScene : IDrawable
 {
-    private float? _currentGridSize;
-
     private int _fontSize;
 
     public DrawableScene(SheetScene? scene)
@@ -28,19 +26,17 @@ public class DrawableScene : IDrawable
         SetScene(scene);
     }
 
+    public Color? BackgroundColor { get; set; }
+
     public float BaseGridSize
     {
         get => CurrentGridSize ?? Workbook.BaseGridSize;
     }
 
-    public float? CurrentGridSize
-    {
-        get => _currentGridSize;
-        set => _currentGridSize = value;
-    }
+    public float? CurrentGridSize { get; set; }
 
     public Coordinate? DisplayOffset { get; set; }
-
+    public Color? ForegroundColor { get; set; }
     public bool IsRendering { get; private set; } = false;
 
     public SheetScene? Scene { get; private set; }
@@ -55,6 +51,11 @@ public class DrawableScene : IDrawable
         _fontSize = Convert.ToInt32(Math.Round(BaseGridSize * Zoom / 2));
         canvas.Antialias = true;
 
+        if (Workbook.BaseFontName != "")
+        {
+            canvas.Font = new Font(Workbook.BaseFontName);
+        }
+
         canvas.FillColor = Scene?.BackgroundColor != null
             ? new Microsoft.Maui.Graphics.Color(
                 Scene.BackgroundColor.R,
@@ -63,6 +64,8 @@ public class DrawableScene : IDrawable
                 Scene.BackgroundColor.A
             )
             : Colors.WhiteSmoke;
+        BackgroundColor = Scene?.BackgroundColor;
+        ForegroundColor = Scene?.ForegroundColor ?? new Color(255, 255, 255);
 
         canvas.FillRectangle(0, 0, 10000, 10000);
         canvas.SaveState();
@@ -107,8 +110,8 @@ public class DrawableScene : IDrawable
             canvas.Translate(DisplayOffset.X, DisplayOffset.Y);
         }
 
-        var lowestPinX = 0;
-        var lowestPinY = 0;
+        int lowestPinX = 0;
+        int lowestPinY = 0;
 
         if (drawable.DrawablePins.Any())
         {
@@ -125,7 +128,7 @@ public class DrawableScene : IDrawable
             if (instruction is LineInstruction line)
             {
                 Log.L("line");
-                SetStrokeColor(canvas, instruction.StrokeColor);
+                SetStrokeColor(canvas, ForegroundColor ?? instruction.StrokeColor);
                 DrawLine(canvas, drawSize, line);
             }
 
@@ -134,16 +137,17 @@ public class DrawableScene : IDrawable
                 Log.L("box");
                 var upperLeft = new Coordinate(box.Position);
                 var lowerRight = new Coordinate(box.Size);
-                SetStrokeColor(canvas, box.StrokeColor);
+                SetStrokeColor(canvas, ForegroundColor ?? box.StrokeColor);
                 SetFillColor(canvas, box.FillColor);
-                DrawRectangle(canvas, drawPos, drawSize, upperLeft, lowerRight, box.FillColor);
+                DrawRectangle(canvas, drawPos, drawSize, upperLeft, lowerRight, BackgroundColor ?? box.FillColor);
             }
 
             if (instruction is TextInstruction text)
             {
                 Log.L("text");
                 var centerPos = new Coordinate(instruction.Position);
-                SetStrokeColor(canvas, instruction.StrokeColor);
+                SetStrokeColor(canvas, ForegroundColor ?? instruction.StrokeColor);
+                canvas.FontColor = ForegroundColor != null ? ForegroundColor.ToMauiColor() : new Microsoft.Maui.Graphics.Color(0, 0, 0);
                 DrawText(canvas, drawPos, drawSize, text, centerPos, instruction);
             }
 
@@ -151,23 +155,21 @@ public class DrawableScene : IDrawable
             {
                 Log.L("circle");
                 var centerPos = new Coordinate(instruction.Position);
-                SetStrokeColor(canvas, instruction.StrokeColor);
+                SetStrokeColor(canvas, ForegroundColor ?? instruction.StrokeColor);
                 DrawCircle(canvas, centerPos, drawPos, drawSize);
             }
 
             if (instruction is PathInstruction path)
             {
                 Log.L("path");
-
-                SetStrokeColor(canvas, instruction.StrokeColor);
-
+                SetStrokeColor(canvas, ForegroundColor ?? instruction.StrokeColor);
                 DrawPath(canvas, drawPos, drawSize, path);
             }
 
             if (instruction is CurveInstruction curve)
             {
                 Log.L("curve");
-                SetStrokeColor(canvas, curve.StrokeColor);
+                SetStrokeColor(canvas, ForegroundColor ?? curve.StrokeColor);
                 DrawCurve(canvas, drawPos, drawSize, curve.Position, curve.End, curve.AngleStart, curve.AngleEnd);
             }
         }
@@ -179,13 +181,14 @@ public class DrawableScene : IDrawable
             var posCenter = new Coordinate(pin.Position);
             posCenter.X = GetScale(drawSize.X, posCenter.X);
             posCenter.Y = GetScale(drawSize.Y, posCenter.Y);
-            canvas.FillColor = Colors.White;
+            canvas.FillColor = BackgroundColor != null ? BackgroundColor.ToMauiColor() : new Microsoft.Maui.Graphics.Color(255, 255, 255);
+
             if (pin == Scene?.SelectedPin)
             {
                 canvas.FillColor = Colors.OrangeRed;
             }
-            //canvas.Translate(posCenter.X, posCenter.Y);
-            SetStrokeColor(canvas, pin.DrawInstructions[0].StrokeColor);
+
+            SetStrokeColor(canvas, ForegroundColor ?? pin.DrawInstructions[0].StrokeColor);
             float selectedSize = Scene != null && Scene.IsSelected(drawable) ? 3f : 1f;
             canvas.FillCircle(posCenter.X, posCenter.Y, Zoom * BaseGridSize * 0.2f * selectedSize);
 
@@ -193,7 +196,8 @@ public class DrawableScene : IDrawable
             {
                 canvas.SaveState();
                 canvas.FontSize = Convert.ToSingle(_fontSize * 0.75 * (selectedSize / 2));
-                canvas.FillColor = Colors.White;
+                canvas.FontColor = ForegroundColor != null ? ForegroundColor.ToMauiColor() : new Microsoft.Maui.Graphics.Color(0, 0, 0);
+                canvas.FillColor = BackgroundColor != null ? BackgroundColor.ToMauiColor() : new Microsoft.Maui.Graphics.Color(255, 255, 255);
 
                 if (pin == Scene?.SelectedPin)
                 {
@@ -235,37 +239,39 @@ public class DrawableScene : IDrawable
         Scene = scene;
         if (scene != null && scene.GridSize != 0)
         {
-            _currentGridSize = scene.GridSize;
+            CurrentGridSize = scene.GridSize;
         }
         else
         {
-            _currentGridSize = Workbook.BaseGridSize;
+            CurrentGridSize = Workbook.BaseGridSize;
         }
 
         if (scene?.SheetSize != null) SheetSize = scene.SheetSize;
     }
 
-    public void SetStrokeColor(ICanvas canvas, Color penColor)
+    public void SetStrokeColor(ICanvas canvas, Color? penColor)
     {
-        canvas.StrokeColor = new Microsoft.Maui.Graphics.Color(penColor.R, penColor.G, penColor.B);
+        if (penColor != null)
+        {
+            canvas.StrokeColor = new Microsoft.Maui.Graphics.Color(penColor.R, penColor.G, penColor.B);
+        }
     }
 
     private void DrawCircle(ICanvas canvas, Coordinate centerPos, Coordinate drawPos, Coordinate drawSize)
     {
-        var x = GetScale(drawSize.X, centerPos.X);
-        var y = GetScale(drawSize.Y, centerPos.Y);
+        float x = GetScale(drawSize.X, centerPos.X);
+        float y = GetScale(drawSize.Y, centerPos.Y);
         canvas.DrawCircle(x, y, Zoom * BaseGridSize * 0.1f);
     }
 
     private void DrawCurve(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, Coordinate curvePosition,
                                 Coordinate curveEnd, float curveAngleStart, float curveAngleEnd)
     {
-        var startX = GetScale(drawSize.X, curvePosition.X);
-        var startY = GetScale(drawSize.Y, curvePosition.Y);
-        var width = GetScale(drawSize.X, curveEnd.X) - startX;
-        var height = GetScale(drawSize.Y, curveEnd.Y) - startY;
+        float startX = GetScale(drawSize.X, curvePosition.X);
+        float startY = GetScale(drawSize.Y, curvePosition.Y);
+        float width = GetScale(drawSize.X, curveEnd.X) - startX;
+        float height = GetScale(drawSize.Y, curveEnd.Y) - startY;
 
-        // canvas.DrawRectangle(startX, startY, width, height);
         canvas.DrawArc(
             startX,
             startY,
@@ -288,8 +294,8 @@ public class DrawableScene : IDrawable
     {
         PathF pathF = new();
 
-        var scaleX = drawSize.X / path.Width;
-        var scaleY = drawSize.Y / path.Height / 2;
+        float scaleX = drawSize.X / path.Width;
+        float scaleY = drawSize.Y / path.Height / 2;
         foreach (var part in path.GetParts())
             switch (part.Type)
             {
@@ -369,8 +375,8 @@ public class DrawableScene : IDrawable
     private void DrawText(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, TextInstruction text,
         Coordinate centerPos, IDrawInstruction instruction)
     {
-        var x = GetScale(drawSize.X, centerPos.X);
-        var y = GetScale(drawSize.Y, centerPos.Y);
+        float x = GetScale(drawSize.X, centerPos.X);
+        float y = GetScale(drawSize.Y, centerPos.Y);
         canvas.SaveState();
         canvas.FontSize = (_fontSize / text.Size) * 12;
         canvas.Translate(x, y);
@@ -383,8 +389,8 @@ public class DrawableScene : IDrawable
     {
         drawPos = new Coordinate(drawable.Position);
         drawSize = new Coordinate(drawable.Size);
-        var offX = (drawSize.X - 2) / 2 * (Zoom * BaseGridSize);
-        var offY = (drawSize.Y - 2) / 2 * (Zoom * BaseGridSize);
+        float offX = (drawSize.X - 2) / 2 * (Zoom * BaseGridSize);
+        float offY = (drawSize.Y - 2) / 2 * (Zoom * BaseGridSize);
         drawSize.X = drawSize.X * Zoom * BaseGridSize;
         drawSize.Y = drawSize.Y * Zoom * BaseGridSize;
         drawPos.X = drawPos.X * Zoom * BaseGridSize;

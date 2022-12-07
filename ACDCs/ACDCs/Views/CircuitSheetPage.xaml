@@ -11,13 +11,11 @@
              Title="New sheet"
              x:Name="CircuitSheetPageInstance">
     <AbsoluteLayout x:Name="AbsoluteLayoutSheetPage">
-        <circuitView:CircuitView x:Name="CircuitView" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional"></circuitView:CircuitView>
+        <circuitView:CircuitView x:Name="CircuitView" ForegroundColor="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional"></circuitView:CircuitView>
         <menu:MenuDragContainer Title="Menu" PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" CircuitView="{x:Reference CircuitView}" />
         <menuHandlers:FileMenuHandlers CircuitView="{x:Reference CircuitView}" PopupPage="{x:Reference CircuitSheetPageInstance}"></menuHandlers:FileMenuHandlers>
         <menuHandlers:EditMenuHandlers CircuitView="{x:Reference CircuitView}"></menuHandlers:EditMenuHandlers>
         <itemsList:ItemsListDragContainer></itemsList:ItemsListDragContainer>
-
-
-        <items:ItemsDragContainer></items:ItemsDragContainer>
+        <items:ItemsDragContainer BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}"></items:ItemsDragContainer>
     </AbsoluteLayout>
 </ContentPage>

@@ -1,4 +1,6 @@
-﻿namespace OSECircuitRender.Definitions;
+﻿using System;
+
+namespace OSECircuitRender.Definitions;
 
 public sealed class Color
 {
@@ -14,5 +16,22 @@ public sealed class Color
         G = g;
         B = b;
         A = a;
+    }
+
+    public Color(Microsoft.Maui.Graphics.Color color)
+    {
+        this.A = Convert.ToInt32(color.Alpha * 255);
+        this.R = Convert.ToInt32(color.Red * 255);
+        this.G = Convert.ToInt32(color.Green * 255);
+        this.B = Convert.ToInt32(color.Blue * 255);
+    }
+
+    public Microsoft.Maui.Graphics.Color ToMauiColor()
+    {
+        return new Microsoft.Maui.Graphics.Color(
+            R / 255f,
+            G / 255f,
+            B / 255f
+        );
     }
 }

@@ -55,6 +55,7 @@ public sealed class Worksheet
     public bool ShowGrid { get; set; } = true;
 
     public WorksheetItemList Traces { get; set; }
+    public Color ForegroundColor { get; set; }
 
     public bool CalculateScene()
     {
@@ -68,17 +69,19 @@ public sealed class Worksheet
         {
             Log.L("Creating Manager");
             SceneManager = new DefaultSceneManager();
-            SceneManager.ShowGrid = ShowGrid;
-            SceneManager.BackgroundColor = BackgroundColor;
         }
 
+
+        SceneManager.ShowGrid = ShowGrid;
+        SceneManager.BackgroundColor = BackgroundColor;
+        SceneManager.ForegroundColor = ForegroundColor;
         if (SceneManager.SetScene(GetDrawableComponents(), GetSelectedComponents(), SelectedPin))
         {
             SceneManager.DisplayOffset = DisplayOffset;
 
             SceneManager.SetSizeAndScale(SheetSize, GridSize);
             Log.L("Getting backend scene");
-            var backendScene = SceneManager.GetSceneForBackend();
+            object? backendScene = SceneManager.GetSceneForBackend();
             if (SceneManager.SendToBackend(backendScene))
             {
                 Log.L("Backend received scene");

@@ -142,12 +142,12 @@ public class Turtle
 
     public static bool PointInTriangle(Point pt, Point v1, Point v2, Point v3)
     {
-        var d1 = Sign(pt, v1, v2);
-        var d2 = Sign(pt, v2, v3);
-        var d3 = Sign(pt, v3, v1);
+        float d1 = Sign(pt, v1, v2);
+        float d2 = Sign(pt, v2, v3);
+        float d3 = Sign(pt, v3, v1);
 
-        var hasNeg = (d1 < 0) || (d2 < 0) || (d3 < 0);
-        var hasPos = (d1 > 0) || (d2 > 0) || (d3 > 0);
+        bool hasNeg = (d1 < 0) || (d2 < 0) || (d3 < 0);
+        bool hasPos = (d1 > 0) || (d2 > 0) || (d3 > 0);
 
         return !(hasNeg && hasPos);
     }
@@ -175,7 +175,7 @@ public class Turtle
 
             if (item.Rotation != 0)
             {
-                var rotation = item.Rotation;
+                float rotation = item.Rotation;
                 float centerX = rect.X1 + (rect.X3 - rect.X1) / 2;
                 float centerY = rect.Y1 + (rect.Y3 - rect.Y1) / 2;
 
@@ -215,7 +215,7 @@ public class Turtle
         foreach (var net in _nets)
         {
             var trace = new TraceItem();
-            for (var i = 0; i < net.Pins.Count; i++)
+            for (int i = 0; i < net.Pins.Count; i++)
             {
                 var pin1 = net.Pins[i];
                 var pin2 = i < net.Pins.Count - 1 ? net.Pins[i + 1] : net.Pins[0];
@@ -223,19 +223,19 @@ public class Turtle
                 var pin2drawable = pin2.ParentItem != null ? pin2.ParentItem.DrawableComponent : pin2;
 
                 SetColorAndScaling(pin1drawable, pin2drawable);
-                var pin1X = pin1.Position.X;
-                var pin1Y = pin1.Position.Y;
-                var position1X = pin1drawable.Position.X + (pin1.Position.X * pin1drawable.Size.X);
-                var position1Y = pin1drawable.Position.Y + (pin1.Position.Y * pin1drawable.Size.Y);
+                float pin1X = pin1.Position.X;
+                float pin1Y = pin1.Position.Y;
+                float position1X = pin1drawable.Position.X + (pin1.Position.X * pin1drawable.Size.X);
+                float position1Y = pin1drawable.Position.Y + (pin1.Position.Y * pin1drawable.Size.Y);
 
                 Rotate(pin1drawable, ref position1X, ref position1Y, ref pin1X, ref pin1Y);
 
                 Direction direction1 = GetDirection(pin1X, pin1Y);
 
-                var pin2X = pin2.Position.X;
-                var pin2Y = pin2.Position.Y;
-                var position2X = pin2drawable.Position.X + (pin2.Position.X * pin2drawable.Size.X);
-                var position2Y = pin2drawable.Position.Y + (pin2.Position.Y * pin2drawable.Size.Y);
+                float pin2X = pin2.Position.X;
+                float pin2Y = pin2.Position.Y;
+                float position2X = pin2drawable.Position.X + (pin2.Position.X * pin2drawable.Size.X);
+                float position2Y = pin2drawable.Position.Y + (pin2.Position.Y * pin2drawable.Size.Y);
 
                 Rotate(pin2drawable, ref position2X, ref position2Y, ref pin2X, ref pin2Y);
 
@@ -253,7 +253,7 @@ public class Turtle
                 {
                     Direction nextDirection = GetDirectionMax(currentPoint, targetPoint);
                     bool found = false;
-                    for (var f = 0; f < 1000 && !found; f++)
+                    for (int f = 0; f < 1000 && !found; f++)
                     {
                         if (currentPoint == targetPoint)
                             found = true;
@@ -345,9 +345,9 @@ public class Turtle
     private static Coordinate RotateCoordinate(float posX, float posY, float centerX, float centerY,
                 double angleInDegrees)
     {
-        var angleInRadians = angleInDegrees * (Math.PI / 180);
-        var cosTheta = Math.Cos(angleInRadians);
-        var sinTheta = Math.Sin(angleInRadians);
+        double angleInRadians = angleInDegrees * (Math.PI / 180);
+        double cosTheta = Math.Cos(angleInRadians);
+        double sinTheta = Math.Sin(angleInRadians);
         return new Coordinate
         {
             X =
@@ -442,8 +442,8 @@ public class Turtle
     {
         Direction direction = default;
 
-        var posX = measurePoint.X - centerPoint.X;
-        var posY = measurePoint.Y - centerPoint.Y;
+        double posX = measurePoint.X - centerPoint.X;
+        double posY = measurePoint.Y - centerPoint.Y;
         int pos = 0;
 
         var directions = new List<Direction>();

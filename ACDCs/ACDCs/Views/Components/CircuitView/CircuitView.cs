@@ -1,4 +1,9 @@
-﻿using Microsoft.Maui;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Newtonsoft.Json;
@@ -9,11 +14,7 @@ using OSECircuitRender.Interfaces;
 using OSECircuitRender.Items;
 using OSECircuitRender.Scene;
 using OSECircuitRender.Sheet;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using Color = Microsoft.Maui.Graphics.Color;
 using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
 
 #pragma warning disable CS4014
@@ -22,6 +23,9 @@ namespace ACDCs.Views.Components.CircuitView;
 
 public class CircuitView : ContentView
 {
+    public static readonly BindableProperty ForegroundColorProperty =
+        BindableProperty.Create(nameof(ForegroundColor), typeof(Color), typeof(CircuitSheetPage), null);
+
     private readonly Workbook _currentWorkbook;
     private readonly GraphicsView _graphicsView;
     private readonly PanGestureRecognizer _panRecognizer;
@@ -37,8 +41,10 @@ public class CircuitView : ContentView
     public CircuitView()
     {
         _currentWorkbook = new Workbook();
+        _currentWorkbook.SetBaseFont("Maple Mono");
         _currentSheet = _currentWorkbook.AddNewSheet();
-        _graphicsView = new GraphicsView()
+
+        _graphicsView = new GraphicsView
         {
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
@@ -60,7 +66,7 @@ public class CircuitView : ContentView
         Content = _graphicsView;
         App.Com<CircuitView>(nameof(CircuitView), "Instance", this);
         App.Com<Worksheet>(nameof(CircuitView), "CurrentWorksheet", _currentSheet);
-        Paint();
+        Loaded += OnLoaded;
     }
 
     public event EventHandler<EventArgs>? LoadedSheet;
@@ -70,6 +76,13 @@ public class CircuitView : ContentView
     public Worksheet CurrentWorksheet
     {
         get => _currentSheet;
+    }
+
+    public Color? ForegroundColor
+    {
+        get => (Color?)GetValue(ForegroundColorProperty);
+
+        set => SetValue(ForegroundColorProperty, value);
     }
 
     private Action<WorksheetItemList, WorksheetItemList>? ListSetItems
@@ -134,6 +147,9 @@ public class CircuitView : ContentView
     {
         await App.Call(() =>
         {
+            _currentSheet.BackgroundColor = new OSECircuitRender.Definitions.Color(BackgroundColor);
+            _currentSheet.ForegroundColor = new OSECircuitRender.Definitions.Color(ForegroundColor);
+
             if (App.Com<bool>("Items", "IsInserting"))
                 return Task.CompletedTask;
 
@@ -235,6 +251,11 @@ public class CircuitView : ContentView
     private void JsonError(object? sender, ErrorEventArgs e)
     {
         Console.WriteLine(e.ErrorContext.Error.ToString());
+    }
+
+    private void OnLoaded(object? sender, EventArgs e)
+    {
+        Paint();
     }
 
     private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)

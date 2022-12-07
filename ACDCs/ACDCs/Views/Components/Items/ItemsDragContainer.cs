@@ -32,9 +32,12 @@ public class ItemsDragContainer : DragContainer.DragContainer
         };
         Layout = _layout;
 
-#pragma warning disable CS4014
-        SetupView();
-#pragma warning restore CS4014
+        Loaded += OnLoaded;
+    }
+
+    private async void OnLoaded(object? sender, EventArgs e)
+    {
+        await SetupView();
     }
 
     public Func<float, float, WorksheetItem?>? DoInsert { get; set; }
@@ -103,6 +106,8 @@ public class ItemsDragContainer : DragContainer.DragContainer
 
                 ItemButton button = new(type) { WidthRequest = 60, HeightRequest = 60 };
                 button.Clicked += OnItemButtonClicked;
+                button.SetBackground(BackgroundColor);
+                button.Draw();
                 _layout.Add(
                     button
                 );

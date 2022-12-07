@@ -15,7 +15,7 @@ public class DrawInstruction : IDrawInstruction
     public Coordinate Position { get; set; }
 
     //public List<Coordinate> Coordinates { get; set; } = new();
-    public Color StrokeColor { get; set; }
+    public Color? StrokeColor { get; set; }
 
     public string Type { get; }
 }

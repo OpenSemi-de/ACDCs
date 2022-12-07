@@ -6,9 +6,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Color x:Key="BackgroundLight">#dfefff</Color>
-    <Color x:Key="BackgroundDark">#00104f</Color>
+    <Color x:Key="BackgroundDark">#00103f</Color>
     <Color x:Key="BackgroundHighlightLight">#afcfff</Color>
-    <Color x:Key="BackgroundHighlightDark">#20307f</Color>
+    <Color x:Key="BackgroundHighlightDark">#10206f</Color>
     <Color x:Key="ForegroundLight">#00104f</Color>
     <Color x:Key="ForegroundDark">#dfefff</Color>
     <Color x:Key="Primary">#85a2b6</Color>

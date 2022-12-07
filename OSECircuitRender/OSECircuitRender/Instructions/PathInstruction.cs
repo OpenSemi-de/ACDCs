@@ -64,9 +64,9 @@ public sealed class PathReader
         _width = 0;
         _height = 0;
         svgPath += "Z";
-        var buffer = "";
-        var command = "";
-        foreach (var chrBuffer in svgPath)
+        string? buffer = "";
+        string? command = "";
+        foreach (char chrBuffer in svgPath)
             if ((chrBuffer > 64 && chrBuffer < 91) ||
                 (chrBuffer > 96 && chrBuffer < 123))
             {
@@ -75,9 +75,9 @@ public sealed class PathReader
                     List<Coordinate> coordinates = new();
                     var type = (PathPartType)Enum.Parse(typeof(PathPartType), command);
                     var textCoordinates = buffer.Split(" ").ToList();
-                    foreach (var textCoordinate in textCoordinates.Where(s => s != "" && s != " "))
+                    foreach (string? textCoordinate in textCoordinates.Where(s => s != "" && s != " "))
                     {
-                        var xypair = textCoordinate.Split(',');
+                        string[]? xypair = textCoordinate.Split(',');
                         var coordinate = new Coordinate(
                             float.Parse(xypair[0].Replace(".", ",")),
                             float.Parse(xypair[1].Replace(".", ",")),

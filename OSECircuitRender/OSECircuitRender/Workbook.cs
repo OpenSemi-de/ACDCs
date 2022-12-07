@@ -13,6 +13,7 @@ public sealed class Workbook
     public WorksheetsList Sheets = new();
     private readonly JsonSerializerSettings _jsonSerializerSettings;
 
+
     public Workbook()
     {
         _jsonSerializerSettings = new JsonSerializerSettings
@@ -25,6 +26,8 @@ public sealed class Workbook
     public static string? BasePath { get; set; }
     public static SkiaBitmapExportContext? DebugContext { get; set; }
 
+    public static string BaseFontName { get; set; } = "";
+
     public Worksheet AddNewSheet()
     {
         Worksheet ws = new();
@@ -35,7 +38,7 @@ public sealed class Workbook
 
     public Worksheet LoadSheet(string fileName)
     {
-        var json = File.ReadAllText(fileName);
+        string? json = File.ReadAllText(fileName);
         var ws = JsonConvert.DeserializeObject<Worksheet>(json, _jsonSerializerSettings);
 
         if (ws != null)
@@ -49,8 +52,13 @@ public sealed class Workbook
 
     public void SaveSheet(Worksheet ws, string fileName)
     {
-        var json = JsonConvert.SerializeObject(ws, _jsonSerializerSettings);
+        string? json = JsonConvert.SerializeObject(ws, _jsonSerializerSettings);
         File.WriteAllText(fileName, json);
+    }
+
+    public void SetBaseFont(string fontName)
+    {
+        BaseFontName = fontName;
     }
 }
 

@@ -41,8 +41,12 @@ namespace ACDCs.Views.Components.Items
                 if (Activator.CreateInstance(ItemType, args: arguments) is WorksheetItem item)
                 {
                     sheet.Items.AddItem(item);
-                    sheet.GridSize = (float)(3f / item.Width * (HeightRequest / 50f));
-                    sheet.DisplayOffset.Y = 7 * (3 / item.Height - 1) - 7;
+                    sheet.GridSize = (float)(3f / item.Width * (HeightRequest / 46f));
+                    if (item.Width != 1)
+                        sheet.DisplayOffset.Y = 7 * (3 / item.Height - 1) - 7;
+                    else
+                        sheet.DisplayOffset.Y = -20;
+
                 }
 
                 if (sheet.CalculateScene())
@@ -50,7 +54,7 @@ namespace ACDCs.Views.Components.Items
                     _drawableSheet = sheet.SceneManager?.GetSceneForBackend() as IDrawable;
                     if (_drawableSheet != null)
                     {
-                        using SkiaBitmapExportContext context = new((int)(WidthRequest -2), (int)(HeightRequest -2), 1);
+                        using SkiaBitmapExportContext context = new((int)(WidthRequest - 2), (int)(HeightRequest - 2), 1);
 
                         _drawableSheet?.Draw(context.Canvas, RectF.Zero);
 

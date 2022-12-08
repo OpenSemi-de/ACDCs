@@ -26,6 +26,7 @@ public class EditMenuHandlers : MenuHandlerView
     private async void DeselectAll()
     {
         CircuitView.CurrentWorksheet.SelectedItems.Clear();
+        CircuitView.CurrentWorksheet.SelectedPin = null;
         await CircuitView.Paint();
     }
 

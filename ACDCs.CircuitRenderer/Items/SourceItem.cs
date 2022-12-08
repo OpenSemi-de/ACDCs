@@ -6,7 +6,7 @@ namespace ACDCs.CircuitRenderer.Items
     {
         public SourceItem(SourceDrawableType sourceDrawableType)
         {
-            DrawableComponent = new SourceDrawable(this, DefaultValue, SourceDrawableType.Voltage, 1, 1);
+            DrawableComponent = new SourceDrawable(this, DefaultValue, sourceDrawableType, 1, 1);
             Value = DefaultValue;
         }
 

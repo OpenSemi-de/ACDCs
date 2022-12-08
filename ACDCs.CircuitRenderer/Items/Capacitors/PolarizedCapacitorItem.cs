@@ -8,5 +8,6 @@ public sealed class PolarizedCapacitorItem : CapacitorItem
     {
     }
 
-    public new static bool IsInsertable { get; set; } = true;
+    public override string DefaultValue => "";
+    public override bool IsInsertable => true;
 }

@@ -18,7 +18,7 @@ public sealed class TerminalItem : WorksheetItem
             Value = "0";
     }
 
-    public new static string DefaultValue { get; set; } = "";
+    public override string DefaultValue => "";
 
-    public new static bool IsInsertable { get; set; } = true;
+    public override bool IsInsertable => true;
 }

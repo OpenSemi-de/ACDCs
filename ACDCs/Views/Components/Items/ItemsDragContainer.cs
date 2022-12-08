@@ -80,27 +80,35 @@ public class ItemsDragContainer : DragContainer.DragContainer
                     continue;
                 }
 
-                PropertyInfo? isInsertableProp = type.GetProperty("IsInsertable");
-                if (isInsertableProp == null)
+                try
                 {
-                    continue;
+                    PropertyInfo? isInsertableProp = type.GetProperty("IsInsertable");
+                    if (isInsertableProp == null)
+                    {
+                        continue;
+                    }
+
+                    bool isInsertable =
+                        (bool)(isInsertableProp.GetValue(Activator.CreateInstance(type), BindingFlags.Instance, null,
+                            null,
+                            null) ?? false);
+
+                    if (!isInsertable)
+                    {
+                        continue;
+                    }
+
+                    ItemButton button = new(type) { WidthRequest = 60, HeightRequest = 60 };
+                    button.Clicked += OnItemButtonClicked;
+                    button.SetBackground(BackgroundColor);
+                    button.Draw();
+                    _layout.Add(
+                        button
+                    );
                 }
-
-                bool isInsertable =
-                    (bool)(isInsertableProp.GetValue(null, BindingFlags.Static, null, null, null) ?? false);
-
-                if (!isInsertable)
+                catch
                 {
-                    continue;
                 }
-
-                ItemButton button = new(type) { WidthRequest = 60, HeightRequest = 60 };
-                button.Clicked += OnItemButtonClicked;
-                button.SetBackground(BackgroundColor);
-                button.Draw();
-                _layout.Add(
-                    button
-                );
             }
 
             return Task.CompletedTask;
@@ -108,7 +116,7 @@ public class ItemsDragContainer : DragContainer.DragContainer
     }
 
     private static readonly BindableProperty PopupTargetProperty =
-                                            BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
+        BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
 
     private readonly StackLayout _layout;
 

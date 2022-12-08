@@ -25,6 +25,7 @@ public class CapacitorItem : WorksheetItem
     }
 
     public CapacitorDrawableType DefaultType { get; set; } = CapacitorDrawableType.Standard;
-    public new string DefaultValue { get; set; } = "10u";
+    public override string DefaultValue => "10u";
+    public override bool IsInsertable => false;
     public CapacitorDrawableType Type { get; }
 }

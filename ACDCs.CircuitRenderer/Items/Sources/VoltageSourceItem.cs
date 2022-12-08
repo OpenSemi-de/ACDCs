@@ -12,8 +12,8 @@ namespace ACDCs.CircuitRenderer.Items.Sources
         {
         }
 
-        public new static string DefaultValue { get; set; } = "5v";
+        public override string DefaultValue => "5v";
 
-        public new static bool IsInsertable { get; set; } = true;
+        public override bool IsInsertable => true;
     }
 }

@@ -10,6 +10,10 @@ public class TraceItem : WorksheetItem
         DrawableComponent = new TraceDrawable(this);
     }
 
+    public override string DefaultValue => "";
+
+    public override bool IsInsertable => false;
+
     public void AddPart(Coordinate from, Coordinate to)
     {
         ((TraceDrawable)DrawableComponent).AddPart(from, to);

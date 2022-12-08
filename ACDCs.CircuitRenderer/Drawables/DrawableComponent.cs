@@ -2,7 +2,6 @@
 using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Instructions;
 using ACDCs.CircuitRenderer.Interfaces;
-using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Sheet;
 
 namespace ACDCs.CircuitRenderer.Drawables;

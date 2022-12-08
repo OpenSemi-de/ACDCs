@@ -15,5 +15,8 @@ namespace ACDCs.CircuitRenderer.Items
             DrawableComponent = new SourceDrawable(this, value, type, x, y);
             Value = value;
         }
+
+        public override string DefaultValue => "5v";
+        public override bool IsInsertable => false;
     }
 }

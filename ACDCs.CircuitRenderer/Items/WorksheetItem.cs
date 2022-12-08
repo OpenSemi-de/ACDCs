@@ -14,8 +14,7 @@ public class WorksheetItem : IWorksheetItem
         DrawableComponent = new DrawableComponent(typeof(DrawableComponent), this);
     }
 
-    public static string? DefaultValue { get; set; }
-    public static bool IsInsertable { get; set; } = false;
+    public virtual string DefaultValue { get; set; }
 
     [JsonIgnore]
     public IDrawableComponent DrawableComponent { get; set; }
@@ -26,6 +25,7 @@ public class WorksheetItem : IWorksheetItem
         set => DrawableComponent.Size.Y = value;
     }
 
+    public virtual bool IsInsertable { get; set; }
     public Guid ItemGuid { get; set; } = Guid.NewGuid();
     public string Name { get; set; } = string.Empty;
 

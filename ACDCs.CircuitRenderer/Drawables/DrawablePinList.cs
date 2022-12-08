@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using ACDCs.CircuitRenderer.Drawables;
 
-namespace ACDCs.CircuitRenderer.Items;
+namespace ACDCs.CircuitRenderer.Drawables;
 
 public sealed class DrawablePinList : List<PinDrawable>
 {

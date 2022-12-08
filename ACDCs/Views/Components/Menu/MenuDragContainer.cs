@@ -1,27 +1,16 @@
-﻿using Microsoft.Maui;
+﻿using System;
+using System.Collections.Generic;
+using ACDCs.Views.Components.DebugView;
+using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using ACDCs.Views.Components.CircuitView;
-using ACDCs.Views.Components.DebugView;
 
 namespace ACDCs.Views.Components.Menu;
 
 public class MenuDragContainer : DragContainer.DragContainer
 {
-    private static readonly BindableProperty PopupTargetProperty =
-        BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
-
-    private static readonly BindableProperty DebugViewProperty =
-        BindableProperty.Create(nameof(DebugView), typeof(DebugViewDragComtainer), typeof(CircuitSheetPage));
-
-    private readonly Label _fileNameLabel;
-    private readonly MenuFrame _menuFrame;
-    private readonly StackLayout _menuLayout;
-
     public MenuDragContainer()
     {
         Orientation = StackOrientation.Horizontal;
@@ -58,6 +47,12 @@ public class MenuDragContainer : DragContainer.DragContainer
         Loaded += MenuDragContainer_Loaded;
     }
 
+    public DebugViewDragComtainer DebugView
+    {
+        get => (DebugViewDragComtainer)GetValue(DebugViewProperty);
+        set => SetValue(DebugViewProperty, value);
+    }
+
     public AbsoluteLayout PopupTarget
     {
         get => (AbsoluteLayout)GetValue(PopupTargetProperty);
@@ -69,11 +64,15 @@ public class MenuDragContainer : DragContainer.DragContainer
         }
     }
 
-    public DebugViewDragComtainer DebugView
-    {
-        get => (DebugViewDragComtainer)GetValue(DebugViewProperty);
-        set => SetValue(DebugViewProperty, value);
-    }
+    private static readonly BindableProperty DebugViewProperty =
+        BindableProperty.Create(nameof(DebugView), typeof(DebugViewDragComtainer), typeof(CircuitSheetPage));
+
+    private static readonly BindableProperty PopupTargetProperty =
+                        BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
+
+    private readonly Label _fileNameLabel;
+    private readonly MenuFrame _menuFrame;
+    private readonly StackLayout _menuLayout;
 
     private async void LoadMenu(string menuMainJson)
     {

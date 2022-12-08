@@ -8,10 +8,6 @@ namespace ACDCs.CircuitRenderer.Sheet;
 
 public class TwoDPathRouter : IPathRouter
 {
-    private readonly int _sheetHeight;
-    private readonly int _sheetWidth;
-    private readonly Worksheet _worksheet;
-
     public TwoDPathRouter(Worksheet worksheet, Coordinate sheetSize, float gridSize)
     {
         _worksheet = worksheet;
@@ -50,4 +46,8 @@ public class TwoDPathRouter : IPathRouter
         Items = items;
         Nets = nets;
     }
+
+    private readonly int _sheetHeight;
+    private readonly int _sheetWidth;
+    private readonly Worksheet _worksheet;
 }

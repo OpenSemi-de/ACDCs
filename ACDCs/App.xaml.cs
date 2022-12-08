@@ -1,18 +1,16 @@
-﻿using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Storage;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
 
 namespace ACDCs;
 
 public partial class App : Application
 {
-    private static readonly ConcurrentDictionary<string, ConcurrentDictionary<string, object?>> _comValues = new();
-
     public App()
     {
         InitializeComponent();
@@ -82,6 +80,8 @@ public partial class App : Application
         var contents = await reader.ReadToEndAsync();
         return contents;
     }
+
+    private static readonly ConcurrentDictionary<string, ConcurrentDictionary<string, object?>> _comValues = new();
 
     private static void OnReset(ResetEventArgs args)
     {

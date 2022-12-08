@@ -10,8 +10,6 @@ namespace ACDCs.CircuitRenderer.Scene;
 
 public class DrawableScene : IDrawable
 {
-    private int _fontSize;
-
     public DrawableScene(SheetScene? scene)
     {
         Scene = scene;
@@ -243,6 +241,8 @@ public class DrawableScene : IDrawable
             canvas.StrokeColor = new Microsoft.Maui.Graphics.Color(penColor.R, penColor.G, penColor.B);
         }
     }
+
+    private int _fontSize;
 
     private void DrawCircle(ICanvas canvas, Coordinate centerPos, Coordinate drawPos, Coordinate drawSize)
     {

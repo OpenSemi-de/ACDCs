@@ -13,15 +13,15 @@ public sealed class SheetScene
     }
 
     public Color? BackgroundColor { get; set; }
+    public Color? BackgroundHighColor { get; set; }
     public Coordinate? DisplayOffset { get; set; }
     public DrawableComponentList? Drawables { get; set; }
+    public Color? ForegroundColor { get; set; }
     public float GridSize { get; set; }
     public DrawableComponentList? Selected { get; set; }
     public PinDrawable? SelectedPin { get; set; }
     public Coordinate SheetSize { get; set; }
     public bool ShowGrid { get; set; } = true;
-    public Color? ForegroundColor { get; set; }
-    public Color? BackgroundHighColor { get; set; }
 
     public bool IsSelected(IDrawableComponent drawable)
     {

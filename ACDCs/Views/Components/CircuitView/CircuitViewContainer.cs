@@ -19,28 +19,15 @@ using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
 
 namespace ACDCs.Views.Components.CircuitView;
 
+public delegate void CursorPositionChangeEvent(object sender, CursorPositionChangeEventArgs args);
+
 public class CircuitViewContainer : ContentView
 {
-    public static readonly BindableProperty ForegroundColorProperty =
-        BindableProperty.Create(nameof(ForegroundColor), typeof(Color), typeof(CircuitSheetPage), null);
-
     public static readonly BindableProperty BackgroundHighColorProperty =
         BindableProperty.Create(nameof(BackgroundHighColor), typeof(Color), typeof(CircuitSheetPage), null);
 
-    private readonly Workbook _currentWorkbook;
-    private readonly GraphicsView _graphicsView;
-    private readonly PanGestureRecognizer _panRecognizer;
-    private readonly PointerGestureRecognizer _pointerRecognizer;
-    private readonly TapGestureRecognizer _tapRecognizer;
-    private Worksheet _currentSheet;
-    private Point _cursorPosition;
-    private PointF _dragStartPosition;
-    private bool _isDraggingItem;
-    private Coordinate? _lastDisplayOffset;
-    private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions = new();
-
-    public event CursorPositionChangeEvent? CursorPositionChanged;
-    public event CursorPositionChangeEvent? TapPositionChanged;
+    public static readonly BindableProperty ForegroundColorProperty =
+            BindableProperty.Create(nameof(ForegroundColor), typeof(Color), typeof(CircuitSheetPage), null);
 
     public CircuitViewContainer()
     {
@@ -73,14 +60,13 @@ public class CircuitViewContainer : ContentView
         Loaded += OnLoaded;
     }
 
+    public event CursorPositionChangeEvent? CursorPositionChanged;
+
     public event EventHandler<EventArgs>? LoadedSheet;
 
     public event EventHandler<EventArgs>? SavedSheet;
 
-    public Worksheet CurrentWorksheet
-    {
-        get => _currentSheet;
-    }
+    public event CursorPositionChangeEvent? TapPositionChanged;
 
     public Color BackgroundHighColor
     {
@@ -88,15 +74,15 @@ public class CircuitViewContainer : ContentView
         set => SetValue(BackgroundHighColorProperty, value);
     }
 
+    public Worksheet CurrentWorksheet
+    {
+        get => _currentSheet;
+    }
+
     public Color ForegroundColor
     {
         get => (Color)GetValue(ForegroundColorProperty);
         set => SetValue(ForegroundColorProperty, value);
-    }
-
-    private Action<WorksheetItemList, WorksheetItemList>? ListSetItems
-    {
-        get => App.Com<Action<WorksheetItemList, WorksheetItemList>>("ItemList", "SetItems");
     }
 
     public void Clear()
@@ -189,6 +175,11 @@ public class CircuitViewContainer : ContentView
         OnSavedSheet();
     }
 
+    protected virtual void OnCursorPositionChanged(CursorPositionChangeEventArgs args)
+    {
+        CursorPositionChanged?.Invoke(this, args);
+    }
+
     protected virtual void OnLoadedSheet()
     {
         LoadedSheet?.Invoke(this, EventArgs.Empty);
@@ -197,6 +188,28 @@ public class CircuitViewContainer : ContentView
     protected virtual void OnSavedSheet()
     {
         SavedSheet?.Invoke(this, EventArgs.Empty);
+    }
+
+    protected virtual void OnTapPositionChanged(CursorPositionChangeEventArgs args)
+    {
+        TapPositionChanged?.Invoke(this, args);
+    }
+
+    private readonly Workbook _currentWorkbook;
+    private readonly GraphicsView _graphicsView;
+    private readonly PanGestureRecognizer _panRecognizer;
+    private readonly PointerGestureRecognizer _pointerRecognizer;
+    private readonly TapGestureRecognizer _tapRecognizer;
+    private Worksheet _currentSheet;
+    private Point _cursorPosition;
+    private PointF _dragStartPosition;
+    private bool _isDraggingItem;
+    private Coordinate? _lastDisplayOffset;
+    private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions = new();
+
+    private Action<WorksheetItemList, WorksheetItemList>? ListSetItems
+    {
+        get => App.Com<Action<WorksheetItemList, WorksheetItemList>>("ItemList", "SetItems");
     }
 
     private static float GetRelPos(double pos)
@@ -447,26 +460,14 @@ public class CircuitViewContainer : ContentView
             }
         });
     }
-
-    protected virtual void OnCursorPositionChanged(CursorPositionChangeEventArgs args)
-    {
-        CursorPositionChanged?.Invoke(this, args);
-    }
-
-    protected virtual void OnTapPositionChanged(CursorPositionChangeEventArgs args)
-    {
-        TapPositionChanged?.Invoke(this, args);
-    }
 }
-
-public delegate void CursorPositionChangeEvent(object sender, CursorPositionChangeEventArgs args);
 
 public class CursorPositionChangeEventArgs
 {
-    public Point CursorPosition { get; }
-
     public CursorPositionChangeEventArgs(Point cursorPosition)
     {
         CursorPosition = cursorPosition;
     }
+
+    public Point CursorPosition { get; }
 }

@@ -8,5 +8,5 @@ public class StandardCapacitorItem : CapacitorItem
     {
     }
 
-    public static new bool IsInsertable { get; set; } = true;
+    public new static bool IsInsertable { get; set; } = true;
 }

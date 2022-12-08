@@ -1,5 +1,5 @@
-using Microsoft.Maui.Controls;
 using System.Collections.Generic;
+using Microsoft.Maui.Controls;
 
 namespace ACDCs.Views.Components.Menu;
 

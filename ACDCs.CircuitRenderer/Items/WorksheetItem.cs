@@ -9,15 +9,12 @@ namespace ACDCs.CircuitRenderer.Items;
 
 public class WorksheetItem : IWorksheetItem
 {
-    private string? _value;
-
     public WorksheetItem()
     {
         DrawableComponent = new DrawableComponent(typeof(DrawableComponent), this);
     }
 
     public static string? DefaultValue { get; set; }
-
     public static bool IsInsertable { get; set; } = false;
 
     [JsonIgnore]
@@ -30,7 +27,6 @@ public class WorksheetItem : IWorksheetItem
     }
 
     public Guid ItemGuid { get; set; } = Guid.NewGuid();
-
     public string Name { get; set; } = string.Empty;
 
     [JsonIgnore]
@@ -69,4 +65,6 @@ public class WorksheetItem : IWorksheetItem
         get => Convert.ToInt32(DrawableComponent.Position.Y);
         set => DrawableComponent.Position.Y = value;
     }
+
+    private string? _value;
 }

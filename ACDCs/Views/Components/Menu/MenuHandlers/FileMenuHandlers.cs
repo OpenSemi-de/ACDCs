@@ -1,7 +1,7 @@
-﻿using Microsoft.Maui.Devices;
-using Microsoft.Maui.Storage;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using Microsoft.Maui.Devices;
+using Microsoft.Maui.Storage;
 
 namespace ACDCs.Views.Components.Menu.MenuHandlers;
 

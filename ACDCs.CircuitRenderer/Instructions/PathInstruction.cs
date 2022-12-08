@@ -21,8 +21,6 @@ public enum PathPartType
 
 public sealed class PathInstruction : DrawInstruction
 {
-    private readonly List<PathPart> _pathParts;
-
     public PathInstruction(string svgPath) : base(typeof(PathInstruction))
     {
         StrokeColor = new Color(0, 0, 0);
@@ -39,6 +37,8 @@ public sealed class PathInstruction : DrawInstruction
     {
         return _pathParts;
     }
+
+    private readonly List<PathPart> _pathParts;
 }
 
 public sealed class PathPart
@@ -55,10 +55,6 @@ public sealed class PathPart
 
 public sealed class PathReader
 {
-    private readonly float _height;
-    private readonly List<PathPart> _pathParts = new();
-    private readonly float _width;
-
     public PathReader(string svgPath)
     {
         _width = 0;
@@ -118,4 +114,8 @@ public sealed class PathReader
     {
         return _width;
     }
+
+    private readonly float _height;
+    private readonly List<PathPart> _pathParts = new();
+    private readonly float _width;
 }

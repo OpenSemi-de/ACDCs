@@ -1,15 +1,14 @@
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
 
 namespace ACDCs.Views.Components.Menu;
 
 public class MenuFrame : StackLayout
 {
     public static List<MenuFrame> MenuFrameList = new();
-    private readonly bool _eventSet;
 
     public MenuFrame()
     {
@@ -24,7 +23,6 @@ public class MenuFrame : StackLayout
     }
 
     public View? MainContainer { get; set; }
-
     public AbsoluteLayout? PopupTarget { get; set; }
 
     public static void HideAllMenus()
@@ -92,6 +90,8 @@ public class MenuFrame : StackLayout
             }
         }
     }
+
+    private readonly bool _eventSet;
 
     private void App_Reset(object sender, ResetEventArgs args)
     {

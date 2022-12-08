@@ -1,17 +1,20 @@
+using System;
+using System.Threading.Tasks;
+using ACDCs.Views.Components.CircuitView;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
-using System;
-using System.Threading.Tasks;
-using ACDCs.Views.Components.CircuitView;
 
 namespace ACDCs.Views.Components.DragContainer;
 
 public partial class DragContainer : ContentView
 {
+    public static readonly BindableProperty CircuitViewProperty =
+        BindableProperty.Create(nameof(CircuitView), typeof(CircuitViewContainer), typeof(CircuitSheetPage));
+
     public static readonly BindableProperty LayoutProperty =
-        BindableProperty.Create(nameof(Layout), typeof(IView), typeof(DragContainer), null,
+            BindableProperty.Create(nameof(Layout), typeof(IView), typeof(DragContainer), null,
             propertyChanged: propertyChanged);
 
     public static readonly BindableProperty OrientationProperty =
@@ -21,13 +24,6 @@ public partial class DragContainer : ContentView
     public static readonly BindableProperty TitleProperty =
                 BindableProperty.Create(nameof(Title), typeof(string), typeof(DragContainer), "Title",
             propertyChanged: propertyChanged);
-
-    public static readonly BindableProperty CircuitViewProperty =
-        BindableProperty.Create(nameof(CircuitView), typeof(CircuitViewContainer), typeof(CircuitSheetPage));
-
-    private PanGestureRecognizer? _dragRecognizer;
-
-    private Rect _lastBounds = Rect.Zero;
 
     public DragContainer()
     {
@@ -71,6 +67,10 @@ public partial class DragContainer : ContentView
     {
         ButtonHide.IsVisible = true;
     }
+
+    private PanGestureRecognizer? _dragRecognizer;
+
+    private Rect _lastBounds = Rect.Zero;
 
     private static void propertyChanged(BindableObject bindable, object oldvalue, object newvalue)
     {

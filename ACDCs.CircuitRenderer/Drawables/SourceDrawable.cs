@@ -1,14 +1,11 @@
-﻿
-using System;
-using ACDCs.CircuitRenderer.Instructions;
-using ACDCs.CircuitRenderer.Interfaces;
+﻿using ACDCs.CircuitRenderer.Instructions;
 using ACDCs.CircuitRenderer.Items;
 
 namespace ACDCs.CircuitRenderer.Drawables
 {
     public class SourceDrawable : DrawableComponent
     {
-        public SourceDrawable(WorksheetItem parent, SourceDrawableType type): base(typeof(SourceDrawable), parent)
+        public SourceDrawable(WorksheetItem parent, SourceDrawableType type) : base(typeof(SourceDrawable), parent)
         {
             Setup(DefaultValue);
         }
@@ -18,6 +15,8 @@ namespace ACDCs.CircuitRenderer.Drawables
             Value = value;
             Setup(value, type, x, y);
         }
+
+        public static string DefaultValue { get; set; } = "5v";
 
         private void Setup(string value = "N/A", SourceDrawableType type = SourceDrawableType.Voltage, float x = 0, float y = 0)
         {
@@ -33,8 +32,5 @@ namespace ACDCs.CircuitRenderer.Drawables
             SetSize(2, 2);
             SetPosition(x, y);
         }
-
-        public static string DefaultValue { get; set; } = "5v";
-
     }
 }

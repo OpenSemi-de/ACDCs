@@ -6,20 +6,16 @@ namespace ACDCs.Views.Components.Menu.MenuHandlers;
 
 public class MenuHandlerView : ContentView
 {
-    private static readonly BindableProperty CircuitViewProperty =
-        BindableProperty.Create(nameof(CircuitView), typeof(CircuitViewContainer), typeof(CircuitSheetPage));
-
-    private static readonly BindableProperty PopupPageProperty =
-            BindableProperty.Create(nameof(Page), typeof(Page), typeof(CircuitSheetPage));
-
-    private static readonly BindableProperty DebugViewProperty =
-        BindableProperty.Create(nameof(DebugView), typeof(DebugViewDragComtainer), typeof(CircuitSheetPage));
-
-
     public CircuitViewContainer CircuitView
     {
         get => (CircuitViewContainer)GetValue(CircuitViewProperty);
         set => SetValue(CircuitViewProperty, value);
+    }
+
+    public DebugViewDragComtainer DebugView
+    {
+        get => (DebugViewDragComtainer)GetValue(DebugViewProperty);
+        set => SetValue(DebugViewProperty, value);
     }
 
     public Page PopupPage
@@ -28,9 +24,12 @@ public class MenuHandlerView : ContentView
         set => SetValue(PopupPageProperty, value);
     }
 
-    public DebugViewDragComtainer DebugView
-    {
-        get => (DebugViewDragComtainer)GetValue(DebugViewProperty);
-        set => SetValue(DebugViewProperty, value);
-    }
+    private static readonly BindableProperty CircuitViewProperty =
+                    BindableProperty.Create(nameof(CircuitView), typeof(CircuitViewContainer), typeof(CircuitSheetPage));
+
+    private static readonly BindableProperty DebugViewProperty =
+        BindableProperty.Create(nameof(DebugView), typeof(DebugViewDragComtainer), typeof(CircuitSheetPage));
+
+    private static readonly BindableProperty PopupPageProperty =
+                BindableProperty.Create(nameof(Page), typeof(Page), typeof(CircuitSheetPage));
 }

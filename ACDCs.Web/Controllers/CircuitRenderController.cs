@@ -13,8 +13,6 @@ namespace ACDCs.Web.Controllers
     [ApiController]
     public class CircuitRenderController : Controller
     {
-        private readonly IWebHostEnvironment _environment;
-
         public CircuitRenderController(IWebHostEnvironment environment)
         {
             _environment = environment;
@@ -125,5 +123,7 @@ namespace ACDCs.Web.Controllers
 
             return File(imageBytes ?? Array.Empty<byte>(), "application/octet-stream", "img.bmp");
         }
+
+        private readonly IWebHostEnvironment _environment;
     }
 }

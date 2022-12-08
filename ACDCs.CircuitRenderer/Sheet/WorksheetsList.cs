@@ -4,8 +4,6 @@ namespace ACDCs.CircuitRenderer.Sheet;
 
 public sealed class WorksheetsList : List<Worksheet>
 {
-    private int _sheetCount;
-
     public int AddSheet(Worksheet sheet)
     {
         _sheetCount++;
@@ -14,4 +12,6 @@ public sealed class WorksheetsList : List<Worksheet>
         Log.L("Added sheet");
         return _sheetCount;
     }
+
+    private int _sheetCount;
 }

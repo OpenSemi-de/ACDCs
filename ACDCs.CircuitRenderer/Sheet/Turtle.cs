@@ -13,75 +13,6 @@ namespace ACDCs.CircuitRenderer.Sheet;
 
 public class Turtle
 {
-    private static readonly Point[][] DirectionalTriangles = {
-        new Point[]
-        {
-            new(0,0),
-            new(1,0),
-            new(0.5f,0.5f),
-        },
-        new Point[]
-        {
-            new(1,0),
-            new(1,1),
-            new(0.5f,0.5f),
-        },
-        new Point[]
-        {
-            new(1,1),
-            new(0,1),
-            new(0.5f,0.5f),
-        },
-        new Point[]
-        {
-            new(0,1),
-            new(0,0),
-            new(0.5f,0.5f),
-        },
-    };
-
-    private static readonly Point[][] DirectionalTrianglesMax = {
-        new Point[]
-        {
-            new(0,0),
-            new(int.MaxValue,0),
-            new(int.MaxValue /2,int.MaxValue /2),
-        },
-        new Point[]
-        {
-            new(int.MaxValue,0),
-            new(int.MaxValue, int.MaxValue),
-            new(int.MaxValue /2,int.MaxValue /2),
-        },
-        new Point[]
-        {
-            new(int.MaxValue,int.MaxValue),
-            new(0,int.MaxValue),
-
-            new(int.MaxValue /2,int.MaxValue /2),
-        },
-        new Point[]
-        {
-            new(0,int.MaxValue),
-            new(0, 0),
-
-            new(int.MaxValue /2,int.MaxValue /2),
-        },
-    };
-
-    private static readonly Point[] DirectionPoints = {
-        new(0,-1),
-        new(1,0),
-        new(0,1),
-        new(-1,0),
-    };
-
-    private readonly List<RectFr> _collisionRectangles = new();
-    private readonly WorksheetItemList _items;
-    private readonly WorksheetItemList _nets;
-    private readonly Coordinate _sheetSize;
-    private readonly Worksheet _worksheet;
-
     public Turtle(WorksheetItemList? items, WorksheetItemList? nets, Coordinate? sheetSize, Worksheet worksheet)
     {
         _worksheet = worksheet;
@@ -293,6 +224,75 @@ public class Turtle
 
         return traces;
     }
+
+    private static readonly Point[][] DirectionalTriangles = {
+        new Point[]
+        {
+            new(0,0),
+            new(1,0),
+            new(0.5f,0.5f),
+        },
+        new Point[]
+        {
+            new(1,0),
+            new(1,1),
+            new(0.5f,0.5f),
+        },
+        new Point[]
+        {
+            new(1,1),
+            new(0,1),
+            new(0.5f,0.5f),
+        },
+        new Point[]
+        {
+            new(0,1),
+            new(0,0),
+            new(0.5f,0.5f),
+        },
+    };
+
+    private static readonly Point[][] DirectionalTrianglesMax = {
+        new Point[]
+        {
+            new(0,0),
+            new(int.MaxValue,0),
+            new(int.MaxValue /2,int.MaxValue /2),
+        },
+        new Point[]
+        {
+            new(int.MaxValue,0),
+            new(int.MaxValue, int.MaxValue),
+            new(int.MaxValue /2,int.MaxValue /2),
+        },
+        new Point[]
+        {
+            new(int.MaxValue,int.MaxValue),
+            new(0,int.MaxValue),
+
+            new(int.MaxValue /2,int.MaxValue /2),
+        },
+        new Point[]
+        {
+            new(0,int.MaxValue),
+            new(0, 0),
+
+            new(int.MaxValue /2,int.MaxValue /2),
+        },
+    };
+
+    private static readonly Point[] DirectionPoints = {
+        new(0,-1),
+        new(1,0),
+        new(0,1),
+        new(-1,0),
+    };
+
+    private readonly List<RectFr> _collisionRectangles = new();
+    private readonly WorksheetItemList _items;
+    private readonly WorksheetItemList _nets;
+    private readonly Coordinate _sheetSize;
+    private readonly Worksheet _worksheet;
 
     private static Point GetPoint(float positionX, float positionY, Direction direction)
     {

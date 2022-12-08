@@ -1,8 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Graphics.Skia;
-using Microsoft.Maui.Storage;
-using System;
+﻿using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,19 +6,24 @@ using ACDCs.CircuitRenderer;
 using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Sheet;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Graphics.Skia;
+using Microsoft.Maui.Storage;
 using Color = ACDCs.CircuitRenderer.Definitions.Color;
 
 namespace ACDCs.Views.Components.Items
 {
     public class ItemButton : ImageButton
     {
-        private IDrawable? _drawableSheet;
-
         public ItemButton(Type? itemType)
         {
             ItemType = itemType;
             Padding = 0;
         }
+
+        public Type? ItemType { get; set; }
+
         public void Draw()
         {
             if (ItemType != null)
@@ -46,7 +47,6 @@ namespace ACDCs.Views.Components.Items
                         sheet.DisplayOffset.Y = 7 * (3 / item.Height - 1) - 7;
                     else
                         sheet.DisplayOffset.Y = -20;
-
                 }
 
                 if (sheet.CalculateScene())
@@ -70,7 +70,12 @@ namespace ACDCs.Views.Components.Items
             }
         }
 
-        public Type? ItemType { get; set; }
+        public void SetBackground(Microsoft.Maui.Graphics.Color backgroundColor)
+        {
+            BackgroundColor = backgroundColor;
+        }
+
+        private IDrawable? _drawableSheet;
 
         private Task<Stream> StreamImage(CancellationToken arg)
         {
@@ -83,11 +88,6 @@ namespace ACDCs.Views.Components.Items
             context.WriteToStream(stream);
 
             return Task.FromResult(stream);
-        }
-
-        public void SetBackground(Microsoft.Maui.Graphics.Color backgroundColor)
-        {
-            BackgroundColor = backgroundColor;
         }
     }
 

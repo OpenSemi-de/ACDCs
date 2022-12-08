@@ -7,12 +7,12 @@ namespace ACDCs.CircuitRenderer.Scene;
 public sealed class DefaultSceneManager : ISceneManager
 {
     public Color? BackgroundColor { get; set; }
+    public Color? BackgroundHighColor { get; set; }
     public Coordinate? DisplayOffset { get; set; }
     public object? DrawableScene { get; set; }
+    public Color? ForegroundColor { get; set; }
     public SheetScene? Scene { get; set; }
     public bool ShowGrid { get; set; } = true;
-    public Color? ForegroundColor { get; set; }
-    public Color? BackgroundHighColor { get; set; }
 
     public object? GetSceneForBackend()
     {

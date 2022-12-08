@@ -6,8 +6,6 @@ namespace ACDCs.Views.Components.Menu.MenuHandlers;
 
 public class MenuHandler
 {
-    private static readonly Dictionary<string, Action> _menuHandlers = new();
-
     public static void Add(string name, Action action)
     {
         App.Call(() =>
@@ -33,4 +31,6 @@ public class MenuHandler
             return Task.CompletedTask;
         }).Wait();
     }
+
+    private static readonly Dictionary<string, Action> _menuHandlers = new();
 }

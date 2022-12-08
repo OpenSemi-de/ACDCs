@@ -5,15 +5,15 @@ using ACDCs.CircuitRenderer.Drawables;
 
 namespace ACDCs.CircuitRenderer.Items.Sources
 {
-    public class VoltageSourceItem: SourceItem
+    public class VoltageSourceItem : SourceItem
     {
-        public  VoltageSourceItem() :
+        public VoltageSourceItem() :
             base(SourceDrawableType.Voltage)
         {
         }
 
-        public static new string DefaultValue { get; set; } = "5v";
+        public new static string DefaultValue { get; set; } = "5v";
 
-        public static new bool IsInsertable { get; set; } = true;
+        public new static bool IsInsertable { get; set; } = true;
     }
 }

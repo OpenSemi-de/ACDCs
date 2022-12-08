@@ -1,21 +1,15 @@
-﻿using CommunityToolkit.Maui.Markup;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Layouts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using ACDCs.CircuitRenderer.Items;
+using CommunityToolkit.Maui.Markup;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Layouts;
 
 namespace ACDCs.Views.Components.ItemsList;
 
 public class ItemsListDragContainer : DragContainer.DragContainer
 {
-    private static readonly BindableProperty PopupTargetProperty =
-        BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
-
-    private readonly StackLayout _layout;
-    private readonly ListView _listViewItems;
-
     public ItemsListDragContainer()
     {
         Title = "Items / selection";
@@ -77,6 +71,12 @@ public class ItemsListDragContainer : DragContainer.DragContainer
         _listViewItems.ItemsSource = null;
         _listViewItems.ItemsSource = list;
     }
+
+    private static readonly BindableProperty PopupTargetProperty =
+                    BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
+
+    private readonly StackLayout _layout;
+    private readonly ListView _listViewItems;
 
     private void AddLabelToTemplate(StackLayout layout, string bindingPath, double width)
     {

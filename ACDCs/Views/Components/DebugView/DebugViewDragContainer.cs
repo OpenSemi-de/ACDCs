@@ -1,20 +1,14 @@
 ﻿using System;
 using ACDCs.Views.Components.CircuitView;
+using CommunityToolkit.Maui.Markup;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
-using CommunityToolkit.Maui.Markup;
 
 namespace ACDCs.Views.Components.DebugView
 {
-    public class DebugViewDragComtainer: DragContainer.DragContainer
+    public class DebugViewDragComtainer : DragContainer.DragContainer
     {
-        private Point _cursorPosition;
-        private readonly StackLayout _layout;
-        private readonly Label _labelCursorPosition;
-        private readonly Label _labelTapPosition;
-        private Point _tapPosition;
-
         public DebugViewDragComtainer()
         {
             Title = "Debug";
@@ -39,20 +33,16 @@ namespace ACDCs.Views.Components.DebugView
             _labelTapPosition = new Label() { HorizontalOptions = LayoutOptions.Fill, };
             _layout.Add(_labelTapPosition);
 
-
             Layout = _layout;
 
             Loaded += OnLoaded;
         }
 
-        private void OnLoaded(object? sender, EventArgs e)
-        {
-            if (CircuitView != null)
-            {
-                CircuitView.CursorPositionChanged += OnCursorPositionChanged;
-                CircuitView.TapPositionChanged += CircuitViewOnTapPositionChanged;
-            }
-        }
+        private readonly Label _labelCursorPosition;
+        private readonly Label _labelTapPosition;
+        private readonly StackLayout _layout;
+        private Point _cursorPosition;
+        private Point _tapPosition;
 
         private void CircuitViewOnTapPositionChanged(object sender, CursorPositionChangeEventArgs args)
         {
@@ -64,6 +54,15 @@ namespace ACDCs.Views.Components.DebugView
         {
             _cursorPosition = args.CursorPosition;
             _labelCursorPosition.Text($"{_cursorPosition.X}/{_cursorPosition.Y}");
+        }
+
+        private void OnLoaded(object? sender, EventArgs e)
+        {
+            if (CircuitView != null)
+            {
+                CircuitView.CursorPositionChanged += OnCursorPositionChanged;
+                CircuitView.TapPositionChanged += CircuitViewOnTapPositionChanged;
+            }
         }
     }
 }

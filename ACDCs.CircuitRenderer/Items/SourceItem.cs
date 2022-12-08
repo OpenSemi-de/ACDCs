@@ -1,9 +1,8 @@
 ﻿using ACDCs.CircuitRenderer.Drawables;
-using Newtonsoft.Json.Linq;
 
 namespace ACDCs.CircuitRenderer.Items
 {
-    public class SourceItem: WorksheetItem
+    public class SourceItem : WorksheetItem
     {
         public SourceItem(SourceDrawableType sourceDrawableType)
         {
@@ -16,6 +15,5 @@ namespace ACDCs.CircuitRenderer.Items
             DrawableComponent = new SourceDrawable(this, value, type, x, y);
             Value = value;
         }
-
     }
 }

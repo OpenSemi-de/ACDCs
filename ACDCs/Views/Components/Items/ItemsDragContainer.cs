@@ -1,22 +1,17 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Layouts;
-using System;
+﻿using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Sheet;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Layouts;
 
 namespace ACDCs.Views.Components.Items;
 
 public class ItemsDragContainer : DragContainer.DragContainer
 {
-    private static readonly BindableProperty PopupTargetProperty =
-        BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
-
-    private readonly StackLayout _layout;
-
     public ItemsDragContainer()
     {
         Title = "Items";
@@ -33,11 +28,6 @@ public class ItemsDragContainer : DragContainer.DragContainer
         Layout = _layout;
 
         Loaded += OnLoaded;
-    }
-
-    private async void OnLoaded(object? sender, EventArgs e)
-    {
-        await SetupView();
     }
 
     public Func<float, float, WorksheetItem?>? DoInsert { get; set; }
@@ -117,6 +107,11 @@ public class ItemsDragContainer : DragContainer.DragContainer
         });
     }
 
+    private static readonly BindableProperty PopupTargetProperty =
+                                            BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
+
+    private readonly StackLayout _layout;
+
     private async Task DeselectSelectedButton()
     {
         await App.Call(() =>
@@ -191,6 +186,11 @@ public class ItemsDragContainer : DragContainer.DragContainer
                 }
             }
         }).Wait();
+    }
+
+    private async void OnLoaded(object? sender, EventArgs e)
+    {
+        await SetupView();
     }
 
     private async Task SelectButton(ItemButton selectedButton)

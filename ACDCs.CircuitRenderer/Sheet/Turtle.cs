@@ -209,17 +209,6 @@ public class Turtle
 
         foreach (var worksheetItem in traces)
         {
-            // worksheetItem.X *= Convert.ToInt32(Workbook.Zoom);
-            // worksheetItem.Y *= Convert.ToInt32(Workbook.Zoom);
-            // var traceItem = (TraceItem)worksheetItem;
-            // foreach (var drawInstruction in ((TraceDrawable)traceItem.DrawableComponent).DrawInstructions)
-            // {
-            //     var line = (LineInstruction)drawInstruction;
-            //     line.Position.X *=  Workbook.Zoom ;
-            //     line.Position.Y *= Workbook.Zoom ;
-            //     line.End.X *= Workbook.Zoom;
-            //     line.End.Y *= Workbook.Zoom;
-            // }
         }
 
         return traces;

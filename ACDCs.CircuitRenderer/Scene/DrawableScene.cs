@@ -382,9 +382,5 @@ public class DrawableScene : IDrawable
         drawSize.Y = drawSize.Y * Zoom * BaseGridSize;
         drawPos.X = drawPos.X * Zoom * BaseGridSize;
         drawPos.Y = drawPos.Y * Zoom * BaseGridSize;
-        //drawPos.X += offX;
-        //  drawPos.Y += offY;
-        //  drawPos.X = drawPos.X - Zoom * BaseGridSize * ((drawable.Size.X % 2) / 2);
-        //  drawPos.Y = drawPos.Y - Zoom * BaseGridSize * ((drawable.Size.Y % 2) / 2);
     }
 }

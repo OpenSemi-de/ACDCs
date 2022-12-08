@@ -22,7 +22,6 @@ public class PinDrawable : DrawableComponent
         Size = new Coordinate(Size);
         Worksheet = pin.Worksheet;
         ParentItem = pin.ParentItem;
-        //BackRef = pin.BackRef;
         Setup(1, 1);
     }
 

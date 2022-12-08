@@ -113,13 +113,12 @@ public partial class DragContainer : ContentView
                     propertyChanged(this, Orientation, Orientation);
                 }
                 Rect newBounds = new(_lastBounds.Location, _lastBounds.Size);
-                newBounds.Top += e.TotalY; // - TitleLabel.Height / 2;
-                newBounds.Left += e.TotalX; // - TitleLabel.Width / 2;
+                newBounds.Top += e.TotalY;
+                newBounds.Left += e.TotalX;
 
                 if (newBounds.Top > 5)
                 {
                     newBounds.Width = AbsoluteLayout.AutoSize;
-                    //  newBounds.Height = AbsoluteLayout.AutoSize;
                 }
                 else
                 {
@@ -130,7 +129,6 @@ public partial class DragContainer : ContentView
                 if (newBounds.Left > 5)
                 {
                     newBounds.Width = AbsoluteLayout.AutoSize;
-                    //newBounds.Height = AbsoluteLayout.AutoSize;
                 }
                 else
                 {

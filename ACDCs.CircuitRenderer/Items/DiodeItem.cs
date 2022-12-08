@@ -22,6 +22,6 @@ public sealed class DiodeItem : WorksheetItem
         Value = value;
     }
 
-    public new static bool IsInsertable { get; set; } = true;
+    public static new bool IsInsertable { get; set; } = true;
     public new string DefaultValue { get; set; } = "0.7";
 }

@@ -8,5 +8,5 @@ public class PnpTransistorItem : TransistorItem
     {
     }
 
-    public new static bool IsInsertable { get; set; } = true;
+    public static new bool IsInsertable { get; set; } = true;
 }

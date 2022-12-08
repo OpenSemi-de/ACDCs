@@ -17,7 +17,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 		<Nullable>enable</Nullable>
 		<IncrementVersionOnBuild>1.+.yyyy.MMdd</IncrementVersionOnBuild>
-		<Version>1.10.2022.1208</Version>
+		<Version>1.24.2022.1208</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -26,6 +26,10 @@
 		<PackageReference Include="MathNet.Spatial" Version="0.6.0" />
 		<PackageReference Include="Microsoft.Maui.Graphics.Skia" Version="7.0.49" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Items\Sources\" />
 	</ItemGroup>
 
 </Project>

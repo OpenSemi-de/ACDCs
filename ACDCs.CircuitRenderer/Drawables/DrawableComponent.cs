@@ -25,6 +25,7 @@ public class DrawableComponent : IDrawableComponent, IHaveAParent
     public Coordinate Size { get; set; } = new(1, 1, 0);
     public string Type { get; }
     public Worksheet? Worksheet { get; set; }
+    public string Value { get; set; }
 
     public void SetPosition(float x, float y)
     {

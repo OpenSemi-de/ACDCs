@@ -24,7 +24,7 @@ public class TransistorItem : WorksheetItem
         Value = type.ToString();
     }
 
-    public new static bool IsInsertable { get; set; } = false;
+    public static new bool IsInsertable { get; set; } = false;
     public TransistorDrawableType DefaultType { get; set; }
     public TransistorDrawableType Type { get; set; }
 }

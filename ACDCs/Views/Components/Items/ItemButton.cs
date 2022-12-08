@@ -2,15 +2,15 @@
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Graphics.Skia;
 using Microsoft.Maui.Storage;
-using OSECircuitRender;
-using OSECircuitRender.Definitions;
-using OSECircuitRender.Items;
-using OSECircuitRender.Sheet;
 using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Color = OSECircuitRender.Definitions.Color;
+using ACDCs.CircuitRenderer;
+using ACDCs.CircuitRenderer.Definitions;
+using ACDCs.CircuitRenderer.Items;
+using ACDCs.CircuitRenderer.Sheet;
+using Color = ACDCs.CircuitRenderer.Definitions.Color;
 
 namespace ACDCs.Views.Components.Items
 {

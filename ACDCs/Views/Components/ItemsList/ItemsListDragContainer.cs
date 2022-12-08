@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Maui.Markup;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Layouts;
-using OSECircuitRender.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ACDCs.CircuitRenderer.Items;
 
 namespace ACDCs.Views.Components.ItemsList;
 

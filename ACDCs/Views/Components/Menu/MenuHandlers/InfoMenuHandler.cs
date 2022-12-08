@@ -1,6 +1,4 @@
-﻿using OSECircuitRender.Items;
-using OSECircuitRender.Sheet;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace ACDCs.Views.Components.Menu.MenuHandlers;

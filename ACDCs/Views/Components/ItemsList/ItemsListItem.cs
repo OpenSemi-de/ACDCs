@@ -1,4 +1,4 @@
-﻿using OSECircuitRender.Interfaces;
+﻿using ACDCs.CircuitRenderer.Interfaces;
 
 namespace ACDCs.Views.Components.ItemsList;
 

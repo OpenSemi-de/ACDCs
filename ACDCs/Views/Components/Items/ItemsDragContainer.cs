@@ -1,12 +1,12 @@
 ﻿using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
-using OSECircuitRender.Interfaces;
-using OSECircuitRender.Items;
-using OSECircuitRender.Sheet;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using ACDCs.CircuitRenderer.Interfaces;
+using ACDCs.CircuitRenderer.Items;
+using ACDCs.CircuitRenderer.Sheet;
 
 namespace ACDCs.Views.Components.Items;
 

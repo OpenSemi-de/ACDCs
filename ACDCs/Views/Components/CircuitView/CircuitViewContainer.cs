@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using ACDCs.CircuitRenderer;
+using ACDCs.CircuitRenderer.Definitions;
+using ACDCs.CircuitRenderer.Drawables;
+using ACDCs.CircuitRenderer.Interfaces;
+using ACDCs.CircuitRenderer.Items;
+using ACDCs.CircuitRenderer.Scene;
+using ACDCs.CircuitRenderer.Sheet;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Newtonsoft.Json;
-using OSECircuitRender;
-using OSECircuitRender.Definitions;
-using OSECircuitRender.Drawables;
-using OSECircuitRender.Interfaces;
-using OSECircuitRender.Items;
-using OSECircuitRender.Scene;
-using OSECircuitRender.Sheet;
 using Color = Microsoft.Maui.Graphics.Color;
 using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
 
@@ -156,9 +156,9 @@ public class CircuitViewContainer : ContentView
     {
         await App.Call(() =>
         {
-            _currentSheet.BackgroundColor = new OSECircuitRender.Definitions.Color(BackgroundColor);
-            _currentSheet.ForegroundColor = new OSECircuitRender.Definitions.Color(ForegroundColor);
-            _currentSheet.BackgroundHighColor = new OSECircuitRender.Definitions.Color(BackgroundHighColor);
+            _currentSheet.BackgroundColor = new CircuitRenderer.Definitions.Color(BackgroundColor);
+            _currentSheet.ForegroundColor = new CircuitRenderer.Definitions.Color(ForegroundColor);
+            _currentSheet.BackgroundHighColor = new CircuitRenderer.Definitions.Color(BackgroundHighColor);
 
             if (App.Com<bool>("Items", "IsInserting"))
                 return Task.CompletedTask;

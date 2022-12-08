@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <IncrementVersionOnBuild>1.+.yyyy.MMdd</IncrementVersionOnBuild>
-    <Version>1.3.2022.1208</Version>
+    <Version>1.4.2022.1208</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\OSECircuitRender\OSECircuitRender\OSECircuitRender.csproj" />
+    <ProjectReference Include="..\ACDCS.CircuitRenderer\ACDCs.CircuitRenderer.csproj" />
   </ItemGroup>
 
 </Project>

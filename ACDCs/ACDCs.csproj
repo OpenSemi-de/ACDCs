@@ -92,7 +92,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\OSECircuitRender\OSECircuitRender\OSECircuitRender.csproj" />
+		<ProjectReference Include="..\ACDCS.CircuitRenderer\ACDCs.CircuitRenderer.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

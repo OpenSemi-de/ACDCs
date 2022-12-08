@@ -1,7 +1,7 @@
-﻿using Microsoft.Maui.Graphics;
-using System;
+﻿using System;
+using Microsoft.Maui.Graphics;
 
-namespace OSECircuitRender.Definitions;
+namespace ACDCs.CircuitRenderer.Definitions;
 
 public sealed class Coordinate
 {

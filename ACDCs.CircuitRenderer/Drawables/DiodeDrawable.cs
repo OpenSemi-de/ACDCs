@@ -1,7 +1,7 @@
-﻿using OSECircuitRender.Instructions;
-using OSECircuitRender.Interfaces;
+﻿using ACDCs.CircuitRenderer.Instructions;
+using ACDCs.CircuitRenderer.Interfaces;
 
-namespace OSECircuitRender.Drawables;
+namespace ACDCs.CircuitRenderer.Drawables;
 
 public sealed class DiodeDrawable : DrawableComponent
 {

@@ -1,8 +1,8 @@
-﻿using OSECircuitRender.Definitions;
-using OSECircuitRender.Drawables;
-using OSECircuitRender.Interfaces;
+﻿using ACDCs.CircuitRenderer.Definitions;
+using ACDCs.CircuitRenderer.Drawables;
+using ACDCs.CircuitRenderer.Interfaces;
 
-namespace OSECircuitRender.Scene;
+namespace ACDCs.CircuitRenderer.Scene;
 
 public sealed class DefaultSceneManager : ISceneManager
 {

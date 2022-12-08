@@ -1,6 +1,6 @@
-﻿using OSECircuitRender.Drawables;
+﻿using ACDCs.CircuitRenderer.Drawables;
 
-namespace OSECircuitRender.Items;
+namespace ACDCs.CircuitRenderer.Items;
 
 public class TransistorItem : WorksheetItem
 {

@@ -1,10 +1,10 @@
-﻿using OSECircuitRender.Definitions;
-using OSECircuitRender.Instructions;
-using OSECircuitRender.Items;
-using OSECircuitRender.Sheet;
-using System;
+﻿using System;
+using ACDCs.CircuitRenderer.Definitions;
+using ACDCs.CircuitRenderer.Instructions;
+using ACDCs.CircuitRenderer.Items;
+using ACDCs.CircuitRenderer.Sheet;
 
-namespace OSECircuitRender.Interfaces;
+namespace ACDCs.CircuitRenderer.Interfaces;
 
 public interface IDrawableComponent
 {

@@ -1,7 +1,7 @@
-﻿using OSECircuitRender.Items;
-using System;
+﻿using System;
+using ACDCs.CircuitRenderer.Items;
 
-namespace OSECircuitRender.Interfaces;
+namespace ACDCs.CircuitRenderer.Interfaces;
 
 public interface IWorksheetItem
 {

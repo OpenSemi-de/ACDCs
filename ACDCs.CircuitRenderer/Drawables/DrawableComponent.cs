@@ -1,11 +1,11 @@
-﻿using OSECircuitRender.Definitions;
-using OSECircuitRender.Instructions;
-using OSECircuitRender.Interfaces;
-using OSECircuitRender.Items;
-using OSECircuitRender.Sheet;
-using System;
+﻿using System;
+using ACDCs.CircuitRenderer.Definitions;
+using ACDCs.CircuitRenderer.Instructions;
+using ACDCs.CircuitRenderer.Interfaces;
+using ACDCs.CircuitRenderer.Items;
+using ACDCs.CircuitRenderer.Sheet;
 
-namespace OSECircuitRender.Drawables;
+namespace ACDCs.CircuitRenderer.Drawables;
 
 public class DrawableComponent : IDrawableComponent, IHaveAParent
 {

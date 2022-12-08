@@ -1,4 +1,4 @@
-﻿namespace OSECircuitRender.Interfaces
+﻿namespace ACDCs.CircuitRenderer.Interfaces
 {
     public interface IHaveAParent
     {

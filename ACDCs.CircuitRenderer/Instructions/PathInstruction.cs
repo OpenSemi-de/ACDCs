@@ -1,9 +1,9 @@
-﻿using OSECircuitRender.Definitions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ACDCs.CircuitRenderer.Definitions;
 
-namespace OSECircuitRender.Instructions;
+namespace ACDCs.CircuitRenderer.Instructions;
 
 public enum PathPartType
 {

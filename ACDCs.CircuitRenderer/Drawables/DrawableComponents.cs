@@ -1,8 +1,8 @@
-﻿using OSECircuitRender.Interfaces;
-using OSECircuitRender.Sheet;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ACDCs.CircuitRenderer.Interfaces;
+using ACDCs.CircuitRenderer.Sheet;
 
-namespace OSECircuitRender.Drawables;
+namespace ACDCs.CircuitRenderer.Drawables;
 
 public sealed class DrawableComponentList : List<IDrawableComponent>
 {

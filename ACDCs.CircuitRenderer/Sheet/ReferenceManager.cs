@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace OSECircuitRender.Sheet;
+namespace ACDCs.CircuitRenderer.Sheet;
 
 public sealed class ReferenceManager
 {

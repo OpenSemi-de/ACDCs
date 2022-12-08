@@ -1,4 +1,4 @@
-﻿namespace OSECircuitRender.Drawables;
+﻿namespace ACDCs.CircuitRenderer.Drawables;
 
 public enum CapacitorDrawableType
 {

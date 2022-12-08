@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OSECircuitRender.Definitions;
+namespace ACDCs.CircuitRenderer.Definitions;
 
 public sealed class Color
 {

@@ -1,10 +1,10 @@
-﻿using Microsoft.Maui.Graphics.Skia;
-using OSECircuitRender.Definitions;
-using OSECircuitRender.Interfaces;
-using OSECircuitRender.Items;
-using System;
+﻿using System;
+using ACDCs.CircuitRenderer.Definitions;
+using ACDCs.CircuitRenderer.Interfaces;
+using ACDCs.CircuitRenderer.Items;
+using Microsoft.Maui.Graphics.Skia;
 
-namespace OSECircuitRender.Sheet;
+namespace ACDCs.CircuitRenderer.Sheet;
 
 public class TwoDPathRouter : IPathRouter
 {

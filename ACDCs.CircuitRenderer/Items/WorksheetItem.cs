@@ -1,11 +1,11 @@
 ﻿#nullable enable
 
-using Newtonsoft.Json;
-using OSECircuitRender.Drawables;
-using OSECircuitRender.Interfaces;
 using System;
+using ACDCs.CircuitRenderer.Drawables;
+using ACDCs.CircuitRenderer.Interfaces;
+using Newtonsoft.Json;
 
-namespace OSECircuitRender.Items;
+namespace ACDCs.CircuitRenderer.Items;
 
 public class WorksheetItem : IWorksheetItem
 {

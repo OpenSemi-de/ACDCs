@@ -1,6 +1,6 @@
 ﻿#nullable enable
 
-namespace OSECircuitRender.Definitions;
+namespace ACDCs.CircuitRenderer.Definitions;
 
 public enum Direction
 {

@@ -1,4 +1,4 @@
-﻿namespace OSECircuitRender.Items;
+﻿namespace ACDCs.CircuitRenderer.Items;
 
 public class NetItem : WorksheetItem
 {

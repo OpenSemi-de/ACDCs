@@ -1,6 +1,6 @@
-﻿using OSECircuitRender.Items;
+﻿using ACDCs.CircuitRenderer.Items;
 
-namespace OSECircuitRender.Interfaces;
+namespace ACDCs.CircuitRenderer.Interfaces;
 
 public interface IPathRouter
 {

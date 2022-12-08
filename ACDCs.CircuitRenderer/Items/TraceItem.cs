@@ -1,7 +1,7 @@
-﻿using OSECircuitRender.Definitions;
-using OSECircuitRender.Drawables;
+﻿using ACDCs.CircuitRenderer.Definitions;
+using ACDCs.CircuitRenderer.Drawables;
 
-namespace OSECircuitRender.Items;
+namespace ACDCs.CircuitRenderer.Items;
 
 public class TraceItem : WorksheetItem
 {

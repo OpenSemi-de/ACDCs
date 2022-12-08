@@ -1,6 +1,6 @@
-﻿using OSECircuitRender.Definitions;
+﻿using ACDCs.CircuitRenderer.Definitions;
 
-namespace OSECircuitRender.Instructions;
+namespace ACDCs.CircuitRenderer.Instructions;
 
 public sealed class LineInstruction : DrawInstruction
 {

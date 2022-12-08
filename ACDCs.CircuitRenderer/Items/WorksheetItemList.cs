@@ -1,10 +1,10 @@
-﻿using OSECircuitRender.Interfaces;
-using OSECircuitRender.Sheet;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using OSECircuitRender.Drawables;
+using ACDCs.CircuitRenderer.Drawables;
+using ACDCs.CircuitRenderer.Interfaces;
+using ACDCs.CircuitRenderer.Sheet;
 
-namespace OSECircuitRender.Items;
+namespace ACDCs.CircuitRenderer.Items;
 
 public sealed class WorksheetItemList : List<IWorksheetItem>
 {

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
+using ACDCs.CircuitRenderer.Definitions;
+using ACDCs.CircuitRenderer.Instructions;
+using ACDCs.CircuitRenderer.Interfaces;
 using Microsoft.Maui.Graphics;
-using OSECircuitRender.Definitions;
-using OSECircuitRender.Instructions;
-using OSECircuitRender.Interfaces;
-using Color = OSECircuitRender.Definitions.Color;
+using Color = ACDCs.CircuitRenderer.Definitions.Color;
 
-namespace OSECircuitRender.Scene;
+namespace ACDCs.CircuitRenderer.Scene;
 
 public class DrawableScene : IDrawable
 {

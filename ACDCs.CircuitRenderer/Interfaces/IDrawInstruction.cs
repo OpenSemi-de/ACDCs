@@ -1,6 +1,6 @@
-﻿using OSECircuitRender.Definitions;
+﻿using ACDCs.CircuitRenderer.Definitions;
 
-namespace OSECircuitRender.Interfaces;
+namespace ACDCs.CircuitRenderer.Interfaces;
 
 public interface IDrawInstruction
 {

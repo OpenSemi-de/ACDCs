@@ -1,8 +1,8 @@
-﻿using OSECircuitRender.Definitions;
-using OSECircuitRender.Interfaces;
-using System;
+﻿using System;
+using ACDCs.CircuitRenderer.Definitions;
+using ACDCs.CircuitRenderer.Interfaces;
 
-namespace OSECircuitRender.Instructions;
+namespace ACDCs.CircuitRenderer.Instructions;
 
 public class DrawInstruction : IDrawInstruction
 {

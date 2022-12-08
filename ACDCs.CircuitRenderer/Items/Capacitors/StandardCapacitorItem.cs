@@ -1,6 +1,6 @@
-﻿using OSECircuitRender.Drawables;
+﻿using ACDCs.CircuitRenderer.Drawables;
 
-namespace OSECircuitRender.Items.Capacitors;
+namespace ACDCs.CircuitRenderer.Items.Capacitors;
 
 public class StandardCapacitorItem : CapacitorItem
 {

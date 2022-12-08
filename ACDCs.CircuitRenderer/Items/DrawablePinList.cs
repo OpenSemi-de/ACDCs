@@ -1,7 +1,7 @@
-﻿using OSECircuitRender.Drawables;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ACDCs.CircuitRenderer.Drawables;
 
-namespace OSECircuitRender.Items;
+namespace ACDCs.CircuitRenderer.Items;
 
 public sealed class DrawablePinList : List<PinDrawable>
 {

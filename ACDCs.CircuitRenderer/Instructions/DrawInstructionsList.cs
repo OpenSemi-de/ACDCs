@@ -1,7 +1,7 @@
-﻿using OSECircuitRender.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ACDCs.CircuitRenderer.Interfaces;
 
-namespace OSECircuitRender.Instructions;
+namespace ACDCs.CircuitRenderer.Instructions;
 
 public sealed class DrawInstructionsList : List<IDrawInstruction>
 {

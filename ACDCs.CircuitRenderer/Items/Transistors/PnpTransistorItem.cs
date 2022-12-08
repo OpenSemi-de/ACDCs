@@ -1,6 +1,6 @@
-﻿using OSECircuitRender.Drawables;
+﻿using ACDCs.CircuitRenderer.Drawables;
 
-namespace OSECircuitRender.Items.Transistors;
+namespace ACDCs.CircuitRenderer.Items.Transistors;
 
 public class PnpTransistorItem : TransistorItem
 {

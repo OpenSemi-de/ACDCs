@@ -5,64 +5,63 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 
-namespace ACDCs.Views.Components.DebugView
+namespace ACDCs.Views.Components.DebugView;
+
+public class DebugViewDragComtainer : DragContainer.DragContainer
 {
-    public class DebugViewDragComtainer : DragContainer.DragContainer
+    public DebugViewDragComtainer()
     {
-        public DebugViewDragComtainer()
+        Title = "Debug";
+        Orientation = StackOrientation.Vertical;
+        ShowButtonHide();
+
+        AbsoluteLayout.SetLayoutBounds(this, new(1, 400, 300, 400));
+        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.XProportional);
+
+        _layout = new()
         {
-            Title = "Debug";
-            Orientation = StackOrientation.Vertical;
-            ShowButtonHide();
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+            MinimumWidthRequest = 300
+        };
 
-            AbsoluteLayout.SetLayoutBounds(this, new(1, 400, 300, 400));
-            AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.XProportional);
+        _layout.Add(new Label().Text("CursorPosition"));
+        _labelCursorPosition = new Label() { HorizontalOptions = LayoutOptions.Fill, };
+        _layout.Add(_labelCursorPosition);
 
-            _layout = new()
-            {
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Fill,
-                MinimumWidthRequest = 300
-            };
+        _layout.Add(new Label().Text("TapPosition"));
+        _labelTapPosition = new Label() { HorizontalOptions = LayoutOptions.Fill, };
+        _layout.Add(_labelTapPosition);
 
-            _layout.Add(new Label().Text("CursorPosition"));
-            _labelCursorPosition = new Label() { HorizontalOptions = LayoutOptions.Fill, };
-            _layout.Add(_labelCursorPosition);
+        Layout = _layout;
 
-            _layout.Add(new Label().Text("TapPosition"));
-            _labelTapPosition = new Label() { HorizontalOptions = LayoutOptions.Fill, };
-            _layout.Add(_labelTapPosition);
+        Loaded += OnLoaded;
+    }
 
-            Layout = _layout;
+    private readonly Label _labelCursorPosition;
+    private readonly Label _labelTapPosition;
+    private readonly StackLayout _layout;
+    private Point _cursorPosition;
+    private Point _tapPosition;
 
-            Loaded += OnLoaded;
-        }
+    private void CircuitViewOnTapPositionChanged(object sender, CursorPositionChangeEventArgs args)
+    {
+        _tapPosition = args.CursorPosition;
+        _labelTapPosition.Text($"{_cursorPosition.X}/{_cursorPosition.Y}");
+    }
 
-        private readonly Label _labelCursorPosition;
-        private readonly Label _labelTapPosition;
-        private readonly StackLayout _layout;
-        private Point _cursorPosition;
-        private Point _tapPosition;
+    private void OnCursorPositionChanged(object sender, CursorPositionChangeEventArgs args)
+    {
+        _cursorPosition = args.CursorPosition;
+        _labelCursorPosition.Text($"{_cursorPosition.X}/{_cursorPosition.Y}");
+    }
 
-        private void CircuitViewOnTapPositionChanged(object sender, CursorPositionChangeEventArgs args)
+    private void OnLoaded(object? sender, EventArgs e)
+    {
+        if (CircuitView != null)
         {
-            _tapPosition = args.CursorPosition;
-            _labelTapPosition.Text($"{_cursorPosition.X}/{_cursorPosition.Y}");
-        }
-
-        private void OnCursorPositionChanged(object sender, CursorPositionChangeEventArgs args)
-        {
-            _cursorPosition = args.CursorPosition;
-            _labelCursorPosition.Text($"{_cursorPosition.X}/{_cursorPosition.Y}");
-        }
-
-        private void OnLoaded(object? sender, EventArgs e)
-        {
-            if (CircuitView != null)
-            {
-                CircuitView.CursorPositionChanged += OnCursorPositionChanged;
-                CircuitView.TapPositionChanged += CircuitViewOnTapPositionChanged;
-            }
+            CircuitView.CursorPositionChanged += OnCursorPositionChanged;
+            CircuitView.TapPositionChanged += CircuitViewOnTapPositionChanged;
         }
     }
 }

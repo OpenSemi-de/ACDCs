@@ -1,7 +1,6 @@
-﻿namespace ACDCs.CircuitRenderer.Interfaces
+﻿namespace ACDCs.CircuitRenderer.Interfaces;
+
+public interface IHaveAParent
 {
-    public interface IHaveAParent
-    {
-        IWorksheetItem ParentItem { get; set; }
-    }
+    IWorksheetItem ParentItem { get; set; }
 }

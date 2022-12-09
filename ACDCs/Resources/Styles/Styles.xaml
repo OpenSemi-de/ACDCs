@@ -38,21 +38,33 @@
     <Style TargetType="menu:MenuDivider">
         <Setter Property="BackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" />
+        <Setter Property="MaximumHeightRequest" Value="2"></Setter>
     </Style>
 
     <Style TargetType="menu:MenuFrame">
         <Setter Property="BackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" />
+                Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
     </Style>
 
     <Style TargetType="Button" ApplyToDerivedTypes="True">
         <Setter Property="TextColor"
                 Value="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" />
         <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" />
+        <Setter Property="BorderColor"
                 Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
         <Setter Property="FontFamily" Value="MapleMonoRegular" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="CornerRadius" Value="2" />
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="Black"
+                    Offset="0,1"
+                    Radius="2"
+                    Opacity="0.8"
+                    />
+            </Setter.Value>
+        </Setter>
         <Setter Property="Padding" Value="14,10" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
@@ -207,6 +219,8 @@
     </Style>
 
     <Style TargetType="ListView">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
         <Setter Property="SeparatorColor"
                 Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
         <Setter Property="RefreshControlColor"
@@ -428,12 +442,13 @@
     <Style TargetType="Page" ApplyToDerivedTypes="True">
         <Setter Property="Padding" Value="0" />
         <Setter Property="BackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+                Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
     </Style>
+
 
     <Style TargetType="Shell" ApplyToDerivedTypes="True">
         <Setter Property="Shell.BackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}" />
+                Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
         <Setter Property="Shell.ForegroundColor"
                 Value="{OnPlatform WinUI={StaticResource Primary}, Default={StaticResource White}}" />
         <Setter Property="Shell.TitleColor"
@@ -455,7 +470,7 @@
 
     <Style TargetType="NavigationPage">
         <Setter Property="BarBackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}" />
+                Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
         <Setter Property="BarTextColor"
                 Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource White}}" />
         <Setter Property="IconColor"

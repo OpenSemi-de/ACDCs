@@ -1,8 +1,7 @@
-﻿namespace ACDCs.CircuitRenderer.Drawables
+﻿namespace ACDCs.CircuitRenderer.Drawables;
+
+public enum SourceDrawableType
 {
-    public enum SourceDrawableType
-    {
-        Voltage,
-        Current
-    }
+    Voltage,
+    Current
 }

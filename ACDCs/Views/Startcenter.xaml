@@ -2,40 +2,30 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:circuitView="clr-namespace:ACDCs.Views.Components.CircuitView"
+             xmlns:items="using:ACDCs.Views.Components.Items"
              x:Class="ACDCs.Views.StartCenterPage"
              Title="Main">
-
     <ScrollView>
         <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
             VerticalOptions="Center">
-
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
+            <circuitView:CircuitViewContainer WidthRequest="500" HeightRequest="400" x:Name="CircuitView" Loaded="CircuitView_OnLoaded">
+                <AbsoluteLayout.LayoutFlags>SizeProportional</AbsoluteLayout.LayoutFlags>
+                <AbsoluteLayout.LayoutBounds>0,0,1,1</AbsoluteLayout.LayoutBounds>
+                <circuitView:CircuitViewContainer.BackgroundColor>
+                    <AppThemeBinding Light="{StaticResource BackgroundLight}" Dark="{StaticResource BackgroundDark}" />
+                </circuitView:CircuitViewContainer.BackgroundColor>
+                <circuitView:CircuitViewContainer.BackgroundHighColor>
+                    <AppThemeBinding Light="{StaticResource BackgroundHighlightLight}"
+                                     Dark="{StaticResource BackgroundHighlightDark}" />
+                </circuitView:CircuitViewContainer.BackgroundHighColor>
+                <circuitView:CircuitViewContainer.ForegroundColor>
+                    <AppThemeBinding Light="{StaticResource ForegroundLight}" Dark="{StaticResource ForegroundDark}" />
+                </circuitView:CircuitViewContainer.ForegroundColor>
+            </circuitView:CircuitViewContainer>
+            <Button Text="New sheet" WidthRequest="200" Clicked="Button_OnClicked"></Button>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

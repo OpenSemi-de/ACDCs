@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.Maui.Accessibility;
+using ACDCs.CircuitRenderer.Items;
 using Microsoft.Maui.Controls;
 
 namespace ACDCs.Views;
@@ -11,17 +11,21 @@ public partial class StartCenterPage : ContentPage
         InitializeComponent();
     }
 
-    private int count = 0;
-
-    private void OnCounterClicked(object sender, EventArgs e)
+    private void CircuitView_OnLoaded(object? sender, EventArgs e)
     {
-        count++;
+        TextItem textItemLogo = new TextItem("ACDCs", 140,10, 10);
+        TextItem textItemText = new TextItem("Advanced Circuit Design Component Suite", 20,10, 12);
+        textItemLogo.IsRealFontSize = true;
+        textItemText.IsRealFontSize = true;
+        textItemLogo.Width = 10;
+        textItemLogo.Height = 6;
+        CircuitView.InsertToPosition(10, 10, textItemLogo).Wait();
+        CircuitView.InsertToPosition(10, 12, textItemText).Wait();
+        CircuitView.Paint();
+    }
 
-        if (count == 1)
-            CounterBtn.Text = $"Clicked {count} time";
-        else
-            CounterBtn.Text = $"Clicked {count} times";
-
-        SemanticScreenReader.Announce(CounterBtn.Text);
+    private void Button_OnClicked(object? sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("//circuit").Wait();
     }
 }

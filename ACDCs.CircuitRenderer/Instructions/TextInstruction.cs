@@ -5,7 +5,7 @@ namespace ACDCs.CircuitRenderer.Instructions;
 public sealed class TextInstruction : DrawInstruction
 {
     public float Orientation;
-    public float Size;
+    public float FontSize;
     public string Text;
 
     public TextInstruction(string text, float orientation, float size, float x, float y) : base(typeof(TextInstruction))
@@ -14,6 +14,8 @@ public sealed class TextInstruction : DrawInstruction
         StrokeColor = new Color(0, 0, 0);
         Text = text;
         Orientation = orientation;
-        Size = size;
+        FontSize = size;
     }
+
+    public bool IsRealFontSize { get; set; }
 }

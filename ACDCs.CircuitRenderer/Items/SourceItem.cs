@@ -1,22 +1,21 @@
 ﻿using ACDCs.CircuitRenderer.Drawables;
 
-namespace ACDCs.CircuitRenderer.Items
+namespace ACDCs.CircuitRenderer.Items;
+
+public class SourceItem : WorksheetItem
 {
-    public class SourceItem : WorksheetItem
+    public SourceItem(SourceDrawableType sourceDrawableType)
     {
-        public SourceItem(SourceDrawableType sourceDrawableType)
-        {
-            DrawableComponent = new SourceDrawable(this, DefaultValue, sourceDrawableType, 1, 1);
-            Value = DefaultValue;
-        }
-
-        public SourceItem(string value, SourceDrawableType type, float x, float y)
-        {
-            DrawableComponent = new SourceDrawable(this, value, type, x, y);
-            Value = value;
-        }
-
-        public override string DefaultValue => "5v";
-        public override bool IsInsertable => false;
+        DrawableComponent = new SourceDrawable(this, DefaultValue, sourceDrawableType, 1, 1);
+        Value = DefaultValue;
     }
+
+    public SourceItem(string value, SourceDrawableType type, float x, float y)
+    {
+        DrawableComponent = new SourceDrawable(this, value, type, x, y);
+        Value = value;
+    }
+
+    public override string DefaultValue => "5v";
+    public override bool IsInsertable => false;
 }

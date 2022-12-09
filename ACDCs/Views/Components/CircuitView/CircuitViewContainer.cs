@@ -68,7 +68,7 @@ public class CircuitViewContainer : ContentView
 
     public event CursorPositionChangeEvent? TapPositionChanged;
 
-    public Color BackgroundHighColor
+    public Color? BackgroundHighColor
     {
         get => (Color)GetValue(BackgroundHighColorProperty);
         set => SetValue(BackgroundHighColorProperty, value);
@@ -79,7 +79,7 @@ public class CircuitViewContainer : ContentView
         get => _currentSheet;
     }
 
-    public Color ForegroundColor
+    public Color? ForegroundColor
     {
         get => (Color)GetValue(ForegroundColorProperty);
         set => SetValue(ForegroundColorProperty, value);
@@ -89,6 +89,27 @@ public class CircuitViewContainer : ContentView
     {
         _currentWorkbook.Sheets.Clear();
         _currentSheet = _currentWorkbook.AddNewSheet();
+    }
+
+    public async Task InsertToPosition(float x, float y, WorksheetItem? newItem)
+    {
+        await App.Call(() =>
+        {
+            
+            if (newItem != null)
+            {
+                newItem.X -= newItem.Width / 2;
+                newItem.Y -= newItem.Height / 2;
+            
+                CurrentWorksheet.Items.AddItem(newItem);
+            }
+
+            App.Com<bool>("Items", "IsInserting", false);
+
+            ListSetItems?.Invoke(_currentSheet.Items, _currentSheet.SelectedItems);
+
+            return Task.CompletedTask;
+        });
     }
 
     public async Task InsertToPosition(float x, float y)
@@ -142,9 +163,20 @@ public class CircuitViewContainer : ContentView
     {
         await App.Call(() =>
         {
-            _currentSheet.BackgroundColor = new CircuitRenderer.Definitions.Color(BackgroundColor);
-            _currentSheet.ForegroundColor = new CircuitRenderer.Definitions.Color(ForegroundColor);
-            _currentSheet.BackgroundHighColor = new CircuitRenderer.Definitions.Color(BackgroundHighColor);
+            if (BackgroundColor != null)
+            {
+                _currentSheet.BackgroundColor = new CircuitRenderer.Definitions.Color(BackgroundColor);
+            }
+
+            if (ForegroundColor != null)
+            {
+                _currentSheet.ForegroundColor = new CircuitRenderer.Definitions.Color(ForegroundColor);
+            }
+
+            if (BackgroundHighColor != null)
+            {
+                _currentSheet.BackgroundHighColor = new CircuitRenderer.Definitions.Color(BackgroundHighColor);
+            }
 
             if (App.Com<bool>("Items", "IsInserting"))
                 return Task.CompletedTask;

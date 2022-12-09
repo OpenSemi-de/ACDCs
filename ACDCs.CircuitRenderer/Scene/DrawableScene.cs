@@ -365,7 +365,17 @@ public class DrawableScene : IDrawable
         float x = GetScale(drawSize.X, centerPos.X);
         float y = GetScale(drawSize.Y, centerPos.Y);
         canvas.SaveState();
-        canvas.FontSize = (_fontSize / text.Size) * 12;
+
+        if (text.IsRealFontSize)
+        {
+            canvas.FontSize = text.FontSize;
+        }
+        else
+        {
+            canvas.FontSize = (_fontSize / text.FontSize) * 12;
+        }
+
+
         canvas.Translate(x, y);
         canvas.Rotate(text.Orientation);
         canvas.DrawString(text.Text, 0, 0, HorizontalAlignment.Center);

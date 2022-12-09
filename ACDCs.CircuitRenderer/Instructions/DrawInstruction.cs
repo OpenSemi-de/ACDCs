@@ -9,6 +9,7 @@ public class DrawInstruction : IDrawInstruction
     public DrawInstruction(Type type)
     {
         Type = type.Name;
+        Position = new();
     }
 
     public Coordinate Position { get; set; }

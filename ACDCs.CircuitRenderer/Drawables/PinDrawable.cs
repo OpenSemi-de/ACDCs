@@ -45,6 +45,7 @@ public class PinDrawable : DrawableComponent
         {
             ParentItem.Pins.Add(this);
         }
+
         SetSize(1, 1);
         SetPosition(x, y);
     }

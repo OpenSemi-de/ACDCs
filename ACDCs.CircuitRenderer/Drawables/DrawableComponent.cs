@@ -12,6 +12,7 @@ public class DrawableComponent : IDrawableComponent, IHaveAParent
     {
         ParentItem = parentItem;
         Type = type.Name;
+        Value = "";
     }
 
     public Guid ComponentGuid { get; set; } = Guid.NewGuid();

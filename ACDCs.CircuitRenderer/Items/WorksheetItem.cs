@@ -14,10 +14,9 @@ public class WorksheetItem : IWorksheetItem
         DrawableComponent = new DrawableComponent(typeof(DrawableComponent), this);
     }
 
-    public virtual string DefaultValue { get; set; }
+    public virtual string DefaultValue { get; set; } = "";
 
-    [JsonIgnore]
-    public IDrawableComponent DrawableComponent { get; set; }
+    [JsonIgnore] public IDrawableComponent DrawableComponent { get; set; }
 
     public int Height
     {
@@ -29,8 +28,7 @@ public class WorksheetItem : IWorksheetItem
     public Guid ItemGuid { get; set; } = Guid.NewGuid();
     public string Name { get; set; } = string.Empty;
 
-    [JsonIgnore]
-    public DrawablePinList Pins { get; set; } = new();
+    [JsonIgnore] public DrawablePinList Pins { get; set; } = new();
 
     public string RefName { get; set; } = string.Empty;
 

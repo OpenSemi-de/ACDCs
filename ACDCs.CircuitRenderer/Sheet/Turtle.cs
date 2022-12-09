@@ -26,17 +26,17 @@ public class Turtle
     public static Direction LineIntersectsRect(Point p1, Point p2, RectFr r)
     {
         if (LineIntersectsLine(
-             p1,
-             p2,
-             new Point(r.X1, r.Y1),
-             new Point(r.X2, r.Y2)))
+                p1,
+                p2,
+                new Point(r.X1, r.Y1),
+                new Point(r.X2, r.Y2)))
             return Direction.Top;
 
         if (LineIntersectsLine(
-            p1,
-            p2,
-            new Point(r.X2, r.Y2),
-            new Point(r.X3, r.Y3)))
+                p1,
+                p2,
+                new Point(r.X2, r.Y2),
+                new Point(r.X3, r.Y3)))
             return Direction.Right;
 
         if (LineIntersectsLine(
@@ -121,10 +121,7 @@ public class Turtle
 
                 var itemPositions = new List<Coordinate>()
                 {
-                    rotatedItemPos1,
-                    rotatedItemPos2,
-                    rotatedItemPos3,
-                    rotatedItemPos4
+                    rotatedItemPos1, rotatedItemPos2, rotatedItemPos3, rotatedItemPos4
                 };
 
                 rect.X1 = itemPositions[0].X;
@@ -174,7 +171,8 @@ public class Turtle
 
                 var currentPoint = GetPoint(position1X, position1Y, direction1);
 
-                DebugDrawLine(position1X, position1Y, Convert.ToSingle(currentPoint.X), Convert.ToSingle(currentPoint.Y));
+                DebugDrawLine(position1X, position1Y, Convert.ToSingle(currentPoint.X),
+                    Convert.ToSingle(currentPoint.Y));
 
                 trace.AddPart(new Coordinate(position1X, position1Y, 0), Coordinate.FromPoint(currentPoint));
 
@@ -194,8 +192,8 @@ public class Turtle
                         Console.WriteLine(f + "-" + pin1.ComponentGuid + "-" + nextDirection);
 
                         DebugDrawLine(Convert.ToSingle(currentPoint.X),
-                                Convert.ToSingle(currentPoint.Y),
-                                Convert.ToSingle(stepPoint.X), Convert.ToSingle(stepPoint.Y));
+                            Convert.ToSingle(currentPoint.Y),
+                            Convert.ToSingle(stepPoint.X), Convert.ToSingle(stepPoint.Y));
 
                         trace.AddPart(Coordinate.FromPoint(currentPoint), Coordinate.FromPoint(stepPoint));
 
@@ -214,68 +212,29 @@ public class Turtle
         return traces;
     }
 
-    private static readonly Point[][] DirectionalTriangles = {
-        new Point[]
-        {
-            new(0,0),
-            new(1,0),
-            new(0.5f,0.5f),
-        },
-        new Point[]
-        {
-            new(1,0),
-            new(1,1),
-            new(0.5f,0.5f),
-        },
-        new Point[]
-        {
-            new(1,1),
-            new(0,1),
-            new(0.5f,0.5f),
-        },
-        new Point[]
-        {
-            new(0,1),
-            new(0,0),
-            new(0.5f,0.5f),
-        },
+    private static readonly Point[][] DirectionalTriangles =
+    {
+        new Point[] { new(0, 0), new(1, 0), new(0.5f, 0.5f), },
+        new Point[] { new(1, 0), new(1, 1), new(0.5f, 0.5f), },
+        new Point[] { new(1, 1), new(0, 1), new(0.5f, 0.5f), },
+        new Point[] { new(0, 1), new(0, 0), new(0.5f, 0.5f), },
     };
 
-    private static readonly Point[][] DirectionalTrianglesMax = {
+    private static readonly Point[][] DirectionalTrianglesMax =
+    {
+        new Point[] { new(0, 0), new(int.MaxValue, 0), new(int.MaxValue / 2, int.MaxValue / 2), },
         new Point[]
         {
-            new(0,0),
-            new(int.MaxValue,0),
-            new(int.MaxValue /2,int.MaxValue /2),
+            new(int.MaxValue, 0), new(int.MaxValue, int.MaxValue), new(int.MaxValue / 2, int.MaxValue / 2),
         },
         new Point[]
         {
-            new(int.MaxValue,0),
-            new(int.MaxValue, int.MaxValue),
-            new(int.MaxValue /2,int.MaxValue /2),
+            new(int.MaxValue, int.MaxValue), new(0, int.MaxValue), new(int.MaxValue / 2, int.MaxValue / 2),
         },
-        new Point[]
-        {
-            new(int.MaxValue,int.MaxValue),
-            new(0,int.MaxValue),
-
-            new(int.MaxValue /2,int.MaxValue /2),
-        },
-        new Point[]
-        {
-            new(0,int.MaxValue),
-            new(0, 0),
-
-            new(int.MaxValue /2,int.MaxValue /2),
-        },
+        new Point[] { new(0, int.MaxValue), new(0, 0), new(int.MaxValue / 2, int.MaxValue / 2), },
     };
 
-    private static readonly Point[] DirectionPoints = {
-        new(0,-1),
-        new(1,0),
-        new(0,1),
-        new(-1,0),
-    };
+    private static readonly Point[] DirectionPoints = { new(0, -1), new(1, 0), new(0, 1), new(-1, 0), };
 
     private readonly List<RectFr> _collisionRectangles = new();
     private readonly WorksheetItemList _items;
@@ -293,8 +252,10 @@ public class Turtle
 
     private static bool LineIntersectsLine(Point line1Point1, Point line1Point2, Point line2Point1, Point line2Point2)
     {
-        float q = Convert.ToSingle((line1Point1.Y - line2Point1.Y) * (line2Point2.X - line2Point1.X) - (line1Point1.X - line2Point1.X) * (line2Point2.Y - line2Point1.Y));
-        float d = Convert.ToSingle((line1Point2.X - line1Point1.X) * (line2Point2.Y - line2Point1.Y) - (line1Point2.Y - line1Point1.Y) * (line2Point2.X - line2Point1.X));
+        float q = Convert.ToSingle((line1Point1.Y - line2Point1.Y) * (line2Point2.X - line2Point1.X) -
+                                   (line1Point1.X - line2Point1.X) * (line2Point2.Y - line2Point1.Y));
+        float d = Convert.ToSingle((line1Point2.X - line1Point1.X) * (line2Point2.Y - line2Point1.Y) -
+                                   (line1Point2.Y - line1Point1.Y) * (line2Point2.X - line2Point1.X));
 
         if (d == 0)
         {
@@ -303,7 +264,8 @@ public class Turtle
 
         float r = q / d;
 
-        q = Convert.ToSingle((line1Point1.Y - line2Point1.Y) * (line1Point2.X - line1Point1.X) - (line1Point1.X - line2Point1.X) * (line1Point2.Y - line1Point1.Y));
+        q = Convert.ToSingle((line1Point1.Y - line2Point1.Y) * (line1Point2.X - line1Point1.X) -
+                             (line1Point1.X - line2Point1.X) * (line1Point2.Y - line1Point1.Y));
         float s = q / d;
 
         if (r < 0 || r > 1 || s < 0 || s > 1)
@@ -315,7 +277,7 @@ public class Turtle
     }
 
     private static void Rotate(IDrawableComponent pindrawable, ref float positionX, ref float positionY, ref float pinX,
-                ref float pinY)
+        ref float pinY)
     {
         if (pindrawable.Rotation != 0)
         {
@@ -332,7 +294,7 @@ public class Turtle
     }
 
     private static Coordinate RotateCoordinate(float posX, float posY, float centerX, float centerY,
-                double angleInDegrees)
+        double angleInDegrees)
     {
         double angleInRadians = angleInDegrees * (Math.PI / 180);
         double cosTheta = Math.Cos(angleInRadians);
@@ -341,12 +303,12 @@ public class Turtle
         {
             X =
                 Convert.ToSingle(
-                (cosTheta * (posX - centerX) -
-                    sinTheta * (posY - centerY) + centerX)),
+                    (cosTheta * (posX - centerX) -
+                        sinTheta * (posY - centerY) + centerX)),
             Y =
                 Convert.ToSingle(
-                (sinTheta * (posX - centerX) +
-                 cosTheta * (posY - centerY) + centerY))
+                    (sinTheta * (posX - centerX) +
+                     cosTheta * (posY - centerY) + centerY))
         };
     }
 
@@ -371,7 +333,9 @@ public class Turtle
 
     private void DebugDrawLine(float position1X, float position1Y, float position2X, float position2Y)
     {
-        DebugCanvas?.DrawLine(position1X * Workbook.Zoom * Workbook.BaseGridSize, position1Y * Workbook.Zoom * Workbook.BaseGridSize, position2X * Workbook.Zoom * Workbook.BaseGridSize, position2Y * Workbook.Zoom * Workbook.BaseGridSize);
+        DebugCanvas?.DrawLine(position1X * Workbook.Zoom * Workbook.BaseGridSize,
+            position1Y * Workbook.Zoom * Workbook.BaseGridSize, position2X * Workbook.Zoom * Workbook.BaseGridSize,
+            position2Y * Workbook.Zoom * Workbook.BaseGridSize);
     }
 
     private void DebugDrawRectangle(RectFr rect)
@@ -421,6 +385,7 @@ public class Turtle
             {
                 return (Direction)pos;
             }
+
             pos++;
         }
 
@@ -447,6 +412,7 @@ public class Turtle
             {
                 directions.Add((Direction)pos);
             }
+
             pos++;
         }
 
@@ -463,9 +429,11 @@ public class Turtle
         Point stepPoint;
 
         var lastDirectionStepPoint = CheckCollision(currentPoint, nextDirection, out var collisionRect);
-        if (lastDirectionStepPoint.X != targetPoint.X && lastDirectionStepPoint.Y != targetPoint.Y && currentPoint.X != targetPoint.X && currentPoint.Y != targetPoint.Y)
+        if (lastDirectionStepPoint.X != targetPoint.X && lastDirectionStepPoint.Y != targetPoint.Y &&
+            currentPoint.X != targetPoint.X && currentPoint.Y != targetPoint.Y)
         {
-            if (collisionRect == null || (lastDirectionStepPoint.X == targetPoint.X && lastDirectionStepPoint.Y == targetPoint.Y))
+            if (collisionRect == null ||
+                (lastDirectionStepPoint.X == targetPoint.X && lastDirectionStepPoint.Y == targetPoint.Y))
             {
                 return lastDirectionStepPoint;
             }

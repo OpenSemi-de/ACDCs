@@ -1,6 +1,9 @@
-﻿using ACDCs.CircuitRenderer.Definitions;
+﻿using System.Collections.Generic;
+using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.CircuitRenderer.Interfaces;
+using Microsoft.Maui.Graphics;
+using Color = ACDCs.CircuitRenderer.Definitions.Color;
 
 namespace ACDCs.CircuitRenderer.Scene;
 
@@ -31,7 +34,7 @@ public sealed class DefaultSceneManager : ISceneManager
 
     public bool SetScene(DrawableComponentList drawables, DrawableComponentList selected, PinDrawable? selectedPin)
     {
-        Scene = new SheetScene();
+        Scene = new SheetScene(this);
         Scene.SetDrawables(drawables, selected);
         Scene.ShowGrid = ShowGrid;
         Scene.BackgroundColor = BackgroundColor;
@@ -50,4 +53,16 @@ public sealed class DefaultSceneManager : ISceneManager
             Scene.SheetSize = sheetSize;
         }
     }
+
+    public void PutFeedbackRect(bool isSelected, DrawableComponent? drawable, Coordinate drawPos, Coordinate drawSize,
+        Coordinate? displayOffset)
+    {
+        FeedbackRect feedBackRect = new(isSelected, drawable);
+        feedBackRect.Rect = new RectF(drawPos.Substract(displayOffset).ToPointF(),
+            drawPos.Add(drawSize).Substract(displayOffset).ToSizeF());
+
+        FeedbackRects.Add(feedBackRect);
+    }
+
+    public List<FeedbackRect>? FeedbackRects { get; } = new();
 }

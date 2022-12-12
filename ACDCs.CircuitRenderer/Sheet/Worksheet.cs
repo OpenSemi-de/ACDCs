@@ -1,6 +1,7 @@
 ﻿#nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Drawables;
@@ -9,6 +10,7 @@ using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Scene;
 using AnyClone;
 using Newtonsoft.Json;
+using Color = ACDCs.CircuitRenderer.Definitions.Color;
 
 namespace ACDCs.CircuitRenderer.Sheet;
 
@@ -82,11 +84,17 @@ public sealed class Worksheet
             if (SceneManager.SendToBackend(backendScene))
             {
                 Log.L("Backend received scene");
+                
                 return true;
             }
         }
 
         return false;
+    }
+
+    public List<FeedbackRect>? GetFeedbackRects()
+    {
+        return SceneManager?.FeedbackRects;
     }
 
     public void DeleteItem(WorksheetItem item)
@@ -201,4 +209,5 @@ public sealed class Worksheet
     {
         OnSelectionChange?.Invoke(SelectedItems);
     }
+
 }

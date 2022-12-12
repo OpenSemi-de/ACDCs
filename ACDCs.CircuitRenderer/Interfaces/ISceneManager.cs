@@ -1,4 +1,5 @@
-﻿using ACDCs.CircuitRenderer.Definitions;
+﻿using System.Collections.Generic;
+using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.CircuitRenderer.Scene;
 
@@ -20,4 +21,8 @@ public interface ISceneManager
     bool SetScene(DrawableComponentList drawables, DrawableComponentList selected, PinDrawable? selectedPin);
 
     void SetSizeAndScale(Coordinate sheetSize, float gridSize);
+    void PutFeedbackRect(bool isSelected, DrawableComponent? drawable, Coordinate drawPos, Coordinate drawSize,
+        Coordinate? displayOffset);
+
+    List<FeedbackRect>? FeedbackRects { get; }
 }

@@ -4,8 +4,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ACDCs.Views.Components.DragContainer.DragContainer"
              x:Name="DragContentView">
-    <Frame HorizontalOptions="Fill" VerticalOptions="Fill">
-        <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+    <AbsoluteLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+        <Image x:Name="BackgroundImage" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional" HorizontalOptions="Fill" VerticalOptions="Fill">
+        </Image>
+        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional" HorizontalOptions="Fill" VerticalOptions="Fill">
             <StackLayout.Orientation>
                 <x:Binding Path="Orientation" />
             </StackLayout.Orientation>
@@ -13,7 +15,7 @@
                 <x:Reference Name="DragContentView" />
             </StackLayout.BindingContext>
             <Frame x:Name="TitleFrame" Margin="0" Padding="0" HorizontalOptions="Fill" VerticalOptions="Fill"
-                   MinimumHeightRequest="40" MinimumWidthRequest="20">
+                   MinimumHeightRequest="40" MinimumWidthRequest="20" BackgroundColor="Transparent">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" VerticalOptions="Fill">
                     <Label x:Name="TitleLabel" FontSize="10" FontAutoScalingEnabled="True" BackgroundColor="Transparent"
                        HorizontalOptions="Fill" VerticalOptions="Fill" HorizontalTextAlignment="Center"
@@ -30,5 +32,5 @@
             </Frame>
             <ContentView x:Name="MainContentView" HorizontalOptions="Fill" VerticalOptions="Fill" />
         </StackLayout>
-    </Frame>
+    </AbsoluteLayout>
 </ContentView>

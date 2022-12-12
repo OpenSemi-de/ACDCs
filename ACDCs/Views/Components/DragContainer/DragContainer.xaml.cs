@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using ACDCs.Services;
 using ACDCs.Views.Components.CircuitView;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
@@ -29,6 +30,17 @@ public partial class DragContainer : ContentView
     {
         InitializeComponent();
         Loaded += (sender, args) => StartDragging();
+
+   
+        LayoutChanged += DragContainer_LayoutChanged;
+    }
+
+    private void DragContainer_LayoutChanged(object? sender, EventArgs e)
+    {
+        DragContainer thisContainer = sender as DragContainer;
+        float height = (float)thisContainer.Height;
+        float width = (float)thisContainer.Width;
+        BackgroundImage.Source = ImageService.BackgroundImageSource(width, height);
     }
 
     public CircuitViewContainer? CircuitView
@@ -166,4 +178,5 @@ public partial class DragContainer : ContentView
         if (ButtonHide.IsVisible)
             ButtonHide_OnClicked(this, EventArgs.Empty);
     }
+
 }

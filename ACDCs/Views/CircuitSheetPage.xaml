@@ -12,11 +12,11 @@
              Title="New sheet"
              x:Name="CircuitSheetPageInstance">
     <AbsoluteLayout x:Name="AbsoluteLayoutSheetPage">
-        <circuitView:CircuitViewContainer x:Name="CircuitView" ForegroundColor="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" BackgroundHighColor="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional"></circuitView:CircuitViewContainer>
+        <circuitView:CircuitViewContainer x:Name="CircuitView" PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" ForegroundColor="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" BackgroundHighColor="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional"></circuitView:CircuitViewContainer>
         <menu:MenuDragContainer Title="Menu" PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" CircuitView="{x:Reference CircuitView}" DebugView="{x:Reference DebugViewInstance}"/>
         <menuHandlers:FileMenuHandlers CircuitView="{x:Reference CircuitView}" PopupPage="{x:Reference CircuitSheetPageInstance}"></menuHandlers:FileMenuHandlers>
         <menuHandlers:EditMenuHandlers CircuitView="{x:Reference CircuitView}"></menuHandlers:EditMenuHandlers>
-<menuHandlers:InfoMenuHandlers CircuitView="{x:Reference CircuitView}" DebugView="{x:Reference DebugViewInstance}"></menuHandlers:InfoMenuHandlers>
+        <menuHandlers:InfoMenuHandlers CircuitView="{x:Reference CircuitView}" DebugView="{x:Reference DebugViewInstance}"></menuHandlers:InfoMenuHandlers>
         <itemsList:ItemsListDragContainer></itemsList:ItemsListDragContainer>
         <debugView:DebugViewDragComtainer x:Name="DebugViewInstance" IsVisible="True" CircuitView="{x:Reference CircuitView}"></debugView:DebugViewDragComtainer>
         <items:ItemsDragContainer BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}"></items:ItemsDragContainer>

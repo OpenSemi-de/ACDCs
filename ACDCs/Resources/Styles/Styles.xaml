@@ -5,11 +5,10 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:dragContainer="using:ACDCs.Views.Components.DragContainer"
+    xmlns:services="using:ACDCs.Services"
     xmlns:menu="using:ACDCs.Views.Components.Menu">
 
     <Style TargetType="dragContainer:DragContainer" ApplyToDerivedTypes="True">
-        <Setter Property="BackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
     </Style>
 
     <Style TargetType="ActivityIndicator">
@@ -143,6 +142,7 @@
             </VisualStateGroupList>
         </Setter>
     </Style>
+
 
     <Style TargetType="Entry">
         <Setter Property="TextColor"

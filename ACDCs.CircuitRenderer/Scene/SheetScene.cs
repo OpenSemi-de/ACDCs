@@ -6,10 +6,11 @@ namespace ACDCs.CircuitRenderer.Scene;
 
 public sealed class SheetScene
 {
-    public SheetScene()
+    public SheetScene(ISceneManager sceneManager)
     {
         DisplayOffset = new Coordinate(0, 0, 0);
         SheetSize = new Coordinate(100, 100, 0);
+        SceneManager = sceneManager;
     }
 
     public Color? BackgroundColor { get; set; }
@@ -22,6 +23,7 @@ public sealed class SheetScene
     public PinDrawable? SelectedPin { get; set; }
     public Coordinate SheetSize { get; set; }
     public bool ShowGrid { get; set; } = true;
+    public ISceneManager SceneManager { get; set; }
 
     public bool IsSelected(IDrawableComponent drawable)
     {

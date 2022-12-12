@@ -4,7 +4,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:circuitView="clr-namespace:ACDCs.Views.Components.CircuitView"
              xmlns:items="using:ACDCs.Views.Components.Items"
+             xmlns:types="using:ACDCs.Types"
              x:Class="ACDCs.Views.StartCenterPage"
+             x:Name="Page"
              Title="Main">
     <ScrollView>
         <VerticalStackLayout

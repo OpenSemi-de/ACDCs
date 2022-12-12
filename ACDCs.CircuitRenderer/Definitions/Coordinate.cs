@@ -41,21 +41,50 @@ public sealed class Coordinate
         return new Coordinate(Convert.ToSingle(stepPoint.X), Convert.ToSingle(stepPoint.Y), 0);
     }
 
-    public Coordinate Add(Coordinate coordinate)
+    public Coordinate Add(Coordinate? coordinate)
     {
-        return new Coordinate(
-            X + coordinate.X,
-            Y + coordinate.Y,
-            Z + coordinate.Z
-        );
+        if (coordinate != null)
+        {
+            return new Coordinate(
+                X + coordinate.X,
+                Y + coordinate.Y,
+                Z + coordinate.Z
+            );
+        }
+
+        return this;
     }
 
-    public Coordinate Substract(Coordinate coordinate)
+    public Coordinate Substract(Coordinate? coordinate)
     {
-        return new Coordinate(
-            X - coordinate.X,
-            Y - coordinate.Y,
-            Z - coordinate.Z
-        );
+        if (coordinate != null)
+        {
+            return new Coordinate(
+                X - coordinate.X,
+                Y - coordinate.Y,
+                Z - coordinate.Z
+            );
+        }
+
+        return this;
+    }
+
+    public Coordinate Round()
+    {
+        X = (float)Math.Round(X);
+        Y = (float)Math.Round(Y);
+        Z = (float)Math.Round(Z);
+        return this;
+    }
+
+
+    public PointF ToPointF()
+    {
+        return new PointF(X, Y);
+    }
+
+    public SizeF ToSizeF()
+    {
+        return new SizeF(X, Y);
     }
 }

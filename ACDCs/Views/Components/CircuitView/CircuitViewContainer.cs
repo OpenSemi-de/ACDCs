@@ -10,9 +10,11 @@ using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Scene;
 using ACDCs.CircuitRenderer.Sheet;
+using ACDCs.Views.Components.Feedback;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Layouts;
 using Newtonsoft.Json;
 using Color = Microsoft.Maui.Graphics.Color;
 using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
@@ -34,12 +36,20 @@ public class CircuitViewContainer : ContentView
         _currentWorkbook = new Workbook();
         _currentWorkbook.SetBaseFont("Maple Mono");
         _currentSheet = _currentWorkbook.AddNewSheet();
-
+        BackgroundColor = Colors.Transparent;
         _graphicsView = new GraphicsView
         {
+            BackgroundColor = Colors.Transparent,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
         };
+
+        Feedback = new FeedbackFrame
+        {
+            IsVisible = false,
+            BackgroundColor = Colors.Transparent,
+        };
+  
 
         _tapRecognizer = new TapGestureRecognizer();
         _tapRecognizer.Tapped += TapGestureRecognizer_OnTapped;
@@ -95,12 +105,12 @@ public class CircuitViewContainer : ContentView
     {
         await App.Call(() =>
         {
-            
+
             if (newItem != null)
             {
                 newItem.X -= newItem.Width / 2;
                 newItem.Y -= newItem.Height / 2;
-            
+
                 CurrentWorksheet.Items.AddItem(newItem);
             }
 
@@ -134,7 +144,7 @@ public class CircuitViewContainer : ContentView
 
     public async void Open(string fileName)
     {
-        JsonSerializerSettings settings = new JsonSerializerSettings()
+        JsonSerializerSettings settings = new()
         {
             PreserveReferencesHandling = PreserveReferencesHandling.All,
             ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
@@ -165,7 +175,7 @@ public class CircuitViewContainer : ContentView
         {
             if (BackgroundColor != null)
             {
-                _currentSheet.BackgroundColor = new CircuitRenderer.Definitions.Color(BackgroundColor);
+                _currentSheet.BackgroundColor = new CircuitRenderer.Definitions.Color(BackgroundColor.WithAlpha(0.2f));
             }
 
             if (ForegroundColor != null)
@@ -188,13 +198,52 @@ public class CircuitViewContainer : ContentView
             _graphicsView.Drawable = scene;
 
             _graphicsView.Invalidate();
+
+            foreach (FeedbackRect feedbackRect in CurrentWorksheet.GetFeedbackRects() ?? new List<FeedbackRect>())
+            {
+                if (feedbackRect.Rect != null && feedbackRect.IsSelected)
+                {
+                    RectF rect = feedbackRect.Rect.Value;
+
+                    float width =2*( rect.Width - rect.X);
+                    float height =2*( rect.Height - rect.Y);
+                    float rectX = rect.X - width / 2;
+                    float rectY = rect.Y - height / 2;
+
+                    AbsoluteLayout.SetLayoutBounds(Feedback, new Rect(rectX, rectY, width, height));
+                    AbsoluteLayout.SetLayoutFlags(Feedback, AbsoluteLayoutFlags.None);
+                }
+            }
+
             return Task.CompletedTask;
         });
     }
 
+
+    public AbsoluteLayout PopupTarget
+    {
+        get => (AbsoluteLayout)GetValue(PopupTargetProperty);
+
+        set
+        {
+            SetValue(PopupTargetProperty, value);
+            PutFeedback();
+        }
+    }
+
+    private void PutFeedback()
+    {
+
+        PopupTarget.Add(Feedback);
+    }
+
+    private static readonly BindableProperty PopupTargetProperty =
+        BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
+
+
     public async void SaveAs(string fileName)
     {
-        JsonSerializerSettings settings = new JsonSerializerSettings()
+        JsonSerializerSettings settings = new()
         {
             PreserveReferencesHandling = PreserveReferencesHandling.All,
             ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
@@ -229,6 +278,9 @@ public class CircuitViewContainer : ContentView
 
     private readonly Workbook _currentWorkbook;
     private readonly GraphicsView _graphicsView;
+
+    public FeedbackFrame Feedback { get; }
+
     private readonly PanGestureRecognizer _panRecognizer;
     private readonly PointerGestureRecognizer _pointerRecognizer;
     private readonly TapGestureRecognizer _tapRecognizer;
@@ -276,6 +328,7 @@ public class CircuitViewContainer : ContentView
                 netToPin.Pins.Add(pinTo);
             }
 
+            CurrentWorksheet.SelectedPin = null;
             await Paint();
         });
     }

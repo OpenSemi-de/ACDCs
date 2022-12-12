@@ -28,6 +28,7 @@ public class ItemButton : ImageButton
     {
         if (ItemType != null)
         {
+            
             Worksheet sheet = new Workbook().AddNewSheet();
 
             sheet.GridSize = Convert.ToSingle(WidthRequest / Workbook.BaseGridSize * Workbook.Zoom);
@@ -36,6 +37,7 @@ public class ItemButton : ImageButton
             if (BackgroundColor != null)
             {
                 sheet.BackgroundColor = new Color(BackgroundColor.WithAlpha(0.2f));
+                this.BackgroundColor = BackgroundColor.WithAlpha(0.2f);
             }
 
             object?[] arguments = { };

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using ACDCs.CircuitRenderer.Definitions;
+using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.CircuitRenderer.Instructions;
 using ACDCs.CircuitRenderer.Interfaces;
 using Microsoft.Maui.Graphics;
@@ -44,15 +45,17 @@ public class DrawableScene : IDrawable
                 Scene.BackgroundColor.R,
                 Scene.BackgroundColor.G,
                 Scene.BackgroundColor.B,
-                Scene.BackgroundColor.A
+                Scene.BackgroundColor.A / 255
             )
             : Colors.WhiteSmoke;
+
+        canvas.FillColor = Colors.Transparent;
 
         BackgroundColor = Scene?.BackgroundColor;
         ForegroundColor = Scene?.ForegroundColor ?? new Color(255, 255, 255);
         BackgroundHighColor = Scene?.BackgroundHighColor ?? new Color(70, 70, 70);
 
-        canvas.FillRectangle(0, 0, 10000, 10000);
+       // canvas.FillRectangle(0, 0, 10000, 10000);
         canvas.SaveState();
 
         if (DisplayOffset != null)
@@ -72,6 +75,7 @@ public class DrawableScene : IDrawable
         }
 
         canvas.RestoreState();
+        //canvas.SetShadow(new SizeF(2,4),2f, Microsoft.Maui.Graphics.Color.FromArgb("#99000000"));
         Scene?.Drawables?.ForEach(
                 component => Render(canvas, component)
             );
@@ -210,6 +214,10 @@ public class DrawableScene : IDrawable
             DrawRectangle(canvas, drawPos, drawSize, upperLeft, lowerRight);
             canvas.RestoreState();
         }
+
+        Scene?.SceneManager.PutFeedbackRect(Scene.IsSelected(drawable), drawable as DrawableComponent, drawPos,
+            drawSize, DisplayOffset);
+
 
         canvas.RestoreState();
     }

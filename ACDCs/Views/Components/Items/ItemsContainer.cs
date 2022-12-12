@@ -4,28 +4,36 @@ using System.Threading.Tasks;
 using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Sheet;
+using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 
 namespace ACDCs.Views.Components.Items;
 
-public class ItemsDragContainer : DragContainer.DragContainer
+public class ItemsContainer : StackLayout
 {
-    public ItemsDragContainer()
+    public ItemsContainer()
     {
-        Title = "Items";
         IsInserting = false;
         Orientation = StackOrientation.Horizontal;
         AbsoluteLayout.SetLayoutBounds(this, new(0, 1, 1, 60));
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.YProportional);
+        _scroll = new()
+        {
+            HorizontalScrollBarVisibility = ScrollBarVisibility.Always,
+            VerticalScrollBarVisibility = ScrollBarVisibility.Never,
+            Orientation = ScrollOrientation.Horizontal
+        };
+
+
         _layout = new()
         {
-            Orientation = StackOrientation.Horizontal,
-            HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill
+            Orientation = StackOrientation.Horizontal
         };
-        Layout = _layout;
+        
+        _scroll.Content = _layout;
+        Add(_scroll);
 
         Loaded += OnLoaded;
     }
@@ -105,6 +113,7 @@ public class ItemsDragContainer : DragContainer.DragContainer
                     _layout.Add(
                         button
                                );
+                    _layout.WidthRequest += 60;
                 }
                 catch
                 {
@@ -119,6 +128,7 @@ public class ItemsDragContainer : DragContainer.DragContainer
         BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
 
     private readonly StackLayout _layout;
+    private readonly ScrollView _scroll;
 
     private async Task DeselectSelectedButton()
     {

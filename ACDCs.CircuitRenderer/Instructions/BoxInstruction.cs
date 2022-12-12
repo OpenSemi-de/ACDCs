@@ -13,6 +13,6 @@ public sealed class BoxInstruction : DrawInstruction
         FillColor = fillColor ?? new Color(255, 255, 255);
     }
 
-    public Color FillColor { get; set; }
+    public Color? FillColor { get; set; }
     public Coordinate Size { get; set; }
 }

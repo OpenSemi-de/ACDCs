@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ACDCs.Views.Components.CircuitView;
 using ACDCs.Views.Components.DebugView;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
@@ -9,19 +10,19 @@ using Newtonsoft.Json;
 
 namespace ACDCs.Views.Components.Menu;
 
-public class MenuDragContainer : DragContainer.DragContainer
+public class MenuContainer : StackLayout
 {
-    public MenuDragContainer()
+    public MenuContainer()
     {
         Orientation = StackOrientation.Horizontal;
-        AbsoluteLayout.SetLayoutBounds(this, new(0, 0, 1, 50));
+        AbsoluteLayout.SetLayoutBounds(this, new(0, 0, 1, 44));
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional);
         _menuLayout = new()
         {
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
             Orientation = StackOrientation.Horizontal,
-            Padding = 5,
+            Padding = 1,
         };
 
         _menuFrame = new()
@@ -42,7 +43,7 @@ public class MenuDragContainer : DragContainer.DragContainer
 
         _menuLayout.Add(_menuFrame);
         _menuLayout.Add(_fileNameLabel);
-        Layout = _menuLayout;
+        Add(_menuLayout);
         LoadMenu("menu_main.json");
         Loaded += MenuDragContainer_Loaded;
     }
@@ -63,6 +64,16 @@ public class MenuDragContainer : DragContainer.DragContainer
             _menuFrame.PopupTarget = value;
         }
     }
+
+    public CircuitViewContainer? CircuitView
+    {
+        get => (CircuitViewContainer)GetValue(CircuitViewProperty);
+        set => SetValue(CircuitViewProperty, value);
+    }
+
+
+    public static readonly BindableProperty CircuitViewProperty =
+        BindableProperty.Create(nameof(CircuitView), typeof(CircuitViewContainer), typeof(CircuitSheetPage));
 
     private static readonly BindableProperty DebugViewProperty =
         BindableProperty.Create(nameof(DebugView), typeof(DebugViewDragComtainer), typeof(CircuitSheetPage));

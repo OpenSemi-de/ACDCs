@@ -84,8 +84,9 @@ public class MenuFrame : StackLayout
             {
                 var childrenHeight = menuButton.MenuFrame.Children.Sum(child => ((IMenuItem)child).ItemHeight);
                 var mainX = AbsoluteLayout.GetLayoutBounds(MainContainer).X;
+                var mainY = AbsoluteLayout.GetLayoutBounds(MainContainer).Y + MainContainer.Height;
                 AbsoluteLayout.SetLayoutBounds(menuButton.MenuFrame,
-                    new(menuButton.X + mainX, 50, 140, childrenHeight));
+                    new(menuButton.X + mainX, mainY, 140, childrenHeight));
             }
         }
     }

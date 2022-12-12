@@ -37,7 +37,7 @@ public class CircuitViewContainer : ContentView
             VerticalOptions = LayoutOptions.Fill,
         };
 
-        Feedback = new FeedbackFrame
+        Feedback = new EditFrame
         {
             IsVisible = false,
             BackgroundColor = Colors.Transparent,
@@ -79,7 +79,7 @@ public class CircuitViewContainer : ContentView
         get => _currentSheet;
     }
 
-    public FeedbackFrame Feedback { get; }
+    public EditFrame Feedback { get; }
 
     public Color? ForegroundColor
     {

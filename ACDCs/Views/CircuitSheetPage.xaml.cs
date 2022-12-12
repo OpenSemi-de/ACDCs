@@ -15,6 +15,5 @@ public partial class CircuitSheetPage : ContentPage
     private void OnLoaded(object? sender, EventArgs e)
     {
         BackgroundImageSource = ImageService.BackgroundImageSource(this);
-
     }
 }

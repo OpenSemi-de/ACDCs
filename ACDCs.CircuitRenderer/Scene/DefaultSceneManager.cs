@@ -13,6 +13,7 @@ public sealed class DefaultSceneManager : ISceneManager
     public Color? BackgroundHighColor { get; set; }
     public Coordinate? DisplayOffset { get; set; }
     public object? DrawableScene { get; set; }
+    public List<FeedbackRect>? FeedbackRects { get; } = new();
     public Color? ForegroundColor { get; set; }
     public SheetScene? Scene { get; set; }
     public bool ShowGrid { get; set; } = true;
@@ -25,6 +26,16 @@ public sealed class DefaultSceneManager : ISceneManager
         };
 
         return DrawableScene;
+    }
+
+    public void PutFeedbackRect(bool isSelected, DrawableComponent? drawable, Coordinate drawPos, Coordinate drawSize,
+        Coordinate? displayOffset)
+    {
+        FeedbackRect feedBackRect = new(isSelected, drawable);
+        feedBackRect.Rect = new RectF(drawPos.Substract(displayOffset).ToPointF(),
+            drawPos.Add(drawSize).Substract(displayOffset).ToSizeF());
+
+        FeedbackRects.Add(feedBackRect);
     }
 
     public bool SendToBackend(object? backendScene)
@@ -53,16 +64,4 @@ public sealed class DefaultSceneManager : ISceneManager
             Scene.SheetSize = sheetSize;
         }
     }
-
-    public void PutFeedbackRect(bool isSelected, DrawableComponent? drawable, Coordinate drawPos, Coordinate drawSize,
-        Coordinate? displayOffset)
-    {
-        FeedbackRect feedBackRect = new(isSelected, drawable);
-        feedBackRect.Rect = new RectF(drawPos.Substract(displayOffset).ToPointF(),
-            drawPos.Add(drawSize).Substract(displayOffset).ToSizeF());
-
-        FeedbackRects.Add(feedBackRect);
-    }
-
-    public List<FeedbackRect>? FeedbackRects { get; } = new();
 }

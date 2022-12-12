@@ -19,11 +19,11 @@ public sealed class SheetScene
     public DrawableComponentList? Drawables { get; set; }
     public Color? ForegroundColor { get; set; }
     public float GridSize { get; set; }
+    public ISceneManager SceneManager { get; set; }
     public DrawableComponentList? Selected { get; set; }
     public PinDrawable? SelectedPin { get; set; }
     public Coordinate SheetSize { get; set; }
     public bool ShowGrid { get; set; } = true;
-    public ISceneManager SceneManager { get; set; }
 
     public bool IsSelected(IDrawableComponent drawable)
     {

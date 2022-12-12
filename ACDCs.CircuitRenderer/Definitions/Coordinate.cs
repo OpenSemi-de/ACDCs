@@ -5,12 +5,6 @@ namespace ACDCs.CircuitRenderer.Definitions;
 
 public sealed class Coordinate
 {
-    public float X;
-
-    public float Y;
-
-    public float Z;
-
     public Coordinate(float x, float y, float z)
     {
         X = x;
@@ -36,6 +30,12 @@ public sealed class Coordinate
     {
     }
 
+    public float X;
+
+    public float Y;
+
+    public float Z;
+
     public static Coordinate FromPoint(Point stepPoint)
     {
         return new Coordinate(Convert.ToSingle(stepPoint.X), Convert.ToSingle(stepPoint.Y), 0);
@@ -49,21 +49,7 @@ public sealed class Coordinate
                 X + coordinate.X,
                 Y + coordinate.Y,
                 Z + coordinate.Z
-            );
-        }
-
-        return this;
-    }
-
-    public Coordinate Substract(Coordinate? coordinate)
-    {
-        if (coordinate != null)
-        {
-            return new Coordinate(
-                X - coordinate.X,
-                Y - coordinate.Y,
-                Z - coordinate.Z
-            );
+                                 );
         }
 
         return this;
@@ -77,6 +63,19 @@ public sealed class Coordinate
         return this;
     }
 
+    public Coordinate Substract(Coordinate? coordinate)
+    {
+        if (coordinate != null)
+        {
+            return new Coordinate(
+                X - coordinate.X,
+                Y - coordinate.Y,
+                Z - coordinate.Z
+                                 );
+        }
+
+        return this;
+    }
 
     public PointF ToPointF()
     {

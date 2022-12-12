@@ -64,7 +64,7 @@ public class TwoDPathRouter : IPathRouter
                 }
 
                 i++;
-                if(i == traceColors.Length)
+                if (i == traceColors.Length)
                     i = 0;
             }
         }

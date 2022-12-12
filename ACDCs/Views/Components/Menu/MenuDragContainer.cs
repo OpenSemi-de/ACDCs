@@ -68,7 +68,7 @@ public class MenuDragContainer : DragContainer.DragContainer
         BindableProperty.Create(nameof(DebugView), typeof(DebugViewDragComtainer), typeof(CircuitSheetPage));
 
     private static readonly BindableProperty PopupTargetProperty =
-                        BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
+                       BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
 
     private readonly Label _fileNameLabel;
     private readonly MenuFrame _menuFrame;

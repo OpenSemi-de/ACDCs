@@ -28,7 +28,6 @@ public class ItemButton : ImageButton
     {
         if (ItemType != null)
         {
-            
             Worksheet sheet = new Workbook().AddNewSheet();
 
             sheet.GridSize = Convert.ToSingle(WidthRequest / Workbook.BaseGridSize * Workbook.Zoom);

@@ -36,15 +36,9 @@ public class CircuitRenderController : Controller
 
         var res1 = new ResistorItem("1k", 1, 1);
 
-        var res2 = new ResistorItem("1k", 1, 4)
-        {
-            Rotation = 90f
-        };
+        var res2 = new ResistorItem("1k", 1, 4) { Rotation = 90f };
 
-        var res3 = new ResistorItem("1k", 1, 7)
-        {
-            Rotation = 135f
-        };
+        var res3 = new ResistorItem("1k", 1, 7) { Rotation = 135f };
 
         var res4 = new ResistorItem("1k", 1, 10);
 
@@ -71,10 +65,7 @@ public class CircuitRenderController : Controller
 
         var npn = new TransistorItem(TransistorDrawableType.Npn, 10, 11);
         ws.Items.AddItem(npn);
-        var npnr = new TransistorItem(TransistorDrawableType.Npn, 10, 15)
-        {
-            Rotation = -90f
-        };
+        var npnr = new TransistorItem(TransistorDrawableType.Npn, 10, 15) { Rotation = -90f };
 
         ws.Items.AddItem(npnr);
 
@@ -94,6 +85,7 @@ public class CircuitRenderController : Controller
         {
             ws = wb.LoadSheet(wwwPath + "/input.json");
         }
+
         if (ws != null)
         {
             ws.CalculateScene();
@@ -108,6 +100,7 @@ public class CircuitRenderController : Controller
                 ms.Position = 0;
                 imageBytes = ms.ToArray();
             }
+
             context.Dispose();
 
             wb.SaveSheet(ws, wwwPath + "/samplesheet.json");

@@ -10,19 +10,19 @@ public interface ISceneManager
     Color? BackgroundColor { get; set; }
     Color? BackgroundHighColor { get; set; }
     Coordinate? DisplayOffset { get; set; }
+    List<FeedbackRect>? FeedbackRects { get; }
     Color? ForegroundColor { get; set; }
     SheetScene? Scene { get; set; }
     bool ShowGrid { get; set; }
 
     object? GetSceneForBackend();
 
+    void PutFeedbackRect(bool isSelected, DrawableComponent? drawable, Coordinate drawPos, Coordinate drawSize,
+        Coordinate? displayOffset);
+
     bool SendToBackend(object? backendScene);
 
     bool SetScene(DrawableComponentList drawables, DrawableComponentList selected, PinDrawable? selectedPin);
 
     void SetSizeAndScale(Coordinate sheetSize, float gridSize);
-    void PutFeedbackRect(bool isSelected, DrawableComponent? drawable, Coordinate drawPos, Coordinate drawSize,
-        Coordinate? displayOffset);
-
-    List<FeedbackRect>? FeedbackRects { get; }
 }

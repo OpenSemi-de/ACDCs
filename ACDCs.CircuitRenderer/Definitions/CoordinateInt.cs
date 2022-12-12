@@ -4,12 +4,6 @@ namespace ACDCs.CircuitRenderer.Definitions;
 
 public sealed class CoordinateInt
 {
-    public int X;
-
-    public int Y;
-
-    public int Z;
-
     public CoordinateInt(int x, int y, int z)
     {
         X = x;
@@ -27,6 +21,12 @@ public sealed class CoordinateInt
     public CoordinateInt()
     {
     }
+
+    public int X;
+
+    public int Y;
+
+    public int Z;
 
     public static CoordinateInt FromFloat(Coordinate coordinate)
     {

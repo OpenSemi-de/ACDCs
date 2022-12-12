@@ -17,7 +17,7 @@ namespace ACDCs.Services
             {
                 return BackgroundImageSource(Convert.ToSingle(view.Width), Convert.ToSingle(view.Height));
             }
-            catch{}
+            catch { }
 
             return null;
         }
@@ -42,7 +42,6 @@ namespace ACDCs.Services
                 colors = new List<Color> { Colors.White, Color.FromArgb("#ffafcfff") };
             }
             canvas.SetShadow(new SizeF(2, 4), 10f, colors[1]);
-
 
             LinearGradientPaint paintFrom = new(Point.Zero, new(1, 1))
             {
@@ -81,9 +80,6 @@ namespace ACDCs.Services
 
             var source = ImageSource.FromStream(() => ms);
             return source;
-
-
         }
     }
-
 }

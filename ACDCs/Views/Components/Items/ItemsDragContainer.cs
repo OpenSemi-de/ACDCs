@@ -104,7 +104,7 @@ public class ItemsDragContainer : DragContainer.DragContainer
                     button.Draw();
                     _layout.Add(
                         button
-                    );
+                               );
                 }
                 catch
                 {

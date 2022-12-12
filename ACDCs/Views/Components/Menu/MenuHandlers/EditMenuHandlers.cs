@@ -40,7 +40,7 @@ public class EditMenuHandlers : MenuHandlerView
             {
                 newItems.Add(sheet.DuplicateItem((WorksheetItem)item));
             }
-        );
+                                            );
 
         newItems.ForEach(item =>
         {

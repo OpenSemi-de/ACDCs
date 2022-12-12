@@ -4,7 +4,6 @@ namespace ACDCs.CircuitRenderer.Items;
 
 public class TextItem : WorksheetItem
 {
-
     public TextItem()
     {
         DrawableComponent = new TextDrawable(this, DefaultValue, 12f, 1, 1);

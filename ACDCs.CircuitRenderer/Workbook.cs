@@ -8,10 +8,6 @@ namespace ACDCs.CircuitRenderer;
 
 public sealed class Workbook
 {
-    public static readonly float BaseGridSize = 2.54f;
-    public static readonly float Zoom = 10f;
-    public WorksheetsList Sheets = new();
-
     public Workbook()
     {
         _jsonSerializerSettings = new JsonSerializerSettings
@@ -21,6 +17,9 @@ public sealed class Workbook
         };
     }
 
+    public static readonly float BaseGridSize = 2.54f;
+    public static readonly float Zoom = 10f;
+    public WorksheetsList Sheets = new();
     public static string BaseFontName { get; set; } = "";
     public static string? BasePath { get; set; }
     public static SkiaBitmapExportContext? DebugContext { get; set; }

@@ -25,7 +25,7 @@ public class MenuHandlerView : ContentView
     }
 
     private static readonly BindableProperty CircuitViewProperty =
-                    BindableProperty.Create(nameof(CircuitView), typeof(CircuitViewContainer), typeof(CircuitSheetPage));
+                   BindableProperty.Create(nameof(CircuitView), typeof(CircuitViewContainer), typeof(CircuitSheetPage));
 
     private static readonly BindableProperty DebugViewProperty =
         BindableProperty.Create(nameof(DebugView), typeof(DebugViewDragComtainer), typeof(CircuitSheetPage));

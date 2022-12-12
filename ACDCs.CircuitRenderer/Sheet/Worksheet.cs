@@ -84,17 +84,12 @@ public sealed class Worksheet
             if (SceneManager.SendToBackend(backendScene))
             {
                 Log.L("Backend received scene");
-                
+
                 return true;
             }
         }
 
         return false;
-    }
-
-    public List<FeedbackRect>? GetFeedbackRects()
-    {
-        return SceneManager?.FeedbackRects;
     }
 
     public void DeleteItem(WorksheetItem item)
@@ -133,17 +128,22 @@ public sealed class Worksheet
                  Items
                      .Select(item =>
                          item.DrawableComponent
-                     )
+                            )
                      .Union(
                          Traces
                              .Select(item =>
                                  item.DrawableComponent
-                             )
-                     ))
+                                    )
+                           ))
         {
             list.Add(item);
         }
         return list;
+    }
+
+    public List<FeedbackRect>? GetFeedbackRects()
+    {
+        return SceneManager?.FeedbackRects;
     }
 
     public WorksheetItem? GetItemAt(float x, float y)
@@ -209,5 +209,4 @@ public sealed class Worksheet
     {
         OnSelectionChange?.Invoke(SelectedItems);
     }
-
 }

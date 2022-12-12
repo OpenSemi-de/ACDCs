@@ -12,10 +12,9 @@ namespace ACDCs.CircuitRenderer.Definitions
             Drawable = drawable;
         }
 
-        public WorksheetItem? Item { get; set; }
-
         public DrawableComponent? Drawable { get; set; }
         public bool IsSelected { get; set; }
+        public WorksheetItem? Item { get; set; }
         public RectF? Rect { get; set; }
     }
 }

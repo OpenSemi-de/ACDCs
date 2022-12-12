@@ -46,7 +46,7 @@ public class DrawableScene : IDrawable
                 Scene.BackgroundColor.G,
                 Scene.BackgroundColor.B,
                 Scene.BackgroundColor.A / 255
-            )
+                                               )
             : Colors.WhiteSmoke;
 
         canvas.FillColor = Colors.Transparent;
@@ -55,7 +55,7 @@ public class DrawableScene : IDrawable
         ForegroundColor = Scene?.ForegroundColor ?? new Color(255, 255, 255);
         BackgroundHighColor = Scene?.BackgroundHighColor ?? new Color(70, 70, 70);
 
-       // canvas.FillRectangle(0, 0, 10000, 10000);
+        // canvas.FillRectangle(0, 0, 10000, 10000);
         canvas.SaveState();
 
         if (DisplayOffset != null)
@@ -77,8 +77,8 @@ public class DrawableScene : IDrawable
         canvas.RestoreState();
         //canvas.SetShadow(new SizeF(2,4),2f, Microsoft.Maui.Graphics.Color.FromArgb("#99000000"));
         Scene?.Drawables?.ForEach(
-                component => Render(canvas, component)
-            );
+               component => Render(canvas, component)
+                                 );
         IsRendering = false;
     }
 
@@ -218,7 +218,6 @@ public class DrawableScene : IDrawable
         Scene?.SceneManager.PutFeedbackRect(Scene.IsSelected(drawable), drawable as DrawableComponent, drawPos,
             drawSize, DisplayOffset);
 
-
         canvas.RestoreState();
     }
 
@@ -260,7 +259,7 @@ public class DrawableScene : IDrawable
     }
 
     private void DrawCurve(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, Coordinate curvePosition,
-                                Coordinate curveEnd, float curveAngleStart, float curveAngleEnd)
+                                   Coordinate curveEnd, float curveAngleStart, float curveAngleEnd)
     {
         float startX = GetScale(drawSize.X, curvePosition.X);
         float startY = GetScale(drawSize.Y, curvePosition.Y);
@@ -306,7 +305,7 @@ public class DrawableScene : IDrawable
                             part.Coordinates[1].Y * scaleY,
                             part.Coordinates[2].X * scaleX,
                             part.Coordinates[2].Y * scaleY
-                        );
+                                     );
                     }
                     break;
 
@@ -315,7 +314,7 @@ public class DrawableScene : IDrawable
                         pathF.MoveTo(
                             part.Coordinates[0].X * scaleX,
                             part.Coordinates[0].Y * scaleY
-                        );
+                                    );
                     }
                     break;
 
@@ -324,7 +323,7 @@ public class DrawableScene : IDrawable
                         pathF.LineTo(
                             part.Coordinates[0].X * scaleX,
                             part.Coordinates[0].Y * scaleY
-                        );
+                                    );
                     }
                     break;
 
@@ -382,7 +381,6 @@ public class DrawableScene : IDrawable
         {
             canvas.FontSize = (_fontSize / text.FontSize) * 12;
         }
-
 
         canvas.Translate(x, y);
         canvas.Rotate(text.Orientation);

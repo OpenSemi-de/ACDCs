@@ -14,7 +14,6 @@ using ACDCs.Views.Components.Feedback;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Layouts;
 using Newtonsoft.Json;
 using Color = Microsoft.Maui.Graphics.Color;
 using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
@@ -25,12 +24,6 @@ public delegate void CursorPositionChangeEvent(object sender, CursorPositionChan
 
 public class CircuitViewContainer : ContentView
 {
-    public static readonly BindableProperty BackgroundHighColorProperty =
-        BindableProperty.Create(nameof(BackgroundHighColor), typeof(Color), typeof(CircuitSheetPage), null);
-
-    public static readonly BindableProperty ForegroundColorProperty =
-            BindableProperty.Create(nameof(ForegroundColor), typeof(Color), typeof(CircuitSheetPage), null);
-
     public CircuitViewContainer()
     {
         _currentWorkbook = new Workbook();
@@ -49,7 +42,6 @@ public class CircuitViewContainer : ContentView
             IsVisible = false,
             BackgroundColor = Colors.Transparent,
         };
-  
 
         _tapRecognizer = new TapGestureRecognizer();
         _tapRecognizer.Tapped += TapGestureRecognizer_OnTapped;
@@ -70,13 +62,11 @@ public class CircuitViewContainer : ContentView
         Loaded += OnLoaded;
     }
 
-    public event CursorPositionChangeEvent? CursorPositionChanged;
+    public static readonly BindableProperty BackgroundHighColorProperty =
+           BindableProperty.Create(nameof(BackgroundHighColor), typeof(Color), typeof(CircuitSheetPage), null);
 
-    public event EventHandler<EventArgs>? LoadedSheet;
-
-    public event EventHandler<EventArgs>? SavedSheet;
-
-    public event CursorPositionChangeEvent? TapPositionChanged;
+    public static readonly BindableProperty ForegroundColorProperty =
+           BindableProperty.Create(nameof(ForegroundColor), typeof(Color), typeof(CircuitSheetPage), null);
 
     public Color? BackgroundHighColor
     {
@@ -89,11 +79,32 @@ public class CircuitViewContainer : ContentView
         get => _currentSheet;
     }
 
+    public FeedbackFrame Feedback { get; }
+
     public Color? ForegroundColor
     {
         get => (Color)GetValue(ForegroundColorProperty);
         set => SetValue(ForegroundColorProperty, value);
     }
+
+    public AbsoluteLayout PopupTarget
+    {
+        get => (AbsoluteLayout)GetValue(PopupTargetProperty);
+
+        set
+        {
+            SetValue(PopupTargetProperty, value);
+            PutFeedback();
+        }
+    }
+
+    public event CursorPositionChangeEvent? CursorPositionChanged;
+
+    public event EventHandler<EventArgs>? LoadedSheet;
+
+    public event EventHandler<EventArgs>? SavedSheet;
+
+    public event CursorPositionChangeEvent? TapPositionChanged;
 
     public void Clear()
     {
@@ -105,7 +116,6 @@ public class CircuitViewContainer : ContentView
     {
         await App.Call(() =>
         {
-
             if (newItem != null)
             {
                 newItem.X -= newItem.Width / 2;
@@ -199,47 +209,9 @@ public class CircuitViewContainer : ContentView
 
             _graphicsView.Invalidate();
 
-            foreach (FeedbackRect feedbackRect in CurrentWorksheet.GetFeedbackRects() ?? new List<FeedbackRect>())
-            {
-                if (feedbackRect.Rect != null && feedbackRect.IsSelected)
-                {
-                    RectF rect = feedbackRect.Rect.Value;
-
-                    float width =2*( rect.Width - rect.X);
-                    float height =2*( rect.Height - rect.Y);
-                    float rectX = rect.X - width / 2;
-                    float rectY = rect.Y - height / 2;
-
-                    AbsoluteLayout.SetLayoutBounds(Feedback, new Rect(rectX, rectY, width, height));
-                    AbsoluteLayout.SetLayoutFlags(Feedback, AbsoluteLayoutFlags.None);
-                }
-            }
-
             return Task.CompletedTask;
         });
     }
-
-
-    public AbsoluteLayout PopupTarget
-    {
-        get => (AbsoluteLayout)GetValue(PopupTargetProperty);
-
-        set
-        {
-            SetValue(PopupTargetProperty, value);
-            PutFeedback();
-        }
-    }
-
-    private void PutFeedback()
-    {
-
-        PopupTarget.Add(Feedback);
-    }
-
-    private static readonly BindableProperty PopupTargetProperty =
-        BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
-
 
     public async void SaveAs(string fileName)
     {
@@ -276,19 +248,29 @@ public class CircuitViewContainer : ContentView
         TapPositionChanged?.Invoke(this, args);
     }
 
+    private static readonly BindableProperty PopupTargetProperty =
+        BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
+
     private readonly Workbook _currentWorkbook;
+
     private readonly GraphicsView _graphicsView;
 
-    public FeedbackFrame Feedback { get; }
-
     private readonly PanGestureRecognizer _panRecognizer;
+
     private readonly PointerGestureRecognizer _pointerRecognizer;
+
     private readonly TapGestureRecognizer _tapRecognizer;
+
     private Worksheet _currentSheet;
+
     private Point _cursorPosition;
+
     private PointF _dragStartPosition;
+
     private bool _isDraggingItem;
+
     private Coordinate? _lastDisplayOffset;
+
     private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions = new();
 
     private Action<WorksheetItemList, WorksheetItemList>? ListSetItems
@@ -346,7 +328,7 @@ public class CircuitViewContainer : ContentView
                     x >= item.X && x <= item.X + item.Width &&
                     y >= item.Y && y <= item.Y + item.Height
 
-            );
+                                                    );
             var worksheetItems = hitItems as IWorksheetItem[] ?? hitItems.ToArray();
             if (worksheetItems.Any())
                 selectedItem = (WorksheetItem?)worksheetItems.First();
@@ -436,7 +418,7 @@ public class CircuitViewContainer : ContentView
                                             item.Y = Convert.ToInt32(newPosition.Y);
                                         }
                                     }
-                                );
+                                                                   );
                             }
                             else
                             {
@@ -458,6 +440,11 @@ public class CircuitViewContainer : ContentView
     {
         _cursorPosition = e.GetPosition(_graphicsView) ?? new Point();
         OnCursorPositionChanged(new CursorPositionChangeEventArgs(_cursorPosition));
+    }
+
+    private void PutFeedback()
+    {
+        PopupTarget.Add(Feedback);
     }
 
     private async void TapGestureRecognizer_OnTapped(object? sender, TappedEventArgs e)

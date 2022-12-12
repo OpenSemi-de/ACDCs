@@ -8,8 +8,6 @@ namespace ACDCs.Views.Components.Menu;
 
 public class MenuFrame : StackLayout
 {
-    public static List<MenuFrame> MenuFrameList = new();
-
     public MenuFrame()
     {
         HorizontalOptions = LayoutOptions.Fill;
@@ -22,6 +20,7 @@ public class MenuFrame : StackLayout
         }
     }
 
+    public static List<MenuFrame> MenuFrameList = new();
     public View? MainContainer { get; set; }
     public AbsoluteLayout? PopupTarget { get; set; }
 

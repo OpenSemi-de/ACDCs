@@ -26,15 +26,9 @@ public class ItemsListDragContainer : DragContainer.DragContainer
             MinimumWidthRequest = 300
         };
 
-        DataTemplate itemTemplate = new(typeof(ViewCell))
-        {
-            LoadTemplate = LoadTemplate
-        };
+        DataTemplate itemTemplate = new(typeof(ViewCell)) { LoadTemplate = LoadTemplate };
 
-        DataTemplate headerTemplate = new(typeof(ViewCell))
-        {
-            LoadTemplate = LoadHeader
-        };
+        DataTemplate headerTemplate = new(typeof(ViewCell)) { LoadTemplate = LoadHeader };
 
         _listViewItems = new(ListViewCachingStrategy.RecycleElement)
         {
@@ -67,13 +61,13 @@ public class ItemsListDragContainer : DragContainer.DragContainer
     {
         var list = items.Select(item =>
             new ItemsListItem(selected.Contains(item), item.GetType().Name.Replace("Item", ""), item.RefName, item)
-        ).ToList();
+                               ).ToList();
         _listViewItems.ItemsSource = null;
         _listViewItems.ItemsSource = list;
     }
 
     private static readonly BindableProperty PopupTargetProperty =
-                    BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
+        BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
 
     private readonly StackLayout _layout;
     private readonly ListView _listViewItems;
@@ -85,10 +79,7 @@ public class ItemsListDragContainer : DragContainer.DragContainer
 
     private object LoadHeader()
     {
-        var layout = new StackLayout
-        {
-            Orientation = StackOrientation.Horizontal
-        };
+        var layout = new StackLayout { Orientation = StackOrientation.Horizontal };
         layout.Add(new Label().Text("Type").Width(120));
         layout.Add(new Label().Text("Name").Width(160));
         return layout;
@@ -97,10 +88,7 @@ public class ItemsListDragContainer : DragContainer.DragContainer
     private object LoadTemplate()
     {
         var viewcell = new ViewCell();
-        var layout = new StackLayout
-        {
-            Orientation = StackOrientation.Horizontal
-        };
+        var layout = new StackLayout { Orientation = StackOrientation.Horizontal };
         viewcell.View = layout;
         AddLabelToTemplate(layout, "TypeName", 120);
         AddLabelToTemplate(layout, "RefName", 160);

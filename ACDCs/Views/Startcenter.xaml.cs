@@ -13,15 +13,15 @@ public partial class StartCenterPage : ContentPage
         Loaded += OnLoaded;
     }
 
-    private void OnLoaded(object? sender, EventArgs e)
+    private void Button_OnClicked(object? sender, EventArgs e)
     {
-        BackgroundImageSource = ImageService.BackgroundImageSource(this);
+        Shell.Current.GoToAsync("//circuit").Wait();
     }
 
     private void CircuitView_OnLoaded(object? sender, EventArgs e)
     {
-        TextItem textItemLogo = new("ACDCs", 140,10, 10);
-        TextItem textItemText = new("Advanced Circuit Design Component Suite", 20,10, 12);
+        TextItem textItemLogo = new("ACDCs", 140, 10, 10);
+        TextItem textItemText = new("Advanced Circuit Design Component Suite", 20, 10, 12);
         textItemLogo.IsRealFontSize = true;
         textItemText.IsRealFontSize = true;
         textItemLogo.Width = 10;
@@ -31,8 +31,8 @@ public partial class StartCenterPage : ContentPage
         CircuitView.Paint();
     }
 
-    private void Button_OnClicked(object? sender, EventArgs e)
+    private void OnLoaded(object? sender, EventArgs e)
     {
-        Shell.Current.GoToAsync("//circuit").Wait();
+        BackgroundImageSource = ImageService.BackgroundImageSource(this);
     }
 }

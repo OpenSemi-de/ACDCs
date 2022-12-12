@@ -4,12 +4,6 @@ namespace ACDCs.CircuitRenderer.Definitions;
 
 public sealed class Color
 {
-    public int A;
-    public int B;
-    public int G;
-
-    public int R;
-
     public Color(int r, int g, int b, int a = 100)
     {
         R = r;
@@ -25,6 +19,12 @@ public sealed class Color
         G = Convert.ToInt32(color.Green * 255);
         B = Convert.ToInt32(color.Blue * 255);
     }
+
+    public int A;
+    public int B;
+    public int G;
+
+    public int R;
 
     public Microsoft.Maui.Graphics.Color ToMauiColor()
     {

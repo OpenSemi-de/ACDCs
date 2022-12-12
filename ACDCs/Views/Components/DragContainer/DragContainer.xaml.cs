@@ -11,37 +11,28 @@ namespace ACDCs.Views.Components.DragContainer;
 
 public partial class DragContainer : ContentView
 {
+    public DragContainer()
+    {
+        InitializeComponent();
+        Loaded += (sender, args) => StartDragging();
+
+        LayoutChanged += DragContainer_LayoutChanged;
+    }
+
     public static readonly BindableProperty CircuitViewProperty =
-        BindableProperty.Create(nameof(CircuitView), typeof(CircuitViewContainer), typeof(CircuitSheetPage));
+           BindableProperty.Create(nameof(CircuitView), typeof(CircuitViewContainer), typeof(CircuitSheetPage));
 
     public static readonly BindableProperty LayoutProperty =
-            BindableProperty.Create(nameof(Layout), typeof(IView), typeof(DragContainer), null,
-            propertyChanged: propertyChanged);
+           BindableProperty.Create(nameof(Layout), typeof(IView), typeof(DragContainer), null,
+           propertyChanged: propertyChanged);
 
     public static readonly BindableProperty OrientationProperty =
         BindableProperty.Create(nameof(Orientation), typeof(StackOrientation), typeof(DragContainer),
             StackOrientation.Vertical, propertyChanged: propertyChanged);
 
     public static readonly BindableProperty TitleProperty =
-                BindableProperty.Create(nameof(Title), typeof(string), typeof(DragContainer), "Title",
-            propertyChanged: propertyChanged);
-
-    public DragContainer()
-    {
-        InitializeComponent();
-        Loaded += (sender, args) => StartDragging();
-
-   
-        LayoutChanged += DragContainer_LayoutChanged;
-    }
-
-    private void DragContainer_LayoutChanged(object? sender, EventArgs e)
-    {
-        DragContainer thisContainer = sender as DragContainer;
-        float height = (float)thisContainer.Height;
-        float width = (float)thisContainer.Width;
-        BackgroundImage.Source = ImageService.BackgroundImageSource(width, height);
-    }
+               BindableProperty.Create(nameof(Title), typeof(string), typeof(DragContainer), "Title",
+           propertyChanged: propertyChanged);
 
     public CircuitViewContainer? CircuitView
     {
@@ -113,6 +104,14 @@ public partial class DragContainer : ContentView
         }
     }
 
+    private void DragContainer_LayoutChanged(object? sender, EventArgs e)
+    {
+        DragContainer thisContainer = sender as DragContainer;
+        float height = (float)thisContainer.Height;
+        float width = (float)thisContainer.Width;
+        BackgroundImage.Source = ImageService.BackgroundImageSource(width, height);
+    }
+
     private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
     {
         App.Call(() =>
@@ -178,5 +177,4 @@ public partial class DragContainer : ContentView
         if (ButtonHide.IsVisible)
             ButtonHide_OnClicked(this, EventArgs.Empty);
     }
-
 }

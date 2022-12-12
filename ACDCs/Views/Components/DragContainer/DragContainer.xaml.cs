@@ -106,10 +106,12 @@ public partial class DragContainer : ContentView
 
     private void DragContainer_LayoutChanged(object? sender, EventArgs e)
     {
-        DragContainer thisContainer = sender as DragContainer;
-        float height = (float)thisContainer.Height;
-        float width = (float)thisContainer.Width;
-        BackgroundImage.Source = ImageService.BackgroundImageSource(width, height);
+        if (sender is DragContainer thisContainer)
+        {
+            float height = (float)thisContainer.Height;
+            float width = (float)thisContainer.Width;
+            BackgroundImage.Source = ImageService.BackgroundImageSource(width, height);
+        }
     }
 
     private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)

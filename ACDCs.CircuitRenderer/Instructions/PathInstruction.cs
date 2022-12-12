@@ -69,12 +69,12 @@ public sealed class PathReader
                 if (command != "")
                 {
                     List<Coordinate> coordinates = new();
-                    var type = (PathPartType)Enum.Parse(typeof(PathPartType), command);
-                    var textCoordinates = buffer.Split(" ").ToList();
+                    PathPartType type = (PathPartType)Enum.Parse(typeof(PathPartType), command);
+                    List<string> textCoordinates = buffer.Split(" ").ToList();
                     foreach (string? textCoordinate in textCoordinates.Where(s => s != "" && s != " "))
                     {
                         string[]? xypair = textCoordinate.Split(',');
-                        var coordinate = new Coordinate(
+                        Coordinate coordinate = new(
                             float.Parse(xypair[0].Replace(".", ",")),
                             float.Parse(xypair[1].Replace(".", ",")),
                             0

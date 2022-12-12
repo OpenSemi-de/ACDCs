@@ -59,7 +59,7 @@ public class ItemsListDragContainer : DragContainer.DragContainer
 
     public void SetItems(WorksheetItemList items, WorksheetItemList selected)
     {
-        var list = items.Select(item =>
+        List<ItemsListItem> list = items.Select(item =>
             new ItemsListItem(selected.Contains(item), item.GetType().Name.Replace("Item", ""), item.RefName, item)
                                ).ToList();
         _listViewItems.ItemsSource = null;
@@ -79,7 +79,7 @@ public class ItemsListDragContainer : DragContainer.DragContainer
 
     private object LoadHeader()
     {
-        var layout = new StackLayout { Orientation = StackOrientation.Horizontal };
+        StackLayout layout = new() { Orientation = StackOrientation.Horizontal };
         layout.Add(new Label().Text("Type").Width(120));
         layout.Add(new Label().Text("Name").Width(160));
         return layout;
@@ -87,8 +87,8 @@ public class ItemsListDragContainer : DragContainer.DragContainer
 
     private object LoadTemplate()
     {
-        var viewcell = new ViewCell();
-        var layout = new StackLayout { Orientation = StackOrientation.Horizontal };
+        ViewCell viewcell = new();
+        StackLayout layout = new() { Orientation = StackOrientation.Horizontal };
         viewcell.View = layout;
         AddLabelToTemplate(layout, "TypeName", 120);
         AddLabelToTemplate(layout, "RefName", 160);

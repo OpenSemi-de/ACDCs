@@ -34,51 +34,51 @@ public class CircuitRenderController : Controller
 
         Workbook.BasePath = wwwPath;
 
-        var res1 = new ResistorItem("1k", 1, 1);
+        ResistorItem res1 = new("1k", 1, 1);
 
-        var res2 = new ResistorItem("1k", 1, 4) { Rotation = 90f };
+        ResistorItem res2 = new("1k", 1, 4) { Rotation = 90f };
 
-        var res3 = new ResistorItem("1k", 1, 7) { Rotation = 135f };
+        ResistorItem res3 = new("1k", 1, 7) { Rotation = 135f };
 
-        var res4 = new ResistorItem("1k", 1, 10);
+        ResistorItem res4 = new("1k", 1, 10);
 
         ws.Items.AddItem(res1);
         ws.Items.AddItem(res2);
         ws.Items.AddItem(res3);
         ws.Items.AddItem(res4);
 
-        var gnd1 = new TerminalItem(TerminalDrawableType.Gnd, 6, 1);
+        TerminalItem gnd1 = new(TerminalDrawableType.Gnd, 6, 1);
 
-        var gnd4 = new TerminalItem(TerminalDrawableType.Null, 6, 10);
+        TerminalItem gnd4 = new(TerminalDrawableType.Null, 6, 10);
 
         ws.Items.AddItem(gnd1);
         ws.Items.AddItem(gnd4);
 
-        var ind = new InductorItem("10m", 10, 1);
+        InductorItem ind = new("10m", 10, 1);
         ws.Items.AddItem(ind);
 
-        var dio = new DiodeItem("0.7", 10, 4);
+        DiodeItem dio = new("0.7", 10, 4);
         ws.Items.AddItem(dio);
 
-        var pnp = new TransistorItem(TransistorDrawableType.Pnp, 10, 7);
+        TransistorItem pnp = new(TransistorDrawableType.Pnp, 10, 7);
         ws.Items.AddItem(pnp);
 
-        var npn = new TransistorItem(TransistorDrawableType.Npn, 10, 11);
+        TransistorItem npn = new(TransistorDrawableType.Npn, 10, 11);
         ws.Items.AddItem(npn);
-        var npnr = new TransistorItem(TransistorDrawableType.Npn, 10, 15) { Rotation = -90f };
+        TransistorItem npnr = new(TransistorDrawableType.Npn, 10, 15) { Rotation = -90f };
 
         ws.Items.AddItem(npnr);
 
-        var net2 = new NetItem();
+        NetItem net2 = new();
         net2.Pins.Add(res1.Pins[0]);
         net2.Pins.Add(res2.Pins[1]);
         net2.Pins.Add(pnp.Pins[0]);
         net2.Pins.Add(npn.Pins[2]);
         ws.Nets.AddItem(net2);
 
-        var caps = new CapacitorItem("10u", CapacitorDrawableType.Standard, 14, 1);
+        CapacitorItem caps = new("10u", CapacitorDrawableType.Standard, 14, 1);
         ws.Items.AddItem(caps);
-        var caps2 = new CapacitorItem("10u", CapacitorDrawableType.Polarized, 14, 4);
+        CapacitorItem caps2 = new("10u", CapacitorDrawableType.Polarized, 14, 4);
         ws.Items.AddItem(caps2);
 
         if (System.IO.File.Exists(wwwPath + "/input.json"))
@@ -110,7 +110,7 @@ public class CircuitRenderController : Controller
         {
             debugContext.WriteToStream(ms);
             ms.Position = 0;
-            var mapImageBytes = ms.ToArray();
+            byte[] mapImageBytes = ms.ToArray();
             System.IO.File.WriteAllBytes(wwwPath + "/map.bmp", mapImageBytes);
         }
 

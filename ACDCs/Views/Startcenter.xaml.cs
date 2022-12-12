@@ -18,7 +18,7 @@ public partial class StartCenterPage : ContentPage
         Shell.Current.GoToAsync("//circuit").Wait();
     }
 
-    private void CircuitView_OnLoaded(object? sender, EventArgs e)
+    private async void CircuitView_OnLoaded(object? sender, EventArgs e)
     {
         TextItem textItemLogo = new("ACDCs", 140, 10, 10);
         TextItem textItemText = new("Advanced Circuit Design Component Suite", 20, 10, 12);
@@ -28,7 +28,7 @@ public partial class StartCenterPage : ContentPage
         textItemLogo.Height = 6;
         CircuitView.InsertToPosition(10, 10, textItemLogo).Wait();
         CircuitView.InsertToPosition(10, 12, textItemText).Wait();
-        CircuitView.Paint();
+        await CircuitView.Paint();
     }
 
     private void OnLoaded(object? sender, EventArgs e)

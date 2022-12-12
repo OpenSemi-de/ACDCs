@@ -9,7 +9,7 @@ namespace ACDCs.CircuitRenderer.Scene
     {
         public void Render(ICanvas canvas, RenderInstruction renderInstruction, CurveInstruction curve) 
         {
-            var centerPos = new Coordinate(curve.Position);
+            Coordinate centerPos = new(curve.Position);
             DrawableScene.SetStrokeColor(canvas, curve.StrokeColor);
 
             float startX = DrawableScene.GetScale(renderInstruction.DrawSize.X, curve.Position.X);

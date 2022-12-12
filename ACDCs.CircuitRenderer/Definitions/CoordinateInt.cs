@@ -30,7 +30,7 @@ public sealed class CoordinateInt
 
     public static CoordinateInt FromFloat(Coordinate coordinate)
     {
-        var newCoordinate = new CoordinateInt(
+        CoordinateInt newCoordinate = new(
             Convert.ToInt32(Math.Round(coordinate.X)),
             Convert.ToInt32(Math.Round(coordinate.Y)),
             Convert.ToInt32(Math.Round(coordinate.Z))

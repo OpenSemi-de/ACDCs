@@ -35,7 +35,7 @@ public sealed class DefaultSceneManager : ISceneManager
         feedBackRect.Rect = new RectF(drawPos.Substract(displayOffset).ToPointF(),
             drawPos.Add(drawSize).Substract(displayOffset).ToSizeF());
 
-        FeedbackRects.Add(feedBackRect);
+        FeedbackRects?.Add(feedBackRect);
     }
 
     public bool SendToBackend(object? backendScene)

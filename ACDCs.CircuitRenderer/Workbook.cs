@@ -35,7 +35,7 @@ public sealed class Workbook
     public Worksheet LoadSheet(string fileName)
     {
         string? json = File.ReadAllText(fileName);
-        var ws = JsonConvert.DeserializeObject<Worksheet>(json, _jsonSerializerSettings);
+        Worksheet? ws = JsonConvert.DeserializeObject<Worksheet>(json, _jsonSerializerSettings);
 
         if (ws != null)
         {

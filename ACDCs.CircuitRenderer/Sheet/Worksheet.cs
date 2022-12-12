@@ -105,7 +105,7 @@ public sealed class Worksheet
     {
         if (SelectedItems.Contains(item))
         {
-            foreach (var pin in item.Pins)
+            foreach (PinDrawable pin in item.Pins)
             {
                 pin.Size = new(1, 1, 0);
             }
@@ -121,9 +121,9 @@ public sealed class Worksheet
 
     public DrawableComponentList GetDrawableComponents()
     {
-        var list = new DrawableComponentList(this);
+        DrawableComponentList list = new(this);
 
-        foreach (var item in
+        foreach (IDrawableComponent item in
 
                  Items
                      .Select(item =>
@@ -151,7 +151,7 @@ public sealed class Worksheet
         int iX = Convert.ToInt32(Math.Round(x));
         int iY = Convert.ToInt32(Math.Round(y));
 
-        var selectedItem = Items.FirstOrDefault(
+        IWorksheetItem? selectedItem = Items.FirstOrDefault(
             item => item.X == iX && item.Y == iY);
 
         return (WorksheetItem?)selectedItem;
@@ -166,7 +166,7 @@ public sealed class Worksheet
     {
         if (!SelectedItems.Contains(item))
         {
-            foreach (var pin in item.Pins)
+            foreach (PinDrawable pin in item.Pins)
             {
                 pin.Size = new(10, 10, 0);
             }
@@ -191,9 +191,9 @@ public sealed class Worksheet
 
     private DrawableComponentList GetSelectedComponents()
     {
-        var list = new DrawableComponentList(this);
+        DrawableComponentList list = new(this);
 
-        foreach (var item in SelectedItems.Select(item => item.DrawableComponent))
+        foreach (IDrawableComponent item in SelectedItems.Select(item => item.DrawableComponent))
         {
             list.Add(item);
         }

@@ -39,11 +39,11 @@ public class MenuFrame : StackLayout
             }
 
             List<IMenuItem> menuParts = new();
-            foreach (var menuItem in items)
+            foreach (MenuItemDefinition menuItem in items)
             {
                 if (menuItem.Text != "")
                 {
-                    var menuButton = new MenuButton(menuItem.Text, menuItem.MenuCommand);
+                    MenuButton menuButton = new(menuItem.Text, menuItem.MenuCommand);
 
                     menuParts.Add(menuButton);
                     if (menuItem.MenuItems != null && menuItem.MenuItems.Count > 0)
@@ -82,9 +82,9 @@ public class MenuFrame : StackLayout
         {
             if (menuButton.MenuFrame != null)
             {
-                var childrenHeight = menuButton.MenuFrame.Children.Sum(child => ((IMenuItem)child).ItemHeight);
-                var mainX = AbsoluteLayout.GetLayoutBounds(MainContainer).X;
-                var mainY = AbsoluteLayout.GetLayoutBounds(MainContainer).Y + MainContainer.Height;
+                double childrenHeight = menuButton.MenuFrame.Children.Sum(child => ((IMenuItem)child).ItemHeight);
+                double mainX = AbsoluteLayout.GetLayoutBounds(MainContainer).X;
+                double mainY = AbsoluteLayout.GetLayoutBounds(MainContainer).Y + AbsoluteLayout.GetLayoutBounds(MainContainer).Height;
                 AbsoluteLayout.SetLayoutBounds(menuButton.MenuFrame,
                     new(menuButton.X + mainX, mainY, 140, childrenHeight));
             }

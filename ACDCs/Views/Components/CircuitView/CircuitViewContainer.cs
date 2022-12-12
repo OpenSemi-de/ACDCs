@@ -280,7 +280,7 @@ public class CircuitViewContainer : ContentView
 
     private static float GetRelPos(double pos)
     {
-        var relPos = 0f;
+        float relPos = 0f;
         App.Call(() =>
         {
             relPos = Convert.ToSingle(Math.Round(pos / (Workbook.BaseGridSize * Workbook.Zoom)));
@@ -323,13 +323,13 @@ public class CircuitViewContainer : ContentView
             float x = GetRelPos(position.X);
             float y = GetRelPos(position.Y);
 
-            var hitItems = _currentSheet.Items.Where(
+            IEnumerable<IWorksheetItem> hitItems = _currentSheet.Items.Where(
                 item =>
                     x >= item.X && x <= item.X + item.Width &&
                     y >= item.Y && y <= item.Y + item.Height
 
                                                     );
-            var worksheetItems = hitItems as IWorksheetItem[] ?? hitItems.ToArray();
+            IWorksheetItem[] worksheetItems = hitItems as IWorksheetItem[] ?? hitItems.ToArray();
             if (worksheetItems.Any())
                 selectedItem = (WorksheetItem?)worksheetItems.First();
             return Task.CompletedTask;
@@ -369,7 +369,7 @@ public class CircuitViewContainer : ContentView
 
                             _dragStartPosition = new PointF(Convert.ToSingle(_cursorPosition.X - _lastDisplayOffset?.X),
                                 Convert.ToSingle(_cursorPosition.Y - _lastDisplayOffset?.Y));
-                            var testForItem = GetWorksheetItemaAt(_dragStartPosition);
+                            WorksheetItem? testForItem = GetWorksheetItemaAt(_dragStartPosition);
                             if (testForItem != null)
                             {
                                 _isDraggingItem = true;
@@ -386,7 +386,7 @@ public class CircuitViewContainer : ContentView
                         {
                             if (_isDraggingItem)
                             {
-                                var cursorPosition = new PointF(Convert.ToSingle(_cursorPosition.X - _lastDisplayOffset?.X),
+                                PointF cursorPosition = new(Convert.ToSingle(_cursorPosition.X - _lastDisplayOffset?.X),
                                     Convert.ToSingle(_cursorPosition.Y - _lastDisplayOffset?.Y));
 
                                 PointF differenceBetweenCursorPoints = new(_dragStartPosition.X - cursorPosition.X,
@@ -486,10 +486,10 @@ public class CircuitViewContainer : ContentView
                             float y = GetRelPos(touch.Y);
 
                             PinDrawable? selectedPin = null;
-                            foreach (var pin in selectedItem.Pins)
+                            foreach (PinDrawable pin in selectedItem.Pins)
                             {
-                                var pinX = Math.Floor(pin.Position.X * selectedItem.Width);
-                                var pinY = Math.Floor(pin.Position.Y * selectedItem.Height);
+                                double pinX = Math.Floor(pin.Position.X * selectedItem.Width);
+                                double pinY = Math.Floor(pin.Position.Y * selectedItem.Height);
                                 pinX += selectedItem.X;
                                 pinY += selectedItem.Y;
                                 if (pinX == x && pinY == y)

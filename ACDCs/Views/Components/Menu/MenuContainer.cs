@@ -89,8 +89,8 @@ public class MenuContainer : StackLayout
     {
         await App.Call(async () =>
         {
-            var jsonData = await App.LoadMauiAssetAsString(menuMainJson);
-            var items = JsonConvert.DeserializeObject<List<MenuItemDefinition>>(jsonData);
+            string jsonData = await App.LoadMauiAssetAsString(menuMainJson);
+            List<MenuItemDefinition>? items = JsonConvert.DeserializeObject<List<MenuItemDefinition>>(jsonData);
             if (items != null) _menuFrame.LoadMenu(items, true);
         });
     }

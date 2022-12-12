@@ -4,7 +4,9 @@ using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.CircuitRenderer.Instructions;
 using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
+using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Graphics.Skia;
+using Color = ACDCs.CircuitRenderer.Definitions.Color;
 
 namespace ACDCs.CircuitRenderer.Sheet;
 
@@ -30,9 +32,9 @@ public class TwoDPathRouter : IPathRouter
 
     public WorksheetItemList GetTraces()
     {
-        var map = Workbook.DebugContext ?? new SkiaBitmapExportContext(0, 0, 10);
+        SkiaBitmapExportContext map = Workbook.DebugContext ?? new SkiaBitmapExportContext(0, 0, 10);
 
-        var canvas = map.Canvas;
+        ICanvas? canvas = map.Canvas;
 
         Turtle turtle = new(Items, Nets, SheetSize, _worksheet)
         {
@@ -47,17 +49,17 @@ public class TwoDPathRouter : IPathRouter
             new Color(0, 255, 255),
         };
 
-        foreach (var worksheetItem in Traces)
+        foreach (IWorksheetItem worksheetItem in Traces)
         {
-            var trace = (TraceItem)worksheetItem;
+            TraceItem trace = (TraceItem)worksheetItem;
             trace.DrawableComponent.Position =
                 trace.DrawableComponent.Position.Round();
             if (trace.DrawableComponent is TraceDrawable traceDrawable)
             {
                 Color traceColor = traceColors[i];
-                foreach (var drawInstruction in traceDrawable.DrawInstructions)
+                foreach (IDrawInstruction drawInstruction in traceDrawable.DrawInstructions)
                 {
-                    var lineInstruction = (LineInstruction)drawInstruction;
+                    LineInstruction lineInstruction = (LineInstruction)drawInstruction;
                     lineInstruction.StrokeColor = traceColor;
                     lineInstruction.Position = lineInstruction.Position.Round();
                     lineInstruction.End = lineInstruction.End.Round();

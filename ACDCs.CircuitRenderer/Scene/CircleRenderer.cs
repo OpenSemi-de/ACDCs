@@ -10,7 +10,7 @@ namespace ACDCs.CircuitRenderer.Scene
     {
         public void Render(ICanvas canvas, RenderInstruction renderInstruction, CircleInstruction circle)
         {
-            var centerPos = new Coordinate(circle.Position);
+            Coordinate centerPos = new(circle.Position);
             DrawableScene.SetStrokeColor(canvas, circle.StrokeColor);
             float x = DrawableScene.GetScale(renderInstruction.DrawSize.X, centerPos.X);
             float y = DrawableScene.GetScale(renderInstruction.DrawSize.Y, centerPos.Y);
@@ -29,7 +29,7 @@ public class PathRenderer : IRenderer, IRenderer<PathInstruction>
 
         float scaleX = renderInstruction.DrawSize.X / path.Width;
         float scaleY = renderInstruction.DrawSize.Y / path.Height / 2;
-        foreach (var part in path.GetParts())
+        foreach (PathPart part in path.GetParts())
             switch (part.Type)
             {
                 case PathPartType.A:

@@ -10,7 +10,7 @@ namespace ACDCs.CircuitRenderer.Scene
     {
         public void Render(ICanvas canvas, RenderInstruction instruction, LineInstruction line)
         {
-            var centerPos = new Coordinate(line.Position);
+            Coordinate centerPos = new(line.Position);
             DrawableScene.SetStrokeColor(canvas, line.StrokeColor);
             float x = DrawableScene.GetScale(instruction.DrawSize.X, centerPos.X);
             float y = DrawableScene.GetScale(instruction.DrawSize.Y, centerPos.Y);

@@ -27,7 +27,7 @@ public class DrawableScene : IDrawable
     public bool IsRendering { get; private set; }
     public SheetScene? Scene { get; private set; }
     public Coordinate SheetSize { get; set; }
-    public float Zoom => Workbook.Zoom;
+    private static float Zoom => Workbook.Zoom;
 
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
@@ -88,7 +88,7 @@ public class DrawableScene : IDrawable
     public void Render(ICanvas canvas, IDrawableComponent drawable)
     {
         canvas.StrokeSize = BaseGridSize / 2;
-        GetScaleAndZoom(drawable, out var drawPos, out var drawSize, Zoom, BaseGridSize);
+        GetScaleAndZoom(drawable, out Coordinate drawPos, out Coordinate drawSize, Zoom, BaseGridSize);
 
         canvas.SaveState();
 
@@ -121,7 +121,7 @@ public class DrawableScene : IDrawable
             FontSize = _fontSize,
         };
 
-        foreach (var instruction in drawable.DrawInstructions)
+        foreach (IDrawInstruction instruction in drawable.DrawInstructions)
         {
             switch (instruction)
             {
@@ -146,11 +146,11 @@ public class DrawableScene : IDrawable
             }
         }
 
-        foreach (var pin in drawable.DrawablePins)
+        foreach (PinDrawable pin in drawable.DrawablePins)
         {
             canvas.SaveState();
             Log.L("pin");
-            var posCenter = new Coordinate(pin.Position);
+            Coordinate posCenter = new(pin.Position);
             posCenter.X = GetScale(drawSize.X, posCenter.X);
             posCenter.Y = GetScale(drawSize.Y, posCenter.Y);
             canvas.FillColor = BackgroundHighColor != null ? BackgroundHighColor.ToMauiColor() : new Microsoft.Maui.Graphics.Color(255, 255, 255);
@@ -190,11 +190,11 @@ public class DrawableScene : IDrawable
         {
             canvas.SaveState();
             Log.L("selected");
-            var upperLeft = new Coordinate(-0.15f, -0.15f);
+            Coordinate upperLeft = new(-0.15f, -0.15f);
             SetStrokeColor(canvas, new Color(255, 100, 30));
             canvas.StrokeSize = 2;
-            var lowerRight = new Coordinate(1.3f, 1.3f);
-            DrawRectangle(canvas, drawPos, drawSize, upperLeft, lowerRight);
+            Coordinate lowerRight = new(1.3f, 1.3f);
+            DrawRectangle(canvas, drawSize, upperLeft, lowerRight);
             canvas.RestoreState();
         }
 
@@ -206,7 +206,10 @@ public class DrawableScene : IDrawable
 
     public static void SetFillColor(ICanvas canvas, Color? fillColor)
     {
-        canvas.FillColor = new Microsoft.Maui.Graphics.Color(fillColor.R, fillColor.G, fillColor.B);
+        if (fillColor != null)
+        {
+            canvas.FillColor = new Microsoft.Maui.Graphics.Color(fillColor.R, fillColor.G, fillColor.B);
+        }
     }
 
     public void SetScene(SheetScene? scene)
@@ -235,7 +238,7 @@ public class DrawableScene : IDrawable
     private int _fontSize;
 
 
-    private void DrawRectangle(ICanvas canvas, Coordinate drawPos, Coordinate drawSize, Coordinate upperLeft,
+    private static void DrawRectangle(ICanvas canvas, Coordinate drawSize, Coordinate upperLeft,
         Coordinate lowerRight, Color? fillColor = null)
     {
         if (fillColor != null)
@@ -257,8 +260,6 @@ public class DrawableScene : IDrawable
     {
         drawPos = new Coordinate(drawable.Position);
         drawSize = new Coordinate(drawable.Size);
-        float offX = (drawSize.X - 2) / 2 * (Zoom * BaseGridSize);
-        float offY = (drawSize.Y - 2) / 2 * (Zoom * BaseGridSize);
         drawSize.X = drawSize.X * Zoom * BaseGridSize;
         drawSize.Y = drawSize.Y * Zoom * BaseGridSize;
         drawPos.X = drawPos.X * Zoom * BaseGridSize;

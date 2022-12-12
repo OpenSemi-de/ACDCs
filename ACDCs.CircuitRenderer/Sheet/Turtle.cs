@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ACDCs.CircuitRenderer.Definitions;
+using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
 using Microsoft.Maui.Graphics;
@@ -90,9 +91,9 @@ public class Turtle
 
     public WorksheetItemList GetTraces()
     {
-        foreach (var item in _items)
+        foreach (IWorksheetItem item in _items)
         {
-            var rect = new RectFr
+            RectFr rect = new()
             {
                 X1 = item.X,
                 Y1 = item.Y,
@@ -119,7 +120,7 @@ public class Turtle
                 Coordinate rotatedItemPos4 =
                     RotateCoordinate(rect.X4, rect.Y4, centerX, centerY, rotation);
 
-                var itemPositions = new List<Coordinate>()
+                List<Coordinate> itemPositions = new()
                 {
                     rotatedItemPos1, rotatedItemPos2, rotatedItemPos3, rotatedItemPos4
                 };
@@ -138,17 +139,17 @@ public class Turtle
             DebugDrawRectangle(rect);
         }
 
-        var traces = new WorksheetItemList(_worksheet);
+        WorksheetItemList traces = new(_worksheet);
 
-        foreach (var net in _nets)
+        foreach (IWorksheetItem net in _nets)
         {
-            var trace = new TraceItem();
+            TraceItem trace = new();
             for (int i = 0; i < net.Pins.Count; i++)
             {
-                var pin1 = net.Pins[i];
-                var pin2 = i < net.Pins.Count - 1 ? net.Pins[i + 1] : net.Pins[0];
-                var pin1drawable = pin1.ParentItem != null ? pin1.ParentItem.DrawableComponent : pin1;
-                var pin2drawable = pin2.ParentItem != null ? pin2.ParentItem.DrawableComponent : pin2;
+                PinDrawable pin1 = net.Pins[i];
+                PinDrawable pin2 = i < net.Pins.Count - 1 ? net.Pins[i + 1] : net.Pins[0];
+                IDrawableComponent pin1drawable = pin1.ParentItem != null ? pin1.ParentItem.DrawableComponent : pin1;
+                IDrawableComponent pin2drawable = pin2.ParentItem != null ? pin2.ParentItem.DrawableComponent : pin2;
 
                 SetColorAndScaling(pin1drawable, pin2drawable);
                 float pin1X = pin1.Position.X;
@@ -169,14 +170,14 @@ public class Turtle
 
                 Direction direction2 = GetDirection(pin2X, pin2Y);
 
-                var currentPoint = GetPoint(position1X, position1Y, direction1);
+                Point currentPoint = GetPoint(position1X, position1Y, direction1);
 
                 DebugDrawLine(position1X, position1Y, Convert.ToSingle(currentPoint.X),
                     Convert.ToSingle(currentPoint.Y));
 
                 trace.AddPart(new Coordinate(position1X, position1Y, 0), Coordinate.FromPoint(currentPoint));
 
-                var targetPoint = GetPoint(position2X, position2Y, direction2);
+                Point targetPoint = GetPoint(position2X, position2Y, direction2);
 
                 if (i != net.Pins.Count - 1)
                 {
@@ -187,7 +188,7 @@ public class Turtle
                         if (currentPoint == targetPoint)
                             found = true;
 
-                        var stepPoint = GetNextStepPoint(currentPoint, targetPoint, ref nextDirection);
+                        Point stepPoint = GetNextStepPoint(currentPoint, targetPoint, ref nextDirection);
 
                         Console.WriteLine(f + "-" + pin1.ComponentGuid + "-" + nextDirection);
 
@@ -205,7 +206,7 @@ public class Turtle
             traces.AddItem(trace);
         }
 
-        foreach (var worksheetItem in traces)
+        foreach (IWorksheetItem worksheetItem in traces)
         {
         }
 
@@ -244,7 +245,7 @@ public class Turtle
 
     private static Point GetPoint(float positionX, float positionY, Direction direction)
     {
-        var targetPoint = new Point(
+        Point targetPoint = new(
             Convert.ToSingle(Math.Ceiling(positionX + DirectionPoints[(int)direction].X / 2)),
             Convert.ToSingle(Math.Ceiling(positionY + DirectionPoints[(int)direction].Y / 2)));
         return targetPoint;
@@ -314,13 +315,13 @@ public class Turtle
 
     private Point CheckCollision(Point currentPoint, Direction direction, out RectFr? collisionRect)
     {
-        var globalStepPoint = new Point(Convert.ToSingle(currentPoint.X + DirectionPoints[(int)direction].X / 2),
+        Point globalStepPoint = new(Convert.ToSingle(currentPoint.X + DirectionPoints[(int)direction].X / 2),
             Convert.ToSingle(currentPoint.Y + DirectionPoints[(int)direction].Y / 2));
 
         collisionRect = _collisionRectangles
             .FirstOrDefault(cr =>
             {
-                var intersect = LineIntersectsRect(currentPoint, globalStepPoint, cr);
+                Direction intersect = LineIntersectsRect(currentPoint, globalStepPoint, cr);
                 if (intersect == Direction.None)
                 {
                     return false;
@@ -374,7 +375,7 @@ public class Turtle
         Direction direction = Direction.None;
 
         int pos = 0;
-        foreach (var triangle in DirectionalTriangles)
+        foreach (Point[] triangle in DirectionalTriangles)
         {
             if (PointInTriangle(
                     new Point(posX, posY),
@@ -400,8 +401,8 @@ public class Turtle
         double posY = measurePoint.Y - centerPoint.Y;
         int pos = 0;
 
-        var directions = new List<Direction>();
-        foreach (var triangle in DirectionalTrianglesMax)
+        List<Direction> directions = new();
+        foreach (Point[] triangle in DirectionalTrianglesMax)
         {
             if (PointInTriangle(
                     new Point(posX + int.MaxValue / 2, posY + int.MaxValue / 2),
@@ -428,7 +429,7 @@ public class Turtle
     {
         Point stepPoint;
 
-        var lastDirectionStepPoint = CheckCollision(currentPoint, nextDirection, out var collisionRect);
+        Point lastDirectionStepPoint = CheckCollision(currentPoint, nextDirection, out RectFr? collisionRect);
         if (lastDirectionStepPoint.X != targetPoint.X && lastDirectionStepPoint.Y != targetPoint.Y &&
             currentPoint.X != targetPoint.X && currentPoint.Y != targetPoint.Y)
         {
@@ -439,10 +440,10 @@ public class Turtle
             }
         }
 
-        var globalDirection = GetDirectionMax(currentPoint, targetPoint);
+        Direction globalDirection = GetDirectionMax(currentPoint, targetPoint);
 
-        var globalStepPoint = CheckCollision(currentPoint, globalDirection, out collisionRect);
-        var lastDirection = nextDirection;
+        Point globalStepPoint = CheckCollision(currentPoint, globalDirection, out collisionRect);
+        Direction lastDirection = nextDirection;
         stepPoint = globalStepPoint;
 
         if (globalStepPoint.X == targetPoint.X && globalStepPoint.Y == targetPoint.Y)
@@ -456,7 +457,7 @@ public class Turtle
             {
                 Direction newDirection =
                     (int)globalDirection < (int)lastDirection ? nextDirection + 1 : nextDirection - 1;
-                var testStepPoint = CheckCollision(currentPoint, newDirection, out collisionRect);
+                Point testStepPoint = CheckCollision(currentPoint, newDirection, out collisionRect);
 
                 if (testStepPoint.X == targetPoint.X && testStepPoint.Y == targetPoint.Y)
                 {
@@ -479,7 +480,7 @@ public class Turtle
 
     private void SetColorAndScaling(IDrawableComponent pin1drawable, IDrawableComponent pin2drawable)
     {
-        var color = Color.FromRgb(red: Convert.ToInt32(pin2drawable.Position.X * 100 % 256),
+        Color? color = Color.FromRgb(red: Convert.ToInt32(pin2drawable.Position.X * 100 % 256),
             Convert.ToInt32(pin2drawable.Position.Y * 100 % 256), Convert.ToInt32(pin1drawable.Position.X * 100 % 256));
         if (DebugCanvas is ScalingCanvas canvas)
         {

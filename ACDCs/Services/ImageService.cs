@@ -31,9 +31,9 @@ namespace ACDCs.Services
         {
             SkiaBitmapExportContext context = new((int)width, (int)height, 1f);
             List<Color> colors;
-            var canvas = context.Canvas;
+            ICanvas? canvas = context.Canvas;
 
-            if (App.Current.RequestedTheme == AppTheme.Dark)
+            if (Application.Current != null && Application.Current.RequestedTheme == AppTheme.Dark)
             {
                 colors = new List<Color> { Colors.Black, Color.FromArgb("#ff10206f") };
             }
@@ -78,7 +78,7 @@ namespace ACDCs.Services
             context.Image.Save(ms);
             ms.Position = 0;
 
-            var source = ImageSource.FromStream(() => ms);
+            ImageSource? source = ImageSource.FromStream(() => ms);
             return source;
         }
     }

@@ -10,7 +10,7 @@ namespace ACDCs.CircuitRenderer.Scene
     {
         public void Render(ICanvas canvas, RenderInstruction instruction, TextInstruction text)
         {
-            var centerPos = new Coordinate(text.Position);
+            Coordinate centerPos = new(text.Position);
             DrawableScene.SetStrokeColor(canvas, text.StrokeColor);
             canvas.FontColor = instruction.ForegroundColor != null ? instruction.ForegroundColor.ToMauiColor() : text.StrokeColor?.ToMauiColor();
 

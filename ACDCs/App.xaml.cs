@@ -73,10 +73,10 @@ public partial class App : Application
 
     public static async Task<string> LoadMauiAssetAsString(string name)
     {
-        await using var stream = await FileSystem.OpenAppPackageFileAsync(name);
-        using var reader = new StreamReader(stream);
+        await using Stream stream = await FileSystem.OpenAppPackageFileAsync(name);
+        using StreamReader reader = new(stream);
 
-        var contents = await reader.ReadToEndAsync();
+        string contents = await reader.ReadToEndAsync();
         return contents;
     }
 

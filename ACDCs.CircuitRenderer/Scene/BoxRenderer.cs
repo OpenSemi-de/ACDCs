@@ -9,8 +9,8 @@ namespace ACDCs.CircuitRenderer.Scene
     {
         public void Render(ICanvas canvas, RenderInstruction renderInstruction, BoxInstruction box)
         {
-            var upperLeft = new Coordinate(box.Position);
-            var lowerRight = new Coordinate(box.Size);
+            Coordinate upperLeft = new(box.Position);
+            Coordinate lowerRight = new(box.Size);
             DrawableScene.SetStrokeColor(canvas, renderInstruction.ForegroundColor ?? box.StrokeColor);
             DrawableScene.SetFillColor(canvas, box.FillColor);
             if (box.FillColor != null)

@@ -33,7 +33,7 @@ public class FileMenuHandlers : MenuHandlerView
             PickerTitle = "Open circuit file"
         };
 
-        var result = await FilePicker.Default.PickAsync(options);
+        FileResult? result = await FilePicker.Default.PickAsync(options);
         if (result != null)
         {
             fileName = result.FullPath;
@@ -55,10 +55,10 @@ public class FileMenuHandlers : MenuHandlerView
 
     private async void SaveFileAs()
     {
-        var result = await PopupPage.DisplayPromptAsync("filename", "filename");
+        string? result = await PopupPage.DisplayPromptAsync("filename", "filename");
         if (result != null)
         {
-            var fileName = result;
+            string fileName = result;
             string mainDir = FileSystem.Current.AppDataDirectory;
             CircuitView.SaveAs(Path.Combine(mainDir, fileName));
         }

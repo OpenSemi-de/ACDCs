@@ -33,7 +33,7 @@ public sealed class WorksheetItemList : List<IWorksheetItem>
     {
         int refNum = ReferenceManager.GetRefNum(nameof(NetItem));
 
-        var newNet = new NetItem();
+        NetItem newNet = new();
         newNet.Pins.Add(pin1);
         newNet.Pins.Add(pin2);
         newNet.RefName = $"{nameof(NetItem)}{refNum}";

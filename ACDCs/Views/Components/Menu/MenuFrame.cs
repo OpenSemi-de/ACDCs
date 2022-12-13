@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Maui;
 using Microsoft.Maui.Controls;
-using AbsoluteLayout = Sharp.UI.AbsoluteLayout;
-using IView = Microsoft.Maui.IView;
-using StackLayout = Sharp.UI.StackLayout;
 
 namespace ACDCs.Views.Components.Menu;
 

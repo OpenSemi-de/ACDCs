@@ -6,10 +6,6 @@ using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
-using AbsoluteLayout = Sharp.UI.AbsoluteLayout;
-using ContentView = Sharp.UI.ContentView;
-using IView = Sharp.UI.IView;
-using PanGestureRecognizer = Sharp.UI.PanGestureRecognizer;
 
 namespace ACDCs.Views.Components.DragContainer;
 
@@ -28,15 +24,15 @@ public partial class DragContainer : ContentView
 
     public static readonly BindableProperty LayoutProperty =
            BindableProperty.Create(nameof(Layout), typeof(IView), typeof(DragContainer), null,
-           propertyChanged: LocalPropertyChanged);
+           propertyChanged: propertyChanged);
 
     public static readonly BindableProperty OrientationProperty =
         BindableProperty.Create(nameof(Orientation), typeof(StackOrientation), typeof(DragContainer),
-            StackOrientation.Vertical, propertyChanged: LocalPropertyChanged);
+            StackOrientation.Vertical, propertyChanged: propertyChanged);
 
     public static readonly BindableProperty TitleProperty =
                BindableProperty.Create(nameof(Title), typeof(string), typeof(DragContainer), "Title",
-           propertyChanged: LocalPropertyChanged);
+           propertyChanged: propertyChanged);
 
     public CircuitViewContainer? CircuitView
     {
@@ -65,7 +61,7 @@ public partial class DragContainer : ContentView
     public void ButtonHide_OnClicked(object? sender, EventArgs e)
     {
         Orientation = StackOrientation.Horizontal;
-        LocalPropertyChanged(this, Orientation, Orientation);
+        propertyChanged(this, Orientation, Orientation);
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.XProportional);
         AbsoluteLayout.SetLayoutBounds(this, new(1, 200, 40, 300));
     }
@@ -79,7 +75,7 @@ public partial class DragContainer : ContentView
 
     private Rect _lastBounds = Rect.Zero;
 
-    private static void LocalPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+    private static void propertyChanged(BindableObject bindable, object oldvalue, object newvalue)
     {
         if (bindable is DragContainer container)
         {
@@ -127,7 +123,7 @@ public partial class DragContainer : ContentView
                 if (ButtonHide.IsVisible)
                 {
                     Orientation = StackOrientation.Vertical;
-                    LocalPropertyChanged(this, Orientation, Orientation);
+                    propertyChanged(this, Orientation, Orientation);
                 }
                 Rect newBounds = new(_lastBounds.Location, _lastBounds.Size);
                 newBounds.Top += e.TotalY;

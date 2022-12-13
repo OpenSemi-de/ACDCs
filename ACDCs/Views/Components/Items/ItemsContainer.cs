@@ -8,10 +8,6 @@ using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
-using Sharp.UI;
-using AbsoluteLayout = Sharp.UI.AbsoluteLayout;
-using ScrollView = Sharp.UI.ScrollView;
-using StackLayout = Sharp.UI.StackLayout;
 
 namespace ACDCs.Views.Components.Items;
 
@@ -20,18 +16,23 @@ public class ItemsContainer : StackLayout
     public ItemsContainer()
     {
         IsInserting = false;
-        this.Orientation(StackOrientation.Horizontal);
+        Orientation = StackOrientation.Horizontal;
         AbsoluteLayout.SetLayoutBounds(this, new(0, 1, 1, 60));
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.YProportional);
-        _scroll = new ScrollView()
-            .HorizontalScrollBarVisibility(ScrollBarVisibility.Always)
-            .VerticalScrollBarVisibility(ScrollBarVisibility.Never)
-            .Orientation(ScrollOrientation.Horizontal);
+        _scroll = new()
+        {
+            HorizontalScrollBarVisibility = ScrollBarVisibility.Always,
+            VerticalScrollBarVisibility = ScrollBarVisibility.Never,
+            Orientation = ScrollOrientation.Horizontal
+        };
 
-        _layout = new StackLayout()
-            .Orientation(StackOrientation.Horizontal);
 
-        _scroll.Content(_layout);
+        _layout = new()
+        {
+            Orientation = StackOrientation.Horizontal
+        };
+        
+        _scroll.Content = _layout;
         Add(_scroll);
 
         Loaded += OnLoaded;
@@ -135,7 +136,7 @@ public class ItemsContainer : StackLayout
         {
             if (SelectedButton != null)
             {
-                SelectedButton.BackgroundColor(SelectedButtonColor);
+                SelectedButton.BackgroundColor = SelectedButtonColor;
             }
 
             SelectedButton = null;
@@ -219,8 +220,8 @@ public class ItemsContainer : StackLayout
             SelectedButtonBorderColor = SelectedButton?.BorderColor;
             if (SelectedButton != null)
             {
-                SelectedButton.BorderColor(Color.Parse("#20307f"))
-                .BackgroundColor(Color.Parse("#dfefff"));
+                SelectedButton.BorderColor = Color.Parse("#20307f");
+                SelectedButton.BackgroundColor = Color.Parse("#dfefff");
             }
 
             return Task.CompletedTask;

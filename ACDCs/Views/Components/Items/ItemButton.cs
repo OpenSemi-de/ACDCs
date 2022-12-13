@@ -11,8 +11,6 @@ using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Graphics.Skia;
 using Microsoft.Maui.Storage;
 using Color = ACDCs.CircuitRenderer.Definitions.Color;
-using ImageButton = Sharp.UI.ImageButton;
-using Path = System.IO.Path;
 
 namespace ACDCs.Views.Components.Items;
 

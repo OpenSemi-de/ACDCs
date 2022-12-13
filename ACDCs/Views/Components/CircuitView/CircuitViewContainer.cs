@@ -19,6 +19,8 @@ using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
 
 namespace ACDCs.Views.Components.CircuitView;
 
+public delegate void CursorPositionChangeEvent(object sender, CursorPositionChangeEventArgs args);
+
 public class CircuitViewContainer : ContentView
 {
     public CircuitViewContainer()
@@ -70,6 +72,7 @@ public class CircuitViewContainer : ContentView
         get => _currentSheet;
     }
 
+
     public Color? ForegroundColor
     {
         get => (Color)GetValue(ForegroundColorProperty);
@@ -92,18 +95,12 @@ public class CircuitViewContainer : ContentView
 
     public event EventHandler<EventArgs>? SavedSheet;
 
-    public event SelectionChangeEvent? SelectionChanged;
-
     public event CursorPositionChangeEvent? TapPositionChanged;
 
     public void Clear()
     {
         _currentWorkbook.Sheets.Clear();
         _currentSheet = _currentWorkbook.AddNewSheet();
-    }
-
-    public void DeleteSelected()
-    {
     }
 
     public async Task InsertToPosition(float x, float y, WorksheetItem? newItem)
@@ -144,10 +141,6 @@ public class CircuitViewContainer : ContentView
 
             return Task.CompletedTask;
         });
-    }
-
-    public void MirrorSelected()
-    {
     }
 
     public async void Open(string fileName)
@@ -211,10 +204,6 @@ public class CircuitViewContainer : ContentView
         });
     }
 
-    public void RotateSelected()
-    {
-    }
-
     public async void SaveAs(string fileName)
     {
         JsonSerializerSettings settings = new()
@@ -230,10 +219,6 @@ public class CircuitViewContainer : ContentView
         OnSavedSheet();
     }
 
-    public void SelectArea()
-    {
-    }
-
     protected virtual void OnCursorPositionChanged(CursorPositionChangeEventArgs args)
     {
         CursorPositionChanged?.Invoke(this, args);
@@ -247,11 +232,6 @@ public class CircuitViewContainer : ContentView
     protected virtual void OnSavedSheet()
     {
         SavedSheet?.Invoke(this, EventArgs.Empty);
-    }
-
-    protected virtual void OnSelectionChanged(SelectionChangeEventArgs args)
-    {
-        SelectionChanged?.Invoke(this, args);
     }
 
     protected virtual void OnTapPositionChanged(CursorPositionChangeEventArgs args)
@@ -339,7 +319,7 @@ public class CircuitViewContainer : ContentView
                     x >= item.X && x <= item.X + item.Width &&
                     y >= item.Y && y <= item.Y + item.Height
 
-                                                                            );
+                                                    );
             IWorksheetItem[] worksheetItems = hitItems as IWorksheetItem[] ?? hitItems.ToArray();
             if (worksheetItems.Any())
                 selectedItem = (WorksheetItem?)worksheetItems.First();
@@ -531,7 +511,7 @@ public class CircuitViewContainer : ContentView
                         {
                             _currentSheet.ToggleSelectItem(selectedItem);
                         }
-                        OnSelectionChanged(new SelectionChangeEventArgs());
+
                         await Paint();
                     }
                 }

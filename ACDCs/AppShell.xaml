@@ -4,16 +4,14 @@
     x:Class="ACDCs.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:views="using:ACDCs.Views"
-    Shell.FlyoutBehavior="Flyout"
-    Shell.Title=""
+    xmlns:views="clr-namespace:ACDCs.Views"
+    FlyoutBehavior="Flyout"
+    Title=""
     NavBarIsVisible="False">
     <ShellContent
-        Route="start"
         Title="StartCenter"
         ContentTemplate="{DataTemplate views:StartCenterPage}" />
     <ShellContent
-        Route="circuit"
         Title="New circuit"
         ContentTemplate="{DataTemplate views:CircuitSheetPage}" />
 </Shell>

@@ -2,7 +2,6 @@
 using ACDCs.CircuitRenderer.Instructions;
 using ACDCs.CircuitRenderer.Interfaces;
 using Microsoft.Maui.Graphics;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ACDCs.CircuitRenderer.Scene
 {

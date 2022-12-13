@@ -10,7 +10,6 @@ using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Scene;
 using ACDCs.CircuitRenderer.Sheet;
-using ACDCs.Views.Components.Feedback;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
@@ -35,12 +34,6 @@ public class CircuitViewContainer : ContentView
             BackgroundColor = Colors.Transparent,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
-        };
-
-        Feedback = new EditFrame
-        {
-            IsVisible = false,
-            BackgroundColor = Colors.Transparent,
         };
 
         _tapRecognizer = new TapGestureRecognizer();
@@ -79,7 +72,6 @@ public class CircuitViewContainer : ContentView
         get => _currentSheet;
     }
 
-    public EditFrame Feedback { get; }
 
     public Color? ForegroundColor
     {
@@ -440,11 +432,6 @@ public class CircuitViewContainer : ContentView
     {
         _cursorPosition = e.GetPosition(_graphicsView) ?? new Point();
         OnCursorPositionChanged(new CursorPositionChangeEventArgs(_cursorPosition));
-    }
-
-    private void PutFeedback()
-    {
-        PopupTarget.Add(Feedback);
     }
 
     private async void TapGestureRecognizer_OnTapped(object? sender, TappedEventArgs e)

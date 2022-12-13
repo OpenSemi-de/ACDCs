@@ -13,9 +13,9 @@ public partial class StartCenterPage : ContentPage
         Loaded += OnLoaded;
     }
 
-    private void Button_OnClicked(object? sender, EventArgs e)
+    private async void Button_OnClicked(object? sender, EventArgs e)
     {
-        Shell.Current.GoToAsync("//circuit").Wait();
+        await Shell.Current.GoToAsync("///circuit");
     }
 
     private async void CircuitView_OnLoaded(object? sender, EventArgs e)

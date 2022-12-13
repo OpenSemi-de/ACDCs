@@ -36,7 +36,7 @@ public class ItemButton : ImageButton
             if (BackgroundColor != null)
             {
                 sheet.BackgroundColor = new Color(BackgroundColor.WithAlpha(0.2f));
-                this.BackgroundColor = BackgroundColor.WithAlpha(0.2f);
+                BackgroundColor = BackgroundColor.WithAlpha(0.2f);
             }
 
             object?[] arguments = { };

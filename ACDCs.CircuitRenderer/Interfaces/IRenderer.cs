@@ -1,6 +1,4 @@
-﻿using ACDCs.CircuitRenderer.Definitions;
-using ACDCs.CircuitRenderer.Instructions;
-using ACDCs.CircuitRenderer.Scene;
+﻿using ACDCs.CircuitRenderer.Scene;
 using Microsoft.Maui.Graphics;
 
 namespace ACDCs.CircuitRenderer.Interfaces

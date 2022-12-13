@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Instructions;
 using ACDCs.CircuitRenderer.Interfaces;
 using Microsoft.Maui.Graphics;

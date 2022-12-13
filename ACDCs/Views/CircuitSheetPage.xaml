@@ -6,8 +6,9 @@
              xmlns:itemsList="clr-namespace:ACDCs.Views.Components.ItemsList"
              xmlns:items="clr-namespace:ACDCs.Views.Components.Items"
              xmlns:circuitView="clr-namespace:ACDCs.Views.Components.CircuitView"
-             xmlns:menuHandlers="using:ACDCs.Views.Components.Menu.MenuHandlers"
-             xmlns:debugView="using:ACDCs.Views.Components.DebugView"
+             xmlns:debugView="clr-namespace:ACDCs.Views.Components.DebugView"
+             xmlns:menuHandlers="clr-namespace:ACDCs.Views.Components.Menu.MenuHandlers"
+             xmlns:edit="clr-namespace:ACDCs.Views.Components.Edit"
              x:Class="ACDCs.Views.CircuitSheetPage"
              Title="New sheet"
              x:Name="CircuitSheetPageInstance">
@@ -17,6 +18,7 @@
         <menuHandlers:FileMenuHandlers CircuitView="{x:Reference CircuitView}" PopupPage="{x:Reference CircuitSheetPageInstance}"></menuHandlers:FileMenuHandlers>
         <menuHandlers:EditMenuHandlers CircuitView="{x:Reference CircuitView}"></menuHandlers:EditMenuHandlers>
         <menuHandlers:InfoMenuHandlers CircuitView="{x:Reference CircuitView}" DebugView="{x:Reference DebugViewInstance}"></menuHandlers:InfoMenuHandlers>
+        <edit:EditContainer></edit:EditContainer>
         <itemsList:ItemsListDragContainer></itemsList:ItemsListDragContainer>
         <debugView:DebugViewDragComtainer x:Name="DebugViewInstance" IsVisible="True" CircuitView="{x:Reference CircuitView}"></debugView:DebugViewDragComtainer>
         <items:ItemsContainer BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}"></items:ItemsContainer>

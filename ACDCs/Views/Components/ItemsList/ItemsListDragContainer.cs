@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using ACDCs.CircuitRenderer.Items;
-using CommunityToolkit.Maui.Markup;
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Layouts;
+using Sharp.UI;
+using Label = Sharp.UI.Label;
+using BindableProperty = Microsoft.Maui.Controls.BindableProperty;
+using DataTemplate = Microsoft.Maui.Controls.DataTemplate;
+using LayoutOptions = Microsoft.Maui.Controls.LayoutOptions;
+using ListViewCachingStrategy = Microsoft.Maui.Controls.ListViewCachingStrategy;
+using StackOrientation = Microsoft.Maui.Controls.StackOrientation;
 
 namespace ACDCs.Views.Components.ItemsList;
 
@@ -30,7 +35,7 @@ public class ItemsListDragContainer : DragContainer.DragContainer
 
         DataTemplate headerTemplate = new(typeof(ViewCell)) { LoadTemplate = LoadHeader };
 
-        _listViewItems = new(ListViewCachingStrategy.RecycleElement)
+        _listViewItems = new()
         {
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
@@ -74,14 +79,14 @@ public class ItemsListDragContainer : DragContainer.DragContainer
 
     private void AddLabelToTemplate(StackLayout layout, string bindingPath, double width)
     {
-        layout.Add(new Label().Bind(bindingPath).Width(width));
+        layout.Add(new Label().BindingContext(bindingPath).WidthRequest(width));
     }
 
     private object LoadHeader()
     {
         StackLayout layout = new() { Orientation = StackOrientation.Horizontal };
-        layout.Add(new Label().Text("Type").Width(120));
-        layout.Add(new Label().Text("Name").Width(160));
+        layout.Add(new Label().Text("Type").WidthRequest(120));
+        layout.Add(new Label().Text("Name").WidthRequest(160));
         return layout;
     }
 

@@ -18,7 +18,6 @@ namespace ACDCs.Views.Components.Edit
                 .CornerRadius(1)
                 .WidthRequest(60)
                 .HeightRequest(60)
-                .BackgroundColor(Colors.Transparent)
                 .Text(onClickAction.Method.Name);
 
             _onClickAction = onClickAction;
@@ -59,13 +58,13 @@ namespace ACDCs.Views.Components.Edit
         {
             _onSelectAction.Invoke(this);
             IsSelected = true;
-            this.BackgroundColor(Colors.White.WithAlpha(0.2f));
+            this.BackgroundColor(BackgroundColor.WithAlpha(1f));
         }
 
         public void Deselect()
         {
             IsSelected = false;
-            this.BackgroundColor(Colors.Transparent);
+            this.BackgroundColor(BackgroundColor.WithAlpha(0.2f));
         }
     }
 }

@@ -8,7 +8,6 @@ using Label = Sharp.UI.Label;
 using BindableProperty = Microsoft.Maui.Controls.BindableProperty;
 using DataTemplate = Microsoft.Maui.Controls.DataTemplate;
 using LayoutOptions = Microsoft.Maui.Controls.LayoutOptions;
-using ListViewCachingStrategy = Microsoft.Maui.Controls.ListViewCachingStrategy;
 using StackOrientation = Microsoft.Maui.Controls.StackOrientation;
 
 namespace ACDCs.Views.Components.ItemsList;

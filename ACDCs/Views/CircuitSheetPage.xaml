@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ui:ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:menu="clr-namespace:ACDCs.Views.Components.Menu"
              xmlns:itemsList="clr-namespace:ACDCs.Views.Components.ItemsList"
@@ -9,10 +9,11 @@
              xmlns:debugView="clr-namespace:ACDCs.Views.Components.DebugView"
              xmlns:menuHandlers="clr-namespace:ACDCs.Views.Components.Menu.MenuHandlers"
              xmlns:edit="clr-namespace:ACDCs.Views.Components.Edit"
+             xmlns:ui="clr-namespace:Sharp.UI;assembly=Sharp.UI"
              x:Class="ACDCs.Views.CircuitSheetPage"
              Title="New sheet"
              x:Name="CircuitSheetPageInstance">
-    <AbsoluteLayout x:Name="AbsoluteLayoutSheetPage">
+    <ui:AbsoluteLayout x:Name="AbsoluteLayoutSheetPage">
         <circuitView:CircuitViewContainer x:Name="CircuitView" PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" ForegroundColor="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" BackgroundHighColor="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional"></circuitView:CircuitViewContainer>
         <menu:MenuContainer PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" CircuitView="{x:Reference CircuitView}" DebugView="{x:Reference DebugViewInstance}"/>
         <menuHandlers:FileMenuHandlers CircuitView="{x:Reference CircuitView}" PopupPage="{x:Reference CircuitSheetPageInstance}"></menuHandlers:FileMenuHandlers>
@@ -22,5 +23,5 @@
         <itemsList:ItemsListDragContainer></itemsList:ItemsListDragContainer>
         <debugView:DebugViewDragComtainer x:Name="DebugViewInstance" IsVisible="True" CircuitView="{x:Reference CircuitView}"></debugView:DebugViewDragComtainer>
         <items:ItemsContainer BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}"></items:ItemsContainer>
-    </AbsoluteLayout>
-</ContentPage>
+    </ui:AbsoluteLayout>
+</ui:ContentPage>

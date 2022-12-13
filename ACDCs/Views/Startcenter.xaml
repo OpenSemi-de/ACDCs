@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ui:ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:circuitView="clr-namespace:ACDCs.Views.Components.CircuitView"
+             xmlns:ui="clr-namespace:Sharp.UI;assembly=Sharp.UI"
              x:Class="ACDCs.Views.StartCenterPage"
              x:Name="Page"
              Title="Main">
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
+    <ui:ScrollView>
+        <ui:StackLayout
+            Orientation="Vertical"
             Padding="30,0"
             VerticalOptions="Center">
             <circuitView:CircuitViewContainer WidthRequest="500" HeightRequest="400" x:Name="CircuitView" Loaded="CircuitView_OnLoaded">
@@ -25,7 +26,7 @@
                     <AppThemeBinding Light="{StaticResource ForegroundLight}" Dark="{StaticResource ForegroundDark}" />
                 </circuitView:CircuitViewContainer.ForegroundColor>
             </circuitView:CircuitViewContainer>
-            <Button Text="New sheet" WidthRequest="200" Clicked="Button_OnClicked"></Button>
-        </VerticalStackLayout>
-    </ScrollView>
-</ContentPage>
+            <ui:Button Text="New sheet" WidthRequest="200" Clicked="Button_OnClicked"></ui:Button>
+        </ui:StackLayout>
+    </ui:ScrollView>
+</ui:ContentPage>

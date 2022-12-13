@@ -1,6 +1,6 @@
 using System;
 using ACDCs.Services;
-using Microsoft.Maui.Controls;
+using Sharp.UI;
 
 namespace ACDCs.Views;
 
@@ -14,6 +14,6 @@ public partial class CircuitSheetPage : ContentPage
 
     private void OnLoaded(object? sender, EventArgs e)
     {
-        BackgroundImageSource = ImageService.BackgroundImageSource(this);
+        this.BackgroundImageSource(ImageService.BackgroundImageSource(this));
     }
 }

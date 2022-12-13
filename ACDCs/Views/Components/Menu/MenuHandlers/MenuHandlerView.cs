@@ -1,6 +1,7 @@
 ﻿using ACDCs.Views.Components.CircuitView;
 using ACDCs.Views.Components.DebugView;
 using Microsoft.Maui.Controls;
+using ContentView = Sharp.UI.ContentView;
 
 namespace ACDCs.Views.Components.Menu.MenuHandlers;
 

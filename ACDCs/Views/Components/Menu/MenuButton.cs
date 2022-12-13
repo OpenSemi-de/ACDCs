@@ -1,6 +1,8 @@
 using System.Threading.Tasks;
 using ACDCs.Views.Components.Menu.MenuHandlers;
-using Microsoft.Maui.Controls;
+using Microsoft.Maui;
+using Sharp.UI;
+
 
 namespace ACDCs.Views.Components.Menu;
 
@@ -8,13 +10,15 @@ public class MenuButton : Button, IMenuItem
 {
     public MenuButton(string text, string menuCommand)
     {
-        Text = text;
         MenuCommand = menuCommand;
         Clicked += MenuButton_Clicked;
-        Padding = new(2, 2, 2, 2);
-        Margin = new(2, 2, 2, 2);
-        MinimumWidthRequest = 80;
-        MinimumHeightRequest = 32;
+        this
+            .Text(text)
+            .Padding((Thickness?)new(2, 2, 2, 2))
+            .Margin((Thickness?)new(2, 2, 2, 2))
+            .MinimumWidthRequest(80)
+            .MinimumHeightRequest(32);
+
         ItemHeight = MinimumHeightRequest + Margin.Top + Margin.Bottom;
     }
 

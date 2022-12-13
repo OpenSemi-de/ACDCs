@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ui:ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:Sharp.UI;assembly=Sharp.UI"
              x:Class="ACDCs.Views.Components.DragContainer.DragContainer"
              x:Name="DragContentView">
-    <AbsoluteLayout HorizontalOptions="Fill" VerticalOptions="Fill">
-        <Image x:Name="BackgroundImage" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional" HorizontalOptions="Fill" VerticalOptions="Fill">
-        </Image>
-        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional" HorizontalOptions="Fill" VerticalOptions="Fill">
-            <StackLayout.Orientation>
+    <ui:AbsoluteLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+        <ui:Image x:Name="BackgroundImage" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional" HorizontalOptions="Fill" VerticalOptions="Fill">
+        </ui:Image>
+        <ui:StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional" HorizontalOptions="Fill" VerticalOptions="Fill">
+            <ui:StackLayout.Orientation>
                 <x:Binding Path="Orientation" />
-            </StackLayout.Orientation>
-            <StackLayout.BindingContext>
+            </ui:StackLayout.Orientation>
+            <ui:StackLayout.BindingContext>
                 <x:Reference Name="DragContentView" />
-            </StackLayout.BindingContext>
-            <Frame x:Name="TitleFrame" Margin="0" Padding="0" HorizontalOptions="Fill" VerticalOptions="Fill"
-                   MinimumHeightRequest="40" MinimumWidthRequest="20" BackgroundColor="Transparent">
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" VerticalOptions="Fill">
-                    <Label x:Name="TitleLabel" FontSize="10" FontAutoScalingEnabled="True" BackgroundColor="Transparent"
-                       HorizontalOptions="Fill" VerticalOptions="Fill" HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center">
-                        <Label.BindingContext>
+            </ui:StackLayout.BindingContext>
+            <ui:Frame x:Name="TitleFrame" Margin="0" Padding="0" HorizontalOptions="Fill" VerticalOptions="Fill"
+                      MinimumHeightRequest="40" MinimumWidthRequest="20" BackgroundColor="Transparent">
+                <ui:StackLayout Orientation="Horizontal" HorizontalOptions="Fill" VerticalOptions="Fill">
+                    <ui:Label x:Name="TitleLabel" FontSize="10" FontAutoScalingEnabled="True" BackgroundColor="Transparent"
+                              HorizontalOptions="Fill" VerticalOptions="Fill" HorizontalTextAlignment="Center"
+                              VerticalTextAlignment="Center">
+                        <ui:Label.BindingContext>
                             <x:Reference Name="DragContentView" />
-                        </Label.BindingContext>
-                        <Label.Text>
+                        </ui:Label.BindingContext>
+                        <ui:Label.Text>
                             <Binding Path="Title" />
-                        </Label.Text>
-                    </Label>
+                        </ui:Label.Text>
+                    </ui:Label>
                     <Button x:Name="ButtonHide" IsVisible="False" Text="X" Clicked="ButtonHide_OnClicked" HorizontalOptions="End"></Button>
-                </StackLayout>
-            </Frame>
-            <ContentView x:Name="MainContentView" HorizontalOptions="Fill" VerticalOptions="Fill" />
-        </StackLayout>
-    </AbsoluteLayout>
-</ContentView>
+                </ui:StackLayout>
+            </ui:Frame>
+            <ui:ContentView x:Name="MainContentView" HorizontalOptions="Fill" VerticalOptions="Fill" />
+        </ui:StackLayout>
+    </ui:AbsoluteLayout>
+</ui:ContentView>

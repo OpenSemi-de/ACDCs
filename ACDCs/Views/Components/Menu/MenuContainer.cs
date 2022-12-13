@@ -7,6 +7,10 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 using Newtonsoft.Json;
+using Sharp.UI;
+using AbsoluteLayout = Sharp.UI.AbsoluteLayout;
+using Label = Sharp.UI.Label;
+using StackLayout = Sharp.UI.StackLayout;
 
 namespace ACDCs.Views.Components.Menu;
 
@@ -17,13 +21,12 @@ public class MenuContainer : StackLayout
         Orientation = StackOrientation.Horizontal;
         AbsoluteLayout.SetLayoutBounds(this, new(0, 0, 1, 44));
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional);
-        _menuLayout = new()
-        {
-            HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill,
-            Orientation = StackOrientation.Horizontal,
-            Padding = 1,
-        };
+        _menuLayout = new StackLayout()
+            .HorizontalOptions(LayoutOptions.Fill)
+            .VerticalOptions(LayoutOptions.Fill)
+            .Orientation(StackOrientation.Horizontal)
+            .Padding(1);
+
 
         _menuFrame = new()
         {
@@ -32,20 +35,18 @@ public class MenuContainer : StackLayout
         };
 
         _fileNameLabel = new Label()
-        {
-            Text = "New file",
-            WidthRequest = 200,
-            HorizontalTextAlignment = TextAlignment.Start,
-            VerticalTextAlignment = TextAlignment.Center,
-            Padding = 5,
-            BackgroundColor = Colors.Transparent,
-        };
+            .Text("New file")
+            .WidthRequest(200)
+            .HorizontalTextAlignment(TextAlignment.Start)
+            .VerticalTextAlignment(TextAlignment.Center)
+            .Padding(5)
+            .BackgroundColor(Colors.Transparent);
+
 
         _menuLayout.Add(_menuFrame);
         _menuLayout.Add(_fileNameLabel);
         Add(_menuLayout);
-        LoadMenu("menu_main.json");
-        Loaded += MenuDragContainer_Loaded;
+
     }
 
     public DebugViewDragComtainer DebugView
@@ -54,7 +55,7 @@ public class MenuContainer : StackLayout
         set => SetValue(DebugViewProperty, value);
     }
 
-    public AbsoluteLayout PopupTarget
+    public AbsoluteLayout? PopupTarget
     {
         get => (AbsoluteLayout)GetValue(PopupTargetProperty);
 
@@ -62,24 +63,46 @@ public class MenuContainer : StackLayout
         {
             SetValue(PopupTargetProperty, value);
             _menuFrame.PopupTarget = value;
+            
+
         }
     }
 
     public CircuitViewContainer? CircuitView
     {
         get => (CircuitViewContainer)GetValue(CircuitViewProperty);
-        set => SetValue(CircuitViewProperty, value);
+        set
+        {
+            SetValue(CircuitViewProperty, value);
+
+            if (value != null)
+            {
+                value.LoadedSheet += Sheet_Loaded;
+                value.SavedSheet += Sheet_Saved;
+            }
+        }
     }
 
 
-    public static readonly BindableProperty CircuitViewProperty =
+    private static readonly BindableProperty CircuitViewProperty =
         BindableProperty.Create(nameof(CircuitView), typeof(CircuitViewContainer), typeof(CircuitSheetPage));
 
     private static readonly BindableProperty DebugViewProperty =
         BindableProperty.Create(nameof(DebugView), typeof(DebugViewDragComtainer), typeof(CircuitSheetPage));
 
     private static readonly BindableProperty PopupTargetProperty =
-                       BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
+                       BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage), null, propertyChanged:PopupTargetPropertyChanged);
+
+    private static void PopupTargetPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+    {
+        if (newvalue != null)
+        {
+            if (bindable is MenuContainer menuContainer)
+            {
+                menuContainer.LoadMenu("menu_main.json");
+            }
+        }
+    }
 
     private readonly Label _fileNameLabel;
     private readonly MenuFrame _menuFrame;
@@ -95,14 +118,6 @@ public class MenuContainer : StackLayout
         });
     }
 
-    private void MenuDragContainer_Loaded(object? sender, EventArgs e)
-    {
-        if (CircuitView != null)
-        {
-            CircuitView.LoadedSheet += Sheet_Loaded;
-            CircuitView.SavedSheet += Sheet_Saved;
-        }
-    }
 
     private void Sheet_Loaded(object? sender, EventArgs e)
     {

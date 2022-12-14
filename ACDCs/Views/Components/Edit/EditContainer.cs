@@ -1,10 +1,12 @@
-﻿using Microsoft.Maui.Controls;
+﻿using ACDCs.Views.Components.CircuitView;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
+using Sharp.UI;
 
 namespace ACDCs.Views.Components.Edit;
 
-public class EditContainer : StackLayout
+[SharpObject]
+public partial class EditContainer : StackLayout, IEditContainerProperties
 {
     public EditContainer()
     {
@@ -28,20 +30,27 @@ public class EditContainer : StackLayout
         _lastButton = editButton;
     }
 
-    public void SelectArea()
+    private void SelectArea()
     { }
 
-    public void Delete()
+    private void Delete()
     { }
 
-    public void Mirror()
+    private void Mirror()
     { }
 
-    public void Rotate()
+    private void Rotate()
     { }
 
     private readonly EditButton _deleteButton;
     private readonly EditButton _mirrorButton;
     private readonly EditButton _rotateButton;
     private EditButton? _lastButton;
+    public CircuitViewContainer CircuitView { get; set; }
+}
+
+[BindableProperties]
+public interface IEditContainerProperties
+{
+    CircuitViewContainer CircuitView { get; set; }
 }

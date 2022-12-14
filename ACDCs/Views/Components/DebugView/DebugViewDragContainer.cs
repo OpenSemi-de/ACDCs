@@ -1,12 +1,9 @@
 ﻿using System;
 using ACDCs.Views.Components.CircuitView;
-
+using CommunityToolkit.Maui.Markup;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
-using Sharp.UI;
-using AbsoluteLayout = Sharp.UI.AbsoluteLayout;
-using LayoutOptions = Microsoft.Maui.Controls.LayoutOptions;
-using StackOrientation = Microsoft.Maui.Controls.StackOrientation;
 
 namespace ACDCs.Views.Components.DebugView;
 

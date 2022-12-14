@@ -86,7 +86,7 @@ public class CircuitViewContainer : ContentView
         set
         {
             SetValue(PopupTargetProperty, value);
-            PutFeedback();
+            
         }
     }
 

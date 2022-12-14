@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Controls.Hosting;
+﻿using CommunityToolkit.Maui.Markup;
+using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Hosting;
 
 namespace ACDCs;
@@ -16,6 +17,7 @@ public static class MauiProgram
                 fonts.AddFont("MapleMono-Regular.ttf", "MapleMonoRegular");
                 fonts.AddFont("MapleMono-Bold.ttf", "MapleMonoBold");
             });
+        builder.UseMauiApp<App>().UseMauiCommunityToolkitMarkup();
 
         return builder.Build();
     }

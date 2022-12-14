@@ -4,6 +4,12 @@ using Microsoft.Maui.Layouts;
 using Sharp.UI;
 
 namespace ACDCs.Views.Components.Edit;
+[BindableProperties]
+public interface IEditContainerProperties
+{
+    CircuitViewContainer CircuitView { get; set; }
+}
+
 
 [SharpObject]
 public partial class EditContainer : StackLayout, IEditContainerProperties
@@ -46,11 +52,5 @@ public partial class EditContainer : StackLayout, IEditContainerProperties
     private readonly EditButton _mirrorButton;
     private readonly EditButton _rotateButton;
     private EditButton? _lastButton;
-    public CircuitViewContainer CircuitView { get; set; }
 }
 
-[BindableProperties]
-public interface IEditContainerProperties
-{
-    CircuitViewContainer CircuitView { get; set; }
-}

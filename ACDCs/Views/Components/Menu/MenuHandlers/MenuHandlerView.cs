@@ -1,5 +1,4 @@
-﻿using ACDCs.Views.Components.CircuitView;
-using ACDCs.Views.Components.DebugView;
+﻿using ACDCs.Views.Components.DebugView;
 using Microsoft.Maui.Controls;
 
 namespace ACDCs.Views.Components.Menu.MenuHandlers;

@@ -1,15 +1,8 @@
-﻿using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using ACDCs.CircuitRenderer;
+﻿using ACDCs.CircuitRenderer;
 using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Sheet;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Graphics.Skia;
-using Microsoft.Maui.Storage;
 using Color = ACDCs.CircuitRenderer.Definitions.Color;
 
 namespace ACDCs.Views.Components.Items;

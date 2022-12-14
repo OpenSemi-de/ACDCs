@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ACDCs.CircuitRenderer.Items;
-using Microsoft.Maui.Controls;
+﻿using ACDCs.CircuitRenderer.Items;
 using Microsoft.Maui.Layouts;
 using Sharp.UI;
 using AbsoluteLayout = Sharp.UI.AbsoluteLayout;

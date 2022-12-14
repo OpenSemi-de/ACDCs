@@ -1,10 +1,8 @@
 ﻿using ACDCs.Views.Components.CircuitView;
-using Microsoft.Maui.Graphics;
 using Sharp.UI;
 using AbsoluteLayout = Sharp.UI.AbsoluteLayout;
 using StackLayout = Sharp.UI.StackLayout;
 using Microsoft.Maui.Layouts;
-using ContentView = Sharp.UI.ContentView;
 
 namespace ACDCs.Views.Components.Edit;
 

@@ -1,10 +1,9 @@
 ﻿using ACDCs.Views.Components.CircuitView;
-using Sharp.UI;
-using AbsoluteLayout = Sharp.UI.AbsoluteLayout;
-using StackLayout = Sharp.UI.StackLayout;
 using Microsoft.Maui.Layouts;
 
 namespace ACDCs.Views.Components.Edit;
+
+using Sharp.UI;
 
 [BindableProperties]
 public interface IEditContainerProperties

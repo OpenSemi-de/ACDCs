@@ -11,22 +11,31 @@ using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
 
 namespace ACDCs.Views.Components.CircuitView;
 
-public delegate void CursorPositionChangeEvent(object sender, CursorPositionChangeEventArgs args);
+using Sharp.UI;
 
-public class CircuitViewContainer : ContentView
+[BindableProperties]
+public interface ICircuitViewProperties
+{
+    public Color BackgroundHighColor { get; set; }
+    public Color ForegroundColor { get; set; }
+    public AbsoluteLayout PopupTarget { get; set; }
+}
+
+[SharpObject]
+public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 {
     public CircuitViewContainer()
     {
         _currentWorkbook = new Workbook();
         _currentWorkbook.SetBaseFont("Maple Mono");
+
         _currentSheet = _currentWorkbook.AddNewSheet();
-        BackgroundColor = Colors.Transparent;
-        _graphicsView = new GraphicsView
-        {
-            BackgroundColor = Colors.Transparent,
-            HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill,
-        };
+
+        this.BackgroundColor(Colors.Transparent);
+        _graphicsView = new GraphicsView()
+            .BackgroundColor(Colors.Transparent)
+            .HorizontalOptions(LayoutOptions.Fill)
+            .VerticalOptions(LayoutOptions.Fill);
 
         _tapRecognizer = new TapGestureRecognizer();
         _tapRecognizer.Tapped += TapGestureRecognizer_OnTapped;
@@ -37,9 +46,9 @@ public class CircuitViewContainer : ContentView
         _pointerRecognizer = new PointerGestureRecognizer();
         _pointerRecognizer.PointerMoved += PointerGestureRecognizer_OnPointerMoved;
 
-        _graphicsView.GestureRecognizers.Add(_tapRecognizer);
-        _graphicsView.GestureRecognizers.Add(_panRecognizer);
-        _graphicsView.GestureRecognizers.Add(_pointerRecognizer);
+        _graphicsView.GestureRecognizers(_tapRecognizer);
+        _graphicsView.GestureRecognizers(_panRecognizer);
+        _graphicsView.GestureRecognizers(_pointerRecognizer);
 
         Content = _graphicsView;
         App.Com<CircuitViewContainer>(nameof(CircuitView), "Instance", this);
@@ -47,40 +56,7 @@ public class CircuitViewContainer : ContentView
         Loaded += OnLoaded;
     }
 
-    public static readonly BindableProperty BackgroundHighColorProperty =
-           BindableProperty.Create(nameof(BackgroundHighColor), typeof(Color), typeof(CircuitSheetPage), null);
-
-    public static readonly BindableProperty ForegroundColorProperty =
-           BindableProperty.Create(nameof(ForegroundColor), typeof(Color), typeof(CircuitSheetPage), null);
-
-    public Color? BackgroundHighColor
-    {
-        get => (Color)GetValue(BackgroundHighColorProperty);
-        set => SetValue(BackgroundHighColorProperty, value);
-    }
-
-    public Worksheet CurrentWorksheet
-    {
-        get => _currentSheet;
-    }
-
-
-    public Color? ForegroundColor
-    {
-        get => (Color)GetValue(ForegroundColorProperty);
-        set => SetValue(ForegroundColorProperty, value);
-    }
-
-    public AbsoluteLayout PopupTarget
-    {
-        get => (AbsoluteLayout)GetValue(PopupTargetProperty);
-
-        set
-        {
-            SetValue(PopupTargetProperty, value);
-            
-        }
-    }
+    public Worksheet CurrentWorksheet { get; set; }
 
     public event CursorPositionChangeEvent? CursorPositionChanged;
 
@@ -156,7 +132,7 @@ public class CircuitViewContainer : ContentView
             _currentSheet = newSheet;
 
             App.Com<Worksheet>(nameof(CircuitView), "CurrentWorksheet", _currentSheet);
-            _currentSheet.Filename = Path.GetFileName(fileName);
+            _currentSheet.Filename = System.IO.Path.GetFileName(fileName);
             await Paint();
         }
 
@@ -207,7 +183,7 @@ public class CircuitViewContainer : ContentView
             TypeNameHandling = TypeNameHandling.All
         };
         string jsonData = JsonConvert.SerializeObject(_currentSheet, settings: settings);
-        _currentSheet.Filename = Path.GetFileName(fileName);
+        _currentSheet.Filename = System.IO.Path.GetFileName(fileName);
         await File.WriteAllTextAsync(fileName, jsonData);
         OnSavedSheet();
     }
@@ -232,8 +208,6 @@ public class CircuitViewContainer : ContentView
         TapPositionChanged?.Invoke(this, args);
     }
 
-    private static readonly BindableProperty PopupTargetProperty =
-        BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
 
     private readonly Workbook _currentWorkbook;
 
@@ -312,7 +286,7 @@ public class CircuitViewContainer : ContentView
                     x >= item.X && x <= item.X + item.Width &&
                     y >= item.Y && y <= item.Y + item.Height
 
-                                                    );
+                                                                            );
             IWorksheetItem[] worksheetItems = hitItems as IWorksheetItem[] ?? hitItems.ToArray();
             if (worksheetItems.Any())
                 selectedItem = (WorksheetItem?)worksheetItems.First();
@@ -511,14 +485,4 @@ public class CircuitViewContainer : ContentView
             }
         });
     }
-}
-
-public class CursorPositionChangeEventArgs
-{
-    public CursorPositionChangeEventArgs(Point cursorPosition)
-    {
-        CursorPosition = cursorPosition;
-    }
-
-    public Point CursorPosition { get; }
 }

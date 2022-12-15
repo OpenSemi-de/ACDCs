@@ -19,9 +19,9 @@
         <menuHandlers:FileMenuHandlers CircuitView="{x:Reference CircuitView}" PopupPage="{x:Reference CircuitSheetPageInstance}"></menuHandlers:FileMenuHandlers>
         <menuHandlers:EditMenuHandlers CircuitView="{x:Reference CircuitView}"></menuHandlers:EditMenuHandlers>
         <menuHandlers:InfoMenuHandlers CircuitView="{x:Reference CircuitView}" DebugView="{x:Reference DebugViewInstance}"></menuHandlers:InfoMenuHandlers>
-        <edit:EditContainer></edit:EditContainer>
+        <edit:EditContainer ButtonWidth="80" ButtonHeight="40"></edit:EditContainer>
         <itemsList:ItemsListDragContainer></itemsList:ItemsListDragContainer>
         <debugView:DebugViewDragComtainer x:Name="DebugViewInstance" IsVisible="True" CircuitView="{x:Reference CircuitView}"></debugView:DebugViewDragComtainer>
-        <items:ItemsContainer BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}"></items:ItemsContainer>
+        <items:ItemsContainer ButtonWidth="60" ButtonHeight="60" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}"></items:ItemsContainer>
     </components:SharpAbsoluteLayout>
 </ContentPage>

@@ -1,6 +1,7 @@
 using ACDCs.Services;
 using ACDCs.Views.Components.CircuitView;
 using Microsoft.Maui.Layouts;
+using static Sharp.UI.AbsoluteLayout;
 
 namespace ACDCs.Views.Components.DragContainer;
 
@@ -30,8 +31,8 @@ public partial class DragContainer : ContentView, DragContainerProperties
     {
         this.Orientation = StackOrientation.Horizontal;
         propertyChanged(this, Orientation, Orientation);
-        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.XProportional);
-        AbsoluteLayout.SetLayoutBounds(this, new(1, 200, 40, 300));
+        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.XProportional);
+        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(this, new(1, 200, 40, 300));
     }
 
     public void ShowButtonHide()
@@ -99,7 +100,7 @@ public partial class DragContainer : ContentView, DragContainerProperties
 
                 if (newBounds.Top > 5)
                 {
-                    newBounds.Width = AbsoluteLayout.AutoSize;
+                    newBounds.Width = Microsoft.Maui.Controls.AbsoluteLayout.AutoSize;
                 }
                 else
                 {
@@ -109,7 +110,7 @@ public partial class DragContainer : ContentView, DragContainerProperties
 
                 if (newBounds.Left > 5)
                 {
-                    newBounds.Width = AbsoluteLayout.AutoSize;
+                    newBounds.Width = Microsoft.Maui.Controls.AbsoluteLayout.AutoSize;
                 }
                 else
                 {
@@ -117,20 +118,20 @@ public partial class DragContainer : ContentView, DragContainerProperties
                     newBounds.Left = 0;
                 }
 
-                AbsoluteLayout.SetLayoutBounds(this, newBounds);
+                Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(this, newBounds);
 
-                if (newBounds.Width == AbsoluteLayout.AutoSize)
+                if (newBounds.Width == Microsoft.Maui.Controls.AbsoluteLayout.AutoSize)
                 {
-                    AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
+                    Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
                 }
                 else
                 {
-                    AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional);
+                    Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional);
                 }
             }
             else
             {
-                _lastBounds = AbsoluteLayout.GetLayoutBounds(this);
+                _lastBounds = Microsoft.Maui.Controls.AbsoluteLayout.GetLayoutBounds(this);
             }
 
             return Task.CompletedTask;

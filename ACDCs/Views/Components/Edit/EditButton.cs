@@ -4,39 +4,48 @@
 namespace ACDCs.Views.Components.Edit;
 
 using Sharp.UI;
-public class EditButton : Button
+public class EditButton : ImageButton
 {
-    public EditButton(Action onClickAction, Action<EditButton> onSelectAction)
+
+    public EditButton(string text, Action onClickAction, Action<EditButton> onSelectAction, double buttonWidth, double buttonHeight)
     {
+        Text = text;
         IsSelected = false;
 
         this.Margin(new Thickness(0))
             .Padding(new Thickness(2))
-            .CornerRadius(1)
-            .WidthRequest(60)
-            .HeightRequest(60)
+            .CornerRadius(4)
+            .WidthRequest(buttonWidth)
+            .HeightRequest(buttonHeight)
             .BackgroundColor(Colors.Transparent)
-            .Text(onClickAction.Method.Name);
+            .BorderWidth(0);
+
+        this.Shadow(new Shadow());
 
         _onClickAction = onClickAction;
         _onSelectAction = onSelectAction;
+        _buttonWidth = buttonWidth;
+        _buttonHeight = buttonHeight;
         Clicked += OnClicked;
         Loaded += OnLoaded;
-        ButtonContentLayout layout = new(ButtonContentLayout.ImagePosition.Right, -10f);
-        this.ContentLayout(layout);
     }
 
-        
+
 
     public bool IsSelected { get; set; }
 
     private void OnLoaded(object? sender, EventArgs e)
     {
-          ImageSource = ImageService.BackgroundImageSource(60, 60);
+        Source = ImageService.ButtonImageSource(Text, (int)_buttonWidth, (int)_buttonHeight);
     }
+
+    public string Text { get; set; }
 
     private readonly Action _onClickAction;
     private readonly Action<EditButton> _onSelectAction;
+    private readonly double _buttonWidth;
+    private readonly double _buttonHeight;
+
 
     private void OnClicked(object? sender, EventArgs e)
     {
@@ -56,7 +65,7 @@ public class EditButton : Button
     {
         _onSelectAction.Invoke(this);
         IsSelected = true;
-        this.BackgroundColor(Colors.White.WithAlpha(0.2f));
+        this.BackgroundColor(Colors.White.WithAlpha(0.7f));
     }
 
     public void Deselect()

@@ -20,12 +20,11 @@ public partial class MenuContainer : StackLayout, IMenuContainer
 {
     public MenuContainer()
     {
+        this.HorizontalOptions(LayoutOptions.Start);
         Orientation = StackOrientation.Horizontal;
-        AbsoluteLayout.SetLayoutBounds(this, new(0, 0, 1, 44));
-        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional);
         _menuLayout = new()
         {
-            HorizontalOptions = LayoutOptions.Fill,
+            HorizontalOptions = LayoutOptions.Start,
             VerticalOptions = LayoutOptions.Fill,
             Orientation = StackOrientation.Horizontal,
             Padding = 1,
@@ -78,6 +77,10 @@ public partial class MenuContainer : StackLayout, IMenuContainer
             CircuitView.LoadedSheet += Sheet_Loaded;
             CircuitView.SavedSheet += Sheet_Saved;
         }
+
+        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(this, new(0, 0, 1, 44));
+        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.PositionProportional);
+
     }
 
     private void Sheet_Loaded(object? sender, EventArgs e)

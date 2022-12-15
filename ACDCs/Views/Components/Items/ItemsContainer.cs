@@ -3,6 +3,7 @@ using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Sheet;
 using Microsoft.Maui.Layouts;
+using static Sharp.UI.AbsoluteLayout;
 
 namespace ACDCs.Views.Components.Items;
 
@@ -11,6 +12,8 @@ using Sharp.UI;
 [BindableProperties]
 public interface IItemsContainerProperties
 {
+    double ButtonWidth { get; set; }
+    double ButtonHeight { get; set; }
 }
 
 [SharpObject()]
@@ -20,8 +23,8 @@ public partial class ItemsContainer : StackLayout, IItemsContainerProperties
     {
         IsInserting = false;
         this.Orientation(StackOrientation.Horizontal);
-        AbsoluteLayout.SetLayoutBounds(this, new(0, 1, 1, 60));
-        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.YProportional);
+        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(this, new(0, 1, 1, 60));
+        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.YProportional);
 
         _layout = new StackLayout()
             .Orientation(StackOrientation.Horizontal);
@@ -72,6 +75,11 @@ public partial class ItemsContainer : StackLayout, IItemsContainerProperties
     {
         await App.Call(() =>
         {
+            if (this.BackgroundColor != null)
+            {
+                BackgroundColor = BackgroundColor.WithAlpha(0.5f);
+            }
+
             foreach (Type type in typeof(IWorksheetItem).Assembly.GetTypes())
             {
                 bool TypeFilter(Type filterType, object? criteria) => filterType == typeof(IWorksheetItem);
@@ -99,9 +107,9 @@ public partial class ItemsContainer : StackLayout, IItemsContainerProperties
                         continue;
                     }
 
-                    ItemButton button = new(type) { WidthRequest = 60, HeightRequest = 60 };
+                    ItemButton button = new(type, ButtonWidth, ButtonHeight);
                     button.Clicked += OnItemButtonClicked;
-                    button.SetBackground(BackgroundColor);
+                    button.SetBackground(BackgroundColor.WithAlpha(0.7f));
                     button.Draw();
                     _layout.Add(
                         button
@@ -211,8 +219,8 @@ public partial class ItemsContainer : StackLayout, IItemsContainerProperties
             SelectedButtonBorderColor = SelectedButton?.BorderColor;
             if (SelectedButton != null)
             {
-                SelectedButton.BorderColor = Color.Parse("#20307f");
-                SelectedButton.BackgroundColor = Color.Parse("#dfefff");
+                SelectedButton.BorderColor = Color.Parse("#aa20307f");
+                SelectedButton.BackgroundColor = Color.Parse("#aadfefff");
             }
 
             return Task.CompletedTask;

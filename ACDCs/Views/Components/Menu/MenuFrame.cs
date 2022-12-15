@@ -1,3 +1,5 @@
+using static Sharp.UI.AbsoluteLayout;
+
 namespace ACDCs.Views.Components.Menu;
 
 using Sharp.UI;
@@ -79,9 +81,9 @@ public class MenuFrame : StackLayout
             if (menuButton.MenuFrame != null)
             {
                 double childrenHeight = menuButton.MenuFrame.Children.Sum(child => ((IMenuItem)child).ItemHeight);
-                double mainX = AbsoluteLayout.GetLayoutBounds(MainContainer).X;
-                double mainY = AbsoluteLayout.GetLayoutBounds(MainContainer).Y + AbsoluteLayout.GetLayoutBounds(MainContainer).Height;
-                AbsoluteLayout.SetLayoutBounds(menuButton.MenuFrame,
+                double mainX = Microsoft.Maui.Controls.AbsoluteLayout.GetLayoutBounds(MainContainer).X;
+                double mainY = Microsoft.Maui.Controls.AbsoluteLayout.GetLayoutBounds(MainContainer).Y + Microsoft.Maui.Controls.AbsoluteLayout.GetLayoutBounds(MainContainer).Height;
+                Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(menuButton.MenuFrame,
                     new(menuButton.X + mainX, mainY, 140, childrenHeight));
             }
         }

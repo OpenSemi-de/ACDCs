@@ -1,5 +1,6 @@
 ﻿using ACDCs.Views.Components.CircuitView;
 using Microsoft.Maui.Layouts;
+using static Sharp.UI.AbsoluteLayout;
 
 namespace ACDCs.Views.Components.DebugView;
 
@@ -13,8 +14,8 @@ public class DebugViewDragComtainer : DragContainer.DragContainer
         this.Orientation = StackOrientation.Vertical;
         ShowButtonHide();
 
-        AbsoluteLayout.SetLayoutBounds(this, new(1, 400, 300, 400));
-        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.XProportional);
+        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(this, new(1, 400, 300, 400));
+        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.XProportional);
 
         _layout = new()
         {

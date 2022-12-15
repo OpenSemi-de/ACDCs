@@ -7,12 +7,22 @@ using Color = ACDCs.CircuitRenderer.Definitions.Color;
 
 namespace ACDCs.Views.Components.Items;
 
+using Sharp.UI;
+
 public class ItemButton : ImageButton
 {
-    public ItemButton(Type? itemType)
+    public ItemButton(Type? itemType, double? buttonWidth, double? buttonHeight)
     {
         ItemType = itemType;
-        Padding = 0;
+
+        this.Margin(new Thickness(0))
+            .Padding(new Thickness(2))
+            .CornerRadius(4)
+            .WidthRequest(buttonWidth)
+            .HeightRequest(buttonHeight)
+            .BackgroundColor(Colors.Transparent)
+            .BorderWidth(0);
+
     }
 
     public Type? ItemType { get; set; }
@@ -93,7 +103,7 @@ internal class FakeLocalFile : IDisposable
     /// </summary>
     public FakeLocalFile(Stream source, string idFilePath)
     {
-        FilePath = Path.Combine(FileSystem.Current.CacheDirectory, $"{idFilePath}");
+        FilePath = System.IO.Path.Combine(FileSystem.Current.CacheDirectory, $"{idFilePath}");
         using FileStream fs = new(FilePath, FileMode.Create);
         source.CopyTo(fs);
     }

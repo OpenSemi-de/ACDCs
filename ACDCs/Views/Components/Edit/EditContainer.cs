@@ -1,5 +1,6 @@
 ﻿using ACDCs.Views.Components.CircuitView;
 using Microsoft.Maui.Layouts;
+using static Sharp.UI.AbsoluteLayout;
 
 namespace ACDCs.Views.Components.Edit;
 
@@ -9,6 +10,8 @@ using Sharp.UI;
 public interface IEditContainerProperties
 {
     CircuitViewContainer CircuitView { get; set; }
+    double ButtonWidth { get; set; }
+    double ButtonHeight { get; set; }
 }
 
 
@@ -17,19 +20,28 @@ public partial class EditContainer : StackLayout, IEditContainerProperties
 {
     public EditContainer()
     {
-        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
-        AbsoluteLayout.SetLayoutBounds(this, new Rect(0,300,AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
-        _selectAreaButton = new(SelectArea, OnSelectButtonChange);
-        _rotateButton = new(Rotate, OnSelectButtonChange);
-        _mirrorButton = new(Mirror, OnSelectButtonChange);
-        _deleteButton = new(Delete, OnSelectButtonChange);
+        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
+        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(this, new Rect(0, 300, Microsoft.Maui.Controls.AbsoluteLayout.AutoSize, Microsoft.Maui.Controls.AbsoluteLayout.AutoSize));
+        Loaded += OnLoaded;
+    }
+
+    private void OnLoaded(object? sender, EventArgs e)
+    {
+        if (ButtonHeight == 0) ButtonHeight = 60;
+        if (ButtonWidth == 0) ButtonWidth = 60;
+
+        _selectAreaButton = new($"Select area", SelectArea, OnSelectButtonChange, ButtonWidth, ButtonHeight);
+        _rotateButton = new("Rotate", Rotate, OnSelectButtonChange, ButtonWidth, ButtonHeight);
+        _mirrorButton = new("Mirror", Mirror, OnSelectButtonChange, ButtonWidth, ButtonHeight);
+        _deleteButton = new("Delete", Delete, OnSelectButtonChange, ButtonWidth, ButtonHeight);
         Add(_selectAreaButton);
         Add(_rotateButton);
         Add(_mirrorButton);
         Add(_deleteButton);
+
     }
 
-    private readonly EditButton _selectAreaButton;
+    private EditButton _selectAreaButton;
 
     private void OnSelectButtonChange(EditButton editButton)
     {
@@ -49,9 +61,9 @@ public partial class EditContainer : StackLayout, IEditContainerProperties
     private void Rotate()
     { }
 
-    private readonly EditButton _deleteButton;
-    private readonly EditButton _mirrorButton;
-    private readonly EditButton _rotateButton;
+    private EditButton _deleteButton;
+    private EditButton _mirrorButton;
+    private EditButton _rotateButton;
     private EditButton? _lastButton;
 }
 

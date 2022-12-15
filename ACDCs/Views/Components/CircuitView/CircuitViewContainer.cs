@@ -1,10 +1,18 @@
-﻿using ACDCs.CircuitRenderer;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using ACDCs.CircuitRenderer;
 using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Scene;
 using ACDCs.CircuitRenderer.Sheet;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
 using Newtonsoft.Json;
 using Color = Microsoft.Maui.Graphics.Color;
 using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
@@ -46,9 +54,12 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
         _pointerRecognizer = new PointerGestureRecognizer();
         _pointerRecognizer.PointerMoved += PointerGestureRecognizer_OnPointerMoved;
 
-        _graphicsView.GestureRecognizers(_tapRecognizer);
-        _graphicsView.GestureRecognizers(_panRecognizer);
-        _graphicsView.GestureRecognizers(_pointerRecognizer);
+        _graphicsView.GestureRecognizers(new GestureRecognizer[]
+        {
+            _tapRecognizer,
+            _panRecognizer,
+            _pointerRecognizer
+        });
 
         Content = _graphicsView;
         App.Com<CircuitViewContainer>(nameof(CircuitView), "Instance", this);

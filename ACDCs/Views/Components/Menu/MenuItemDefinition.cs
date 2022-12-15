@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ACDCs.Views.Components.Menu;
 
 public class MenuItemDefinition

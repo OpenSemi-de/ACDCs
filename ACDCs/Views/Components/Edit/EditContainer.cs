@@ -1,4 +1,5 @@
 ﻿using ACDCs.Views.Components.CircuitView;
+using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 
 namespace ACDCs.Views.Components.Edit;

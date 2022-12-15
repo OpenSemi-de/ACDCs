@@ -1,3 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
+
 namespace ACDCs.Views.Components.Menu;
 
 public class MenuFrame : StackLayout

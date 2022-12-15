@@ -1,5 +1,7 @@
-﻿using ACDCs.CircuitRenderer.Items;
+﻿using System;
+using ACDCs.CircuitRenderer.Items;
 using ACDCs.Services;
+using Microsoft.Maui.Controls;
 
 namespace ACDCs.Views;
 

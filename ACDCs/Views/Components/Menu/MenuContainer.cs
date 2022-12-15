@@ -1,5 +1,10 @@
-﻿using ACDCs.Views.Components.CircuitView;
+﻿using System;
+using System.Collections.Generic;
+using ACDCs.Views.Components.CircuitView;
 using ACDCs.Views.Components.DebugView;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 using Newtonsoft.Json;
 

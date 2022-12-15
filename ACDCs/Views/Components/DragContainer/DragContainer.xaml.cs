@@ -1,5 +1,10 @@
+using System;
+using System.Threading.Tasks;
 using ACDCs.Services;
 using ACDCs.Views.Components.CircuitView;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 
 namespace ACDCs.Views.Components.DragContainer;

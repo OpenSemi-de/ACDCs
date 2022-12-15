@@ -1,4 +1,7 @@
-﻿namespace ACDCs.WinUI;
+﻿using Microsoft.Maui;
+using Microsoft.Maui.Hosting;
+
+namespace ACDCs.WinUI;
 
 /// <summary>
 /// Provides application-specific behavior to supplement the default Application class.

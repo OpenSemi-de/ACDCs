@@ -1,4 +1,7 @@
-﻿namespace ACDCs;
+﻿using Microsoft.Maui.Controls.Hosting;
+using Microsoft.Maui.Hosting;
+
+namespace ACDCs;
 
 public static class MauiProgram
 {

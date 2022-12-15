@@ -1,4 +1,7 @@
-﻿using Sharp.UI;
+﻿using System;
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
+using Sharp.UI;
 using Button = Sharp.UI.Button;
 
 

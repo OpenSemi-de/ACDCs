@@ -1,4 +1,9 @@
-﻿namespace ACDCs.Views.Components.Menu.MenuHandlers;
+﻿using System.Collections.Generic;
+using System.IO;
+using Microsoft.Maui.Devices;
+using Microsoft.Maui.Storage;
+
+namespace ACDCs.Views.Components.Menu.MenuHandlers;
 
 public class FileMenuHandlers : MenuHandlerView
 {

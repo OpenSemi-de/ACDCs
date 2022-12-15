@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using Microsoft.Maui.Controls;
+
 namespace ACDCs.Views.Components.Menu;
 
 public class MenuDivider : Frame, IMenuItem

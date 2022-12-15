@@ -1,4 +1,7 @@
-﻿using ACDCs.Views.Components.CircuitView;
+﻿using System;
+using ACDCs.Views.Components.CircuitView;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 using Sharp.UI;
 using AbsoluteLayout = Sharp.UI.AbsoluteLayout;

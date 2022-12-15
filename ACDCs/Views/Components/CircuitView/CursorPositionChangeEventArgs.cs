@@ -1,4 +1,6 @@
-﻿namespace ACDCs.Views.Components.CircuitView
+﻿using Microsoft.Maui.Graphics;
+
+namespace ACDCs.Views.Components.CircuitView
 {
     public class CursorPositionChangeEventArgs
     {

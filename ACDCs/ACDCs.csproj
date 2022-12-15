@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
@@ -70,7 +70,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\ACDCS.CircuitRenderer\ACDCs.CircuitRenderer.csproj" />
-	  <ProjectReference Include="..\libs\Sharp.UI\Sharp.UI.Generator\Sharp.UI.Generator.csproj" />
+	  <ProjectReference Include="..\libs\Sharp.UI\Sharp.UI.Generator\Sharp.UI.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
 	  <ProjectReference Include="..\libs\Sharp.UI\Sharp.UI\Sharp.UI.csproj" />
 	</ItemGroup>
 

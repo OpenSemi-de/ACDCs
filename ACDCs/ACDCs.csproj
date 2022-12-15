@@ -74,6 +74,12 @@
     <None Remove="Resources\Fonts\MapleMono-Bold.ttf" />
     <None Remove="Resources\Fonts\MapleMono-Regular.ttf" />
     <None Remove="Resources\Raw\menu_main.json" />
+    <None Remove="Resources\Splash\splash.svg" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <MauiSplashScreen Include="Resources\Splash\splash.svg" />
   </ItemGroup>
 
   <ItemGroup>

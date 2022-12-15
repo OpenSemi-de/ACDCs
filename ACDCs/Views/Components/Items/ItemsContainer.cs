@@ -219,6 +219,7 @@ public partial class ItemsContainer : StackLayout, IItemsContainerProperties
             SelectedButtonBorderColor = SelectedButton?.BorderColor;
             if (SelectedButton != null)
             {
+                
                 SelectedButton.BorderColor = Color.Parse("#aa20307f");
                 SelectedButton.BackgroundColor = Color.Parse("#aadfefff");
             }

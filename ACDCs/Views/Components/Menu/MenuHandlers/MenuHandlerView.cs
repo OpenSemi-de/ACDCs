@@ -1,35 +1,20 @@
 ﻿using ACDCs.Views.Components.CircuitView;
 using ACDCs.Views.Components.DebugView;
-using Microsoft.Maui.Controls;
 
 namespace ACDCs.Views.Components.Menu.MenuHandlers;
 
-public class MenuHandlerView : ContentView
+using Sharp.UI;
+
+[BindableProperties]
+public interface IMenuHandlerView
 {
-    public CircuitViewContainer CircuitView
-    {
-        get => (CircuitViewContainer)GetValue(CircuitViewProperty);
-        set => SetValue(CircuitViewProperty, value);
-    }
+    CircuitViewContainer CircuitView { get; set; }
+    DebugViewDragComtainer DebugView { get; set; }
+    Page PopupPage { get; set; }
 
-    public DebugViewDragComtainer DebugView
-    {
-        get => (DebugViewDragComtainer)GetValue(DebugViewProperty);
-        set => SetValue(DebugViewProperty, value);
-    }
+}
 
-    public Page PopupPage
-    {
-        get => (Page)GetValue(PopupPageProperty);
-        set => SetValue(PopupPageProperty, value);
-    }
-
-    private static readonly BindableProperty CircuitViewProperty =
-                   BindableProperty.Create(nameof(CircuitView), typeof(CircuitViewContainer), typeof(CircuitSheetPage));
-
-    private static readonly BindableProperty DebugViewProperty =
-        BindableProperty.Create(nameof(DebugView), typeof(DebugViewDragComtainer), typeof(CircuitSheetPage));
-
-    private static readonly BindableProperty PopupPageProperty =
-                BindableProperty.Create(nameof(Page), typeof(Page), typeof(CircuitSheetPage));
+[SharpObject]
+public partial class MenuHandlerView : ContentView, IMenuHandlerView
+{
 }

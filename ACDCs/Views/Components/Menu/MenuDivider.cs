@@ -1,7 +1,6 @@
-using System.Collections.Generic;
-using Microsoft.Maui.Controls;
-
 namespace ACDCs.Views.Components.Menu;
+
+using Sharp.UI;
 
 public class MenuDivider : Frame, IMenuItem
 {

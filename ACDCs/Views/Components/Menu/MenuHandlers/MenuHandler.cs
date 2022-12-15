@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace ACDCs.Views.Components.Menu.MenuHandlers;
+﻿namespace ACDCs.Views.Components.Menu.MenuHandlers;
 
 public class MenuHandler
 {

@@ -1,14 +1,11 @@
-﻿using Microsoft.Maui.Graphics;
+﻿namespace ACDCs.Views.Components.CircuitView;
 
-namespace ACDCs.Views.Components.CircuitView
+public class CursorPositionChangeEventArgs
 {
-    public class CursorPositionChangeEventArgs
+    public CursorPositionChangeEventArgs(Point cursorPosition)
     {
-        public CursorPositionChangeEventArgs(Point cursorPosition)
-        {
-            CursorPosition = cursorPosition;
-        }
-
-        public Point CursorPosition { get; }
+        CursorPosition = cursorPosition;
     }
+
+    public Point CursorPosition { get; }
 }

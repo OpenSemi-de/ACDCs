@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ACDCs.CircuitRenderer.Items;
-using Microsoft.Maui.Controls;
+﻿using ACDCs.CircuitRenderer.Items;
 using Microsoft.Maui.Layouts;
-using Sharp.UI;
-using AbsoluteLayout = Sharp.UI.AbsoluteLayout;
-using Label = Sharp.UI.Label;
-using ListView = Sharp.UI.ListView;
-using StackLayout = Sharp.UI.StackLayout;
-using ViewCell = Sharp.UI.ViewCell;
 
 namespace ACDCs.Views.Components.ItemsList;
 
-public class ItemsListDragContainer : DragContainer.DragContainer
+using Sharp.UI;
+
+[BindableProperties]
+public interface IItemsListDragContainerProperties
+{
+    AbsoluteLayout PopupTarget { get; set; }
+}
+
+[SharpObject]
+public partial class ItemsListDragContainer : DragContainer.DragContainer, IItemsListDragContainerProperties
 {
     public ItemsListDragContainer()
     {
@@ -55,13 +54,6 @@ public class ItemsListDragContainer : DragContainer.DragContainer
 #pragma warning restore CS8974
     }
 
-    public AbsoluteLayout PopupTarget
-    {
-        get => (AbsoluteLayout)GetValue(PopupTargetProperty);
-
-        set => SetValue(PopupTargetProperty, value);
-    }
-
     public void SetItems(WorksheetItemList items, WorksheetItemList selected)
     {
         List<ItemsListItem> list = items.Select(item =>
@@ -71,8 +63,6 @@ public class ItemsListDragContainer : DragContainer.DragContainer
         _listViewItems.ItemsSource = list;
     }
 
-    private static readonly BindableProperty PopupTargetProperty =
-        BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
 
     private readonly StackLayout _layout;
     private readonly ListView _listViewItems;

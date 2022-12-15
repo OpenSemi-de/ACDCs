@@ -1,15 +1,22 @@
-using System;
-using System.Threading.Tasks;
 using ACDCs.Services;
 using ACDCs.Views.Components.CircuitView;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 
 namespace ACDCs.Views.Components.DragContainer;
 
-public partial class DragContainer : ContentView
+using Sharp.UI;
+
+[BindableProperties]
+public interface DragContainerProperties
+{
+    CircuitViewContainer CircuitView { get; set; }
+    IView Layout { get; set; }
+    StackOrientation Orientation { get; set; }
+    string Title { get; set; }
+}
+
+[SharpObject]
+public partial class DragContainer : ContentView, DragContainerProperties
 {
     public DragContainer()
     {
@@ -19,48 +26,9 @@ public partial class DragContainer : ContentView
         LayoutChanged += DragContainer_LayoutChanged;
     }
 
-    public static readonly BindableProperty CircuitViewProperty =
-           BindableProperty.Create(nameof(CircuitView), typeof(CircuitViewContainer), typeof(CircuitSheetPage));
-
-    public static readonly BindableProperty LayoutProperty =
-           BindableProperty.Create(nameof(Layout), typeof(IView), typeof(DragContainer), null,
-           propertyChanged: propertyChanged);
-
-    public static readonly BindableProperty OrientationProperty =
-        BindableProperty.Create(nameof(Orientation), typeof(StackOrientation), typeof(DragContainer),
-            StackOrientation.Vertical, propertyChanged: propertyChanged);
-
-    public static readonly BindableProperty TitleProperty =
-               BindableProperty.Create(nameof(Title), typeof(string), typeof(DragContainer), "Title",
-           propertyChanged: propertyChanged);
-
-    public CircuitViewContainer? CircuitView
-    {
-        get => (CircuitViewContainer)GetValue(CircuitViewProperty);
-        set => SetValue(CircuitViewProperty, value);
-    }
-
-    public new IView Layout
-    {
-        get => (IView)GetValue(LayoutProperty);
-        set => SetValue(LayoutProperty, value);
-    }
-
-    public StackOrientation Orientation
-    {
-        get => (StackOrientation)GetValue(OrientationProperty);
-        set => SetValue(OrientationProperty, value);
-    }
-
-    public string Title
-    {
-        get => (string)GetValue(TitleProperty);
-        set => SetValue(TitleProperty, value);
-    }
-
     public void ButtonHide_OnClicked(object? sender, EventArgs e)
     {
-        Orientation = StackOrientation.Horizontal;
+        this.Orientation = StackOrientation.Horizontal;
         propertyChanged(this, Orientation, Orientation);
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.XProportional);
         AbsoluteLayout.SetLayoutBounds(this, new(1, 200, 40, 300));
@@ -122,7 +90,7 @@ public partial class DragContainer : ContentView
             {
                 if (ButtonHide.IsVisible)
                 {
-                    Orientation = StackOrientation.Vertical;
+                    this.Orientation = StackOrientation.Vertical;
                     propertyChanged(this, Orientation, Orientation);
                 }
                 Rect newBounds = new(_lastBounds.Location, _lastBounds.Size);

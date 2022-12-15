@@ -1,16 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using ACDCs.Views.Components.CircuitView;
+﻿using ACDCs.Views.Components.CircuitView;
 using ACDCs.Views.Components.DebugView;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 using Newtonsoft.Json;
 
 namespace ACDCs.Views.Components.Menu;
 
-public class MenuContainer : StackLayout
+using Sharp.UI;
+
+[BindableProperties]
+public interface IMenuContainer
+{
+    DebugViewDragComtainer DebugView { get; set; }
+    AbsoluteLayout PopupTarget { get; set; }
+    CircuitViewContainer CircuitView { get; set; }
+}
+
+[SharpObject]
+public partial class MenuContainer : StackLayout, IMenuContainer
 {
     public MenuContainer()
     {
@@ -25,12 +31,7 @@ public class MenuContainer : StackLayout
             Padding = 1,
         };
 
-        _menuFrame = new()
-        {
-            PopupTarget = PopupTarget,
-            MainContainer = this
-        };
-
+   
         _fileNameLabel = new Label()
         {
             Text = "New file",
@@ -41,48 +42,13 @@ public class MenuContainer : StackLayout
             BackgroundColor = Colors.Transparent,
         };
 
-        _menuLayout.Add(_menuFrame);
         _menuLayout.Add(_fileNameLabel);
         Add(_menuLayout);
-        LoadMenu("menu_main.json");
         Loaded += MenuDragContainer_Loaded;
     }
 
-    public DebugViewDragComtainer DebugView
-    {
-        get => (DebugViewDragComtainer)GetValue(DebugViewProperty);
-        set => SetValue(DebugViewProperty, value);
-    }
-
-    public AbsoluteLayout PopupTarget
-    {
-        get => (AbsoluteLayout)GetValue(PopupTargetProperty);
-
-        set
-        {
-            SetValue(PopupTargetProperty, value);
-            _menuFrame.PopupTarget = value;
-        }
-    }
-
-    public CircuitViewContainer? CircuitView
-    {
-        get => (CircuitViewContainer)GetValue(CircuitViewProperty);
-        set => SetValue(CircuitViewProperty, value);
-    }
-
-
-    public static readonly BindableProperty CircuitViewProperty =
-        BindableProperty.Create(nameof(CircuitView), typeof(CircuitViewContainer), typeof(CircuitSheetPage));
-
-    private static readonly BindableProperty DebugViewProperty =
-        BindableProperty.Create(nameof(DebugView), typeof(DebugViewDragComtainer), typeof(CircuitSheetPage));
-
-    private static readonly BindableProperty PopupTargetProperty =
-                       BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
-
     private readonly Label _fileNameLabel;
-    private readonly MenuFrame _menuFrame;
+    private MenuFrame _menuFrame;
     private readonly StackLayout _menuLayout;
 
     private async void LoadMenu(string menuMainJson)
@@ -97,6 +63,16 @@ public class MenuContainer : StackLayout
 
     private void MenuDragContainer_Loaded(object? sender, EventArgs e)
     {
+        _menuFrame = new()
+        {
+            PopupTarget = PopupTarget,
+            MainContainer = this
+        };
+
+        _menuLayout.Add(_menuFrame);
+
+        LoadMenu("menu_main.json");
+
         if (CircuitView != null)
         {
             CircuitView.LoadedSheet += Sheet_Loaded;

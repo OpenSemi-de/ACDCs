@@ -1,21 +1,16 @@
-﻿using System;
-using ACDCs.Views.Components.CircuitView;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
+﻿using ACDCs.Views.Components.CircuitView;
 using Microsoft.Maui.Layouts;
-using Sharp.UI;
-using AbsoluteLayout = Sharp.UI.AbsoluteLayout;
-using Label = Sharp.UI.Label;
-using StackLayout = Sharp.UI.StackLayout;
 
 namespace ACDCs.Views.Components.DebugView;
+
+using Sharp.UI;
 
 public class DebugViewDragComtainer : DragContainer.DragContainer
 {
     public DebugViewDragComtainer()
     {
         Title = "Debug";
-        Orientation = StackOrientation.Vertical;
+        this.Orientation = StackOrientation.Vertical;
         ShowButtonHide();
 
         AbsoluteLayout.SetLayoutBounds(this, new(1, 400, 300, 400));

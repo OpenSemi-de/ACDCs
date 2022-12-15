@@ -1,38 +1,37 @@
-﻿using System;
-using System.Reflection;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Sheet;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 
 namespace ACDCs.Views.Components.Items;
 
-public class ItemsContainer : StackLayout
+using Sharp.UI;
+
+[BindableProperties]
+public interface IItemsContainerProperties
+{
+}
+
+[SharpObject()]
+public partial class ItemsContainer : StackLayout, IItemsContainerProperties 
 {
     public ItemsContainer()
     {
         IsInserting = false;
-        Orientation = StackOrientation.Horizontal;
+        this.Orientation(StackOrientation.Horizontal);
         AbsoluteLayout.SetLayoutBounds(this, new(0, 1, 1, 60));
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.YProportional);
-        _scroll = new()
-        {
-            HorizontalScrollBarVisibility = ScrollBarVisibility.Always,
-            VerticalScrollBarVisibility = ScrollBarVisibility.Never,
-            Orientation = ScrollOrientation.Horizontal
-        };
 
+        _layout = new StackLayout()
+            .Orientation(StackOrientation.Horizontal);
 
-        _layout = new()
-        {
-            Orientation = StackOrientation.Horizontal
-        };
-        
-        _scroll.Content = _layout;
+        _scroll = new ScrollView()
+            .HorizontalScrollBarVisibility(ScrollBarVisibility.Always)
+            .VerticalScrollBarVisibility(ScrollBarVisibility.Never)
+            .Orientation(ScrollOrientation.Horizontal)
+            .Content(_layout);
+
         Add(_scroll);
 
         Loaded += OnLoaded;
@@ -45,13 +44,7 @@ public class ItemsContainer : StackLayout
         get => App.Com<bool>("Items", "IsInserting");
         set => App.Com<bool>("Items", "IsInserting", value);
     }
-
-    public AbsoluteLayout PopupTarget
-    {
-        get => (AbsoluteLayout)GetValue(PopupTargetProperty);
-
-        set => SetValue(PopupTargetProperty, value);
-    }
+    
 
     public ItemButton? SelectedButton { get; set; }
 
@@ -124,8 +117,6 @@ public class ItemsContainer : StackLayout
         });
     }
 
-    private static readonly BindableProperty PopupTargetProperty =
-        BindableProperty.Create(nameof(PopupTarget), typeof(AbsoluteLayout), typeof(CircuitSheetPage));
 
     private readonly StackLayout _layout;
     private readonly ScrollView _scroll;

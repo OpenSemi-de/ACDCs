@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-
-namespace ACDCs;
+﻿namespace ACDCs;
 
 public partial class AppShell : Shell
 {

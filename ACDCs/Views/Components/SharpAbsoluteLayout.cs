@@ -6,5 +6,6 @@ public class SharpAbsoluteLayout: AbsoluteLayout
 {
     public SharpAbsoluteLayout() : base()
     {
+
     }
 }

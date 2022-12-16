@@ -30,23 +30,14 @@ public partial class MenuContainer : StackLayout, IMenuContainer
             Padding = 1,
         };
 
-   
-        _fileNameLabel = new Label()
-        {
-            Text = "New file",
-            WidthRequest = 200,
-            HorizontalTextAlignment = TextAlignment.Start,
-            VerticalTextAlignment = TextAlignment.Center,
-            Padding = 5,
-            BackgroundColor = Colors.Transparent,
-        };
+        
 
-        _menuLayout.Add(_fileNameLabel);
+   
         Add(_menuLayout);
         Loaded += MenuDragContainer_Loaded;
     }
 
-    private readonly Label _fileNameLabel;
+    private Label _fileNameLabel;
     private MenuFrame _menuFrame;
     private readonly StackLayout _menuLayout;
 
@@ -78,8 +69,21 @@ public partial class MenuContainer : StackLayout, IMenuContainer
             CircuitView.SavedSheet += Sheet_Saved;
         }
 
-        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(this, new(0, 0, 1, 44));
-        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.PositionProportional);
+
+        _fileNameLabel = new Label()
+        {
+            Text = "New file",
+            WidthRequest = 200,
+            HorizontalTextAlignment = TextAlignment.Start,
+            VerticalTextAlignment = TextAlignment.Center,
+            Padding = 5,
+            BackgroundColor = Colors.Transparent,
+        };
+
+        _menuLayout.Add(_fileNameLabel);
+
+        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.PositionProportional);
+        AbsoluteLayout.SetLayoutBounds(this, new(0, 0, 1, 44));
 
     }
 

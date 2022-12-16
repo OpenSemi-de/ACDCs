@@ -7,7 +7,8 @@ using Sharp.UI;
 public class EditButton : ImageButton
 {
 
-    public EditButton(string text, Action onClickAction, Action<EditButton> onSelectAction, double buttonWidth, double buttonHeight)
+    public EditButton(string text, Action onClickAction, Action<EditButton> onSelectAction, double buttonWidth,
+        double buttonHeight, bool isSelectable = false)
     {
         Text = text;
         IsSelected = false;
@@ -26,6 +27,7 @@ public class EditButton : ImageButton
         _onSelectAction = onSelectAction;
         _buttonWidth = buttonWidth;
         _buttonHeight = buttonHeight;
+        _isSelectable = isSelectable;
         Clicked += OnClicked;
         Loaded += OnLoaded;
     }
@@ -45,20 +47,31 @@ public class EditButton : ImageButton
     private readonly Action<EditButton> _onSelectAction;
     private readonly double _buttonWidth;
     private readonly double _buttonHeight;
+    private readonly bool _isSelectable;
 
 
-    private void OnClicked(object? sender, EventArgs e)
+    private async void OnClicked(object? sender, EventArgs e)
     {
-        if (IsSelected)
+        if (_isSelectable)
         {
-            Deselect();
+            if (IsSelected)
+            {
+                Deselect();
+            }
+            else
+            {
+                Select();
+            }
         }
         else
         {
             Select();
+
+            _onClickAction.Invoke();
+           await  Task.Delay(200);
+            Deselect();
         }
 
-        _onClickAction.Invoke();
     }
 
     public void Select()

@@ -30,7 +30,7 @@ public partial class EditContainer : StackLayout, IEditContainerProperties
         if (ButtonHeight == 0) ButtonHeight = 60;
         if (ButtonWidth == 0) ButtonWidth = 60;
 
-        _selectAreaButton = new($"Select area", SelectArea, OnSelectButtonChange, ButtonWidth, ButtonHeight);
+        _selectAreaButton = new($"Select area", SelectArea, OnSelectButtonChange, ButtonWidth, ButtonHeight, true);
         _rotateButton = new("Rotate", Rotate, OnSelectButtonChange, ButtonWidth, ButtonHeight);
         _mirrorButton = new("Mirror", Mirror, OnSelectButtonChange, ButtonWidth, ButtonHeight);
         _deleteButton = new("Delete", Delete, OnSelectButtonChange, ButtonWidth, ButtonHeight);

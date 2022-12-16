@@ -82,8 +82,6 @@ public static class ImageService
         ICanvas? canvas = context.Canvas;
         canvas.Alpha = 0.7f;
 
-        AppColors.
-
         if (Application.Current != null && Application.Current.RequestedTheme == AppTheme.Dark)
         {
             colors = new List<Color> { Colors.Black, Color.FromArgb("#ff10206f"), Colors.White };

@@ -270,4 +270,9 @@ public class DrawableScene : IDrawable
         drawPos.X = drawPos.X * Zoom * BaseGridSize;
         drawPos.Y = drawPos.Y * Zoom * BaseGridSize;
     }
+
+    public static void SetStrokeWidth(ICanvas canvas, float lineStrokeWidth)
+    {
+        canvas.StrokeSize = lineStrokeWidth;
+    }
 }

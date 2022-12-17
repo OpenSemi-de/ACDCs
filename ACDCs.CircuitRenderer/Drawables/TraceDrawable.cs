@@ -15,7 +15,7 @@ public class TraceDrawable : DrawableComponent
     public void AddPart(Coordinate from, Coordinate to)
     {
         DrawInstructions.Add(
-            new LineInstruction(from.X, from.Y, to.X, to.Y)
+            new LineInstruction(from.X, from.Y, to.X, to.Y, 3)
         );
     }
 }

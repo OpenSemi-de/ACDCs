@@ -58,7 +58,7 @@ public class ItemButton : ImageButton
                 _drawableSheet = sheet.SceneManager?.GetSceneForBackend() as IDrawable;
                 if (_drawableSheet != null)
                 {
-                    using SkiaBitmapExportContext context = new((int)(WidthRequest - 2), (int)(HeightRequest - 2), 1);
+                    using BitmapExportContext context = App.BitmapExportContextService.CreateContext((int)(WidthRequest - 2), (int)(HeightRequest - 2), 1);
 
                     _drawableSheet?.Draw(context.Canvas, RectF.Zero);
 
@@ -83,7 +83,7 @@ public class ItemButton : ImageButton
 
     private Task<Stream> StreamImage(CancellationToken arg)
     {
-        using SkiaBitmapExportContext context = new(40, 40, 1);
+        using BitmapExportContext context = App.BitmapExportContextService.CreateContext(40, 40, 1);
 
         _drawableSheet?.Draw(context.Canvas, RectF.Zero);
 

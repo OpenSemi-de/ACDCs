@@ -35,16 +35,30 @@
     <Version>1.155.22.1214</Version>
     <FileVersion>1.164.2022.1209</FileVersion>
     <AssemblyVersion>1.164.2022.1209</AssemblyVersion>
+
+    <Optimize>False</Optimize>
+    <PublishTrimmed>False</PublishTrimmed>
+    <RunAOTCompilation>False</RunAOTCompilation>
+    <AndroidLinkResources>false</AndroidLinkResources>
+
+
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
     <Optimize>False</Optimize>
     <PublishTrimmed>False</PublishTrimmed>
     <RunAOTCompilation>False</RunAOTCompilation>
+    <AndroidLinkResources>false</AndroidLinkResources>
+    <AndroidUseAapt2>False</AndroidUseAapt2>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|AnyCPU'">
     <Optimize>False</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
+    <AndroidUseAapt2>True</AndroidUseAapt2>
+    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
   </PropertyGroup>
 
   <ItemGroup>
@@ -85,6 +99,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Maui.Graphics.Skia" Version="7.0.52" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="SkiaSharp" Version="2.88.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -126,5 +141,7 @@
 	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
 	  </MauiAsset>
 	</ItemGroup>
+
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionACDCsHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 </Project>

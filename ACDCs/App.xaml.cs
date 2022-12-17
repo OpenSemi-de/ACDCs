@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Diagnostics;
+using Microsoft.Maui.Graphics.Skia;
 
 namespace ACDCs;
 
@@ -10,9 +11,11 @@ public partial class App : Application
         InitializeComponent();
         UserAppTheme = AppTheme.Dark;
         MainPage = new AppShell();
+        
     }
 
     public static event ResetEvent? Reset;
+    public static PlatformBitmapExportService BitmapExportContextService { get; set; } = new();
 
     public static async Task Call(Func<Task> action, bool disableReset = false)
     {

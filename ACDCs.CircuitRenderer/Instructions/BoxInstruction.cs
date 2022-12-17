@@ -11,6 +11,7 @@ public sealed class BoxInstruction : DrawInstruction
         Size = new Coordinate(width, height, 0);
         StrokeColor = new Color(0, 0, 0);
         FillColor = fillColor ?? new Color(255, 255, 255);
+        Coordinates.Add(Position);
     }
 
     public Color? FillColor { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Interfaces;
 
@@ -13,6 +14,8 @@ public class DrawInstruction : IDrawInstruction
     }
 
     public Coordinate Position { get; set; }
+
+    public List<Coordinate> Coordinates { get; } = new();
 
     public Color? StrokeColor { get; set; }
 

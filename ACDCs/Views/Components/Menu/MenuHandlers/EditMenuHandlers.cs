@@ -9,6 +9,7 @@ public class EditMenuHandlers : MenuHandlerView
     {
         MenuHandler.Add("delete", Delete);
         MenuHandler.Add("duplicate", Duplicate);
+        MenuHandler.Add("mirror", Mirror);
         MenuHandler.Add("selectall", SelectAll);
         MenuHandler.Add("deselectall", DeselectAll);
         MenuHandler.Add("multiselect", SwitchMultiselect);
@@ -18,6 +19,15 @@ public class EditMenuHandlers : MenuHandlerView
     private void SwitchMultiselect(object state)
     {
         CircuitView.UseMultiselect((bool)state);
+    }
+
+    private async void Mirror()
+    {
+        Worksheet sheet = CircuitView.CurrentWorksheet;
+        sheet.SelectedItems.ToList().ForEach(
+            item => { sheet.MirrorItem((WorksheetItem)item); });
+        await CircuitView.Paint();
+
     }
 
     private async void Delete()

@@ -252,4 +252,28 @@ public sealed class Worksheet
         if (item.Rotation >= 360)
             item.Rotation = 0;
     }
+
+    public void MirrorItem(WorksheetItem item)
+    {
+        float centerX = item.Width / 2;
+        item.DrawableComponent.DrawInstructions
+            .ForEach(instruction => MirrorInstruction(centerX, instruction));
+        item.IsMirrored = !item.IsMirrored;
+        item.DrawableComponent.IsMirroringDone = true;
+    }
+
+    private void MirrorInstruction(float centerX, IDrawInstruction instruction)
+    {
+        instruction.Coordinates.ForEach(coordinate =>
+            {
+                if (coordinate.X > centerX)
+                {
+                    coordinate.X = centerX - (coordinate.X - centerX);
+                }
+                else
+                {
+                    coordinate.X = centerX + (centerX - coordinate.X);
+                }
+            });
+    }
 }

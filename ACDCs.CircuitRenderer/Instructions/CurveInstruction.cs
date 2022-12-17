@@ -12,6 +12,8 @@ public sealed class CurveInstruction : DrawInstruction
         AngleStart = angleStart;
         AngleEnd = angleEnd;
         StrokeColor = new Color(0, 0, 0);
+        Coordinates.Add(Position);
+        Coordinates.Add(End);
     }
 
     public float AngleEnd { get; set; }

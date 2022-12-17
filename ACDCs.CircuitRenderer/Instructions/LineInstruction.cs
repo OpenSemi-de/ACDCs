@@ -9,6 +9,8 @@ public sealed class LineInstruction : DrawInstruction
         Position = new Coordinate(x1, y1, 0);
         End = new Coordinate(x2, y2, 0);
         StrokeColor = new Color(0, 0, 0);
+        Coordinates.Add(Position);
+        Coordinates.Add(End);
     }
 
     public Coordinate End { get; set; }

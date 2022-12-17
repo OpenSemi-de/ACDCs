@@ -11,6 +11,7 @@ public sealed class TextInstruction : DrawInstruction
         Text = text;
         Orientation = orientation;
         FontSize = size;
+        Coordinates.Add(Position);
     }
 
     public float FontSize;

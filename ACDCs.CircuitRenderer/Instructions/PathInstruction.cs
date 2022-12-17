@@ -28,6 +28,7 @@ public sealed class PathInstruction : DrawInstruction
         _pathParts = pr.GetPathParts();
         Width = pr.GetWidth();
         Height = pr.GetHeight();
+        Coordinates.Add(Position);
     }
 
     public float Height { get; set; }

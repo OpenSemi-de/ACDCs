@@ -1,7 +1,6 @@
 ﻿#nullable enable
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Drawables;
@@ -92,6 +91,31 @@ public sealed class Worksheet
         return false;
     }
 
+
+    public void AddRoute(PinDrawable pinFrom, PinDrawable pinTo)
+    {
+        IWorksheetItem? netFromPin = Nets.FirstOrDefault(net => net.Pins.Contains(pinFrom));
+        IWorksheetItem? netToPin = Nets.FirstOrDefault(net => net.Pins.Contains(pinTo));
+        if (netToPin == null & netFromPin == null)
+        {
+            Nets.AddNet(pinFrom, pinTo);
+        }
+
+        if (netToPin == null && netFromPin != null)
+        {
+            if (!netFromPin.Pins.Contains(pinTo))
+                netFromPin.Pins.Add(pinTo);
+        }
+
+        if (netToPin != null && netFromPin == null)
+        {
+            if (!netToPin.Pins.Contains(pinTo))
+                netToPin.Pins.Add(pinTo);
+        }
+
+        SelectedPin = null;
+    }
+
     public void DeleteItem(WorksheetItem item)
     {
         if (SelectedItems.Contains(item))
@@ -139,11 +163,6 @@ public sealed class Worksheet
             list.Add(item);
         }
         return list;
-    }
-
-    public List<FeedbackRect>? GetFeedbackRects()
-    {
-        return SceneManager?.FeedbackRects;
     }
 
     public WorksheetItem? GetItemAt(float x, float y)
@@ -230,5 +249,7 @@ public sealed class Worksheet
     public void RotateItem(WorksheetItem item)
     {
         item.Rotation += 90;
+        if (item.Rotation >= 360)
+            item.Rotation = 0;
     }
 }

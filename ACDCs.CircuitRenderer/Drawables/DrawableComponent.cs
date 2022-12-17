@@ -26,6 +26,8 @@ public class DrawableComponent : IDrawableComponent, IHaveAParent
     public string Type { get; }
     public string Value { get; set; }
     public Worksheet? Worksheet { get; set; }
+    public bool IsMirrored { get; set; }
+    public bool IsMirroringDone { get; set; }
 
     public void SetPosition(float x, float y)
     {

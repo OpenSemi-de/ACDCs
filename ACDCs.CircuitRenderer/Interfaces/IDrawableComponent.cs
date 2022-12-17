@@ -15,4 +15,6 @@ public interface IDrawableComponent
     float Rotation { get; set; }
     Coordinate Size { get; set; }
     Worksheet? Worksheet { get; set; }
+    bool IsMirrored { get; set; }
+    bool IsMirroringDone { get; set; }
 }

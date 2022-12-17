@@ -4,6 +4,7 @@ using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.CircuitRenderer.Instructions;
 using ACDCs.CircuitRenderer.Interfaces;
+using Android.Hardware.Camera2.Params;
 using Microsoft.Maui.Graphics;
 using Color = ACDCs.CircuitRenderer.Definitions.Color;
 
@@ -74,6 +75,9 @@ public class DrawableScene : IDrawable
         }
 
         canvas.RestoreState();
+
+        
+
         Scene?.Drawables?.ForEach(
                component => Render(canvas, component)
                                  );
@@ -87,6 +91,11 @@ public class DrawableScene : IDrawable
 
     public void Render(ICanvas canvas, IDrawableComponent drawable)
     {
+        if (drawable.IsMirrored)
+        {
+            drawable = Mirror(drawable);
+        }
+
         canvas.StrokeSize = BaseGridSize / 2;
         GetScaleAndZoom(drawable, out Coordinate drawPos, out Coordinate drawSize, Zoom, BaseGridSize);
 
@@ -202,6 +211,16 @@ public class DrawableScene : IDrawable
             drawSize, DisplayOffset);
 
         canvas.RestoreState();
+    }
+
+    private IDrawableComponent Mirror(IDrawableComponent drawable)
+    {
+        if (!drawable.IsMirroringDone)
+        {
+
+        }
+
+        return drawable;
     }
 
     public static void SetFillColor(ICanvas canvas, Color? fillColor)

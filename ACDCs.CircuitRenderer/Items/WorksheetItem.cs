@@ -64,5 +64,11 @@ public class WorksheetItem : IWorksheetItem
         set => DrawableComponent.Position.Y = value;
     }
 
+    public bool IsMirrored
+    {
+        get => DrawableComponent.IsMirrored;
+        set => DrawableComponent.IsMirrored = value;
+    }
+
     private string? _value;
 }

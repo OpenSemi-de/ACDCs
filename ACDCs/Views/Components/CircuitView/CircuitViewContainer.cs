@@ -26,10 +26,11 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 {
     public CircuitViewContainer()
     {
+        _multiSelectionMode = false;
         _currentWorkbook = new Workbook();
         _currentWorkbook.SetBaseFont("Maple Mono");
 
-        CurrentWorksheet = _currentWorkbook.AddNewSheet();
+        _currentSheet = _currentWorkbook.AddNewSheet();
 
         this.BackgroundColor(Colors.Transparent);
 
@@ -56,7 +57,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
         Content = _graphicsView;
         App.Com<CircuitViewContainer>(nameof(CircuitView), "Instance", this);
-        App.Com<Worksheet>(nameof(CircuitView), "CurrentWorksheet", CurrentWorksheet);
+        App.Com<Worksheet>(nameof(CircuitView), "_currentSheet", _currentSheet);
         Loaded += OnLoaded;
     }
 
@@ -72,7 +73,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
     public void Clear()
     {
         _currentWorkbook.Sheets.Clear();
-        CurrentWorksheet = _currentWorkbook.AddNewSheet();
+        _currentSheet = _currentWorkbook.AddNewSheet();
     }
 
     public async Task InsertToPosition(float x, float y, WorksheetItem? newItem)
@@ -84,12 +85,12 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
                 newItem.X -= newItem.Width / 2;
                 newItem.Y -= newItem.Height / 2;
 
-                CurrentWorksheet.Items.AddItem(newItem);
+                _currentSheet.Items.AddItem(newItem);
             }
 
             App.Com<bool>("Items", "IsInserting", false);
 
-            ListSetItems?.Invoke(CurrentWorksheet.Items, CurrentWorksheet.SelectedItems);
+            ListSetItems?.Invoke(_currentSheet.Items, _currentSheet.SelectedItems);
 
             return Task.CompletedTask;
         });
@@ -100,7 +101,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
         await App.Call(() =>
         {
             Func<float, float, Worksheet, WorksheetItem?>? doInsert = App.Com<Func<float, float, Worksheet, WorksheetItem?>?>("Items", "DoInsert");
-            WorksheetItem? newItem = doInsert?.Invoke(x, y, CurrentWorksheet);
+            WorksheetItem? newItem = doInsert?.Invoke(x, y, _currentSheet);
             if (newItem != null)
             {
                 newItem.X -= newItem.Width / 2;
@@ -109,7 +110,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
             App.Com<bool>("Items", "IsInserting", false);
 
-            ListSetItems?.Invoke(CurrentWorksheet.Items, CurrentWorksheet.SelectedItems);
+            ListSetItems?.Invoke(_currentSheet.Items, _currentSheet.SelectedItems);
 
             return Task.CompletedTask;
         });
@@ -132,10 +133,10 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
         {
             _currentWorkbook.Sheets.Clear();
             _currentWorkbook.Sheets.AddSheet(newSheet);
-            CurrentWorksheet = newSheet;
+            _currentSheet = newSheet;
 
-            App.Com<Worksheet>(nameof(CircuitView), "CurrentWorksheet", CurrentWorksheet);
-            CurrentWorksheet.Filename = System.IO.Path.GetFileName(fileName);
+            App.Com<Worksheet>(nameof(CircuitView), "_currentSheet", _currentSheet);
+            _currentSheet.Filename = System.IO.Path.GetFileName(fileName);
             await Paint();
         }
 
@@ -148,26 +149,26 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
         {
             if (BackgroundColor != null)
             {
-                CurrentWorksheet.BackgroundColor = new CircuitRenderer.Definitions.Color(BackgroundColor.WithAlpha(0.2f));
+                _currentSheet.BackgroundColor = new CircuitRenderer.Definitions.Color(BackgroundColor.WithAlpha(0.2f));
             }
 
             if (ForegroundColor != null)
             {
-                CurrentWorksheet.ForegroundColor = new CircuitRenderer.Definitions.Color(ForegroundColor);
+                _currentSheet.ForegroundColor = new CircuitRenderer.Definitions.Color(ForegroundColor);
             }
 
             if (BackgroundHighColor != null)
             {
-                CurrentWorksheet.BackgroundHighColor = new CircuitRenderer.Definitions.Color(BackgroundHighColor);
+                _currentSheet.BackgroundHighColor = new CircuitRenderer.Definitions.Color(BackgroundHighColor);
             }
 
             if (App.Com<bool>("Items", "IsInserting"))
                 return Task.CompletedTask;
 
             _graphicsView.Drawable = null;
-            CurrentWorksheet?.CalculateScene();
+            _currentSheet?.CalculateScene();
             DrawableScene? scene = (DrawableScene?)
-                CurrentWorksheet?.SceneManager?.GetSceneForBackend();
+                _currentSheet?.SceneManager?.GetSceneForBackend();
             _graphicsView.Drawable = scene;
 
             _graphicsView.Invalidate();
@@ -185,8 +186,8 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
             Formatting = Formatting.Indented,
             TypeNameHandling = TypeNameHandling.All
         };
-        string jsonData = JsonConvert.SerializeObject(CurrentWorksheet, settings: settings);
-        CurrentWorksheet.Filename = System.IO.Path.GetFileName(fileName);
+        string jsonData = JsonConvert.SerializeObject(_currentSheet, settings: settings);
+        _currentSheet.Filename = System.IO.Path.GetFileName(fileName);
         await File.WriteAllTextAsync(fileName, jsonData);
         OnSavedSheet();
     }
@@ -261,27 +262,11 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
     {
         await App.Call(async () =>
         {
-            IWorksheetItem? netFromPin = CurrentWorksheet.Nets.FirstOrDefault(net => net.Pins.Contains(pinFrom));
-            IWorksheetItem? netToPin = CurrentWorksheet.Nets.FirstOrDefault(net => net.Pins.Contains(pinTo));
-            if (netToPin == null & netFromPin == null)
-            {
-                CurrentWorksheet.Nets.AddNet(pinFrom, pinTo);
-            }
-
-            if (netToPin == null && netFromPin != null)
-            {
-                netFromPin.Pins.Add(pinTo);
-            }
-
-            if (netToPin != null && netFromPin == null)
-            {
-                netToPin.Pins.Add(pinTo);
-            }
-
-            CurrentWorksheet.SelectedPin = null;
+            _currentSheet.AddRoute(pinFrom, pinTo);
             await Paint();
         });
     }
+
 
     private WorksheetItem? GetWorksheetItemaAt(PointF position)
     {
@@ -291,7 +276,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
             float x = GetRelPos(position.X);
             float y = GetRelPos(position.Y);
 
-            IEnumerable<IWorksheetItem> hitItems = CurrentWorksheet.Items.Where(
+            IEnumerable<IWorksheetItem> hitItems = _currentSheet.Items.Where(
                 item =>
                     x >= item.X && x <= item.X + item.Width &&
                     y >= item.Y && y <= item.Y + item.Height
@@ -325,13 +310,13 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
                 case GestureStatus.Started:
                 case GestureStatus.Completed:
                     {
-                        _lastDisplayOffset = CurrentWorksheet?.DisplayOffset ??
+                        _lastDisplayOffset = _currentSheet?.DisplayOffset ??
                                              new Coordinate(
                                                  Convert.ToSingle(e.TotalX),
                                                  Convert.ToSingle(e.TotalY));
                         if (e.StatusType == GestureStatus.Started)
                         {
-                            _selectedItemsBasePositions = new(CurrentWorksheet?.SelectedItems.Select(selectedItem =>
+                            _selectedItemsBasePositions = new(_currentSheet?.SelectedItems.Select(selectedItem =>
                                 new KeyValuePair<WorksheetItem, Coordinate>((WorksheetItem)selectedItem,
                                     new Coordinate(selectedItem.DrawableComponent.Position))) ?? Array.Empty<KeyValuePair<WorksheetItem, Coordinate>>());
 
@@ -350,7 +335,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
                     }
                 case GestureStatus.Running:
                     {
-                        if (CurrentWorksheet != null)
+                        if (_currentSheet != null)
                         {
                             if (_isDraggingItem)
                             {
@@ -359,7 +344,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
                                 PointF differenceBetweenCursorPoints = new(_dragStartPosition.X - cursorPosition.X,
                                     _dragStartPosition.Y - cursorPosition.Y);
-                                CurrentWorksheet.SelectedItems.ForEach(item =>
+                                _currentSheet.SelectedItems.ForEach(item =>
                                     {
                                         if (item != null)
                                         {
@@ -390,7 +375,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
                             }
                             else
                             {
-                                CurrentWorksheet.DisplayOffset =
+                                _currentSheet.DisplayOffset =
                                     new Coordinate(
                                         Convert.ToSingle(e.TotalX),
                                         Convert.ToSingle(e.TotalY)).Add(_lastDisplayOffset ?? new Coordinate());
@@ -443,7 +428,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
                     if (selectedItem != null)
                     {
-                        if (CurrentWorksheet.IsSelected(selectedItem))
+                        if (_currentSheet.IsSelected(selectedItem))
                         {
                             float x = GetRelPos(touch.X);
                             float y = GetRelPos(touch.Y);
@@ -457,22 +442,22 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
                                 pinY += selectedItem.Y;
                                 if (pinX == x && pinY == y)
                                 {
-                                    if (CurrentWorksheet.SelectedPin == pin)
+                                    if (_currentSheet.SelectedPin == pin)
                                     {
                                         selectedPin = null;
-                                        CurrentWorksheet.SelectedPin = null;
+                                        _currentSheet.SelectedPin = null;
                                         await Paint();
                                         return;
                                     }
                                     else
                                     {
-                                        if (CurrentWorksheet.SelectedPin != null)
+                                        if (_currentSheet.SelectedPin != null)
                                         {
-                                            await AddTrace(pin, CurrentWorksheet.SelectedPin);
+                                            await AddTrace(pin, _currentSheet.SelectedPin);
                                         }
 
                                         selectedPin = pin;
-                                        CurrentWorksheet.SelectedPin = selectedPin;
+                                        _currentSheet.SelectedPin = selectedPin;
                                     }
 
                                     break;
@@ -481,12 +466,12 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
                             if (selectedPin == null)
                             {
-                                CurrentWorksheet.ToggleSelectItem(selectedItem);
+                                _currentSheet.ToggleSelectItem(selectedItem);
                             }
                         }
                         else
                         {
-                            CurrentWorksheet.ToggleSelectItem(selectedItem);
+                            _currentSheet.ToggleSelectItem(selectedItem);
                         }
 
                         await Paint();
@@ -498,7 +483,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
     public void UseMultiselect(bool state)
     {
-        CurrentWorksheet.UseMultiselect(state);
+        _currentSheet.UseMultiselect(state);
         Paint().Wait();
     }
 }

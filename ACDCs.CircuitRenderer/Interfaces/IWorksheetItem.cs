@@ -17,4 +17,5 @@ public interface IWorksheetItem
     int Width { get; set; }
     int X { get; set; }
     int Y { get; set; }
+    bool IsMirrored { get; set; }
 }

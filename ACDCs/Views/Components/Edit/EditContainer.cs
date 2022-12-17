@@ -1,6 +1,6 @@
 ﻿using ACDCs.Views.Components.CircuitView;
+using ACDCs.Views.Components.Menu.MenuHandlers;
 using Microsoft.Maui.Layouts;
-using static Sharp.UI.AbsoluteLayout;
 
 namespace ACDCs.Views.Components.Edit;
 
@@ -50,16 +50,33 @@ public partial class EditContainer : StackLayout, IEditContainerProperties
     }
 
     private void SelectArea()
-    { }
+    {
+        CallHandler("selectarea");
+    }
+
+    private static void CallHandler(string command)
+    {
+        App.Call(() =>
+        {
+            MenuHandler.Call(command);
+            return Task.CompletedTask;
+        }).Wait();
+    }
 
     private void Delete()
-    { }
+    {
+        CallHandler("delete");
+    }
 
     private void Mirror()
-    { }
+    {
+        CallHandler("mirror");
+    }
 
     private void Rotate()
-    { }
+    {
+        CallHandler("rotate");
+    }
 
     private EditButton _deleteButton;
     private EditButton _mirrorButton;

@@ -12,6 +12,7 @@ public class EditMenuHandlers : MenuHandlerView
         MenuHandler.Add("selectall", SelectAll);
         MenuHandler.Add("deselectall", DeselectAll);
         MenuHandler.Add("multiselect", SwitchMultiselect);
+        MenuHandler.Add("rotate", Rotate);
     }
 
     private void SwitchMultiselect(object state)
@@ -24,6 +25,13 @@ public class EditMenuHandlers : MenuHandlerView
         Worksheet sheet = CircuitView.CurrentWorksheet;
         sheet.SelectedItems.ToList().ForEach(
             item => { sheet.DeleteItem((WorksheetItem)item); });
+        await CircuitView.Paint();
+    }
+    private async void Rotate()
+    {
+        Worksheet sheet = CircuitView.CurrentWorksheet;
+        sheet.SelectedItems.ToList().ForEach(
+            item => { sheet.RotateItem((WorksheetItem)item); });
         await CircuitView.Paint();
     }
 

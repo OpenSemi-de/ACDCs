@@ -226,4 +226,9 @@ public sealed class Worksheet
             SelectedItems.Clear();
         }
     }
+
+    public void RotateItem(WorksheetItem item)
+    {
+        item.Rotation += 90;
+    }
 }

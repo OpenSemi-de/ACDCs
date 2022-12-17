@@ -245,6 +245,12 @@ public class Turtle
 
     private static Point GetPoint(float positionX, float positionY, Direction direction)
     {
+        if ((int)direction >= DirectionPoints.Length)
+            direction = 0;
+
+        if ((int)direction < 0)
+            direction = (Direction)(DirectionPoints.Length - 1);
+
         Point targetPoint = new(
             Convert.ToSingle(Math.Ceiling(positionX + DirectionPoints[(int)direction].X / 2)),
             Convert.ToSingle(Math.Ceiling(positionY + DirectionPoints[(int)direction].Y / 2)));

@@ -39,7 +39,7 @@ public class MenuFrame : StackLayout
             List<IMenuItem> menuParts = new();
             foreach (MenuItemDefinition menuItem in items)
             {
-                if (menuItem.Text != "")
+                if (menuItem.Text != "" && menuItem.IsChecked == "")
                 {
                     MenuButton menuButton = new(menuItem.Text, menuItem.MenuCommand);
 
@@ -62,6 +62,11 @@ public class MenuFrame : StackLayout
 
                         PopupTarget?.Add(menuButton.MenuFrame);
                     }
+                }
+                else if (menuItem.IsChecked != "")
+                {
+                    MenuToggle toggle = new(menuItem.Text, menuItem.MenuCommand);
+                    menuParts.Add(toggle);
                 }
                 else
                 {

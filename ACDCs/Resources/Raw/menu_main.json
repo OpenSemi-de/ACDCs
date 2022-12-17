@@ -42,6 +42,11 @@
         "Text": "Edit",
         "MenuItems": [
             {
+                "Text": "Multiselect",
+                "IsChecked": "False",
+                "MenuCommand": "multiselect"
+            },
+            {
                 "Text": "Deselect all",
                 "MenuCommand": "deselectall"
             },

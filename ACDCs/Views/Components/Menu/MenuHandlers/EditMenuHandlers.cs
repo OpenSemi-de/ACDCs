@@ -11,6 +11,12 @@ public class EditMenuHandlers : MenuHandlerView
         MenuHandler.Add("duplicate", Duplicate);
         MenuHandler.Add("selectall", SelectAll);
         MenuHandler.Add("deselectall", DeselectAll);
+        MenuHandler.Add("multiselect", SwitchMultiselect);
+    }
+
+    private void SwitchMultiselect(object state)
+    {
+        CircuitView.UseMultiselect((bool)state);
     }
 
     private async void Delete()

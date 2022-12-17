@@ -45,6 +45,11 @@
                 Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
     </Style>
 
+    <Style TargetType="menu:MenuButton">
+        <Setter Property="FontSize" Value="10"></Setter>
+    </Style>
+
+
     <Style TargetType="Button" ApplyToDerivedTypes="True">
         <Setter Property="TextColor"
                 Value="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" />
@@ -383,9 +388,11 @@
                 Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
     </Style>
 
-    <Style TargetType="Switch">
+    <Style TargetType="Switch" ApplyToDerivedTypes="True">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
         <Setter Property="OnColor"
-                Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+                Value="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" />
         <Setter Property="ThumbColor" Value="{StaticResource White}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
@@ -402,9 +409,8 @@
                     <VisualState x:Name="On">
                         <VisualState.Setters>
                             <Setter Property="OnColor"
-                                    Value="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource Gray200}}" />
-                            <Setter Property="ThumbColor"
-                                    Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+                                    Value="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" />
+                            <Setter Property="ThumbColor" Value="{StaticResource White}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="Off">

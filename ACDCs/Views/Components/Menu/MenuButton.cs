@@ -1,3 +1,4 @@
+using ACDCs.Views.Components.CircuitView;
 using ACDCs.Views.Components.Menu.MenuHandlers;
 
 namespace ACDCs.Views.Components.Menu;

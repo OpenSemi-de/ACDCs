@@ -2,13 +2,13 @@
 
 public class MenuHandler
 {
-    public static void Add(string name, Action action)
+    public static void Add(string name, object action)
     {
         App.Call(() =>
         {
-            if (!_menuHandlers.ContainsKey(name))
+            if (!s_menuHandlers.ContainsKey(name))
             {
-                _menuHandlers.Add(name, action);
+                s_menuHandlers.Add(name, action);
             }
 
             return Task.CompletedTask;
@@ -19,14 +19,28 @@ public class MenuHandler
     {
         App.Call(() =>
         {
-            if (_menuHandlers.ContainsKey(menuCommand))
+            if (s_menuHandlers.ContainsKey(menuCommand))
             {
-                _menuHandlers[menuCommand].Invoke();
+                ((Action)s_menuHandlers[menuCommand]).Invoke();
             }
 
             return Task.CompletedTask;
         }).Wait();
     }
 
-    private static readonly Dictionary<string, Action> _menuHandlers = new();
+    private static readonly Dictionary<string, object> s_menuHandlers = new();
+
+    public static void Call(string menuCommand, object param)
+    {
+
+        App.Call(() =>
+        {
+            if (s_menuHandlers.ContainsKey(menuCommand))
+            {
+                ((Action<object>)s_menuHandlers[menuCommand]).Invoke(param);
+            }
+
+            return Task.CompletedTask;
+        }).Wait();
+    }
 }

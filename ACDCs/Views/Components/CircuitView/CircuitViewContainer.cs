@@ -233,6 +233,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
     private Coordinate? _lastDisplayOffset;
 
     private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions = new();
+    private bool _multiSelectionMode;
 
     private Action<WorksheetItemList, WorksheetItemList>? ListSetItems
     {
@@ -493,5 +494,11 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
                 }
             }
         });
+    }
+
+    public void UseMultiselect(bool state)
+    {
+        CurrentWorksheet.UseMultiselect(state);
+        Paint().Wait();
     }
 }

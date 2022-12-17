@@ -177,17 +177,24 @@ public sealed class Worksheet
 
     public bool ToggleSelectItem(WorksheetItem selectedItem)
     {
-        if (SelectedItems.Contains(selectedItem))
+        if (IsMultiselectionEnabled)
         {
-            SelectedItems.Remove(selectedItem);
-            return false;
-        }
-        else
-        {
+            if (SelectedItems.Contains(selectedItem))
+            {
+                SelectedItems.Remove(selectedItem);
+                return false;
+            }
+
             SelectedItems.AddItem(selectedItem);
             return true;
         }
+
+        SelectedItems.Clear();
+        SelectedItems.AddItem(selectedItem);
+        return true;
     }
+
+    public bool IsMultiselectionEnabled { get; set; }
 
     private DrawableComponentList GetSelectedComponents()
     {
@@ -208,5 +215,15 @@ public sealed class Worksheet
     private void OnSelectionAdded(IWorksheetItem obj)
     {
         OnSelectionChange?.Invoke(SelectedItems);
+    }
+
+    public void UseMultiselect(bool enabled)
+    {
+        IsMultiselectionEnabled = enabled;
+
+        if (enabled)
+        {
+            SelectedItems.Clear();
+        }
     }
 }

@@ -21,7 +21,7 @@ public static class ImageService
         {
 
 
-            BitmapExportContext context = App.BitmapExportContextService.CreateContext((int)width, (int)height, 1f);
+            using BitmapExportContext context = App.BitmapExportContextService.CreateContext((int)width, (int)height, 1f);
             List<Color> colors;
             ICanvas? canvas = context.Canvas;
 
@@ -83,7 +83,7 @@ public static class ImageService
         {
 
 
-            BitmapExportContext context = App.BitmapExportContextService.CreateContext((int)width, (int)height, 1f);
+            using BitmapExportContext context = App.BitmapExportContextService.CreateContext((int)width, (int)height, 1f);
             List<Color> colors;
             ICanvas? canvas = context.Canvas;
             canvas.Alpha = 0.7f;

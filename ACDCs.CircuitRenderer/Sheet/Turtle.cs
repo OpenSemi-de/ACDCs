@@ -2,7 +2,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.CircuitRenderer.Interfaces;
@@ -90,6 +92,173 @@ public class Turtle
     }
 
     public WorksheetItemList GetTraces()
+    {
+        Dictionary<RectFr, IWorksheetItem> collisionRects = GetCollisionRects();
+        WorksheetItemList traces = new(_worksheet);
+
+        foreach (IWorksheetItem net in _nets)
+        {
+            TraceItem trace = new();
+            var pins = net.Pins
+                .OrderBy(pin => pin.ParentItem.X)
+                .ThenBy(pin => pin.ParentItem.Y)
+                .ToList();
+
+            PinDrawable? lastPin = null;
+
+            foreach (PinDrawable pin in pins)
+            {
+                if (lastPin != null)
+                {
+                    trace = GetTrace(trace, lastPin, pin);
+
+                }
+
+                lastPin = pin;
+            }
+
+            traces.AddItem(trace);
+        }
+
+        return traces;
+    }
+
+    private TraceItem GetTrace(TraceItem trace, PinDrawable fromPin, PinDrawable toPin)
+    {
+        DirectionNine startDirectionPinFrom = GetPinStartDirection(fromPin, toPin);
+        DirectionNine startDirectionPinTo = GetPinStartDirection(toPin, fromPin);
+        Coordinate firstStepCoordinateFrom = GetStepCoordinate(fromPin.Position, startDirectionPinFrom);
+        Coordinate firstStepCoordinateto = GetStepCoordinate(toPin.Position, startDirectionPinTo);
+        trace.AddPart(fromPin.ParentItem.DrawableComponent.Position, firstStepCoordinateFrom);
+        trace.AddPart(toPin.ParentItem.DrawableComponent.Position, firstStepCoordinateto);
+
+
+        return trace;
+    }
+
+    private Coordinate GetStepCoordinate(Coordinate position, DirectionNine direction)
+    {
+        Dictionary<DirectionNine, Coordinate> directionCoordinates = new()
+        {
+            { DirectionNine.Up , new Coordinate(0,-1,0)},
+            { DirectionNine.Down , new Coordinate(0,1,0)},
+            { DirectionNine.Right , new Coordinate(1,0,0)},
+            { DirectionNine.Left , new Coordinate(-1,0,0)}
+        };
+
+        if (directionCoordinates.ContainsKey(direction))
+        {
+            return directionCoordinates[direction].Add(position);
+        }
+
+        Debug.Write(direction);
+        return new Coordinate(-100,-100,0);
+    }
+
+    private DirectionNine GetPinStartDirection(PinDrawable pin, PinDrawable targetPin)
+    {
+        int pinX = Convert.ToInt32(Math.Round(pin.Position.X * 2));
+        int pinY = Convert.ToInt32(Math.Round(pin.Position.Y * 2));
+
+        DirectionNine[,] position = new DirectionNine[3, 3]
+        {
+            {
+                DirectionNine.UpLeft,
+                DirectionNine.Up,
+                DirectionNine.UpRight
+            },
+            {
+                DirectionNine.Left,
+                DirectionNine.Middle,
+                DirectionNine.Right
+            },
+            {
+                DirectionNine.DownLeft,
+                DirectionNine.Down,
+                DirectionNine.DownRight
+            }
+        };
+
+        DirectionNine direction = position[pinY, pinX];
+
+        if (direction == DirectionNine.Middle)
+        {
+            direction = DirectionNine.Up;
+        }
+        else
+        {
+            if ((int)direction % 2 == 1)
+            {
+                if (pin.Position.Y > targetPin.Position.Y)
+                {
+                    direction = (DirectionNine)((int)direction + 1);
+                }
+                else
+                {
+                    direction = (DirectionNine)((int)direction - 1);
+                }
+            }
+        }
+
+        return direction;
+    }
+
+    private Dictionary<RectFr, IWorksheetItem> GetCollisionRects()
+    {
+        Dictionary<RectFr, IWorksheetItem> collList = new();
+        foreach (IWorksheetItem item in _items)
+        {
+            RectFr rect = new()
+            {
+                X1 = item.X,
+                Y1 = item.Y,
+                X2 = item.X + item.Width,
+                Y2 = item.Y,
+                X3 = item.X + item.Width,
+                Y3 = item.Y + item.Height,
+                X4 = item.X,
+                Y4 = item.Y + item.Height
+            };
+
+            if (item.Rotation != 0)
+            {
+                float rotation = item.Rotation;
+                float centerX = rect.X1 + (rect.X3 - rect.X1) / 2;
+                float centerY = rect.Y1 + (rect.Y3 - rect.Y1) / 2;
+
+                Coordinate rotatedItemPos1 =
+                    RotateCoordinate(rect.X1, rect.Y1, centerX, centerY, rotation);
+                Coordinate rotatedItemPos2 =
+                    RotateCoordinate(rect.X2, rect.Y2, centerX, centerY, rotation);
+                Coordinate rotatedItemPos3 =
+                    RotateCoordinate(rect.X3, rect.Y3, centerX, centerY, rotation);
+                Coordinate rotatedItemPos4 =
+                    RotateCoordinate(rect.X4, rect.Y4, centerX, centerY, rotation);
+
+                List<Coordinate> itemPositions = new()
+                {
+                    rotatedItemPos1, rotatedItemPos2, rotatedItemPos3, rotatedItemPos4
+                };
+
+                rect.X1 = itemPositions[0].X;
+                rect.Y1 = itemPositions[0].Y;
+                rect.X2 = itemPositions[1].X;
+                rect.Y2 = itemPositions[1].Y;
+                rect.X3 = itemPositions[2].X;
+                rect.Y3 = itemPositions[2].Y;
+                rect.X4 = itemPositions[3].X;
+                rect.Y4 = itemPositions[3].Y;
+            }
+
+
+
+            collList.Add(rect, item);
+        }
+
+        return collList;
+    }
+
+    public WorksheetItemList GetTracesOld()
     {
         foreach (IWorksheetItem item in _items)
         {
@@ -494,4 +663,18 @@ public class Turtle
             canvas.StrokeSize = 3;
         }
     }
+}
+
+internal enum DirectionNine
+{
+    Unknown = 0,
+    UpLeft = 1,
+    Up = 2,
+    UpRight = 3,
+    Left = 8,
+    Middle = 9,
+    Right = 4,
+    DownRight = 5,
+    Down = 6,
+    DownLeft = 7,
 }

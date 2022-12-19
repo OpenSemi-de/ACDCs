@@ -127,10 +127,17 @@ public class Turtle
     {
         DirectionNine startDirectionPinFrom = GetPinStartDirection(fromPin, toPin);
         DirectionNine startDirectionPinTo = GetPinStartDirection(toPin, fromPin);
-        Coordinate firstStepCoordinateFrom = GetStepCoordinate(fromPin.Position, startDirectionPinFrom);
-        Coordinate firstStepCoordinateto = GetStepCoordinate(toPin.Position, startDirectionPinTo);
-        trace.AddPart(fromPin.ParentItem.DrawableComponent.Position, firstStepCoordinateFrom);
-        trace.AddPart(toPin.ParentItem.DrawableComponent.Position, firstStepCoordinateto);
+        Coordinate pinAbsoluteCoordinateFrom =
+            fromPin.ParentItem.DrawableComponent.Position.Add(
+                fromPin.Position.Multiply(fromPin.ParentItem.DrawableComponent.Size));
+        Coordinate pinAbsoluteCoordinateTo =
+            toPin.ParentItem.DrawableComponent.Position.Add(
+                toPin.Position.Multiply(toPin.ParentItem.DrawableComponent.Size));
+
+        Coordinate firstStepCoordinateFrom = GetStepCoordinate(pinAbsoluteCoordinateFrom, startDirectionPinFrom);
+        Coordinate firstStepCoordinateto = GetStepCoordinate(pinAbsoluteCoordinateTo, startDirectionPinTo);
+        trace.AddPart(pinAbsoluteCoordinateFrom, firstStepCoordinateFrom);
+        trace.AddPart(pinAbsoluteCoordinateTo, firstStepCoordinateto);
 
 
         return trace;

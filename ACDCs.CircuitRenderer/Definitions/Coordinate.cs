@@ -86,4 +86,13 @@ public sealed class Coordinate
     {
         return new SizeF(X, Y);
     }
+
+    public Coordinate Multiply(Coordinate coordinate)
+    {
+        var result = new Coordinate(this);
+        result.X *= coordinate.X;
+        result.Y *= coordinate.Y;
+        result.Z *= coordinate.Z;
+        return result;
+    }
 }

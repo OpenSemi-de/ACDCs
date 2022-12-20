@@ -4,18 +4,26 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
 using Microsoft.Maui.Graphics;
-using Color = Microsoft.Maui.Graphics.Color;
 
 namespace ACDCs.CircuitRenderer.Sheet;
 
 public class Turtle
 {
+    private readonly List<RectFr> _collisionRectangles = new();
+
+    private readonly WorksheetItemList _items;
+
+    private readonly WorksheetItemList _nets;
+
+    private readonly Coordinate _sheetSize;
+
+    private readonly Worksheet _worksheet;
+
     public Turtle(WorksheetItemList? items, WorksheetItemList? nets, Coordinate? sheetSize, Worksheet worksheet)
     {
         _worksheet = worksheet;
@@ -23,8 +31,6 @@ public class Turtle
         _nets = nets ?? new WorksheetItemList(_worksheet);
         _sheetSize = sheetSize ?? new Coordinate();
     }
-
-    public ICanvas? DebugCanvas { get; set; }
 
     public static Direction LineIntersectsRect(Point p1, Point p2, RectFr r)
     {
@@ -111,7 +117,6 @@ public class Turtle
                 if (lastPin != null)
                 {
                     trace = GetTrace(trace, lastPin, pin);
-
                 }
 
                 lastPin = pin;
@@ -123,360 +128,9 @@ public class Turtle
         return traces;
     }
 
-    private TraceItem GetTrace(TraceItem trace, PinDrawable fromPin, PinDrawable toPin)
-    {
-        DirectionNine startDirectionPinFrom = GetPinStartDirection(fromPin, toPin);
-        DirectionNine startDirectionPinTo = GetPinStartDirection(toPin, fromPin);
-        Coordinate pinAbsoluteCoordinateFrom =
-            fromPin.ParentItem.DrawableComponent.Position.Add(
-                fromPin.Position.Multiply(fromPin.ParentItem.DrawableComponent.Size));
-        Coordinate pinAbsoluteCoordinateTo =
-            toPin.ParentItem.DrawableComponent.Position.Add(
-                toPin.Position.Multiply(toPin.ParentItem.DrawableComponent.Size));
-
-        Coordinate firstStepCoordinateFrom = GetStepCoordinate(pinAbsoluteCoordinateFrom, startDirectionPinFrom);
-        Coordinate firstStepCoordinateTo = GetStepCoordinate(pinAbsoluteCoordinateTo, startDirectionPinTo);
-        trace.AddPart(pinAbsoluteCoordinateFrom, firstStepCoordinateFrom);
-        trace.AddPart(pinAbsoluteCoordinateTo, firstStepCoordinateTo);
-
-        Coordinate currentPositionCoordinate = firstStepCoordinateFrom;
-        DirectionNine currentDirection = startDirectionPinFrom;
-        int count = 0;
-        while (count <100 &&!currentPositionCoordinate.IsEqual(firstStepCoordinateTo))
-        {
-            DirectionNine nextDirection =
-                GetTargetDirection(currentPositionCoordinate, pinAbsoluteCoordinateTo, currentDirection);
-            if (nextDirection.GetOpposite() == currentDirection)
-                nextDirection.Turn();
-            trace.AddPart(currentPositionCoordinate, GetStepCoordinate(currentPositionCoordinate, nextDirection));
-            currentPositionCoordinate = GetStepCoordinate(currentPositionCoordinate, nextDirection);
-            currentDirection = nextDirection;
-            count++;
-        }
-
-        return trace;
-    }
-
-    private DirectionNine GetTargetDirection(Coordinate currentCoordinate, Coordinate toCoordinate, DirectionNine currentDirection)
-    {
-        DirectionNine direction = DirectionNine.Middle;
-        float diffX = Math.Max(currentCoordinate.X, toCoordinate.X) - Math.Min(currentCoordinate.X, toCoordinate.X);
-        float diffY = Math.Max(currentCoordinate.Y, toCoordinate.Y) - Math.Min(currentCoordinate.Y, toCoordinate.Y);
-        if (diffX > diffY)
-        {
-            if (currentCoordinate.X < toCoordinate.X)
-            {
-                direction = DirectionNine.Right;
-            }
-            else
-            {
-                direction = DirectionNine.Left;
-            }
-        }
-        else
-        {
-            if (currentCoordinate.Y < toCoordinate.Y)
-            {
-                direction = DirectionNine.Down;
-            }
-            else
-            {
-                direction = DirectionNine.Up;
-            }
-        }
-
-        return direction;
-    }
-
-    private Coordinate GetStepCoordinate(Coordinate position, DirectionNine direction)
-    {
-        Dictionary<DirectionNine, Coordinate> directionCoordinates = new()
-        {
-            { DirectionNine.Up , new Coordinate(0,-1,0)},
-            { DirectionNine.Down , new Coordinate(0,1,0)},
-            { DirectionNine.Right , new Coordinate(1,0,0)},
-            { DirectionNine.Left , new Coordinate(-1,0,0)}
-        };
-
-        if (directionCoordinates.ContainsKey(direction))
-        {
-            return directionCoordinates[direction].Add(position);
-        }
-
-        Debug.Write(direction);
-        return new Coordinate(-100,-100,0);
-    }
-
-    private DirectionNine GetPinStartDirection(PinDrawable pin, PinDrawable targetPin)
-    {
-        int pinX = Convert.ToInt32(Math.Round(pin.Position.X * 2));
-        int pinY = Convert.ToInt32(Math.Round(pin.Position.Y * 2));
-
-        DirectionNine[,] position = new DirectionNine[3, 3]
-        {
-            {
-                DirectionNine.UpLeft,
-                DirectionNine.Up,
-                DirectionNine.UpRight
-            },
-            {
-                DirectionNine.Left,
-                DirectionNine.Middle,
-                DirectionNine.Right
-            },
-            {
-                DirectionNine.DownLeft,
-                DirectionNine.Down,
-                DirectionNine.DownRight
-            }
-        };
-
-        DirectionNine direction = position[pinY, pinX];
-
-        if (direction == DirectionNine.Middle)
-        {
-            direction = DirectionNine.Up;
-        }
-        else
-        {
-            if ((int)direction % 2 == 1)
-            {
-                if (pin.Position.Y > targetPin.Position.Y)
-                {
-                    direction = (DirectionNine)((int)direction + 1);
-                }
-                else
-                {
-                    direction = (DirectionNine)((int)direction - 1);
-                }
-            }
-        }
-
-        return direction;
-    }
-
-    private Dictionary<RectFr, IWorksheetItem> GetCollisionRects()
-    {
-        Dictionary<RectFr, IWorksheetItem> collList = new();
-        foreach (IWorksheetItem item in _items)
-        {
-            RectFr rect = new()
-            {
-                X1 = item.X,
-                Y1 = item.Y,
-                X2 = item.X + item.Width,
-                Y2 = item.Y,
-                X3 = item.X + item.Width,
-                Y3 = item.Y + item.Height,
-                X4 = item.X,
-                Y4 = item.Y + item.Height
-            };
-
-            if (item.Rotation != 0)
-            {
-                float rotation = item.Rotation;
-                float centerX = rect.X1 + (rect.X3 - rect.X1) / 2;
-                float centerY = rect.Y1 + (rect.Y3 - rect.Y1) / 2;
-
-                Coordinate rotatedItemPos1 =
-                    RotateCoordinate(rect.X1, rect.Y1, centerX, centerY, rotation);
-                Coordinate rotatedItemPos2 =
-                    RotateCoordinate(rect.X2, rect.Y2, centerX, centerY, rotation);
-                Coordinate rotatedItemPos3 =
-                    RotateCoordinate(rect.X3, rect.Y3, centerX, centerY, rotation);
-                Coordinate rotatedItemPos4 =
-                    RotateCoordinate(rect.X4, rect.Y4, centerX, centerY, rotation);
-
-                List<Coordinate> itemPositions = new()
-                {
-                    rotatedItemPos1, rotatedItemPos2, rotatedItemPos3, rotatedItemPos4
-                };
-
-                rect.X1 = itemPositions[0].X;
-                rect.Y1 = itemPositions[0].Y;
-                rect.X2 = itemPositions[1].X;
-                rect.Y2 = itemPositions[1].Y;
-                rect.X3 = itemPositions[2].X;
-                rect.Y3 = itemPositions[2].Y;
-                rect.X4 = itemPositions[3].X;
-                rect.Y4 = itemPositions[3].Y;
-            }
-
-
-
-            collList.Add(rect, item);
-        }
-
-        return collList;
-    }
-
-    public WorksheetItemList GetTracesOld()
-    {
-        foreach (IWorksheetItem item in _items)
-        {
-            RectFr rect = new()
-            {
-                X1 = item.X,
-                Y1 = item.Y,
-                X2 = item.X + item.Width,
-                Y2 = item.Y,
-                X3 = item.X + item.Width,
-                Y3 = item.Y + item.Height,
-                X4 = item.X,
-                Y4 = item.Y + item.Height
-            };
-
-            if (item.Rotation != 0)
-            {
-                float rotation = item.Rotation;
-                float centerX = rect.X1 + (rect.X3 - rect.X1) / 2;
-                float centerY = rect.Y1 + (rect.Y3 - rect.Y1) / 2;
-
-                Coordinate rotatedItemPos1 =
-                    RotateCoordinate(rect.X1, rect.Y1, centerX, centerY, rotation);
-                Coordinate rotatedItemPos2 =
-                    RotateCoordinate(rect.X2, rect.Y2, centerX, centerY, rotation);
-                Coordinate rotatedItemPos3 =
-                    RotateCoordinate(rect.X3, rect.Y3, centerX, centerY, rotation);
-                Coordinate rotatedItemPos4 =
-                    RotateCoordinate(rect.X4, rect.Y4, centerX, centerY, rotation);
-
-                List<Coordinate> itemPositions = new()
-                {
-                    rotatedItemPos1, rotatedItemPos2, rotatedItemPos3, rotatedItemPos4
-                };
-
-                rect.X1 = itemPositions[0].X;
-                rect.Y1 = itemPositions[0].Y;
-                rect.X2 = itemPositions[1].X;
-                rect.Y2 = itemPositions[1].Y;
-                rect.X3 = itemPositions[2].X;
-                rect.Y3 = itemPositions[2].Y;
-                rect.X4 = itemPositions[3].X;
-                rect.Y4 = itemPositions[3].Y;
-            }
-
-            _collisionRectangles.Add(rect);
-            DebugDrawRectangle(rect);
-        }
-
-        WorksheetItemList traces = new(_worksheet);
-
-        foreach (IWorksheetItem net in _nets)
-        {
-            TraceItem trace = new();
-            for (int i = 0; i < net.Pins.Count; i++)
-            {
-                PinDrawable pin1 = net.Pins[i];
-                PinDrawable pin2 = i < net.Pins.Count - 1 ? net.Pins[i + 1] : net.Pins[0];
-                IDrawableComponent pin1drawable = pin1.ParentItem != null ? pin1.ParentItem.DrawableComponent : pin1;
-                IDrawableComponent pin2drawable = pin2.ParentItem != null ? pin2.ParentItem.DrawableComponent : pin2;
-
-                SetColorAndScaling(pin1drawable, pin2drawable);
-                float pin1X = pin1.Position.X;
-                float pin1Y = pin1.Position.Y;
-                float position1X = pin1drawable.Position.X + (pin1.Position.X * pin1drawable.Size.X);
-                float position1Y = pin1drawable.Position.Y + (pin1.Position.Y * pin1drawable.Size.Y);
-
-                Rotate(pin1drawable, ref position1X, ref position1Y, ref pin1X, ref pin1Y);
-
-                Direction direction1 = GetDirection(pin1X, pin1Y);
-
-                float pin2X = pin2.Position.X;
-                float pin2Y = pin2.Position.Y;
-                float position2X = pin2drawable.Position.X + (pin2.Position.X * pin2drawable.Size.X);
-                float position2Y = pin2drawable.Position.Y + (pin2.Position.Y * pin2drawable.Size.Y);
-
-                Rotate(pin2drawable, ref position2X, ref position2Y, ref pin2X, ref pin2Y);
-
-                Direction direction2 = GetDirection(pin2X, pin2Y);
-
-                Point currentPoint = GetPoint(position1X, position1Y, direction1);
-
-                DebugDrawLine(position1X, position1Y, Convert.ToSingle(currentPoint.X),
-                    Convert.ToSingle(currentPoint.Y));
-
-                trace.AddPart(new Coordinate(position1X, position1Y, 0), Coordinate.FromPoint(currentPoint));
-
-                Point targetPoint = GetPoint(position2X, position2Y, direction2);
-
-                if (i != net.Pins.Count - 1)
-                {
-                    Direction nextDirection = GetDirectionMax(currentPoint, targetPoint);
-                    bool found = false;
-                    for (int f = 0; f < 1000 && !found; f++)
-                    {
-                        if (currentPoint == targetPoint)
-                            found = true;
-
-                        Point stepPoint = GetNextStepPoint(currentPoint, targetPoint, ref nextDirection);
-
-                        Console.WriteLine(f + "-" + pin1.ComponentGuid + "-" + nextDirection);
-
-                        DebugDrawLine(Convert.ToSingle(currentPoint.X),
-                            Convert.ToSingle(currentPoint.Y),
-                            Convert.ToSingle(stepPoint.X), Convert.ToSingle(stepPoint.Y));
-
-                        trace.AddPart(Coordinate.FromPoint(currentPoint), Coordinate.FromPoint(stepPoint));
-
-                        currentPoint = stepPoint;
-                    }
-                }
-            }
-
-            traces.AddItem(trace);
-        }
-
-        foreach (IWorksheetItem worksheetItem in traces)
-        {
-        }
-
-        return traces;
-    }
-
-    private static readonly Point[][] DirectionalTriangles =
-    {
-        new Point[] { new(0, 0), new(1, 0), new(0.5f, 0.5f), },
-        new Point[] { new(1, 0), new(1, 1), new(0.5f, 0.5f), },
-        new Point[] { new(1, 1), new(0, 1), new(0.5f, 0.5f), },
-        new Point[] { new(0, 1), new(0, 0), new(0.5f, 0.5f), },
-    };
-
-    private static readonly Point[][] DirectionalTrianglesMax =
-    {
-        new Point[] { new(0, 0), new(int.MaxValue, 0), new(int.MaxValue / 2, int.MaxValue / 2), },
-        new Point[]
-        {
-            new(int.MaxValue, 0), new(int.MaxValue, int.MaxValue), new(int.MaxValue / 2, int.MaxValue / 2),
-        },
-        new Point[]
-        {
-            new(int.MaxValue, int.MaxValue), new(0, int.MaxValue), new(int.MaxValue / 2, int.MaxValue / 2),
-        },
-        new Point[] { new(0, int.MaxValue), new(0, 0), new(int.MaxValue / 2, int.MaxValue / 2), },
-    };
-
-    private static readonly Point[] DirectionPoints = { new(0, -1), new(1, 0), new(0, 1), new(-1, 0), };
-
-    private readonly List<RectFr> _collisionRectangles = new();
-    private readonly WorksheetItemList _items;
-    private readonly WorksheetItemList _nets;
-    private readonly Coordinate _sheetSize;
-    private readonly Worksheet _worksheet;
-
-    private static Point GetPoint(float positionX, float positionY, Direction direction)
-    {
-        if ((int)direction >= DirectionPoints.Length)
-            direction = 0;
-
-        if ((int)direction < 0)
-            direction = (Direction)(DirectionPoints.Length - 1);
-
-        Point targetPoint = new(
-            Convert.ToSingle(Math.Ceiling(positionX + DirectionPoints[(int)direction].X / 2)),
-            Convert.ToSingle(Math.Ceiling(positionY + DirectionPoints[(int)direction].Y / 2)));
-        return targetPoint;
-    }
+    private static Coordinate GetAbsolutePinPosition(PinDrawable pin) =>
+        pin.ParentItem.DrawableComponent.Position.Add(
+            pin.Position.Multiply(pin.ParentItem.DrawableComponent.Size));
 
     private static bool LineIntersectsLine(Point line1Point1, Point line1Point2, Point line2Point1, Point line2Point2)
     {
@@ -540,195 +194,174 @@ public class Turtle
         };
     }
 
-    private Point CheckCollision(Point currentPoint, Direction direction, out RectFr? collisionRect)
+    private Dictionary<RectFr, IWorksheetItem> GetCollisionRects()
     {
-        Point globalStepPoint = new(Convert.ToSingle(currentPoint.X + DirectionPoints[(int)direction].X / 2),
-            Convert.ToSingle(currentPoint.Y + DirectionPoints[(int)direction].Y / 2));
-
-        collisionRect = _collisionRectangles
-            .FirstOrDefault(cr =>
+        Dictionary<RectFr, IWorksheetItem> collList = new();
+        foreach (IWorksheetItem item in _items)
+        {
+            RectFr rect = new()
             {
-                Direction intersect = LineIntersectsRect(currentPoint, globalStepPoint, cr);
-                if (intersect == Direction.None)
+                X1 = item.X,
+                Y1 = item.Y,
+                X2 = item.X + item.Width,
+                Y2 = item.Y,
+                X3 = item.X + item.Width,
+                Y3 = item.Y + item.Height,
+                X4 = item.X,
+                Y4 = item.Y + item.Height
+            };
+
+            if (item.Rotation != 0)
+            {
+                float rotation = item.Rotation;
+                float centerX = rect.X1 + (rect.X3 - rect.X1) / 2;
+                float centerY = rect.Y1 + (rect.Y3 - rect.Y1) / 2;
+
+                Coordinate rotatedItemPos1 =
+                    RotateCoordinate(rect.X1, rect.Y1, centerX, centerY, rotation);
+                Coordinate rotatedItemPos2 =
+                    RotateCoordinate(rect.X2, rect.Y2, centerX, centerY, rotation);
+                Coordinate rotatedItemPos3 =
+                    RotateCoordinate(rect.X3, rect.Y3, centerX, centerY, rotation);
+                Coordinate rotatedItemPos4 =
+                    RotateCoordinate(rect.X4, rect.Y4, centerX, centerY, rotation);
+
+                List<Coordinate> itemPositions = new()
                 {
-                    return false;
-                }
+                    rotatedItemPos1, rotatedItemPos2, rotatedItemPos3, rotatedItemPos4
+                };
 
-                return true;
-            });
-        return globalStepPoint;
-    }
-
-    private void DebugDrawLine(float position1X, float position1Y, float position2X, float position2Y)
-    {
-        DebugCanvas?.DrawLine(position1X * Workbook.Zoom * Workbook.BaseGridSize,
-            position1Y * Workbook.Zoom * Workbook.BaseGridSize, position2X * Workbook.Zoom * Workbook.BaseGridSize,
-            position2Y * Workbook.Zoom * Workbook.BaseGridSize);
-    }
-
-    private void DebugDrawRectangle(RectFr rect)
-    {
-        DebugCanvas?.DrawLine(
-            rect.X1 * Workbook.Zoom * Workbook.BaseGridSize,
-            rect.Y1 * Workbook.Zoom * Workbook.BaseGridSize,
-            rect.X2 * Workbook.Zoom * Workbook.BaseGridSize,
-            rect.Y2 * Workbook.Zoom * Workbook.BaseGridSize
-        );
-
-        DebugCanvas?.DrawLine(
-            rect.X2 * Workbook.Zoom * Workbook.BaseGridSize,
-            rect.Y2 * Workbook.Zoom * Workbook.BaseGridSize,
-            rect.X3 * Workbook.Zoom * Workbook.BaseGridSize,
-            rect.Y3 * Workbook.Zoom * Workbook.BaseGridSize
-        );
-
-        DebugCanvas?.DrawLine(
-            rect.X3 * Workbook.Zoom * Workbook.BaseGridSize,
-            rect.Y3 * Workbook.Zoom * Workbook.BaseGridSize,
-            rect.X4 * Workbook.Zoom * Workbook.BaseGridSize,
-            rect.Y4 * Workbook.Zoom * Workbook.BaseGridSize
-        );
-
-        DebugCanvas?.DrawLine(
-            rect.X4 * Workbook.Zoom * Workbook.BaseGridSize,
-            rect.Y4 * Workbook.Zoom * Workbook.BaseGridSize,
-            rect.X1 * Workbook.Zoom * Workbook.BaseGridSize,
-            rect.Y1 * Workbook.Zoom * Workbook.BaseGridSize
-        );
-    }
-
-    private Direction GetDirection(float posX, float posY)
-    {
-        Direction direction = Direction.None;
-
-        int pos = 0;
-        foreach (Point[] triangle in DirectionalTriangles)
-        {
-            if (PointInTriangle(
-                    new Point(posX, posY),
-                    triangle[0],
-                    triangle[1],
-                    triangle[2]
-                ))
-            {
-                return (Direction)pos;
+                rect.X1 = itemPositions[0].X;
+                rect.Y1 = itemPositions[0].Y;
+                rect.X2 = itemPositions[1].X;
+                rect.Y2 = itemPositions[1].Y;
+                rect.X3 = itemPositions[2].X;
+                rect.Y3 = itemPositions[2].Y;
+                rect.X4 = itemPositions[3].X;
+                rect.Y4 = itemPositions[3].Y;
             }
 
-            pos++;
+            collList.Add(rect, item);
         }
 
-        return direction;
+        return collList;
     }
 
-    private Direction GetDirectionMax(Point centerPoint, Point measurePoint, Direction lastDirection = Direction.None)
+    private DirectionNine GetPinStartDirection(PinDrawable pin, PinDrawable targetPin)
     {
-        Direction direction = default;
+        int pinX = Convert.ToInt32(Math.Round(pin.Position.X * 2));
+        int pinY = Convert.ToInt32(Math.Round(pin.Position.Y * 2));
 
-        double posX = measurePoint.X - centerPoint.X;
-        double posY = measurePoint.Y - centerPoint.Y;
-        int pos = 0;
-
-        List<Direction> directions = new();
-        foreach (Point[] triangle in DirectionalTrianglesMax)
+        DirectionNine[,] position = new DirectionNine[3, 3]
         {
-            if (PointInTriangle(
-                    new Point(posX + int.MaxValue / 2, posY + int.MaxValue / 2),
-                    triangle[0],
-                    triangle[1],
-                    triangle[2]
-                ))
             {
-                directions.Add((Direction)pos);
-            }
-
-            pos++;
-        }
-
-        if (direction == default)
-        {
-            direction = directions.FirstOrDefault();
-        }
-
-        return direction;
-    }
-
-    private Point GetNextStepPoint(Point currentPoint, Point targetPoint, ref Direction nextDirection)
-    {
-        Point stepPoint;
-
-        Point lastDirectionStepPoint = CheckCollision(currentPoint, nextDirection, out RectFr? collisionRect);
-        if (lastDirectionStepPoint.X != targetPoint.X && lastDirectionStepPoint.Y != targetPoint.Y &&
-            currentPoint.X != targetPoint.X && currentPoint.Y != targetPoint.Y)
-        {
-            if (collisionRect == null ||
-                (lastDirectionStepPoint.X == targetPoint.X && lastDirectionStepPoint.Y == targetPoint.Y))
+                DirectionNine.UpLeft,
+                DirectionNine.Up,
+                DirectionNine.UpRight
+            },
             {
-                return lastDirectionStepPoint;
-            }
-        }
-
-        Direction globalDirection = GetDirectionMax(currentPoint, targetPoint);
-
-        Point globalStepPoint = CheckCollision(currentPoint, globalDirection, out collisionRect);
-        Direction lastDirection = nextDirection;
-        stepPoint = globalStepPoint;
-
-        if (globalStepPoint.X == targetPoint.X && globalStepPoint.Y == targetPoint.Y)
-        {
-            return globalStepPoint;
-        }
-
-        if (collisionRect != null)
-        {
-            while (collisionRect != null && nextDirection != lastDirection)
+                DirectionNine.Left,
+                DirectionNine.Middle,
+                DirectionNine.Right
+            },
             {
-                Direction newDirection =
-                    (int)globalDirection < (int)lastDirection ? nextDirection + 1 : nextDirection - 1;
-                Point testStepPoint = CheckCollision(currentPoint, newDirection, out collisionRect);
-
-                if (testStepPoint.X == targetPoint.X && testStepPoint.Y == targetPoint.Y)
-                {
-                    return testStepPoint;
-                }
-
-                lastDirection = newDirection;
-                nextDirection = newDirection;
-                stepPoint = testStepPoint;
+                DirectionNine.DownLeft,
+                DirectionNine.Down,
+                DirectionNine.DownRight
             }
+        };
+
+        DirectionNine direction = position[pinY, pinX];
+
+        if (direction == DirectionNine.Middle)
+        {
+            direction = DirectionNine.Up;
         }
         else
         {
-            nextDirection = globalDirection;
-            stepPoint = globalStepPoint;
+            if ((int)direction % 2 == 1)
+            {
+                direction = pin.Position.Y > targetPin.Position.Y
+                    ? (DirectionNine)((int)direction + 1)
+                    : (DirectionNine)((int)direction - 1);
+            }
         }
 
-        return stepPoint;
+        return direction;
     }
 
-    private void SetColorAndScaling(IDrawableComponent pin1drawable, IDrawableComponent pin2drawable)
+    private Coordinate GetStepCoordinate(Coordinate position, DirectionNine direction)
     {
-        Color? color = Color.FromRgb(red: Convert.ToInt32(pin2drawable.Position.X * 100 % 256),
-            Convert.ToInt32(pin2drawable.Position.Y * 100 % 256), Convert.ToInt32(pin1drawable.Position.X * 100 % 256));
-        if (DebugCanvas is ScalingCanvas canvas)
+        Dictionary<DirectionNine, Coordinate> directionCoordinates = new()
         {
-            canvas.StrokeColor = color;
-            canvas.StrokeSize = 3;
-        }
-    }
-}
+            { DirectionNine.Up , new Coordinate(0,-1,0)},
+            { DirectionNine.Down , new Coordinate(0,1,0)},
+            { DirectionNine.Right , new Coordinate(1,0,0)},
+            { DirectionNine.Left , new Coordinate(-1,0,0)}
+        };
 
-public enum DirectionNine
-{
-    Unknown = 0,
-    UpLeft = 1,
-    Up = 2,
-    UpRight = 3,
-    Left = 8,
-    Middle = 9,
-    Right = 4,
-    DownRight = 5,
-    Down = 6,
-    DownLeft = 7,
+        if (directionCoordinates.ContainsKey(direction))
+        {
+            return directionCoordinates[direction].Add(position);
+        }
+
+        Debug.Write(direction);
+        return new Coordinate(-100, -100, 0);
+    }
+
+    private DirectionNine GetTargetDirection(Coordinate currentCoordinate, Coordinate toCoordinate, DirectionNine currentDirection)
+    {
+        DirectionNine direction = DirectionNine.Middle;
+        float diffX = Math.Max(currentCoordinate.X, toCoordinate.X) - Math.Min(currentCoordinate.X, toCoordinate.X);
+        float diffY = Math.Max(currentCoordinate.Y, toCoordinate.Y) - Math.Min(currentCoordinate.Y, toCoordinate.Y);
+        if (diffX > diffY)
+        {
+            direction = currentCoordinate.X < toCoordinate.X ? DirectionNine.Right : DirectionNine.Left;
+        }
+        else
+        {
+            direction = currentCoordinate.Y < toCoordinate.Y ? DirectionNine.Down : DirectionNine.Up;
+        }
+
+        return direction;
+    }
+
+    private TraceItem GetTrace(TraceItem trace, PinDrawable fromPin, PinDrawable toPin)
+    {
+        DirectionNine startDirectionPinFrom = GetPinStartDirection(fromPin, toPin);
+        DirectionNine startDirectionPinTo = GetPinStartDirection(toPin, fromPin);
+
+        Coordinate pinAbsoluteCoordinateFrom = GetAbsolutePinPosition(fromPin);
+        Coordinate pinAbsoluteCoordinateTo = GetAbsolutePinPosition(toPin);
+
+        Coordinate firstStepCoordinateFrom = GetStepCoordinate(pinAbsoluteCoordinateFrom, startDirectionPinFrom);
+        Coordinate firstStepCoordinateTo = GetStepCoordinate(pinAbsoluteCoordinateTo, startDirectionPinTo);
+
+        trace.AddPart(pinAbsoluteCoordinateFrom, firstStepCoordinateFrom);
+        trace.AddPart(pinAbsoluteCoordinateTo, firstStepCoordinateTo);
+
+        Coordinate currentPositionCoordinate = firstStepCoordinateFrom;
+        DirectionNine currentDirection = startDirectionPinFrom;
+
+        int count = 0;
+        while (count < 100 && !currentPositionCoordinate.IsEqual(firstStepCoordinateTo))
+        {
+            DirectionNine nextDirection =
+                GetTargetDirection(currentPositionCoordinate, pinAbsoluteCoordinateTo, currentDirection);
+
+            if (nextDirection.GetOpposite() == currentDirection)
+                nextDirection.Turn();
+
+            trace.AddPart(currentPositionCoordinate, GetStepCoordinate(currentPositionCoordinate, nextDirection));
+
+            currentPositionCoordinate = GetStepCoordinate(currentPositionCoordinate, nextDirection);
+            currentDirection = nextDirection;
+
+            count++;
+        }
+
+        return trace;
+    }
 }
 
 public static class DirectionNineExtensions

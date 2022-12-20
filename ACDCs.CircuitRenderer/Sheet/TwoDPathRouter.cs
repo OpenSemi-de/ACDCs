@@ -36,10 +36,7 @@ public class TwoDPathRouter : IPathRouter
 
         ICanvas? canvas = map.Canvas;
 
-        Turtle turtle = new(Items, Nets, SheetSize, _worksheet)
-        {
-            DebugCanvas = canvas
-        };
+        Turtle turtle = new(Items, Nets, SheetSize, _worksheet);
         Traces = turtle.GetTraces();
 
         int i = 0;

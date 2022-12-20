@@ -4,6 +4,10 @@ namespace ACDCs.CircuitRenderer.Items;
 
 public class SourceItem : WorksheetItem
 {
+    public override string DefaultValue => "5v";
+
+    public override bool IsInsertable => false;
+
     public SourceItem(SourceDrawableType sourceDrawableType)
     {
         DrawableComponent = new SourceDrawable(this, DefaultValue, sourceDrawableType, 1, 1);
@@ -15,7 +19,4 @@ public class SourceItem : WorksheetItem
         DrawableComponent = new SourceDrawable(this, value, type, x, y);
         Value = value;
     }
-
-    public override string DefaultValue => "5v";
-    public override bool IsInsertable => false;
 }

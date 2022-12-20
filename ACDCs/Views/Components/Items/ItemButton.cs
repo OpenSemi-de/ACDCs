@@ -2,7 +2,6 @@
 using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Sheet;
-using Microsoft.Maui.Graphics.Skia;
 using Color = ACDCs.CircuitRenderer.Definitions.Color;
 
 namespace ACDCs.Views.Components.Items;
@@ -11,6 +10,10 @@ using Sharp.UI;
 
 public class ItemButton : ImageButton
 {
+    private IDrawable? _drawableSheet;
+
+    public Type? ItemType { get; set; }
+
     public ItemButton(Type? itemType, double? buttonWidth, double? buttonHeight)
     {
         ItemType = itemType;
@@ -22,10 +25,7 @@ public class ItemButton : ImageButton
             .HeightRequest(buttonHeight)
             .BackgroundColor(Colors.Transparent)
             .BorderWidth(0);
-
     }
-
-    public Type? ItemType { get; set; }
 
     public void Draw()
     {
@@ -79,8 +79,6 @@ public class ItemButton : ImageButton
         BackgroundColor = backgroundColor;
     }
 
-    private IDrawable? _drawableSheet;
-
     private Task<Stream> StreamImage(CancellationToken arg)
     {
         using BitmapExportContext context = App.BitmapExportContextService.CreateContext(40, 40, 1);
@@ -97,6 +95,8 @@ public class ItemButton : ImageButton
 
 internal class FakeLocalFile : IDisposable
 {
+    public string FilePath { get; }
+
     /// <summary>
     /// Currently ImageSource.FromStream is not working on windows devices.
     /// This class saves the passed stream in a cache directory, returns the local path and deletes it on dispose.
@@ -107,8 +107,6 @@ internal class FakeLocalFile : IDisposable
         using FileStream fs = new(FilePath, FileMode.Create);
         source.CopyTo(fs);
     }
-
-    public string FilePath { get; }
 
     public void Dispose()
     {

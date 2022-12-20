@@ -24,6 +24,41 @@ public interface ICircuitViewProperties
 [SharpObject]
 public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 {
+    private readonly Workbook _currentWorkbook;
+
+    private readonly GraphicsView _graphicsView;
+
+    private readonly PanGestureRecognizer _panRecognizer;
+
+    private readonly PointerGestureRecognizer _pointerRecognizer;
+
+    private readonly TapGestureRecognizer _tapRecognizer;
+
+    private Worksheet _currentSheet;
+
+    private Point _cursorPosition;
+
+    private PointF _dragStartPosition;
+
+    private bool _isDraggingItem;
+
+    private Coordinate? _lastDisplayOffset;
+
+    private bool _multiSelectionMode;
+
+    private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions = new();
+
+    public Worksheet CurrentWorksheet
+    {
+        get => _currentSheet;
+        set => _currentSheet = value;
+    }
+
+    private Action<WorksheetItemList, WorksheetItemList>? ListSetItems
+    {
+        get => App.Com<Action<WorksheetItemList, WorksheetItemList>>("ItemList", "SetItems");
+    }
+
     public CircuitViewContainer()
     {
         _multiSelectionMode = false;
@@ -33,7 +68,6 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
         _currentSheet = _currentWorkbook.AddNewSheet();
 
         this.BackgroundColor(Colors.Transparent);
-
 
         _tapRecognizer = new TapGestureRecognizer();
         _tapRecognizer.Tapped += TapGestureRecognizer_OnTapped;
@@ -60,7 +94,6 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
         App.Com<Worksheet>(nameof(CircuitView), "_currentSheet", _currentSheet);
         Loaded += OnLoaded;
     }
-
 
     public event CursorPositionChangeEvent? CursorPositionChanged;
 
@@ -192,6 +225,12 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
         OnSavedSheet();
     }
 
+    public void UseMultiselect(bool state)
+    {
+        _currentSheet.UseMultiselect(state);
+        Paint().Wait();
+    }
+
     protected virtual void OnCursorPositionChanged(CursorPositionChangeEventArgs args)
     {
         CursorPositionChanged?.Invoke(this, args);
@@ -210,41 +249,6 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
     protected virtual void OnTapPositionChanged(CursorPositionChangeEventArgs args)
     {
         TapPositionChanged?.Invoke(this, args);
-    }
-
-
-    private readonly Workbook _currentWorkbook;
-
-    private readonly GraphicsView _graphicsView;
-
-    private readonly PanGestureRecognizer _panRecognizer;
-
-    private readonly PointerGestureRecognizer _pointerRecognizer;
-
-    private readonly TapGestureRecognizer _tapRecognizer;
-
-    private Worksheet _currentSheet;
-
-    private Point _cursorPosition;
-
-    private PointF _dragStartPosition;
-
-    private bool _isDraggingItem;
-
-    private Coordinate? _lastDisplayOffset;
-
-    private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions = new();
-    private bool _multiSelectionMode;
-
-    private Action<WorksheetItemList, WorksheetItemList>? ListSetItems
-    {
-        get => App.Com<Action<WorksheetItemList, WorksheetItemList>>("ItemList", "SetItems");
-    }
-
-    public Worksheet CurrentWorksheet
-    {
-        get => _currentSheet;
-        set => _currentSheet = value;
     }
 
     private static float GetRelPos(double pos)
@@ -266,7 +270,6 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
             await Paint();
         });
     }
-
 
     private WorksheetItem? GetWorksheetItemaAt(PointF position)
     {
@@ -479,11 +482,5 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
                 }
             }
         });
-    }
-
-    public void UseMultiselect(bool state)
-    {
-        _currentSheet.UseMultiselect(state);
-        Paint().Wait();
     }
 }

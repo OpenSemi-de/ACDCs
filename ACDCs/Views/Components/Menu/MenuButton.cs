@@ -1,4 +1,3 @@
-using ACDCs.Views.Components.CircuitView;
 using ACDCs.Views.Components.Menu.MenuHandlers;
 
 namespace ACDCs.Views.Components.Menu;
@@ -7,6 +6,12 @@ using Sharp.UI;
 
 public class MenuButton : Button, IMenuItem
 {
+    public double ItemHeight { get; set; }
+
+    public string MenuCommand { get; set; }
+
+    public MenuFrame? MenuFrame { get; set; }
+
     public MenuButton(string text, string menuCommand)
     {
         Text = text;
@@ -18,12 +23,6 @@ public class MenuButton : Button, IMenuItem
         MinimumHeightRequest = 32;
         ItemHeight = MinimumHeightRequest + Margin.Top + Margin.Bottom;
     }
-
-    public double ItemHeight { get; set; }
-
-    public string MenuCommand { get; set; }
-
-    public MenuFrame? MenuFrame { get; set; }
 
     private void MenuButton_Clicked(object? sender, System.EventArgs e)
     {

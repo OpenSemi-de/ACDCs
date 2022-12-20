@@ -1,7 +1,6 @@
 using ACDCs.Services;
 using ACDCs.Views.Components.CircuitView;
 using Microsoft.Maui.Layouts;
-using static Sharp.UI.AbsoluteLayout;
 
 namespace ACDCs.Views.Components.DragContainer;
 
@@ -19,6 +18,10 @@ public interface DragContainerProperties
 [SharpObject]
 public partial class DragContainer : ContentView, DragContainerProperties
 {
+    private PanGestureRecognizer? _dragRecognizer;
+
+    private Rect _lastBounds = Rect.Zero;
+
     public DragContainer()
     {
         InitializeComponent();
@@ -39,10 +42,6 @@ public partial class DragContainer : ContentView, DragContainerProperties
     {
         ButtonHide.IsVisible = true;
     }
-
-    private PanGestureRecognizer? _dragRecognizer;
-
-    private Rect _lastBounds = Rect.Zero;
 
     private static void propertyChanged(BindableObject bindable, object oldvalue, object newvalue)
     {

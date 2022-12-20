@@ -10,14 +10,20 @@ using Sharp.UI;
 [BindableProperties]
 public interface IMenuContainer
 {
+    CircuitViewContainer CircuitView { get; set; }
     DebugViewDragComtainer DebugView { get; set; }
     AbsoluteLayout PopupTarget { get; set; }
-    CircuitViewContainer CircuitView { get; set; }
 }
 
 [SharpObject]
 public partial class MenuContainer : StackLayout, IMenuContainer
 {
+    private readonly StackLayout _menuLayout;
+
+    private Label _fileNameLabel;
+
+    private MenuFrame _menuFrame;
+
     public MenuContainer()
     {
         this.HorizontalOptions(LayoutOptions.Start);
@@ -30,16 +36,9 @@ public partial class MenuContainer : StackLayout, IMenuContainer
             Padding = 1,
         };
 
-        
-
-   
         Add(_menuLayout);
         Loaded += MenuDragContainer_Loaded;
     }
-
-    private Label _fileNameLabel;
-    private MenuFrame _menuFrame;
-    private readonly StackLayout _menuLayout;
 
     private async void LoadMenu(string menuMainJson)
     {
@@ -69,7 +68,6 @@ public partial class MenuContainer : StackLayout, IMenuContainer
             CircuitView.SavedSheet += Sheet_Saved;
         }
 
-
         _fileNameLabel = new Label()
         {
             Text = "New file",
@@ -84,7 +82,6 @@ public partial class MenuContainer : StackLayout, IMenuContainer
 
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.PositionProportional);
         AbsoluteLayout.SetLayoutBounds(this, new(0, 0, 1, 44));
-
     }
 
     private void Sheet_Loaded(object? sender, EventArgs e)

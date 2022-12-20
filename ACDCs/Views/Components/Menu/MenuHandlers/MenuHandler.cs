@@ -2,6 +2,8 @@
 
 public class MenuHandler
 {
+    private static readonly Dictionary<string, object> s_menuHandlers = new();
+
     public static void Add(string name, object action)
     {
         App.Call(() =>
@@ -28,11 +30,8 @@ public class MenuHandler
         }).Wait();
     }
 
-    private static readonly Dictionary<string, object> s_menuHandlers = new();
-
     public static void Call(string menuCommand, object param)
     {
-
         App.Call(() =>
         {
             if (s_menuHandlers.ContainsKey(menuCommand))

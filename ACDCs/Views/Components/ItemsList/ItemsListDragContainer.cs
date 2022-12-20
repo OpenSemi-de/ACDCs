@@ -1,6 +1,5 @@
 ﻿using ACDCs.CircuitRenderer.Items;
 using Microsoft.Maui.Layouts;
-using static Sharp.UI.AbsoluteLayout;
 
 namespace ACDCs.Views.Components.ItemsList;
 
@@ -63,7 +62,6 @@ public partial class ItemsListDragContainer : DragContainer.DragContainer, IItem
         _listViewItems.ItemsSource = null;
         _listViewItems.ItemsSource = list;
     }
-
 
     private readonly StackLayout _layout;
     private readonly ListView _listViewItems;

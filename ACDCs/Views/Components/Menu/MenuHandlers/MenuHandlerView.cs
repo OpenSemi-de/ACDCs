@@ -11,7 +11,6 @@ public interface IMenuHandlerView
     CircuitViewContainer CircuitView { get; set; }
     DebugViewDragComtainer DebugView { get; set; }
     Page PopupPage { get; set; }
-
 }
 
 [SharpObject]

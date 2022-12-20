@@ -6,16 +6,18 @@ namespace ACDCs;
 
 public partial class App : Application
 {
+    private static readonly ConcurrentDictionary<string, ConcurrentDictionary<string, object?>> _comValues = new();
+
+    public static PlatformBitmapExportService BitmapExportContextService { get; set; } = new();
+
     public App()
     {
         InitializeComponent();
         UserAppTheme = AppTheme.Dark;
         MainPage = new AppShell();
-        
     }
 
     public static event ResetEvent? Reset;
-    public static PlatformBitmapExportService BitmapExportContextService { get; set; } = new();
 
     public static async Task Call(Func<Task> action, bool disableReset = false)
     {
@@ -76,8 +78,6 @@ public partial class App : Application
         string contents = await reader.ReadToEndAsync();
         return contents;
     }
-
-    private static readonly ConcurrentDictionary<string, ConcurrentDictionary<string, object?>> _comValues = new();
 
     private static void OnReset(ResetEventArgs args)
     {

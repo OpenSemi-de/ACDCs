@@ -16,32 +16,11 @@ public class EditMenuHandlers : MenuHandlerView
         MenuHandler.Add("rotate", Rotate);
     }
 
-    private void SwitchMultiselect(object state)
-    {
-        CircuitView.UseMultiselect((bool)state);
-    }
-
-    private async void Mirror()
-    {
-        Worksheet sheet = CircuitView.CurrentWorksheet;
-        sheet.SelectedItems.ToList().ForEach(
-            item => { sheet.MirrorItem((WorksheetItem)item); });
-        await CircuitView.Paint();
-
-    }
-
     private async void Delete()
     {
         Worksheet sheet = CircuitView.CurrentWorksheet;
         sheet.SelectedItems.ToList().ForEach(
             item => { sheet.DeleteItem((WorksheetItem)item); });
-        await CircuitView.Paint();
-    }
-    private async void Rotate()
-    {
-        Worksheet sheet = CircuitView.CurrentWorksheet;
-        sheet.SelectedItems.ToList().ForEach(
-            item => { sheet.RotateItem((WorksheetItem)item); });
         await CircuitView.Paint();
     }
 
@@ -83,10 +62,31 @@ public class EditMenuHandlers : MenuHandlerView
         await CircuitView.Paint();
     }
 
+    private async void Mirror()
+    {
+        Worksheet sheet = CircuitView.CurrentWorksheet;
+        sheet.SelectedItems.ToList().ForEach(
+            item => { sheet.MirrorItem((WorksheetItem)item); });
+        await CircuitView.Paint();
+    }
+
+    private async void Rotate()
+    {
+        Worksheet sheet = CircuitView.CurrentWorksheet;
+        sheet.SelectedItems.ToList().ForEach(
+            item => { sheet.RotateItem((WorksheetItem)item); });
+        await CircuitView.Paint();
+    }
+
     private async void SelectAll()
     {
         CircuitView.CurrentWorksheet.SelectedItems.AddRange(
             CircuitView.CurrentWorksheet.Items);
         await CircuitView.Paint();
+    }
+
+    private void SwitchMultiselect(object state)
+    {
+        CircuitView.UseMultiselect((bool)state);
     }
 }

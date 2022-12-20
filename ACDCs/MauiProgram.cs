@@ -7,13 +7,13 @@ public static class MauiProgram
         MauiAppBuilder builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
-            
+
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("MapleMono-Regular.ttf", "MapleMonoRegular");
                 fonts.AddFont("MapleMono-Bold.ttf", "MapleMonoBold");
             });
-    
+
         return builder.Build();
     }
 }

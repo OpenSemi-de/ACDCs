@@ -1,11 +1,17 @@
-using static Sharp.UI.AbsoluteLayout;
-
 namespace ACDCs.Views.Components.Menu;
 
 using Sharp.UI;
 
 public class MenuFrame : StackLayout
 {
+    public static List<MenuFrame> MenuFrameList = new();
+
+    private readonly bool _eventSet;
+
+    public View? MainContainer { get; set; }
+
+    public AbsoluteLayout? PopupTarget { get; set; }
+
     public MenuFrame()
     {
         HorizontalOptions = LayoutOptions.Fill;
@@ -17,10 +23,6 @@ public class MenuFrame : StackLayout
             _eventSet = true;
         }
     }
-
-    public static List<MenuFrame> MenuFrameList = new();
-    public View? MainContainer { get; set; }
-    public AbsoluteLayout? PopupTarget { get; set; }
 
     public static void HideAllMenus()
     {
@@ -93,8 +95,6 @@ public class MenuFrame : StackLayout
             }
         }
     }
-
-    private readonly bool _eventSet;
 
     private void App_Reset(object sender, ResetEventArgs args)
     {

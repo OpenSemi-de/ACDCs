@@ -2,10 +2,9 @@
 
 using Sharp.UI;
 
-public class SharpAbsoluteLayout: AbsoluteLayout
+public class SharpAbsoluteLayout : AbsoluteLayout
 {
     public SharpAbsoluteLayout() : base()
     {
-
     }
 }

@@ -1,6 +1,5 @@
 ﻿using ACDCs.Views.Components.CircuitView;
 using Microsoft.Maui.Layouts;
-using static Sharp.UI.AbsoluteLayout;
 
 namespace ACDCs.Views.Components.DebugView;
 
@@ -8,6 +7,16 @@ using Sharp.UI;
 
 public class DebugViewDragComtainer : DragContainer.DragContainer
 {
+    private readonly Label _labelCursorPosition;
+
+    private readonly Label _labelTapPosition;
+
+    private readonly StackLayout _layout;
+
+    private Point _cursorPosition;
+
+    private Point _tapPosition;
+
     public DebugViewDragComtainer()
     {
         Title = "Debug";
@@ -36,12 +45,6 @@ public class DebugViewDragComtainer : DragContainer.DragContainer
 
         Loaded += OnLoaded;
     }
-
-    private readonly Label _labelCursorPosition;
-    private readonly Label _labelTapPosition;
-    private readonly StackLayout _layout;
-    private Point _cursorPosition;
-    private Point _tapPosition;
 
     private void CircuitViewOnTapPositionChanged(object sender, CursorPositionChangeEventArgs args)
     {

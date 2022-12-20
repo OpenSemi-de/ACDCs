@@ -1,14 +1,27 @@
 ﻿using ACDCs.Services;
 
-
 namespace ACDCs.Views.Components.Edit;
 
 using Sharp.UI;
+
 public class EditButton : ImageButton
 {
+    private readonly double _buttonHeight;
+
+    private readonly double _buttonWidth;
+
+    private readonly bool _isSelectable;
+
+    private readonly Action _onClickAction;
+
+    private readonly Action<EditButton> _onSelectAction;
+
+    public bool IsSelected { get; set; }
+
+    public string Text { get; set; }
 
     public EditButton(string text, Action onClickAction, Action<EditButton> onSelectAction, double buttonWidth,
-        double buttonHeight, bool isSelectable = false)
+                                    double buttonHeight, bool isSelectable = false)
     {
         Text = text;
         IsSelected = false;
@@ -32,23 +45,18 @@ public class EditButton : ImageButton
         Loaded += OnLoaded;
     }
 
-
-
-    public bool IsSelected { get; set; }
-
-    private void OnLoaded(object? sender, EventArgs e)
+    public void Deselect()
     {
-        Source = ImageService.ButtonImageSource(Text, (int)_buttonWidth, (int)_buttonHeight);
+        IsSelected = false;
+        this.BackgroundColor(Colors.Transparent);
     }
 
-    public string Text { get; set; }
-
-    private readonly Action _onClickAction;
-    private readonly Action<EditButton> _onSelectAction;
-    private readonly double _buttonWidth;
-    private readonly double _buttonHeight;
-    private readonly bool _isSelectable;
-
+    public void Select()
+    {
+        _onSelectAction.Invoke(this);
+        IsSelected = true;
+        this.BackgroundColor(Colors.White.WithAlpha(0.7f));
+    }
 
     private async void OnClicked(object? sender, EventArgs e)
     {
@@ -68,22 +76,13 @@ public class EditButton : ImageButton
             Select();
 
             _onClickAction.Invoke();
-           await  Task.Delay(200);
+            await Task.Delay(200);
             Deselect();
         }
-
     }
 
-    public void Select()
+    private void OnLoaded(object? sender, EventArgs e)
     {
-        _onSelectAction.Invoke(this);
-        IsSelected = true;
-        this.BackgroundColor(Colors.White.WithAlpha(0.7f));
-    }
-
-    public void Deselect()
-    {
-        IsSelected = false;
-        this.BackgroundColor(Colors.Transparent);
+        Source = ImageService.ButtonImageSource(Text, (int)_buttonWidth, (int)_buttonHeight);
     }
 }

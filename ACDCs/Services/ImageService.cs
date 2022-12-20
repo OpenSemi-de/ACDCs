@@ -1,10 +1,7 @@
-﻿using Microsoft.Maui.Graphics.Skia;
-
-namespace ACDCs.Services;
+﻿namespace ACDCs.Services;
 
 public static class ImageService
 {
-
     public static ImageSource? BackgroundImageSource(IView view)
     {
         return BackgroundImageSource(Convert.ToSingle(view.Width), Convert.ToSingle(view.Height));
@@ -19,8 +16,6 @@ public static class ImageService
     {
         try
         {
-
-
             using BitmapExportContext context = App.BitmapExportContextService.CreateContext((int)width, (int)height, 1f);
             List<Color> colors;
             ICanvas? canvas = context.Canvas;
@@ -70,7 +65,6 @@ public static class ImageService
             ImageSource? source = ImageSource.FromStream(() => ms);
             return source;
         }
-
         catch (Exception e)
         {
         }
@@ -81,8 +75,6 @@ public static class ImageService
     {
         try
         {
-
-
             using BitmapExportContext context = App.BitmapExportContextService.CreateContext((int)width, (int)height, 1f);
             List<Color> colors;
             ICanvas? canvas = context.Canvas;
@@ -123,7 +115,6 @@ public static class ImageService
             };
 
             canvas.SetFillPaint(paintTo, new RectF(0f, 0f, width, height));
-
 
             canvas.FillPath(path, WindingMode.EvenOdd);
             canvas.FontColor = colors[2];

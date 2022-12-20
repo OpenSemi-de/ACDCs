@@ -3,7 +3,6 @@ using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Sheet;
 using Microsoft.Maui.Layouts;
-using static Sharp.UI.AbsoluteLayout;
 
 namespace ACDCs.Views.Components.Items;
 
@@ -12,13 +11,31 @@ using Sharp.UI;
 [BindableProperties]
 public interface IItemsContainerProperties
 {
-    double ButtonWidth { get; set; }
     double ButtonHeight { get; set; }
+    double ButtonWidth { get; set; }
 }
 
 [SharpObject()]
-public partial class ItemsContainer : StackLayout, IItemsContainerProperties 
+public partial class ItemsContainer : StackLayout, IItemsContainerProperties
 {
+    private readonly StackLayout _layout;
+
+    private readonly ScrollView _scroll;
+
+    public Func<float, float, WorksheetItem?>? DoInsert { get; set; }
+
+    public bool IsInserting
+    {
+        get => App.Com<bool>("Items", "IsInserting");
+        set => App.Com<bool>("Items", "IsInserting", value);
+    }
+
+    public ItemButton? SelectedButton { get; set; }
+
+    public Color? SelectedButtonBorderColor { get; set; }
+
+    public Color? SelectedButtonColor { get; set; }
+
     public ItemsContainer()
     {
         IsInserting = false;
@@ -39,21 +56,6 @@ public partial class ItemsContainer : StackLayout, IItemsContainerProperties
 
         Loaded += OnLoaded;
     }
-
-    public Func<float, float, WorksheetItem?>? DoInsert { get; set; }
-
-    public bool IsInserting
-    {
-        get => App.Com<bool>("Items", "IsInserting");
-        set => App.Com<bool>("Items", "IsInserting", value);
-    }
-    
-
-    public ItemButton? SelectedButton { get; set; }
-
-    public Color? SelectedButtonBorderColor { get; set; }
-
-    public Color? SelectedButtonColor { get; set; }
 
     public async Task InsertToPosition(float x, float y)
     {
@@ -124,10 +126,6 @@ public partial class ItemsContainer : StackLayout, IItemsContainerProperties
             return Task.CompletedTask;
         });
     }
-
-
-    private readonly StackLayout _layout;
-    private readonly ScrollView _scroll;
 
     private async Task DeselectSelectedButton()
     {
@@ -219,7 +217,6 @@ public partial class ItemsContainer : StackLayout, IItemsContainerProperties
             SelectedButtonBorderColor = SelectedButton?.BorderColor;
             if (SelectedButton != null)
             {
-                
                 SelectedButton.BorderColor = Color.Parse("#aa20307f");
                 SelectedButton.BackgroundColor = Color.Parse("#aadfefff");
             }

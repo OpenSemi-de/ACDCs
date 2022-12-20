@@ -16,7 +16,7 @@ public class LineRenderer : IRenderer<LineInstruction>, IRenderer
         DrawableScene.SetStrokeWidth(canvas, line.StrokeWidth);
         float x = DrawableScene.GetScale(renderInstruction.DrawSize.X, centerPos.X);
         float y = DrawableScene.GetScale(renderInstruction.DrawSize.Y, centerPos.Y);
-            
+
         canvas.DrawLine(
             DrawableScene.GetScale(renderInstruction.DrawSize.X, line.Position.X),
             DrawableScene.GetScale(renderInstruction.DrawSize.Y, line.Position.Y),
@@ -25,5 +25,4 @@ public class LineRenderer : IRenderer<LineInstruction>, IRenderer
 
         canvas.RestoreState();
     }
-
 }

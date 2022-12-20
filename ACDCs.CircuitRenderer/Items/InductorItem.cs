@@ -4,6 +4,10 @@ namespace ACDCs.CircuitRenderer.Items;
 
 public sealed class InductorItem : WorksheetItem
 {
+    public override string DefaultValue => "1m";
+
+    public override bool IsInsertable => true;
+
     public InductorItem()
     {
         DrawableComponent = new InductorDrawable(this, DefaultValue, 1, 1);
@@ -21,7 +25,4 @@ public sealed class InductorItem : WorksheetItem
         Value = value;
         DrawableComponent = new InductorDrawable(this, value, 1, 1);
     }
-
-    public override string DefaultValue => "1m";
-    public override bool IsInsertable => true;
 }

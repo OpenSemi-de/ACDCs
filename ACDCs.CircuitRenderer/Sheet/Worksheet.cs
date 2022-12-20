@@ -15,24 +15,22 @@ namespace ACDCs.CircuitRenderer.Sheet;
 
 public sealed class Worksheet
 {
-    public Worksheet()
-    {
-        Router = new TwoDPathRouter(this, SheetSize, GridSize);
-        Nets = new WorksheetItemList(this);
-        Items = new WorksheetItemList(this);
-        Traces = new WorksheetItemList(this);
-        SelectedItems = new WorksheetItemList(this);
-        Items.OnAdded(OnItemAdded);
-        SelectedItems.OnAdded(OnSelectionAdded);
-    }
-
     public Color? BackgroundColor { get; set; }
+
     public Color? BackgroundHighColor { get; set; }
+
     public Coordinate? DisplayOffset { get; set; }
+
     public string Filename { get; set; } = "";
+
     public Color? ForegroundColor { get; set; }
+
     public float GridSize { get; set; } = 2.54f;
+
+    public bool IsMultiselectionEnabled { get; set; }
+
     public WorksheetItemList Items { get; set; }
+
     public WorksheetItemList Nets { get; set; }
 
     [JsonIgnore]
@@ -47,6 +45,7 @@ public sealed class Worksheet
     public WorksheetItemList SelectedItems { get; set; }
 
     public PinDrawable? SelectedPin { get; set; }
+
     public int SheetNum { get; set; }
 
     public Coordinate SheetSize { get; set; } = new(100, 100, 0);
@@ -54,6 +53,41 @@ public sealed class Worksheet
     public bool ShowGrid { get; set; } = true;
 
     public WorksheetItemList Traces { get; set; }
+
+    public Worksheet()
+    {
+        Router = new TwoDPathRouter(this, SheetSize, GridSize);
+        Nets = new WorksheetItemList(this);
+        Items = new WorksheetItemList(this);
+        Traces = new WorksheetItemList(this);
+        SelectedItems = new WorksheetItemList(this);
+        Items.OnAdded(OnItemAdded);
+        SelectedItems.OnAdded(OnSelectionAdded);
+    }
+
+    public void AddRoute(PinDrawable pinFrom, PinDrawable pinTo)
+    {
+        IWorksheetItem? netFromPin = Nets.FirstOrDefault(net => net.Pins.Contains(pinFrom));
+        IWorksheetItem? netToPin = Nets.FirstOrDefault(net => net.Pins.Contains(pinTo));
+        if (netToPin == null & netFromPin == null)
+        {
+            Nets.AddNet(pinFrom, pinTo);
+        }
+
+        if (netToPin == null && netFromPin != null)
+        {
+            if (!netFromPin.Pins.Contains(pinTo))
+                netFromPin.Pins.Add(pinTo);
+        }
+
+        if (netToPin != null && netFromPin == null)
+        {
+            if (!netToPin.Pins.Contains(pinTo))
+                netToPin.Pins.Add(pinTo);
+        }
+
+        SelectedPin = null;
+    }
 
     public bool CalculateScene()
     {
@@ -89,31 +123,6 @@ public sealed class Worksheet
         }
 
         return false;
-    }
-
-
-    public void AddRoute(PinDrawable pinFrom, PinDrawable pinTo)
-    {
-        IWorksheetItem? netFromPin = Nets.FirstOrDefault(net => net.Pins.Contains(pinFrom));
-        IWorksheetItem? netToPin = Nets.FirstOrDefault(net => net.Pins.Contains(pinTo));
-        if (netToPin == null & netFromPin == null)
-        {
-            Nets.AddNet(pinFrom, pinTo);
-        }
-
-        if (netToPin == null && netFromPin != null)
-        {
-            if (!netFromPin.Pins.Contains(pinTo))
-                netFromPin.Pins.Add(pinTo);
-        }
-
-        if (netToPin != null && netFromPin == null)
-        {
-            if (!netToPin.Pins.Contains(pinTo))
-                netToPin.Pins.Add(pinTo);
-        }
-
-        SelectedPin = null;
     }
 
     public void DeleteItem(WorksheetItem item)
@@ -181,6 +190,22 @@ public sealed class Worksheet
         return SelectedItems.Contains(selectedItem);
     }
 
+    public void MirrorItem(WorksheetItem item)
+    {
+        float centerX = item.Width / 2;
+        item.DrawableComponent.DrawInstructions
+            .ForEach(instruction => MirrorInstruction(centerX, instruction));
+        item.IsMirrored = !item.IsMirrored;
+        item.DrawableComponent.IsMirroringDone = true;
+    }
+
+    public void RotateItem(WorksheetItem item)
+    {
+        item.Rotation += 90;
+        if (item.Rotation >= 360)
+            item.Rotation = 0;
+    }
+
     public void SelectItem(WorksheetItem item)
     {
         if (!SelectedItems.Contains(item))
@@ -213,29 +238,6 @@ public sealed class Worksheet
         return true;
     }
 
-    public bool IsMultiselectionEnabled { get; set; }
-
-    private DrawableComponentList GetSelectedComponents()
-    {
-        DrawableComponentList list = new(this);
-
-        foreach (IDrawableComponent item in SelectedItems.Select(item => item.DrawableComponent))
-        {
-            list.Add(item);
-        }
-        return list;
-    }
-
-    private void OnItemAdded(IWorksheetItem item)
-    {
-        Router.SetItems(Items, Nets);
-    }
-
-    private void OnSelectionAdded(IWorksheetItem obj)
-    {
-        OnSelectionChange?.Invoke(SelectedItems);
-    }
-
     public void UseMultiselect(bool enabled)
     {
         IsMultiselectionEnabled = enabled;
@@ -246,20 +248,15 @@ public sealed class Worksheet
         }
     }
 
-    public void RotateItem(WorksheetItem item)
+    private DrawableComponentList GetSelectedComponents()
     {
-        item.Rotation += 90;
-        if (item.Rotation >= 360)
-            item.Rotation = 0;
-    }
+        DrawableComponentList list = new(this);
 
-    public void MirrorItem(WorksheetItem item)
-    {
-        float centerX = item.Width / 2;
-        item.DrawableComponent.DrawInstructions
-            .ForEach(instruction => MirrorInstruction(centerX, instruction));
-        item.IsMirrored = !item.IsMirrored;
-        item.DrawableComponent.IsMirroringDone = true;
+        foreach (IDrawableComponent item in SelectedItems.Select(item => item.DrawableComponent))
+        {
+            list.Add(item);
+        }
+        return list;
     }
 
     private void MirrorInstruction(float centerX, IDrawInstruction instruction)
@@ -275,5 +272,15 @@ public sealed class Worksheet
                     coordinate.X = centerX + (centerX - coordinate.X);
                 }
             });
+    }
+
+    private void OnItemAdded(IWorksheetItem item)
+    {
+        Router.SetItems(Items, Nets);
+    }
+
+    private void OnSelectionAdded(IWorksheetItem obj)
+    {
+        OnSelectionChange?.Invoke(SelectedItems);
     }
 }

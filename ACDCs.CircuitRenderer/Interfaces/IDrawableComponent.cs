@@ -11,10 +11,10 @@ public interface IDrawableComponent
     Guid ComponentGuid { get; set; }
     DrawablePinList DrawablePins { get; set; }
     DrawInstructionsList DrawInstructions { get; set; }
+    bool IsMirrored { get; set; }
+    bool IsMirroringDone { get; set; }
     Coordinate Position { get; set; }
     float Rotation { get; set; }
     Coordinate Size { get; set; }
     Worksheet? Worksheet { get; set; }
-    bool IsMirrored { get; set; }
-    bool IsMirroringDone { get; set; }
 }

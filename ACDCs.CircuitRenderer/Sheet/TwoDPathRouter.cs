@@ -12,6 +12,22 @@ namespace ACDCs.CircuitRenderer.Sheet;
 
 public class TwoDPathRouter : IPathRouter
 {
+    private readonly int _sheetHeight;
+
+    private readonly int _sheetWidth;
+
+    private readonly Worksheet _worksheet;
+
+    public float GridSize { get; set; }
+
+    public WorksheetItemList Items { get; set; }
+
+    public WorksheetItemList Nets { get; set; }
+
+    public Coordinate SheetSize { get; set; }
+
+    public WorksheetItemList Traces { get; set; }
+
     public TwoDPathRouter(Worksheet worksheet, Coordinate sheetSize, float gridSize)
     {
         _worksheet = worksheet;
@@ -23,12 +39,6 @@ public class TwoDPathRouter : IPathRouter
         Nets = new WorksheetItemList(worksheet);
         Items = new WorksheetItemList(worksheet);
     }
-
-    public float GridSize { get; set; }
-    public WorksheetItemList Items { get; set; }
-    public WorksheetItemList Nets { get; set; }
-    public Coordinate SheetSize { get; set; }
-    public WorksheetItemList Traces { get; set; }
 
     public WorksheetItemList GetTraces()
     {
@@ -76,8 +86,4 @@ public class TwoDPathRouter : IPathRouter
         Items = items;
         Nets = nets;
     }
-
-    private readonly int _sheetHeight;
-    private readonly int _sheetWidth;
-    private readonly Worksheet _worksheet;
 }

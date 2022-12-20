@@ -4,6 +4,14 @@ namespace ACDCs.CircuitRenderer.Items;
 
 public class TransistorItem : WorksheetItem
 {
+    public TransistorDrawableType DefaultType { get; set; }
+
+    public override string DefaultValue => "";
+
+    public override bool IsInsertable => false;
+
+    public TransistorDrawableType Type { get; set; }
+
     public TransistorItem()
     {
         DrawableComponent = new TransistorDrawable(this, DefaultType, 1, 1);
@@ -23,9 +31,4 @@ public class TransistorItem : WorksheetItem
         Type = type;
         Value = type.ToString();
     }
-
-    public TransistorDrawableType DefaultType { get; set; }
-    public override string DefaultValue => "";
-    public override bool IsInsertable => false;
-    public TransistorDrawableType Type { get; set; }
 }

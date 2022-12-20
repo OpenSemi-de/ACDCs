@@ -9,6 +9,7 @@ public interface IWorksheetItem
     static bool IsInsertable { get; set; }
     IDrawableComponent DrawableComponent { get; set; }
     int Height { get; set; }
+    bool IsMirrored { get; set; }
     public Guid ItemGuid { get; set; }
     public string Name { get; set; }
     public DrawablePinList Pins { get; set; }
@@ -17,5 +18,4 @@ public interface IWorksheetItem
     int Width { get; set; }
     int X { get; set; }
     int Y { get; set; }
-    bool IsMirrored { get; set; }
 }

@@ -8,16 +8,17 @@ namespace ACDCs.CircuitRenderer.Items;
 
 public sealed class WorksheetItemList : List<IWorksheetItem>
 {
-    public WorksheetItemList(Worksheet? worksheet)
-    {
-        Worksheet = worksheet;
-    }
-
     public Action<IWorksheetItem>? OnItemAdded { get; set; }
+
     public ReferenceManager ReferenceManager { get; } = new();
 
     public Worksheet? Worksheet
     { get; set; }
+
+    public WorksheetItemList(Worksheet? worksheet)
+    {
+        Worksheet = worksheet;
+    }
 
     public int AddItem(IWorksheetItem item)
     {

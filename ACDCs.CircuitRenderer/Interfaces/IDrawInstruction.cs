@@ -5,7 +5,7 @@ namespace ACDCs.CircuitRenderer.Interfaces;
 
 public interface IDrawInstruction
 {
+    List<Coordinate> Coordinates { get; }
     Coordinate Position { get; set; }
     Color? StrokeColor { get; set; }
-    List<Coordinate> Coordinates { get; }
 }

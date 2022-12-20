@@ -4,9 +4,9 @@ namespace ACDCs.CircuitRenderer.Items.Capacitors;
 
 public class StandardCapacitorItem : CapacitorItem
 {
+    public override bool IsInsertable => true;
+
     public StandardCapacitorItem() : base("10u", CapacitorDrawableType.Standard)
     {
     }
-
-    public override bool IsInsertable => true;
 }

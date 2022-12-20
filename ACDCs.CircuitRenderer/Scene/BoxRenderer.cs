@@ -5,7 +5,7 @@ using Microsoft.Maui.Graphics;
 
 namespace ACDCs.CircuitRenderer.Scene;
 
-public class BoxRenderer: IRenderer, IRenderer<BoxInstruction>
+public class BoxRenderer : IRenderer, IRenderer<BoxInstruction>
 {
     public void Render(ICanvas canvas, RenderInstruction renderInstruction, BoxInstruction box)
     {
@@ -25,6 +25,5 @@ public class BoxRenderer: IRenderer, IRenderer<BoxInstruction>
             DrawableScene.GetScale(renderInstruction.DrawSize.Y, upperLeft.Y),
             DrawableScene.GetScale(renderInstruction.DrawSize.X, lowerRight.X),
             DrawableScene.GetScale(renderInstruction.DrawSize.Y, lowerRight.Y));
-
     }
 }

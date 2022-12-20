@@ -32,6 +32,38 @@ public class Turtle
         _sheetSize = sheetSize ?? new Coordinate();
     }
 
+    public static Coordinate GetAbsolutePinPosition(PinDrawable pin)
+    {
+        return pin.ParentItem.DrawableComponent.Position.Add(
+            pin.Position.Multiply(pin.ParentItem.DrawableComponent.Size));
+    }
+
+    public static bool LineIntersectsLine(Point line1Point1, Point line1Point2, Point line2Point1, Point line2Point2)
+    {
+        float q = Convert.ToSingle((line1Point1.Y - line2Point1.Y) * (line2Point2.X - line2Point1.X) -
+                                   (line1Point1.X - line2Point1.X) * (line2Point2.Y - line2Point1.Y));
+        float d = Convert.ToSingle((line1Point2.X - line1Point1.X) * (line2Point2.Y - line2Point1.Y) -
+                                   (line1Point2.Y - line1Point1.Y) * (line2Point2.X - line2Point1.X));
+
+        if (d == 0)
+        {
+            return false;
+        }
+
+        float r = q / d;
+
+        q = Convert.ToSingle((line1Point1.Y - line2Point1.Y) * (line1Point2.X - line1Point1.X) -
+                             (line1Point1.X - line2Point1.X) * (line1Point2.Y - line1Point1.Y));
+        float s = q / d;
+
+        if (r < 0 || r > 1 || s < 0 || s > 1)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public static Direction LineIntersectsRect(Point p1, Point p2, RectFr r)
     {
         if (LineIntersectsLine(
@@ -92,73 +124,7 @@ public class Turtle
         return !(hasNeg && hasPos);
     }
 
-    public static float Sign(Point p1, Point p2, Point p3)
-    {
-        return Convert.ToSingle((p1.X - p3.X) * (p2.Y - p3.Y) - (p2.X - p3.X) * (p1.Y - p3.Y));
-    }
-
-    public WorksheetItemList GetTraces()
-    {
-        Dictionary<RectFr, IWorksheetItem> collisionRects = GetCollisionRects();
-        WorksheetItemList traces = new(_worksheet);
-
-        foreach (IWorksheetItem net in _nets)
-        {
-            TraceItem trace = new();
-            var pins = net.Pins
-                .OrderBy(pin => pin.ParentItem.X)
-                .ThenBy(pin => pin.ParentItem.Y)
-                .ToList();
-
-            PinDrawable? lastPin = null;
-
-            foreach (PinDrawable pin in pins)
-            {
-                if (lastPin != null)
-                {
-                    trace = GetTrace(trace, lastPin, pin);
-                }
-
-                lastPin = pin;
-            }
-
-            traces.AddItem(trace);
-        }
-
-        return traces;
-    }
-
-    private static Coordinate GetAbsolutePinPosition(PinDrawable pin) =>
-        pin.ParentItem.DrawableComponent.Position.Add(
-            pin.Position.Multiply(pin.ParentItem.DrawableComponent.Size));
-
-    private static bool LineIntersectsLine(Point line1Point1, Point line1Point2, Point line2Point1, Point line2Point2)
-    {
-        float q = Convert.ToSingle((line1Point1.Y - line2Point1.Y) * (line2Point2.X - line2Point1.X) -
-                                   (line1Point1.X - line2Point1.X) * (line2Point2.Y - line2Point1.Y));
-        float d = Convert.ToSingle((line1Point2.X - line1Point1.X) * (line2Point2.Y - line2Point1.Y) -
-                                   (line1Point2.Y - line1Point1.Y) * (line2Point2.X - line2Point1.X));
-
-        if (d == 0)
-        {
-            return false;
-        }
-
-        float r = q / d;
-
-        q = Convert.ToSingle((line1Point1.Y - line2Point1.Y) * (line1Point2.X - line1Point1.X) -
-                             (line1Point1.X - line2Point1.X) * (line1Point2.Y - line1Point1.Y));
-        float s = q / d;
-
-        if (r < 0 || r > 1 || s < 0 || s > 1)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    private static void Rotate(IDrawableComponent pindrawable, ref float positionX, ref float positionY, ref float pinX,
+    public static void Rotate(IDrawableComponent pindrawable, ref float positionX, ref float positionY, ref float pinX,
         ref float pinY)
     {
         if (pindrawable.Rotation != 0)
@@ -175,7 +141,7 @@ public class Turtle
         }
     }
 
-    private static Coordinate RotateCoordinate(float posX, float posY, float centerX, float centerY,
+    public static Coordinate RotateCoordinate(float posX, float posY, float centerX, float centerY,
         double angleInDegrees)
     {
         double angleInRadians = angleInDegrees * (Math.PI / 180);
@@ -194,7 +160,12 @@ public class Turtle
         };
     }
 
-    private Dictionary<RectFr, IWorksheetItem> GetCollisionRects()
+    public static float Sign(Point p1, Point p2, Point p3)
+    {
+        return Convert.ToSingle((p1.X - p3.X) * (p2.Y - p3.Y) - (p2.X - p3.X) * (p1.Y - p3.Y));
+    }
+
+    public Dictionary<RectFr, IWorksheetItem> GetCollisionRects()
     {
         Dictionary<RectFr, IWorksheetItem> collList = new();
         foreach (IWorksheetItem item in _items)
@@ -247,7 +218,7 @@ public class Turtle
         return collList;
     }
 
-    private DirectionNine GetPinStartDirection(PinDrawable pin, PinDrawable targetPin)
+    public DirectionNine GetPinStartDirection(PinDrawable pin, PinDrawable targetPin)
     {
         int pinX = Convert.ToInt32(Math.Round(pin.Position.X * 2));
         int pinY = Convert.ToInt32(Math.Round(pin.Position.Y * 2));
@@ -290,7 +261,7 @@ public class Turtle
         return direction;
     }
 
-    private Coordinate GetStepCoordinate(Coordinate position, DirectionNine direction)
+    public Coordinate GetStepCoordinate(Coordinate position, DirectionNine direction)
     {
         Dictionary<DirectionNine, Coordinate> directionCoordinates = new()
         {
@@ -309,7 +280,7 @@ public class Turtle
         return new Coordinate(-100, -100, 0);
     }
 
-    private DirectionNine GetTargetDirection(Coordinate currentCoordinate, Coordinate toCoordinate, DirectionNine currentDirection)
+    public DirectionNine GetTargetDirection(Coordinate currentCoordinate, Coordinate toCoordinate, DirectionNine currentDirection)
     {
         DirectionNine direction = DirectionNine.Middle;
         float diffX = Math.Max(currentCoordinate.X, toCoordinate.X) - Math.Min(currentCoordinate.X, toCoordinate.X);
@@ -326,7 +297,7 @@ public class Turtle
         return direction;
     }
 
-    private TraceItem GetTrace(TraceItem trace, PinDrawable fromPin, PinDrawable toPin)
+    public TraceItem GetTrace(TraceItem trace, PinDrawable fromPin, PinDrawable toPin)
     {
         DirectionNine startDirectionPinFrom = GetPinStartDirection(fromPin, toPin);
         DirectionNine startDirectionPinTo = GetPinStartDirection(toPin, fromPin);
@@ -362,41 +333,35 @@ public class Turtle
 
         return trace;
     }
-}
 
-public static class DirectionNineExtensions
-{
-    public static DirectionNine GetOpposite(this DirectionNine direction)
+    public WorksheetItemList GetTraces()
     {
-        if (GetNum(direction) > 5)
-        {
-            return ByNum(direction, -4);
-        }
-        else
-        {
-            return ByNum(direction, 4);
-        }
-    }
+        Dictionary<RectFr, IWorksheetItem> collisionRects = GetCollisionRects();
+        WorksheetItemList traces = new(_worksheet);
 
-    public static DirectionNine Turn(this DirectionNine direction)
-    {
-        if (GetNum(direction) > 7)
+        foreach (IWorksheetItem net in _nets)
         {
-            return ByNum(direction, -6);
-        }
-        else
-        {
-            return ByNum(direction, 2);
-        }
-    }
+            TraceItem trace = new();
+            var pins = net.Pins
+                .OrderBy(pin => pin.ParentItem.X)
+                .ThenBy(pin => pin.ParentItem.Y)
+                .ToList();
 
-    private static DirectionNine ByNum(this DirectionNine direction, int i)
-    {
-        return (DirectionNine)((int)direction + i);
-    }
+            PinDrawable? lastPin = null;
 
-    private static int GetNum(this DirectionNine direction)
-    {
-        return (int)direction;
+            foreach (PinDrawable pin in pins)
+            {
+                if (lastPin != null)
+                {
+                    trace = GetTrace(trace, lastPin, pin);
+                }
+
+                lastPin = pin;
+            }
+
+            traces.AddItem(trace);
+        }
+
+        return traces;
     }
 }

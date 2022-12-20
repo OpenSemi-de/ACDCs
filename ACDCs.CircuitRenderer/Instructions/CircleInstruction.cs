@@ -4,6 +4,10 @@ namespace ACDCs.CircuitRenderer.Instructions;
 
 public sealed class CircleInstruction : DrawInstruction
 {
+    public Color FillColor { get; set; }
+
+    public Coordinate Size { get; set; }
+
     public CircleInstruction(float centerX, float centerY, float width, float height) : base(typeof(CircleInstruction))
     {
         Position = new Coordinate(centerX, centerY, 0);
@@ -12,7 +16,4 @@ public sealed class CircleInstruction : DrawInstruction
         FillColor = new Color(255, 255, 255);
         Coordinates.Add(Position);
     }
-
-    public Color FillColor { get; set; }
-    public Coordinate Size { get; set; }
 }

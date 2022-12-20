@@ -31,5 +31,4 @@ public class TextRenderer : IRenderer<TextInstruction>, IRenderer
         canvas.DrawString(text.Text, 0, 0, HorizontalAlignment.Center);
         canvas.RestoreState();
     }
-
 }

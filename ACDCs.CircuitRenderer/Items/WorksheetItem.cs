@@ -9,10 +9,7 @@ namespace ACDCs.CircuitRenderer.Items;
 
 public class WorksheetItem : IWorksheetItem
 {
-    public WorksheetItem()
-    {
-        DrawableComponent = new DrawableComponent(typeof(DrawableComponent), this);
-    }
+    private string? _value;
 
     public virtual string DefaultValue { get; set; } = "";
 
@@ -25,7 +22,15 @@ public class WorksheetItem : IWorksheetItem
     }
 
     public virtual bool IsInsertable { get; set; }
+
+    public bool IsMirrored
+    {
+        get => DrawableComponent.IsMirrored;
+        set => DrawableComponent.IsMirrored = value;
+    }
+
     public Guid ItemGuid { get; set; } = Guid.NewGuid();
+
     public string Name { get; set; } = string.Empty;
 
     [JsonIgnore] public DrawablePinList Pins { get; set; } = new();
@@ -64,11 +69,8 @@ public class WorksheetItem : IWorksheetItem
         set => DrawableComponent.Position.Y = value;
     }
 
-    public bool IsMirrored
+    public WorksheetItem()
     {
-        get => DrawableComponent.IsMirrored;
-        set => DrawableComponent.IsMirrored = value;
+        DrawableComponent = new DrawableComponent(typeof(DrawableComponent), this);
     }
-
-    private string? _value;
 }

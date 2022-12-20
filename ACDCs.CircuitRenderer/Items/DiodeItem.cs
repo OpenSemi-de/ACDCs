@@ -4,6 +4,10 @@ namespace ACDCs.CircuitRenderer.Items;
 
 public sealed class DiodeItem : WorksheetItem
 {
+    public override string DefaultValue => "0.7";
+
+    public override bool IsInsertable => true;
+
     public DiodeItem()
     {
         DrawableComponent = new DiodeDrawable(this, DefaultValue, 1, 1);
@@ -21,7 +25,4 @@ public sealed class DiodeItem : WorksheetItem
         DrawableComponent = new DiodeDrawable(this, value, 1, 1);
         Value = value;
     }
-
-    public override string DefaultValue => "0.7";
-    public override bool IsInsertable => true;
 }

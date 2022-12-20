@@ -6,14 +6,17 @@ namespace ACDCs.CircuitRenderer.Definitions;
 
 public class FeedbackRect
 {
+    public DrawableComponent? Drawable { get; set; }
+
+    public bool IsSelected { get; set; }
+
+    public WorksheetItem? Item { get; set; }
+
+    public RectF? Rect { get; set; }
+
     public FeedbackRect(bool isSelected, DrawableComponent? drawable)
     {
         IsSelected = isSelected;
         Drawable = drawable;
     }
-
-    public DrawableComponent? Drawable { get; set; }
-    public bool IsSelected { get; set; }
-    public WorksheetItem? Item { get; set; }
-    public RectF? Rect { get; set; }
 }

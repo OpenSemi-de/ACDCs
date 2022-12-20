@@ -4,6 +4,10 @@ namespace ACDCs.CircuitRenderer.Items;
 
 public sealed class ResistorItem : WorksheetItem
 {
+    public override string DefaultValue => "10k";
+
+    public override bool IsInsertable => true;
+
     public ResistorItem()
     {
         DrawableComponent = new ResistorDrawable(this, DefaultValue, 1, 1);
@@ -15,8 +19,4 @@ public sealed class ResistorItem : WorksheetItem
         DrawableComponent = new ResistorDrawable(this, value, x, y);
         Value = value;
     }
-
-    public override string DefaultValue => "10k";
-
-    public override bool IsInsertable => true;
 }

@@ -21,6 +21,12 @@ public enum PathPartType
 
 public sealed class PathInstruction : DrawInstruction
 {
+    private readonly List<PathPart> _pathParts;
+
+    public float Height { get; set; }
+
+    public float Width { get; set; }
+
     public PathInstruction(string svgPath) : base(typeof(PathInstruction))
     {
         StrokeColor = new Color(0, 0, 0);
@@ -31,31 +37,33 @@ public sealed class PathInstruction : DrawInstruction
         Coordinates.Add(Position);
     }
 
-    public float Height { get; set; }
-    public float Width { get; set; }
-
     public List<PathPart> GetParts()
     {
         return _pathParts;
     }
-
-    private readonly List<PathPart> _pathParts;
 }
 
 public sealed class PathPart
 {
+    public List<Coordinate> Coordinates { get; }
+
+    public PathPartType Type { get; }
+
     public PathPart(PathPartType type, List<Coordinate> coordinates)
     {
         Coordinates = coordinates;
         Type = type;
     }
-
-    public List<Coordinate> Coordinates { get; }
-    public PathPartType Type { get; }
 }
 
 public sealed class PathReader
 {
+    private readonly float _height;
+
+    private readonly List<PathPart> _pathParts = new();
+
+    private readonly float _width;
+
     public PathReader(string svgPath)
     {
         _width = 0;
@@ -115,8 +123,4 @@ public sealed class PathReader
     {
         return _width;
     }
-
-    private readonly float _height;
-    private readonly List<PathPart> _pathParts = new();
-    private readonly float _width;
 }

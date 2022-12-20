@@ -5,6 +5,8 @@ namespace ACDCs.CircuitRenderer.Drawables;
 
 public class SourceDrawable : DrawableComponent
 {
+    public static string DefaultValue { get; set; } = "5v";
+
     public SourceDrawable(WorksheetItem parent, SourceDrawableType type) : base(typeof(SourceDrawable), parent)
     {
         Setup(DefaultValue);
@@ -15,8 +17,6 @@ public class SourceDrawable : DrawableComponent
         Value = value;
         Setup(value, type, x, y);
     }
-
-    public static string DefaultValue { get; set; } = "5v";
 
     private void Setup(string value = "N/A", SourceDrawableType type = SourceDrawableType.Voltage, float x = 0, float y = 0)
     {

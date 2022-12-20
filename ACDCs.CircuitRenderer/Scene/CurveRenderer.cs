@@ -7,7 +7,7 @@ namespace ACDCs.CircuitRenderer.Scene;
 
 public class CurveRenderer : IRenderer, IRenderer<CurveInstruction>
 {
-    public void Render(ICanvas canvas, RenderInstruction renderInstruction, CurveInstruction curve) 
+    public void Render(ICanvas canvas, RenderInstruction renderInstruction, CurveInstruction curve)
     {
         Coordinate centerPos = new(curve.Position);
         DrawableScene.SetStrokeColor(canvas, curve.StrokeColor);
@@ -24,6 +24,5 @@ public class CurveRenderer : IRenderer, IRenderer<CurveInstruction>
             height,
             curve.AngleStart,
             curve.AngleEnd, false, false);
-
     }
 }

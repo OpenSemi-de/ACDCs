@@ -5,6 +5,12 @@ namespace ACDCs.CircuitRenderer.Definitions;
 
 public sealed class Coordinate
 {
+    public float X;
+
+    public float Y;
+
+    public float Z;
+
     public Coordinate(float x, float y, float z)
     {
         X = x;
@@ -30,12 +36,6 @@ public sealed class Coordinate
     {
     }
 
-    public float X;
-
-    public float Y;
-
-    public float Z;
-
     public static Coordinate FromPoint(Point stepPoint)
     {
         return new Coordinate(Convert.ToSingle(stepPoint.X), Convert.ToSingle(stepPoint.Y), 0);
@@ -53,6 +53,22 @@ public sealed class Coordinate
         }
 
         return this;
+    }
+
+    public bool IsEqual(Coordinate coordinate)
+    {
+        return this.X == coordinate.X &&
+               this.Y == coordinate.Y &&
+               this.Z == coordinate.Z;
+    }
+
+    public Coordinate Multiply(Coordinate coordinate)
+    {
+        var result = new Coordinate(this);
+        result.X *= coordinate.X;
+        result.Y *= coordinate.Y;
+        result.Z *= coordinate.Z;
+        return result;
     }
 
     public Coordinate Round()
@@ -85,21 +101,5 @@ public sealed class Coordinate
     public SizeF ToSizeF()
     {
         return new SizeF(X, Y);
-    }
-
-    public Coordinate Multiply(Coordinate coordinate)
-    {
-        var result = new Coordinate(this);
-        result.X *= coordinate.X;
-        result.Y *= coordinate.Y;
-        result.Z *= coordinate.Z;
-        return result;
-    }
-
-    public bool IsEqual(Coordinate coordinate)
-    {
-        return this.X == coordinate.X &&
-               this.Y == coordinate.Y &&
-               this.Z == coordinate.Z;
     }
 }

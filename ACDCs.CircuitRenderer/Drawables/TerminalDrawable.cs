@@ -5,8 +5,12 @@ namespace ACDCs.CircuitRenderer.Drawables;
 
 public sealed class TerminalDrawable : DrawableComponent
 {
+    public string TerminalText { get; set; }
+
+    public TerminalDrawableType TerminalType { get; set; }
+
     public TerminalDrawable(IWorksheetItem parent, float x, float y,
-        TerminalDrawableType terminalType = TerminalDrawableType.None, string terminalName = "") : base(
+                TerminalDrawableType terminalType = TerminalDrawableType.None, string terminalName = "") : base(
         typeof(TerminalDrawable), parent)
     {
         TerminalType = terminalType;
@@ -37,9 +41,6 @@ public sealed class TerminalDrawable : DrawableComponent
 
         Setup(x, y);
     }
-
-    public string TerminalText { get; set; }
-    public TerminalDrawableType TerminalType { get; set; }
 
     private void Setup(float x, float y)
     {

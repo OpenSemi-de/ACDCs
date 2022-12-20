@@ -6,12 +6,12 @@ namespace ACDCs.CircuitRenderer.Drawables;
 
 public sealed class DrawableComponentList : List<IDrawableComponent>
 {
+    public Worksheet? Worksheet { get; set; }
+
     public DrawableComponentList(Worksheet worksheet)
     {
         Worksheet = worksheet;
     }
-
-    public Worksheet? Worksheet { get; set; }
 
     public new void Add(IDrawableComponent component)
     {

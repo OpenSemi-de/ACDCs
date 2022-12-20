@@ -7,6 +7,20 @@ namespace ACDCs.CircuitRenderer.Drawables;
 
 public class PinDrawable : DrawableComponent
 {
+    private Worksheet? _worksheet;
+
+    public string PinText { get; }
+
+    public new Worksheet? Worksheet
+    {
+        get => _worksheet;
+        set
+        {
+            _worksheet = value;
+            Setup(Position.X, Position.Y);
+        }
+    }
+
     public PinDrawable(IWorksheetItem parent, float x, float y, string pinText = "") : base(typeof(PinDrawable), parent)
     {
         PinText = pinText;
@@ -24,20 +38,6 @@ public class PinDrawable : DrawableComponent
         ParentItem = pin.ParentItem;
         Setup(1, 1);
     }
-
-    public string PinText { get; }
-
-    public new Worksheet? Worksheet
-    {
-        get => _worksheet;
-        set
-        {
-            _worksheet = value;
-            Setup(Position.X, Position.Y);
-        }
-    }
-
-    private Worksheet? _worksheet;
 
     private void Setup(float x, float y)
     {

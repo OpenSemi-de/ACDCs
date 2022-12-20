@@ -11,4 +11,3 @@ public enum Direction
     Contains = 4,
     None = 999,
 }
-

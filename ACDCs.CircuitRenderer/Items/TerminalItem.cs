@@ -4,6 +4,10 @@ namespace ACDCs.CircuitRenderer.Items;
 
 public sealed class TerminalItem : WorksheetItem
 {
+    public override string DefaultValue => "";
+
+    public override bool IsInsertable => true;
+
     public TerminalItem()
     {
         DrawableComponent = new TerminalDrawable(this, 1, 1, TerminalDrawableType.Null);
@@ -17,8 +21,4 @@ public sealed class TerminalItem : WorksheetItem
         if (Value == "Null")
             Value = "0";
     }
-
-    public override string DefaultValue => "";
-
-    public override bool IsInsertable => true;
 }

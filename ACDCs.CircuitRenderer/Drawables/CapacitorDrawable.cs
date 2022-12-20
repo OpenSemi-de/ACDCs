@@ -6,6 +6,8 @@ namespace ACDCs.CircuitRenderer.Drawables;
 
 public sealed class CapacitorDrawable : DrawableComponent
 {
+    public CapacitorDrawableType CapacitorType { get; set; }
+
     public CapacitorDrawable(IWorksheetItem parent) : base(typeof(CapacitorDrawable), parent)
     {
         Setup();
@@ -15,8 +17,6 @@ public sealed class CapacitorDrawable : DrawableComponent
     {
         Setup(value, type, x, y);
     }
-
-    public CapacitorDrawableType CapacitorType { get; set; }
 
     private void Setup(string value = "N/A", CapacitorDrawableType capacitorType = CapacitorDrawableType.Standard, float x = 0, float y = 0)
     {

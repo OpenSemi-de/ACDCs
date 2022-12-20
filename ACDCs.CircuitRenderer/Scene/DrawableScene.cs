@@ -11,6 +11,28 @@ namespace ACDCs.CircuitRenderer.Scene;
 
 public class DrawableScene : IDrawable
 {
+    private int _fontSize;
+
+    public Color? BackgroundColor { get; set; }
+
+    public Color? BackgroundHighColor { get; set; }
+
+    public float BaseGridSize => CurrentGridSize ?? Workbook.BaseGridSize;
+
+    public float? CurrentGridSize { get; set; }
+
+    public Coordinate? DisplayOffset { get; set; }
+
+    public Color? ForegroundColor { get; set; }
+
+    public bool IsRendering { get; private set; }
+
+    public SheetScene? Scene { get; private set; }
+
+    public Coordinate SheetSize { get; set; }
+
+    private static float Zoom => Workbook.Zoom;
+
     public DrawableScene(SheetScene? scene)
     {
         Scene = scene;
@@ -18,16 +40,31 @@ public class DrawableScene : IDrawable
         SetScene(scene);
     }
 
-    public Color? BackgroundColor { get; set; }
-    public Color? BackgroundHighColor { get; set; }
-    public float BaseGridSize => CurrentGridSize ?? Workbook.BaseGridSize;
-    public float? CurrentGridSize { get; set; }
-    public Coordinate? DisplayOffset { get; set; }
-    public Color? ForegroundColor { get; set; }
-    public bool IsRendering { get; private set; }
-    public SheetScene? Scene { get; private set; }
-    public Coordinate SheetSize { get; set; }
-    private static float Zoom => Workbook.Zoom;
+    public static float GetScale(float size, float scale)
+    {
+        return size * scale;
+    }
+
+    public static void SetFillColor(ICanvas canvas, Color? fillColor)
+    {
+        if (fillColor != null)
+        {
+            canvas.FillColor = new Microsoft.Maui.Graphics.Color(fillColor.R, fillColor.G, fillColor.B);
+        }
+    }
+
+    public static void SetStrokeColor(ICanvas canvas, Color? penColor)
+    {
+        if (penColor != null)
+        {
+            canvas.StrokeColor = new Microsoft.Maui.Graphics.Color(penColor.R, penColor.G, penColor.B);
+        }
+    }
+
+    public static void SetStrokeWidth(ICanvas canvas, float lineStrokeWidth)
+    {
+        canvas.StrokeSize = lineStrokeWidth;
+    }
 
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
@@ -75,22 +112,14 @@ public class DrawableScene : IDrawable
 
         canvas.RestoreState();
 
-        
-
         Scene?.Drawables?.ForEach(
                component => Render(canvas, component)
                                  );
         IsRendering = false;
     }
 
-    public static float GetScale(float size, float scale)
-    {
-        return size * scale;
-    }
-
     public void Render(ICanvas canvas, IDrawableComponent drawable)
     {
-
         canvas.StrokeSize = BaseGridSize / 2;
         GetScaleAndZoom(drawable, out Coordinate drawPos, out Coordinate drawSize, Zoom, BaseGridSize);
 
@@ -132,18 +161,23 @@ public class DrawableScene : IDrawable
                 case LineInstruction line:
                     RenderManager.Render(canvas, renderInstruction, line);
                     break;
+
                 case BoxInstruction box:
                     RenderManager.Render(canvas, renderInstruction, box);
                     break;
+
                 case TextInstruction text:
                     RenderManager.Render(canvas, renderInstruction, text);
                     break;
+
                 case CircleInstruction circle:
                     RenderManager.Render(canvas, renderInstruction, circle);
                     break;
+
                 case PathInstruction path:
                     RenderManager.Render(canvas, renderInstruction, path);
                     break;
+
                 case CurveInstruction curve:
                     RenderManager.Render(canvas, renderInstruction, curve);
                     break;
@@ -208,15 +242,6 @@ public class DrawableScene : IDrawable
         canvas.RestoreState();
     }
 
-
-    public static void SetFillColor(ICanvas canvas, Color? fillColor)
-    {
-        if (fillColor != null)
-        {
-            canvas.FillColor = new Microsoft.Maui.Graphics.Color(fillColor.R, fillColor.G, fillColor.B);
-        }
-    }
-
     public void SetScene(SheetScene? scene)
     {
         Scene = scene;
@@ -231,17 +256,6 @@ public class DrawableScene : IDrawable
 
         if (scene?.SheetSize != null) SheetSize = scene.SheetSize;
     }
-
-    public static void SetStrokeColor(ICanvas canvas, Color? penColor)
-    {
-        if (penColor != null)
-        {
-            canvas.StrokeColor = new Microsoft.Maui.Graphics.Color(penColor.R, penColor.G, penColor.B);
-        }
-    }
-
-    private int _fontSize;
-
 
     private static void DrawRectangle(ICanvas canvas, Coordinate drawSize, Coordinate upperLeft,
         Coordinate lowerRight, Color? fillColor = null)
@@ -260,7 +274,6 @@ public class DrawableScene : IDrawable
             GetScale(drawSize.Y, lowerRight.Y));
     }
 
-
     private static void GetScaleAndZoom(IDrawableComponent drawable, out Coordinate drawPos, out Coordinate drawSize, float Zoom, float BaseGridSize)
     {
         drawPos = new Coordinate(drawable.Position);
@@ -269,10 +282,5 @@ public class DrawableScene : IDrawable
         drawSize.Y = drawSize.Y * Zoom * BaseGridSize;
         drawPos.X = drawPos.X * Zoom * BaseGridSize;
         drawPos.Y = drawPos.Y * Zoom * BaseGridSize;
-    }
-
-    public static void SetStrokeWidth(ICanvas canvas, float lineStrokeWidth)
-    {
-        canvas.StrokeSize = lineStrokeWidth;
     }
 }

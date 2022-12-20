@@ -135,12 +135,57 @@ public class Turtle
                 toPin.Position.Multiply(toPin.ParentItem.DrawableComponent.Size));
 
         Coordinate firstStepCoordinateFrom = GetStepCoordinate(pinAbsoluteCoordinateFrom, startDirectionPinFrom);
-        Coordinate firstStepCoordinateto = GetStepCoordinate(pinAbsoluteCoordinateTo, startDirectionPinTo);
+        Coordinate firstStepCoordinateTo = GetStepCoordinate(pinAbsoluteCoordinateTo, startDirectionPinTo);
         trace.AddPart(pinAbsoluteCoordinateFrom, firstStepCoordinateFrom);
-        trace.AddPart(pinAbsoluteCoordinateTo, firstStepCoordinateto);
+        trace.AddPart(pinAbsoluteCoordinateTo, firstStepCoordinateTo);
 
+        Coordinate currentPositionCoordinate = firstStepCoordinateFrom;
+        DirectionNine currentDirection = startDirectionPinFrom;
+        int count = 0;
+        while (count <100 &&!currentPositionCoordinate.IsEqual(firstStepCoordinateTo))
+        {
+            DirectionNine nextDirection =
+                GetTargetDirection(currentPositionCoordinate, pinAbsoluteCoordinateTo, currentDirection);
+            if (nextDirection.GetOpposite() == currentDirection)
+                nextDirection.Turn();
+            trace.AddPart(currentPositionCoordinate, GetStepCoordinate(currentPositionCoordinate, nextDirection));
+            currentPositionCoordinate = GetStepCoordinate(currentPositionCoordinate, nextDirection);
+            currentDirection = nextDirection;
+            count++;
+        }
 
         return trace;
+    }
+
+    private DirectionNine GetTargetDirection(Coordinate currentCoordinate, Coordinate toCoordinate, DirectionNine currentDirection)
+    {
+        DirectionNine direction = DirectionNine.Middle;
+        float diffX = Math.Max(currentCoordinate.X, toCoordinate.X) - Math.Min(currentCoordinate.X, toCoordinate.X);
+        float diffY = Math.Max(currentCoordinate.Y, toCoordinate.Y) - Math.Min(currentCoordinate.Y, toCoordinate.Y);
+        if (diffX > diffY)
+        {
+            if (currentCoordinate.X < toCoordinate.X)
+            {
+                direction = DirectionNine.Right;
+            }
+            else
+            {
+                direction = DirectionNine.Left;
+            }
+        }
+        else
+        {
+            if (currentCoordinate.Y < toCoordinate.Y)
+            {
+                direction = DirectionNine.Down;
+            }
+            else
+            {
+                direction = DirectionNine.Up;
+            }
+        }
+
+        return direction;
     }
 
     private Coordinate GetStepCoordinate(Coordinate position, DirectionNine direction)
@@ -672,7 +717,7 @@ public class Turtle
     }
 }
 
-internal enum DirectionNine
+public enum DirectionNine
 {
     Unknown = 0,
     UpLeft = 1,
@@ -684,4 +729,41 @@ internal enum DirectionNine
     DownRight = 5,
     Down = 6,
     DownLeft = 7,
+}
+
+public static class DirectionNineExtensions
+{
+    public static DirectionNine GetOpposite(this DirectionNine direction)
+    {
+        if (GetNum(direction) > 5)
+        {
+            return ByNum(direction, -4);
+        }
+        else
+        {
+            return ByNum(direction, 4);
+        }
+    }
+
+    public static DirectionNine Turn(this DirectionNine direction)
+    {
+        if (GetNum(direction) > 7)
+        {
+            return ByNum(direction, -6);
+        }
+        else
+        {
+            return ByNum(direction, 2);
+        }
+    }
+
+    private static DirectionNine ByNum(this DirectionNine direction, int i)
+    {
+        return (DirectionNine)((int)direction + i);
+    }
+
+    private static int GetNum(this DirectionNine direction)
+    {
+        return (int)direction;
+    }
 }

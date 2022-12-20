@@ -95,4 +95,11 @@ public sealed class Coordinate
         result.Z *= coordinate.Z;
         return result;
     }
+
+    public bool IsEqual(Coordinate coordinate)
+    {
+        return this.X == coordinate.X &&
+               this.Y == coordinate.Y &&
+               this.Z == coordinate.Z;
+    }
 }

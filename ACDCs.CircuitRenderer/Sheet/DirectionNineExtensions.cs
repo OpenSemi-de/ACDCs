@@ -14,15 +14,29 @@ public static class DirectionNineExtensions
         }
     }
 
-    public static DirectionNine Turn(this DirectionNine direction)
+    public static void Turn(this ref DirectionNine direction, int i)
     {
-        if (GetNum(direction) > 7)
+        if (i > 0)
         {
-            return ByNum(direction, -6);
+            if (GetNum(direction) > 7)
+            {
+                direction = ByNum(direction, i - 8);
+            }
+            else
+            {
+                direction = ByNum(direction, i);
+            }
         }
         else
         {
-            return ByNum(direction, 2);
+            if (GetNum(direction) < 2)
+            {
+                direction = ByNum(direction, i + 8);
+            }
+            else
+            {
+                direction = ByNum(direction, i);
+            }
         }
     }
 

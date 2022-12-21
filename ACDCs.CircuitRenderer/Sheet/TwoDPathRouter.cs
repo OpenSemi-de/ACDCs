@@ -46,7 +46,7 @@ public class TwoDPathRouter : IPathRouter
 
         ICanvas? canvas = map.Canvas;
 
-        Turtle turtle = new(Items, Nets, SheetSize, _worksheet);
+        Turtlor turtle = new(Items, Nets, SheetSize, _worksheet);
         Traces = turtle.GetTraces();
 
         int i = 0;
@@ -64,12 +64,14 @@ public class TwoDPathRouter : IPathRouter
             if (trace.DrawableComponent is TraceDrawable traceDrawable)
             {
                 Color traceColor = traceColors[i];
+                float lum = 0.5f;
                 foreach (IDrawInstruction drawInstruction in traceDrawable.DrawInstructions)
                 {
                     LineInstruction lineInstruction = (LineInstruction)drawInstruction;
-                    lineInstruction.StrokeColor = traceColor;
+                    lineInstruction.StrokeColor = new Color(traceColor.ToMauiColor().WithLuminosity(lum));
                     lineInstruction.Position = lineInstruction.Position.Round();
                     lineInstruction.End = lineInstruction.End.Round();
+                    lum += 0.2f / traceDrawable.DrawInstructions.Count;
                 }
 
                 i++;

@@ -57,9 +57,9 @@ public sealed class Coordinate
 
     public bool IsEqual(Coordinate coordinate)
     {
-        return this.X == coordinate.X &&
-               this.Y == coordinate.Y &&
-               this.Z == coordinate.Z;
+        return Math.Abs(X - coordinate.X) < 0.01 &&
+               Math.Abs(Y - coordinate.Y) < 0.01 &&
+               Math.Abs(Z - coordinate.Z) < 0.01;
     }
 
     public Coordinate Multiply(Coordinate coordinate)
@@ -102,4 +102,37 @@ public sealed class Coordinate
     {
         return new SizeF(X, Y);
     }
+
+    public Coordinate Multiply(float multplier)
+    {
+        return new Coordinate(
+            X * multplier,
+            Y * multplier,
+            Z * multplier
+        );
+    }
+
+    public bool IsNaN()
+    {
+        return float.IsNaN(X) && float.IsNaN(Y) && float.IsNaN(Z);
+    }
+
+    public Coordinate RotateCoordinate(float centerX, float centerY,double angleInDegrees)
+    {
+        double angleInRadians = angleInDegrees * (Math.PI / 180);
+        double cosTheta = Math.Cos(angleInRadians);
+        double sinTheta = Math.Sin(angleInRadians);
+        return new Coordinate
+        {
+            X =
+                Convert.ToSingle(
+                    (cosTheta * (X - centerX) -
+                        sinTheta * (Y - centerY) + centerX)),
+            Y =
+                Convert.ToSingle(
+                    (sinTheta * (X - centerX) +
+                     cosTheta * (Y - centerY) + centerY))
+        };
+    }
+
 }

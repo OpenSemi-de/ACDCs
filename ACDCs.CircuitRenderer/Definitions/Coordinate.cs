@@ -62,6 +62,11 @@ public sealed class Coordinate
                Math.Abs(Z - coordinate.Z) < 0.01;
     }
 
+    public bool IsNaN()
+    {
+        return float.IsNaN(X) && float.IsNaN(Y) && float.IsNaN(Z);
+    }
+
     public Coordinate Multiply(Coordinate coordinate)
     {
         var result = new Coordinate(this);
@@ -69,6 +74,33 @@ public sealed class Coordinate
         result.Y *= coordinate.Y;
         result.Z *= coordinate.Z;
         return result;
+    }
+
+    public Coordinate Multiply(float multplier)
+    {
+        return new Coordinate(
+            X * multplier,
+            Y * multplier,
+            Z * multplier
+        );
+    }
+
+    public Coordinate RotateCoordinate(float centerX, float centerY, double angleInDegrees)
+    {
+        double angleInRadians = angleInDegrees * (Math.PI / 180);
+        double cosTheta = Math.Cos(angleInRadians);
+        double sinTheta = Math.Sin(angleInRadians);
+        return new Coordinate
+        {
+            X =
+                Convert.ToSingle(
+                    (cosTheta * (X - centerX) -
+                        sinTheta * (Y - centerY) + centerX)),
+            Y =
+                Convert.ToSingle(
+                    (sinTheta * (X - centerX) +
+                     cosTheta * (Y - centerY) + centerY))
+        };
     }
 
     public Coordinate Round()
@@ -102,37 +134,4 @@ public sealed class Coordinate
     {
         return new SizeF(X, Y);
     }
-
-    public Coordinate Multiply(float multplier)
-    {
-        return new Coordinate(
-            X * multplier,
-            Y * multplier,
-            Z * multplier
-        );
-    }
-
-    public bool IsNaN()
-    {
-        return float.IsNaN(X) && float.IsNaN(Y) && float.IsNaN(Z);
-    }
-
-    public Coordinate RotateCoordinate(float centerX, float centerY,double angleInDegrees)
-    {
-        double angleInRadians = angleInDegrees * (Math.PI / 180);
-        double cosTheta = Math.Cos(angleInRadians);
-        double sinTheta = Math.Sin(angleInRadians);
-        return new Coordinate
-        {
-            X =
-                Convert.ToSingle(
-                    (cosTheta * (X - centerX) -
-                        sinTheta * (Y - centerY) + centerX)),
-            Y =
-                Convert.ToSingle(
-                    (sinTheta * (X - centerX) +
-                     cosTheta * (Y - centerY) + centerY))
-        };
-    }
-
 }

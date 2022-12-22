@@ -115,6 +115,8 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
         {
             if (newItem != null)
             {
+                newItem.DrawableComponent.Position.X = x;
+                newItem.DrawableComponent.Position.Y = y;
                 newItem.X -= newItem.Width / 2;
                 newItem.Y -= newItem.Height / 2;
 
@@ -333,6 +335,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
                         }
 
                         if (e.StatusType == GestureStatus.Completed)
+
                             _isDraggingItem = false;
                         break;
                     }
@@ -373,8 +376,8 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
                                             item.X = Convert.ToInt32(newPosition.X);
                                             item.Y = Convert.ToInt32(newPosition.Y);
                                         }
-                                    }
-                                                                   );
+                                    });
+                                CurrentWorksheet.StartRouter();
                             }
                             else
                             {

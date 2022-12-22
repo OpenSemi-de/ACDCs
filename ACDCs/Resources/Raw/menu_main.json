@@ -3,7 +3,7 @@
     "Text": "File",
     "MenuItems": [
       {
-        "Text": "Nee",
+        "Text": "New",
         "MenuCommand": "new"
       },
       {

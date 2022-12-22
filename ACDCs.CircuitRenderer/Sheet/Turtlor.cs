@@ -161,10 +161,10 @@ public class Turtlor
         return new Coordinate(-100, -100, 0);
     }
 
-    public WorksheetItemList GetTraces()
+    public List<WorksheetItem> GetTraces()
     {
         Dictionary<RectFr, IWorksheetItem> collisionRects = GetCollisionRects();
-        WorksheetItemList traces = new(_worksheet);
+        List<WorksheetItem> traces = new();
 
         foreach (IWorksheetItem net in _nets)
         {
@@ -186,7 +186,7 @@ public class Turtlor
                 lastPin = pin;
             }
 
-            traces.AddItem(trace);
+            traces.Add(trace);
         }
 
         return traces;

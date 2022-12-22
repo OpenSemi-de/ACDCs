@@ -4,8 +4,6 @@ using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.CircuitRenderer.Instructions;
 using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
-using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Graphics.Skia;
 using Color = ACDCs.CircuitRenderer.Definitions.Color;
 
 namespace ACDCs.CircuitRenderer.Sheet;
@@ -17,6 +15,11 @@ public class TwoDPathRouter : IPathRouter
     private readonly int _sheetWidth;
 
     private readonly Worksheet _worksheet;
+
+    private Color[] _traceColors = {
+        new Color(255, 0, 0), new Color(0, 255, 0), new Color(0, 0, 255), new Color(255, 255, 0),
+        new Color(0, 255, 255),
+    };
 
     public float GridSize { get; set; }
 
@@ -42,41 +45,38 @@ public class TwoDPathRouter : IPathRouter
 
     public WorksheetItemList GetTraces()
     {
-        SkiaBitmapExportContext map = Workbook.DebugContext ?? new SkiaBitmapExportContext(0, 0, 10);
-
-        ICanvas? canvas = map.Canvas;
-
+        Traces.Clear();
         Turtlor turtle = new(Items, Nets, SheetSize, _worksheet);
-        Traces = turtle.GetTraces();
+        Traces.AddRange(turtle.GetTraces());
 
         int i = 0;
-        Color[] traceColors = new[]
-        {
-            new Color(255, 0, 0), new Color(0, 255, 0), new Color(0, 0, 255), new Color(255, 255, 0),
-            new Color(0, 255, 255),
-        };
 
         foreach (IWorksheetItem worksheetItem in Traces)
         {
-            TraceItem trace = (TraceItem)worksheetItem;
-            trace.DrawableComponent.Position =
-                trace.DrawableComponent.Position.Round();
-            if (trace.DrawableComponent is TraceDrawable traceDrawable)
+            if (worksheetItem is TraceItem trace)
             {
-                Color traceColor = traceColors[i];
-                float lum = 0.5f;
-                foreach (IDrawInstruction drawInstruction in traceDrawable.DrawInstructions)
+                trace.DrawableComponent.Position =
+                    trace.DrawableComponent.Position.Round();
+                if (trace.DrawableComponent is TraceDrawable traceDrawable)
                 {
-                    LineInstruction lineInstruction = (LineInstruction)drawInstruction;
-                    lineInstruction.StrokeColor = new Color(traceColor.ToMauiColor().WithLuminosity(lum));
-                    lineInstruction.Position = lineInstruction.Position.Round();
-                    lineInstruction.End = lineInstruction.End.Round();
-                    lum += 0.2f / traceDrawable.DrawInstructions.Count;
-                }
+                    Color traceColor = _traceColors[i];
+                    float lum = 0.5f;
+                    foreach (IDrawInstruction drawInstruction in traceDrawable.DrawInstructions)
+                    {
+                        if (drawInstruction is LineInstruction lineInstruction)
+                        {
+                            lineInstruction.StrokeColor = new Color(traceColor.ToMauiColor().WithLuminosity(lum));
+                            lineInstruction.Position = lineInstruction.Position.Round();
+                            lineInstruction.End = lineInstruction.End.Round();
+                        }
 
-                i++;
-                if (i == traceColors.Length)
-                    i = 0;
+                        lum += 0.2f / traceDrawable.DrawInstructions.Count;
+                    }
+
+                    i++;
+                    if (i == _traceColors.Length)
+                        i = 0;
+                }
             }
         }
 
@@ -85,7 +85,9 @@ public class TwoDPathRouter : IPathRouter
 
     public void SetItems(WorksheetItemList items, WorksheetItemList nets)
     {
-        Items = items;
-        Nets = nets;
+        Items.Clear();
+        Items.AddRange(items);
+        Nets.Clear();
+        Nets.AddRange(nets);
     }
 }

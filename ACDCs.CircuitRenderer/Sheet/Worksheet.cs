@@ -86,16 +86,14 @@ public sealed class Worksheet
                 netToPin.Pins.Add(pinTo);
         }
 
+        StartRouter();
+
         SelectedPin = null;
     }
 
     public bool CalculateScene()
     {
         Log.L("Calculating scene");
-
-        Router = new TwoDPathRouter(this, SheetSize, GridSize);
-        Router.SetItems(Items, Nets);
-        Traces = Router.GetTraces();
 
         if (SceneManager == null)
         {
@@ -132,6 +130,8 @@ public sealed class Worksheet
 
         if (Items.Contains(item))
             Items.Remove(item);
+
+        StartRouter();
     }
 
     public void DeselectItem(WorksheetItem item)
@@ -149,6 +149,7 @@ public sealed class Worksheet
     public WorksheetItem DuplicateItem(WorksheetItem item)
     {
         WorksheetItem? newItem = item.Clone<WorksheetItem>(CloneOptions.DisableIgnoreAttributes);
+        StartRouter();
         return newItem;
     }
 
@@ -197,6 +198,7 @@ public sealed class Worksheet
             .ForEach(instruction => MirrorInstruction(centerX, instruction));
         item.IsMirrored = !item.IsMirrored;
         item.DrawableComponent.IsMirroringDone = true;
+        StartRouter();
     }
 
     public void RotateItem(WorksheetItem item)
@@ -204,6 +206,7 @@ public sealed class Worksheet
         item.Rotation += 90;
         if (item.Rotation >= 360)
             item.Rotation = 0;
+        StartRouter();
     }
 
     public void SelectItem(WorksheetItem item)
@@ -217,6 +220,13 @@ public sealed class Worksheet
 
             SelectedItems.AddItem(item);
         }
+    }
+
+    public void StartRouter()
+    {
+        Router.SetItems(Items, Nets);
+        Traces.Clear();
+        Traces.AddRange(Router.GetTraces());
     }
 
     public bool ToggleSelectItem(WorksheetItem selectedItem)
@@ -276,7 +286,7 @@ public sealed class Worksheet
 
     private void OnItemAdded(IWorksheetItem item)
     {
-        Router.SetItems(Items, Nets);
+        StartRouter();
     }
 
     private void OnSelectionAdded(IWorksheetItem obj)

@@ -13,6 +13,7 @@ public class FileMenuHandlers : MenuHandlerView
     private async void NewFile()
     {
         CircuitView.Clear();
+        GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
         await CircuitView.Paint();
     }
 

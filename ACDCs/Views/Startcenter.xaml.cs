@@ -1,4 +1,5 @@
 ﻿using ACDCs.CircuitRenderer.Items;
+using ACDCs.CircuitRenderer.Items.Transistors;
 using ACDCs.Services;
 
 namespace ACDCs.Views;
@@ -24,6 +25,12 @@ public partial class StartCenterPage : ContentPage
         textItemText.IsRealFontSize = true;
         textItemLogo.Width = 10;
         textItemLogo.Height = 6;
+        PnpTransistorItem pnp1 = new PnpTransistorItem();
+        PnpTransistorItem pnp2 = new PnpTransistorItem();
+
+        CircuitView.InsertToPosition(10, 4, pnp1).Wait();
+        CircuitView.InsertToPosition(16, 4, pnp2).Wait();
+        CircuitView.CurrentWorksheet.Nets.AddNet(pnp1.Pins[2], pnp2.Pins[2]);
         CircuitView.InsertToPosition(10, 10, textItemLogo).Wait();
         CircuitView.InsertToPosition(10, 12, textItemText).Wait();
         await CircuitView.Paint();

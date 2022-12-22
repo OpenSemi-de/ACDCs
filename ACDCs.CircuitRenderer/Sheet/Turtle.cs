@@ -124,6 +124,15 @@ namespace ACDCs.CircuitRenderer.Sheet
             Coordinate lastPosition = _pinAbsoluteCoordinateFrom;
             while (!Stuck() && !Arrived())
             {
+                var diffCoordinate = _currentCoordinate.Substract(_endCoordinate);
+                if (Math.Abs(diffCoordinate.X) + Math.Abs(diffCoordinate.Y) == 1)
+                {
+                    Coordinate lastStep = diffCoordinate.Multiply(-1);
+                    PathCoordinates.Add(_currentCoordinate.Add(lastStep));
+                    _currentCoordinate = lastStep;
+                    break;
+                }
+
                 Coordinate nextStepOffset = GetNextStep();
                 Coordinate nextStep = _currentCoordinate.Add(nextStepOffset);
 
@@ -134,6 +143,8 @@ namespace ACDCs.CircuitRenderer.Sheet
                 {
                     nextStepOffset = GetNextStep(collisionDirection);
                     nextStep = _currentCoordinate.Add(nextStepOffset);
+                    collisionDirection =
+                        !nextStep.IsEqual(_endCoordinate) ? CheckCollision(nextStepOffset, _currentCoordinate) : Direction.None;
                 }
 
                 PathCoordinates.Add(nextStep);
@@ -143,7 +154,7 @@ namespace ACDCs.CircuitRenderer.Sheet
 
         private bool Arrived()
         {
-            return _startCoordinate.IsEqual(_endCoordinate);
+            return _currentCoordinate.IsEqual(_endCoordinate);
         }
 
         private Direction CheckCollision(Coordinate nextStepOffset, Coordinate currentCoordinate)
@@ -167,45 +178,51 @@ namespace ACDCs.CircuitRenderer.Sheet
 
         private Coordinate GetNextStep(Direction collisionDirection = Direction.None)
         {
-            var diffCoordinate = _currentCoordinate.Substract(_endCoordinate);
+            var diffCoordinate = _endCoordinate.Substract(_currentCoordinate);
 
             if (collisionDirection == Direction.Contains) throw new AccessViolationException();
 
             if (collisionDirection != Direction.None)
             {
-                if (collisionDirection == Direction.Bottom ||
-                    collisionDirection == Direction.Top)
+                switch (collisionDirection)
                 {
-                    if (diffCoordinate.X < 0)
-                    {
-                        return new Coordinate(1, 0);
-                    }
+                    case Direction.Bottom:
+                    case Direction.Top:
+                        {
+                            if (diffCoordinate.X < 0)
+                            {
+                                return new Coordinate(-1, 0);
+                            }
 
-                    return new Coordinate(-1, 0);
+                            return new Coordinate(1, 0);
+                        }
+                    case Direction.Left:
+                    case Direction.Right:
+                        {
+                            if (diffCoordinate.Y < 0)
+                            {
+                                return new Coordinate(0, -1);
+                            }
+
+                            return new Coordinate(0, 1);
+                        }
                 }
-
-                if (diffCoordinate.Y < 0)
-                {
-                    return new Coordinate(0, 1);
-                }
-
-                return new Coordinate(0, -1);
             }
 
             if (Math.Abs(diffCoordinate.X) == 0)
             {
-                float stepY = -1 * diffCoordinate.Y / Math.Abs(diffCoordinate.Y);
+                float stepY = diffCoordinate.Y / Math.Abs(diffCoordinate.Y);
                 return new Coordinate(0, stepY);
             }
 
-            float stepX = -1 * diffCoordinate.X / Math.Abs(diffCoordinate.X);
+            float stepX = diffCoordinate.X / Math.Abs(diffCoordinate.X);
             return new Coordinate(stepX, 0);
         }
 
         private bool Stuck()
         {
             _stepCount++;
-            if (_stepCount > 15) return true;
+            if (_stepCount > 1000) return true;
             return false;
         }
     }

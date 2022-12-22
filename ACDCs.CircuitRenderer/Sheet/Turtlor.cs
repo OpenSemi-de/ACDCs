@@ -18,6 +18,7 @@ public class Turtlor
     private readonly WorksheetItemList _nets;
 
     private readonly Worksheet _worksheet;
+    private Turtle _turtle;
 
     public Turtlor(WorksheetItemList? items, WorksheetItemList? nets, Coordinate? sheetSize, Worksheet worksheet)
     {
@@ -206,12 +207,14 @@ public class Turtlor
 
         Coordinate currentPositionCoordinate = firstStepCoordinateFrom;
 
-        Turtle turtle = new(currentPositionCoordinate, firstStepCoordinateTo, pinAbsoluteCoordinateFrom);
-        turtle.CollisionRects = GetCollisionRects();
-        turtle.Run();
+        _turtle = new Turtle(currentPositionCoordinate, firstStepCoordinateTo, pinAbsoluteCoordinateFrom)
+        {
+            CollisionRects = GetCollisionRects()
+        };
+        _turtle.Run();
 
         Coordinate loopPos = firstStepCoordinateFrom;
-        foreach (Coordinate pathCoordinate in turtle.PathCoordinates)
+        foreach (Coordinate pathCoordinate in _turtle.PathCoordinates)
         {
             trace.AddPart(loopPos, pathCoordinate);
             loopPos = pathCoordinate;

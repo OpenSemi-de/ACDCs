@@ -119,6 +119,7 @@ namespace ACDCs.CircuitRenderer.Sheet
 
         public void Run()
         {
+            PathCoordinates.Clear();
             PathCoordinates.Add(_startCoordinate);
             Coordinate lastPosition = _pinAbsoluteCoordinateFrom;
             while (!Stuck() && !Arrived())
@@ -130,6 +131,7 @@ namespace ACDCs.CircuitRenderer.Sheet
 
                 if (collisionDirection != Direction.None)
                 {
+                    nextStepOffset = GetNextStep(collisionDirection);
                     (nextStepOffset.X, nextStepOffset.Y) = (nextStepOffset.Y, nextStepOffset.X);
                     nextStep = _currentCoordinate.Add(nextStepOffset);
                 }
@@ -156,7 +158,7 @@ namespace ACDCs.CircuitRenderer.Sheet
             {
                 var collisionDirection = LineIntersectsRect(
                     currentCoordinate.ToPointF(),
-                    currentCoordinate.Add(nextStepOffset.Multiply(2)).ToPointF(),
+                    currentCoordinate.Add(nextStepOffset.Multiply(1.1f)).ToPointF(),
                     collisionRect
                 );
 
@@ -169,13 +171,16 @@ namespace ACDCs.CircuitRenderer.Sheet
             return Direction.None;
         }
 
-        private Coordinate GetNextStep()
+        private Coordinate GetNextStep(Direction collisionDirection = Direction.None)
         {
             var diffCoordinate = _currentCoordinate.Substract(_endCoordinate);
             var stepCoordinate = new Coordinate(diffCoordinate);
 
-            if (Math.Abs(diffCoordinate.X) > 0)
+            if (collisionDirection == Direction.Top ||
+                collisionDirection == Direction.Bottom ||
+                Math.Abs(diffCoordinate.X) > 0)
             {
+                stepCoordinate.X = stepCoordinate.X != 0 ? stepCoordinate.X : 1;
                 stepCoordinate.Y = 0;
                 stepCoordinate.X /= Math.Abs(stepCoordinate.X);
             }

@@ -134,4 +134,9 @@ public sealed class Coordinate
     {
         return new SizeF(X, Y);
     }
+
+    public override string ToString()
+    {
+        return $"{X}/{Y}/{Z}-Coordinate";
+    }
 }

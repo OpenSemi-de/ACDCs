@@ -126,19 +126,13 @@ namespace ACDCs.CircuitRenderer.Sheet
             {
                 Coordinate nextStepOffset = GetNextStep();
                 Coordinate nextStep = _currentCoordinate.Add(nextStepOffset);
+
                 Direction collisionDirection =
                     !nextStep.IsEqual(_endCoordinate) ? CheckCollision(nextStepOffset, _currentCoordinate) : Direction.None;
 
                 if (collisionDirection != Direction.None)
                 {
                     nextStepOffset = GetNextStep(collisionDirection);
-                    (nextStepOffset.X, nextStepOffset.Y) = (nextStepOffset.Y, nextStepOffset.X);
-                    nextStep = _currentCoordinate.Add(nextStepOffset);
-                }
-
-                if (nextStep.IsEqual(lastPosition))
-                {
-                    nextStepOffset = nextStepOffset.Multiply(-1);
                     nextStep = _currentCoordinate.Add(nextStepOffset);
                 }
 
@@ -158,7 +152,7 @@ namespace ACDCs.CircuitRenderer.Sheet
             {
                 var collisionDirection = LineIntersectsRect(
                     currentCoordinate.ToPointF(),
-                    currentCoordinate.Add(nextStepOffset.Multiply(1.1f)).ToPointF(),
+                    currentCoordinate.Add(nextStepOffset.Multiply(1f)).ToPointF(),
                     collisionRect
                 );
 
@@ -174,29 +168,44 @@ namespace ACDCs.CircuitRenderer.Sheet
         private Coordinate GetNextStep(Direction collisionDirection = Direction.None)
         {
             var diffCoordinate = _currentCoordinate.Substract(_endCoordinate);
-            var stepCoordinate = new Coordinate(diffCoordinate);
 
-            if (collisionDirection == Direction.Top ||
-                collisionDirection == Direction.Bottom ||
-                Math.Abs(diffCoordinate.X) > 0)
+            if (collisionDirection == Direction.Contains) throw new AccessViolationException();
+
+            if (collisionDirection != Direction.None)
             {
-                stepCoordinate.X = stepCoordinate.X != 0 ? stepCoordinate.X : 1;
-                stepCoordinate.Y = 0;
-                stepCoordinate.X /= Math.Abs(stepCoordinate.X);
-            }
-            else
-            {
-                stepCoordinate.Y /= Math.Abs(stepCoordinate.Y);
-                stepCoordinate.X = 0;
+                if (collisionDirection == Direction.Bottom ||
+                    collisionDirection == Direction.Top)
+                {
+                    if (diffCoordinate.X < 0)
+                    {
+                        return new Coordinate(1, 0);
+                    }
+
+                    return new Coordinate(-1, 0);
+                }
+
+                if (diffCoordinate.Y < 0)
+                {
+                    return new Coordinate(0, 1);
+                }
+
+                return new Coordinate(0, -1);
             }
 
-            return stepCoordinate.Multiply(-1);
+            if (Math.Abs(diffCoordinate.X) == 0)
+            {
+                float stepY = -1 * diffCoordinate.Y / Math.Abs(diffCoordinate.Y);
+                return new Coordinate(0, stepY);
+            }
+
+            float stepX = -1 * diffCoordinate.X / Math.Abs(diffCoordinate.X);
+            return new Coordinate(stepX, 0);
         }
 
         private bool Stuck()
         {
             _stepCount++;
-            if (_stepCount > 1000) return true;
+            if (_stepCount > 15) return true;
             return false;
         }
     }

@@ -350,6 +350,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
                                 PointF differenceBetweenCursorPoints = new(_dragStartPosition.X - cursorPosition.X,
                                     _dragStartPosition.Y - cursorPosition.Y);
+                                bool changed = false;
                                 _currentSheet.SelectedItems.ForEach(item =>
                                     {
                                         if (item != null)
@@ -372,12 +373,18 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
                                             newPosition.X = Math.Floor(newPosition.X);
                                             newPosition.Y = Math.Floor(newPosition.Y);
-
-                                            item.X = Convert.ToInt32(newPosition.X);
-                                            item.Y = Convert.ToInt32(newPosition.Y);
+                                            if (newPosition.X != item.X &&
+                                                newPosition.Y != item.Y)
+                                            {
+                                                item.X = Convert.ToInt32(newPosition.X);
+                                                item.Y = Convert.ToInt32(newPosition.Y);
+                                                changed = true;
+                                            }
                                         }
                                     });
-                                CurrentWorksheet.StartRouter();
+
+                                if (changed)
+                                    CurrentWorksheet.StartRouter();
                             }
                             else
                             {

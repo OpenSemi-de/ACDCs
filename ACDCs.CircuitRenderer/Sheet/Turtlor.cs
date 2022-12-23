@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Drawables;
@@ -18,6 +17,15 @@ public class Turtlor
     private readonly WorksheetItemList _nets;
 
     private readonly Worksheet _worksheet;
+
+    private Dictionary<DirectionNine, Coordinate> _directionCoordinates = new Dictionary<DirectionNine, Coordinate>
+    {
+        { DirectionNine.Up, new Coordinate(0, -1, 0) },
+        { DirectionNine.Down, new Coordinate(0, 1, 0) },
+        { DirectionNine.Right, new Coordinate(1, 0, 0) },
+        { DirectionNine.Left, new Coordinate(-1, 0, 0) }
+    };
+
     private Turtle _turtle;
 
     public Turtlor(WorksheetItemList? items, WorksheetItemList? nets, Coordinate? sheetSize, Worksheet worksheet)
@@ -144,26 +152,17 @@ public class Turtlor
 
     public Coordinate GetStepCoordinate(Coordinate position, DirectionNine direction)
     {
-        Dictionary<DirectionNine, Coordinate> directionCoordinates = new()
+        if (_directionCoordinates.ContainsKey(direction))
         {
-            { DirectionNine.Up, new Coordinate(0, -1, 0) },
-            { DirectionNine.Down, new Coordinate(0, 1, 0) },
-            { DirectionNine.Right, new Coordinate(1, 0, 0) },
-            { DirectionNine.Left, new Coordinate(-1, 0, 0) }
-        };
-
-        if (directionCoordinates.ContainsKey(direction))
-        {
-            return directionCoordinates[direction].Add(position);
+            return _directionCoordinates[direction].Add(position);
         }
 
-        Debug.Write(direction);
         return new Coordinate(-100, -100, 0);
     }
 
     public List<WorksheetItem> GetTraces()
     {
-        Dictionary<RectFr, IWorksheetItem> collisionRects = GetCollisionRects();
+        GetCollisionRects();
         List<WorksheetItem> traces = new();
 
         foreach (IWorksheetItem net in _nets)

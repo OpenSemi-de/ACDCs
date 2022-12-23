@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Interfaces;
 using Microsoft.Maui.Graphics;
@@ -122,6 +123,7 @@ namespace ACDCs.CircuitRenderer.Sheet
             PathCoordinates.Clear();
             PathCoordinates.Add(_startCoordinate);
             Coordinate lastPosition = _pinAbsoluteCoordinateFrom;
+            Coordinate lastStepOffset = new();
             while (!Stuck() && !Arrived())
             {
                 var diffCoordinate = _currentCoordinate.Substract(_endCoordinate);
@@ -143,11 +145,15 @@ namespace ACDCs.CircuitRenderer.Sheet
                 {
                     nextStepOffset = GetNextStep(collisionDirection);
                     nextStep = _currentCoordinate.Add(nextStepOffset);
-                    collisionDirection =
-                        !nextStep.IsEqual(_endCoordinate) ? CheckCollision(nextStepOffset, _currentCoordinate) : Direction.None;
+                    if (PathCoordinates.Any(coordinate => coordinate.IsEqual(nextStep)))
+                    {
+                        nextStep = _currentCoordinate.Add(lastStepOffset);
+                    }
                 }
 
                 PathCoordinates.Add(nextStep);
+                lastPosition = _currentCoordinate;
+                lastStepOffset = nextStepOffset;
                 _currentCoordinate = nextStep;
             }
         }
@@ -163,7 +169,7 @@ namespace ACDCs.CircuitRenderer.Sheet
             {
                 var collisionDirection = LineIntersectsRect(
                     currentCoordinate.ToPointF(),
-                    currentCoordinate.Add(nextStepOffset.Multiply(1f)).ToPointF(),
+                    currentCoordinate.Add(nextStepOffset.Multiply(1.01f)).ToPointF(),
                     collisionRect
                 );
 
@@ -209,7 +215,7 @@ namespace ACDCs.CircuitRenderer.Sheet
                 }
             }
 
-            if (Math.Abs(diffCoordinate.X) == 0)
+            if (Math.Abs(diffCoordinate.X) < 2)
             {
                 float stepY = diffCoordinate.Y / Math.Abs(diffCoordinate.Y);
                 return new Coordinate(0, stepY);

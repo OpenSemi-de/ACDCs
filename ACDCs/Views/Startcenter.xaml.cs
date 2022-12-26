@@ -14,7 +14,7 @@ public partial class StartCenterPage : ContentPage
 
     private async void Button_OnClicked(object? sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("///circuit");
+        await Shell.Current.Navigation.PushAsync(new CircuitSheetPage(), true);
     }
 
     private async void CircuitView_OnLoaded(object? sender, EventArgs e)

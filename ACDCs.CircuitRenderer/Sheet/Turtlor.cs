@@ -71,17 +71,15 @@ public class Turtlor
         Dictionary<RectFr, IWorksheetItem> collList = new();
         foreach (IWorksheetItem item in _items)
         {
-            RectFr rect = new()
-            {
-                X1 = item.X,
-                Y1 = item.Y,
-                X2 = item.X + item.Width,
-                Y2 = item.Y,
-                X3 = item.X + item.Width,
-                Y3 = item.Y + item.Height,
-                X4 = item.X,
-                Y4 = item.Y + item.Height
-            };
+            RectFr rect = new(item.X,
+              item.Y,
+              item.X + item.Width,
+              item.Y,
+              item.X + item.Width,
+              item.Y + item.Height,
+              item.X,
+              item.Y + item.Height
+            );
 
             if (item.Rotation != 0)
             {
@@ -168,10 +166,7 @@ public class Turtlor
         foreach (IWorksheetItem net in _nets)
         {
             TraceItem trace = new();
-            var pins = net.Pins
-                .OrderBy(pin => pin.ParentItem.X)
-                .ThenBy(pin => pin.ParentItem.Y)
-                .ToList();
+            var pins = SortDistance(net.Pins);
 
             PinDrawable? lastPin = null;
 
@@ -189,6 +184,14 @@ public class Turtlor
         }
 
         return traces;
+    }
+
+    private float GetDistance(Coordinate fromCoordinate, Coordinate toCoordinate)
+    {
+        float x = Math.Abs(fromCoordinate.X - toCoordinate.X);
+        float y = Math.Abs(fromCoordinate.Y - toCoordinate.Y);
+
+        return Convert.ToSingle(Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2)));
     }
 
     private TraceItem GetTrace(TraceItem trace, PinDrawable fromPin, PinDrawable toPin)
@@ -227,5 +230,12 @@ public class Turtlor
     private int R(float number)
     {
         return Convert.ToInt32(Math.Round(number));
+    }
+
+    private List<PinDrawable> SortDistance(DrawablePinList pins)
+    {
+        var orderedPins = pins.OrderBy(pin => pin.Position.X).ToList();
+
+        return orderedPins;
     }
 }

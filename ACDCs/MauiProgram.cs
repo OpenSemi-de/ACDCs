@@ -1,4 +1,7 @@
-﻿namespace ACDCs;
+﻿using CommunityToolkit.Maui;
+using UraniumUI;
+
+namespace ACDCs;
 
 public static class MauiProgram
 {
@@ -7,7 +10,9 @@ public static class MauiProgram
         MauiAppBuilder builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
-
+            .UseMauiCommunityToolkit()
+            .UseUraniumUI()
+            .UseUraniumUIMaterial()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("MapleMono-Regular.ttf", "MapleMonoRegular");

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Interfaces;
 using Microsoft.Maui.Graphics;
@@ -145,10 +144,6 @@ namespace ACDCs.CircuitRenderer.Sheet
                 {
                     nextStepOffset = GetNextStep(collisionDirection);
                     nextStep = _currentCoordinate.Add(nextStepOffset);
-                    if (PathCoordinates.Any(coordinate => coordinate.IsEqual(nextStep)))
-                    {
-                        nextStep = _currentCoordinate.Add(lastStepOffset);
-                    }
                 }
 
                 PathCoordinates.Add(nextStep);

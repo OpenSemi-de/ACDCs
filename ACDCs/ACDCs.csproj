@@ -87,6 +87,7 @@
   <ItemGroup>
     <None Remove="Resources\Fonts\MapleMono-Bold.ttf" />
     <None Remove="Resources\Fonts\MapleMono-Regular.ttf" />
+    <None Remove="Resources\Raw\menu_components.json" />
     <None Remove="Resources\Raw\menu_main.json" />
     <None Remove="Resources\Splash\splash.svg" />
   </ItemGroup>
@@ -100,9 +101,15 @@
     <PackageReference Include="Microsoft.Maui.Graphics.Skia" Version="7.0.52" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="SkiaSharp" Version="2.88.2" />
+    <PackageReference Include="UraniumUI" Version="2.1.2" />
+    <PackageReference Include="UraniumUI.Material" Version="2.1.2" />
   </ItemGroup>
 
   <ItemGroup>
+
+    <ProjectReference Include="..\ACDCs.Data\ACDCs.Data.csproj" />
+
+    <ProjectReference Include="..\ACDCs.IO\ACDCs.IO.csproj" />
 
     <ProjectReference Include="..\libs\Sharp.UI\Sharp.UI\Sharp.UI.csproj" />
     <ProjectReference Include="..\libs\Sharp.UI\Sharp.UI.Generator\Sharp.UI.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
@@ -110,6 +117,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\ComponentsPage.xaml.cs">
+      <DependentUpon>ComponentsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Startcenter.xaml.cs">
       <DependentUpon>Startcenter.xaml</DependentUpon>
     </Compile>
@@ -132,6 +142,9 @@
 
 	<ItemGroup>
 	  <MauiAsset Update="Resources\Raw\AboutAssets.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\menu_components.json">
 	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
 	  </MauiAsset>
 	</ItemGroup>

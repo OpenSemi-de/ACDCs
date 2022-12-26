@@ -20,6 +20,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sharp.UI", "libs\Sharp.UI\S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sharp.UI.Generator", "libs\Sharp.UI\Sharp.UI.Generator\Sharp.UI.Generator.csproj", "{A1EA20F3-93FE-4F48-81A1-E4C4C3E919BA}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACDCs.Data", "ACDCs.Data\ACDCs.Data.csproj", "{9A16BB21-FE55-470D-90D6-B2938425D6D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACDCs.IO", "ACDCs.IO\ACDCs.IO.csproj", "{672C623E-3ABC-4983-85FB-C72AE8E1ADFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +52,14 @@ Global
 		{A1EA20F3-93FE-4F48-81A1-E4C4C3E919BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1EA20F3-93FE-4F48-81A1-E4C4C3E919BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1EA20F3-93FE-4F48-81A1-E4C4C3E919BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A16BB21-FE55-470D-90D6-B2938425D6D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A16BB21-FE55-470D-90D6-B2938425D6D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A16BB21-FE55-470D-90D6-B2938425D6D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A16BB21-FE55-470D-90D6-B2938425D6D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{672C623E-3ABC-4983-85FB-C72AE8E1ADFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{672C623E-3ABC-4983-85FB-C72AE8E1ADFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{672C623E-3ABC-4983-85FB-C72AE8E1ADFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{672C623E-3ABC-4983-85FB-C72AE8E1ADFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

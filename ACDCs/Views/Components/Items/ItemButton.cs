@@ -14,7 +14,7 @@ public class ItemButton : ImageButton
 
     public Type? ItemType { get; set; }
 
-    public ItemButton(Type? itemType, double? buttonWidth, double? buttonHeight)
+    public ItemButton(Type? itemType, double buttonWidth, double buttonHeight)
     {
         ItemType = itemType;
 

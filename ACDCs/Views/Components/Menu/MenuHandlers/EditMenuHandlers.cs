@@ -21,6 +21,7 @@ public class EditMenuHandlers : MenuHandlerView
         Worksheet sheet = CircuitView.CurrentWorksheet;
         sheet.SelectedItems.ToList().ForEach(
             item => { sheet.DeleteItem((WorksheetItem)item); });
+        sheet.StartRouter();
         await CircuitView.Paint();
     }
 
@@ -58,7 +59,7 @@ public class EditMenuHandlers : MenuHandlerView
                 sheet.SelectItem(item);
             }
         });
-
+        sheet.StartRouter();
         await CircuitView.Paint();
     }
 
@@ -67,6 +68,7 @@ public class EditMenuHandlers : MenuHandlerView
         Worksheet sheet = CircuitView.CurrentWorksheet;
         sheet.SelectedItems.ToList().ForEach(
             item => { sheet.MirrorItem((WorksheetItem)item); });
+        sheet.StartRouter();
         await CircuitView.Paint();
     }
 
@@ -75,6 +77,7 @@ public class EditMenuHandlers : MenuHandlerView
         Worksheet sheet = CircuitView.CurrentWorksheet;
         sheet.SelectedItems.ToList().ForEach(
             item => { sheet.RotateItem((WorksheetItem)item); });
+        sheet.StartRouter();
         await CircuitView.Paint();
     }
 

@@ -9,6 +9,7 @@ using Sharp.UI;
 public interface IMenuHandlerView
 {
     CircuitViewContainer CircuitView { get; set; }
+    ComponentsPage ComponentsPage { get; set; }
     DebugViewDragComtainer DebugView { get; set; }
     Page PopupPage { get; set; }
 }

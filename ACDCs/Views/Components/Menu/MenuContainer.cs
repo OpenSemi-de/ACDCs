@@ -11,7 +11,9 @@ using Sharp.UI;
 public interface IMenuContainer
 {
     CircuitViewContainer CircuitView { get; set; }
+    ComponentsPage ComponentsPage { get; set; }
     DebugViewDragComtainer DebugView { get; set; }
+    string MenuFilename { get; set; }
     AbsoluteLayout PopupTarget { get; set; }
 }
 
@@ -60,7 +62,7 @@ public partial class MenuContainer : StackLayout, IMenuContainer
 
         _menuLayout.Add(_menuFrame);
 
-        LoadMenu("menu_main.json");
+        LoadMenu(MenuFilename ?? "menu_main.json");
 
         if (CircuitView != null)
         {

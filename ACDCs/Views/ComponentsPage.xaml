@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:menu="clr-namespace:ACDCs.Views.Components.Menu"
+             xmlns:circuitView="clr-namespace:ACDCs.Views.Components.CircuitView"
+             xmlns:components="clr-namespace:ACDCs.Views.Components"
+             xmlns:menuHandlers="clr-namespace:ACDCs.Views.Components.Menu.MenuHandlers"
+             x:Class="ACDCs.Views.ComponentsPage"
+             x:Name="ComponentsPageInstance">
+    <ContentPage.Content>
+        <components:SharpAbsoluteLayout x:Name="AbsoluteLayoutSheetPage">
+            <menu:MenuContainer PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" MenuFilename="menu_components.json"/>
+            <StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,50,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
+                <StackLayout Orientation="Horizontal">
+                    <Picker WidthRequest="200">
+                        <Picker.Items>
+                            <x:String>All</x:String>
+                            <x:String>Orange</x:String>
+                            <x:String>Banana</x:String>
+                            <x:String>Grape</x:String>
+                            <x:String>Mango</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </StackLayout>
+                <controls:DataGrid x:Name="ComponentsGrid" UseAutoColumns="True" HorizontalOptions="Fill" VerticalOptions="Fill">
+                    <controls:DataGrid.Columns>
+                        <controls:DataGridColumn PropertyName="Name" Title="Name" Width="200"></controls:DataGridColumn>
+                        <controls:DataGridColumn PropertyName="Value" Title="Value" Width="100"></controls:DataGridColumn>
+                    </controls:DataGrid.Columns>
+                </controls:DataGrid>
+            </StackLayout>
+            <menuHandlers:ImportMenuHandlers ComponentsPage="{x:Reference ComponentsPageInstance}"></menuHandlers:ImportMenuHandlers>
+        </components:SharpAbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

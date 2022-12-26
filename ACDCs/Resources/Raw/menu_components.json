@@ -1,0 +1,78 @@
+[
+  {
+    "Text": "Data",
+    "MenuItems": [
+      {
+        "Text": "New",
+        "MenuCommand": "new"
+      },
+      {
+        "Text": "Open...",
+        "MenuCommand": "openfile"
+      },
+      {
+        "Text": "Save",
+        "MenuCommand": "savefile"
+      },
+      {
+        "Text": "Save as..",
+        "MenuCommand": "saveasfile"
+      },
+      {
+        "Text": "Import",
+        "MenuCommand": "",
+        "MenuItems": [
+          {
+            "Text": "Spice models...",
+            "MenuCommand": "importspicemodels"
+          }
+        ]
+      }
+    ]
+  },
+    {
+        "Text": "Edit",
+        "MenuItems": [
+            {
+                "Text": "Multiselect",
+                "IsChecked": "False",
+                "MenuCommand": "multiselect"
+            },
+            {
+                "Text": "Deselect all",
+                "MenuCommand": "deselectall"
+            },
+            {
+                "Text": "Select all",
+                "MenuCommand": "selectall"
+            },
+            {},
+            {
+                "Text": "Duplicate",
+                "MenuCommand": "duplicate"
+            },
+            {},
+            {
+                "Text": "Delete",
+                "MenuCommand": "delete"
+            }
+        ]
+    },
+    {
+        "Text": "Info",
+        "MenuItems": [
+            {
+                "Text": "About",
+                "MenuCommand": "about"
+            },
+            {
+                "Text": "License",
+                "MenuCommand": "license"
+            },
+            {
+                "Text": "Debug",
+                "MenuCommand": "debug"
+            }
+        ]
+    }
+]

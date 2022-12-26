@@ -19,10 +19,10 @@ public class FileMenuHandlers : MenuHandlerView
 
     private async void OpenFile()
     {
-        string fileName = "";
         IDictionary<DevicePlatform, IEnumerable<string>> fileTypes =
             new Dictionary<DevicePlatform, IEnumerable<string>>();
-        fileTypes.Add(DevicePlatform.WinUI, new List<string>() { ".acc" });
+        fileTypes.Add(DevicePlatform.WinUI, new List<string> { ".acc" });
+        fileTypes.Add(DevicePlatform.Android, new List<string> { "application/acdcs" });
         PickOptions options = new()
         {
             FileTypes = new FilePickerFileType(fileTypes),
@@ -32,7 +32,7 @@ public class FileMenuHandlers : MenuHandlerView
         FileResult? result = await FilePicker.Default.PickAsync(options);
         if (result != null)
         {
-            fileName = result.FullPath;
+            string fileName = result.FullPath;
             CircuitView.Open(fileName);
         }
     }

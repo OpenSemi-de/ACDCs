@@ -24,12 +24,31 @@
                         </Picker.Items>
                     </Picker>
                 </StackLayout>
-                <controls:DataGrid x:Name="ComponentsGrid" UseAutoColumns="True" HorizontalOptions="Fill" VerticalOptions="Fill">
-                    <controls:DataGrid.Columns>
-                        <controls:DataGridColumn PropertyName="Name" Title="Name" Width="200"></controls:DataGridColumn>
-                        <controls:DataGridColumn PropertyName="Value" Title="Value" Width="100"></controls:DataGridColumn>
-                    </controls:DataGrid.Columns>
-                </controls:DataGrid>
+
+                <CollectionView x:Name="ComponentsGrid" VerticalOptions="Fill" HorizontalOptions="Fill" VerticalScrollBarVisibility="Always">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="22" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0"
+                                       Text="{Binding Name}"
+                                       FontAttributes="Bold" />
+                                <Label Grid.Row="1" Grid.Column="0"
+                                       TextType="Html"
+                                       LineBreakMode="WordWrap"
+                                       MaxLines="10"
+                                       Text="{Binding Parameters}"
+                                       VerticalOptions="Fill" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </StackLayout>
             <menuHandlers:ImportMenuHandlers ComponentsPage="{x:Reference ComponentsPageInstance}"></menuHandlers:ImportMenuHandlers>
         </components:SharpAbsoluteLayout>

@@ -1,9 +1,11 @@
 ﻿namespace ACDCs.Data.ACDCs.Components;
 
-public class Diode : ElectricalComponent, IElectronicComponent
+public class Diode : DiodeParameters, IElectronicComponent
 {
-    public IComponentParameters ParametersModel => new DiodeParameters();
+    public string Model { get; set; }
+    public string Name { get; set; }
     public IComponentRuntimeParameters ParametersRuntime => new DiodeRuntimeParameters();
+    public string Type { get; set; }
 }
 
 public class DiodeParameters : IComponentParameters

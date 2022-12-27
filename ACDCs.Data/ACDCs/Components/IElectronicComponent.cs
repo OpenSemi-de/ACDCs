@@ -2,6 +2,8 @@
 
 public interface IElectronicComponent
 {
-    public IComponentParameters ParametersModel { get; }
+    string Model { get; set; }
+    string Name { get; set; }
     public IComponentRuntimeParameters ParametersRuntime { get; }
+    string Type { get; set; }
 }

@@ -1,11 +1,11 @@
 ﻿namespace ACDCs.Data.ACDCs.Components;
 
-public class Bjt : ElectricalComponent, IElectronicComponent
+public class Bjt : BjtModelParameters, IElectronicComponent
 {
-    public new string Model { get; set; }
-    public new string Name { get; set; }
-    public IComponentParameters ParametersModel { get; set; }
+    public string Model { get; set; }
+    public string Name { get; set; }
     public IComponentRuntimeParameters ParametersRuntime { get; set; }
+    public string Type { get; set; } = nameof(Bjt);
 }
 
 public class BjtModelParameters : IComponentParameters

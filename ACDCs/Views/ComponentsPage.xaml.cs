@@ -1,14 +1,14 @@
 ﻿using System.Collections.ObjectModel;
-using ACDCs.Data.ACDCs.Components;
+using System.Reflection;
 using ACDCs.IO.Spice;
-using Newtonsoft.Json;
+using SpiceSharp.Components;
 using SpiceSharp.Entities;
 
 namespace ACDCs.Views;
 
 public partial class ComponentsPage : ContentPage
 {
-    private readonly ObservableCollection<IElectronicComponent> _currentComponents = new();
+    private readonly ObservableCollection<ComponentPageModel> _currentComponents = new();
 
     public ComponentsPage()
     {
@@ -34,16 +34,45 @@ public partial class ComponentsPage : ContentPage
         }
 
         _currentComponents.Clear();
-        foreach (var m in models)
+        foreach (IEntity entity in models)
         {
-            IElectronicComponent? component =
-                JsonConvert.DeserializeObject<IElectronicComponent>(JsonConvert.SerializeObject(m));
-            if (component != null)
+            switch (entity)
             {
-                _currentComponents.Add(component);
+                case BipolarJunctionTransistorModel model:
+                    {
+                        Dictionary<string, string> parameters = ObjectToDictionary(model.Parameters);
+                        ComponentPageModel viewmodel = new()
+                        {
+                            Parameters = string.Join("", parameters).Replace("[", "").Replace("]", "<br />"),
+                            Name = model.Name
+                        };
+                        _currentComponents.Add(viewmodel);
+                        break;
+                    }
             }
-
-            ComponentsGrid.ItemsSource = _currentComponents;
         }
     }
+
+    private Dictionary<string, string> ObjectToDictionary(object modelObject)
+    {
+        Dictionary<string, string> values = new();
+        var properties = modelObject.GetType().GetProperties().Where(prop => prop.DeclaringType == modelObject.GetType() && prop.PropertyType.IsPrimitive && prop.PropertyType.IsValueType);
+        foreach (PropertyInfo propertyInfo in properties)
+        {
+            string name = propertyInfo.Name;
+            string? value = Convert.ToString(propertyInfo.GetValue(modelObject));
+            if (value != null)
+            {
+                values.Add(name, value);
+            }
+        }
+
+        return values;
+    }
+}
+
+public class ComponentPageModel
+{
+    public string Name { get; set; }
+    public string Parameters { get; set; }
 }

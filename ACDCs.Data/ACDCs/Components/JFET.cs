@@ -1,9 +1,11 @@
 ﻿namespace ACDCs.Data.ACDCs.Components;
 
-public class JFET : ElectricalComponent, IElectronicComponent
+public class JFET : JFETParameters, IElectronicComponent
 {
-    public IComponentParameters ParametersModel => new JFETParameters();
+    public string Model { get; set; }
+    public string Name { get; set; }
     public IComponentRuntimeParameters ParametersRuntime => new JFETParametersRuntimeParameters();
+    public string Type { get; set; }
 }
 
 public class JFETParameters : IComponentParameters

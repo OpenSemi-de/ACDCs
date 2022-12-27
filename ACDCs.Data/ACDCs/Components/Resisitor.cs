@@ -1,9 +1,12 @@
 ﻿namespace ACDCs.Data.ACDCs.Components;
 
-public class Resisitor : ElectricalComponent, IElectronicComponent
+public class Resisitor : ResisitorParameters, IElectronicComponent
 {
+    public string Model { get; set; }
+    public string Name { get; set; }
     public IComponentParameters ParametersModel => new ResisitorParameters();
     public IComponentRuntimeParameters ParametersRuntime => throw new NotImplementedException();
+    public string Type { get; set; }
 }
 
 public class ResisitorParameters : IComponentParameters

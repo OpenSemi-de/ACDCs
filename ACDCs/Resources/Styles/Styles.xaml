@@ -6,7 +6,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:dragContainer="using:ACDCs.Views.Components.DragContainer"
     xmlns:services="using:ACDCs.Services"
-    xmlns:menu="using:ACDCs.Views.Components.Menu">
+    xmlns:menu="using:ACDCs.Views.Components.Menu"
+    xmlns:menu1="clr-namespace:ACDCs.Views.Components.Menu">
 
     <Style TargetType="dragContainer:DragContainer" ApplyToDerivedTypes="True">
     </Style>
@@ -34,18 +35,18 @@
                 Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
 
-    <Style TargetType="menu:MenuDivider">
+    <Style TargetType="menu1:MenuDivider">
         <Setter Property="BackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" />
         <Setter Property="MaximumHeightRequest" Value="2"></Setter>
     </Style>
 
-    <Style TargetType="menu:MenuFrame">
+    <Style TargetType="menu1:MenuFrame">
         <Setter Property="BackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
     </Style>
 
-    <Style TargetType="menu:MenuButton">
+    <Style TargetType="menu1:MenuButton">
         <Setter Property="FontSize" Value="10"></Setter>
     </Style>
 
@@ -178,6 +179,11 @@
                 Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}" />
         <Setter Property="CornerRadius" Value="2" />
         <Setter Property="Padding" Value="1,1,1,1" />
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" />
+    </Style>
+
+    <Style TargetType="Grid">
         <Setter Property="BackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" />
     </Style>

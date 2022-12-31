@@ -7,50 +7,37 @@
              xmlns:circuitView="clr-namespace:ACDCs.Views.Components.CircuitView"
              xmlns:components="clr-namespace:ACDCs.Views.Components"
              xmlns:menuHandlers="clr-namespace:ACDCs.Views.Components.Menu.MenuHandlers"
+             xmlns:views="using:ACDCs.Views"
              x:Class="ACDCs.Views.ComponentsPage"
              x:Name="ComponentsPageInstance">
     <ContentPage.Content>
-        <components:SharpAbsoluteLayout x:Name="AbsoluteLayoutSheetPage">
-            <menu:MenuContainer PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" MenuFilename="menu_components.json"/>
-            <StackLayout Orientation="Vertical" AbsoluteLayout.LayoutBounds="0,50,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
-                <StackLayout Orientation="Horizontal">
-                    <Picker WidthRequest="200">
-                        <Picker.Items>
-                            <x:String>All</x:String>
-                            <x:String>Orange</x:String>
-                            <x:String>Banana</x:String>
-                            <x:String>Grape</x:String>
-                            <x:String>Mango</x:String>
-                        </Picker.Items>
-                    </Picker>
-                </StackLayout>
+        <StackLayout>
+            <components:SharpAbsoluteLayout x:Name="AbsoluteLayoutSheetPage">
+                <menu:MenuContainer PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" MenuFilename="menu_components.json"/>
+            </components:SharpAbsoluteLayout>
 
-                <CollectionView x:Name="ComponentsGrid" VerticalOptions="Fill" HorizontalOptions="Fill" VerticalScrollBarVisibility="Always">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Padding="1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="22" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0"
-                                       Text="{Binding Name}"
-                                       FontAttributes="Bold" />
-                                <Label Grid.Row="1" Grid.Column="0"
-                                       TextType="Html"
-                                       LineBreakMode="WordWrap"
-                                       MaxLines="10"
-                                       Text="{Binding Parameters}"
-                                       VerticalOptions="Fill" />
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </StackLayout>
+
+            <controls:DataGrid VerticalOptions="Fill" x:Name="ComponentsGrid" ItemsSource="{x:Reference dataSource}" UseAutoColumns="False" Margin="0" Padding="1">
+                <controls:DataGrid.Columns>
+                    <controls:DataGridSelectionColumn Title=" "></controls:DataGridSelectionColumn>
+                    <controls:DataGridColumn Title="Name" PropertyName="Name"></controls:DataGridColumn>
+                    <controls:DataGridColumn Title="Type" PropertyName="Type"></controls:DataGridColumn>
+                    <controls:DataGridColumn Title="Value" PropertyName="Value"></controls:DataGridColumn>
+                    <controls:DataGridColumn Title="Details">
+                        <controls:DataGridColumn.CellItemTemplate>
+                            <DataTemplate>
+                                <Button Text="Details" x:Name="DetailsButton" Clicked="DetailsButton_OnClicked"
+                                                    CommandParameter="{Binding Row}"/>
+                            </DataTemplate>
+                        </controls:DataGridColumn.CellItemTemplate>
+                    </controls:DataGridColumn>
+
+
+                </controls:DataGrid.Columns>
+            </controls:DataGrid>
+
+
             <menuHandlers:ImportMenuHandlers ComponentsPage="{x:Reference ComponentsPageInstance}"></menuHandlers:ImportMenuHandlers>
-        </components:SharpAbsoluteLayout>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

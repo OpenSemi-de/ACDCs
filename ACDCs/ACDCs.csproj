@@ -99,6 +99,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
     <PackageReference Include="Microsoft.Maui.Graphics.Skia" Version="7.0.52" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="SkiaSharp" Version="2.88.2" />
@@ -118,6 +119,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\ComponentsDetailPopup.xaml.cs">
+      <DependentUpon>ComponentsDetailPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\ComponentsPage.xaml.cs">
       <DependentUpon>ComponentsPage.xaml</DependentUpon>
     </Compile>
@@ -128,6 +132,9 @@
 
   <ItemGroup>
     <MauiXaml Update="Views\CircuitSheetPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\ComponentsDetailPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\Components\DragContainer\DragContainer.xaml">

@@ -1,19 +1,31 @@
 ﻿using System.Collections.ObjectModel;
-using System.Reflection;
 using ACDCs.IO.Spice;
+using CommunityToolkit.Maui.Views;
+using Sharp.UI;
 using SpiceSharp.Components;
 using SpiceSharp.Entities;
+using Button = Microsoft.Maui.Controls.Button;
+using ContentPage = Microsoft.Maui.Controls.ContentPage;
+using Shell = Microsoft.Maui.Controls.Shell;
 
 namespace ACDCs.Views;
 
+[BindableProperties]
+public interface IDataLineProperties
+{
+    Dictionary<string, string> Data { get; set; }
+}
+
 public partial class ComponentsPage : ContentPage
 {
-    private readonly ObservableCollection<ComponentPageModel> _currentComponents = new();
+    public ObservableCollection<ComponentPageModel> dataSource;
 
     public ComponentsPage()
     {
         InitializeComponent();
-        ComponentsGrid.ItemsSource = _currentComponents;
+        dataSource = new();
+
+        ComponentsGrid.ItemsSource = dataSource;
     }
 
     public async void ImportSpiceModels(string fileName)
@@ -33,46 +45,44 @@ public partial class ComponentsPage : ContentPage
             return;
         }
 
-        _currentComponents.Clear();
-        foreach (IEntity entity in models)
+        dataSource.Clear();
+        foreach (IEntity model in models)
         {
-            switch (entity)
+            ComponentPageModel modelLine = new()
             {
-                case BipolarJunctionTransistorModel model:
-                    {
-                        Dictionary<string, string> parameters = ObjectToDictionary(model.Parameters);
-                        ComponentPageModel viewmodel = new()
-                        {
-                            Parameters = string.Join("", parameters).Replace("[", "").Replace("]", "<br />"),
-                            Name = model.Name
-                        };
-                        _currentComponents.Add(viewmodel);
-                        break;
-                    }
+                Name = model.Name,
+                Type = model.GetType().Name.Replace("Model", "")
+            };
+            modelLine.Model = model;
+            switch (model)
+            {
+                case BipolarJunctionTransistorModel bjt:
+                    modelLine.Value = bjt.Parameters.TypeName;
+                    modelLine.Model = bjt;
+                    break;
             }
+
+            dataSource.Add(modelLine);
         }
     }
 
-    private Dictionary<string, string> ObjectToDictionary(object modelObject)
+    private void DetailsButton_OnClicked(object? sender, EventArgs e)
     {
-        Dictionary<string, string> values = new();
-        var properties = modelObject.GetType().GetProperties().Where(prop => prop.DeclaringType == modelObject.GetType() && prop.PropertyType.IsPrimitive && prop.PropertyType.IsValueType);
-        foreach (PropertyInfo propertyInfo in properties)
+        if (sender is Button button &&
+            button.CommandParameter is int row)
         {
-            string name = propertyInfo.Name;
-            string? value = Convert.ToString(propertyInfo.GetValue(modelObject));
-            if (value != null)
-            {
-                values.Add(name, value);
-            }
+            var model = dataSource[row - 1];
+            ComponentsDetailPopup popup = new();
+            this.ShowPopup(popup);
+            popup.Load(model);
         }
-
-        return values;
     }
 }
 
 public class ComponentPageModel
 {
+    public IEntity Model { get; set; }
     public string Name { get; set; }
-    public string Parameters { get; set; }
+    public string Type { get; set; }
+    public string Value { get; set; }
 }

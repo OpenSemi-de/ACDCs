@@ -4,19 +4,19 @@
     "MenuItems": [
       {
         "Text": "New",
-        "MenuCommand": "new"
+        "MenuCommand": "newdb"
       },
       {
         "Text": "Open...",
-        "MenuCommand": "openfile"
+        "MenuCommand": "opendb"
       },
       {
         "Text": "Save",
-        "MenuCommand": "savefile"
+        "MenuCommand": "savedb"
       },
       {
-        "Text": "Save as..",
-        "MenuCommand": "saveasfile"
+        "Text": "Save to..",
+        "MenuCommand": "savetodb"
       },
       {
         "Text": "Import",

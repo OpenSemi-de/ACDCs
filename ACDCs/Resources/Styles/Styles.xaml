@@ -7,7 +7,8 @@
     xmlns:dragContainer="using:ACDCs.Views.Components.DragContainer"
     xmlns:services="using:ACDCs.Services"
     xmlns:menu="using:ACDCs.Views.Components.Menu"
-    xmlns:menu1="clr-namespace:ACDCs.Views.Components.Menu">
+    xmlns:menu1="clr-namespace:ACDCs.Views.Components.Menu"
+    xmlns:views="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
     <Style TargetType="dragContainer:DragContainer" ApplyToDerivedTypes="True">
     </Style>
@@ -173,6 +174,8 @@
         </Setter>
     </Style>
 
+
+  
     <Style TargetType="Frame">
         <Setter Property="HasShadow" Value="False" />
         <Setter Property="BorderColor"
@@ -207,7 +210,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="Label">
+    <Style TargetType="Label" ApplyToDerivedTypes="True">
         <Setter Property="BackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
         <Setter Property="TextColor"

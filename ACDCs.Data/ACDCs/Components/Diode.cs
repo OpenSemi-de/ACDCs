@@ -10,31 +10,31 @@ public class Diode : DiodeParameters, IElectronicComponent
 
 public class DiodeParameters : IComponentParameters
 {
-    public float ActivationEnergy { get; set; }
-    public float BreakdownCurrent { get; set; }
-    public float BreakdownVoltage { get; set; }
-    public float DepletionCapCoefficient { get; set; }
-    public float EmissionCoefficient { get; set; }
-    public float FlickerNoiseCoefficient { get; set; }
-    public float FlickerNoiseExponent { get; set; }
-    public float GradingCoefficient { get; set; }
-    public float JunctionCap { get; set; }
-    public float JunctionPotential { get; set; }
-    public float NominalTemperature { get; set; }
-    public float NominalTemperatureCelsius { get; set; }
-    public float Resistance { get; set; }
-    public float SaturationCurrent { get; set; }
-    public float SaturationCurrentExp { get; set; }
-    public float TransitTime { get; set; }
+    public double ActivationEnergy { get; set; }
+    public double BreakdownCurrent { get; set; }
+    public double BreakdownVoltage { get; set; }
+    public double DepletionCapCoefficient { get; set; }
+    public double EmissionCoefficient { get; set; }
+    public double FlickerNoiseCoefficient { get; set; }
+    public double FlickerNoiseExponent { get; set; }
+    public double GradingCoefficient { get; set; }
+    public double JunctionCap { get; set; }
+    public double JunctionPotential { get; set; }
+    public double NominalTemperature { get; set; }
+    public double NominalTemperatureCelsius { get; set; }
+    public double Resistance { get; set; }
+    public double SaturationCurrent { get; set; }
+    public double SaturationCurrentExp { get; set; }
+    public double TransitTime { get; set; }
 }
 
 public class DiodeRuntimeParameters : IComponentRuntimeParameters
 {
-    public float Area { get; set; }
-    public float InitCond { get; set; }
+    public double Area { get; set; }
+    public double InitCond { get; set; }
     public bool Off { get; set; }
-    public float ParallelMultiplier { get; set; }
-    public float SeriesMultiplier { get; set; }
-    public float Temperature { get; set; }
-    public float TemperatureCelsius { get; set; }
+    public double ParallelMultiplier { get; set; }
+    public double SeriesMultiplier { get; set; }
+    public double Temperature { get; set; }
+    public double TemperatureCelsius { get; set; }
 }

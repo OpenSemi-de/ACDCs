@@ -10,23 +10,23 @@ public class Capacitor : CapacitorParameters, IElectronicComponent
 
 public class CapacitorParameters : IComponentParameters
 {
-    public float DefaultWidth { get; set; }
-    public float JunctionCap { get; set; }
-    public float JunctionCapSidewall { get; set; }
-    public float Narrow { get; set; }
-    public float NominalTemperature { get; set; }
-    public float NominalTemperatureCelsius { get; set; }
-    public float TemperatureCoefficient1 { get; set; }
-    public float TemperatureCoefficient2 { get; set; }
+    public double DefaultWidth { get; set; }
+    public double JunctionCap { get; set; }
+    public double JunctionCapSidewall { get; set; }
+    public double Narrow { get; set; }
+    public double NominalTemperature { get; set; }
+    public double NominalTemperatureCelsius { get; set; }
+    public double TemperatureCoefficient1 { get; set; }
+    public double TemperatureCoefficient2 { get; set; }
 }
 
 public class CapacitorRuntimeParameters : IComponentRuntimeParameters
 {
-    public float Capacitance { get; set; }
-    public float InitialCondition { get; set; }
-    public float Length { get; set; }
-    public float ParallelMultiplier { get; set; }
-    public float Temperature { get; set; }
-    public float TemperatureCelsius { get; set; }
-    public float Width { get; set; }
+    public double Capacitance { get; set; }
+    public double InitialCondition { get; set; }
+    public double Length { get; set; }
+    public double ParallelMultiplier { get; set; }
+    public double Temperature { get; set; }
+    public double TemperatureCelsius { get; set; }
+    public double Width { get; set; }
 }

@@ -1,9 +1,8 @@
 ﻿using System.Collections.ObjectModel;
+using ACDCs.Data.ACDCs.Components;
 using ACDCs.IO.Spice;
 using CommunityToolkit.Maui.Views;
 using Sharp.UI;
-using SpiceSharp.Components;
-using SpiceSharp.Entities;
 using Button = Microsoft.Maui.Controls.Button;
 using ContentPage = Microsoft.Maui.Controls.ContentPage;
 using Shell = Microsoft.Maui.Controls.Shell;
@@ -33,7 +32,7 @@ public partial class ComponentsPage : ContentPage
         string jsonData = await File.ReadAllTextAsync(fileName);
 
         SpiceReader spiceReader = new();
-        List<IEntity> models = spiceReader.ReadModels(jsonData);
+        List<IElectronicComponent> components = spiceReader.ReadComponents(jsonData);
         if (spiceReader.HasErrors)
         {
             if (spiceReader.Errors != null)
@@ -46,18 +45,20 @@ public partial class ComponentsPage : ContentPage
         }
 
         dataSource.Clear();
-        foreach (IEntity model in models)
+        foreach (var component in components)
         {
             ComponentPageModel modelLine = new()
             {
-                Name = model.Name,
-                Type = model.GetType().Name.Replace("Model", "")
+                Name = component.Name,
+                Type = component.GetType().Name,
             };
-            modelLine.Model = model;
-            switch (model)
+
+            modelLine.Model = component;
+
+            switch (component)
             {
-                case BipolarJunctionTransistorModel bjt:
-                    modelLine.Value = bjt.Parameters.TypeName;
+                case Bjt bjt:
+                    modelLine.Value = bjt.TypeName;
                     modelLine.Model = bjt;
                     break;
             }
@@ -81,7 +82,7 @@ public partial class ComponentsPage : ContentPage
 
 public class ComponentPageModel
 {
-    public IEntity Model { get; set; }
+    public IElectronicComponent Model { get; set; }
     public string Name { get; set; }
     public string Type { get; set; }
     public string Value { get; set; }

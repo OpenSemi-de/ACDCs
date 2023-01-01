@@ -8,29 +8,30 @@ namespace ACDCs.IO.DB
 
         public DBConnection(string dbname)
         {
-            string dbdir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "db", dbname);
+            string dbdir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "db", dbname);
             if (!Directory.Exists(dbdir))
             {
-                Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "db"));
+                Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "db"));
             }
             _connectionString = $"Filename={dbdir}";
         }
 
-        public List<T> Read<T>()
+        public List<T> Read<T>(string collectionName)
         {
             using LiteDatabase db = new(_connectionString);
-            if (db.GetCollection<T>() != null)
-                return db.GetCollection<T>().FindAll().ToList();
+            if (db.CollectionExists(collectionName))
+                return db.GetCollection<T>(collectionName).FindAll().ToList();
 
             return new();
         }
 
-        public void Write<T>(List<T> items)
+        public void Write<T>(List<T> items, string collectionName)
         {
             using LiteDatabase db = new(_connectionString);
 
-            db.GetCollection<T>()
+            db.GetCollection<T>(collectionName)
                 .Insert(items);
+            db.Dispose();
         }
     }
 }

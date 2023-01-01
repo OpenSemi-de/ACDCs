@@ -10,34 +10,34 @@ public class JFET : JFETParameters, IElectronicComponent
 
 public class JFETParameters : IComponentParameters
 {
-    public float B { get; set; }
-    public float Beta { get; set; }
-    public float CapGd { get; set; }
-    public float CapGs { get; set; }
-    public float DepletionCapCoefficient { get; set; }
-    public float DrainConductance { get; set; }
-    public float DrainResistance { get; set; }
-    public float FnCoefficient { get; set; }
-    public float FnExponent { get; set; }
-    public float GatePotential { get; set; }
-    public float GateSaturationCurrent { get; set; }
-    public float JFETType { get; set; }
-    public float LModulation { get; set; }
-    public float NominalTemperature { get; set; }
-    public float NominalTemperatureCelsius { get; set; }
-    public float SourceConductance { get; set; }
-    public float SourceResistance { get; set; }
-    public float Threshold { get; set; }
+    public double B { get; set; }
+    public double Beta { get; set; }
+    public double CapGd { get; set; }
+    public double CapGs { get; set; }
+    public double DepletionCapCoefficient { get; set; }
+    public double DrainConductance { get; set; }
+    public double DrainResistance { get; set; }
+    public double FnCoefficient { get; set; }
+    public double FnExponent { get; set; }
+    public double GatePotential { get; set; }
+    public double GateSaturationCurrent { get; set; }
+    public double JFETType { get; set; }
+    public double LModulation { get; set; }
+    public double NominalTemperature { get; set; }
+    public double NominalTemperatureCelsius { get; set; }
+    public double SourceConductance { get; set; }
+    public double SourceResistance { get; set; }
+    public double Threshold { get; set; }
     public string TypeName { get; set; }
 }
 
 public class JFETParametersRuntimeParameters : IComponentRuntimeParameters
 {
-    public float Area { get; set; }
-    public float InitialVds { get; set; }
-    public float InitialVgs { get; set; }
+    public double Area { get; set; }
+    public double InitialVds { get; set; }
+    public double InitialVgs { get; set; }
     public bool Off { get; set; }
-    public float ParallelMultiplier { get; set; }
-    public float Temperature { get; set; }
-    public float TemperatureCelsius { get; set; }
+    public double ParallelMultiplier { get; set; }
+    public double Temperature { get; set; }
+    public double TemperatureCelsius { get; set; }
 }

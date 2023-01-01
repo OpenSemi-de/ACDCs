@@ -10,61 +10,61 @@ public class Bjt : BjtModelParameters, IElectronicComponent
 
 public class BjtModelParameters : IComponentParameters
 {
-    public float BaseCurrentHalfResist { get; set; }
-    public float BaseFractionBcCap { get; set; }
-    public float BaseResist { get; set; }
-    public float BetaExponent { get; set; }
-    public float BetaF { get; set; }
-    public float BetaR { get; set; }
-    public float BipolarType { get; set; }
-    public float C2 { get; set; }
-    public float C4 { get; set; }
-    public float CapCs { get; set; }
-    public float CollectorResistance { get; set; }
-    public float DepletionCapBc { get; set; }
-    public float DepletionCapBe { get; set; }
-    public float DepletionCapCoefficient { get; set; }
-    public float EarlyVoltageForward { get; set; }
-    public float EarlyVoltageReverse { get; set; }
-    public float EmissionCoefficientForward { get; set; }
-    public float EmissionCoefficientReverse { get; set; }
-    public float EmitterResistance { get; set; }
-    public float EnergyGap { get; set; }
-    public float ExcessPhase { get; set; }
-    public float ExponentialSubstrate { get; set; }
-    public float FlickerNoiseCoefficient { get; set; }
-    public float FlickerNoiseExponent { get; set; }
-    public float JunctionExpBc { get; set; }
-    public float JunctionExpBe { get; set; }
-    public float LeakBcCurrent { get; set; }
-    public float LeakBcEmissionCoefficient { get; set; }
-    public float LeakBeCurrent { get; set; }
-    public float LeakBeEmissionCoefficient { get; set; }
-    public float MinimumBaseResistance { get; set; }
-    public float NominalTemperature { get; set; }
-    public float NominalTemperatureCelsius { get; set; }
-    public float PotentialBc { get; set; }
-    public float PotentialBe { get; set; }
-    public float PotentialSubstrate { get; set; }
-    public float RollOffForward { get; set; }
-    public float RollOffReverse { get; set; }
-    public float SatCur { get; set; }
-    public float TempExpIs { get; set; }
-    public float TransitTimeBiasCoefficientForward { get; set; }
-    public float TransitTimeForward { get; set; }
-    public float TransitTimeForwardVoltageBc { get; set; }
-    public float TransitTimeHighCurrentForward { get; set; }
-    public float TransitTimeReverse { get; set; }
+    public double BaseCurrentHalfResist { get; set; }
+    public double BaseFractionBcCap { get; set; }
+    public double BaseResist { get; set; }
+    public double BetaExponent { get; set; }
+    public double BetaF { get; set; }
+    public double BetaR { get; set; }
+    public double BipolarType { get; set; }
+    public double C2 { get; set; }
+    public double C4 { get; set; }
+    public double CapCs { get; set; }
+    public double CollectorResistance { get; set; }
+    public double DepletionCapBc { get; set; }
+    public double DepletionCapBe { get; set; }
+    public double DepletionCapCoefficient { get; set; }
+    public double EarlyVoltageForward { get; set; }
+    public double EarlyVoltageReverse { get; set; }
+    public double EmissionCoefficientForward { get; set; }
+    public double EmissionCoefficientReverse { get; set; }
+    public double EmitterResistance { get; set; }
+    public double EnergyGap { get; set; }
+    public double ExcessPhase { get; set; }
+    public double ExponentialSubstrate { get; set; }
+    public double FlickerNoiseCoefficient { get; set; }
+    public double FlickerNoiseExponent { get; set; }
+    public double JunctionExpBc { get; set; }
+    public double JunctionExpBe { get; set; }
+    public double LeakBcCurrent { get; set; }
+    public double LeakBcEmissionCoefficient { get; set; }
+    public double LeakBeCurrent { get; set; }
+    public double LeakBeEmissionCoefficient { get; set; }
+    public double MinimumBaseResistance { get; set; }
+    public double NominalTemperature { get; set; }
+    public double NominalTemperatureCelsius { get; set; }
+    public double PotentialBc { get; set; }
+    public double PotentialBe { get; set; }
+    public double PotentialSubstrate { get; set; }
+    public double RollOffForward { get; set; }
+    public double RollOffReverse { get; set; }
+    public double SatCur { get; set; }
+    public double TempExpIs { get; set; }
+    public double TransitTimeBiasCoefficientForward { get; set; }
+    public double TransitTimeForward { get; set; }
+    public double TransitTimeForwardVoltageBc { get; set; }
+    public double TransitTimeHighCurrentForward { get; set; }
+    public double TransitTimeReverse { get; set; }
     public string TypeName { get; set; }
 }
 
 public class BjtRuntimeParameters : IComponentRuntimeParameters
 {
-    public float Area { get; set; }
-    public float InitialVoltageBe { get; set; }
-    public float InitialVoltageCe { get; set; }
+    public double Area { get; set; }
+    public double InitialVoltageBe { get; set; }
+    public double InitialVoltageCe { get; set; }
     public bool Off { get; set; }
-    public float ParallelMultiplier { get; set; }
-    public float Temperature { get; set; }
-    public float TemperatureCelsius { get; set; }
+    public double ParallelMultiplier { get; set; }
+    public double Temperature { get; set; }
+    public double TemperatureCelsius { get; set; }
 }

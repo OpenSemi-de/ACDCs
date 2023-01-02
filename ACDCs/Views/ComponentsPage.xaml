@@ -11,40 +11,51 @@
              x:Class="ACDCs.Views.ComponentsPage"
              x:Name="ComponentsPageInstance">
     <ContentPage.Content>
-        <StackLayout>
-            <components:SharpAbsoluteLayout x:Name="AbsoluteLayoutSheetPage">
-                <menu:MenuContainer PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" MenuFilename="menu_components.json"/>
-            </components:SharpAbsoluteLayout>
 
-            <ListView x:Name="ComponentsGrid">
+        <components:SharpAbsoluteLayout x:Name="AbsoluteLayoutSheetPage">
+            <menu:MenuContainer PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" MenuFilename="menu_components.json"/>
+
+            <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutFlags="WidthProportional" AbsoluteLayout.LayoutBounds="0,50,1,30">
+<Entry WidthRequest="200" x:Name="keywordEntry" TextChanged="KeywordEntry_OnTextChanged"></Entry>
+            </StackLayout>
+            <ListView x:Name="ComponentsGrid" AbsoluteLayout.LayoutBounds="0,80,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid Padding="10">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100" />
-                                    <ColumnDefinition Width="100" />
-                                    <ColumnDefinition Width="80" />
-                                    <ColumnDefinition Width="150" />
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0"
+
+                            <Border>
+                                <Grid Margin="2" Padding="2" HorizontalOptions="Fill">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="32" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="60" />
+                                        <ColumnDefinition Width="60" />
+                                        <ColumnDefinition Width="60" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0"
                                    Text="{Binding Name}"
                                    FontAttributes="Bold" />
 
-                                <Label Grid.Column="1"
+                                    <Label Grid.Column="1"
                                    Text="{Binding Type}"
                                     />
 
-                                <Label Grid.Column="2"
+                                    <Label Grid.Column="2"
                                    Text="{Binding Value}"
                                     />
-                                <Button Grid.Column="3" Text="Details" x:Name="DetailsButton" Clicked="DetailsButton_OnClicked"
-                                    CommandParameter="{Binding Row}"/>
+                                    <Button Grid.Column="3" Text="Details" x:Name="DetailsButton" Clicked="DetailsButton_OnClicked"
+                                        CommandParameter="{Binding Row}"/>
+                                    <Button Grid.Column="4" Text="Edit" x:Name="EditButton" Clicked="DetailsButton_OnClicked"
+                                        CommandParameter="{Binding Row}"/>
+                                    <Button Grid.Column="5" Text="Delete" x:Name="DeleteButton" Clicked="DetailsButton_OnClicked"
+                                        CommandParameter="{Binding Row}"/>
 
-                            </Grid>
+                                </Grid>
+                            </Border>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -70,6 +81,6 @@
 
 
             <menuHandlers:ImportMenuHandlers ComponentsPage="{x:Reference ComponentsPageInstance}"></menuHandlers:ImportMenuHandlers>
-        </StackLayout>
+        </components:SharpAbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -1,4 +1,5 @@
 ﻿using ACDCs.Data.ACDCs.Components;
+using ACDCs.IO.DB;
 using ACDCs.IO.Spice;
 using CommunityToolkit.Maui.Views;
 using Sharp.UI;
@@ -17,10 +18,14 @@ public interface IDataLineProperties
 public partial class ComponentsPage : ContentPage
 {
     public List<ComponentPageModel> dataSource = new();
+    private List<ComponentPageModel> baseData;
 
     public ComponentsPage()
     {
         InitializeComponent();
+        DBConnection defaultdb = new DBConnection("default");
+        List<IElectronicComponent> defaultComponents = defaultdb.Read<IElectronicComponent>("Components");
+        LoadFromSource(defaultComponents);
     }
 
     public async void ImportSpiceModels(string fileName)
@@ -69,7 +74,9 @@ public partial class ComponentsPage : ContentPage
             dataSource.Add(modelLine);
             row++;
         }
-        ComponentsGrid.ItemsSource = dataSource;
+
+        baseData = dataSource;
+        Reload();
     }
 
     private void DetailsButton_OnClicked(object? sender, EventArgs e)
@@ -82,6 +89,24 @@ public partial class ComponentsPage : ContentPage
             this.ShowPopup(popup);
             popup.Load(model);
         }
+    }
+
+    private void KeywordEntry_OnTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        List<ComponentPageModel> data = baseData;
+        data = data.Where(d => d.Name.ToLower().Contains(keywordEntry.Text.ToLower()))
+
+            .ToList();
+        dataSource = data;
+        Reload();
+    }
+
+    private void Reload()
+    {
+        ComponentsGrid.BatchBegin();
+        ComponentsGrid.ItemsSource = null;
+        ComponentsGrid.ItemsSource = dataSource;
+        ComponentsGrid.BatchCommit();
     }
 }
 

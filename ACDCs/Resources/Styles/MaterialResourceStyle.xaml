@@ -52,9 +52,9 @@
                 </Style>
 
                 <Style TargetType="Button" x:Key="BaseButtonStyle">
-                    <Setter Property="CornerRadius" Value="20" />
+                    <Setter Property="CornerRadius" Value="2" />
                     <Setter Property="HeightRequest" Value="40" />
-                    <Setter Property="Padding" Value="24,0" />
+                    <Setter Property="Padding" Value="2,0" />
                 </Style>
 
                 <Style TargetType="Button" BaseResourceKey="BaseButtonStyle" />
@@ -329,7 +329,7 @@
 
                 <Style TargetType="c:ButtonView" ApplyToDerivedTypes="True">
                     <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
-                    <Setter Property="StrokeShape" Value="{RoundRectangle CornerRadius=20}"/>
+                    <Setter Property="StrokeShape" Value="{RoundRectangle CornerRadius=2}"/>
                     <Setter Property="t:CascadingStyle.Resources">
                         <Setter.Value>
                             <ResourceDictionary>

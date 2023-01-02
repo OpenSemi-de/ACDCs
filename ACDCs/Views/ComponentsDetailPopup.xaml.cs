@@ -1,9 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Reflection;
 using CommunityToolkit.Maui.Views;
-using SpiceSharp.Components;
-using SpiceSharp.Components.Bipolars;
-using SpiceSharp.ParameterSets;
 
 namespace ACDCs.Views
 {
@@ -16,7 +13,6 @@ namespace ACDCs.Views
 
         public void Load(ComponentPageModel model)
         {
-            titleLabel.Text = model.Name;
             propertiesTreeView.IsExpandedPropertyName = "IsExpanded";
             propertiesTreeView.IsLeafPropertyName = "IsLeaf";
 
@@ -28,10 +24,10 @@ namespace ACDCs.Views
             Close();
         }
 
-        private Dictionary<string, string> GetParameters(ModelParameters parameters)
+        private Dictionary<string, string> GetParameters(ComponentPageModel model)
         {
             Dictionary<string, string> parametersdic = new();
-            IParameterSet parameterSet = parameters;
+            object parameterSet = model.Model;
             foreach (PropertyInfo info in parameterSet.GetType().GetProperties())
             {
                 parametersdic.Add(info.Name, Convert.ToString(info.GetValue(parameterSet)));
@@ -43,19 +39,20 @@ namespace ACDCs.Views
         private ObservableCollection<PropertyItem> ToItemSource(ComponentPageModel model)
         {
             PropertyItem root = new PropertyItem(model.Name) { IsExpanded = true };
-            if (model.Model is BipolarJunctionTransistorModel bjt)
+
+            Dictionary<string, string> parameters = GetParameters(model);
+
+            foreach (KeyValuePair<string, string> modelParameter in parameters)
             {
-                foreach (KeyValuePair<string, string> modelParameter in GetParameters(bjt.Parameters))
+                if (modelParameter.Value != "")
                 {
-                    if (modelParameter.Value != "")
-                    {
-                        PropertyItem item = new(modelParameter.Key) { IsExpanded = true };
-                        PropertyItem valueItem = new(modelParameter.Value);
-                        item.Children.Add(valueItem);
-                        root.Children.Add(item);
-                    }
+                    PropertyItem item = new(modelParameter.Key) { IsExpanded = true };
+                    PropertyItem valueItem = new(modelParameter.Value);
+                    item.Children.Add(valueItem);
+                    root.Children.Add(item);
                 }
             }
+
             return new ObservableCollection<PropertyItem> { root };
         }
     }

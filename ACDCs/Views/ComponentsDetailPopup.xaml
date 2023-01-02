@@ -11,8 +11,7 @@
     <toolkit:Popup.Content>
         <Frame>
             <StackLayout BackgroundColor="Transparent" VerticalOptions="Fill" HorizontalOptions="Fill">
-                <Label x:Name="titleLabel" HorizontalOptions="Fill" Text="Title" HeightRequest="40"></Label>
-                <ScrollView HeightRequest="400" HorizontalOptions="Fill" VerticalScrollBarVisibility="Always">
+                <ScrollView HeightRequest="450" HorizontalOptions="Fill" VerticalScrollBarVisibility="Always">
                     <controls:TreeView x:Name="propertiesTreeView">
                     </controls:TreeView>
                 </ScrollView>

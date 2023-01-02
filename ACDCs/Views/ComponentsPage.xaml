@@ -16,8 +16,40 @@
                 <menu:MenuContainer PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" MenuFilename="menu_components.json"/>
             </components:SharpAbsoluteLayout>
 
+            <ListView x:Name="ComponentsGrid">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="150" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0"
+                                   Text="{Binding Name}"
+                                   FontAttributes="Bold" />
 
-            <controls:DataGrid VerticalOptions="Fill" x:Name="ComponentsGrid" ItemsSource="{x:Reference dataSource}" UseAutoColumns="False" Margin="0" Padding="1">
+                                <Label Grid.Column="1"
+                                   Text="{Binding Type}"
+                                    />
+
+                                <Label Grid.Column="2"
+                                   Text="{Binding Value}"
+                                    />
+                                <Button Grid.Column="3" Text="Details" x:Name="DetailsButton" Clicked="DetailsButton_OnClicked"
+                                    CommandParameter="{Binding Row}"/>
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--   <controls:DataGrid VerticalOptions="Fill" x:Name="ComponentsGrid" ItemsSource="{x:Reference dataSource}" UseAutoColumns="False" Margin="0" Padding="1">
                 <controls:DataGrid.Columns>
                     <controls:DataGridSelectionColumn Title=" "></controls:DataGridSelectionColumn>
                     <controls:DataGridColumn Title="Name" PropertyName="Name"></controls:DataGridColumn>
@@ -34,7 +66,7 @@
 
 
                 </controls:DataGrid.Columns>
-            </controls:DataGrid>
+            </controls:DataGrid>-->
 
 
             <menuHandlers:ImportMenuHandlers ComponentsPage="{x:Reference ComponentsPageInstance}"></menuHandlers:ImportMenuHandlers>

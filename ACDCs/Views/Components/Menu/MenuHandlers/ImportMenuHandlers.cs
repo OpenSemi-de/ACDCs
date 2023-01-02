@@ -8,6 +8,7 @@ public class ImportMenuHandlers : MenuHandlerView
 {
     public ImportMenuHandlers()
     {
+        MenuHandler.Add("opendb", OpenDB);
         MenuHandler.Add("savetodb", SaveToDB);
         MenuHandler.Add("importspicemodels", ImportSpiceModels);
     }
@@ -30,6 +31,17 @@ public class ImportMenuHandlers : MenuHandlerView
             string fileName = result.FullPath;
             ComponentsPage.ImportSpiceModels(fileName);
         }
+    }
+
+    public async void OpenDB()
+    {
+        await App.Call(() =>
+        {
+            DBConnection defaultdb = new DBConnection("default");
+            List<IElectronicComponent> defaultComponents = defaultdb.Read<IElectronicComponent>("Components");
+            ComponentsPage.LoadFromSource(defaultComponents);
+            return Task.CompletedTask;
+        });
     }
 
     public void SaveToDB()
@@ -63,13 +75,13 @@ public static class RComparer
         if (left == null || right == null)
             return false;
 
-        var comparer = new ObjectsComparer.Comparer<T>();
+        ObjectsComparer.Comparer<T> comparer = new ObjectsComparer.Comparer<T>();
         bool isEqual = comparer.Compare(left, right);
         return isEqual;
 
         if (left == null || right == null) return false;
-        var propsleft = left.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-        var propsright = right.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+        PropertyInfo[] propsleft = left.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+        PropertyInfo[] propsright = right.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
         if (propsright.Length != propsleft.Length)
             return false;
 
@@ -82,7 +94,7 @@ public static class RComparer
         foreach (PropertyInfo propLeft in propsleft)
         {
             if (propLeft.Name.ToLower().Contains("baseresist")) continue;
-            var propRight = propsright.First(prop => prop.Name == propLeft.Name);
+            PropertyInfo propRight = propsright.First(prop => prop.Name == propLeft.Name);
             if (Convert.ToString(propLeft.GetValue(left)) != Convert.ToString(propRight.GetValue(right)))
                 return false;
         }

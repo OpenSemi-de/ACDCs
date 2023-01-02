@@ -45,7 +45,7 @@ namespace ACDCs.Views
             PropertyItem root = new PropertyItem(model.Name) { IsExpanded = true };
             if (model.Model is BipolarJunctionTransistorModel bjt)
             {
-                foreach (var modelParameter in GetParameters(bjt.Parameters))
+                foreach (KeyValuePair<string, string> modelParameter in GetParameters(bjt.Parameters))
                 {
                     if (modelParameter.Value != "")
                     {

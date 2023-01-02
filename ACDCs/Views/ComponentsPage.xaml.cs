@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using ACDCs.Data.ACDCs.Components;
+﻿using ACDCs.Data.ACDCs.Components;
 using ACDCs.IO.Spice;
 using CommunityToolkit.Maui.Views;
 using Sharp.UI;
@@ -17,14 +16,11 @@ public interface IDataLineProperties
 
 public partial class ComponentsPage : ContentPage
 {
-    public ObservableCollection<ComponentPageModel> dataSource;
+    public List<ComponentPageModel> dataSource = new();
 
     public ComponentsPage()
     {
         InitializeComponent();
-        dataSource = new();
-
-        ComponentsGrid.ItemsSource = dataSource;
     }
 
     public async void ImportSpiceModels(string fileName)
@@ -41,16 +37,23 @@ public partial class ComponentsPage : ContentPage
                     string.Join(':', spiceReader.Errors), "ok");
             }
 
-            return;
+            // return;
         }
+        LoadFromSource(components);
+    }
 
+    public void LoadFromSource(List<IElectronicComponent> components)
+    {
         dataSource.Clear();
-        foreach (var component in components)
+        components = components.OrderBy(c => c.Name).ThenBy(c => c.Type).ToList();
+        int row = 0;
+        foreach (IElectronicComponent component in components)
         {
             ComponentPageModel modelLine = new()
             {
                 Name = component.Name,
                 Type = component.GetType().Name,
+                Row = row,
             };
 
             modelLine.Model = component;
@@ -64,7 +67,9 @@ public partial class ComponentsPage : ContentPage
             }
 
             dataSource.Add(modelLine);
+            row++;
         }
+        ComponentsGrid.ItemsSource = dataSource;
     }
 
     private void DetailsButton_OnClicked(object? sender, EventArgs e)
@@ -72,7 +77,7 @@ public partial class ComponentsPage : ContentPage
         if (sender is Button button &&
             button.CommandParameter is int row)
         {
-            var model = dataSource[row - 1];
+            ComponentPageModel model = dataSource[row];
             ComponentsDetailPopup popup = new();
             this.ShowPopup(popup);
             popup.Load(model);
@@ -84,6 +89,7 @@ public class ComponentPageModel
 {
     public IElectronicComponent Model { get; set; }
     public string Name { get; set; }
+    public int Row { get; set; }
     public string Type { get; set; }
     public string Value { get; set; }
 }

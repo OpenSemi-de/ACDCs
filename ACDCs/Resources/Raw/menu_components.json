@@ -7,7 +7,7 @@
         "MenuCommand": "newdb"
       },
       {
-        "Text": "Open...",
+        "Text": "Open default DB",
         "MenuCommand": "opendb"
       },
       {

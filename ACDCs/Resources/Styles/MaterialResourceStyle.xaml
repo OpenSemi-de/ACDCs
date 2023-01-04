@@ -21,10 +21,7 @@
                     <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground},Dark={StaticResource OnBackgroundDark}}" />
                 </Style>
 
-                <Style TargetType="Frame" ApplyToDerivedTypes="True">
-                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}" />
-                </Style>
-
+         
                 <Shadow x:Key="ShadowElevation0" Opacity="0" Offset="0,0" Radius="0" Brush="{StaticResource  ShadowBrush}" />
                 <Shadow x:Key="ShadowElevation1" Opacity="0.2" Offset="2,2" Radius="4" Brush="{StaticResource ShadowBrush}" />
                 <Shadow x:Key="ShadowElevation2" Opacity="0.4" Offset="4,4" Radius="8" Brush="{StaticResource ShadowBrush}" />

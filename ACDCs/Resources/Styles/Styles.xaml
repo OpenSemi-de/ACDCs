@@ -8,7 +8,8 @@
     xmlns:services="using:ACDCs.Services"
     xmlns:menu="using:ACDCs.Views.Components.Menu"
     xmlns:menu1="clr-namespace:ACDCs.Views.Components.Menu"
-    xmlns:views="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+    xmlns:views="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:windowView="using:ACDCs.Views.Components.WindowView">
 
     <Style TargetType="dragContainer:DragContainer" ApplyToDerivedTypes="True">
     </Style>
@@ -175,7 +176,6 @@
     </Style>
 
 
-  
     <Style TargetType="Frame">
         <Setter Property="HasShadow" Value="False" />
         <Setter Property="BorderColor"
@@ -186,10 +186,34 @@
                 Value="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" />
     </Style>
 
+    <Style TargetType="windowView:WindowFrame">
+        <Setter Property="HasShadow" Value="True" />
+        <Setter Property="Shadow">
+            <Shadow>
+                <Shadow.Offset>
+                    <Point X="20" Y="20"></Point>
+                </Shadow.Offset>
+                <Shadow.Opacity>0.7</Shadow.Opacity>
+                <Shadow.Radius>0.5</Shadow.Radius>
+            </Shadow>
+        </Setter>
+        <Setter Property="Shadow.Brush"
+                Value="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}"></Setter>
+        <Setter Property="BorderColor"
+                Value="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" />
+        <Setter Property="CornerRadius" Value="3" />
+        <Setter Property="Padding" Value="0,0,0,0" />
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" />
+    </Style>
+
+
+    <!--
     <Style TargetType="Grid">
         <Setter Property="BackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" />
     </Style>
+    -->
 
     <Style TargetType="ImageButton">
         <Setter Property="Opacity" Value="1" />

@@ -11,6 +11,7 @@ public class MenuFrame : StackLayout
     public View? MainContainer { get; set; }
 
     public AbsoluteLayout? PopupTarget { get; set; }
+    public WindowView.WindowView? WindowFrame { get; set; }
 
     public MenuFrame()
     {
@@ -43,8 +44,8 @@ public class MenuFrame : StackLayout
             {
                 if (menuItem.Text != "" && menuItem.IsChecked == "")
                 {
-                    MenuButton menuButton = new(menuItem.Text, menuItem.MenuCommand);
-
+                    MenuButton menuButton = new(menuItem.Text, menuItem.MenuCommand, menuItem.ClickAction);
+                    menuButton.ItemWidth = menuButton.Width;
                     menuParts.Add(menuButton);
                     if (menuItem.MenuItems != null && menuItem.MenuItems.Count > 0)
                     {
@@ -87,11 +88,21 @@ public class MenuFrame : StackLayout
         {
             if (menuButton.MenuFrame != null)
             {
+                double childrenWidth = menuButton.MenuFrame.Children.Max(child => ((IMenuItem)child).ItemWidth);
+                if (childrenWidth < 100)
+                    childrenWidth = 100;
                 double childrenHeight = menuButton.MenuFrame.Children.Sum(child => ((IMenuItem)child).ItemHeight);
                 double mainX = Microsoft.Maui.Controls.AbsoluteLayout.GetLayoutBounds(MainContainer).X;
                 double mainY = Microsoft.Maui.Controls.AbsoluteLayout.GetLayoutBounds(MainContainer).Y + Microsoft.Maui.Controls.AbsoluteLayout.GetLayoutBounds(MainContainer).Height;
+                if (WindowFrame != null)
+                {
+                    mainX += AbsoluteLayout.GetLayoutBounds(WindowFrame).X;
+                    mainY += AbsoluteLayout.GetLayoutBounds(WindowFrame).Y + menuButton.Height;
+                    menuButton.MenuFrame.ZIndex(999);
+                }
+
                 Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(menuButton.MenuFrame,
-                    new(menuButton.X + mainX, mainY, 140, childrenHeight));
+                    new(menuButton.X + mainX, mainY, childrenWidth + 2, childrenHeight));
             }
         }
     }

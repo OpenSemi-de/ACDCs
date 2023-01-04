@@ -9,6 +9,7 @@ public class MenuToggle : StackLayout, IMenuItem
     private readonly Button _button;
     private readonly CheckBox _checkbox;
     public double ItemHeight { get; set; }
+    public double ItemWidth { get; set; }
 
     public string MenuCommand { get; set; }
 

@@ -83,10 +83,6 @@
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
-  <ItemGroup>
-    <MauiXaml Remove="Views\Components\WindowView\WindowView.xaml" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <None Remove="Resources\Fonts\MapleMono-Bold.ttf" />
@@ -124,22 +120,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\CircuitSheetView.xaml.cs">
-      <DependentUpon>CircuitSheetView.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\ComponentsDetailPopup.xaml.cs">
       <DependentUpon>ComponentsDetailPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\ComponentsView.xaml.cs">
-      <DependentUpon>ComponentsView.xaml</DependentUpon>
+    <Compile Update="Views\ComponentsPage.xaml.cs">
+      <DependentUpon>ComponentsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\StartCenterPage.xaml.cs">
-      <DependentUpon>StartCenterPage.xaml</DependentUpon>
+    <Compile Update="Views\Components\WindowView\WindowView.xaml.cs">
+      <DependentUpon>WindowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Startcenter.xaml.cs">
+      <DependentUpon>Startcenter.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <MauiXaml Update="Views\CircuitSheetView.xaml">
+    <MauiXaml Update="Views\CircuitSheetPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\ComponentsDetailPopup.xaml">

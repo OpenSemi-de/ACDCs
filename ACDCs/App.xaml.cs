@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Diagnostics;
+using ACDCs.Views;
 using Microsoft.Maui.Graphics.Skia;
 
 namespace ACDCs;
@@ -14,7 +15,7 @@ public partial class App : Application
     {
         InitializeComponent();
         UserAppTheme = AppTheme.Dark;
-        MainPage = new AppShell();
+        MainPage = new StartCenterPage();
     }
 
     public static event ResetEvent? Reset;

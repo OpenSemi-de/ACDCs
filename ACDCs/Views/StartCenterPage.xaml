@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:circuitView="clr-namespace:ACDCs.Views.Components.CircuitView"
+             xmlns:components="clr-namespace:ACDCs.Views.Components"
+             x:Class="ACDCs.Views.StartCenterPage"
+             x:Name="Page"
+             Title="Main">
+    <components:SharpAbsoluteLayout x:Name="MainWindowLayout">
+
+        <ScrollView>
+            <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+                <circuitView:CircuitViewContainer WidthRequest="500" HeightRequest="400" x:Name="CircuitView" Loaded="CircuitView_OnLoaded">
+                    <AbsoluteLayout.LayoutFlags>SizeProportional</AbsoluteLayout.LayoutFlags>
+                    <AbsoluteLayout.LayoutBounds>0,0,1,1</AbsoluteLayout.LayoutBounds>
+                    <circuitView:CircuitViewContainer.BackgroundColor>
+                        <AppThemeBinding Light="{StaticResource BackgroundLight}" Dark="{StaticResource BackgroundDark}" />
+                    </circuitView:CircuitViewContainer.BackgroundColor>
+                    <circuitView:CircuitViewContainer.BackgroundHighColor>
+                        <AppThemeBinding Light="{StaticResource BackgroundHighlightLight}"
+                                     Dark="{StaticResource BackgroundHighlightDark}" />
+                    </circuitView:CircuitViewContainer.BackgroundHighColor>
+                    <circuitView:CircuitViewContainer.ForegroundColor>
+                        <AppThemeBinding Light="{StaticResource ForegroundLight}" Dark="{StaticResource ForegroundDark}" />
+                    </circuitView:CircuitViewContainer.ForegroundColor>
+                </circuitView:CircuitViewContainer>
+                <Button Text="New sheet" WidthRequest="200" Clicked="Button_OnClicked"></Button>
+                <Button Text="Components" WidthRequest="200" x:Name="componentsButton" Clicked="ComponentsButton_OnClicked"></Button>
+            </VerticalStackLayout>
+        </ScrollView>
+    </components:SharpAbsoluteLayout>
+</ContentPage>

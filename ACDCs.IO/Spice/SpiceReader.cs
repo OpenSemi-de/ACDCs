@@ -7,7 +7,7 @@ using SpiceSharpParser.Common.Validation;
 using SpiceSharpParser.ModelReaders.Netlist.Spice;
 using Capacitor = ACDCs.Data.ACDCs.Components.Capacitor;
 using Diode = ACDCs.Data.ACDCs.Components.Diode;
-using Resistor = ACDCs.Data.ACDCs.Components.Resistor;
+using Resistor = ACDCs.Data.ACDCs.Components.Resistor.Resistor;
 
 namespace ACDCs.IO.Spice;
 
@@ -93,7 +93,7 @@ public class SpiceReader
         SpiceNetlistReaderSettings settings = new();
 
         var reader = new SpiceSharpReader(settings);
-        var spiceSharpModel = reader.Read(result.InputModel);
+        var spiceSharpModel = reader.Read(result.FinalModel);
         return spiceSharpModel.Circuit.ToList();
     }
 }

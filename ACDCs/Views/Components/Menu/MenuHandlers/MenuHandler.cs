@@ -12,6 +12,11 @@ public class MenuHandler
             {
                 s_menuHandlers.Add(name, action);
             }
+            else
+            {
+                s_menuHandlers[name] = action;
+                GC.Collect();
+            }
 
             return Task.CompletedTask;
         }).Wait();

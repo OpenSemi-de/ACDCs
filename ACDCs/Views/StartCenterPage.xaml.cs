@@ -1,6 +1,7 @@
 ﻿using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Items.Transistors;
 using ACDCs.Services;
+using ACDCs.Views.Components.WindowView;
 
 namespace ACDCs.Views;
 
@@ -14,7 +15,10 @@ public partial class StartCenterPage : ContentPage
 
     private async void Button_OnClicked(object? sender, EventArgs e)
     {
-        await Shell.Current.Navigation.PushAsync(new CircuitSheetPage(), true);
+        WindowView windowView = new WindowView(MainWindowLayout)
+            .WindowContent(new CircuitSheetView());
+        windowView.Maximize();
+        MainWindowLayout.Add(windowView);
     }
 
     private async void CircuitView_OnLoaded(object? sender, EventArgs e)
@@ -34,6 +38,18 @@ public partial class StartCenterPage : ContentPage
         CircuitView.InsertToPosition(10, 10, textItemLogo).Wait();
         CircuitView.InsertToPosition(10, 12, textItemText).Wait();
         await CircuitView.Paint();
+    }
+
+    private void ComponentsButton_OnClicked(object? sender, EventArgs e)
+    {
+        ComponentsView componentsView = new ComponentsView();
+
+        WindowView windowView = new WindowView(MainWindowLayout)
+            .WindowContent(componentsView);
+        windowView.OnClose = componentsView.OnClose;
+        MainWindowLayout.Add(windowView);
+
+        windowView.Maximize();
     }
 
     private void OnLoaded(object? sender, EventArgs e)

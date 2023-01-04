@@ -29,7 +29,7 @@ public class ImportMenuHandlers : MenuHandlerView
         if (result != null)
         {
             string fileName = result.FullPath;
-            ComponentsPage.ImportSpiceModels(fileName);
+            ComponentsView.ImportSpiceModels(fileName);
         }
     }
 
@@ -39,7 +39,7 @@ public class ImportMenuHandlers : MenuHandlerView
         {
             DBConnection defaultdb = new DBConnection("default");
             List<IElectronicComponent> defaultComponents = defaultdb.Read<IElectronicComponent>("Components");
-            ComponentsPage.LoadFromSource(defaultComponents);
+            ComponentsView.LoadFromSource(defaultComponents);
             return Task.CompletedTask;
         });
     }
@@ -49,7 +49,7 @@ public class ImportMenuHandlers : MenuHandlerView
         DBConnection db = new("default");
         List<IElectronicComponent> newComponents = new();
 
-        List<IElectronicComponent> components = ComponentsPage.dataSource.Select(m => m.Model).ToList();
+        List<IElectronicComponent> components = ComponentsView.dataSource.Select(m => m.Model).ToList();
         List<IElectronicComponent> existingComponents = db.Read<IElectronicComponent>("Components");
 
         foreach (IElectronicComponent newComponent in components)

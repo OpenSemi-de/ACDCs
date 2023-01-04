@@ -1,24 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-             xmlns:menu="clr-namespace:ACDCs.Views.Components.Menu"
-             xmlns:circuitView="clr-namespace:ACDCs.Views.Components.CircuitView"
-             xmlns:components="clr-namespace:ACDCs.Views.Components"
-             xmlns:menuHandlers="clr-namespace:ACDCs.Views.Components.Menu.MenuHandlers"
-             xmlns:views="using:ACDCs.Views"
-             x:Class="ACDCs.Views.ComponentsPage"
-             x:Name="ComponentsPageInstance">
-    <ContentPage.Content>
+<components:SharpAbsoluteLayout xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                                xmlns:controls="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+                                xmlns:menu="clr-namespace:ACDCs.Views.Components.Menu"
+                                xmlns:circuitView="clr-namespace:ACDCs.Views.Components.CircuitView"
+                                xmlns:components="clr-namespace:ACDCs.Views.Components"
+                                xmlns:menuHandlers="clr-namespace:ACDCs.Views.Components.Menu.MenuHandlers"
+                                xmlns:views="using:ACDCs.Views"
+                                xmlns:windowView="clr-namespace:ACDCs.Views.Components.WindowView"
+                                x:Class="ACDCs.Views.ComponentsView"
+                                x:Name="AbsoluteLayoutSheetPage">
+    <menu:MenuContainer PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" MenuFilename="menu_components.json"/>
 
-        <components:SharpAbsoluteLayout x:Name="AbsoluteLayoutSheetPage">
-            <menu:MenuContainer PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" MenuFilename="menu_components.json"/>
+    <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutFlags="WidthProportional" AbsoluteLayout.LayoutBounds="0,50,1,30">
+        <Entry WidthRequest="200" x:Name="keywordEntry" TextChanged="KeywordEntry_OnTextChanged"></Entry>
+        <Picker WidthRequest="120" x:Name="CategoryPicker" SelectedIndexChanged="CategoryPicker_OnSelectedIndexChanged">
+        </Picker>
+    </StackLayout>
 
-            <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutFlags="WidthProportional" AbsoluteLayout.LayoutBounds="0,50,1,30">
-<Entry WidthRequest="200" x:Name="keywordEntry" TextChanged="KeywordEntry_OnTextChanged"></Entry>
-            </StackLayout>
-            <ListView x:Name="ComponentsGrid" AbsoluteLayout.LayoutBounds="0,80,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
+    <StackLayout AbsoluteLayout.LayoutBounds="0,80,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
+        <Grid HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="6000">
+            <ListView Grid.Column="0" Grid.Row="0" x:Name="ComponentsGrid" HeightRequest="6000">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -60,7 +63,9 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <!--   <controls:DataGrid VerticalOptions="Fill" x:Name="ComponentsGrid" ItemsSource="{x:Reference dataSource}" UseAutoColumns="False" Margin="0" Padding="1">
+        </Grid>
+    </StackLayout>
+    <!--   <controls:DataGrid VerticalOptions="Fill" x:Name="ComponentsGrid" ItemsSource="{x:Reference dataSource}" UseAutoColumns="False" Margin="0" Padding="1">
                 <controls:DataGrid.Columns>
                     <controls:DataGridSelectionColumn Title=" "></controls:DataGridSelectionColumn>
                     <controls:DataGridColumn Title="Name" PropertyName="Name"></controls:DataGridColumn>
@@ -80,7 +85,6 @@
             </controls:DataGrid>-->
 
 
-            <menuHandlers:ImportMenuHandlers ComponentsPage="{x:Reference ComponentsPageInstance}"></menuHandlers:ImportMenuHandlers>
-        </components:SharpAbsoluteLayout>
-    </ContentPage.Content>
-</ContentPage>
+    <menuHandlers:ImportMenuHandlers ComponentsView="{x:Reference AbsoluteLayoutSheetPage}"></menuHandlers:ImportMenuHandlers>
+
+</components:SharpAbsoluteLayout>

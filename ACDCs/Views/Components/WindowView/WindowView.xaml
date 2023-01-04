@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ui:ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:Sharp.UI;assembly=Sharp.UI"
+             x:Class="ACDCs.Views.Components.WindowView.WindowView">
+
+    <ui:Border HorizontalOptions="Fill" VerticalOptions="Fill">
+        <ui:StackLayout Orientation="Vertical" HorizontalOptions="Fill" VerticalOptions="Fill">
+            <ui:StackLayout Orientation="Horizontal" HeightRequest="32" HorizontalOptions="Fill">
+                <ui:Button Text="=" HorizontalOptions="Start" WidthRequest="32" HeightRequest="32" x:Name="MenuButton"></ui:Button>
+                <ui:Label Text="Title" HeightRequest="32" HorizontalOptions="Fill">
+                    <ui:Label.GestureRecognizers>
+                        <PanGestureRecognizer PanUpdated="PanGestureRecognizer_OnPanUpdated"></PanGestureRecognizer>
+                    </ui:Label.GestureRecognizers>
+                </ui:Label>
+            </ui:StackLayout>
+            <ContentView x:Name="MainContent" HorizontalOptions="Fill" VerticalOptions="Fill"></ContentView>
+        </ui:StackLayout>
+    </ui:Border>
+</ui:ContentView>

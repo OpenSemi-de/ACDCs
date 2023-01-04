@@ -5,6 +5,7 @@ using Sharp.UI;
 public class MenuDivider : Frame, IMenuItem
 {
     public double ItemHeight { get; set; } = 4;
+    public double ItemWidth { get; set; }
 
     public string MenuCommand { get; set; } = "";
 

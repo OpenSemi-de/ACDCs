@@ -11,7 +11,7 @@ using Sharp.UI;
 public interface IMenuContainer
 {
     CircuitViewContainer CircuitView { get; set; }
-    ComponentsPage ComponentsPage { get; set; }
+    ComponentsView ComponentsView { get; set; }
     DebugViewDragComtainer DebugView { get; set; }
     string MenuFilename { get; set; }
     AbsoluteLayout PopupTarget { get; set; }

@@ -56,21 +56,21 @@ namespace ACDCs.Views
             return new ObservableCollection<PropertyItem> { root };
         }
     }
-}
 
-public class PropertyItem
-{
-    public virtual IList<PropertyItem> Children { get; set; } = new ObservableCollection<PropertyItem>();
-
-    public virtual bool IsExpanded { get; set; }
-    public virtual string Name { get; set; } = "";
-
-    public PropertyItem()
+    public class PropertyItem
     {
-    }
+        public virtual IList<PropertyItem> Children { get; set; } = new ObservableCollection<PropertyItem>();
 
-    public PropertyItem(string name)
-    {
-        Name = name;
+        public virtual bool IsExpanded { get; set; }
+        public virtual string Name { get; set; } = "";
+
+        public PropertyItem()
+        {
+        }
+
+        public PropertyItem(string name)
+        {
+            Name = name;
+        }
     }
 }

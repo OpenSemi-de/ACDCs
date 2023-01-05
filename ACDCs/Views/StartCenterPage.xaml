@@ -4,7 +4,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:circuitView="clr-namespace:ACDCs.Views.Components.CircuitView"
              xmlns:components="clr-namespace:ACDCs.Views.Components"
-             xmlns:windowView="using:ACDCs.Views.Components.WindowView"
+             xmlns:windowView="using:ACDCs.Views.Components.Window"
+             xmlns:window="using:ACDCs.Views.Components.Window"
+             xmlns:debug="using:ACDCs.Views.Components.Debug"
              x:Class="ACDCs.Views.StartCenterPage"
              x:Name="Page"
              Title="Main">
@@ -39,6 +41,7 @@
                 <Button Text="Components" WidthRequest="200" x:Name="componentsButton" Clicked="ComponentsButton_OnClicked"></Button>
             </VerticalStackLayout>
         </components:SharpAbsoluteLayout>
-        <windowView:WindowTabBar Grid.Row="1" x:Name="windowTabBar" HorizontalOptions="Fill" HeightRequest="36"></windowView:WindowTabBar>
+        <window:WindowTabBar Grid.Row="1" x:Name="windowTabBar" HorizontalOptions="Fill" HeightRequest="36"></window:WindowTabBar>
+
     </Grid>
 </ContentPage>

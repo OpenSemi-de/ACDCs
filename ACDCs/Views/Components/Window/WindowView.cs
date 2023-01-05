@@ -1,10 +1,15 @@
 ﻿using System.ComponentModel;
 using ACDCs.Views.Components.Menu;
 using Microsoft.Maui.Layouts;
-
-namespace ACDCs.Views.Components.WindowView;
-
 using Sharp.UI;
+using AbsoluteLayout = Sharp.UI.AbsoluteLayout;
+using ContentView = Sharp.UI.ContentView;
+using Grid = Sharp.UI.Grid;
+using IView = Sharp.UI.IView;
+using Label = Sharp.UI.Label;
+using PanGestureRecognizer = Sharp.UI.PanGestureRecognizer;
+
+namespace ACDCs.Views.Components.Window;
 
 [BindableProperties]
 public interface IWindowViewProperties
@@ -142,6 +147,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
         border.Content = grid;
         PropertyChanged += OnPropertyChanged;
         Content = border;
+        sharpAbsoluteLayout.Add(this);
     }
 
     public void Close()
@@ -170,6 +176,14 @@ public partial class WindowView : ContentView, IWindowViewProperties
     {
         if (State == WindowState.Minimized) return;
         State = WindowState.Minimized;
+
+        if (TabBar != null)
+        {
+            AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
+            AbsoluteLayout.SetLayoutBounds(this, new Rect(0, -140, 120, 32));
+            return;
+        }
+
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.PositionProportional);
         AbsoluteLayout.SetLayoutBounds(this, new Rect(0, 1, 120, 32));
     }

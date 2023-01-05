@@ -1,4 +1,4 @@
-﻿namespace ACDCs.Views.Components.WindowView;
+﻿namespace ACDCs.Views.Components.Window;
 
 public enum WindowState
 {

@@ -84,7 +84,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <MauiXaml Remove="Views\Components\WindowView\WindowView.xaml" />
+    <MauiXaml Remove="Views\Components\Window\WindowView.xaml" />
   </ItemGroup>
 
 
@@ -169,6 +169,10 @@
 	  <MauiAsset Update="Resources\Raw\menu_main.json">
 	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
 	  </MauiAsset>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Views\Components\Debug\" />
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionACDCsHideInfoBar="True" /></VisualStudio></ProjectExtensions>

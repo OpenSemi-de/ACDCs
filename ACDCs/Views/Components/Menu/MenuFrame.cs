@@ -11,7 +11,7 @@ public class MenuFrame : StackLayout
     public View? MainContainer { get; set; }
 
     public AbsoluteLayout? PopupTarget { get; set; }
-    public WindowView.WindowView? WindowFrame { get; set; }
+    public Window.WindowView? WindowFrame { get; set; }
 
     public MenuFrame()
     {

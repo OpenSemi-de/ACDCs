@@ -5,7 +5,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:menu1="clr-namespace:ACDCs.Views.Components.Menu"
-    xmlns:windowView="using:ACDCs.Views.Components.WindowView">
+    xmlns:windowView="using:ACDCs.Views.Components.WindowView"
+    xmlns:window="using:ACDCs.Views.Components.Window">
 
     
     <Style TargetType="ActivityIndicator">
@@ -180,7 +181,7 @@
                 Value="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" />
     </Style>
 
-    <Style TargetType="windowView:WindowFrame">
+    <Style TargetType="window:WindowFrame">
         <Setter Property="HasShadow" Value="True" />
         <Setter Property="Shadow">
             <Shadow>

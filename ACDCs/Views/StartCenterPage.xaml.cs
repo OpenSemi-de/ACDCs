@@ -1,13 +1,18 @@
 ﻿using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Items.Transistors;
 using ACDCs.Services;
-using ACDCs.Views.Components.WindowView;
+using ACDCs.Views.Components.Debug;
+using ACDCs.Views.Components.Window;
+using WindowView = ACDCs.Views.Components.Window.WindowView;
 
 namespace ACDCs.Views;
 
 public partial class StartCenterPage : ContentPage
 {
+    private int _circuitCount = 0;
     private ComponentsView _componentsView;
+    private WindowView? _componentsWindowView;
+    private DebugWindow _debugWindow;
 
     public StartCenterPage()
     {
@@ -17,10 +22,10 @@ public partial class StartCenterPage : ContentPage
 
     private async void Button_OnClicked(object? sender, EventArgs e)
     {
-        WindowView windowView = new WindowView(MainWindowLayout, "New Circuit")
+        _circuitCount++;
+        WindowView windowView = new WindowView(MainWindowLayout, $"Circuit {_circuitCount}")
             .WindowContent(new CircuitSheetView());
         windowView.Maximize();
-        MainWindowLayout.Add(windowView);
         windowTabBar.AddWindow(windowView);
     }
 
@@ -45,20 +50,24 @@ public partial class StartCenterPage : ContentPage
 
     private void ComponentsButton_OnClicked(object? sender, EventArgs e)
     {
-        _componentsView = new ComponentsView();
+        if (_componentsWindowView == null)
+        {
+            _componentsView = new ComponentsView();
 
-        WindowView windowView = new WindowView(MainWindowLayout, "Components")
-            .WindowContent(_componentsView);
-        windowView.OnClose = _componentsView.OnClose;
-        MainWindowLayout.Add(windowView);
+            _componentsWindowView = new WindowView(MainWindowLayout, "Components")
+                .WindowContent(_componentsView);
+            _componentsWindowView.OnClose = _componentsView.OnClose;
 
-        windowView.Maximize();
+            windowTabBar.AddWindow(_componentsWindowView);
+        }
 
-        windowTabBar.AddWindow(windowView);
+        _componentsWindowView?.Maximize();
     }
 
     private void OnLoaded(object? sender, EventArgs e)
     {
         BackgroundImageSource = ImageService.BackgroundImageSource(this);
+        _debugWindow = new DebugWindow(MainWindowLayout);
+        windowTabBar.AddWindow(_debugWindow);
     }
 }

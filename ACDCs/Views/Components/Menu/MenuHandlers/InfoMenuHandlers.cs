@@ -15,7 +15,6 @@ public class InfoMenuHandlers : MenuHandlerView
 
     private void Debug()
     {
-        DebugView.IsVisible = true;
     }
 
     private void Licenses()

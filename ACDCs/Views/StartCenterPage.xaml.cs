@@ -7,6 +7,8 @@ namespace ACDCs.Views;
 
 public partial class StartCenterPage : ContentPage
 {
+    private ComponentsView _componentsView;
+
     public StartCenterPage()
     {
         InitializeComponent();
@@ -15,10 +17,11 @@ public partial class StartCenterPage : ContentPage
 
     private async void Button_OnClicked(object? sender, EventArgs e)
     {
-        WindowView windowView = new WindowView(MainWindowLayout)
+        WindowView windowView = new WindowView(MainWindowLayout, "New Circuit")
             .WindowContent(new CircuitSheetView());
         windowView.Maximize();
         MainWindowLayout.Add(windowView);
+        windowTabBar.AddWindow(windowView);
     }
 
     private async void CircuitView_OnLoaded(object? sender, EventArgs e)
@@ -42,14 +45,16 @@ public partial class StartCenterPage : ContentPage
 
     private void ComponentsButton_OnClicked(object? sender, EventArgs e)
     {
-        ComponentsView componentsView = new ComponentsView();
+        _componentsView = new ComponentsView();
 
-        WindowView windowView = new WindowView(MainWindowLayout)
-            .WindowContent(componentsView);
-        windowView.OnClose = componentsView.OnClose;
+        WindowView windowView = new WindowView(MainWindowLayout, "Components")
+            .WindowContent(_componentsView);
+        windowView.OnClose = _componentsView.OnClose;
         MainWindowLayout.Add(windowView);
 
         windowView.Maximize();
+
+        windowTabBar.AddWindow(windowView);
     }
 
     private void OnLoaded(object? sender, EventArgs e)

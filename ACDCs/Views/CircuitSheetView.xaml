@@ -3,23 +3,19 @@
 <components:SharpAbsoluteLayout xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:menu="clr-namespace:ACDCs.Views.Components.Menu"
-             xmlns:itemsList="clr-namespace:ACDCs.Views.Components.ItemsList"
              xmlns:items="clr-namespace:ACDCs.Views.Components.Items"
              xmlns:circuitView="clr-namespace:ACDCs.Views.Components.CircuitView"
-             xmlns:debugView="clr-namespace:ACDCs.Views.Components.DebugView"
              xmlns:menuHandlers="clr-namespace:ACDCs.Views.Components.Menu.MenuHandlers"
              xmlns:edit="clr-namespace:ACDCs.Views.Components.Edit"
              xmlns:components="clr-namespace:ACDCs.Views.Components"
              x:Class="ACDCs.Views.CircuitSheetView"
              HorizontalOptions="Fill" VerticalOptions="Fill" x:Name="AbsoluteLayoutSheetPage">
     <circuitView:CircuitViewContainer x:Name="CircuitView" PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" ForegroundColor="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" BackgroundHighColor="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional"></circuitView:CircuitViewContainer>
-    <menu:MenuContainer PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" CircuitView="{x:Reference CircuitView}" DebugView="{x:Reference DebugViewInstance}"/>
+    <menu:MenuContainer PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" CircuitView="{x:Reference CircuitView}" />
     <menuHandlers:FileMenuHandlers CircuitView="{x:Reference CircuitView}" PopupPage="{x:Reference CircuitSheetPageInstance}"></menuHandlers:FileMenuHandlers>
     <menuHandlers:EditMenuHandlers CircuitView="{x:Reference CircuitView}"></menuHandlers:EditMenuHandlers>
-    <menuHandlers:InfoMenuHandlers CircuitView="{x:Reference CircuitView}" DebugView="{x:Reference DebugViewInstance}"></menuHandlers:InfoMenuHandlers>
+    <menuHandlers:InfoMenuHandlers CircuitView="{x:Reference CircuitView}"></menuHandlers:InfoMenuHandlers>
     <edit:EditContainer ButtonWidth="80" ButtonHeight="40"></edit:EditContainer>
-    <itemsList:ItemsListDragContainer></itemsList:ItemsListDragContainer>
-    <debugView:DebugViewDragComtainer x:Name="DebugViewInstance" IsVisible="True" CircuitView="{x:Reference CircuitView}"></debugView:DebugViewDragComtainer>
     <items:ItemsContainer ButtonWidth="60" ButtonHeight="60" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}"></items:ItemsContainer>
 
 </components:SharpAbsoluteLayout>

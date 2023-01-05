@@ -6,38 +6,41 @@ namespace ACDCs.Views.Components.WindowView;
 
 using Sharp.UI;
 
-/*
-<ui:StackLayout Orientation = "Vertical" HorizontalOptions="Fill" VerticalOptions="Fill">
-    <ui:StackLayout Orientation = "Horizontal" HeightRequest="32" HorizontalOptions="Fill">
-    <ui:Button Text = "=" HorizontalOptions="Start" WidthRequest="32" HeightRequest="32" x:Name="MenuButton"></ui:Button>
-    <ui:Label Text = "Title" HeightRequest="32" HorizontalOptions="Fill">
-    <ui:Label.GestureRecognizers>
-    <PanGestureRecognizer PanUpdated = "PanGestureRecognizer_OnPanUpdated" ></ PanGestureRecognizer >
-    </ ui:Label.GestureRecognizers>
-    </ui:Label>
-    </ui:StackLayout>
-    <ContentView x:Name="MainContent" HorizontalOptions="Fill" VerticalOptions="Fill"></ContentView>
-    </ui:StackLayout>
-    </ui:Border>
-    </
-    */
-
-public class WindowFrame : Frame
+[BindableProperties]
+public interface IWindowViewProperties
 {
+    public View WindowContent { get; set; }
 }
 
 [SharpObject]
 public partial class WindowView : ContentView, IWindowViewProperties
 {
     private readonly MenuFrame _menuFrame;
+    private readonly Label _resizeField;
     private readonly ContentView _windowContentView;
     private Rect _lastBounds = Rect.Zero;
+    private WindowState _state = WindowState.Standard;
     public SharpAbsoluteLayout MainContainer { get; set; }
 
     public Action OnClose { get; set; }
 
-    public WindowView(SharpAbsoluteLayout sharpAbsoluteLayout)
+    public WindowState State
     {
+        get => _state;
+        set
+        {
+            _state = value;
+        }
+    }
+
+    public WindowTabBar? TabBar { get; set; }
+
+    public string WindowTitle
+    { get; set; }
+
+    public WindowView(SharpAbsoluteLayout sharpAbsoluteLayout, string title)
+    {
+        WindowTitle = title;
         AbsoluteLayout.SetLayoutBounds(this, new Rect(30, 30, 500, 400));
         _lastBounds = AbsoluteLayout.GetLayoutBounds(this);
         MainContainer = sharpAbsoluteLayout;
@@ -60,7 +63,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
         grid.Add(menuButton);
         SetRowAndColumn(menuButton, 0, 0);
 
-        var titleLabel = new Label("Title")
+        var titleLabel = new Label(WindowTitle)
             .HorizontalOptions(LayoutOptions.Fill)
             .HeightRequest(32);
 
@@ -78,21 +81,22 @@ public partial class WindowView : ContentView, IWindowViewProperties
         grid.Add(_windowContentView);
         SetRowAndColumn(_windowContentView, 1, 0, 3, 2);
 
-        var resizeField = new Label("//")
+        _resizeField = new Label("//")
             .WidthRequest(32)
             .HeightRequest(32)
             .FontSize(30)
+            .BackgroundColor(Colors.Green)
             .FontAttributes(FontAttributes.Bold | FontAttributes.Italic)
             .HorizontalTextAlignment(TextAlignment.End)
             .VerticalTextAlignment(TextAlignment.End);
 
-        grid.Add(resizeField);
-        SetRowAndColumn(resizeField, 2, 2);
+        grid.Add(_resizeField);
+        SetRowAndColumn(_resizeField, 2, 2);
 
         var resizeRecognizer = new PanGestureRecognizer()
             .OnPanUpdated(resizeRecognizer_PanUpdated);
 
-        resizeField.GestureRecognizers.Add(resizeRecognizer);
+        _resizeField.GestureRecognizers.Add(resizeRecognizer);
 
         _menuFrame = new MenuFrame();
         List<MenuItemDefinition> menuItems = new()
@@ -113,13 +117,13 @@ public partial class WindowView : ContentView, IWindowViewProperties
             {
                 Text = "Restore",
                 MenuCommand = "dummy",
-                ClickAction = RestoreWindow_Clicked
+                ClickAction = Restore
             },
             new MenuItemDefinition()
             {
                 Text = "Close",
                 MenuCommand = "dummy",
-                ClickAction = CloseWindow_Clicked
+                ClickAction = Close
             },
         };
 
@@ -140,14 +144,9 @@ public partial class WindowView : ContentView, IWindowViewProperties
         Content = border;
     }
 
-    public void Maximize()
+    public void Close()
     {
-        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.SizeProportional);
-        AbsoluteLayout.SetLayoutBounds(this, new Rect(0, 0, 1, 1));
-    }
-
-    private void CloseWindow_Clicked()
-    {
+        TabBar?.RemoveWindow(this);
         OnClose?.Invoke();
         IsVisible = false;
         PropertyChanged -= OnPropertyChanged;
@@ -159,8 +158,27 @@ public partial class WindowView : ContentView, IWindowViewProperties
         GC.WaitForPendingFinalizers();
     }
 
-    private void Minimize()
+    public void Maximize()
     {
+        if (State == WindowState.Maximized) return;
+        State = WindowState.Maximized;
+        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.SizeProportional);
+        AbsoluteLayout.SetLayoutBounds(this, new Rect(0, 0, 1, 1));
+    }
+
+    public void Minimize()
+    {
+        if (State == WindowState.Minimized) return;
+        State = WindowState.Minimized;
+        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.PositionProportional);
+        AbsoluteLayout.SetLayoutBounds(this, new Rect(0, 1, 120, 32));
+    }
+
+    public void Restore()
+    {
+        State = WindowState.Standard;
+        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
+        AbsoluteLayout.SetLayoutBounds(this, _lastBounds);
     }
 
     private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -209,28 +227,37 @@ public partial class WindowView : ContentView, IWindowViewProperties
                 newBounds.Height += e.TotalY;
                 newBounds.Width += e.TotalX;
 
-                if (newBounds.Width < 400)
-                    newBounds.Width = 400;
+                if (newBounds.Width < 200)
+                    newBounds.Width = 200;
 
-                if (newBounds.Height < 400)
-                    newBounds.Height = 400;
+                if (newBounds.Height < 200)
+                    newBounds.Height = 200;
 
-                AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
+                this.BatchBegin();
                 AbsoluteLayout.SetLayoutBounds(this, newBounds);
+                this.BatchCommit();
             }
             else
             {
+                if (e.StatusType == GestureStatus.Started)
+                {
+                    _resizeField.WidthRequest(100)
+                        .HeightRequest(100)
+                        .Margin(new Thickness(-68, -68, 0, 0));
+                }
+                else
+                {
+                    _resizeField.WidthRequest(32)
+                        .HeightRequest(32)
+                        .Margin(new Thickness(0, 0, 0, 0));
+                }
+
+                AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
                 _lastBounds = AbsoluteLayout.GetLayoutBounds(this);
             }
 
             return Task.CompletedTask;
         }).Wait();
-    }
-
-    private void RestoreWindow_Clicked()
-    {
-        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
-        AbsoluteLayout.SetLayoutBounds(this, _lastBounds);
     }
 
     private void SetRowAndColumn(IView view, int row, int column, int columnSpan = 0, int rowSpan = 0)
@@ -242,10 +269,4 @@ public partial class WindowView : ContentView, IWindowViewProperties
         if (rowSpan > 0)
             Microsoft.Maui.Controls.Grid.SetRowSpan((BindableObject)view, rowSpan);
     }
-}
-
-[BindableProperties]
-public interface IWindowViewProperties
-{
-    public View WindowContent { get; set; }
 }

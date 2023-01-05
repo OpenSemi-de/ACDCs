@@ -4,12 +4,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:circuitView="clr-namespace:ACDCs.Views.Components.CircuitView"
              xmlns:components="clr-namespace:ACDCs.Views.Components"
+             xmlns:windowView="using:ACDCs.Views.Components.WindowView"
              x:Class="ACDCs.Views.StartCenterPage"
              x:Name="Page"
              Title="Main">
-    <components:SharpAbsoluteLayout x:Name="MainWindowLayout">
-
-        <ScrollView>
+    <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="34"></RowDefinition>
+        </Grid.RowDefinitions>
+        <components:SharpAbsoluteLayout Grid.Row="0" x:Name="MainWindowLayout">
             <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
@@ -31,6 +38,7 @@
                 <Button Text="New sheet" WidthRequest="200" Clicked="Button_OnClicked"></Button>
                 <Button Text="Components" WidthRequest="200" x:Name="componentsButton" Clicked="ComponentsButton_OnClicked"></Button>
             </VerticalStackLayout>
-        </ScrollView>
-    </components:SharpAbsoluteLayout>
+        </components:SharpAbsoluteLayout>
+        <windowView:WindowTabBar Grid.Row="1" x:Name="windowTabBar" HorizontalOptions="Fill" HeightRequest="36"></windowView:WindowTabBar>
+    </Grid>
 </ContentPage>

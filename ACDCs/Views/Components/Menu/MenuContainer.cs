@@ -1,5 +1,4 @@
 ﻿using ACDCs.Views.Components.CircuitView;
-using ACDCs.Views.Components.DebugView;
 using Microsoft.Maui.Layouts;
 using Newtonsoft.Json;
 
@@ -12,7 +11,6 @@ public interface IMenuContainer
 {
     CircuitViewContainer CircuitView { get; set; }
     ComponentsView ComponentsView { get; set; }
-    DebugViewDragComtainer DebugView { get; set; }
     string MenuFilename { get; set; }
     AbsoluteLayout PopupTarget { get; set; }
 }

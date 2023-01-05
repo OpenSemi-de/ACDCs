@@ -1,15 +1,15 @@
 [submodule "sharpui"]
 	path = libs/Sharp.UI
-	url = git://git@github.com:idexus/Sharp.UI.git
+	url = https://github.com/idexus/Sharp.UI.git
 
 [submodule "spicesharp"]
 	path = libs/SpiceSharp
-	url = git://git@github.com:SpiceSharp/SpiceSharp.git
+	url = https://github.com/SpiceSharp/SpiceSharp.git
 	
 [submodule "spicesharpb"]
 	path = libs/SpiceSharpBehavioral
-	url = git://git@github.com:SpiceSharp/SpiceSharpBehavioral.git
+	url = https://github.com/SpiceSharp/SpiceSharpBehavioral.git
 	
 [submodule "spicesharpp"]
 	path = libs/SpiceSharpParser
-	url = git://git@github.com:SpiceSharp/SpiceSharpParser.git
+	url = https://github.com/SpiceSharp/SpiceSharpParser.git

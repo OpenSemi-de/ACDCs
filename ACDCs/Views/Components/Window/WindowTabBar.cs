@@ -48,7 +48,8 @@ public class WindowTabBar : Grid
             tapGestureRecognizer
         );
         window.OnFocused(OnWindowFocus);
-        _focusWindow = window;
+
+        BringToFront(window);
         _windowViews.Add(tab, window);
         _mainLayout.Add(tab);
         MarkFocused();
@@ -107,8 +108,7 @@ public class WindowTabBar : Grid
             {
                 window.Restore();
                 window.Focus();
-                _focusWindow = window;
-
+                BringToFront(window);
                 MarkFocused();
                 return;
             }
@@ -121,11 +121,7 @@ public class WindowTabBar : Grid
 
             if (_focusWindow != window)
             {
-                if (_focusWindow != null)
-                {
-                    window.ZIndex = _focusWindow.ZIndex + 1;
-                }
-                _focusWindow = window;
+                BringToFront(window);
             }
 
             MarkFocused();

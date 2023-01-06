@@ -21,6 +21,7 @@ public interface IWindowViewProperties
 public partial class WindowView : ContentView, IWindowViewProperties
 {
     private readonly WindowFrame _border;
+    private readonly Grid _grid;
     private readonly MenuFrame _menuFrame;
     private readonly Label _resizeField;
     private readonly Label _titleLabel;
@@ -53,22 +54,24 @@ public partial class WindowView : ContentView, IWindowViewProperties
         _lastBounds = AbsoluteLayout.GetLayoutBounds(this);
         MainContainer = sharpAbsoluteLayout;
 
-        var grid = new Grid()
+        _grid = new Grid()
             .VerticalOptions(LayoutOptions.Fill)
-            .HorizontalOptions(LayoutOptions.Fill);
+            .HorizontalOptions(LayoutOptions.Fill)
+            .Margin(1)
+            .BackgroundColor(ColorManager.Background);
 
-        grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(32));
-        grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
-        grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(32));
-        grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(32));
-        grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(GridLength.Star));
-        grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(32));
+        _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(32));
+        _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
+        _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(32));
+        _grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(32));
+        _grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(GridLength.Star));
+        _grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(32));
 
         var menuButton = new MenuButton("*", "")
             .HeightRequest(32)
             .WidthRequest(32);
 
-        grid.Add(menuButton);
+        _grid.Add(menuButton);
         SetRowAndColumn(menuButton, 0, 0);
 
         _titleLabel = new Label(WindowTitle)
@@ -77,7 +80,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
             .TextColor(ColorManager.Text)
             .BackgroundColor(ColorManager.Foreground);
 
-        grid.Add(_titleLabel);
+        _grid.Add(_titleLabel);
         SetRowAndColumn(_titleLabel, 0, 1, 2);
 
         var panGesture = new PanGestureRecognizer()
@@ -88,7 +91,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
 
-        grid.Add(_windowContentView);
+        _grid.Add(_windowContentView);
         SetRowAndColumn(_windowContentView, 1, 0, 3, 2);
 
         _resizeField = new Label("//")
@@ -101,7 +104,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
             .HorizontalTextAlignment(TextAlignment.End)
             .VerticalTextAlignment(TextAlignment.End);
 
-        grid.Add(_resizeField);
+        _grid.Add(_resizeField);
         SetRowAndColumn(_resizeField, 2, 2);
 
         var resizeRecognizer = new PanGestureRecognizer()
@@ -152,7 +155,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
             .VerticalOptions(LayoutOptions.Fill);
         _borderColor = _border.BorderColor;
 
-        _border.Content = grid;
+        _border.Content = _grid;
         PropertyChanged += OnPropertyChanged;
         Content = _border;
         sharpAbsoluteLayout.Add(this);
@@ -206,13 +209,15 @@ public partial class WindowView : ContentView, IWindowViewProperties
     public void SetActive()
     {
         _titleLabel.BackgroundColor(ColorManager.Foreground);
-        _border.BorderColor(_borderColor);
+        _border.BorderColor(ColorManager.Border);
+        _grid.BackgroundColor(ColorManager.Foreground);
     }
 
     public void SetInactive()
     {
         _titleLabel.BackgroundColor(ColorManager.Background);
-        _border.BorderColor(ColorManager.BackgroundHigh);
+        _border.BorderColor(ColorManager.Background);
+        _grid.BackgroundColor(ColorManager.BackgroundHigh);
     }
 
     private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)

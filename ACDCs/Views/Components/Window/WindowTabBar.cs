@@ -87,12 +87,14 @@ public class WindowTabBar : Grid
         foreach (WindowTab windowTab in _windowViews.Keys)
         {
             windowTab.SetInactive();
+            _windowViews[windowTab].SetInactive();
         }
 
         if (_focusWindow != null)
         {
             WindowTab? focusTab = _windowViews.First(kv => kv.Value == _focusWindow).Key;
             focusTab?.SetActive();
+            _focusWindow.SetActive();
         }
     }
 

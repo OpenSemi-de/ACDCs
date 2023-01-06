@@ -1,4 +1,6 @@
-﻿namespace ACDCs.Services;
+﻿using ACDCs.Views;
+
+namespace ACDCs.Services;
 
 public static class ImageService
 {
@@ -20,14 +22,7 @@ public static class ImageService
             List<Color> colors;
             ICanvas? canvas = context.Canvas;
 
-            if (Application.Current != null && Application.Current.RequestedTheme == AppTheme.Dark)
-            {
-                colors = new List<Color> { Colors.Black, Color.FromArgb("#ff10206f") };
-            }
-            else
-            {
-                colors = new List<Color> { Colors.White, Color.FromArgb("#ffafcfff") };
-            }
+            colors = new List<Color> { ColorManager.Background, ColorManager.BackgroundHigh };
 
             canvas.SetShadow(new SizeF(2, 4), 10f, colors[1]);
 
@@ -80,14 +75,8 @@ public static class ImageService
             ICanvas? canvas = context.Canvas;
             canvas.Alpha = 0.7f;
 
-            if (Application.Current != null && Application.Current.RequestedTheme == AppTheme.Dark)
-            {
-                colors = new List<Color> { Colors.Black, Color.FromArgb("#ff10206f"), Colors.White };
-            }
-            else
-            {
-                colors = new List<Color> { Colors.White, Color.FromArgb("#ffafcfff"), Colors.Black };
-            }
+            colors = new List<Color> { ColorManager.Background, ColorManager.BackgroundHigh };
+
             canvas.SetShadow(new SizeF(2, 4), 10f, colors[1]);
 
             LinearGradientPaint paintFrom = new(Point.Zero, new(1, 1))

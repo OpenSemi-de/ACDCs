@@ -3,6 +3,7 @@ using ACDCs.CircuitRenderer.Items.Transistors;
 using ACDCs.Services;
 using ACDCs.Views.Components.Debug;
 using ACDCs.Views.Components.Window;
+using ContentPage = Microsoft.Maui.Controls.ContentPage;
 using WindowView = ACDCs.Views.Components.Window.WindowView;
 
 namespace ACDCs.Views;

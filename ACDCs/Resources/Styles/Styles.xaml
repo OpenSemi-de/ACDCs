@@ -4,11 +4,14 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:menu1="clr-namespace:ACDCs.Views.Components.Menu"
-    xmlns:windowView="using:ACDCs.Views.Components.WindowView"
-    xmlns:window="using:ACDCs.Views.Components.Window">
+    xmlns:menu="clr-namespace:ACDCs.Views.Components.Menu"
+    xmlns:window="using:ACDCs.Views.Components.Window"
+    xmlns:views="using:ACDCs.Views"
+    xmlns:system="using:System">
+
 
     
+ 
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
     </Style>
@@ -32,18 +35,18 @@
                 Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
 
-    <Style TargetType="menu1:MenuDivider">
+    <Style TargetType="menu:MenuDivider">
         <Setter Property="BackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" />
         <Setter Property="MaximumHeightRequest" Value="2"></Setter>
     </Style>
 
-    <Style TargetType="menu1:MenuFrame">
+    <Style TargetType="menu:MenuFrame">
         <Setter Property="BackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
     </Style>
 
-    <Style TargetType="menu1:MenuButton">
+    <Style TargetType="menu:MenuButton">
         <Setter Property="FontSize" Value="10"></Setter>
     </Style>
 
@@ -52,7 +55,7 @@
         <Setter Property="TextColor"
                 Value="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" />
         <Setter Property="BackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" />
+                Value="{AppThemeBinding Light={StaticResource BackgroundHighLight}, Dark={StaticResource BackgroundHighDark}}" />
         <Setter Property="BorderColor"
                 Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
         <Setter Property="FontFamily" Value="MapleMonoRegular" />
@@ -178,7 +181,7 @@
         <Setter Property="CornerRadius" Value="2" />
         <Setter Property="Padding" Value="1,1,1,1" />
         <Setter Property="BackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" />
+                Value="{AppThemeBinding Light={StaticResource BackgroundHighLight}, Dark={StaticResource BackgroundHighDark}}" />
     </Style>
 
     <Style TargetType="window:WindowFrame">
@@ -197,16 +200,16 @@
         <Setter Property="BorderColor"
                 Value="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" />
         <Setter Property="CornerRadius" Value="3" />
-        <Setter Property="Padding" Value="0,0,0,0" />
+        <Setter Property="Padding" Value="2" />
         <Setter Property="BackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" />
+                Value="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" />
     </Style>
 
 
     <!--
     <Style TargetType="Grid">
         <Setter Property="BackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" />
+                Value="{AppThemeBinding Light={StaticResource BackgroundHighLight}, Dark={StaticResource BackgroundHighDark}}" />
     </Style>
     -->
 
@@ -420,7 +423,7 @@
         <Setter Property="BackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
         <Setter Property="OnColor"
-                Value="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" />
+                Value="{AppThemeBinding Light={StaticResource BackgroundHighLight}, Dark={StaticResource BackgroundHighDark}}" />
         <Setter Property="ThumbColor" Value="{StaticResource White}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
@@ -437,7 +440,7 @@
                     <VisualState x:Name="On">
                         <VisualState.Setters>
                             <Setter Property="OnColor"
-                                    Value="{AppThemeBinding Light={StaticResource BackgroundHighlightLight}, Dark={StaticResource BackgroundHighlightDark}}" />
+                                    Value="{AppThemeBinding Light={StaticResource BackgroundHighLight}, Dark={StaticResource BackgroundHighDark}}" />
                             <Setter Property="ThumbColor" Value="{StaticResource White}" />
                         </VisualState.Setters>
                     </VisualState>

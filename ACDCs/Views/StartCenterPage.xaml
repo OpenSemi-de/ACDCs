@@ -7,6 +7,7 @@
              xmlns:windowView="using:ACDCs.Views.Components.Window"
              xmlns:window="using:ACDCs.Views.Components.Window"
              xmlns:debug="using:ACDCs.Views.Components.Debug"
+             xmlns:views="using:ACDCs.Views"
              x:Class="ACDCs.Views.StartCenterPage"
              x:Name="Page"
              Title="Main">
@@ -23,25 +24,17 @@
             Spacing="25"
             Padding="30,0"
             VerticalOptions="Center">
-                <circuitView:CircuitViewContainer WidthRequest="500" HeightRequest="400" x:Name="CircuitView" Loaded="CircuitView_OnLoaded">
+                <circuitView:CircuitViewContainer WidthRequest="500" HeightRequest="400" x:Name="CircuitView" Loaded="CircuitView_OnLoaded"
+                                                  BackgroundColor="{x:Static views:ColorManager.Background}"
+                                                  BackgroundHighColor="{x:Static views:ColorManager.BackgroundHigh}"
+                                                  ForegroundColor="{x:Static views:ColorManager.Text}">
                     <AbsoluteLayout.LayoutFlags>SizeProportional</AbsoluteLayout.LayoutFlags>
                     <AbsoluteLayout.LayoutBounds>0,0,1,1</AbsoluteLayout.LayoutBounds>
-                    <circuitView:CircuitViewContainer.BackgroundColor>
-                        <AppThemeBinding Light="{StaticResource BackgroundLight}" Dark="{StaticResource BackgroundDark}" />
-                    </circuitView:CircuitViewContainer.BackgroundColor>
-                    <circuitView:CircuitViewContainer.BackgroundHighColor>
-                        <AppThemeBinding Light="{StaticResource BackgroundHighlightLight}"
-                                     Dark="{StaticResource BackgroundHighlightDark}" />
-                    </circuitView:CircuitViewContainer.BackgroundHighColor>
-                    <circuitView:CircuitViewContainer.ForegroundColor>
-                        <AppThemeBinding Light="{StaticResource ForegroundLight}" Dark="{StaticResource ForegroundDark}" />
-                    </circuitView:CircuitViewContainer.ForegroundColor>
                 </circuitView:CircuitViewContainer>
                 <Button Text="New sheet" WidthRequest="200" Clicked="Button_OnClicked"></Button>
                 <Button Text="Components" WidthRequest="200" x:Name="componentsButton" Clicked="ComponentsButton_OnClicked"></Button>
             </VerticalStackLayout>
         </components:SharpAbsoluteLayout>
         <window:WindowTabBar Grid.Row="1" x:Name="windowTabBar" HorizontalOptions="Fill" HeightRequest="36"></window:WindowTabBar>
-
     </Grid>
 </ContentPage>

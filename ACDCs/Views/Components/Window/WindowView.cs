@@ -20,9 +20,12 @@ public interface IWindowViewProperties
 [SharpObject]
 public partial class WindowView : ContentView, IWindowViewProperties
 {
+    private readonly WindowFrame _border;
     private readonly MenuFrame _menuFrame;
     private readonly Label _resizeField;
+    private readonly Label _titleLabel;
     private readonly ContentView _windowContentView;
+    private Color _borderColor;
     private Rect _lastBounds = Rect.Zero;
     private WindowState _state = WindowState.Standard;
     public SharpAbsoluteLayout MainContainer { get; set; }
@@ -68,17 +71,19 @@ public partial class WindowView : ContentView, IWindowViewProperties
         grid.Add(menuButton);
         SetRowAndColumn(menuButton, 0, 0);
 
-        var titleLabel = new Label(WindowTitle)
+        _titleLabel = new Label(WindowTitle)
             .HorizontalOptions(LayoutOptions.Fill)
-            .HeightRequest(32);
+            .HeightRequest(32)
+            .TextColor(ColorManager.Text)
+            .BackgroundColor(ColorManager.Foreground);
 
-        grid.Add(titleLabel);
-        SetRowAndColumn(titleLabel, 0, 1, 2);
+        grid.Add(_titleLabel);
+        SetRowAndColumn(_titleLabel, 0, 1, 2);
 
         var panGesture = new PanGestureRecognizer()
             .OnPanUpdated(PanGestureRecognizer_OnPanUpdated);
 
-        titleLabel.GestureRecognizers.Add(panGesture);
+        _titleLabel.GestureRecognizers.Add(panGesture);
         _windowContentView = new ContentView()
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
@@ -90,6 +95,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
             .WidthRequest(32)
             .HeightRequest(32)
             .FontSize(30)
+            .TextColor(ColorManager.Text)
             .BackgroundColor(Colors.Green)
             .FontAttributes(FontAttributes.Bold | FontAttributes.Italic)
             .HorizontalTextAlignment(TextAlignment.End)
@@ -138,15 +144,17 @@ public partial class WindowView : ContentView, IWindowViewProperties
         MainContainer.Add(_menuFrame);
         menuButton.MenuFrame = _menuFrame;
 
-        var border = new WindowFrame()
+        _border = new WindowFrame()
             .Margin(0)
-            .Padding(0)
+            .BorderColor(ColorManager.Border)
+            .BackgroundColor(ColorManager.Text)
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
+        _borderColor = _border.BorderColor;
 
-        border.Content = grid;
+        _border.Content = grid;
         PropertyChanged += OnPropertyChanged;
-        Content = border;
+        Content = _border;
         sharpAbsoluteLayout.Add(this);
     }
 
@@ -179,8 +187,8 @@ public partial class WindowView : ContentView, IWindowViewProperties
 
         if (TabBar != null)
         {
-            AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
-            AbsoluteLayout.SetLayoutBounds(this, new Rect(0, -140, 120, 32));
+            AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.PositionProportional);
+            AbsoluteLayout.SetLayoutBounds(this, new Rect(1, 1.1, 120, 32));
             return;
         }
 
@@ -193,6 +201,18 @@ public partial class WindowView : ContentView, IWindowViewProperties
         State = WindowState.Standard;
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
         AbsoluteLayout.SetLayoutBounds(this, _lastBounds);
+    }
+
+    public void SetActive()
+    {
+        _titleLabel.BackgroundColor(ColorManager.Foreground);
+        _border.BorderColor(_borderColor);
+    }
+
+    public void SetInactive()
+    {
+        _titleLabel.BackgroundColor(ColorManager.Background);
+        _border.BorderColor(ColorManager.BackgroundHigh);
     }
 
     private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)

@@ -55,7 +55,7 @@ public class EditButton : ImageButton
     {
         _onSelectAction.Invoke(this);
         IsSelected = true;
-        this.BackgroundColor(Colors.White.WithAlpha(0.7f));
+        this.BackgroundColor(ColorManager.Foreground.WithAlpha(0.7f));
     }
 
     private async void OnClicked(object? sender, EventArgs e)

@@ -18,7 +18,7 @@
                                       ForegroundColor="{x:Static views:ColorManager.Text}"
                                       AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional"></circuitView:CircuitViewContainer>
     <menu:MenuContainer PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" CircuitView="{x:Reference CircuitView}" />
-    <menuHandlers:FileMenuHandlers CircuitView="{x:Reference CircuitView}" PopupPage="{x:Reference CircuitSheetPageInstance}"></menuHandlers:FileMenuHandlers>
+    <menuHandlers:FileMenuHandlers CircuitView="{x:Reference CircuitView}" PopupPage="{x:Reference AbsoluteLayoutSheetPage}"></menuHandlers:FileMenuHandlers>
     <menuHandlers:EditMenuHandlers CircuitView="{x:Reference CircuitView}"></menuHandlers:EditMenuHandlers>
     <menuHandlers:InfoMenuHandlers CircuitView="{x:Reference CircuitView}"></menuHandlers:InfoMenuHandlers>
     <edit:EditContainer ButtonWidth="80" ButtonHeight="40"></edit:EditContainer>

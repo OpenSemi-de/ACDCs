@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
-using System.Diagnostics;
 using ACDCs.Views;
+using Microsoft.AppCenter.Crashes;
 using Microsoft.Maui.Graphics.Skia;
 
 namespace ACDCs;
@@ -16,6 +16,7 @@ public partial class App : Application
         InitializeComponent();
         UserAppTheme = AppTheme.Dark;
         MainPage = new StartCenterPage();
+        AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
     }
 
     public static event ResetEvent? Reset;
@@ -28,10 +29,9 @@ public partial class App : Application
             {
                 OnReset(new());
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                Console.WriteLine(e);
-                throw;
+                Crashes.TrackError(exception);
             }
         }
 
@@ -39,11 +39,11 @@ public partial class App : Application
         {
             await action().ConfigureAwait(false);
         }
-        catch (Exception ex)
+        catch (Exception exception)
         {
-            Debug.WriteLine(ex);
+            Crashes.TrackError(exception);
 
-            await Shell.Current.CurrentPage.DisplayAlert("Internal exception", ex.Message.ToString(), "ok");
+            await Shell.Current.CurrentPage.DisplayAlert("Internal exception", exception.Message.ToString(), "ok");
         }
     }
 
@@ -83,6 +83,11 @@ public partial class App : Application
     private static void OnReset(ResetEventArgs args)
     {
         Reset?.Invoke(new(), args);
+    }
+
+    private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+    {
+        Crashes.TrackError(e.ExceptionObject as Exception);
     }
 }
 

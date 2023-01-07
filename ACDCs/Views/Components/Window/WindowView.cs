@@ -24,7 +24,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
     private readonly Grid _grid;
     private readonly MenuFrame _menuFrame;
     private readonly Label _resizeField;
-    private readonly Label _titleLabel;
+    private readonly TitleLabel _titleLabel;
     private readonly ContentView _windowContentView;
     private Color _borderColor;
     private Rect _lastBounds = Rect.Zero;
@@ -57,13 +57,16 @@ public partial class WindowView : ContentView, IWindowViewProperties
         _grid = new Grid()
             .VerticalOptions(LayoutOptions.Fill)
             .HorizontalOptions(LayoutOptions.Fill)
-            .Margin(1)
+            .Margin(0)
+            .Padding(0)
+            .ColumnSpacing(0)
+            .RowSpacing(0)
             .BackgroundColor(ColorManager.Background);
 
         _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(32));
         _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
         _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(32));
-        _grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(32));
+        _grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(34));
         _grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(GridLength.Star));
         _grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(32));
 
@@ -74,9 +77,9 @@ public partial class WindowView : ContentView, IWindowViewProperties
         _grid.Add(menuButton);
         SetRowAndColumn(menuButton, 0, 0);
 
-        _titleLabel = new Label(WindowTitle)
+        _titleLabel = new TitleLabel(WindowTitle)
             .HorizontalOptions(LayoutOptions.Fill)
-            .HeightRequest(32)
+            .HeightRequest(34)
             .TextColor(ColorManager.Text)
             .BackgroundColor(ColorManager.Foreground);
 
@@ -307,5 +310,32 @@ public partial class WindowView : ContentView, IWindowViewProperties
             Microsoft.Maui.Controls.Grid.SetColumnSpan((BindableObject)view, columnSpan);
         if (rowSpan > 0)
             Microsoft.Maui.Controls.Grid.SetRowSpan((BindableObject)view, rowSpan);
+    }
+}
+
+public class TitleLabel : ContentView
+{
+    private readonly Label _label;
+
+    public TitleLabel(string windowTitle)
+    {
+        _label = new Label(windowTitle)
+            .BackgroundColor(Colors.GreenYellow)
+            .HorizontalOptions(LayoutOptions.Fill)
+            .VerticalOptions(LayoutOptions.Fill)
+            .Padding(0)
+            .Margin(0);
+
+        this.Padding(0).Margin(0)
+            .HorizontalOptions(LayoutOptions.Fill)
+            .VerticalOptions(LayoutOptions.Fill);
+
+        Content = _label;
+    }
+
+    public TitleLabel TextColor(Color color)
+    {
+        _label.TextColor(color);
+        return this;
     }
 }

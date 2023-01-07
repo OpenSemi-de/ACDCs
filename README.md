@@ -1,5 +1,7 @@
 # ACDCs
 
+[![Android relase build](https://github.com/OpenSemi-de/ACDCs/actions/workflows/dotnet.yml/badge.svg)](https://github.com/OpenSemi-de/ACDCs/actions/workflows/dotnet.yml)
+
 Advanced Circuit Design Component Suite
 
 Currently in alpha-state, no warranty or agreements come with this software.

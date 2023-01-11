@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel;
+using ACDCs.Services;
 using ACDCs.Views.Components.Menu;
-using Microsoft.Maui.Layouts;
 using Sharp.UI;
 using AbsoluteLayout = Sharp.UI.AbsoluteLayout;
 using ContentView = Sharp.UI.ContentView;
 using Grid = Sharp.UI.Grid;
+using Image = Sharp.UI.Image;
 using IView = Sharp.UI.IView;
 using Label = Sharp.UI.Label;
 using PanGestureRecognizer = Sharp.UI.PanGestureRecognizer;
@@ -20,18 +21,23 @@ public interface IWindowViewProperties
 [SharpObject]
 public partial class WindowView : ContentView, IWindowViewProperties
 {
+    private readonly Image _backgroundImage;
     private readonly WindowFrame _border;
     private readonly Grid _grid;
+    private readonly Image _headerImage;
     private readonly MenuFrame _menuFrame;
     private readonly Label _resizeField;
     private readonly TitleLabel _titleLabel;
     private readonly ContentView _windowContentView;
     private Color _borderColor;
+    private Timer _delayTimer;
+    private bool _isActive = false;
     private Rect _lastBounds = Rect.Zero;
     private WindowState _state = WindowState.Standard;
+    private Action SetBackground;
     public SharpAbsoluteLayout MainContainer { get; set; }
 
-    public Action OnClose { get; set; }
+    public Func<bool>? OnClose { get; set; }
 
     public WindowState State
     {
@@ -51,7 +57,6 @@ public partial class WindowView : ContentView, IWindowViewProperties
     {
         WindowTitle = title;
         AbsoluteLayout.SetLayoutBounds(this, new Rect(30, 30, 500, 400));
-        _lastBounds = AbsoluteLayout.GetLayoutBounds(this);
         MainContainer = sharpAbsoluteLayout;
 
         _grid = new Grid()
@@ -63,34 +68,43 @@ public partial class WindowView : ContentView, IWindowViewProperties
             .RowSpacing(0)
             .BackgroundColor(ColorManager.Background);
 
-        _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(32));
+        _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(36));
         _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
-        _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(32));
-        _grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(34));
+        _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(36));
+        _grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(36));
         _grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(GridLength.Star));
-        _grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(32));
+        _grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(36));
+
+        _headerImage = new Image()
+            .Margin(0)
+            .Aspect(Aspect.Fill)
+            .HorizontalOptions(LayoutOptions.Fill)
+            .VerticalOptions(LayoutOptions.Fill);
+
+        SetRowAndColumn(_headerImage, 0, 0, 3, 3);
+        _grid.Add(_headerImage);
 
         var menuButton = new MenuButton("*", "")
             .HeightRequest(32)
-            .WidthRequest(32);
+            .WidthRequest(32)
+            .FontSize(30)
+            .Margin(new Thickness(2, 4, 0, 0));
 
-        _grid.Add(menuButton);
         SetRowAndColumn(menuButton, 0, 0);
 
         _titleLabel = new TitleLabel(WindowTitle)
             .HorizontalOptions(LayoutOptions.Fill)
             .HeightRequest(34)
-            .TextColor(ColorManager.Text)
-            .BackgroundColor(ColorManager.Foreground);
+            .TextColor(ColorManager.Text);
 
-        _grid.Add(_titleLabel);
-        SetRowAndColumn(_titleLabel, 0, 1, 2);
+        SetRowAndColumn(_titleLabel, 0, 0, 3);
 
         var panGesture = new PanGestureRecognizer()
             .OnPanUpdated(PanGestureRecognizer_OnPanUpdated);
 
         _titleLabel.GestureRecognizers.Add(panGesture);
         _windowContentView = new ContentView()
+            .Padding(4)
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
 
@@ -102,7 +116,6 @@ public partial class WindowView : ContentView, IWindowViewProperties
             .HeightRequest(32)
             .FontSize(30)
             .TextColor(ColorManager.Text)
-            .BackgroundColor(Colors.Green)
             .FontAttributes(FontAttributes.Bold | FontAttributes.Italic)
             .HorizontalTextAlignment(TextAlignment.End)
             .VerticalTextAlignment(TextAlignment.End);
@@ -127,19 +140,19 @@ public partial class WindowView : ContentView, IWindowViewProperties
             new MenuItemDefinition()
             {
                 Text = "Minimize",
-                MenuCommand = "dummy",
+                MenuCommand = "dummy2",
                 ClickAction = Minimize
             },
             new MenuItemDefinition()
             {
                 Text = "Restore",
-                MenuCommand = "dummy",
+                MenuCommand = "dummy3",
                 ClickAction = Restore
             },
             new MenuItemDefinition()
             {
                 Text = "Close",
-                MenuCommand = "dummy",
+                MenuCommand = "dummy3",
                 ClickAction = Close
             },
         };
@@ -147,27 +160,38 @@ public partial class WindowView : ContentView, IWindowViewProperties
         _menuFrame.MainContainer = MainContainer;
         _menuFrame.WindowFrame = this;
         _menuFrame.LoadMenu(menuItems);
-        MainContainer.Add(_menuFrame);
         menuButton.MenuFrame = _menuFrame;
 
         _border = new WindowFrame()
             .Margin(0)
+            .Padding(0)
             .BorderColor(ColorManager.Border)
             .BackgroundColor(ColorManager.Text)
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
         _borderColor = _border.BorderColor;
 
+        _grid.Add(_titleLabel);
+        _grid.Add(menuButton);
+
         _border.Content = _grid;
         PropertyChanged += OnPropertyChanged;
         Content = _border;
+
         sharpAbsoluteLayout.Add(this);
+
+        MainContainer.Add(_menuFrame);
+        MenuFrame.HideAllMenus();
+        _lastBounds = AbsoluteLayout.GetLayoutBounds(this);
+
+        _headerImage.Source = ImageService.WindowImageSource(Convert.ToSingle(_lastBounds.Width), Convert.ToSingle(_lastBounds.Height));
     }
 
     public void Close()
     {
+        if (OnClose != null && OnClose()) return;
         TabBar?.RemoveWindow(this);
-        OnClose?.Invoke();
+
         IsVisible = false;
         PropertyChanged -= OnPropertyChanged;
         MainContainer.Remove(this);
@@ -180,45 +204,54 @@ public partial class WindowView : ContentView, IWindowViewProperties
 
     public void Maximize()
     {
-        if (State == WindowState.Maximized) return;
         State = WindowState.Maximized;
-        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.SizeProportional);
-        AbsoluteLayout.SetLayoutBounds(this, new Rect(0, 0, 1, 1));
+
+        this.TranslateTo(0, 0);
+        AbsoluteLayout.SetLayoutBounds(this, new Rect(0, 0, MainContainer.Width, MainContainer.Height));
+        _lastBounds = AbsoluteLayout.GetLayoutBounds(this);
+        _headerImage.Source = ImageService.WindowImageSource(Convert.ToSingle(_lastBounds.Width), Convert.ToSingle(_lastBounds.Height));
     }
 
-    public void Minimize()
+    public async void Minimize()
     {
         if (State == WindowState.Minimized) return;
         State = WindowState.Minimized;
 
         if (TabBar != null)
         {
-            AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.PositionProportional);
-            AbsoluteLayout.SetLayoutBounds(this, new Rect(1, 1.1, 120, 32));
+            await this.TranslateTo(-_lastBounds.Width - 100, MainContainer.Height + 100);
+            //   await this.LayoutTo(new Rect(0, 0, 120, 30));
+
+            //     AbsoluteLayout.SetLayoutBounds(this, bounds)t;
             return;
         }
 
-        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.PositionProportional);
-        AbsoluteLayout.SetLayoutBounds(this, new Rect(0, 1, 120, 32));
+        AbsoluteLayout.SetLayoutBounds(this, new Rect(MainContainer.Height + 100, 1, 120, 32));
     }
 
     public void Restore()
     {
-        State = WindowState.Standard;
-        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
-        AbsoluteLayout.SetLayoutBounds(this, _lastBounds);
+        Maximize();
     }
 
     public void SetActive()
     {
-        _titleLabel.BackgroundColor(ColorManager.Foreground);
+        if (TabBar != null)
+        {
+            TabBar.BringToFront(this);
+        }
+        _isActive = true;
+        _titleLabel.TextColor(ColorManager.Text);
+        _headerImage.BackgroundColor(ColorManager.Foreground);
         _border.BorderColor(ColorManager.Border);
         _grid.BackgroundColor(ColorManager.Foreground);
     }
 
     public void SetInactive()
     {
-        _titleLabel.BackgroundColor(ColorManager.Background);
+        _isActive = false;
+        _titleLabel.TextColor(ColorManager.Foreground);
+        _headerImage.BackgroundColor(ColorManager.Background);
         _border.BorderColor(ColorManager.Background);
         _grid.BackgroundColor(ColorManager.BackgroundHigh);
     }
@@ -235,10 +268,12 @@ public partial class WindowView : ContentView, IWindowViewProperties
     {
         App.Call(() =>
         {
+            if (!_isActive) SetActive();
+
             if (_lastBounds == Rect.Zero)
                 _lastBounds = AbsoluteLayout.GetLayoutBounds(this);
 
-            if (e.StatusType == GestureStatus.Running)
+            if (e.StatusType != GestureStatus.Started && e.StatusType != GestureStatus.Completed)
             {
                 Rect newBounds = new(_lastBounds.Location, _lastBounds.Size);
                 newBounds.Top += e.TotalY;
@@ -249,6 +284,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
             else
             {
                 _lastBounds = AbsoluteLayout.GetLayoutBounds(this);
+                _headerImage.Source = ImageService.WindowImageSource(Convert.ToSingle(_lastBounds.Width), Convert.ToSingle(_lastBounds.Height));
             }
 
             return Task.CompletedTask;
@@ -259,10 +295,11 @@ public partial class WindowView : ContentView, IWindowViewProperties
     {
         App.Call(() =>
         {
+            if (!_isActive) SetActive();
             if (_lastBounds == Rect.Zero)
                 _lastBounds = AbsoluteLayout.GetLayoutBounds(this);
 
-            if (e.StatusType == GestureStatus.Running)
+            if (e.StatusType != GestureStatus.Started && e.StatusType != GestureStatus.Completed)
             {
                 Rect newBounds = new(_lastBounds.Location, _lastBounds.Size);
 
@@ -294,8 +331,8 @@ public partial class WindowView : ContentView, IWindowViewProperties
                         .Margin(new Thickness(0, 0, 0, 0));
                 }
 
-                AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
                 _lastBounds = AbsoluteLayout.GetLayoutBounds(this);
+                _headerImage.Source = ImageService.WindowImageSource(Convert.ToSingle(_lastBounds.Width), Convert.ToSingle(_lastBounds.Height));
             }
 
             return Task.CompletedTask;
@@ -320,13 +357,16 @@ public class TitleLabel : ContentView
     public TitleLabel(string windowTitle)
     {
         _label = new Label(windowTitle)
-            .BackgroundColor(Colors.GreenYellow)
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill)
+            .VerticalTextAlignment(TextAlignment.Center)
+            .HorizontalTextAlignment(TextAlignment.Center)
+            .FontSize(14)
+            .FontAttributes(FontAttributes.Bold)
             .Padding(0)
             .Margin(0);
 
-        this.Padding(0).Margin(0)
+        this.Padding(0).Margin(1)
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
 

@@ -8,6 +8,12 @@ public partial class CircuitSheetView : SharpAbsoluteLayout
     {
         InitializeComponent();
         Loaded += OnLoaded;
+        CircuitView.CursorDebugChanged = CursorDebugChanged;
+    }
+
+    private void CursorDebugChanged()
+    {
+        CursorDebugLabel.Text = CircuitView.CursorDebugOutput;
     }
 
     private void OnLoaded(object? sender, EventArgs e)

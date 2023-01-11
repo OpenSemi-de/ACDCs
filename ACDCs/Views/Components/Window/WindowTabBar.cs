@@ -55,18 +55,7 @@ public class WindowTabBar : Grid
         MarkFocused();
     }
 
-    public void RemoveWindow(WindowView windowView)
-    {
-        if (_windowViews.ContainsValue(windowView))
-        {
-            WindowTab tab = _windowViews.First(kv => kv.Value == windowView).Key;
-            _windowViews.Remove(tab);
-            _mainLayout.Remove(tab);
-            windowView.TabBar = null;
-        }
-    }
-
-    private void BringToFront(object? sender)
+    public void BringToFront(object? sender)
     {
         if (sender != null)
         {
@@ -80,6 +69,17 @@ public class WindowTabBar : Grid
             }
 
             _focusWindow = window;
+        }
+    }
+
+    public void RemoveWindow(WindowView windowView)
+    {
+        if (_windowViews.ContainsValue(windowView))
+        {
+            WindowTab tab = _windowViews.First(kv => kv.Value == windowView).Key;
+            _windowViews.Remove(tab);
+            _mainLayout.Remove(tab);
+            windowView.TabBar = null;
         }
     }
 
@@ -99,33 +99,37 @@ public class WindowTabBar : Grid
         }
     }
 
-    private void OnTabClicked(WindowTab tab)
+    private async void OnTabClicked(WindowTab tab)
     {
-        if (_windowViews.ContainsKey(tab))
-        {
-            WindowView window = _windowViews[tab];
-            if (window.State == WindowState.Minimized)
-            {
-                window.Restore();
-                window.Focus();
-                BringToFront(window);
-                MarkFocused();
-                return;
-            }
+        await App.Call(() =>
+           {
+               if (_windowViews.ContainsKey(tab))
+               {
+                   WindowView window = _windowViews[tab];
+                   if (window.State == WindowState.Minimized)
+                   {
+                       window.Restore();
+                       window.Focus();
+                       BringToFront(window);
+                       MarkFocused();
+                       return Task.CompletedTask;
+                   }
 
-            if (_focusWindow == window)
-            {
-                window.Minimize();
-                return;
-            }
+                   if (_focusWindow == window)
+                   {
+                       window.Minimize();
+                       return Task.CompletedTask;
+                   }
 
-            if (_focusWindow != window)
-            {
-                BringToFront(window);
-            }
+                   if (_focusWindow != window)
+                   {
+                       BringToFront(window);
+                   }
 
-            MarkFocused();
-        }
+                   MarkFocused();
+               }
+               return Task.CompletedTask;
+           });
     }
 
     private void OnWindowFocus(object? sender, FocusEventArgs e)

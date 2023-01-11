@@ -18,7 +18,7 @@ public class ImportMenuHandlers : MenuHandlerView
         IDictionary<DevicePlatform, IEnumerable<string>> fileTypes =
             new Dictionary<DevicePlatform, IEnumerable<string>>();
         fileTypes.Add(DevicePlatform.WinUI, new List<string> { ".asc", ".lib", ".txt", ".bjt", ".dio" });
-        fileTypes.Add(DevicePlatform.Android, new List<string> { "application/text" });
+        fileTypes.Add(DevicePlatform.Android, new List<string> { "application/text", "*/*" });
         PickOptions options = new()
         {
             FileTypes = new FilePickerFileType(fileTypes),

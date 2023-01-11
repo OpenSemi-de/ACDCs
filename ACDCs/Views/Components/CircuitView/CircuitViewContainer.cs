@@ -36,12 +36,12 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
     private Worksheet _currentSheet;
 
+    private Dictionary<string, string> _cursorDebugValues = new();
     private Point _cursorPosition;
 
     private PointF _dragStartPosition;
 
     private bool _isDraggingItem;
-
     private Coordinate? _lastDisplayOffset;
 
     private bool _multiSelectionMode;
@@ -53,6 +53,10 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
         get => _currentSheet;
         set => _currentSheet = value;
     }
+
+    public Action? CursorDebugChanged { get; set; }
+
+    public string CursorDebugOutput { get; set; }
 
     private Action<WorksheetItemList, WorksheetItemList>? ListSetItems
     {
@@ -69,7 +73,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
         this.BackgroundColor(Colors.Transparent);
 
-        _tapRecognizer = new TapGestureRecognizer();
+        _tapRecognizer = new Microsoft.Maui.Controls.TapGestureRecognizer();
         _tapRecognizer.Tapped += TapGestureRecognizer_OnTapped;
 
         _panRecognizer = new PanGestureRecognizer();
@@ -82,12 +86,9 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
             .BackgroundColor(Colors.Transparent)
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill)
-            .GestureRecognizers(new GestureRecognizer[]
-            {
-                _tapRecognizer,
-                _panRecognizer,
-                _pointerRecognizer
-            });
+            .GestureRecognizers(_panRecognizer)
+            .GestureRecognizers(_pointerRecognizer)
+        .GestureRecognizers(_tapRecognizer);
 
         Content = _graphicsView;
         App.Com<CircuitViewContainer>(nameof(CircuitView), "Instance", this);
@@ -308,6 +309,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
     private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
     {
+        SetCursorDebugValue("Pan", e.StatusType + ":" + e.TotalX + "/" + e.TotalY);
         App.Call(async () =>
         {
             switch (e.StatusType)
@@ -348,8 +350,13 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
                                 PointF cursorPosition = new(Convert.ToSingle(_cursorPosition.X - _lastDisplayOffset?.X),
                                     Convert.ToSingle(_cursorPosition.Y - _lastDisplayOffset?.Y));
 
-                                PointF differenceBetweenCursorPoints = new(_dragStartPosition.X - cursorPosition.X,
+                                PointF olddifferenceBetweenCursorPoints = new(_dragStartPosition.X - cursorPosition.X,
                                     _dragStartPosition.Y - cursorPosition.Y);
+
+                                PointF differenceBetweenCursorPoints = new PointF(
+                                    Convert.ToSingle(-e.TotalX),
+                                    Convert.ToSingle(-e.TotalY));
+
                                 bool changed = false;
                                 _currentSheet.SelectedItems.ForEach(item =>
                                     {
@@ -373,7 +380,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
                                             newPosition.X = Math.Floor(newPosition.X);
                                             newPosition.Y = Math.Floor(newPosition.Y);
-                                            if (newPosition.X != item.X &&
+                                            if (newPosition.X != item.X ||
                                                 newPosition.Y != item.Y)
                                             {
                                                 item.X = Convert.ToInt32(newPosition.X);
@@ -404,15 +411,30 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
     private void PointerGestureRecognizer_OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        _cursorPosition = e.GetPosition(_graphicsView) ?? new Point();
+        // _cursorPosition = e.GetPosition(_graphicsView) ?? new Point();
+        SetCursorDebugValue("Pointer", _cursorPosition.X + "/" + _cursorPosition.Y);
+
         OnCursorPositionChanged(new CursorPositionChangeEventArgs(_cursorPosition));
+    }
+
+    private void SetCursorDebugValue(string key, string value)
+    {
+        if (!_cursorDebugValues.ContainsKey(key))
+            _cursorDebugValues.Add(key, value);
+        else
+            _cursorDebugValues[key] = value;
+
+        CursorDebugOutput = String.Join(Environment.NewLine, _cursorDebugValues.Select(kv => kv.Key + "=" + kv.Value));
+        CursorDebugChanged?.Invoke();
     }
 
     private async void TapGestureRecognizer_OnTapped(object? sender, TappedEventArgs e)
     {
+        Point touch = e.GetPosition(_graphicsView) ?? Point.Zero;
+        SetCursorDebugValue("Tap", touch.X + "/" + touch.Y);
+        _cursorPosition = touch;
         await App.Call(async () =>
         {
-            Point touch = e.GetPosition(_graphicsView) ?? Point.Zero;
             if (touch != Point.Zero)
             {
                 float offsetX = 0;

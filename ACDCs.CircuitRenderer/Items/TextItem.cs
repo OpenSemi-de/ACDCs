@@ -4,7 +4,7 @@ namespace ACDCs.CircuitRenderer.Items;
 
 public class TextItem : WorksheetItem
 {
-    public override string DefaultValue => "";
+    public override string DefaultValue => "Text";
 
     public override bool IsInsertable => true;
 

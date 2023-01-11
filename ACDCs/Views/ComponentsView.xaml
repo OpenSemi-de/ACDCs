@@ -20,7 +20,7 @@
 
     <StackLayout AbsoluteLayout.LayoutBounds="0,80,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
         <Grid HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="6000">
-            <ListView Grid.Column="0" Grid.Row="0" x:Name="ComponentsGrid" HeightRequest="6000">
+            <views:CacheListView Grid.Column="0" Grid.Row="0" x:Name="ComponentsGrid" HeightRequest="6000">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -61,7 +61,7 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>
+            </views:CacheListView>
         </Grid>
     </StackLayout>
     <!--   <controls:DataGrid VerticalOptions="Fill" x:Name="ComponentsGrid" ItemsSource="{x:Reference dataSource}" UseAutoColumns="False" Margin="0" Padding="1">

@@ -6,7 +6,7 @@ using ACDCs.Views.Components;
 using CommunityToolkit.Maui.Views;
 using Sharp.UI;
 using Button = Microsoft.Maui.Controls.Button;
-using Shell = Microsoft.Maui.Controls.Shell;
+using ListView = Microsoft.Maui.Controls.ListView;
 
 namespace ACDCs.Views;
 
@@ -14,6 +14,13 @@ namespace ACDCs.Views;
 public interface IDataLineProperties
 {
     Dictionary<string, string> Data { get; set; }
+}
+
+public class CacheListView : ListView
+{
+    public CacheListView() : base(ListViewCachingStrategy.RecycleElement)
+    {
+    }
 }
 
 public partial class ComponentsView : SharpAbsoluteLayout
@@ -39,7 +46,7 @@ public partial class ComponentsView : SharpAbsoluteLayout
         {
             if (spiceReader.Errors != null)
             {
-                await Shell.Current.CurrentPage.DisplayAlert("Model import failed",
+                await StartCenter.Instance.DisplayAlert("Model import failed",
                     string.Join(':', spiceReader.Errors), "ok");
             }
 
@@ -60,9 +67,8 @@ public partial class ComponentsView : SharpAbsoluteLayout
                 Name = component.Name,
                 Type = component.GetType().Name,
                 Row = row,
+                Model = component
             };
-
-            modelLine.Model = component;
 
             switch (component)
             {
@@ -76,20 +82,18 @@ public partial class ComponentsView : SharpAbsoluteLayout
             row++;
         }
 
-        _baseData = dataSource;
+        _baseData = dataSource.ToList();
         Reload();
     }
 
-    public async void OnClose()
+    public bool OnClose()
     {
+        return true;
         ComponentsGrid.BatchBegin();
-        ComponentsGrid.ItemsSource = null;
-        ComponentsGrid.ItemsSource = new List<string>();
         dataSource.Clear();
         _baseData?.Clear();
+        ComponentsGrid.ItemsSource = new List<string>();
         ComponentsGrid.BatchCommit();
-
-        await Task.Delay(10000);
     }
 
     private void CategoryPicker_OnSelectedIndexChanged(object? sender, EventArgs e)
@@ -131,7 +135,12 @@ public partial class ComponentsView : SharpAbsoluteLayout
                                      d.Name.ToLower().Contains(keyword));
         }
 
-        dataSource = query.ToList();
+        dataSource.Clear();
+        foreach (ComponentPageModel model in query)
+        {
+            dataSource.Add(model);
+        }
+
         Reload();
     }
 

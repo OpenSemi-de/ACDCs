@@ -27,14 +27,13 @@ public class EditButton : ImageButton
         IsSelected = false;
 
         this.Margin(new Thickness(0))
-            .Padding(new Thickness(2))
+            .Padding(new Thickness(0))
             .CornerRadius(4)
             .WidthRequest(buttonWidth)
             .HeightRequest(buttonHeight)
             .BackgroundColor(Colors.Transparent)
-            .BorderWidth(0);
-
-        this.Shadow(new Shadow());
+            .BorderWidth(0)
+            .Aspect(Aspect.Fill);
 
         _onClickAction = onClickAction;
         _onSelectAction = onSelectAction;
@@ -42,7 +41,7 @@ public class EditButton : ImageButton
         _buttonHeight = buttonHeight;
         _isSelectable = isSelectable;
         Clicked += OnClicked;
-        Loaded += OnLoaded;
+        Source = ImageService.ButtonImageSource(Text, Convert.ToInt32(_buttonWidth + 20), Convert.ToInt32(_buttonHeight + 20));
     }
 
     public void Deselect()
@@ -55,7 +54,7 @@ public class EditButton : ImageButton
     {
         _onSelectAction.Invoke(this);
         IsSelected = true;
-        this.BackgroundColor(ColorManager.Foreground.WithAlpha(0.7f));
+        this.BackgroundColor(ColorService.Foreground.WithAlpha(0.7f));
     }
 
     private async void OnClicked(object? sender, EventArgs e)
@@ -79,10 +78,5 @@ public class EditButton : ImageButton
             await Task.Delay(200);
             Deselect();
         }
-    }
-
-    private void OnLoaded(object? sender, EventArgs e)
-    {
-        Source = ImageService.ButtonImageSource(Text, (int)_buttonWidth, (int)_buttonHeight);
     }
 }

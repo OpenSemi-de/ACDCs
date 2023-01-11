@@ -13,6 +13,8 @@
     <Color x:Key="BackgroundHighDark">#10206f</Color>
     <Color x:Key="ForegroundDark">#10309f</Color>
     <Color x:Key="ForegroundLight">#dfefff</Color>
+    <Color x:Key="FullDark">#000</Color>
+    <Color x:Key="FullLight">#fff</Color>
     <Color x:Key="TextLight">#000000</Color>
     <Color x:Key="TextDark">#ffffff</Color>
     <Color x:Key="Primary">#85a2b6</Color>

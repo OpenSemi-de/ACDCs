@@ -1,7 +1,11 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
+using Microsoft.Maui.LifecycleEvents;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
 using UraniumUI;
+using Windows.Graphics;
 
 namespace ACDCs;
 
@@ -21,6 +25,29 @@ public static class MauiProgram
                 fonts.AddFont("MapleMono-Regular.ttf", "MapleMonoRegular");
                 fonts.AddFont("MapleMono-Bold.ttf", "MapleMonoBold");
             });
+
+#if WINDOWS
+        builder.ConfigureLifecycleEvents(events =>
+        {
+            events.AddWindows(wndLifeCycleBuilder =>
+            {
+                wndLifeCycleBuilder.OnWindowCreated(window =>
+                {
+                    IntPtr nativeWindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(window);
+                    WindowId win32WindowsId = Win32Interop.GetWindowIdFromWindow(nativeWindowHandle);
+                    AppWindow winuiAppWindow = AppWindow.GetFromWindowId(win32WindowsId);
+                    if (winuiAppWindow.Presenter is OverlappedPresenter p)
+                        p.Maximize();
+                    else
+                    {
+                        const int width = 1200;
+                        const int height = 800;
+                        winuiAppWindow.MoveAndResize(new RectInt32(1920 / 2 - width / 2, 1080 / 2 - height / 2, width, height));
+                    }
+                });
+            });
+        });
+#endif
 
         return builder.Build();
     }

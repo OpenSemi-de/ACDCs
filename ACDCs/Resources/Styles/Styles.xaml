@@ -7,10 +7,10 @@
     xmlns:menu="clr-namespace:ACDCs.Views.Components.Menu"
     xmlns:window="using:ACDCs.Views.Components.Window"
     xmlns:views="using:ACDCs.Views"
-    xmlns:system="using:System">
+    xmlns:system="using:System"
+    xmlns:acdcs="using:ACDCs">
 
 
-    
  
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />

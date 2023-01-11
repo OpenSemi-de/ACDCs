@@ -1,6 +1,6 @@
-﻿namespace ACDCs.Views;
+﻿namespace ACDCs.Services;
 
-public static class ColorManager
+public static class ColorService
 {
     private static ResourceDictionary? s_resourceColors;
 
@@ -8,6 +8,7 @@ public static class ColorManager
     public static Color BackgroundHigh => GetColor(nameof(BackgroundHigh));
     public static Color Border => GetColor(nameof(Border));
     public static Color Foreground => GetColor(nameof(Foreground));
+    public static Color Full => GetColor(nameof(Full));
     public static Color Text => GetColor(nameof(Text));
 
     private static Color GetColor(string colorName)

@@ -8,6 +8,7 @@
              xmlns:window="using:ACDCs.Views.Components.Window"
              xmlns:debug="using:ACDCs.Views.Components.Debug"
              xmlns:views="using:ACDCs.Views"
+             xmlns:services="using:ACDCs.Services"
              x:Class="ACDCs.Views.StartCenterPage"
              x:Name="Page"
              Title="Main">
@@ -16,25 +17,21 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="34"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="34"></RowDefinition>
         </Grid.RowDefinitions>
-        <components:SharpAbsoluteLayout Grid.Row="0" x:Name="MainWindowLayout">
-            <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
-                <circuitView:CircuitViewContainer WidthRequest="500" HeightRequest="400" x:Name="CircuitView" Loaded="CircuitView_OnLoaded"
-                                                  BackgroundColor="{x:Static views:ColorManager.Background}"
-                                                  BackgroundHighColor="{x:Static views:ColorManager.BackgroundHigh}"
-                                                  ForegroundColor="{x:Static views:ColorManager.Text}">
-                    <AbsoluteLayout.LayoutFlags>SizeProportional</AbsoluteLayout.LayoutFlags>
-                    <AbsoluteLayout.LayoutBounds>0,0,1,1</AbsoluteLayout.LayoutBounds>
-                </circuitView:CircuitViewContainer>
-                <Button Text="New sheet" WidthRequest="200" Clicked="Button_OnClicked"></Button>
-                <Button Text="Components" WidthRequest="200" x:Name="componentsButton" Clicked="ComponentsButton_OnClicked"></Button>
-            </VerticalStackLayout>
+        <StackLayout Orientation="Horizontal" Grid.Row="0"
+            Spacing="0"
+            Padding="0,0"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+            <Button Text="New sheet" WidthRequest="100" Clicked="Button_OnClicked"></Button>
+            <Button Text="Components" WidthRequest="100" x:Name="componentsButton" Clicked="ComponentsButton_OnClicked"></Button>
+        </StackLayout>
+
+<components:SharpAbsoluteLayout Grid.Row="1" x:Name="MainWindowLayout">
         </components:SharpAbsoluteLayout>
-        <window:WindowTabBar Grid.Row="1" x:Name="windowTabBar" HorizontalOptions="Fill" HeightRequest="36"></window:WindowTabBar>
+        <window:WindowTabBar Grid.Row="2" x:Name="windowTabBar" HorizontalOptions="Fill" HeightRequest="36"></window:WindowTabBar>
     </Grid>
 </ContentPage>

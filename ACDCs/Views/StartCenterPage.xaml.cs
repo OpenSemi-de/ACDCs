@@ -1,6 +1,4 @@
-﻿using ACDCs.CircuitRenderer.Items;
-using ACDCs.CircuitRenderer.Items.Transistors;
-using ACDCs.Services;
+﻿using ACDCs.Services;
 using ACDCs.Views.Components.Debug;
 using ACDCs.Views.Components.Window;
 using ContentPage = Microsoft.Maui.Controls.ContentPage;
@@ -38,28 +36,6 @@ public partial class StartCenterPage : ContentPage
              windowTabBar.AddWindow(windowView);
              return Task.CompletedTask;
          });
-    }
-
-    private async void CircuitView_OnLoaded(object? sender, EventArgs e)
-    {
-        await App.Call(async () =>
-        {
-            TextItem textItemLogo = new("ACDCs", 140, 10, 10);
-            TextItem textItemText = new("Advanced Circuit Design Component Suite", 20, 10, 12);
-            textItemLogo.IsRealFontSize = true;
-            textItemText.IsRealFontSize = true;
-            textItemLogo.Width = 10;
-            textItemLogo.Height = 6;
-            PnpTransistorItem pnp1 = new PnpTransistorItem();
-            PnpTransistorItem pnp2 = new PnpTransistorItem();
-
-            CircuitView.InsertToPosition(10, 4, pnp1).Wait();
-            CircuitView.InsertToPosition(16, 4, pnp2).Wait();
-            CircuitView.CurrentWorksheet.Nets.AddNet(pnp1.Pins[2], pnp2.Pins[2]);
-            CircuitView.InsertToPosition(10, 10, textItemLogo).Wait();
-            CircuitView.InsertToPosition(10, 12, textItemText).Wait();
-            await CircuitView.Paint();
-        });
     }
 
     private async void ComponentsButton_OnClicked(object? sender, EventArgs e)

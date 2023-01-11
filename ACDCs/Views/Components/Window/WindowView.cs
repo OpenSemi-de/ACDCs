@@ -25,6 +25,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
     private readonly WindowFrame _border;
     private readonly Grid _grid;
     private readonly Image _headerImage;
+    private readonly MenuButton _menuButton;
     private readonly MenuFrame _menuFrame;
     private readonly Label _resizeField;
     private readonly TitleLabel _titleLabel;
@@ -66,7 +67,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
             .Padding(0)
             .ColumnSpacing(0)
             .RowSpacing(0)
-            .BackgroundColor(ColorManager.Background);
+            .BackgroundColor(ColorService.Background);
 
         _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(36));
         _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
@@ -84,18 +85,18 @@ public partial class WindowView : ContentView, IWindowViewProperties
         SetRowAndColumn(_headerImage, 0, 0, 3, 3);
         _grid.Add(_headerImage);
 
-        var menuButton = new MenuButton("*", "")
+        _menuButton = new MenuButton("*", "")
             .HeightRequest(32)
             .WidthRequest(32)
             .FontSize(30)
             .Margin(new Thickness(2, 4, 0, 0));
 
-        SetRowAndColumn(menuButton, 0, 0);
+        SetRowAndColumn(_menuButton, 0, 0);
 
         _titleLabel = new TitleLabel(WindowTitle)
             .HorizontalOptions(LayoutOptions.Fill)
             .HeightRequest(34)
-            .TextColor(ColorManager.Text);
+            .TextColor(ColorService.Text);
 
         SetRowAndColumn(_titleLabel, 0, 0, 3);
 
@@ -115,7 +116,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
             .WidthRequest(32)
             .HeightRequest(32)
             .FontSize(30)
-            .TextColor(ColorManager.Text)
+            .TextColor(ColorService.Text)
             .FontAttributes(FontAttributes.Bold | FontAttributes.Italic)
             .HorizontalTextAlignment(TextAlignment.End)
             .VerticalTextAlignment(TextAlignment.End);
@@ -160,19 +161,19 @@ public partial class WindowView : ContentView, IWindowViewProperties
         _menuFrame.MainContainer = MainContainer;
         _menuFrame.WindowFrame = this;
         _menuFrame.LoadMenu(menuItems);
-        menuButton.MenuFrame = _menuFrame;
+        _menuButton.MenuFrame = _menuFrame;
 
         _border = new WindowFrame()
             .Margin(0)
             .Padding(0)
-            .BorderColor(ColorManager.Border)
-            .BackgroundColor(ColorManager.Text)
+            .BorderColor(ColorService.Border)
+            .BackgroundColor(ColorService.Text)
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
         _borderColor = _border.BorderColor;
 
         _grid.Add(_titleLabel);
-        _grid.Add(menuButton);
+        _grid.Add(_menuButton);
 
         _border.Content = _grid;
         PropertyChanged += OnPropertyChanged;
@@ -236,24 +237,31 @@ public partial class WindowView : ContentView, IWindowViewProperties
 
     public void SetActive()
     {
-        if (TabBar != null)
-        {
-            TabBar.BringToFront(this);
-        }
+        TabBar?.BringToFront(this);
         _isActive = true;
-        _titleLabel.TextColor(ColorManager.Text);
-        _headerImage.BackgroundColor(ColorManager.Foreground);
-        _border.BorderColor(ColorManager.Border);
-        _grid.BackgroundColor(ColorManager.Foreground);
+        _titleLabel.TextColor(ColorService.Text);
+        _headerImage.BackgroundColor(ColorService.Foreground);
+        _border.BorderColor(ColorService.Border);
+        _grid.BackgroundColor(ColorService.Foreground);
     }
 
     public void SetInactive()
     {
         _isActive = false;
-        _titleLabel.TextColor(ColorManager.Foreground);
-        _headerImage.BackgroundColor(ColorManager.Background);
-        _border.BorderColor(ColorManager.Background);
-        _grid.BackgroundColor(ColorManager.BackgroundHigh);
+        _titleLabel.TextColor(ColorService.Foreground);
+        _headerImage.BackgroundColor(ColorService.Background);
+        _border.BorderColor(ColorService.Background);
+        _grid.BackgroundColor(ColorService.BackgroundHigh);
+    }
+
+    protected void HideMenuButton()
+    {
+        _menuButton.IsVisible = false;
+    }
+
+    protected void HideResizer()
+    {
+        _resizeField.IsVisible = false;
     }
 
     private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)

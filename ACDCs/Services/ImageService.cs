@@ -1,5 +1,4 @@
-﻿using ACDCs.Views;
-using Microsoft.Maui.Layouts;
+﻿using Microsoft.Maui.Layouts;
 
 namespace ACDCs.Services;
 
@@ -24,11 +23,11 @@ public static class ImageService
             List<Color> colors;
             ICanvas? canvas = context.Canvas;
 
-            colors = new List<Color> { ColorManager.Background, ColorManager.BackgroundHigh };
+            colors = new List<Color> { ColorService.Full, ColorService.Background };
 
             canvas.SetShadow(new SizeF(2, 4), 10f, colors[1]);
 
-            LinearGradientPaint paintFrom = new(Point.Zero, new(10, 1))
+            LinearGradientPaint paintFrom = new(Point.Zero, new(1, 1))
             {
                 StartColor = colors[0],
                 EndColor = colors[1],
@@ -37,7 +36,6 @@ public static class ImageService
             canvas.SetFillPaint(paintFrom, new RectF(0f, 0f, width, height));
             canvas.FillRectangle(0, 0, width, height);
 
-            canvas.Alpha = 0.7f;
             LinearGradientPaint paintTo = new(Point.Zero, new(1, 1)) { StartColor = colors[1], EndColor = colors[0], };
 
             canvas.SetFillPaint(paintTo, new RectF(0f, 0f, width, height));
@@ -78,7 +76,7 @@ public static class ImageService
             ICanvas? canvas = context.Canvas;
             canvas.Alpha = 0.7f;
 
-            colors = new List<Color> { ColorManager.Background, ColorManager.BackgroundHigh };
+            colors = new List<Color> { ColorService.Background, ColorService.BackgroundHigh };
 
             canvas.SetShadow(new SizeF(2, 4), 10f, colors[1]);
 
@@ -88,28 +86,14 @@ public static class ImageService
                 EndColor = colors[1],
             };
             canvas.SetFillPaint(paintFrom, new RectF(0f, 0f, width, height));
-            canvas.FillRectangle(0, 0, width, height);
-            PathF path = new();
+            canvas.FillRoundedRectangle(0, 0, width, height, 2);
+            canvas.StrokeSize = 3;
+            canvas.StrokeColor = ColorService.Border;
+            canvas.Antialias = false;
+            canvas.DrawRoundedRectangle(2, 2, width - 4, height - 4, 2);
+            canvas.Antialias = true;
 
-            path.MoveTo(0, 0)
-                .LineTo(width, 0)
-                .LineTo(width, 3)
-                .LineTo(9, 3)
-                .CurveTo(3, 3, 3, 3, 3, 9)
-                .LineTo(3, height)
-                .LineTo(0, height)
-                .LineTo(0, 0);
-
-            LinearGradientPaint paintTo = new(Point.Zero, new(1, 1))
-            {
-                StartColor = colors[1],
-                EndColor = colors[0],
-            };
-
-            canvas.SetFillPaint(paintTo, new RectF(0f, 0f, width, height));
-
-            canvas.FillPath(path, WindingMode.EvenOdd);
-            canvas.FontColor = colors[2];
+            canvas.FontColor = ColorService.Text;
             canvas.DrawString(text, width / 2, height / 2, HorizontalAlignment.Center);
 
             MemoryStream ms = new();
@@ -136,7 +120,7 @@ public static class ImageService
             ICanvas? canvas = context.Canvas;
             canvas.Alpha = 0.7f;
 
-            colors = new List<Color> { ColorManager.Background, ColorManager.Foreground };
+            colors = new List<Color> { ColorService.Background, ColorService.Foreground };
 
             LinearGradientPaint paintFrom = new(Point.Zero, new(1, 0))
             {
@@ -147,7 +131,7 @@ public static class ImageService
             canvas.SetFillPaint(paintFrom, new RectF(0f, 0f, width, height));
             canvas.FillRoundedRectangle(0, 0, width, height, 2);
             canvas.StrokeSize = 3;
-            canvas.StrokeColor = ColorManager.Border;
+            canvas.StrokeColor = ColorService.Border;
             canvas.Antialias = false;
             canvas.DrawRoundedRectangle(2, 2, width - 4, height - 4, 2);
 

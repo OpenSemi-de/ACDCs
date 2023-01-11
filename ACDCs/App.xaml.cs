@@ -16,6 +16,7 @@ public partial class App : Application
         InitializeComponent();
         UserAppTheme = AppTheme.Dark;
         MainPage = new StartCenterPage();
+
         AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
     }
 

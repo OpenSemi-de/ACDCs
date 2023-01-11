@@ -58,6 +58,9 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
     public string CursorDebugOutput { get; set; }
 
+    public Action<WorksheetItem>? OnSelectedItemChange { get; set; }
+    public WorksheetItem? SelectedItem { get; set; }
+
     private Action<WorksheetItemList, WorksheetItemList>? ListSetItems
     {
         get => App.Com<Action<WorksheetItemList, WorksheetItemList>>("ItemList", "SetItems");
@@ -208,7 +211,6 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
             _graphicsView.Drawable = scene;
 
             _graphicsView.Invalidate();
-
             return Task.CompletedTask;
         });
     }
@@ -317,6 +319,9 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
                 case GestureStatus.Started:
                 case GestureStatus.Completed:
                     {
+                        if (SelectedItem != null)
+                            OnSelectedItemChange?.Invoke(SelectedItem);
+
                         _lastDisplayOffset = _currentSheet?.DisplayOffset ??
                                              new Coordinate(
                                                  Convert.ToSingle(e.TotalX),
@@ -463,6 +468,8 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
                     if (selectedItem != null)
                     {
+                        SelectedItem = selectedItem;
+                        OnSelectedItemChange?.Invoke(selectedItem);
                         if (_currentSheet.IsSelected(selectedItem))
                         {
                             float x = GetRelPos(touch.X);

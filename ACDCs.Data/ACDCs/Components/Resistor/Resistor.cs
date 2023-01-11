@@ -5,6 +5,6 @@ public class Resistor : ResistorParameters, IElectronicComponent
     public string Model { get; set; }
     public string Name { get; set; }
     public IComponentParameters ParametersModel => new ResistorParameters();
-    public IComponentRuntimeParameters ParametersRuntime => throw new NotImplementedException();
+    public IComponentRuntimeParameters ParametersRuntime => new ResistorRuntimeParameters();
     public string Type { get; set; }
 }

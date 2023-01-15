@@ -3,6 +3,7 @@
 using System;
 using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.CircuitRenderer.Interfaces;
+using ACDCs.Data.ACDCs.Components;
 using Newtonsoft.Json;
 
 namespace ACDCs.CircuitRenderer.Items;
@@ -12,7 +13,6 @@ public class WorksheetItem : IWorksheetItem
     private string? _value;
 
     public virtual string DefaultValue { get; set; } = "";
-
     [JsonIgnore] public IDrawableComponent DrawableComponent { get; set; }
 
     public int Height
@@ -30,7 +30,7 @@ public class WorksheetItem : IWorksheetItem
     }
 
     public Guid ItemGuid { get; set; } = Guid.NewGuid();
-
+    public IElectronicComponent? Model { get; set; }
     public string Name { get; set; } = string.Empty;
 
     [JsonIgnore] public DrawablePinList Pins { get; set; } = new();
@@ -48,7 +48,15 @@ public class WorksheetItem : IWorksheetItem
     public string? Value
     {
         get => _value ?? DefaultValue;
-        set => _value = value ?? DefaultValue;
+        set
+        {
+            if (value != null)
+            {
+                DrawableComponent.Value = value;
+            }
+
+            _value = value ?? DefaultValue;
+        }
     }
 
     public int Width

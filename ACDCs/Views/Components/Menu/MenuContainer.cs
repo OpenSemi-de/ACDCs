@@ -42,9 +42,9 @@ public partial class MenuContainer : StackLayout, IMenuContainer
 
     private async void LoadMenu(string menuMainJson)
     {
-        await App.Call(async () =>
+        await API.Call(async () =>
         {
-            string jsonData = await App.LoadMauiAssetAsString(menuMainJson);
+            string jsonData = await API.LoadMauiAssetAsString(menuMainJson);
             List<MenuItemDefinition>? items = JsonConvert.DeserializeObject<List<MenuItemDefinition>>(jsonData);
             if (items != null) _menuFrame.LoadMenu(items, true);
         });

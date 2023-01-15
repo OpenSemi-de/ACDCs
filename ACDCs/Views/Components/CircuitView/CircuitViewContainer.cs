@@ -63,7 +63,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
     private Action<WorksheetItemList, WorksheetItemList>? ListSetItems
     {
-        get => App.Com<Action<WorksheetItemList, WorksheetItemList>>("ItemList", "SetItems");
+        get => API.Com<Action<WorksheetItemList, WorksheetItemList>>("ItemList", "SetItems");
     }
 
     public CircuitViewContainer()
@@ -94,8 +94,8 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
         .GestureRecognizers(_tapRecognizer);
 
         Content = _graphicsView;
-        App.Com<CircuitViewContainer>(nameof(CircuitView), "Instance", this);
-        App.Com<Worksheet>(nameof(CircuitView), "_currentSheet", _currentSheet);
+        API.Com<CircuitViewContainer>(nameof(CircuitView), "Instance", this);
+        API.Com<Worksheet>(nameof(CircuitView), "_currentSheet", _currentSheet);
         Loaded += OnLoaded;
     }
 
@@ -115,7 +115,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
     public async Task InsertToPosition(float x, float y, WorksheetItem? newItem)
     {
-        await App.Call(() =>
+        await API.Call(() =>
         {
             if (newItem != null)
             {
@@ -127,7 +127,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
                 _currentSheet.Items.AddItem(newItem);
             }
 
-            App.Com<bool>("Items", "IsInserting", false);
+            API.Com<bool>("Items", "IsInserting", false);
 
             ListSetItems?.Invoke(_currentSheet.Items, _currentSheet.SelectedItems);
 
@@ -137,9 +137,9 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
     public async Task InsertToPosition(float x, float y)
     {
-        await App.Call(() =>
+        await API.Call(() =>
         {
-            Func<float, float, Worksheet, WorksheetItem?>? doInsert = App.Com<Func<float, float, Worksheet, WorksheetItem?>?>("Items", "DoInsert");
+            Func<float, float, Worksheet, WorksheetItem?>? doInsert = API.Com<Func<float, float, Worksheet, WorksheetItem?>?>("Items", "DoInsert");
             WorksheetItem? newItem = doInsert?.Invoke(x, y, _currentSheet);
             if (newItem != null)
             {
@@ -147,7 +147,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
                 newItem.Y -= newItem.Height / 2;
             }
 
-            App.Com<bool>("Items", "IsInserting", false);
+            API.Com<bool>("Items", "IsInserting", false);
 
             ListSetItems?.Invoke(_currentSheet.Items, _currentSheet.SelectedItems);
 
@@ -174,7 +174,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
             _currentWorkbook.Sheets.AddSheet(newSheet);
             _currentSheet = newSheet;
 
-            App.Com<Worksheet>(nameof(CircuitView), "_currentSheet", _currentSheet);
+            API.Com<Worksheet>(nameof(CircuitView), "_currentSheet", _currentSheet);
             _currentSheet.Filename = System.IO.Path.GetFileName(fileName);
             await Paint();
         }
@@ -184,7 +184,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
     public async Task Paint()
     {
-        await App.Call(() =>
+        await API.Call(() =>
         {
             if (BackgroundColor != null)
             {
@@ -201,7 +201,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
                 _currentSheet.BackgroundHighColor = new CircuitRenderer.Definitions.Color(BackgroundHighColor);
             }
 
-            if (App.Com<bool>("Items", "IsInserting"))
+            if (API.Com<bool>("Items", "IsInserting"))
                 return Task.CompletedTask;
 
             _graphicsView.Drawable = null;
@@ -259,7 +259,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
     private static float GetRelPos(double pos)
     {
         float relPos = 0f;
-        App.Call(() =>
+        API.Call(() =>
         {
             relPos = Convert.ToSingle(Math.Round(pos / (Workbook.BaseGridSize * Workbook.Zoom)));
             return Task.CompletedTask;
@@ -269,7 +269,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
     private async Task AddTrace(PinDrawable pinFrom, PinDrawable pinTo)
     {
-        await App.Call(async () =>
+        await API.Call(async () =>
         {
             _currentSheet.AddRoute(pinFrom, pinTo);
             await Paint();
@@ -279,7 +279,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
     private WorksheetItem? GetWorksheetItemaAt(PointF position)
     {
         WorksheetItem? selectedItem = null;
-        App.Call(() =>
+        API.Call(() =>
         {
             float x = GetRelPos(position.X);
             float y = GetRelPos(position.Y);
@@ -312,7 +312,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
     private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
     {
         SetCursorDebugValue("Pan", e.StatusType + ":" + e.TotalX + "/" + e.TotalY);
-        App.Call(async () =>
+        API.Call(async () =>
         {
             switch (e.StatusType)
             {
@@ -438,7 +438,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
         Point touch = e.GetPosition(_graphicsView) ?? Point.Zero;
         SetCursorDebugValue("Tap", touch.X + "/" + touch.Y);
         _cursorPosition = touch;
-        await App.Call(async () =>
+        await API.Call(async () =>
         {
             if (touch != Point.Zero)
             {
@@ -452,7 +452,7 @@ public partial class CircuitViewContainer : ContentView, ICircuitViewProperties
 
                 OnTapPositionChanged(new CursorPositionChangeEventArgs(touch));
 
-                if (App.Com<bool>("Items", "IsInserting"))
+                if (API.Com<bool>("Items", "IsInserting"))
                 {
                     float x = GetRelPos(touch.X - offsetX);
                     float y = GetRelPos(touch.Y - offsetY);

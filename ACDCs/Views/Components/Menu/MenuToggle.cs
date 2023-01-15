@@ -48,7 +48,7 @@ public class MenuToggle : StackLayout, IMenuItem
 
     private void CheckboxOnCheckedChanged(object? sender, CheckedChangedEventArgs e)
     {
-        App.Call(() =>
+        API.Call(() =>
         {
             if (MenuCommand != "")
             {

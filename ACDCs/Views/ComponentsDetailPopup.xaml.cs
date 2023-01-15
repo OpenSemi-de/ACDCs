@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Reflection;
+using ACDCs.Views.Components.ModelSelection;
 using CommunityToolkit.Maui.Views;
 
 namespace ACDCs.Views;
@@ -11,7 +12,7 @@ public partial class ComponentsDetailPopup : Popup
         InitializeComponent();
     }
 
-    public void Load(ComponentPageModel model)
+    public void Load(ComponentViewModel model)
     {
         propertiesTreeView.IsExpandedPropertyName = "IsExpanded";
         propertiesTreeView.IsLeafPropertyName = "IsLeaf";
@@ -24,7 +25,7 @@ public partial class ComponentsDetailPopup : Popup
         Close();
     }
 
-    private Dictionary<string, string> GetParameters(ComponentPageModel model)
+    private Dictionary<string, string> GetParameters(ComponentViewModel model)
     {
         Dictionary<string, string> parametersdic = new();
         object parameterSet = model.Model;
@@ -36,7 +37,7 @@ public partial class ComponentsDetailPopup : Popup
         return parametersdic;
     }
 
-    private ObservableCollection<PropertyItem> ToItemSource(ComponentPageModel model)
+    private ObservableCollection<PropertyItem> ToItemSource(ComponentViewModel model)
     {
         PropertyItem root = new PropertyItem(model.Name) { IsExpanded = true };
 

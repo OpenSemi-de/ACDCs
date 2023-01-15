@@ -8,6 +8,7 @@ namespace ACDCs.CircuitRenderer.Drawables;
 
 public class DrawableComponent : IDrawableComponent, IHaveAParent
 {
+    private string _value;
     public Guid ComponentGuid { get; set; } = Guid.NewGuid();
 
     public DrawablePinList DrawablePins { get; set; } = new();
@@ -18,6 +19,7 @@ public class DrawableComponent : IDrawableComponent, IHaveAParent
 
     public bool IsMirroringDone { get; set; }
 
+    public Action OnValueSet { get; set; }
     public IWorksheetItem ParentItem { get; set; }
 
     public Coordinate Position { get; set; } = new(0, 0, 0);
@@ -30,7 +32,15 @@ public class DrawableComponent : IDrawableComponent, IHaveAParent
 
     public string Type { get; }
 
-    public string Value { get; set; }
+    public string Value
+    {
+        get => _value;
+        set
+        {
+            _value = value;
+            OnValueSet?.Invoke();
+        }
+    }
 
     public Worksheet? Worksheet { get; set; }
 

@@ -11,6 +11,7 @@
              xmlns:views="using:ACDCs.Views"
              xmlns:views1="clr-namespace:ACDCs.Views"
              xmlns:services="using:ACDCs.Services"
+             xmlns:acdCs="using:ACDCs"
              x:Class="ACDCs.Views.CircuitSheetView"
              HorizontalOptions="Fill" VerticalOptions="Fill" x:Name="AbsoluteLayoutSheetPage">
     <circuitView:CircuitViewContainer x:Name="CircuitView"
@@ -20,10 +21,9 @@
                                       ForegroundColor="{x:Static services:ColorService.Text}"
                                       AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional"></circuitView:CircuitViewContainer>
     <menu:MenuContainer PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" CircuitView="{x:Reference CircuitView}" />
-    <menuHandlers:FileMenuHandlers CircuitView="{x:Reference CircuitView}" PopupPage="{x:Static views1:StartCenter.Instance}"></menuHandlers:FileMenuHandlers>
+    <menuHandlers:FileMenuHandlers CircuitView="{x:Reference CircuitView}" PopupPage="{x:Static acdCs:API.MainPage}"></menuHandlers:FileMenuHandlers>
     <menuHandlers:EditMenuHandlers CircuitView="{x:Reference CircuitView}"></menuHandlers:EditMenuHandlers>
     <menuHandlers:InfoMenuHandlers CircuitView="{x:Reference CircuitView}"></menuHandlers:InfoMenuHandlers>
     <items:ItemsContainer ButtonWidth="60" ButtonHeight="60" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}"></items:ItemsContainer>
-
     <Label x:Name="CursorDebugLabel" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,0.5,100,400" MaxLines="10"></Label>
 </components:SharpAbsoluteLayout>

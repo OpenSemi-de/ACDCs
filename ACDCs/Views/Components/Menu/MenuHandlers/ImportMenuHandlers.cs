@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using ACDCs.Data.ACDCs.Components;
+﻿using ACDCs.Data.ACDCs.Components;
 using ACDCs.IO.DB;
 
 namespace ACDCs.Views.Components.Menu.MenuHandlers;
@@ -35,7 +34,7 @@ public class ImportMenuHandlers : MenuHandlerView
 
     public async void OpenDB()
     {
-        await App.Call(() =>
+        await API.Call(() =>
         {
             DBConnection defaultdb = new DBConnection("default");
             List<IElectronicComponent> defaultComponents = defaultdb.Read<IElectronicComponent>("Components");
@@ -78,27 +77,5 @@ public static class RComparer
         ObjectsComparer.Comparer<T> comparer = new ObjectsComparer.Comparer<T>();
         bool isEqual = comparer.Compare(left, right);
         return isEqual;
-
-        if (left == null || right == null) return false;
-        PropertyInfo[] propsleft = left.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-        PropertyInfo[] propsright = right.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-        if (propsright.Length != propsleft.Length)
-            return false;
-
-        string? propnamesleft = string.Join("", propsleft.Select(prop => prop.Name));
-        string? propnamesright = string.Join("", propsright.Select(prop => prop.Name));
-
-        if (propnamesright != propnamesleft)
-            return false;
-
-        foreach (PropertyInfo propLeft in propsleft)
-        {
-            if (propLeft.Name.ToLower().Contains("baseresist")) continue;
-            PropertyInfo propRight = propsright.First(prop => prop.Name == propLeft.Name);
-            if (Convert.ToString(propLeft.GetValue(left)) != Convert.ToString(propRight.GetValue(right)))
-                return false;
-        }
-
-        return true;
     }
 }

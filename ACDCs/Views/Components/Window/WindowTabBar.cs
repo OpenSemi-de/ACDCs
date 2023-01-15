@@ -101,7 +101,7 @@ public class WindowTabBar : Grid
 
     private async void OnTabClicked(WindowTab tab)
     {
-        await App.Call(() =>
+        await API.Call(() =>
            {
                if (_windowViews.ContainsKey(tab))
                {

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net7.0;net7.0-android</TargetFrameworks>
@@ -30,6 +30,10 @@
 
 	<ItemGroup>
 	  <Folder Include="Items\Sources\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ACDCs.Data\ACDCs.Data.csproj" />
 	</ItemGroup>
 
 </Project>

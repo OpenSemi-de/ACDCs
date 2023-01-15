@@ -21,21 +21,17 @@ public interface IWindowViewProperties
 [SharpObject]
 public partial class WindowView : ContentView, IWindowViewProperties
 {
-    private readonly Image _backgroundImage;
+    protected readonly Grid _grid;
     private readonly WindowFrame _border;
-    private readonly Grid _grid;
     private readonly Image _headerImage;
     private readonly MenuButton _menuButton;
     private readonly MenuFrame _menuFrame;
     private readonly Label _resizeField;
     private readonly TitleLabel _titleLabel;
     private readonly ContentView _windowContentView;
-    private Color _borderColor;
-    private Timer _delayTimer;
     private bool _isActive = false;
     private Rect _lastBounds = Rect.Zero;
     private WindowState _state = WindowState.Standard;
-    private Action SetBackground;
     public SharpAbsoluteLayout MainContainer { get; set; }
 
     public Func<bool>? OnClose { get; set; }
@@ -170,7 +166,6 @@ public partial class WindowView : ContentView, IWindowViewProperties
             .BackgroundColor(ColorService.Text)
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
-        _borderColor = _border.BorderColor;
 
         _grid.Add(_titleLabel);
         _grid.Add(_menuButton);
@@ -274,7 +269,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
 
     private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)
     {
-        App.Call(() =>
+        API.Call(() =>
         {
             if (!_isActive) SetActive();
 
@@ -301,7 +296,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
 
     private void resizeRecognizer_PanUpdated(object? sender, PanUpdatedEventArgs e)
     {
-        App.Call(() =>
+        API.Call(() =>
         {
             if (!_isActive) SetActive();
             if (_lastBounds == Rect.Zero)

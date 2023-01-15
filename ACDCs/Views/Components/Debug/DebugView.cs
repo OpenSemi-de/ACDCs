@@ -10,7 +10,7 @@ using Sharp.UI;
 public class DebugWindow : WindowView
 {
     private readonly Button _button;
-    private readonly Grid _grid;
+    private readonly Grid _debugGrid;
     private readonly Label _label;
     private readonly TextField _textField;
     private string _script;
@@ -20,7 +20,7 @@ public class DebugWindow : WindowView
 
     public DebugWindow(SharpAbsoluteLayout layout) : base(layout, "Debug")
     {
-        _grid = new Grid()
+        _debugGrid = new Grid()
             .ColumnDefinitions(new ColumnDefinitionCollection(
                 new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star),
                 new Microsoft.Maui.Controls.ColumnDefinition(new GridLength(60))
@@ -41,15 +41,15 @@ public class DebugWindow : WindowView
         _textField = new TextField();
         _textField.TextChanged += TextFieldOnTextChanged;
         Grid.SetRow(_textField, 1);
-        _grid.Add(_label);
-        _grid.Add(_textField);
+        _debugGrid.Add(_label);
+        _debugGrid.Add(_textField);
         _button = new Button(">")
             .WidthRequest(60);
         Grid.SetRow(_button, 1);
         Grid.SetColumn(_button, 1);
         _button.Clicked += ButtonOnClicked;
-        _grid.Add(_button);
-        WindowContent = _grid;
+        _debugGrid.Add(_button);
+        WindowContent = _debugGrid;
     }
 
     public void Write(string text)

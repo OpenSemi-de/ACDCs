@@ -37,7 +37,7 @@ public partial class EditView : WindowView, IEditViewProperties
 
     private static void CallHandler(string command)
     {
-        App.Call(() =>
+        API.Call(() =>
         {
             MenuHandler.Call(command);
             return Task.CompletedTask;

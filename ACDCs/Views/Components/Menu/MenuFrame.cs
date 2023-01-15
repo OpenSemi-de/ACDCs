@@ -20,7 +20,7 @@ public class MenuFrame : StackLayout
         Orientation = StackOrientation.Horizontal;
         if (!_eventSet)
         {
-            App.Reset += App_Reset;
+            API.Reset += App_Reset;
             _eventSet = true;
         }
     }
@@ -32,7 +32,7 @@ public class MenuFrame : StackLayout
 
     public void LoadMenu(List<MenuItemDefinition> items, bool isRoot = false)
     {
-        App.Call(() =>
+        API.Call(() =>
         {
             if (!isRoot)
             {

@@ -6,28 +6,27 @@ using WindowView = ACDCs.Views.Components.Window.WindowView;
 
 namespace ACDCs.Views;
 
-public static class StartCenter
-{
-    public static Page Instance { get; set; }
-}
-
 public partial class StartCenterPage : ContentPage
 {
     private int _circuitCount = 0;
-    private ComponentsView _componentsView;
+    private ComponentsView? _componentsView;
     private WindowView? _componentsWindowView;
-    private DebugWindow _debugWindow;
+    private DebugWindow? _debugWindow;
 
     public StartCenterPage()
     {
         InitializeComponent();
+
         Loaded += OnLoaded;
-        StartCenter.Instance = this;
+        API.MainPage = this;
+        PointerGestureRecognizer pointerMovement = new();
+        pointerMovement.PointerMoved += PointerMovementOnPointerMoved;
+        MainWindowLayout.GestureRecognizers.Add(pointerMovement);
     }
 
     private async void Button_OnClicked(object? sender, EventArgs e)
     {
-        await App.Call(() =>
+        await API.Call(() =>
          {
              _circuitCount++;
              WindowView windowView = new WindowView(MainWindowLayout, $"Circuit {_circuitCount}")
@@ -40,7 +39,7 @@ public partial class StartCenterPage : ContentPage
 
     private async void ComponentsButton_OnClicked(object? sender, EventArgs e)
     {
-        await App.Call(() =>
+        await API.Call(() =>
         {
             if (_componentsWindowView == null)
             {
@@ -70,5 +69,21 @@ public partial class StartCenterPage : ContentPage
         _debugWindow = new DebugWindow(MainWindowLayout) { StartCenterPage = this, TabBar = windowTabBar };
         windowTabBar.AddWindow(_debugWindow);
         _debugWindow.Minimize();
+    }
+
+    private void PointerMovementOnPointerMoved(object? sender, PointerEventArgs e)
+    {
+        Point? point = e.GetPosition(MainWindowLayout);
+        if (API.PointerLayoutObjectToMeasure != null)
+        {
+            point = e.GetPosition(API.PointerLayoutObjectToMeasure);
+        }
+
+        if (point == null)
+        {
+            return;
+        }
+
+        API.PointerCallback?.Invoke((Point)point);
     }
 }

@@ -16,5 +16,6 @@ public interface IDrawableComponent
     Coordinate Position { get; set; }
     float Rotation { get; set; }
     Coordinate Size { get; set; }
+    string Value { get; set; }
     Worksheet? Worksheet { get; set; }
 }

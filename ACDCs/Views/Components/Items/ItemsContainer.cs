@@ -26,8 +26,8 @@ public partial class ItemsContainer : StackLayout, IItemsContainerProperties
 
     public bool IsInserting
     {
-        get => App.Com<bool>("Items", "IsInserting");
-        set => App.Com<bool>("Items", "IsInserting", value);
+        get => API.Com<bool>("Items", "IsInserting");
+        set => API.Com<bool>("Items", "IsInserting", value);
     }
 
     public ItemButton? SelectedButton { get; set; }
@@ -59,7 +59,7 @@ public partial class ItemsContainer : StackLayout, IItemsContainerProperties
 
     public async Task InsertToPosition(float x, float y)
     {
-        await App.Call(async () =>
+        await API.Call(async () =>
         {
             WorksheetItem? newItem = DoInsert?.Invoke(x, y);
             if (newItem != null)
@@ -75,7 +75,7 @@ public partial class ItemsContainer : StackLayout, IItemsContainerProperties
 
     public async Task SetupView()
     {
-        await App.Call(() =>
+        await API.Call(() =>
         {
             if (this.BackgroundColor != null)
             {
@@ -129,7 +129,7 @@ public partial class ItemsContainer : StackLayout, IItemsContainerProperties
 
     private async Task DeselectSelectedButton()
     {
-        await App.Call(() =>
+        await API.Call(() =>
         {
             if (SelectedButton != null)
             {
@@ -143,11 +143,11 @@ public partial class ItemsContainer : StackLayout, IItemsContainerProperties
 
     private async Task Insert(WorksheetItem? item)
     {
-        await App.Call(() =>
+        await API.Call(() =>
         {
             if (item != null)
             {
-                App.Com<Func<float, float, Worksheet, WorksheetItem?>?>("Items", "DoInsert",
+                API.Com<Func<float, float, Worksheet, WorksheetItem?>?>("Items", "DoInsert",
                     (float x, float y, Worksheet sheet) =>
                     {
                         item.DrawableComponent.Position.X = x;
@@ -166,7 +166,7 @@ public partial class ItemsContainer : StackLayout, IItemsContainerProperties
 
     private async Task InsertItem(Type itemType, ItemButton selectedButton)
     {
-        await App.Call(async () =>
+        await API.Call(async () =>
         {
             bool justDeselectAndReturn = SelectedButton == selectedButton;
             IsInserting = false;
@@ -188,7 +188,7 @@ public partial class ItemsContainer : StackLayout, IItemsContainerProperties
 
     private void OnItemButtonClicked(object? sender, EventArgs e)
     {
-        App.Call(async () =>
+        API.Call(async () =>
         {
             if (sender is ItemButton button)
             {
@@ -210,7 +210,7 @@ public partial class ItemsContainer : StackLayout, IItemsContainerProperties
 
     private async Task SelectButton(ItemButton selectedButton)
     {
-        await App.Call(() =>
+        await API.Call(() =>
         {
             SelectedButton = selectedButton;
             SelectedButtonColor = SelectedButton?.BackgroundColor;

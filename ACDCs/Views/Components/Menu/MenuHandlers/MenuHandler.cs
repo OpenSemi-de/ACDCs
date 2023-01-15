@@ -6,7 +6,7 @@ public class MenuHandler
 
     public static void Add(string name, object action)
     {
-        App.Call(() =>
+        API.Call(() =>
         {
             if (!s_menuHandlers.ContainsKey(name))
             {
@@ -24,7 +24,7 @@ public class MenuHandler
 
     public static void Call(string menuCommand)
     {
-        App.Call(() =>
+        API.Call(() =>
         {
             if (s_menuHandlers.ContainsKey(menuCommand))
             {
@@ -37,7 +37,7 @@ public class MenuHandler
 
     public static void Call(string menuCommand, object param)
     {
-        App.Call(() =>
+        API.Call(() =>
         {
             if (s_menuHandlers.ContainsKey(menuCommand))
             {

@@ -3,6 +3,7 @@ using ACDCs.Data.ACDCs.Components;
 using ACDCs.IO.DB;
 using ACDCs.IO.Spice;
 using ACDCs.Views.Components;
+using ACDCs.Views.Components.ModelSelection;
 using CommunityToolkit.Maui.Views;
 using Sharp.UI;
 using Button = Microsoft.Maui.Controls.Button;
@@ -25,8 +26,8 @@ public class CacheListView : ListView
 
 public partial class ComponentsView : SharpAbsoluteLayout
 {
-    public List<ComponentPageModel> dataSource = new();
-    private List<ComponentPageModel> _baseData = new();
+    public List<ComponentViewModel> dataSource = new();
+    private List<ComponentViewModel> _baseData = new();
     private string _category = "";
 
     public ComponentsView()
@@ -46,7 +47,7 @@ public partial class ComponentsView : SharpAbsoluteLayout
         {
             if (spiceReader.Errors != null)
             {
-                await StartCenter.Instance.DisplayAlert("Model import failed",
+                await API.MainPage.DisplayAlert("Model import failed",
                     string.Join(':', spiceReader.Errors), "ok");
             }
 
@@ -62,7 +63,7 @@ public partial class ComponentsView : SharpAbsoluteLayout
         int row = 0;
         foreach (IElectronicComponent component in components)
         {
-            ComponentPageModel modelLine = new()
+            ComponentViewModel modelLine = new()
             {
                 Name = component.Name,
                 Type = component.GetType().Name,
@@ -107,7 +108,7 @@ public partial class ComponentsView : SharpAbsoluteLayout
         if (sender is Button button &&
             button.CommandParameter is int row)
         {
-            ComponentPageModel model = dataSource[row];
+            ComponentViewModel model = dataSource[row];
             ComponentsDetailPopup popup = new();
             if (App.Current?.MainPage != null)
             {
@@ -120,7 +121,7 @@ public partial class ComponentsView : SharpAbsoluteLayout
 
     private void KeywordEntry_OnTextChanged(object? sender, TextChangedEventArgs e)
     {
-        IEnumerable<ComponentPageModel> query = _baseData;
+        IEnumerable<ComponentViewModel> query = _baseData;
         if (_category != "")
         {
             query = query.Where(d => d.Type.ToLower().Contains(_category.ToLower()));
@@ -136,7 +137,7 @@ public partial class ComponentsView : SharpAbsoluteLayout
         }
 
         dataSource.Clear();
-        foreach (ComponentPageModel model in query)
+        foreach (ComponentViewModel model in query)
         {
             dataSource.Add(model);
         }
@@ -163,13 +164,13 @@ public partial class ComponentsView : SharpAbsoluteLayout
         }
     }
 
-    private bool ReflectedSearch(ComponentPageModel componentPageModel, string text)
+    private bool ReflectedSearch(ComponentViewModel ComponentViewModel, string text)
     {
-        Type modelType = componentPageModel.Model.GetType();
+        Type modelType = ComponentViewModel.Model.GetType();
         text = text.ToLower();
         foreach (PropertyInfo propertyInfo in modelType.GetProperties())
         {
-            string? value = Convert.ToString(propertyInfo.GetValue(componentPageModel.Model));
+            string? value = Convert.ToString(propertyInfo.GetValue(ComponentViewModel.Model));
             if (value != null)
             {
                 value = value.ToLower();
@@ -192,13 +193,4 @@ public partial class ComponentsView : SharpAbsoluteLayout
         ComponentsGrid.ItemsSource = dataSource;
         ComponentsGrid.BatchCommit();
     }
-}
-
-public class ComponentPageModel
-{
-    public IElectronicComponent Model { get; set; }
-    public string Name { get; set; }
-    public int Row { get; set; }
-    public string Type { get; set; }
-    public string Value { get; set; }
 }

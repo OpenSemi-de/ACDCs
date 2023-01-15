@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Reflection;
+using ACDCs.Data.ACDCs.Components;
 using ACDCs.Views.Components.Window;
 using Microsoft.Maui.Layouts;
 
@@ -11,6 +12,12 @@ public class PropertiesView : WindowView
 {
     private readonly Grid _propertiesGrid;
     private readonly ListView _propertiesView;
+    private object? _currentObject;
+
+    public Action<PropertyEditor>? OnModelSelectionClicked { get; set; }
+    public Action<IElectronicComponent> OnModelSelectionForward { get; set; }
+    public Action? OnUpdate { get; set; }
+    public List<string> PropertyExcludeList { get; set; } = new();
 
     public PropertiesView(SharpAbsoluteLayout layout) : base(layout, "Properties")
     {
@@ -26,7 +33,7 @@ public class PropertiesView : WindowView
 
         DataTemplate itemTemplate = new()
         {
-            LoadTemplate = () => new PropertyTemplate()
+            LoadTemplate = () => new PropertyTemplate(OnPropertyUpdated, ModelSelectionClicked)
         };
 
         _propertiesView.ItemTemplate(itemTemplate);
@@ -40,28 +47,78 @@ public class PropertiesView : WindowView
         layout.SizeChanged += PropertiesView_SizeChanged;
     }
 
-    public void GetProperties(object? obj)
+    public void GetProperties(object? currentObject)
     {
-        var properties = obj?.GetType().GetProperties();
+        _currentObject = currentObject;
+        var properties = currentObject?.GetType().GetRuntimeProperties();
 
         ObservableCollection<PropertyItem> propertyItems = new();
-        foreach (PropertyInfo propertyInfo in properties)
+        if (properties != null)
         {
-            if (propertyInfo.PropertyType.IsPrimitive)
+            foreach (PropertyInfo propertyInfo in properties)
             {
-                PropertyItem item = new PropertyItem();
-                item.Name = propertyInfo.Name;
-                object? value = propertyInfo.GetValue(obj, null);
-                if (value != null)
+                if (
+                    !PropertyExcludeList.Contains(propertyInfo.Name)
+                // && (propertyInfo.PropertyType.IsPrimitive || propertyInfo.PropertyType.IsEnum)
+                )
                 {
-                    item.Value = value;
-                }
+                    PropertyItem item = new() { Name = propertyInfo.Name };
+                    object? value = propertyInfo.GetValue(currentObject, null);
+                    if (value != null)
+                    {
+                        item.Value = value;
+                    }
 
-                propertyItems.Add(item);
+                    propertyItems.Add(item);
+                }
             }
         }
 
         _propertiesView.ItemsSource(propertyItems);
+    }
+
+    public void OnModelSelected(IElectronicComponent obj)
+    {
+        OnModelSelectionForward(obj);
+    }
+
+    private void ModelSelectionClicked(PropertyEditor obj)
+    {
+        OnModelSelectionClicked?.Invoke(obj);
+        OnModelSelectionForward = obj.OnModelSelected;
+    }
+
+    private void OnPropertyUpdated(string? propertyName, object value)
+    {
+        try
+        {
+            Type? currentType = _currentObject?.GetType();
+            if (propertyName != null && currentType != null && Convert.ToString(value) != "")
+            {
+                PropertyInfo? propertyInfo = currentType.GetProperty(propertyName);
+                if (propertyInfo != null)
+                {
+                    object outputValue = value;
+                    if (propertyInfo.PropertyType == typeof(float))
+                    {
+                        outputValue = Convert.ToSingle(value);
+                    }
+
+                    if (propertyInfo.PropertyType == typeof(int))
+                    {
+                        outputValue = Convert.ToInt32(value);
+                    }
+
+                    propertyInfo.SetValue(_currentObject, outputValue);
+                }
+            }
+        }
+        catch (Exception exception)
+        {
+            API.PopupException(exception);
+        }
+
+        OnUpdate?.Invoke();
     }
 
     private void PropertiesView_SizeChanged(object? sender, EventArgs e)
@@ -70,78 +127,4 @@ public class PropertiesView : WindowView
         Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
         Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(this, new Rect(MainContainer.Width - 152, 60, 148, 400));
     }
-}
-
-[SharpObject()]
-public partial class PropertyEditor : ContentView, IPropertyEditorProperties
-{
-    private int _fontSize;
-
-    public PropertyEditor()
-    {
-        PropertyChanged += PropertyEditor_PropertyChanged;
-    }
-
-    public PropertyEditor Fontsize(int fontSize)
-    {
-        _fontSize = fontSize;
-        return this;
-    }
-
-    private void PropertyEditor_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-    {
-        if (e.PropertyName != null && e.PropertyName.StartsWith("Value"))
-        {
-            var value = GetValue(ValueProperty);
-
-            if (value is bool boolValue)
-            {
-                Content = new Switch()
-                    .HorizontalOptions(LayoutOptions.Start)
-                    .VerticalOptions(LayoutOptions.Start)
-                    .IsToggled(boolValue);
-            }
-            else
-            {
-                Content = new Entry()
-                    .HorizontalOptions(LayoutOptions.Fill)
-                    .VerticalOptions(LayoutOptions.Fill)
-                    .FontSize(_fontSize)
-                    .Text(Convert.ToString(value));
-            }
-        }
-    }
-}
-
-public class PropertyTemplate : ViewCell
-{
-    public PropertyTemplate()
-    {
-        Grid grid = new Grid()
-            .HorizontalOptions(LayoutOptions.Fill)
-            .HeightRequest(26);
-        grid.ColumnDefinitions.Add(new(new(60)));
-        grid.ColumnDefinitions.Add(new(GridLength.Star));
-
-        Label label = new Label()
-            .FontSize(10);
-
-        label.SetBinding(Label.TextProperty, "Name");
-        grid.Add(label);
-
-        PropertyEditor entry = new PropertyEditor()
-            .Fontsize(10);
-
-        entry.SetBinding(PropertyEditor.ValueProperty, "Value");
-
-        grid.Add(entry);
-        Grid.SetColumn(entry, 1);
-        this.Add(grid);
-    }
-}
-
-[BindableProperties]
-public interface IPropertyEditorProperties
-{
-    object Value { get; set; }
 }

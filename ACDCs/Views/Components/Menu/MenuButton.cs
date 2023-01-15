@@ -28,7 +28,7 @@ public class MenuButton : Button, IMenuItem
 
     private void ClickAction_Click(object? sender, EventArgs e)
     {
-        App.Call(() =>
+        API.Call(() =>
         {
             _clickAction?.Invoke();
             if (MenuCommand != "")
@@ -42,7 +42,7 @@ public class MenuButton : Button, IMenuItem
 
     private void MenuButton_Clicked(object? sender, System.EventArgs e)
     {
-        App.Call(() =>
+        API.Call(() =>
         {
             if (MenuFrame != null)
             {

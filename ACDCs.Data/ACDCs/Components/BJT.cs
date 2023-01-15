@@ -5,7 +5,7 @@ public class Bjt : BjtModelParameters, IElectronicComponent
     public string Model { get; set; }
     public string Name { get; set; }
     public IComponentRuntimeParameters ParametersRuntime { get; set; }
-    public string Type { get; set; } = nameof(Bjt);
+    public string Type { get; set; }
 }
 
 public class BjtModelParameters : IComponentParameters

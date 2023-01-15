@@ -6,6 +6,8 @@ namespace ACDCs.CircuitRenderer.Drawables;
 
 public sealed class TransistorDrawable : DrawableComponent
 {
+    private TextInstruction? _textInstruction;
+
     public TransistorDrawable(IWorksheetItem parent, TransistorDrawableType type, float x, float y) : base(
         typeof(TransistorDrawable), parent)
     {
@@ -21,7 +23,8 @@ public sealed class TransistorDrawable : DrawableComponent
         DrawInstructions.Add(new LineInstruction(1f, 0.8f, 1f, 1f));
         DrawInstructions.Add(new LineInstruction(0.5f, 0.5f, 1f, 0.8f));
         DrawInstructions.Add(new BoxInstruction(0.5f, 0.3f, 0.05f, 0.4f, new Color(0, 0, 0)));
-        DrawInstructions.Add(new TextInstruction(type.ToString(), 0f, 12f, 0.3f, 1f));
+        _textInstruction = new TextInstruction(Value, 0f, 12f, 0.3f, 1f);
+        DrawInstructions.Add(_textInstruction);
 
         if (type == TransistorDrawableType.Pnp)
         {
@@ -47,5 +50,15 @@ public sealed class TransistorDrawable : DrawableComponent
 
         SetSize(2, 2);
         SetPosition(x, y);
+
+        OnValueSet = ValueSet;
+    }
+
+    private void ValueSet()
+    {
+        if (_textInstruction != null)
+        {
+            _textInstruction.Text = Value;
+        }
     }
 }

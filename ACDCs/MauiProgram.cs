@@ -2,10 +2,14 @@
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Maui.LifecycleEvents;
+
+#if WINDOWS
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
-using UraniumUI;
 using Windows.Graphics;
+#endif
+
+using UraniumUI;
 
 namespace ACDCs;
 

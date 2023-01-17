@@ -1,16 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<components:SharpAbsoluteLayout xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<components1:SharpAbsoluteLayout xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                                 xmlns:controls="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
                                 xmlns:menu="clr-namespace:ACDCs.Views.Components.Menu"
-                                xmlns:circuitView="clr-namespace:ACDCs.Views.Components.CircuitView"
                                 xmlns:components="clr-namespace:ACDCs.Views.Components"
                                 xmlns:menuHandlers="clr-namespace:ACDCs.Views.Components.Menu.MenuHandlers"
                                 xmlns:views="using:ACDCs.Views"
+                                xmlns:components1="using:ACDCs.Components"
+                                xmlns:menu1="using:ACDCs.Components.Menu"
+                                xmlns:menuHandlers1="using:ACDCs.Components.Menu.MenuHandlers"
                                 x:Class="ACDCs.Views.ComponentsView"
                                 x:Name="AbsoluteLayoutSheetPage">
-    <menu:MenuContainer PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" MenuFilename="menu_components.json"/>
+    <menu1:MenuContainer PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" MenuFilename="menu_components.json"/>
 
     <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutFlags="WidthProportional" AbsoluteLayout.LayoutBounds="0,50,1,30">
         <Entry WidthRequest="200" x:Name="keywordEntry" TextChanged="KeywordEntry_OnTextChanged"></Entry>
@@ -84,6 +86,6 @@
             </controls:DataGrid>-->
 
 
-    <menuHandlers:ImportMenuHandlers ComponentsView="{x:Reference AbsoluteLayoutSheetPage}"></menuHandlers:ImportMenuHandlers>
+    <menuHandlers1:ImportMenuHandlers ComponentsView="{x:Reference AbsoluteLayoutSheetPage}"></menuHandlers1:ImportMenuHandlers>
 
-</components:SharpAbsoluteLayout>
+</components1:SharpAbsoluteLayout>

@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Reflection;
-using ACDCs.Views.Components.ModelSelection;
+using ACDCs.Views.ModelSelection;
 using CommunityToolkit.Maui.Views;
 
 namespace ACDCs.Views;
@@ -39,7 +39,7 @@ public partial class ComponentsDetailPopup : Popup
 
     private ObservableCollection<PropertyItem> ToItemSource(ComponentViewModel model)
     {
-        PropertyItem root = new PropertyItem(model.Name) { IsExpanded = true };
+        PropertyItem root = new(model.Name) { IsExpanded = true };
 
         Dictionary<string, string> parameters = GetParameters(model);
 

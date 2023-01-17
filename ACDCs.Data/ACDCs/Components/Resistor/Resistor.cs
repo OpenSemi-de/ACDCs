@@ -2,6 +2,7 @@
 
 public class Resistor : ResistorParameters, IElectronicComponent
 {
+    private string _value;
     public string Model { get; set; }
     public string Name { get; set; }
     public IComponentParameters ParametersModel => new ResistorParameters();
@@ -10,10 +11,11 @@ public class Resistor : ResistorParameters, IElectronicComponent
 
     public string Value
     {
-        get => Convert.ToString(((ResistorRuntimeParameters)ParametersRuntime).Resistance);
+        get => _value;
 
         set
         {
+            _value = value;
             ((ResistorRuntimeParameters)ParametersRuntime).Resistance = Convert.ToDouble(value);
         }
     }

@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
+using ACDCs.Components;
 using ACDCs.Data.ACDCs.Components;
 using ACDCs.IO.DB;
 using ACDCs.IO.Spice;
-using ACDCs.Views.Components;
-using ACDCs.Views.Components.ModelSelection;
+using ACDCs.Views.ModelSelection;
 using CommunityToolkit.Maui.Views;
 using Sharp.UI;
 using Button = Microsoft.Maui.Controls.Button;
@@ -147,7 +147,7 @@ public partial class ComponentsView : SharpAbsoluteLayout
 
     private void OnLoaded(object? sender, EventArgs e)
     {
-        DBConnection defaultdb = new DBConnection("default");
+        DBConnection defaultdb = new("default");
         List<IElectronicComponent> defaultComponents = defaultdb.Read<IElectronicComponent>("Components");
 
         CategoryPicker.ItemsSource = dataSource

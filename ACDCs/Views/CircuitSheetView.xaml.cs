@@ -1,6 +1,8 @@
-using ACDCs.Views.Components;
-using ACDCs.Views.Components.Edit;
-using ACDCs.Views.Components.ModelSelection;
+using ACDCs.Components;
+using ACDCs.Views.ModelSelection;
+using ACDCs.Views.Properties;
+using EditView = ACDCs.Views.Edit.EditView;
+using PropertyEditorView = ACDCs.Views.Properties.PropertyEditorView;
 
 namespace ACDCs.Views;
 
@@ -25,23 +27,23 @@ public partial class CircuitSheetView : SharpAbsoluteLayout
     private void OnLoaded(object? sender, EventArgs e)
     {
         _editWindow = new EditView(AbsoluteLayoutSheetPage);
-        _propertiesWindow = new PropertiesView(AbsoluteLayoutSheetPage);
-        _propertiesWindow.OnUpdate = OnUpdate;
+        _propertiesWindow = new PropertiesView(AbsoluteLayoutSheetPage) { OnUpdate = OnUpdate };
         _propertiesWindow.PropertyExcludeList.AddRange(
         new[]{
-            "IsInsertable", "DefaultValue", "DefaultType", "DrawableComponent", "Pins"
+            "IsInsertable", "DefaultValue", "DefaultType", "DrawableComponent", "Pins", "TypeName", "RefName", "ItemGuid"
         });
         _propertiesWindow.OnModelSelectionClicked = OnModelSelectionClicked;
         CircuitView.OnSelectedItemChange = _propertiesWindow.GetProperties;
 
-        _modelSelectionWindow = new ModelSelectionWindowView(AbsoluteLayoutSheetPage);
-        _modelSelectionWindow.IsVisible = false;
-        _modelSelectionWindow.OnModelSelected = _propertiesWindow.OnModelSelected;
+        _modelSelectionWindow = new ModelSelectionWindowView(AbsoluteLayoutSheetPage)
+            {
+                IsVisible = false, OnModelSelected = _propertiesWindow.OnModelSelected
+            };
 
         //    BackgroundImageSource = ImageService.BackgroundImageSource(this);
     }
 
-    private void OnModelSelectionClicked(PropertyEditor obj)
+    private void OnModelSelectionClicked(PropertyEditorView obj)
     {
         _modelSelectionWindow.SetComponentType(obj.ValueType);
         _modelSelectionWindow.IsVisible = true;

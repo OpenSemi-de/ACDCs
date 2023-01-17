@@ -8,7 +8,9 @@
     xmlns:window="using:ACDCs.Views.Components.Window"
     xmlns:views="using:ACDCs.Views"
     xmlns:system="using:System"
-    xmlns:acdcs="using:ACDCs">
+    xmlns:acdcs="using:ACDCs"
+    xmlns:menu1="using:ACDCs.Components.Menu"
+    xmlns:window1="using:ACDCs.Components.Window">
 
 
  
@@ -35,18 +37,18 @@
                 Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
 
-    <Style TargetType="menu:MenuDivider">
+    <Style TargetType="menu1:MenuDivider">
         <Setter Property="BackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" />
         <Setter Property="MaximumHeightRequest" Value="2"></Setter>
     </Style>
 
-    <Style TargetType="menu:MenuFrame">
+    <Style TargetType="menu1:MenuFrame">
         <Setter Property="BackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
     </Style>
 
-    <Style TargetType="menu:MenuButton">
+    <Style TargetType="menu1:MenuButton">
         <Setter Property="FontSize" Value="10"></Setter>
     </Style>
 
@@ -184,7 +186,7 @@
                 Value="{AppThemeBinding Light={StaticResource BackgroundHighLight}, Dark={StaticResource BackgroundHighDark}}" />
     </Style>
 
-    <Style TargetType="window:WindowFrame">
+    <Style TargetType="window1:WindowFrame">
         <Setter Property="HasShadow" Value="True" />
         <Setter Property="Shadow">
             <Shadow>

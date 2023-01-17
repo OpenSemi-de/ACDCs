@@ -1,9 +1,10 @@
-﻿using ACDCs.Views.Components.Window;
+﻿using ACDCs.Components;
+using ACDCs.Components.Window;
 using CSScriptLib;
 using Microsoft.Maui.Layouts;
 using UraniumUI.Material.Controls;
 
-namespace ACDCs.Views.Components.Debug;
+namespace ACDCs.Views.Debug;
 
 using Sharp.UI;
 

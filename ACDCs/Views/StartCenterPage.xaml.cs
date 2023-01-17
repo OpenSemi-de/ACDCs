@@ -1,8 +1,7 @@
-﻿using ACDCs.Services;
-using ACDCs.Views.Components.Debug;
-using ACDCs.Views.Components.Window;
+﻿using ACDCs.Components.Window;
+using ACDCs.Services;
+using ACDCs.Views.Debug;
 using ContentPage = Microsoft.Maui.Controls.ContentPage;
-using WindowView = ACDCs.Views.Components.Window.WindowView;
 
 namespace ACDCs.Views;
 
@@ -29,8 +28,10 @@ public partial class StartCenterPage : ContentPage
         await API.Call(() =>
          {
              _circuitCount++;
-             WindowView windowView = new WindowView(MainWindowLayout, $"Circuit {_circuitCount}")
-                 .WindowContent(new CircuitSheetView());
+             WindowView windowView = new(MainWindowLayout, $"Circuit {_circuitCount}")
+             {
+                 WindowContent = new CircuitSheetView()
+             };
              windowView.Maximize();
              windowTabBar.AddWindow(windowView);
              return Task.CompletedTask;
@@ -46,8 +47,10 @@ public partial class StartCenterPage : ContentPage
                 _componentsView = new ComponentsView();
 
                 _componentsWindowView = new WindowView(MainWindowLayout, "Components")
-                    .WindowContent(_componentsView);
-                _componentsWindowView.OnClose = OnCloseComponentsView;
+                {
+                    WindowContent = _componentsView,
+                    OnClose = OnCloseComponentsView
+                };
 
                 windowTabBar.AddWindow(_componentsWindowView);
             }

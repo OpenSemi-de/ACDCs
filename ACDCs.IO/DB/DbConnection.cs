@@ -1,37 +1,74 @@
-﻿using LiteDB;
+﻿using ACDCs.Data.ACDCs.Components;
+using LiteDB;
 
-namespace ACDCs.IO.DB
+namespace ACDCs.IO.DB;
+
+public class DBConnection
 {
-    public class DBConnection
+    private readonly string _connectionString;
+
+    public DBConnection(string dbname)
     {
-        private readonly string _connectionString;
-
-        public DBConnection(string dbname)
+        string dbdir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "db", dbname);
+        if (!Directory.Exists(dbdir))
         {
-            string dbdir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "db", dbname);
-            if (!Directory.Exists(dbdir))
-            {
-                Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "db"));
-            }
-            _connectionString = $"Filename={dbdir}";
+            Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "db"));
+        }
+        _connectionString = $"Filename={dbdir}";
+    }
+
+    public List<T> Read<T>(string collectionName)
+    {
+        using LiteDatabase db = new(_connectionString);
+        if (db.CollectionExists(collectionName))
+            return db.GetCollection<T>(collectionName).FindAll().ToList();
+
+        return new();
+    }
+
+    public void Write<T>(List<T> items, string collectionName)
+    {
+        using LiteDatabase db = new(_connectionString);
+
+        db.GetCollection<T>(collectionName)
+            .Insert(items);
+        db.Dispose();
+    }
+}
+
+public class DefaultModelRepository
+{
+    private DBConnection _connection;
+
+    public DefaultModelRepository()
+    {
+        _connection = new DBConnection("default");
+    }
+
+    public List<T> GetModels<T>(string type)
+    {
+        List<IElectronicComponent> models = new();
+
+        if (type.ToLower() == "pnp" || type.ToLower() == "npn")
+        {
+            models = GetModels()
+                .Where(c => (c is Bjt bjt) && bjt.TypeName == type.ToLower())
+                .ToList();
         }
 
-        public List<T> Read<T>(string collectionName)
+        if (type.ToLower() == "diode")
         {
-            using LiteDatabase db = new(_connectionString);
-            if (db.CollectionExists(collectionName))
-                return db.GetCollection<T>(collectionName).FindAll().ToList();
-
-            return new();
+            models = GetModels()
+                .Where(c => (c is Diode))
+                .ToList();
         }
 
-        public void Write<T>(List<T> items, string collectionName)
-        {
-            using LiteDatabase db = new(_connectionString);
+        return models.Cast<T>().ToList();
+    }
 
-            db.GetCollection<T>(collectionName)
-                .Insert(items);
-            db.Dispose();
-        }
+    public List<IElectronicComponent> GetModels()
+    {
+        List<IElectronicComponent> models = _connection.Read<IElectronicComponent>("Components");
+        return models;
     }
 }

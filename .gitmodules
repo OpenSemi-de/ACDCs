@@ -1,7 +1,3 @@
-[submodule "sharpui"]
-	path = libs/Sharp.UI
-	url = https://github.com/idexus/Sharp.UI.git
-
 [submodule "spicesharp"]
 	path = libs/SpiceSharp
 	url = https://github.com/SpiceSharp/SpiceSharp.git

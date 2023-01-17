@@ -6,6 +6,12 @@ public class JFET : JFETParameters, IElectronicComponent
     public string Name { get; set; }
     public IComponentRuntimeParameters ParametersRuntime => new JFETParametersRuntimeParameters();
     public string Type { get; set; }
+
+    public string Value
+    {
+        get => Name;
+        set => Name = value;
+    }
 }
 
 public class JFETParameters : IComponentParameters

@@ -6,6 +6,12 @@ public class Bjt : BjtModelParameters, IElectronicComponent
     public string Name { get; set; }
     public IComponentRuntimeParameters ParametersRuntime { get; set; }
     public string Type { get; set; }
+
+    public string Value
+    {
+        get => Name;
+        set => Name = value;
+    }
 }
 
 public class BjtModelParameters : IComponentParameters

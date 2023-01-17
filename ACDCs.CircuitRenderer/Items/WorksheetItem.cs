@@ -53,6 +53,10 @@ public class WorksheetItem : IWorksheetItem
             if (value != null)
             {
                 DrawableComponent.Value = value;
+                if (Model != null)
+                {
+                    Model.Value = ParseUnits(value);
+                }
             }
 
             _value = value ?? DefaultValue;
@@ -80,5 +84,94 @@ public class WorksheetItem : IWorksheetItem
     public WorksheetItem()
     {
         DrawableComponent = new DrawableComponent(typeof(DrawableComponent), this);
+    }
+
+    private static double PartialValue(double partialValue, double multiplier, ref double result)
+    {
+        partialValue *= multiplier;
+        result += partialValue;
+        partialValue = 0;
+        return partialValue;
+    }
+
+    private string ParseUnits(string stringValue)
+    {
+        double partialValue = 0;
+        double result = 0;
+        double multiplier = 0;
+
+        stringValue = stringValue.Trim();
+
+        foreach (char c in stringValue)
+        {
+            string ch = Convert.ToString(c);
+            switch (ch)
+            {
+                case "k":
+                case "K":
+                    multiplier = 1000;
+                    partialValue = PartialValue(partialValue, multiplier, ref result);
+                    break;
+
+                case "M":
+                    multiplier = 1000000;
+                    partialValue = PartialValue(partialValue, multiplier, ref result);
+                    break;
+
+                case "G":
+                case "g":
+                    multiplier = 1000000000;
+                    partialValue = PartialValue(partialValue, multiplier, ref result);
+                    break;
+
+                case "m":
+                    multiplier = 1d / 1000;
+                    partialValue = PartialValue(partialValue, multiplier, ref result);
+                    break;
+
+                case "n":
+                    multiplier = 1d / 1000000;
+                    partialValue = PartialValue(partialValue, multiplier, ref result);
+                    break;
+
+                case "u":
+                    multiplier = 1d / 1000000000;
+                    partialValue = PartialValue(partialValue, multiplier, ref result);
+                    break;
+
+                case "p":
+                    multiplier = 1d / 1000000000000;
+                    partialValue = PartialValue(partialValue, multiplier, ref result);
+                    break;
+
+                default:
+                    {
+                        if (int.TryParse(ch, out int intValue))
+                        {
+                            if (partialValue == 0)
+                            {
+                                partialValue = intValue;
+                            }
+                            else
+                            {
+                                partialValue *= 10;
+                                partialValue += intValue;
+                            }
+                        }
+
+                        break;
+                    }
+            }
+        }
+
+        if (partialValue != 0 && result != 0)
+        {
+            partialValue *= multiplier / 10;
+            result += partialValue;
+        }
+
+        if (result == 0) { result = partialValue; }
+
+        return Convert.ToString(result);
     }
 }

@@ -33,6 +33,7 @@ public class EditButton : ImageButton
             .HeightRequest(buttonHeight)
             .BackgroundColor(Colors.Transparent)
             .BorderWidth(0)
+
             .Aspect(Aspect.Fill);
 
         _onClickAction = onClickAction;

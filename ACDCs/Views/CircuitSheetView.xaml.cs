@@ -29,7 +29,7 @@ public partial class CircuitSheetView : SharpAbsoluteLayout
         _propertiesWindow.OnUpdate = OnUpdate;
         _propertiesWindow.PropertyExcludeList.AddRange(
         new[]{
-            "IsInsertable", "DefaultValue", "DefaultType"
+            "IsInsertable", "DefaultValue", "DefaultType", "DrawableComponent", "Pins"
         });
         _propertiesWindow.OnModelSelectionClicked = OnModelSelectionClicked;
         CircuitView.OnSelectedItemChange = _propertiesWindow.GetProperties;

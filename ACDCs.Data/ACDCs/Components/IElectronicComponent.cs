@@ -6,4 +6,6 @@ public interface IElectronicComponent
     string Name { get; set; }
     public IComponentRuntimeParameters ParametersRuntime { get; }
     string Type { get; set; }
+
+    string Value { get; set; }
 }

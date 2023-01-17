@@ -73,7 +73,17 @@ public partial class PropertyEditor : ContentView, IPropertyEditorProperties
                 if (value != null)
                 {
                     ValueType = value.GetType().Name;
-                    if (value is bool boolValue)
+
+                    if (PropertyName == "Value")
+                    {
+                        Content = new Entry()
+                            .HorizontalOptions(LayoutOptions.Fill)
+                            .VerticalOptions(LayoutOptions.Fill)
+                            .FontSize(_fontSize)
+                            .OnTextChanged(Value_OnTextChanged)
+                            .Text(Convert.ToString(value));
+                    }
+                    else if (value is bool boolValue)
                     {
                         Content = new Switch()
                             .HorizontalOptions(LayoutOptions.Start)
@@ -143,5 +153,10 @@ public partial class PropertyEditor : ContentView, IPropertyEditorProperties
     private void Toggle_OnToggle(object? sender, ToggledEventArgs e)
     {
         OnValueChanged?.Invoke(e.Value);
+    }
+
+    private void Value_OnTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        OnValueChanged?.Invoke(e.NewTextValue);
     }
 }

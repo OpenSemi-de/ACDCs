@@ -6,6 +6,15 @@ public class Capacitor : CapacitorParameters, IElectronicComponent
     public new string Name { get; set; }
     public IComponentRuntimeParameters ParametersRuntime => new CapacitorRuntimeParameters();
     public string Type { get; set; }
+
+    public string Value
+    {
+        get => Convert.ToString(((CapacitorRuntimeParameters)ParametersRuntime).Capacitance);
+        set
+        {
+            ((CapacitorRuntimeParameters)ParametersRuntime).Capacitance = Convert.ToDouble(value);
+        }
+    }
 }
 
 public class CapacitorParameters : IComponentParameters

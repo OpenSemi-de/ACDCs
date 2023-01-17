@@ -5,6 +5,8 @@ namespace ACDCs.CircuitRenderer.Drawables;
 
 public sealed class DiodeDrawable : DrawableComponent
 {
+    private TextInstruction _textInstruction;
+
     public DiodeDrawable(IWorksheetItem parent, string value, float x, float y) : base(typeof(DiodeDrawable), parent)
     {
         Setup(value, x, y);
@@ -19,8 +21,16 @@ public sealed class DiodeDrawable : DrawableComponent
         DrawInstructions.Add(new LineInstruction(0.8f, 0.5f, 0.5f, 0.8f));
         DrawInstructions.Add(new LineInstruction(0.5f, 0.2f, 0.5f, 0.8f));
         DrawInstructions.Add(new LineInstruction(0.8f, 0.5f, 1f, 0.5f));
-        DrawInstructions.Add(new TextInstruction(value, 0f, 12f, 0.5f, 1.3f));
+        _textInstruction = new TextInstruction(value, 0f, 12f, 0.5f, 1.3f);
+        DrawInstructions.Add(_textInstruction);
         SetSize(2, 1);
         SetPosition(x, y);
+
+        OnValueSet = ValueSet;
+    }
+
+    private void ValueSet()
+    {
+        _textInstruction.Text = Value;
     }
 }

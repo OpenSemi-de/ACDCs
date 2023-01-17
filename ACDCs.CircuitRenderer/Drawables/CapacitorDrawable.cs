@@ -6,6 +6,7 @@ namespace ACDCs.CircuitRenderer.Drawables;
 
 public sealed class CapacitorDrawable : DrawableComponent
 {
+    private TextInstruction _textInstruction;
     public CapacitorDrawableType CapacitorType { get; set; }
 
     public CapacitorDrawable(IWorksheetItem parent) : base(typeof(CapacitorDrawable), parent)
@@ -42,8 +43,16 @@ public sealed class CapacitorDrawable : DrawableComponent
             DrawInstructions.Add(new LineInstruction(0.5f, 0.5f, 1f, 0.5f));
         }
 
-        DrawInstructions.Add(new TextInstruction(value, 0f, 12f, 0.5f, 1.35f));
+        _textInstruction = new TextInstruction(value, 0f, 12f, 0.5f, 1.35f);
+        DrawInstructions.Add(_textInstruction);
         SetSize(2, 1);
         SetPosition(x, y);
+
+        OnValueSet = ValueSet;
+    }
+
+    private void ValueSet()
+    {
+        _textInstruction.Text = Value;
     }
 }

@@ -108,6 +108,7 @@
     <PackageReference Include="Microsoft.Maui.Graphics.Skia" Version="7.0.52" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="ObjectsComparer" Version="1.4.1" />
+    <PackageReference Include="Sharp.UI" Version="0.2.3-alpha.6" />
     <PackageReference Include="SkiaSharp" Version="2.88.2" />
     <PackageReference Include="UraniumUI" Version="2.2.0" />
     <PackageReference Include="UraniumUI.Material" Version="2.2.0" />
@@ -118,9 +119,6 @@
     <ProjectReference Include="..\ACDCs.Data\ACDCs.Data.csproj" />
 
     <ProjectReference Include="..\ACDCs.IO\ACDCs.IO.csproj" />
-
-    <ProjectReference Include="..\libs\Sharp.UI\Sharp.UI\Sharp.UI.csproj" />
-    <ProjectReference Include="..\libs\Sharp.UI\Sharp.UI.Generator\Sharp.UI.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\ACDCS.CircuitRenderer\ACDCs.CircuitRenderer.csproj" />
   </ItemGroup>
 

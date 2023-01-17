@@ -27,6 +27,8 @@ public class PropertyTemplate : ViewCell
             .HorizontalOptions(LayoutOptions.Fill)
             .HeightRequest(30)
             .Fontsize(11);
+        entry.SetBinding(PropertyEditor.PropertyNameProperty, "Name", BindingMode.OneTime);
+        entry.SetBinding(PropertyEditor.ValueProperty, "Value", BindingMode.OneTime);
 
         entry.OnModelSelectionClicked = _onModelSelectionClicked;
 
@@ -34,9 +36,6 @@ public class PropertyTemplate : ViewCell
         {
             UpdateProperty(entry.PropertyName, newValue);
         };
-
-        entry.SetBinding(PropertyEditor.ValueProperty, "Value");
-        entry.SetBinding(PropertyEditor.PropertyNameProperty, "Name");
 
         grid.Add(entry);
         Grid.SetColumn(entry, 1);

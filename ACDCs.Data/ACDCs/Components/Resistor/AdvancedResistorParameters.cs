@@ -6,5 +6,4 @@ public class AdvancedResistorParameters
     public string ResistorType { get; set; }
     public ResistorSeries Series { get; set; }
     public double Tolerance { get; set; }
-    public double Value { get; set; }
 }

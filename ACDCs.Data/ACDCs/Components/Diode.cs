@@ -6,6 +6,11 @@ public class Diode : DiodeParameters, IElectronicComponent
     public string Name { get; set; }
     public IComponentRuntimeParameters ParametersRuntime => new DiodeRuntimeParameters();
     public string Type { get; set; }
+
+    public string Value
+    {
+        get => Name; set => Name = value;
+    }
 }
 
 public class DiodeParameters : IComponentParameters

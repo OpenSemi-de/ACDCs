@@ -55,7 +55,7 @@ public class PropertiesView : WindowView
         ObservableCollection<PropertyItem> propertyItems = new();
         if (properties != null)
         {
-            foreach (PropertyInfo propertyInfo in properties)
+            foreach (PropertyInfo propertyInfo in properties.OrderBy(p => p.PropertyType.Name).ThenBy(p => p.Name))
             {
                 if (
                     !PropertyExcludeList.Contains(propertyInfo.Name)
@@ -98,7 +98,8 @@ public class PropertiesView : WindowView
                 PropertyInfo? propertyInfo = currentType.GetProperty(propertyName);
                 if (propertyInfo != null)
                 {
-                    object outputValue = value;
+                    object? outputValue = value;
+
                     if (propertyInfo.PropertyType == typeof(float))
                     {
                         outputValue = Convert.ToSingle(value);
@@ -109,13 +110,14 @@ public class PropertiesView : WindowView
                         outputValue = Convert.ToInt32(value);
                     }
 
-                    propertyInfo.SetValue(_currentObject, outputValue);
+                    if (propertyInfo.GetValue(_currentObject) != value)
+                        propertyInfo.SetValue(_currentObject, outputValue);
                 }
             }
         }
         catch (Exception exception)
         {
-            API.PopupException(exception);
+            //   API.PopupException(exception);
         }
 
         OnUpdate?.Invoke();

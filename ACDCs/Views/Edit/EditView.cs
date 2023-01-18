@@ -1,10 +1,9 @@
 ﻿using ACDCs.Components;
 using ACDCs.Components.Edit;
-using ACDCs.Components.Menu.MenuHandlers;
 using ACDCs.Interfaces;
 using ACDCs.Services;
-using Microsoft.Maui.Layouts;
 using ACDCs.Views.Window;
+using Microsoft.Maui.Layouts;
 
 namespace ACDCs.Views.Edit;
 
@@ -39,7 +38,7 @@ public partial class EditView : WindowView, IEditViewProperties
         if (ButtonHeight == 0) ButtonHeight = 60;
         if (ButtonWidth == 0) ButtonWidth = 60;
 
-        _selectAreaButton = new($"Select area", SelectArea, OnSelectButtonChange, ButtonWidth, ButtonHeight, true);
+        _selectAreaButton = new("Select area", SelectArea, OnSelectButtonChange, ButtonWidth, ButtonHeight, true);
         _rotateButton = new("Rotate", Rotate, OnSelectButtonChange, ButtonWidth, ButtonHeight);
         _mirrorButton = new("Mirror", Mirror, OnSelectButtonChange, ButtonWidth, ButtonHeight);
         _deleteButton = new("Delete", Delete, OnSelectButtonChange, ButtonWidth, ButtonHeight);
@@ -64,8 +63,8 @@ public partial class EditView : WindowView, IEditViewProperties
             .VerticalOptions(LayoutOptions.Fill);
 
         WindowContent = _buttonLayout;
-        base.HideMenuButton();
-        base.HideResizer();
+        HideMenuButton();
+        HideResizer();
         AddButtons();
     }
 

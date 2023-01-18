@@ -3,7 +3,7 @@ using ACDCs.IO.DB;
 using ACDCs.Services;
 using MenuHandlerView = ACDCs.Views.Menu.MenuHandlerView;
 
-namespace ACDCs.Interfaces;
+namespace ACDCs.Components.Menu.MenuHandlers;
 
 public class ImportMenuHandlers : MenuHandlerView
 {

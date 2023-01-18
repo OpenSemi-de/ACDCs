@@ -20,16 +20,12 @@ public partial class WindowView : ContentView, IWindowViewProperties
     private readonly Label _resizeField;
     private readonly TitleLabel _titleLabel;
     private readonly ContentView _windowContentView;
-    private bool _isActive = false;
+    private bool _isActive;
     private Rect _lastBounds = Rect.Zero;
     public SharpAbsoluteLayout MainContainer { get; set; }
-
     public Func<bool>? OnClose { get; set; }
-
     public WindowState State { get; set; } = WindowState.Standard;
-
     public WindowTabBar? TabBar { get; set; }
-
     public string WindowTitle { get; set; }
 
     public WindowView(SharpAbsoluteLayout sharpAbsoluteLayout, string title)

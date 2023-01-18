@@ -40,7 +40,7 @@ public class MenuButton : Button, IMenuComponent
         }).Wait();
     }
 
-    private void MenuButton_Clicked(object? sender, System.EventArgs e)
+    private void MenuButton_Clicked(object? sender, EventArgs e)
     {
         API.Call(() =>
         {

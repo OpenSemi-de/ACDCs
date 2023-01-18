@@ -9,15 +9,15 @@ public class WindowTabBar : Grid
     private readonly StackLayout _mainLayout;
     private readonly ScrollView _scrollView;
 
-    private readonly Dictionary<WindowTab, Views.Window.WindowView> _windowViews;
-    private Views.Window.WindowView? _focusWindow;
+    private readonly Dictionary<WindowTab, WindowView> _windowViews;
+    private WindowView? _focusWindow;
 
     public WindowTabBar()
     {
-        this.ColumnDefinitions.Add(
+        ColumnDefinitions.Add(
             new(GridLength.Star)
         );
-        this.RowDefinitions.Add(
+        RowDefinitions.Add(
             new(new GridLength(34))
         );
         _windowViews = new();
@@ -33,10 +33,10 @@ public class WindowTabBar : Grid
             .HeightRequest(34);
         _scrollView.Content = _mainLayout;
 
-        this.Add(_scrollView);
+        Add(_scrollView);
     }
 
-    public void AddWindow(Views.Window.WindowView window)
+    public void AddWindow(WindowView window)
     {
         var tab = new WindowTab(window.WindowTitle, OnTabClicked);
         window.TabBar = this;
@@ -57,7 +57,7 @@ public class WindowTabBar : Grid
     {
         if (sender != null)
         {
-            var window = (Views.Window.WindowView)sender;
+            var window = (WindowView)sender;
             if (_focusWindow != window)
             {
                 if (_focusWindow != null)
@@ -70,7 +70,7 @@ public class WindowTabBar : Grid
         }
     }
 
-    public void RemoveWindow(Views.Window.WindowView windowView)
+    public void RemoveWindow(WindowView windowView)
     {
         if (_windowViews.ContainsValue(windowView))
         {
@@ -104,7 +104,7 @@ public class WindowTabBar : Grid
            {
                if (_windowViews.ContainsKey(tab))
                {
-                   Views.Window.WindowView window = _windowViews[tab];
+                   WindowView window = _windowViews[tab];
                    if (window.State == WindowState.Minimized)
                    {
                        window.Restore();

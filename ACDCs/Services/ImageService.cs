@@ -110,7 +110,7 @@ public static class ImageService
     {
         try
         {
-            using BitmapExportContext context = API.BitmapExportContextService.CreateContext((int)width, (int)height, 1f);
+            using BitmapExportContext context = API.BitmapExportContextService.CreateContext((int)width, (int)height);
             ICanvas? canvas = context.Canvas;
             canvas.Alpha = 0.7f;
 

@@ -1,5 +1,4 @@
 ﻿using ACDCs.Services;
-using ACDCs.Views.Circuit;
 using ACDCs.Views.Menu;
 
 namespace ACDCs.Components.Menu.MenuHandlers;

@@ -17,6 +17,7 @@ public partial class CircuitSheetView : SharpAbsoluteLayout
         InitializeComponent();
         Loaded += OnLoaded;
         CircuitView.CursorDebugChanged = CursorDebugChanged;
+        CircuitView.ItemsView = ItemsView;
     }
 
     private void CursorDebugChanged()

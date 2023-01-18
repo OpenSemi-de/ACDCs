@@ -5,7 +5,7 @@ namespace ACDCs.CircuitRenderer.Drawables;
 
 public sealed class ResistorDrawable : DrawableComponent
 {
-    private TextInstruction _textInstruction;
+    private TextInstruction? _textInstruction;
 
     public ResistorDrawable(IWorksheetItem parent, string value, float x, float y) : base(typeof(ResistorDrawable), parent)
     {
@@ -29,6 +29,9 @@ public sealed class ResistorDrawable : DrawableComponent
 
     private void ValueSet()
     {
-        _textInstruction.Text = Value;
+        if (_textInstruction != null)
+        {
+            _textInstruction.Text = Value;
+        }
     }
 }

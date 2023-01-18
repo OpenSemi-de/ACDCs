@@ -10,6 +10,7 @@ using ACDCs.Interfaces;
 using Newtonsoft.Json;
 using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
 
+using ItemsView = ACDCs.Views.Items.ItemsView;
 namespace ACDCs.Views.Circuit;
 
 using Sharp.UI;
@@ -45,11 +46,7 @@ public partial class CircuitView : ContentView, ICircuitViewProperties
     public Action<WorksheetItem>? OnSelectedItemChange { get; set; }
     public WorksheetItem? SelectedItem { get; set; }
 
-    private Action<WorksheetItemList, WorksheetItemList>? ListSetItems
-    {
-        get => API.Com<Action<WorksheetItemList, WorksheetItemList>>("ItemList", "SetItems");
-    }
-
+ 
     public bool MultiSelectionMode { get; set; }
 
     public CircuitView()
@@ -111,9 +108,10 @@ public partial class CircuitView : ContentView, ICircuitViewProperties
                 newItem.Y -= newItem.Height / 2;
             }
 
-            API.Com<bool>("Items", "IsInserting", false);
-
-            ListSetItems?.Invoke(_currentSheet.Items, _currentSheet.SelectedItems);
+            if (ItemsView != null)
+            {
+                ItemsView.IsInserting = false;
+            }
 
             return Task.CompletedTask;
         });
@@ -165,7 +163,7 @@ public partial class CircuitView : ContentView, ICircuitViewProperties
                 _currentSheet.BackgroundHighColor = new CircuitRenderer.Definitions.Color(BackgroundHighColor);
             }
 
-            if (API.Com<bool>("Items", "IsInserting"))
+            if (ItemsView != null && ItemsView.IsInserting)
                 return Task.CompletedTask;
 
             _graphicsView.Drawable = null;

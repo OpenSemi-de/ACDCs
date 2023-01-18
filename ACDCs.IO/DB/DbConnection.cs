@@ -71,4 +71,10 @@ public class DefaultModelRepository
         List<IElectronicComponent> models = _connection.Read<IElectronicComponent>("Components");
         return models;
     }
+
+    public void Write(List<IElectronicComponent?> newComponents)
+    {
+        newComponents = newComponents.Where(c => c != null).ToList();
+        _connection.Write(newComponents, "Components");
+    }
 }

@@ -1,5 +1,4 @@
 ﻿using ACDCs.Components.Menu.MenuHandlers;
-using ACDCs.Components.ModelSelection;
 using ACDCs.Data.ACDCs.Components;
 using ACDCs.IO.DB;
 
@@ -47,22 +46,16 @@ public class ImportMenuHandlers : MenuHandlerView
 
     public void SaveToDB()
     {
-        DBConnection db = new("default");
-        List<IElectronicComponent> newComponents = new();
+        List<IElectronicComponent?> newComponents = new();
 
-        List<IElectronicComponent> components = Enumerable.Select<ComponentViewModel, IElectronicComponent>(ComponentsView.dataSource, m =>
-        {
-            
-                return m.Model;
-            
+        List<IElectronicComponent?> components = ComponentsView.dataSource.Select(m => m.Model).ToList();
+        DefaultModelRepository repository = new DefaultModelRepository();
+        List<IElectronicComponent> existingComponents = repository.GetModels();
 
-        }).ToList();
-        List<IElectronicComponent> existingComponents = db.Read<IElectronicComponent>("Components");
-
-        foreach (IElectronicComponent newComponent in components)
+        foreach (IElectronicComponent? newComponent in components)
         {
             bool found = existingComponents.Any(existingComponent =>
-                newComponent.Name == existingComponent.Name &&
+                newComponent?.Name == existingComponent?.Name &&
                 newComponent.IsFlatEqual(existingComponent));
 
             if (!found)
@@ -71,7 +64,7 @@ public class ImportMenuHandlers : MenuHandlerView
             }
         }
 
-        db.Write(newComponents, "Components");
+        repository.Write(newComponents);
     }
 }
 

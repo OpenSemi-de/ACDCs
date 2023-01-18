@@ -1,14 +1,14 @@
-using ACDCs.Components.Menu.MenuHandlers;
+using ACDCs.Interfaces;
+using ACDCs.Services;
 
 namespace ACDCs.Components.Menu;
 
 using Sharp.UI;
 
-public class MenuButton : Button, Interfaces.IMenuItem
+public class MenuButton : Button, IMenuComponent
 {
     private readonly Action? _clickAction;
     public double ItemHeight { get; set; }
-
     public double ItemWidth { get; set; }
     public string MenuCommand { get; set; }
     public MenuFrame? MenuFrame { get; set; }
@@ -33,7 +33,7 @@ public class MenuButton : Button, Interfaces.IMenuItem
             _clickAction?.Invoke();
             if (MenuCommand != "")
             {
-                MenuHandler.Call(MenuCommand);
+                MenuService.Call(MenuCommand);
             }
 
             return Task.CompletedTask;
@@ -52,7 +52,7 @@ public class MenuButton : Button, Interfaces.IMenuItem
 
             if (MenuCommand != "")
             {
-                MenuHandler.Call(MenuCommand);
+                MenuService.Call(MenuCommand);
             }
 
             return Task.CompletedTask;

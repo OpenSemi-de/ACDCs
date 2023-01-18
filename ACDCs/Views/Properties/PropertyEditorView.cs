@@ -65,7 +65,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
         {
             if (e.PropertyName != null && e.PropertyName.StartsWith("Value"))
             {
-                object? value = GetValue(PropertyEditorView.ValueProperty);
+                object? value = GetValue(ValueProperty);
                 if (value != null)
                 {
                     ValueType = value.GetType().Name;
@@ -127,7 +127,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
                             .Text(text)
                             .OnClicked(ModelButton_Clicked);
 
-                        ValueType = c.GetType().Name + (c.Type != null ? ":" + c.Type : "");
+                        ValueType = c.GetType().Name + (c.Type != "" ? ":" + c.Type : "");
                         Content = modelButton;
                     }
                     else

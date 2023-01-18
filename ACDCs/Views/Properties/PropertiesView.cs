@@ -44,8 +44,8 @@ public class PropertiesView : WindowView
 
         WindowContent = _propertiesGrid;
 
-        base.HideMenuButton();
-        base.HideResizer();
+        HideMenuButton();
+        HideResizer();
         layout.SizeChanged += PropertiesView_SizeChanged;
     }
 
@@ -117,7 +117,7 @@ public class PropertiesView : WindowView
                 }
             }
         }
-        catch (Exception exception)
+        catch (Exception)
         {
             //   API.PopupException(exception);
         }

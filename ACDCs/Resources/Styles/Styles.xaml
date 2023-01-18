@@ -4,13 +4,8 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:menu="clr-namespace:ACDCs.Views.Components.Menu"
-    xmlns:window="using:ACDCs.Views.Components.Window"
-    xmlns:views="using:ACDCs.Views"
-    xmlns:system="using:System"
-    xmlns:acdcs="using:ACDCs"
-    xmlns:menu1="using:ACDCs.Components.Menu"
-    xmlns:window1="using:ACDCs.Components.Window">
+    xmlns:menu="using:ACDCs.Components.Menu"
+    xmlns:window="using:ACDCs.Components.Window">
 
 
  
@@ -37,18 +32,18 @@
                 Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
 
-    <Style TargetType="menu1:MenuDivider">
+    <Style TargetType="menu:MenuDivider">
         <Setter Property="BackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" />
         <Setter Property="MaximumHeightRequest" Value="2"></Setter>
     </Style>
 
-    <Style TargetType="menu1:MenuFrame">
+    <Style TargetType="menu:MenuFrame">
         <Setter Property="BackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
     </Style>
 
-    <Style TargetType="menu1:MenuButton">
+    <Style TargetType="menu:MenuButton">
         <Setter Property="FontSize" Value="10"></Setter>
     </Style>
 
@@ -186,7 +181,7 @@
                 Value="{AppThemeBinding Light={StaticResource BackgroundHighLight}, Dark={StaticResource BackgroundHighDark}}" />
     </Style>
 
-    <Style TargetType="window1:WindowFrame">
+    <Style TargetType="window:WindowFrame">
         <Setter Property="HasShadow" Value="True" />
         <Setter Property="Shadow">
             <Shadow>
@@ -485,27 +480,7 @@
     </Style>
 
 
-    <Style TargetType="Shell" ApplyToDerivedTypes="True">
-        <Setter Property="Shell.BackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
-        <Setter Property="Shell.ForegroundColor"
-                Value="{OnPlatform WinUI={StaticResource Primary}, Default={StaticResource White}}" />
-        <Setter Property="Shell.TitleColor"
-                Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
-        <Setter Property="Shell.DisabledColor"
-                Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
-        <Setter Property="Shell.UnselectedColor"
-                Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray200}}" />
-        <Setter Property="Shell.NavBarHasShadow" Value="False" />
-        <Setter Property="Shell.TabBarBackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
-        <Setter Property="Shell.TabBarForegroundColor"
-                Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
-        <Setter Property="Shell.TabBarTitleColor"
-                Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
-        <Setter Property="Shell.TabBarUnselectedColor"
-                Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
-    </Style>
+   
 
     <Style TargetType="NavigationPage">
         <Setter Property="BarBackgroundColor"

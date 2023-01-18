@@ -7,7 +7,7 @@ namespace ACDCs.Views;
 
 public partial class StartCenterPage : ContentPage
 {
-    private int _circuitCount = 0;
+    private int _circuitCount;
     private ComponentsView? _componentsView;
     private WindowView? _componentsWindowView;
     private DebugWindow? _debugWindow;

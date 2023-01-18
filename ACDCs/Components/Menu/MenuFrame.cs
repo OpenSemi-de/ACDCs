@@ -1,17 +1,15 @@
-using WindowView = ACDCs.Views.Window.WindowView;
+using ACDCs.Views.Window;
 
 namespace ACDCs.Components.Menu;
 
 using Sharp.UI;
+using IMenuItem = ACDCs.Interfaces.IMenuItem;
 
 public class MenuFrame : StackLayout
 {
     public static List<MenuFrame> MenuFrameList = new();
-
     private readonly bool _eventSet;
-
     public View? MainContainer { get; set; }
-
     public AbsoluteLayout? PopupTarget { get; set; }
     public WindowView? WindowFrame { get; set; }
 
@@ -41,7 +39,7 @@ public class MenuFrame : StackLayout
                 MenuFrameList.Add(this);
             }
 
-            List<Interfaces.IMenuItem> menuParts = new();
+            List<IMenuItem> menuParts = new();
             foreach (MenuItemDefinition menuItem in items)
             {
                 if (menuItem.Text != "" && menuItem.IsChecked == "")

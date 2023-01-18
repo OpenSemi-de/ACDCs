@@ -1,6 +1,6 @@
 namespace ACDCs.Interfaces;
 
-public interface IMenuItem
+public interface IMenuComponent
 {
     double ItemHeight { get; set; }
     double ItemWidth { get; set; }

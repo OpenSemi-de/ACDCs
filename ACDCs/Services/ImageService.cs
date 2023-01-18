@@ -1,12 +1,9 @@
-﻿using Microsoft.Maui.Layouts;
-
-namespace ACDCs.Services;
+﻿namespace ACDCs.Services;
 
 public static class ImageService
 {
     public static ImageSource? BackgroundImageSource(IView view)
     {
-        Size size = view.ComputeDesiredSize(0, 0);
         return BackgroundImageSource(Convert.ToSingle(view.Width), Convert.ToSingle(view.Height));
     }
 
@@ -19,11 +16,10 @@ public static class ImageService
     {
         try
         {
-            using BitmapExportContext context = API.BitmapExportContextService.CreateContext((int)width, (int)height, 1f);
-            List<Color> colors;
+            using BitmapExportContext context = API.BitmapExportContextService.CreateContext((int)width, (int)height);
             ICanvas? canvas = context.Canvas;
 
-            colors = new List<Color> { ColorService.Full, ColorService.Background };
+            List<Color> colors = new() { ColorService.Full, ColorService.Background };
 
             canvas.SetShadow(new SizeF(2, 4), 10f, colors[1]);
 
@@ -71,12 +67,11 @@ public static class ImageService
     {
         try
         {
-            using BitmapExportContext context = API.BitmapExportContextService.CreateContext((int)width, (int)height, 1f);
-            List<Color> colors;
+            using BitmapExportContext context = API.BitmapExportContextService.CreateContext(width, height);
             ICanvas? canvas = context.Canvas;
             canvas.Alpha = 0.7f;
 
-            colors = new List<Color> { ColorService.Background, ColorService.BackgroundHigh };
+            List<Color> colors = new() { ColorService.Background, ColorService.BackgroundHigh };
 
             canvas.SetShadow(new SizeF(2, 4), 10f, colors[1]);
 
@@ -116,11 +111,10 @@ public static class ImageService
         try
         {
             using BitmapExportContext context = API.BitmapExportContextService.CreateContext((int)width, (int)height, 1f);
-            List<Color> colors;
             ICanvas? canvas = context.Canvas;
             canvas.Alpha = 0.7f;
 
-            colors = new List<Color> { ColorService.Background, ColorService.Foreground };
+            List<Color> colors = new() { ColorService.Background, ColorService.Foreground };
 
             LinearGradientPaint paintFrom = new(Point.Zero, new(1, 0))
             {

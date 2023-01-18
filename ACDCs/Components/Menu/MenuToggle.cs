@@ -1,10 +1,11 @@
-using ACDCs.Components.Menu.MenuHandlers;
+using ACDCs.Interfaces;
+using ACDCs.Services;
 
 namespace ACDCs.Components.Menu;
 
 using Sharp.UI;
 
-public class MenuToggle : StackLayout, Interfaces.IMenuItem
+public class MenuToggle : StackLayout, IMenuComponent
 {
     private readonly Button _button;
     private readonly CheckBox _checkbox;
@@ -52,7 +53,7 @@ public class MenuToggle : StackLayout, Interfaces.IMenuItem
         {
             if (MenuCommand != "")
             {
-                MenuHandler.Call(MenuCommand, _checkbox.IsChecked);
+                MenuService.Call(MenuCommand, _checkbox.IsChecked);
             }
 
             Task.Delay(200).Wait();

@@ -4,7 +4,6 @@ using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Sheet;
 using Color = ACDCs.CircuitRenderer.Definitions.Color;
 
-
 namespace ACDCs.Components.Items;
 
 using Sharp.UI;
@@ -59,7 +58,7 @@ public class ItemButton : ImageButton
                 _drawableSheet = sheet.SceneManager?.GetSceneForBackend() as IDrawable;
                 if (_drawableSheet != null)
                 {
-                    using BitmapExportContext context = API.BitmapExportContextService.CreateContext((int)(WidthRequest - 2), (int)(HeightRequest - 2), 1);
+                    using BitmapExportContext context = API.BitmapExportContextService.CreateContext((int)(WidthRequest - 2), (int)(HeightRequest - 2));
 
                     _drawableSheet?.Draw(context.Canvas, RectF.Zero);
 
@@ -78,19 +77,6 @@ public class ItemButton : ImageButton
     public void SetBackground(Microsoft.Maui.Graphics.Color backgroundColor)
     {
         BackgroundColor = backgroundColor;
-    }
-
-    private Task<Stream> StreamImage(CancellationToken arg)
-    {
-        using BitmapExportContext context = API.BitmapExportContextService.CreateContext(40, 40, 1);
-
-        _drawableSheet?.Draw(context.Canvas, RectF.Zero);
-
-        using Stream stream = new MemoryStream();
-
-        context.WriteToStream(stream);
-
-        return Task.FromResult(stream);
     }
 }
 

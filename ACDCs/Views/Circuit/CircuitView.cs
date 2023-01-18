@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
 
 using ItemsView = ACDCs.Views.Items.ItemsView;
+
 namespace ACDCs.Views.Circuit;
 
 using Sharp.UI;
@@ -19,12 +20,12 @@ using Sharp.UI;
 public partial class CircuitView : ContentView, ICircuitViewProperties
 {
     private readonly Workbook _currentWorkbook;
+    private readonly Dictionary<string, string> _cursorDebugValues = new();
     private readonly GraphicsView _graphicsView;
     private readonly PanGestureRecognizer _panRecognizer;
     private readonly PointerGestureRecognizer _pointerRecognizer;
     private readonly TapGestureRecognizer _tapRecognizer;
     private Worksheet _currentSheet;
-    private readonly Dictionary<string, string> _cursorDebugValues = new();
     private Point _cursorPosition;
     private PointF _dragStartPosition;
     private bool _isDraggingItem;
@@ -37,17 +38,12 @@ public partial class CircuitView : ContentView, ICircuitViewProperties
         set => _currentSheet = value;
     }
 
-    public ItemsView? ItemsView { get; set; }
-
     public Action? CursorDebugChanged { get; set; }
-
     public string? CursorDebugOutput { get; set; }
-
+    public ItemsView? ItemsView { get; set; }
+    public bool MultiSelectionMode { get; set; }
     public Action<WorksheetItem>? OnSelectedItemChange { get; set; }
     public WorksheetItem? SelectedItem { get; set; }
-
- 
-    public bool MultiSelectionMode { get; set; }
 
     public CircuitView()
     {
@@ -167,7 +163,7 @@ public partial class CircuitView : ContentView, ICircuitViewProperties
                 return Task.CompletedTask;
 
             _graphicsView.Drawable = null;
-            _currentSheet?.CalculateScene();
+            _currentSheet.CalculateScene();
             DrawableScene? scene = (DrawableScene?)
                 _currentSheet?.SceneManager?.GetSceneForBackend();
             _graphicsView.Drawable = scene;
@@ -284,7 +280,7 @@ public partial class CircuitView : ContentView, ICircuitViewProperties
                         if (SelectedItem != null)
                             OnSelectedItemChange?.Invoke(SelectedItem);
 
-                        _lastDisplayOffset = _currentSheet?.DisplayOffset ??
+                        _lastDisplayOffset = _currentSheet.DisplayOffset ??
                                              new Coordinate(
                                                  Convert.ToSingle(e.TotalX),
                                                  Convert.ToSingle(e.TotalY));
@@ -310,63 +306,56 @@ public partial class CircuitView : ContentView, ICircuitViewProperties
                     }
                 case GestureStatus.Running:
                     {
-                        if (_currentSheet != null)
+                        if (_isDraggingItem)
                         {
-                            if (_isDraggingItem)
+                            PointF differenceBetweenCursorPoints = new(
+                                Convert.ToSingle(-e.TotalX),
+                                Convert.ToSingle(-e.TotalY));
+
+                            bool changed = false;
+                            _currentSheet.SelectedItems.ForEach(item =>
                             {
-                                PointF cursorPosition = new(Convert.ToSingle(_cursorPosition.X - _lastDisplayOffset?.X),
-                                    Convert.ToSingle(_cursorPosition.Y - _lastDisplayOffset?.Y));
+                                if (item == null)
+                                {
+                                    return;
+                                }
 
-                                PointF olddifferenceBetweenCursorPoints = new(_dragStartPosition.X - cursorPosition.X,
-                                    _dragStartPosition.Y - cursorPosition.Y);
+                                Point newPosition = new()
+                                {
+                                    X = _selectedItemsBasePositions[(WorksheetItem)item].X,
+                                    Y = _selectedItemsBasePositions[(WorksheetItem)item].Y
+                                };
 
-                                PointF differenceBetweenCursorPoints = new(
-                                    Convert.ToSingle(-e.TotalX),
-                                    Convert.ToSingle(-e.TotalY));
+                                newPosition.X *= Workbook.Zoom * Workbook.BaseGridSize;
+                                newPosition.X -= differenceBetweenCursorPoints.X;
+                                newPosition.X /= Workbook.Zoom * Workbook.BaseGridSize;
+                                newPosition.X -= item.DrawableComponent.Size.X / 2;
 
-                                bool changed = false;
-                                _currentSheet.SelectedItems.ForEach(item =>
-                                    {
-                                        if (item != null)
-                                        {
-                                            Point newPosition = new()
-                                            {
-                                                X = _selectedItemsBasePositions[(WorksheetItem)item].X,
-                                                Y = _selectedItemsBasePositions[(WorksheetItem)item].Y
-                                            };
+                                newPosition.Y *= Workbook.Zoom * Workbook.BaseGridSize;
+                                newPosition.Y -= differenceBetweenCursorPoints.Y;
+                                newPosition.Y /= Workbook.Zoom * Workbook.BaseGridSize;
+                                newPosition.Y -= item.DrawableComponent.Size.Y / 2;
 
-                                            newPosition.X *= Workbook.Zoom * Workbook.BaseGridSize;
-                                            newPosition.X -= differenceBetweenCursorPoints.X;
-                                            newPosition.X /= Workbook.Zoom * Workbook.BaseGridSize;
-                                            newPosition.X -= item.DrawableComponent.Size.X / 2;
+                                newPosition.X = Math.Floor(newPosition.X);
+                                newPosition.Y = Math.Floor(newPosition.Y);
+                                if (newPosition.X != item.X ||
+                                    newPosition.Y != item.Y)
+                                {
+                                    item.X = Convert.ToInt32(newPosition.X);
+                                    item.Y = Convert.ToInt32(newPosition.Y);
+                                    changed = true;
+                                }
+                            });
 
-                                            newPosition.Y *= Workbook.Zoom * Workbook.BaseGridSize;
-                                            newPosition.Y -= differenceBetweenCursorPoints.Y;
-                                            newPosition.Y /= Workbook.Zoom * Workbook.BaseGridSize;
-                                            newPosition.Y -= item.DrawableComponent.Size.Y / 2;
-
-                                            newPosition.X = Math.Floor(newPosition.X);
-                                            newPosition.Y = Math.Floor(newPosition.Y);
-                                            if (newPosition.X != item.X ||
-                                                newPosition.Y != item.Y)
-                                            {
-                                                item.X = Convert.ToInt32(newPosition.X);
-                                                item.Y = Convert.ToInt32(newPosition.Y);
-                                                changed = true;
-                                            }
-                                        }
-                                    });
-
-                                if (changed)
-                                    CurrentWorksheet.StartRouter();
-                            }
-                            else
-                            {
-                                _currentSheet.DisplayOffset =
-                                    new Coordinate(
-                                        Convert.ToSingle(e.TotalX),
-                                        Convert.ToSingle(e.TotalY)).Add(_lastDisplayOffset ?? new Coordinate());
-                            }
+                            if (changed)
+                                CurrentWorksheet.StartRouter();
+                        }
+                        else
+                        {
+                            _currentSheet.DisplayOffset =
+                                new Coordinate(
+                                    Convert.ToSingle(e.TotalX),
+                                    Convert.ToSingle(e.TotalY)).Add(_lastDisplayOffset ?? new Coordinate());
                         }
 
                         await Paint();
@@ -391,7 +380,7 @@ public partial class CircuitView : ContentView, ICircuitViewProperties
         else
             _cursorDebugValues[key] = value;
 
-        CursorDebugOutput = String.Join(Environment.NewLine, _cursorDebugValues.Select(kv => kv.Key + "=" + kv.Value));
+        CursorDebugOutput = string.Join(Environment.NewLine, _cursorDebugValues.Select(kv => kv.Key + "=" + kv.Value));
         CursorDebugChanged?.Invoke();
     }
 
@@ -444,28 +433,27 @@ public partial class CircuitView : ContentView, ICircuitViewProperties
                                 double pinY = Math.Floor(pin.Position.Y * selectedItem.Height);
                                 pinX += selectedItem.X;
                                 pinY += selectedItem.Y;
-                                if (pinX == x && pinY == y)
+                                if (pinX != x || pinY != y)
                                 {
-                                    if (_currentSheet.SelectedPin == pin)
-                                    {
-                                        selectedPin = null;
-                                        _currentSheet.SelectedPin = null;
-                                        await Paint();
-                                        return;
-                                    }
-                                    else
-                                    {
-                                        if (_currentSheet.SelectedPin != null)
-                                        {
-                                            await AddTrace(pin, _currentSheet.SelectedPin);
-                                        }
-
-                                        selectedPin = pin;
-                                        _currentSheet.SelectedPin = selectedPin;
-                                    }
-
-                                    break;
+                                    continue;
                                 }
+
+                                if (_currentSheet.SelectedPin == pin)
+                                {
+                                    _currentSheet.SelectedPin = null;
+                                    await Paint();
+                                    return;
+                                }
+
+                                if (_currentSheet.SelectedPin != null)
+                                {
+                                    await AddTrace(pin, _currentSheet.SelectedPin);
+                                }
+
+                                selectedPin = pin;
+                                _currentSheet.SelectedPin = selectedPin;
+
+                                break;
                             }
 
                             if (selectedPin == null)

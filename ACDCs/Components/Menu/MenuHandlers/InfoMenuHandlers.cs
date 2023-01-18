@@ -1,23 +1,25 @@
-﻿namespace ACDCs.Components.Menu.MenuHandlers;
+﻿using ACDCs.Services;
 
-public class InfoMenuHandlers : MenuHandlerView
+namespace ACDCs.Components.Menu.MenuHandlers;
+
+public class InfoMenuHandlers : Views.Menu.MenuHandlerView
 {
     public InfoMenuHandlers()
     {
-        MenuHandler.Add("about", About);
-        MenuHandler.Add("licenses", Licenses);
-        MenuHandler.Add("debug", Debug);
+        MenuService.Add("about", About);
+        MenuService.Add("licenses", Licenses);
+        MenuService.Add("debug", Debug);
     }
 
-    private void About()
+    private void About(object? o)
     {
     }
 
-    private void Debug()
+    private void Debug(object? o)
     {
     }
 
-    private void Licenses()
+    private void Licenses(object? o)
     {
     }
 }

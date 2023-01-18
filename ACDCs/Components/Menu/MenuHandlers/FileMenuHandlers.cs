@@ -1,62 +1,36 @@
-﻿namespace ACDCs.Components.Menu.MenuHandlers;
+﻿using ACDCs.Services;
+using ACDCs.Views.Circuit;
+using ACDCs.Views.Menu;
+
+namespace ACDCs.Components.Menu.MenuHandlers;
 
 public class FileMenuHandlers : MenuHandlerView
 {
     public FileMenuHandlers()
     {
-        MenuHandler.Add("new", NewFile);
-        MenuHandler.Add("openfile", OpenFile);
-        MenuHandler.Add("savefile", SaveFile);
-        MenuHandler.Add("saveasfile", SaveFileAs);
+        MenuService.Add("new", NewFile);
+        MenuService.Add("openfile", OpenFile);
+        MenuService.Add("savefile", SaveFile);
+        MenuService.Add("saveasfile", SaveFileAs);
     }
 
-    private async void NewFile()
+    private async void NewFile(object? o)
     {
-        CircuitView.Clear();
-        GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
-        await CircuitView.Paint();
+        await FileService.NewFile(CircuitView);
     }
 
-    private async void OpenFile()
+    private async void OpenFile(object? o)
     {
-        IDictionary<DevicePlatform, IEnumerable<string>> fileTypes =
-            new Dictionary<DevicePlatform, IEnumerable<string>>();
-        fileTypes.Add(DevicePlatform.WinUI, new List<string> { ".acc" });
-        fileTypes.Add(DevicePlatform.Android, new List<string> { "application/acdcs" });
-        PickOptions options = new()
-        {
-            FileTypes = new FilePickerFileType(fileTypes),
-            PickerTitle = "Open circuit file"
-        };
-
-        FileResult? result = await FilePicker.Default.PickAsync(options);
-        if (result != null)
-        {
-            string fileName = result.FullPath;
-            CircuitView.Open(fileName);
-        }
+        await FileService.OpenFile(CircuitView);
     }
 
-    private void SaveFile()
+    private async void SaveFile(object? o)
     {
-        if (CircuitView.CurrentWorksheet.Filename != "")
-        {
-            CircuitView.SaveAs(CircuitView.CurrentWorksheet.Filename);
-        }
-        else
-        {
-            SaveFileAs();
-        }
+        await FileService.SaveFile(CircuitView, PopupPage);
     }
 
-    private async void SaveFileAs()
+    private async void SaveFileAs(object? o)
     {
-        string? result = await PopupPage.DisplayPromptAsync("filename", "filename");
-        if (result != null)
-        {
-            string fileName = result;
-            string mainDir = FileSystem.Current.AppDataDirectory;
-            CircuitView.SaveAs(Path.Combine(mainDir, fileName));
-        }
+        await FileService.SaveFileAs(PopupPage, CircuitView);
     }
 }

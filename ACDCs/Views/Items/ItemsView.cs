@@ -11,7 +11,7 @@ namespace ACDCs.Views.Items;
 using Sharp.UI;
 
 [SharpObject]
-public partial class ItemsView: StackLayout, IItemsViewProperties
+public partial class ItemsView : StackLayout, IItemsViewProperties
 {
     private readonly StackLayout _layout;
 
@@ -72,15 +72,13 @@ public partial class ItemsView: StackLayout, IItemsViewProperties
     {
         await API.Call(() =>
         {
-            if (this.BackgroundColor != null)
+            if (BackgroundColor != null)
             {
                 BackgroundColor = BackgroundColor.WithAlpha(0.5f);
             }
 
             foreach (Type type in typeof(IWorksheetItem).Assembly.GetTypes())
             {
-                bool TypeFilter(Type filterType, object? criteria) => filterType == typeof(IWorksheetItem);
-
                 if (type.FindInterfaces(TypeFilter, null).Length <= 0)
                 {
                     continue;
@@ -106,7 +104,11 @@ public partial class ItemsView: StackLayout, IItemsViewProperties
 
                     ItemButton button = new(type, ButtonWidth, ButtonHeight);
                     button.Clicked += OnItemButtonClicked;
-                    button.SetBackground(BackgroundColor.WithAlpha(0.7f));
+                    if (BackgroundColor != null)
+                    {
+                        button.SetBackground(BackgroundColor.WithAlpha(0.7f));
+                    }
+
                     button.Draw();
                     _layout.Add(
                         button
@@ -121,6 +123,8 @@ public partial class ItemsView: StackLayout, IItemsViewProperties
             return Task.CompletedTask;
         });
     }
+
+    private static bool TypeFilter(Type filterType, object? criteria) => filterType == typeof(IWorksheetItem);
 
     private async Task DeselectSelectedButton()
     {
@@ -147,7 +151,7 @@ public partial class ItemsView: StackLayout, IItemsViewProperties
                     {
                         item.DrawableComponent.Position.X = x;
                         item.DrawableComponent.Position.Y = y;
-                        sheet?.Items.AddItem(item);
+                        sheet.Items.AddItem(item);
                         DeselectSelectedButton().Wait();
                         return item;
                     });
@@ -165,7 +169,7 @@ public partial class ItemsView: StackLayout, IItemsViewProperties
         {
             bool justDeselectAndReturn = SelectedButton == selectedButton;
             IsInserting = false;
-            DoInsert = (x, y) => null;
+            DoInsert = delegate { return null; };
             await DeselectSelectedButton();
             if (justDeselectAndReturn) return;
 
@@ -185,15 +189,9 @@ public partial class ItemsView: StackLayout, IItemsViewProperties
     {
         API.Call(async () =>
         {
-            if (sender is ItemButton button)
+            if (sender is ItemButton { ItemType: { } } button)
             {
-                if (button.ItemType != null)
-                {
-                    if (InsertItem != null)
-                    {
-                        await InsertItem(button.ItemType, button);
-                    }
-                }
+                await InsertItem(button.ItemType, button);
             }
         }).Wait();
     }

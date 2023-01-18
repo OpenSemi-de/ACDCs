@@ -22,24 +22,15 @@ public partial class WindowView : ContentView, IWindowViewProperties
     private readonly ContentView _windowContentView;
     private bool _isActive = false;
     private Rect _lastBounds = Rect.Zero;
-    private WindowState _state = WindowState.Standard;
     public SharpAbsoluteLayout MainContainer { get; set; }
 
     public Func<bool>? OnClose { get; set; }
 
-    public WindowState State
-    {
-        get => _state;
-        set
-        {
-            _state = value;
-        }
-    }
+    public WindowState State { get; set; } = WindowState.Standard;
 
     public WindowTabBar? TabBar { get; set; }
 
-    public string WindowTitle
-    { get; set; }
+    public string WindowTitle { get; set; }
 
     public WindowView(SharpAbsoluteLayout sharpAbsoluteLayout, string title)
     {

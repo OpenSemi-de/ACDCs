@@ -8,7 +8,9 @@ namespace ACDCs.Views;
 
 public partial class CircuitSheetView : SharpAbsoluteLayout
 {
+    // ReSharper disable once NotAccessedField.Local
     private EditView? _editWindow;
+
     private ModelSelectionWindowView? _modelSelectionWindow;
     private PropertiesView? _propertiesWindow;
 
@@ -37,9 +39,10 @@ public partial class CircuitSheetView : SharpAbsoluteLayout
         CircuitView.OnSelectedItemChange = _propertiesWindow.GetProperties;
 
         _modelSelectionWindow = new ModelSelectionWindowView(AbsoluteLayoutSheetPage)
-            {
-                IsVisible = false, OnModelSelected = _propertiesWindow.OnModelSelected
-            };
+        {
+            IsVisible = false,
+            OnModelSelected = _propertiesWindow.OnModelSelected
+        };
 
         //    BackgroundImageSource = ImageService.BackgroundImageSource(this);
     }

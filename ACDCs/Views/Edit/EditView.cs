@@ -2,6 +2,7 @@
 using ACDCs.Components.Edit;
 using ACDCs.Components.Menu.MenuHandlers;
 using ACDCs.Interfaces;
+using ACDCs.Services;
 using Microsoft.Maui.Layouts;
 using ACDCs.Views.Window;
 
@@ -28,7 +29,7 @@ public partial class EditView : WindowView, IEditViewProperties
     {
         API.Call(() =>
         {
-            MenuHandler.Call(command);
+            MenuService.Call(command);
             return Task.CompletedTask;
         }).Wait();
     }

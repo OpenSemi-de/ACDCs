@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
-using Microsoft.Maui.LifecycleEvents;
 
 #if WINDOWS
 using Microsoft.UI;

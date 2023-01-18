@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using ACDCs.Components;
 using ACDCs.Data.ACDCs.Components;
-using ACDCs.IO.DB;
 using ACDCs.IO.Spice;
 using CommunityToolkit.Maui.Views;
 
@@ -72,13 +71,13 @@ public partial class ComponentsView : SharpAbsoluteLayout
     public bool OnClose()
     {
         return true;
-/*
-        ComponentsGrid.BatchBegin();
-        dataSource.Clear();
-        _baseData?.Clear();
-        ComponentsGrid.ItemsSource = new List<string>();
-        ComponentsGrid.BatchCommit();
-*/
+        /*
+                ComponentsGrid.BatchBegin();
+                dataSource.Clear();
+                _baseData?.Clear();
+                ComponentsGrid.ItemsSource = new List<string>();
+                ComponentsGrid.BatchCommit();
+        */
     }
 
     private void CategoryPicker_OnSelectedIndexChanged(object? sender, EventArgs e)
@@ -115,9 +114,9 @@ public partial class ComponentsView : SharpAbsoluteLayout
 
         if (keyword != "")
         {
-            query = query.Where(d => ReflectedSearch(d, keywordEntry.Text) ||
-                                     d.Type.ToLower().Contains(keyword) ||
-                                     d.Name.ToLower().Contains(keyword));
+            query = query.Where(d => d.Name != null && (ReflectedSearch(d, keywordEntry.Text) ||
+                                                        d.Type.ToLower().Contains(keyword) ||
+                                                        d.Name.ToLower().Contains(keyword)));
         }
 
         dataSource.Clear();
@@ -131,9 +130,6 @@ public partial class ComponentsView : SharpAbsoluteLayout
 
     private void OnLoaded(object? sender, EventArgs e)
     {
-        DBConnection defaultdb = new("default");
-        List<IElectronicComponent> defaultComponents = defaultdb.Read<IElectronicComponent>("Components");
-
         CategoryPicker.ItemsSource = dataSource
             .Select(cm => cm.Type).Distinct().ToList();
     }
@@ -150,20 +146,23 @@ public partial class ComponentsView : SharpAbsoluteLayout
 
     private bool ReflectedSearch(ComponentViewModel ComponentViewModel, string text)
     {
-        Type modelType = ComponentViewModel.Model.GetType();
+        Type? modelType = ComponentViewModel.Model?.GetType();
         text = text.ToLower();
-        foreach (PropertyInfo propertyInfo in modelType.GetProperties())
+        if (modelType != null)
         {
-            string? value = Convert.ToString(propertyInfo.GetValue(ComponentViewModel.Model));
-            if (value != null)
+            foreach (PropertyInfo propertyInfo in modelType.GetProperties())
             {
-                value = value.ToLower();
-                if (value.Contains(text))
-                    return true;
-            }
-            else
-            {
-                return false;
+                string? value = Convert.ToString(propertyInfo.GetValue(ComponentViewModel.Model));
+                if (value != null)
+                {
+                    value = value.ToLower();
+                    if (value.Contains(text))
+                        return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 
@@ -172,9 +171,7 @@ public partial class ComponentsView : SharpAbsoluteLayout
 
     private void Reload()
     {
-        ComponentsGrid.BatchBegin();
         ComponentsGrid.ItemsSource = null;
         ComponentsGrid.ItemsSource = dataSource;
-        ComponentsGrid.BatchCommit();
     }
 }

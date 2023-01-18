@@ -123,12 +123,12 @@ public class ModelSelectionWindowView : WindowView
 
     private static string SourceName(IElectronicComponent c)
     {
-        if (c is Resistor resistor)
+        if (c is Resistor)
         {
             return ResistorCalculator.GetStringValue(c.Value);
         }
 
-        return c.Name ?? c.Value;
+        return c.Name != "" ? c.Name : c.Value;
     }
 
     private void CancelButton_Clicked(object? sender, EventArgs e)
@@ -186,8 +186,7 @@ public class ModelSelectionWindowView : WindowView
 
     private void Model_Selected(object? sender, SelectedItemChangedEventArgs e)
     {
-        ComponentViewModel? viewModel = e.SelectedItem as ComponentViewModel;
-        if (viewModel != null)
+        if (e.SelectedItem is ComponentViewModel viewModel)
         {
             SetItemBackground(viewModel);
             _selectedModel = viewModel.Model;
@@ -228,9 +227,8 @@ public class ModelSelectionWindowView : WindowView
         {
             Model = c,
             Name = SourceName(c),
-            Type = c.Type ??
-                   (c is Bjt bjt ? bjt.TypeName : null) ??
-                   c.GetType().Name,
+            Type = c.Type != "" ? c.Type :
+                   (c is Bjt bjt ? bjt.TypeName : ""),
             Value = SourceDescription(c)
         }).ToObservableCollection();
 
@@ -244,6 +242,6 @@ public class ModelSelectionWindowView : WindowView
             return $"Series: {resistor.Series}, tolerance: {resistor.Tolerance}%";
         }
 
-        return electronicComponent.Name ?? electronicComponent.Value;
+        return electronicComponent.Name != "" ? electronicComponent.Name : electronicComponent.Value;
     }
 }

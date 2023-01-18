@@ -1,4 +1,6 @@
-﻿namespace ACDCs.Components.Window;
+﻿using ACDCs.Views.Window;
+
+namespace ACDCs.Components.Window;
 
 using Sharp.UI;
 
@@ -7,8 +9,8 @@ public class WindowTabBar : Grid
     private readonly StackLayout _mainLayout;
     private readonly ScrollView _scrollView;
 
+    private readonly Dictionary<WindowTab, Views.Window.WindowView> _windowViews;
     private Views.Window.WindowView? _focusWindow;
-    private Dictionary<WindowTab, Views.Window.WindowView> _windowViews;
 
     public WindowTabBar()
     {
@@ -89,8 +91,9 @@ public class WindowTabBar : Grid
 
         if (_focusWindow != null)
         {
-            WindowTab? focusTab = _windowViews.First(kv => kv.Value == _focusWindow).Key;
-            focusTab?.SetActive();
+            KeyValuePair<WindowTab, WindowView>? focusTab = _windowViews.First(kv => kv.Value == _focusWindow);
+            focusTab?.Key.SetActive();
+
             _focusWindow.SetActive();
         }
     }

@@ -2,13 +2,8 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:components="clr-namespace:ACDCs.Views.Components"
-             xmlns:windowView="using:ACDCs.Views.Components.Window"
-             xmlns:window="using:ACDCs.Views.Components.Window"
-             xmlns:views="using:ACDCs.Views"
-             xmlns:services="using:ACDCs.Services"
-             xmlns:components1="using:ACDCs.Components"
-             xmlns:window1="using:ACDCs.Components.Window"
+             xmlns:components="using:ACDCs.Components"
+             xmlns:window="using:ACDCs.Components.Window"
              x:Class="ACDCs.Views.StartCenterPage"
              x:Name="Page"
              Title="Main">
@@ -30,8 +25,8 @@
             <Button Text="Components" WidthRequest="100" x:Name="componentsButton" Clicked="ComponentsButton_OnClicked"></Button>
         </StackLayout>
 
-        <components1:SharpAbsoluteLayout Grid.Row="1" x:Name="MainWindowLayout">
-        </components1:SharpAbsoluteLayout>
-        <window1:WindowTabBar Grid.Row="2" x:Name="windowTabBar" HorizontalOptions="Fill" HeightRequest="36"></window1:WindowTabBar>
+        <components:SharpAbsoluteLayout Grid.Row="1" x:Name="MainWindowLayout">
+        </components:SharpAbsoluteLayout>
+        <window:WindowTabBar Grid.Row="2" x:Name="windowTabBar" HorizontalOptions="Fill" HeightRequest="36"></window:WindowTabBar>
     </Grid>
 </ContentPage>

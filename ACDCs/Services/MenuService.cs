@@ -1,10 +1,10 @@
-﻿namespace ACDCs.Components.Menu.MenuHandlers;
+﻿namespace ACDCs.Services;
 
-public class MenuHandler
+public static class MenuService
 {
-    private static readonly Dictionary<string, object> s_menuHandlers = new();
+    private static readonly Dictionary<string, Action<object?>> s_menuHandlers = new();
 
-    public static void Add(string name, object action)
+    public static void Add(string name, Action<object?> action)
     {
         API.Call(() =>
         {
@@ -28,7 +28,7 @@ public class MenuHandler
         {
             if (s_menuHandlers.ContainsKey(menuCommand))
             {
-                ((Action)s_menuHandlers[menuCommand]).Invoke();
+                s_menuHandlers[menuCommand].Invoke(null);
             }
 
             return Task.CompletedTask;
@@ -41,7 +41,7 @@ public class MenuHandler
         {
             if (s_menuHandlers.ContainsKey(menuCommand))
             {
-                ((Action<object>)s_menuHandlers[menuCommand]).Invoke(param);
+                s_menuHandlers[menuCommand].Invoke(param);
             }
 
             return Task.CompletedTask;

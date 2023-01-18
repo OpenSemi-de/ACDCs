@@ -3,7 +3,7 @@
 public class Capacitor : CapacitorParameters, IElectronicComponent
 {
     public string Model { get; set; } = string.Empty;
-    public new string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
     public IComponentRuntimeParameters ParametersRuntime => new CapacitorRuntimeParameters();
     public string Type { get; set; } = string.Empty;
 

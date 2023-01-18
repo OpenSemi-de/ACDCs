@@ -1,19 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<components1:SharpAbsoluteLayout xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<components:SharpAbsoluteLayout xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                                xmlns:controls="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-                                xmlns:menu="clr-namespace:ACDCs.Views.Components.Menu"
-                                xmlns:components="clr-namespace:ACDCs.Views.Components"
-                                xmlns:menuHandlers="clr-namespace:ACDCs.Views.Components.Menu.MenuHandlers"
-                                xmlns:views="using:ACDCs.Views"
-                                xmlns:components1="using:ACDCs.Components"
-                                xmlns:menu1="using:ACDCs.Components.Menu"
-                                xmlns:menuHandlers1="using:ACDCs.Components.Menu.MenuHandlers"
+                                xmlns:components="using:ACDCs.Components"
                                 xmlns:interfaces="using:ACDCs.Interfaces"
+                                xmlns:menu="using:ACDCs.Views.Menu"
                                 x:Class="ACDCs.Views.ComponentsView"
                                 x:Name="AbsoluteLayoutSheetPage">
-    <menu1:MenuContainer PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" MenuFilename="menu_components.json"/>
+    <menu:MenuView PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" MenuFilename="menu_components.json"/>
 
     <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutFlags="WidthProportional" AbsoluteLayout.LayoutBounds="0,50,1,30">
         <Entry WidthRequest="200" x:Name="keywordEntry" TextChanged="KeywordEntry_OnTextChanged"></Entry>
@@ -23,7 +17,7 @@
 
     <StackLayout AbsoluteLayout.LayoutBounds="0,80,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
         <Grid HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="6000">
-            <views:CacheListView Grid.Column="0" Grid.Row="0" x:Name="ComponentsGrid" HeightRequest="6000">
+            <ListView Grid.Column="0" Grid.Row="0" x:Name="ComponentsGrid" HeightRequest="6000">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -64,7 +58,7 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </views:CacheListView>
+            </ListView>
         </Grid>
     </StackLayout>
     <!--   <controls:DataGrid VerticalOptions="Fill" x:Name="ComponentsGrid" ItemsSource="{x:Reference dataSource}" UseAutoColumns="False" Margin="0" Padding="1">
@@ -89,4 +83,4 @@
 
     <interfaces:ImportMenuHandlers ComponentsView="{x:Reference AbsoluteLayoutSheetPage}"></interfaces:ImportMenuHandlers>
 
-</components1:SharpAbsoluteLayout>
+</components:SharpAbsoluteLayout>

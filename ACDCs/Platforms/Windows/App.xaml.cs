@@ -1,4 +1,5 @@
-﻿namespace ACDCs.WinUI;
+﻿// ReSharper disable CheckNamespace
+namespace ACDCs.WinUI;
 
 /// <summary>
 /// Provides application-specific behavior to supplement the default Application class.

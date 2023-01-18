@@ -5,10 +5,10 @@ using Sharp.UI;
 public class WindowTab : Frame
 {
     private readonly Color _backgroundColor;
-    private readonly Action<WindowTab> _callBack;
+    private readonly Action<WindowTab>? _callBack;
     private readonly Button _tabButton;
 
-    public WindowTab(string title, Action<WindowTab> callBack)
+    public WindowTab(string title, Action<WindowTab>? callBack)
     {
         this.VerticalOptions(LayoutOptions.Fill)
             .HorizontalOptions(LayoutOptions.Fill)
@@ -23,7 +23,7 @@ public class WindowTab : Frame
             .Margin(0)
             .CornerRadius(1)
             .BackgroundColor(Colors.LightBlue)
-            .OnClicked(windowTabClicked);
+            .OnClicked(WindowTabClicked);
         Content = _tabButton;
         _backgroundColor = _tabButton.BackgroundColor;
         SetInactive();
@@ -40,7 +40,7 @@ public class WindowTab : Frame
         _tabButton.BackgroundColor(_backgroundColor.WithAlpha(0.2f));
     }
 
-    private void windowTabClicked(object? sender, EventArgs e)
+    private void WindowTabClicked(object? sender, EventArgs e)
     {
         _callBack?.Invoke(this);
     }

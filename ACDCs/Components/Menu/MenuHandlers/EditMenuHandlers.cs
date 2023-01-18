@@ -1,95 +1,52 @@
-﻿using ACDCs.CircuitRenderer.Items;
-using ACDCs.CircuitRenderer.Sheet;
+﻿using ACDCs.Services;
 
 namespace ACDCs.Components.Menu.MenuHandlers;
 
-public class EditMenuHandlers : MenuHandlerView
+public class EditMenuHandlers : Views.Menu.MenuHandlerView
 {
     public EditMenuHandlers()
     {
-        MenuHandler.Add("delete", Delete);
-        MenuHandler.Add("duplicate", Duplicate);
-        MenuHandler.Add("mirror", Mirror);
-        MenuHandler.Add("selectall", SelectAll);
-        MenuHandler.Add("deselectall", DeselectAll);
-        MenuHandler.Add("multiselect", SwitchMultiselect);
-        MenuHandler.Add("rotate", Rotate);
+        MenuService.Add("delete", Delete);
+        MenuService.Add("duplicate", Duplicate);
+        MenuService.Add("mirror", Mirror);
+        MenuService.Add("selectall", SelectAll);
+        MenuService.Add("deselectall", DeselectAll);
+        MenuService.Add("multiselect", SwitchMultiselect);
+        MenuService.Add("rotate", Rotate);
     }
 
-    private async void Delete()
+    private async void Delete(object? o)
     {
-        Worksheet sheet = CircuitView.CurrentWorksheet;
-        sheet.SelectedItems.ToList().ForEach(
-            item => { sheet.DeleteItem((WorksheetItem)item); });
-        sheet.StartRouter();
-        await CircuitView.Paint();
+        await EditService.Delete(CircuitView);
     }
 
-    private async void DeselectAll()
+    private async void DeselectAll(object? o)
     {
-        CircuitView.CurrentWorksheet.SelectedItems.Clear();
-        CircuitView.CurrentWorksheet.SelectedPin = null;
-        await CircuitView.Paint();
+        await EditService.DeselectAll(CircuitView);
     }
 
-    private async void Duplicate()
+    private async void Duplicate(object? o)
     {
-        Worksheet sheet = CircuitView.CurrentWorksheet;
-
-        List<WorksheetItem?> newItems = new();
-        sheet.SelectedItems.ToList().ForEach(
-            item =>
-            {
-                newItems.Add(sheet.DuplicateItem((WorksheetItem)item));
-            }
-                                            );
-
-        newItems.ForEach(item =>
-        {
-            if (item != null) sheet.Items.Add(item);
-        });
-
-        sheet.SelectedItems.ToList().ForEach(item => sheet.DeselectItem((WorksheetItem)item));
-        newItems.ForEach(item =>
-        {
-            if (item != null)
-            {
-                item.X += 2;
-                item.Y += 2;
-                sheet.SelectItem(item);
-            }
-        });
-        sheet.StartRouter();
-        await CircuitView.Paint();
+        await EditService.Duplicate(CircuitView);
     }
 
-    private async void Mirror()
+    private async void Mirror(object? o)
     {
-        Worksheet sheet = CircuitView.CurrentWorksheet;
-        sheet.SelectedItems.ToList().ForEach(
-            item => { sheet.MirrorItem((WorksheetItem)item); });
-        sheet.StartRouter();
-        await CircuitView.Paint();
+        await EditService.Mirror(CircuitView);
     }
 
-    private async void Rotate()
+    private async void Rotate(object? o)
     {
-        Worksheet sheet = CircuitView.CurrentWorksheet;
-        sheet.SelectedItems.ToList().ForEach(
-            item => { sheet.RotateItem((WorksheetItem)item); });
-        sheet.StartRouter();
-        await CircuitView.Paint();
+        await EditService.Rotate(CircuitView);
     }
 
-    private async void SelectAll()
+    private async void SelectAll(object? o)
     {
-        CircuitView.CurrentWorksheet.SelectedItems.AddRange(
-            CircuitView.CurrentWorksheet.Items);
-        await CircuitView.Paint();
+        await EditService.SelectAll(CircuitView);
     }
 
-    private void SwitchMultiselect(object state)
+    private async void SwitchMultiselect(object? state)
     {
-        CircuitView.UseMultiselect((bool)state);
+        await EditService.SwitchMultiselect(state, CircuitView);
     }
 }

@@ -83,7 +83,7 @@ public static class API
     {
         if (API.MainPage != null)
         {
-            await API.MainPage.DisplayAlert("Internal exception", exception.Message.ToString(), "ok");
+            await API.MainPage.DisplayAlert("Internal exception", exception.Message, "ok");
         }
     }
 

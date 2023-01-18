@@ -2,13 +2,13 @@
 
 <components:SharpAbsoluteLayout xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:services="using:ACDCs.Services"
-             xmlns:acdcs="using:ACDCs"
-             xmlns:items="using:ACDCs.Views.Items"
-             xmlns:components="using:ACDCs.Components"
-             xmlns:menu="using:ACDCs.Views.Menu"
-             xmlns:menuHandlers="using:ACDCs.Components.Menu.MenuHandlers"
-             xmlns:circuit="using:ACDCs.Views.Circuit"
+             xmlns:services="clr-namespace:ACDCs.Services"
+             xmlns:circuit="clr-namespace:ACDCs.Views.Circuit"
+             xmlns:menu="clr-namespace:ACDCs.Views.Menu"
+             xmlns:menuhandlers="clr-namespace:ACDCs.Components.Menu.MenuHandlers"
+             xmlns:acdcs="clr-namespace:ACDCs"
+             xmlns:items="clr-namespace:ACDCs.Views.Items"
+             xmlns:components="clr-namespace:ACDCs.Components"
              x:Class="ACDCs.Views.CircuitSheetView"
              HorizontalOptions="Fill" VerticalOptions="Fill" x:Name="AbsoluteLayoutSheetPage">
     <circuit:CircuitView x:Name="CircuitView"
@@ -18,9 +18,9 @@
                                       ForegroundColor="{x:Static services:ColorService.Text}"
                                       AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional"></circuit:CircuitView>
     <menu:MenuView PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" CircuitView="{x:Reference CircuitView}" />
-    <menuHandlers:FileMenuHandlers CircuitView="{x:Reference CircuitView}" PopupPage="{x:Static acdcs:API.MainPage}"></menuHandlers:FileMenuHandlers>
-    <menuHandlers:EditMenuHandlers CircuitView="{x:Reference CircuitView}"></menuHandlers:EditMenuHandlers>
-    <menuHandlers:InfoMenuHandlers CircuitView="{x:Reference CircuitView}"></menuHandlers:InfoMenuHandlers>
+    <menuhandlers:FileMenuHandlers CircuitView="{x:Reference CircuitView}" PopupPage="{x:Static acdcs:API.MainPage}"></menuhandlers:FileMenuHandlers>
+    <menuhandlers:EditMenuHandlers CircuitView="{x:Reference CircuitView}"></menuhandlers:EditMenuHandlers>
+    <menuhandlers:InfoMenuHandlers CircuitView="{x:Reference CircuitView}"></menuhandlers:InfoMenuHandlers>
     <items:ItemsView x:Name="ItemsView" ButtonWidth="60" ButtonHeight="60" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}"></items:ItemsView>
     <Label x:Name="CursorDebugLabel" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,0.5,100,400" MaxLines="10"></Label>
 </components:SharpAbsoluteLayout>

@@ -39,12 +39,14 @@ public static class EditService
         sheet.SelectedItems.ToList().ForEach(item => sheet.DeselectItem((WorksheetItem)item));
         newItems.ForEach(item =>
         {
-            if (item != null)
+            if (item == null)
             {
-                item.X += 2;
-                item.Y += 2;
-                sheet.SelectItem(item);
+                return;
             }
+
+            item.X += 2;
+            item.Y += 2;
+            sheet.SelectItem(item);
         });
         sheet.StartRouter();
         await circuitView.Paint();

@@ -2,26 +2,24 @@
 
 <components:SharpAbsoluteLayout xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                                xmlns:components="using:ACDCs.Components"
-                                xmlns:interfaces="using:ACDCs.Interfaces"
-                                xmlns:menu="using:ACDCs.Views.Menu"
+                                xmlns:components="clr-namespace:ACDCs.Components"
+                                xmlns:menu="clr-namespace:ACDCs.Views.Menu"
+                                xmlns:modelSelection="clr-namespace:ACDCs.Components.ModelSelection"
+                                xmlns:menuHandlers="clr-namespace:ACDCs.Components.Menu.MenuHandlers"
                                 x:Class="ACDCs.Views.ComponentsView"
                                 x:Name="AbsoluteLayoutSheetPage">
     <menu:MenuView PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" MenuFilename="menu_components.json"/>
-
     <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutFlags="WidthProportional" AbsoluteLayout.LayoutBounds="0,50,1,30">
         <Entry WidthRequest="200" x:Name="keywordEntry" TextChanged="KeywordEntry_OnTextChanged"></Entry>
         <Picker WidthRequest="120" x:Name="CategoryPicker" SelectedIndexChanged="CategoryPicker_OnSelectedIndexChanged">
         </Picker>
     </StackLayout>
-
     <StackLayout AbsoluteLayout.LayoutBounds="0,80,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
         <Grid HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="6000">
             <ListView Grid.Column="0" Grid.Row="0" x:Name="ComponentsGrid" HeightRequest="6000">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-
+                        <ViewCell x:DataType="modelSelection:ComponentViewModel">
                             <Border>
                                 <Grid Margin="2" Padding="2" HorizontalOptions="Fill">
                                     <Grid.RowDefinitions>
@@ -61,26 +59,5 @@
             </ListView>
         </Grid>
     </StackLayout>
-    <!--   <controls:DataGrid VerticalOptions="Fill" x:Name="ComponentsGrid" ItemsSource="{x:Reference dataSource}" UseAutoColumns="False" Margin="0" Padding="1">
-                <controls:DataGrid.Columns>
-                    <controls:DataGridSelectionColumn Title=" "></controls:DataGridSelectionColumn>
-                    <controls:DataGridColumn Title="Name" PropertyName="Name"></controls:DataGridColumn>
-                    <controls:DataGridColumn Title="Type" PropertyName="Type"></controls:DataGridColumn>
-                    <controls:DataGridColumn Title="Value" PropertyName="Value"></controls:DataGridColumn>
-                    <controls:DataGridColumn Title="Details">
-                        <controls:DataGridColumn.CellItemTemplate>
-                            <DataTemplate>
-                                <Button Text="Details" x:Name="DetailsButton" Clicked="DetailsButton_OnClicked"
-                                                    CommandParameter="{Binding Row}"/>
-                            </DataTemplate>
-                        </controls:DataGridColumn.CellItemTemplate>
-                    </controls:DataGridColumn>
-
-
-                </controls:DataGrid.Columns>
-            </controls:DataGrid>-->
-
-
-    <interfaces:ImportMenuHandlers ComponentsView="{x:Reference AbsoluteLayoutSheetPage}"></interfaces:ImportMenuHandlers>
-
+    <menuHandlers:ImportMenuHandlers ComponentsView="{x:Reference AbsoluteLayoutSheetPage}"></menuHandlers:ImportMenuHandlers>
 </components:SharpAbsoluteLayout>

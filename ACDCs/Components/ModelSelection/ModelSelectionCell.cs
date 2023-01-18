@@ -17,9 +17,9 @@ public class ModelSelectionCell : ViewCell
 
         _grid.SetBinding(VisualElement.BackgroundColorProperty, "ItemBackground");
 
-        _grid.ColumnDefinitions.Add(new(new(80)));
-        _grid.ColumnDefinitions.Add(new(new(80)));
-        _grid.ColumnDefinitions.Add(new(GridLength.Star));
+        _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(new GridLength(80)));
+        _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(new GridLength(80)));
+        _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
 
         _labelName = new Label()
             .HorizontalOptions(LayoutOptions.Fill)

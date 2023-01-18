@@ -14,17 +14,21 @@ public static class ColorService
     private static Color GetColor(string colorName)
     {
         Color color = Colors.Transparent;
-        if (colorName != "")
+        if (colorName == "")
         {
-            s_resourceColors ??= App.Current?.Resources.MergedDictionaries.First(dic => dic.Source.ToString().Contains("Colors.xaml"));
-            string theme = App.Current?.UserAppTheme == AppTheme.Dark ? "Dark" : "Light";
-            if (s_resourceColors != null)
-            {
-                if (s_resourceColors.TryGetValue(colorName + theme, out object value))
-                {
-                    color = value as Color ?? Colors.Purple;
-                }
-            }
+            return color;
+        }
+
+        s_resourceColors ??= App.Current?.Resources.MergedDictionaries.First(dic => dic.Source.ToString().Contains("Colors.xaml"));
+        string theme = App.Current?.UserAppTheme == AppTheme.Dark ? "Dark" : "Light";
+        if (s_resourceColors == null)
+        {
+            return color;
+        }
+
+        if (s_resourceColors.TryGetValue(colorName + theme, out object value))
+        {
+            color = value as Color ?? Colors.Purple;
         }
 
         return color;

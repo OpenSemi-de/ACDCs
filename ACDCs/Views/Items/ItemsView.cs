@@ -35,7 +35,7 @@ public partial class ItemsView : StackLayout, IItemsViewProperties
     {
         IsInserting = false;
         this.Orientation(StackOrientation.Horizontal);
-        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(this, new(0, 1, 1, 60));
+        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(this, new Rect(0, 1, 1, 60));
         Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.YProportional);
 
         _layout = new StackLayout()
@@ -72,10 +72,7 @@ public partial class ItemsView : StackLayout, IItemsViewProperties
     {
         await API.Call(() =>
         {
-            if (BackgroundColor != null)
-            {
-                BackgroundColor = BackgroundColor.WithAlpha(0.5f);
-            }
+            BackgroundColor = BackgroundColor?.WithAlpha(0.5f);
 
             foreach (Type type in typeof(IWorksheetItem).Assembly.GetTypes())
             {
@@ -208,11 +205,13 @@ public partial class ItemsView : StackLayout, IItemsViewProperties
             SelectedButton = selectedButton;
             SelectedButtonColor = SelectedButton?.BackgroundColor;
             SelectedButtonBorderColor = SelectedButton?.BorderColor;
-            if (SelectedButton != null)
+            if (SelectedButton == null)
             {
-                SelectedButton.BorderColor = Color.Parse("#aa20307f");
-                SelectedButton.BackgroundColor = Color.Parse("#aadfefff");
+                return Task.CompletedTask;
             }
+
+            SelectedButton.BorderColor = Color.Parse("#aa20307f");
+            SelectedButton.BackgroundColor = Color.Parse("#aadfefff");
 
             return Task.CompletedTask;
         }, true);

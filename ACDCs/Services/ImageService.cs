@@ -23,16 +23,16 @@ public static class ImageService
 
             canvas.SetShadow(new SizeF(2, 4), 10f, colors[1]);
 
-            LinearGradientPaint paintFrom = new(Point.Zero, new(1, 1))
+            LinearGradientPaint paintFrom = new(Point.Zero, new Point(1, 1))
             {
                 StartColor = colors[0],
-                EndColor = colors[1],
+                EndColor = colors[1]
             };
 
             canvas.SetFillPaint(paintFrom, new RectF(0f, 0f, width, height));
             canvas.FillRectangle(0, 0, width, height);
 
-            LinearGradientPaint paintTo = new(Point.Zero, new(1, 1)) { StartColor = colors[1], EndColor = colors[0], };
+            LinearGradientPaint paintTo = new(Point.Zero, new Point(1, 1)) { StartColor = colors[1], EndColor = colors[0] };
 
             canvas.SetFillPaint(paintTo, new RectF(0f, 0f, width, height));
 
@@ -75,10 +75,10 @@ public static class ImageService
 
             canvas.SetShadow(new SizeF(2, 4), 10f, colors[1]);
 
-            LinearGradientPaint paintFrom = new(Point.Zero, new(1, 1))
+            LinearGradientPaint paintFrom = new(Point.Zero, new Point(1, 1))
             {
                 StartColor = colors[0],
-                EndColor = colors[1],
+                EndColor = colors[1]
             };
             canvas.SetFillPaint(paintFrom, new RectF(0f, 0f, width, height));
             canvas.FillRoundedRectangle(0, 0, width, height, 2);
@@ -116,10 +116,10 @@ public static class ImageService
 
             List<Color> colors = new() { ColorService.Background, ColorService.Foreground };
 
-            LinearGradientPaint paintFrom = new(Point.Zero, new(1, 0))
+            LinearGradientPaint paintFrom = new(Point.Zero, new Point(1, 0))
             {
                 StartColor = colors[0],
-                EndColor = colors[1],
+                EndColor = colors[1]
             };
 
             canvas.SetFillPaint(paintFrom, new RectF(0f, 0f, width, height));

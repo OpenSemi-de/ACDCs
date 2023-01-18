@@ -38,10 +38,10 @@ public partial class EditView : WindowView, IEditViewProperties
         if (ButtonHeight == 0) ButtonHeight = 60;
         if (ButtonWidth == 0) ButtonWidth = 60;
 
-        _selectAreaButton = new("Select area", SelectArea, OnSelectButtonChange, ButtonWidth, ButtonHeight, true);
-        _rotateButton = new("Rotate", Rotate, OnSelectButtonChange, ButtonWidth, ButtonHeight);
-        _mirrorButton = new("Mirror", Mirror, OnSelectButtonChange, ButtonWidth, ButtonHeight);
-        _deleteButton = new("Delete", Delete, OnSelectButtonChange, ButtonWidth, ButtonHeight);
+        _selectAreaButton = new EditButton("Select area", SelectArea, OnSelectButtonChange, ButtonWidth, ButtonHeight, true);
+        _rotateButton = new EditButton("Rotate", Rotate, OnSelectButtonChange, ButtonWidth, ButtonHeight);
+        _mirrorButton = new EditButton("Mirror", Mirror, OnSelectButtonChange, ButtonWidth, ButtonHeight);
+        _deleteButton = new EditButton("Delete", Delete, OnSelectButtonChange, ButtonWidth, ButtonHeight);
         _buttonLayout.Add(_selectAreaButton);
         _buttonLayout.Add(_rotateButton);
         _buttonLayout.Add(_mirrorButton);

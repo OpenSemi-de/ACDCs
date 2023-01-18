@@ -32,8 +32,8 @@ public class ModelSelectionWindowView : WindowView
     {
         WidthRequest = 500;
         HeightRequest = 500;
-        this.HideMenuButton();
-        this.HideResizer();
+        HideMenuButton();
+        HideResizer();
 
         _modelGrid = new Grid()
             .HorizontalOptions(LayoutOptions.Fill)
@@ -41,12 +41,12 @@ public class ModelSelectionWindowView : WindowView
             .Margin(0)
             .Padding(0);
 
-        _modelGrid.RowDefinitions.Add(new(new(40)));
-        _modelGrid.RowDefinitions.Add(new(GridLength.Star));
-        _modelGrid.RowDefinitions.Add(new(new(40)));
-        _modelGrid.RowDefinitions.Add(new(new(40)));
+        _modelGrid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(new GridLength(40)));
+        _modelGrid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(GridLength.Star));
+        _modelGrid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(new GridLength(40)));
+        _modelGrid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(new GridLength(40)));
 
-        _modelGrid.ColumnDefinitions.Add(new(GridLength.Star));
+        _modelGrid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
 
         _searchEntry = new Entry()
             .HorizontalOptions(LayoutOptions.Fill)
@@ -121,6 +121,16 @@ public class ModelSelectionWindowView : WindowView
         LoadDB(componentType);
     }
 
+    private static string SourceDescription(IElectronicComponent electronicComponent)
+    {
+        if (electronicComponent is Resistor resistor)
+        {
+            return $"Series: {resistor.Series}, tolerance: {resistor.Tolerance}%";
+        }
+
+        return electronicComponent.Name != "" ? electronicComponent.Name : electronicComponent.Value;
+    }
+
     private static string SourceName(IElectronicComponent c)
     {
         if (c is Resistor)
@@ -133,18 +143,20 @@ public class ModelSelectionWindowView : WindowView
 
     private void CancelButton_Clicked(object? sender, EventArgs e)
     {
-        this.IsVisible = false;
+        IsVisible = false;
     }
 
     private void ComponentsList_ItemTapped(object? sender, ItemTappedEventArgs e)
     {
-        if (e.Item is ComponentViewModel selectedItem)
+        if (e.Item is not ComponentViewModel selectedItem)
         {
-            SetItemBackground(selectedItem);
-            if (_componentsList.ItemsSource is ObservableCollection<ComponentViewModel> model)
-            {
-                model.Move(0, 0);
-            }
+            return;
+        }
+
+        SetItemBackground(selectedItem);
+        if (_componentsList.ItemsSource is ObservableCollection<ComponentViewModel> model)
+        {
+            model.Move(0, 0);
         }
     }
 
@@ -155,51 +167,57 @@ public class ModelSelectionWindowView : WindowView
             SetItemSource(Array.Empty<IElectronicComponent>());
             DefaultModelRepository repository = new();
 
-            if (type == "NPN" || type == "PNP")
+            switch (type)
             {
-                List<Bjt> bjts = repository.GetModels<Bjt>(type.ToLower());
-                SetItemSource(bjts);
+                case "NPN":
+                case "PNP":
+                    {
+                        List<Bjt> bjts = repository.GetModels<Bjt>(type.ToLower());
+                        SetItemSource(bjts);
 
-                return Task.CompletedTask;
+                        return Task.CompletedTask;
+                    }
+                case "Resistor":
+                    {
+                        List<Resistor> resistors = repository.GetModels<Resistor>(type.ToLower());
+
+                        SetItemSource(resistors.Union(ResistorCalculator.GetAllValues()));
+                        return Task.CompletedTask;
+                    }
+                case "Diode":
+                    {
+                        List<Diode> diodes = repository.GetModels<Diode>(type.ToLower());
+                        SetItemSource(diodes);
+                        return Task.CompletedTask;
+                    }
+                default:
+                    //  SetItemSource(repository.GetModels().Union(ResistorCalculator.GetAllValues()));
+
+                    return Task.CompletedTask;
             }
-            else
-            if (type == "Resistor")
-            {
-                List<Resistor> resistors = repository.GetModels<Resistor>(type.ToLower());
-
-                SetItemSource(resistors.Union(ResistorCalculator.GetAllValues()));
-                return Task.CompletedTask;
-            }
-            else
-            if (type == "Diode")
-            {
-                List<Diode> diodes = repository.GetModels<Diode>(type.ToLower());
-                SetItemSource(diodes);
-                return Task.CompletedTask;
-            }
-
-            //  SetItemSource(repository.GetModels().Union(ResistorCalculator.GetAllValues()));
-
-            return Task.CompletedTask;
         });
     }
 
     private void Model_Selected(object? sender, SelectedItemChangedEventArgs e)
     {
-        if (e.SelectedItem is ComponentViewModel viewModel)
+        if (e.SelectedItem is not ComponentViewModel viewModel)
         {
-            SetItemBackground(viewModel);
-            _selectedModel = viewModel.Model;
+            return;
         }
+
+        SetItemBackground(viewModel);
+        _selectedModel = viewModel.Model;
     }
 
     private void OKButton_Click(object? sender, EventArgs e)
     {
-        if (_selectedModel != null)
+        if (_selectedModel == null)
         {
-            OnModelSelected?.Invoke(_selectedModel);
-            IsVisible = false;
+            return;
         }
+
+        OnModelSelected?.Invoke(_selectedModel);
+        IsVisible = false;
     }
 
     private void SearchTextChanged(object? sender, TextChangedEventArgs e)
@@ -228,20 +246,10 @@ public class ModelSelectionWindowView : WindowView
             Model = c,
             Name = SourceName(c),
             Type = c.Type != "" ? c.Type :
-                   (c is Bjt bjt ? bjt.TypeName : ""),
+                   c is Bjt bjt ? bjt.TypeName : "",
             Value = SourceDescription(c)
         }).ToObservableCollection();
 
         _componentsList.ItemsSource = _fullCollection;
-    }
-
-    private string SourceDescription(IElectronicComponent electronicComponent)
-    {
-        if (electronicComponent is Resistor resistor)
-        {
-            return $"Series: {resistor.Series}, tolerance: {resistor.Tolerance}%";
-        }
-
-        return electronicComponent.Name != "" ? electronicComponent.Name : electronicComponent.Value;
     }
 }

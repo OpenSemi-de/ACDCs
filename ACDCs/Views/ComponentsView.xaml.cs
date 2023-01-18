@@ -80,6 +80,33 @@ public partial class ComponentsView : SharpAbsoluteLayout
         */
     }
 
+    private static bool ReflectedSearch(ComponentViewModel ComponentViewModel, string text)
+    {
+        Type? modelType = ComponentViewModel.Model?.GetType();
+        text = text.ToLower();
+        if (modelType == null)
+        {
+            return false;
+        }
+
+        foreach (PropertyInfo propertyInfo in modelType.GetProperties())
+        {
+            string? value = Convert.ToString(propertyInfo.GetValue(ComponentViewModel.Model));
+            if (value != null)
+            {
+                value = value.ToLower();
+                if (value.Contains(text))
+                    return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
     private void CategoryPicker_OnSelectedIndexChanged(object? sender, EventArgs e)
     {
         _category = CategoryPicker.SelectedItem as string ?? string.Empty;
@@ -88,18 +115,20 @@ public partial class ComponentsView : SharpAbsoluteLayout
 
     private void DetailsButton_OnClicked(object? sender, EventArgs e)
     {
-        if (sender is Button button &&
-            button.CommandParameter is int row)
+        if (sender is not Button button ||
+            button.CommandParameter is not int row)
         {
-            ComponentViewModel model = dataSource[row];
-            ComponentsDetailPopup popup = new();
-            if (App.Current?.MainPage != null)
-            {
-                App.Current.MainPage.ShowPopup(popup);
-            }
-
-            popup.Load(model);
+            return;
         }
+
+        ComponentViewModel model = dataSource[row];
+        ComponentsDetailPopup popup = new();
+        if (App.Current?.MainPage != null)
+        {
+            App.Current.MainPage.ShowPopup(popup);
+        }
+
+        popup.Load(model);
     }
 
     private void KeywordEntry_OnTextChanged(object? sender, TextChangedEventArgs e)
@@ -142,31 +171,6 @@ public partial class ComponentsView : SharpAbsoluteLayout
             child.InvalidateMeasure();
             child.InvalidateArrange();
         }
-    }
-
-    private bool ReflectedSearch(ComponentViewModel ComponentViewModel, string text)
-    {
-        Type? modelType = ComponentViewModel.Model?.GetType();
-        text = text.ToLower();
-        if (modelType != null)
-        {
-            foreach (PropertyInfo propertyInfo in modelType.GetProperties())
-            {
-                string? value = Convert.ToString(propertyInfo.GetValue(ComponentViewModel.Model));
-                if (value != null)
-                {
-                    value = value.ToLower();
-                    if (value.Contains(text))
-                        return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
-        return false;
     }
 
     private void Reload()

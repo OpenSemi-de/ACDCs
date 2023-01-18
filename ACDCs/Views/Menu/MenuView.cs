@@ -20,12 +20,12 @@ public partial class MenuView : StackLayout, IMenuViewProperties
     {
         this.HorizontalOptions(LayoutOptions.Start);
         Orientation = StackOrientation.Horizontal;
-        _menuLayout = new()
+        _menuLayout = new StackLayout
         {
             HorizontalOptions = LayoutOptions.Start,
             VerticalOptions = LayoutOptions.Fill,
             Orientation = StackOrientation.Horizontal,
-            Padding = 1,
+            Padding = 1
         };
 
         Add(_menuLayout);
@@ -44,7 +44,7 @@ public partial class MenuView : StackLayout, IMenuViewProperties
 
     private void MenuDragContainer_Loaded(object? sender, EventArgs e)
     {
-        _menuFrame = new()
+        _menuFrame = new MenuFrame
         {
             PopupTarget = PopupTarget,
             MainContainer = this
@@ -67,13 +67,13 @@ public partial class MenuView : StackLayout, IMenuViewProperties
             HorizontalTextAlignment = TextAlignment.Start,
             VerticalTextAlignment = TextAlignment.Center,
             Padding = 5,
-            BackgroundColor = Colors.Transparent,
+            BackgroundColor = Colors.Transparent
         };
 
         _menuLayout.Add(_fileNameLabel);
 
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.PositionProportional);
-        AbsoluteLayout.SetLayoutBounds(this, new(0, 0, 1, 44));
+        AbsoluteLayout.SetLayoutBounds(this, new Rect(0, 0, 1, 44));
     }
 
     private void Sheet_Loaded(object? sender, EventArgs e)

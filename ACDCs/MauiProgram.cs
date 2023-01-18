@@ -6,6 +6,7 @@ using Microsoft.AppCenter.Crashes;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Windows.Graphics;
+using Microsoft.Maui.LifecycleEvents;
 #endif
 
 using UraniumUI;

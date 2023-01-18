@@ -15,12 +15,12 @@ public class WindowTabBar : Grid
     public WindowTabBar()
     {
         ColumnDefinitions.Add(
-            new(GridLength.Star)
+            new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star)
         );
         RowDefinitions.Add(
-            new(new GridLength(34))
+            new Microsoft.Maui.Controls.RowDefinition(new GridLength(34))
         );
-        _windowViews = new();
+        _windowViews = new Dictionary<WindowTab, WindowView>();
 
         _mainLayout = new StackLayout()
             .VerticalOptions(LayoutOptions.Fill)
@@ -55,30 +55,34 @@ public class WindowTabBar : Grid
 
     public void BringToFront(object? sender)
     {
-        if (sender != null)
+        if (sender == null)
         {
-            var window = (WindowView)sender;
-            if (_focusWindow != window)
-            {
-                if (_focusWindow != null)
-                {
-                    window.ZIndex = _focusWindow.ZIndex + 1;
-                }
-            }
-
-            _focusWindow = window;
+            return;
         }
+
+        var window = (WindowView)sender;
+        if (_focusWindow != window)
+        {
+            if (_focusWindow != null)
+            {
+                window.ZIndex = _focusWindow.ZIndex + 1;
+            }
+        }
+
+        _focusWindow = window;
     }
 
     public void RemoveWindow(WindowView windowView)
     {
-        if (_windowViews.ContainsValue(windowView))
+        if (!_windowViews.ContainsValue(windowView))
         {
-            WindowTab tab = _windowViews.First(kv => kv.Value == windowView).Key;
-            _windowViews.Remove(tab);
-            _mainLayout.Remove(tab);
-            windowView.TabBar = null;
+            return;
         }
+
+        WindowTab tab = _windowViews.First(kv => kv.Value == windowView).Key;
+        _windowViews.Remove(tab);
+        _mainLayout.Remove(tab);
+        windowView.TabBar = null;
     }
 
     private void MarkFocused()
@@ -89,44 +93,48 @@ public class WindowTabBar : Grid
             _windowViews[windowTab].SetInactive();
         }
 
-        if (_focusWindow != null)
+        if (_focusWindow == null)
         {
-            KeyValuePair<WindowTab, WindowView>? focusTab = _windowViews.First(kv => kv.Value == _focusWindow);
-            focusTab?.Key.SetActive();
-
-            _focusWindow.SetActive();
+            return;
         }
+
+        KeyValuePair<WindowTab, WindowView>? focusTab = _windowViews.First(kv => kv.Value == _focusWindow);
+        focusTab?.Key.SetActive();
+
+        _focusWindow.SetActive();
     }
 
     private async void OnTabClicked(WindowTab tab)
     {
         await API.Call(() =>
            {
-               if (_windowViews.ContainsKey(tab))
+               if (!_windowViews.ContainsKey(tab))
                {
-                   WindowView window = _windowViews[tab];
-                   if (window.State == WindowState.Minimized)
-                   {
-                       window.Restore();
-                       window.Focus();
-                       BringToFront(window);
-                       MarkFocused();
-                       return Task.CompletedTask;
-                   }
-
-                   if (_focusWindow == window)
-                   {
-                       window.Minimize();
-                       return Task.CompletedTask;
-                   }
-
-                   if (_focusWindow != window)
-                   {
-                       BringToFront(window);
-                   }
-
-                   MarkFocused();
+                   return Task.CompletedTask;
                }
+
+               WindowView window = _windowViews[tab];
+               if (window.State == WindowState.Minimized)
+               {
+                   window.Restore();
+                   window.Focus();
+                   BringToFront(window);
+                   MarkFocused();
+                   return Task.CompletedTask;
+               }
+
+               if (_focusWindow == window)
+               {
+                   window.Minimize();
+                   return Task.CompletedTask;
+               }
+
+               if (_focusWindow != window)
+               {
+                   BringToFront(window);
+               }
+
+               MarkFocused();
                return Task.CompletedTask;
            });
     }

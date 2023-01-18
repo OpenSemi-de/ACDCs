@@ -14,7 +14,7 @@ public partial class App : Application
         AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
     }
 
-    private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+    private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
         Crashes.TrackError(e.ExceptionObject as Exception);
     }

@@ -49,11 +49,13 @@ public partial class CircuitSheetView : SharpAbsoluteLayout
 
     private void OnModelSelectionClicked(PropertyEditorView obj)
     {
-        if (_modelSelectionWindow != null)
+        if (_modelSelectionWindow == null)
         {
-            _modelSelectionWindow.SetComponentType(obj.ValueType);
-            _modelSelectionWindow.IsVisible = true;
+            return;
         }
+
+        _modelSelectionWindow.SetComponentType(obj.ValueType);
+        _modelSelectionWindow.IsVisible = true;
     }
 
     private void OnUpdate()

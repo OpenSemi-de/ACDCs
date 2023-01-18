@@ -59,20 +59,20 @@ public class PropertiesView : WindowView
         {
             foreach (PropertyInfo propertyInfo in properties.OrderBy(p => p.PropertyType.Name).ThenBy(p => p.Name))
             {
-                if (
-                    !PropertyExcludeList.Contains(propertyInfo.Name)
-                // && (propertyInfo.PropertyType.IsPrimitive || propertyInfo.PropertyType.IsEnum)
-                )
+                if (PropertyExcludeList.Contains(propertyInfo.Name))
                 {
-                    Components.Properties.PropertyItem item = new() { Name = propertyInfo.Name };
-                    object? value = propertyInfo.GetValue(currentObject, null);
-                    if (value != null)
-                    {
-                        item.Value = value;
-                    }
-
-                    propertyItems.Add(item);
+                    continue;
                 }
+
+                // && (propertyInfo.PropertyType.IsPrimitive || propertyInfo.PropertyType.IsEnum)
+                Components.Properties.PropertyItem item = new() { Name = propertyInfo.Name };
+                object? value = propertyInfo.GetValue(currentObject, null);
+                if (value != null)
+                {
+                    item.Value = value;
+                }
+
+                propertyItems.Add(item);
             }
         }
 

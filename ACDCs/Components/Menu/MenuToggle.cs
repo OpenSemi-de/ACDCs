@@ -28,7 +28,7 @@ public class MenuToggle : StackLayout, IMenuComponent
         _checkbox = new CheckBox();
         _checkbox.CheckedChanged += CheckboxOnCheckedChanged;
 
-        Margin = new(2, 2, 2, 2);
+        Margin = new Thickness(2, 2, 2, 2);
         ItemHeight = MinimumHeightRequest + Margin.Top + Margin.Bottom;
 
         _button = new Button()

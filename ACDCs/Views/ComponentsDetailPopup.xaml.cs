@@ -20,24 +20,26 @@ public partial class ComponentsDetailPopup : Popup
         propertiesTreeView.ItemsSource = ToItemSource(model);
     }
 
-    private void CloseButton_OnClicked(object? sender, EventArgs e)
-    {
-        Close();
-    }
-
-    private Dictionary<string, string?> GetParameters(ComponentViewModel model)
+    private static Dictionary<string, string?> GetParameters(ComponentViewModel model)
     {
         Dictionary<string, string?> parametersdic = new();
         object? parameterSet = model.Model;
-        if (parameterSet != null)
+        if (parameterSet == null)
         {
-            foreach (PropertyInfo info in parameterSet.GetType().GetProperties())
-            {
-                parametersdic.Add(info.Name, Convert.ToString(info.GetValue(parameterSet)));
-            }
+            return parametersdic;
+        }
+
+        foreach (PropertyInfo info in parameterSet.GetType().GetProperties())
+        {
+            parametersdic.Add(info.Name, Convert.ToString(info.GetValue(parameterSet)));
         }
 
         return parametersdic;
+    }
+
+    private void CloseButton_OnClicked(object? sender, EventArgs e)
+    {
+        Close();
     }
 
     private ObservableCollection<PropertyItem> ToItemSource(ComponentViewModel model)
@@ -48,13 +50,15 @@ public partial class ComponentsDetailPopup : Popup
 
         foreach (KeyValuePair<string, string?> modelParameter in parameters)
         {
-            if (modelParameter.Value != "")
+            if (modelParameter.Value == "")
             {
-                PropertyItem item = new(modelParameter.Key) { IsExpanded = true };
-                PropertyItem valueItem = new(modelParameter.Value);
-                item.Children.Add(valueItem);
-                root.Children.Add(item);
+                continue;
             }
+
+            PropertyItem item = new(modelParameter.Key) { IsExpanded = true };
+            PropertyItem valueItem = new(modelParameter.Value);
+            item.Children.Add(valueItem);
+            root.Children.Add(item);
         }
 
         return new ObservableCollection<PropertyItem> { root };
@@ -67,10 +71,6 @@ public class PropertyItem
 
     public bool IsExpanded { get; set; }
     public string? Name { get; set; } = string.Empty;
-
-    public PropertyItem()
-    {
-    }
 
     public PropertyItem(string? name)
     {

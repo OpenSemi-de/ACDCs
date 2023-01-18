@@ -30,11 +30,13 @@ public class ImportMenuHandlers : MenuHandlerView
         };
 
         FileResult? result = await FilePicker.Default.PickAsync(options);
-        if (result != null)
+        if (result == null)
         {
-            string fileName = result.FullPath;
-            ComponentsView.ImportSpiceModels(fileName);
+            return;
         }
+
+        string fileName = result.FullPath;
+        ComponentsView.ImportSpiceModels(fileName);
     }
 
     public async void OpenDB(object? o)
@@ -50,23 +52,19 @@ public class ImportMenuHandlers : MenuHandlerView
 
     public void SaveToDB(object? o)
     {
-        List<IElectronicComponent?> newComponents = new();
-
         List<IElectronicComponent?> components = ComponentsView.dataSource.Select(m => m.Model).ToList();
         DefaultModelRepository repository = new();
         List<IElectronicComponent> existingComponents = repository.GetModels();
 
-        foreach (IElectronicComponent? newComponent in components)
-        {
-            bool found = existingComponents.Any(existingComponent =>
-                newComponent?.Name == existingComponent.Name &&
-                newComponent.IsFlatEqual(existingComponent));
-
-            if (!found)
+        List<IElectronicComponent?> newComponents = components
+            .Select(newComponent => new
             {
-                newComponents.Add(newComponent);
-            }
-        }
+                newComponent,
+                found = existingComponents.Any(existingComponent =>
+                    newComponent?.Name == existingComponent.Name && newComponent.IsFlatEqual(existingComponent))
+            })
+            .Where(t => !t.found)
+            .Select(t => t.newComponent).ToList();
 
         repository.Write(newComponents);
     }

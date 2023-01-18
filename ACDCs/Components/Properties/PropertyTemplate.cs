@@ -16,9 +16,9 @@ public class PropertyTemplate : ViewCell
         Grid grid = new Grid()
             .HorizontalOptions(LayoutOptions.Fill)
             .HeightRequest(30);
-        grid.ColumnDefinitions.Add(new(new(80)));
-        grid.ColumnDefinitions.Add(new(GridLength.Star));
-        grid.RowDefinitions.Add(new(new(30)));
+        grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(new GridLength(80)));
+        grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
+        grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(new GridLength(30)));
         Label label = new Label()
             .FontSize(11);
 

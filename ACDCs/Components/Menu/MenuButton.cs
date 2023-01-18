@@ -19,8 +19,8 @@ public class MenuButton : Button, IMenuComponent
         Text = text;
         MenuCommand = menuCommand;
         Clicked += clickAction != null ? ClickAction_Click : MenuButton_Clicked;
-        Padding = new(2, 2, 2, 2);
-        Margin = new(2, 2, 2, 2);
+        Padding = new Thickness(2, 2, 2, 2);
+        Margin = new Thickness(2, 2, 2, 2);
         WidthRequest = 100;
         MinimumHeightRequest = 32;
         ItemHeight = MinimumHeightRequest + Margin.Top + Margin.Bottom;

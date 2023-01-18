@@ -4,16 +4,24 @@ using ACDCs.Components.Menu;
 using ACDCs.Components.Window;
 using ACDCs.Interfaces;
 using ACDCs.Services;
+using Sharp.UI;
+using AbsoluteLayout = Sharp.UI.AbsoluteLayout;
+using ColumnDefinition = Microsoft.Maui.Controls.ColumnDefinition;
+using ContentView = Sharp.UI.ContentView;
+using Grid = Sharp.UI.Grid;
+using Image = Sharp.UI.Image;
+using IView = Sharp.UI.IView;
+using Label = Sharp.UI.Label;
+using PanGestureRecognizer = Sharp.UI.PanGestureRecognizer;
+using RowDefinition = Microsoft.Maui.Controls.RowDefinition;
 
 namespace ACDCs.Views.Window;
-
-using Sharp.UI;
 
 [SharpObject]
 public partial class WindowView : ContentView, IWindowViewProperties
 {
-    protected readonly Grid _grid;
     private readonly WindowFrame _border;
+    private readonly Grid _grid;
     private readonly Image _headerImage;
     private readonly MenuButton _menuButton;
     private readonly MenuFrame _menuFrame;
@@ -43,12 +51,12 @@ public partial class WindowView : ContentView, IWindowViewProperties
             .RowSpacing(0)
             .BackgroundColor(ColorService.Background);
 
-        _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(36));
-        _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
-        _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(36));
-        _grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(36));
-        _grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(GridLength.Star));
-        _grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(36));
+        _grid.ColumnDefinitions.Add(new ColumnDefinition(36));
+        _grid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
+        _grid.ColumnDefinitions.Add(new ColumnDefinition(36));
+        _grid.RowDefinitions.Add(new RowDefinition(36));
+        _grid.RowDefinitions.Add(new RowDefinition(GridLength.Star));
+        _grid.RowDefinitions.Add(new RowDefinition(36));
 
         _headerImage = new Image()
             .Margin(0)
@@ -129,7 +137,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
                 Text = "Close",
                 MenuCommand = "dummy3",
                 ClickAction = Close
-            },
+            }
         };
 
         _menuFrame.MainContainer = MainContainer;
@@ -237,6 +245,16 @@ public partial class WindowView : ContentView, IWindowViewProperties
         _resizeField.IsVisible = false;
     }
 
+    private static void SetRowAndColumn(IView view, int row, int column, int columnSpan = 0, int rowSpan = 0)
+    {
+        Microsoft.Maui.Controls.Grid.SetRow((BindableObject)view, row);
+        Microsoft.Maui.Controls.Grid.SetColumn((BindableObject)view, column);
+        if (columnSpan > 0)
+            Microsoft.Maui.Controls.Grid.SetColumnSpan((BindableObject)view, columnSpan);
+        if (rowSpan > 0)
+            Microsoft.Maui.Controls.Grid.SetRowSpan((BindableObject)view, rowSpan);
+    }
+
     private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName != null && e.PropertyName.StartsWith("WindowContent"))
@@ -293,9 +311,9 @@ public partial class WindowView : ContentView, IWindowViewProperties
                 if (newBounds.Height < 200)
                     newBounds.Height = 200;
 
-                this.BatchBegin();
+                BatchBegin();
                 AbsoluteLayout.SetLayoutBounds(this, newBounds);
-                this.BatchCommit();
+                BatchCommit();
             }
             else
             {
@@ -318,16 +336,6 @@ public partial class WindowView : ContentView, IWindowViewProperties
 
             return Task.CompletedTask;
         }).Wait();
-    }
-
-    private void SetRowAndColumn(IView view, int row, int column, int columnSpan = 0, int rowSpan = 0)
-    {
-        Microsoft.Maui.Controls.Grid.SetRow((BindableObject)view, row);
-        Microsoft.Maui.Controls.Grid.SetColumn((BindableObject)view, column);
-        if (columnSpan > 0)
-            Microsoft.Maui.Controls.Grid.SetColumnSpan((BindableObject)view, columnSpan);
-        if (rowSpan > 0)
-            Microsoft.Maui.Controls.Grid.SetRowSpan((BindableObject)view, rowSpan);
     }
 }
 

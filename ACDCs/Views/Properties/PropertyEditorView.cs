@@ -63,83 +63,87 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
     {
         await API.Call(() =>
         {
-            if (e.PropertyName != null && e.PropertyName.StartsWith("Value"))
+            if (e.PropertyName == null || !e.PropertyName.StartsWith("Value"))
             {
-                object? value = GetValue(ValueProperty);
-                if (value != null)
+                return Task.CompletedTask;
+            }
+
+            object? value = GetValue(ValueProperty);
+            if (value == null)
+            {
+                return Task.CompletedTask;
+            }
+
+            ValueType = value.GetType().Name;
+
+            if (PropertyName == "Value")
+            {
+                Content = new Entry()
+                    .HorizontalOptions(LayoutOptions.Fill)
+                    .VerticalOptions(LayoutOptions.Fill)
+                    .FontSize(_fontSize)
+                    .OnTextChanged(Value_OnTextChanged)
+                    .Text(Convert.ToString(value));
+            }
+            else if (value is bool boolValue)
+            {
+                Content = new Switch()
+                    .HorizontalOptions(LayoutOptions.Start)
+                    .VerticalOptions(LayoutOptions.Start)
+                    .IsToggled(boolValue)
+                    .OnToggled(Toggle_OnToggle);
+            }
+            else if (value.GetType().IsEnum)
+            {
+                Picker? picker = new Picker()
+                    .HorizontalOptions(LayoutOptions.Fill)
+                    .VerticalOptions(LayoutOptions.Fill)
+                    .Margin(0)
+                    .FontSize(_fontSize);
+
+                foreach (object? enumValue in value.GetType().GetEnumValues())
                 {
-                    ValueType = value.GetType().Name;
-
-                    if (PropertyName == "Value")
-                    {
-                        Content = new Entry()
-                            .HorizontalOptions(LayoutOptions.Fill)
-                            .VerticalOptions(LayoutOptions.Fill)
-                            .FontSize(_fontSize)
-                            .OnTextChanged(Value_OnTextChanged)
-                            .Text(Convert.ToString(value));
-                    }
-                    else if (value is bool boolValue)
-                    {
-                        Content = new Switch()
-                            .HorizontalOptions(LayoutOptions.Start)
-                            .VerticalOptions(LayoutOptions.Start)
-                            .IsToggled(boolValue)
-                            .OnToggled(Toggle_OnToggle);
-                    }
-                    else if (value.GetType().IsEnum)
-                    {
-                        Picker? picker = new Picker()
-                            .HorizontalOptions(LayoutOptions.Fill)
-                            .VerticalOptions(LayoutOptions.Fill)
-                            .Margin(0)
-                            .FontSize(_fontSize);
-
-                        foreach (var enumValue in value.GetType().GetEnumValues())
-                        {
-                            picker.Items.Add(Convert.ToString(enumValue));
-                        }
-
-                        picker.SelectedItem = Convert.ToString(value);
-                        picker.OnSelectedIndexChanged(Picker_OnSelectedIndexChange);
-                        Content = picker;
-                    }
-                    // else if (value is int intValue)
-                    // {
-                    //     TurnKnob knob = new TurnKnob()
-                    //         .InputValue(value)
-                    //         .Margin(0)
-                    //         .WidthRequest(Width)
-                    //         .HeightRequest(Height)
-                    //         .OnKnobValueChanged(Knob_OnValueChanged);
-                    //
-                    //     Content = knob;
-                    // }
-                    else if (value is IElectronicComponent c)
-                    {
-                        IElectronicComponent? component = (IElectronicComponent?)c;
-                        string text = component != null ? component.Name : "";
-                        Button modelButton = new Button()
-                            .HorizontalOptions(LayoutOptions.Fill)
-                            .VerticalOptions(LayoutOptions.Fill)
-                            .Margin(0)
-                            .FontSize(_fontSize)
-                            .Text(text)
-                            .OnClicked(ModelButton_Clicked);
-
-                        ValueType = c.GetType().Name + (c.Type != "" ? ":" + c.Type : "");
-                        Content = modelButton;
-                    }
-                    else
-                    {
-                        Content = new Entry()
-                            .HorizontalOptions(LayoutOptions.Fill)
-                            .VerticalOptions(LayoutOptions.Fill)
-                            .FontSize(_fontSize)
-                            .OnTextChanged(Entry_OnTextChanged)
-                            .Text(Convert.ToString(value));
-                    }
+                    picker.Items.Add(Convert.ToString(enumValue));
                 }
+
+                picker.SelectedItem = Convert.ToString(value);
+                picker.OnSelectedIndexChanged(Picker_OnSelectedIndexChange);
+                Content = picker;
+            }
+            // else if (value is int intValue)
+            // {
+            //     TurnKnob knob = new TurnKnob()
+            //         .InputValue(value)
+            //         .Margin(0)
+            //         .WidthRequest(Width)
+            //         .HeightRequest(Height)
+            //         .OnKnobValueChanged(Knob_OnValueChanged);
+            //
+            //     Content = knob;
+            // }
+            else if (value is IElectronicComponent c)
+            {
+                IElectronicComponent? component = (IElectronicComponent?)c;
+                string text = component != null ? component.Name : "";
+                Button modelButton = new Button()
+                    .HorizontalOptions(LayoutOptions.Fill)
+                    .VerticalOptions(LayoutOptions.Fill)
+                    .Margin(0)
+                    .FontSize(_fontSize)
+                    .Text(text)
+                    .OnClicked(ModelButton_Clicked);
+
+                ValueType = c.GetType().Name + (c.Type != "" ? ":" + c.Type : "");
+                Content = modelButton;
+            }
+            else
+            {
+                Content = new Entry()
+                    .HorizontalOptions(LayoutOptions.Fill)
+                    .VerticalOptions(LayoutOptions.Fill)
+                    .FontSize(_fontSize)
+                    .OnTextChanged(Entry_OnTextChanged)
+                    .Text(Convert.ToString(value));
             }
 
             return Task.CompletedTask;

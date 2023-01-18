@@ -26,7 +26,7 @@ public static class API
         {
             try
             {
-                OnReset(new());
+                OnReset(new ResetEventArgs());
             }
             catch (Exception exception)
             {
@@ -81,14 +81,14 @@ public static class API
 
     public static async Task PopupException(Exception exception)
     {
-        if (API.MainPage != null)
+        if (MainPage != null)
         {
-            await API.MainPage.DisplayAlert("Internal exception", exception.Message, "ok");
+            await MainPage.DisplayAlert("Internal exception", exception.Message, "ok");
         }
     }
 
     private static void OnReset(ResetEventArgs args)
     {
-        Reset?.Invoke(new(), args);
+        Reset?.Invoke(new object(), args);
     }
 }

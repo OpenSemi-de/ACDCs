@@ -2,6 +2,7 @@
 using ACDCs.Components;
 using ACDCs.Components.Menu;
 using ACDCs.Components.Window;
+using ACDCs.Interfaces;
 using ACDCs.Services;
 
 namespace ACDCs.Views.Window;

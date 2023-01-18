@@ -5,7 +5,7 @@ namespace ACDCs.CircuitRenderer.Interfaces;
 
 public interface IWorksheetItem
 {
-    static string DefaultValue { get; set; } = "";
+    static string DefaultValue { get; set; } = string.Empty;
     static bool IsInsertable { get; set; }
     IDrawableComponent DrawableComponent { get; set; }
     int Height { get; set; }

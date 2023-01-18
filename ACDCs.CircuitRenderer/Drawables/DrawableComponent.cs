@@ -8,28 +8,22 @@ namespace ACDCs.CircuitRenderer.Drawables;
 
 public class DrawableComponent : IDrawableComponent, IHaveAParent
 {
-    private string _value;
+    private string _value = string.Empty;
     public Guid ComponentGuid { get; set; } = Guid.NewGuid();
-
     public DrawablePinList DrawablePins { get; set; } = new();
-
     public DrawInstructionsList DrawInstructions { get; set; } = new();
-
     public bool IsMirrored { get; set; }
-
     public bool IsMirroringDone { get; set; }
-
-    public Action OnValueSet { get; set; }
+    public Action? OnValueSet { get; set; }
     public IWorksheetItem ParentItem { get; set; }
-
     public Coordinate Position { get; set; } = new(0, 0, 0);
-
-    public string RefName => ParentItem.RefName;
+    public string RefName
+    {
+        get { return ParentItem.RefName; }
+    }
 
     public float Rotation { get; set; }
-
     public Coordinate Size { get; set; } = new(1, 1, 0);
-
     public string Type { get; }
 
     public string Value
@@ -48,7 +42,7 @@ public class DrawableComponent : IDrawableComponent, IHaveAParent
     {
         ParentItem = parentItem;
         Type = type.Name;
-        Value = "";
+        Value = string.Empty;
     }
 
     public void SetPosition(float x, float y)

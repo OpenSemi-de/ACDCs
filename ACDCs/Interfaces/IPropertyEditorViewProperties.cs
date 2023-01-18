@@ -1,6 +1,6 @@
-﻿namespace ACDCs.Views.Properties;
+﻿using Sharp.UI;
 
-using Sharp.UI;
+namespace ACDCs.Interfaces;
 
 [BindableProperties]
 public interface IPropertyEditorViewProperties

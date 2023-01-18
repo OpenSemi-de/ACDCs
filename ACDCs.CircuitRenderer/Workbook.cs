@@ -16,7 +16,7 @@ public sealed class Workbook
 
     private readonly JsonSerializerSettings _jsonSerializerSettings;
 
-    public static string BaseFontName { get; set; } = "";
+    public static string BaseFontName { get; set; } = string.Empty;
 
     public static string? BasePath { get; set; }
 

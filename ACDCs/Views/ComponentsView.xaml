@@ -10,6 +10,7 @@
                                 xmlns:components1="using:ACDCs.Components"
                                 xmlns:menu1="using:ACDCs.Components.Menu"
                                 xmlns:menuHandlers1="using:ACDCs.Components.Menu.MenuHandlers"
+                                xmlns:interfaces="using:ACDCs.Interfaces"
                                 x:Class="ACDCs.Views.ComponentsView"
                                 x:Name="AbsoluteLayoutSheetPage">
     <menu1:MenuContainer PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" MenuFilename="menu_components.json"/>
@@ -86,6 +87,6 @@
             </controls:DataGrid>-->
 
 
-    <menuHandlers1:ImportMenuHandlers ComponentsView="{x:Reference AbsoluteLayoutSheetPage}"></menuHandlers1:ImportMenuHandlers>
+    <interfaces:ImportMenuHandlers ComponentsView="{x:Reference AbsoluteLayoutSheetPage}"></interfaces:ImportMenuHandlers>
 
 </components1:SharpAbsoluteLayout>

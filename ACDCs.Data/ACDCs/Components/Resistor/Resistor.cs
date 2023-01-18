@@ -2,12 +2,12 @@
 
 public class Resistor : ResistorParameters, IElectronicComponent
 {
-    private string _value;
-    public string Model { get; set; }
-    public string Name { get; set; }
+    private string _value = string.Empty;
+    public string Model { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
     public IComponentParameters ParametersModel => new ResistorParameters();
     public IComponentRuntimeParameters ParametersRuntime => new ResistorRuntimeParameters();
-    public string Type { get; set; }
+    public string Type { get; set; } = string.Empty;
 
     public string Value
     {

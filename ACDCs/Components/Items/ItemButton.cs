@@ -4,7 +4,8 @@ using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Sheet;
 using Color = ACDCs.CircuitRenderer.Definitions.Color;
 
-namespace ACDCs.Views.Items;
+
+namespace ACDCs.Components.Items;
 
 using Sharp.UI;
 

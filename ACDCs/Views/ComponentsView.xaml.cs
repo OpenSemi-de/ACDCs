@@ -3,32 +3,18 @@ using ACDCs.Components;
 using ACDCs.Data.ACDCs.Components;
 using ACDCs.IO.DB;
 using ACDCs.IO.Spice;
-using ACDCs.Views.ModelSelection;
 using CommunityToolkit.Maui.Views;
-using Sharp.UI;
-using Button = Microsoft.Maui.Controls.Button;
-using ListView = Microsoft.Maui.Controls.ListView;
 
 namespace ACDCs.Views;
 
-[BindableProperties]
-public interface IDataLineProperties
-{
-    Dictionary<string, string> Data { get; set; }
-}
-
-public class CacheListView : ListView
-{
-    public CacheListView() : base(ListViewCachingStrategy.RecycleElement)
-    {
-    }
-}
+using ACDCs.Components.ModelSelection;
+using Sharp.UI;
 
 public partial class ComponentsView : SharpAbsoluteLayout
 {
     public List<ComponentViewModel> dataSource = new();
     private List<ComponentViewModel> _baseData = new();
-    private string _category = "";
+    private string _category = string.Empty;
 
     public ComponentsView()
     {
@@ -43,14 +29,10 @@ public partial class ComponentsView : SharpAbsoluteLayout
 
         SpiceReader spiceReader = new();
         List<IElectronicComponent> components = spiceReader.ReadComponents(jsonData);
-        if (spiceReader.HasErrors)
+        if (spiceReader.HasErrors && spiceReader.Errors != null && API.MainPage != null)
         {
-            if (spiceReader.Errors != null)
-            {
-                await API.MainPage.DisplayAlert("Model import failed",
-                    string.Join(':', spiceReader.Errors), "ok");
-            }
-
+            await API.MainPage.DisplayAlert("Model import failed",
+                string.Join(':', spiceReader.Errors), "ok");
             // return;
         }
         LoadFromSource(components);
@@ -90,17 +72,19 @@ public partial class ComponentsView : SharpAbsoluteLayout
     public bool OnClose()
     {
         return true;
+/*
         ComponentsGrid.BatchBegin();
         dataSource.Clear();
         _baseData?.Clear();
         ComponentsGrid.ItemsSource = new List<string>();
         ComponentsGrid.BatchCommit();
+*/
     }
 
     private void CategoryPicker_OnSelectedIndexChanged(object? sender, EventArgs e)
     {
         _category = CategoryPicker.SelectedItem as string ?? string.Empty;
-        KeywordEntry_OnTextChanged(keywordEntry, null);
+        KeywordEntry_OnTextChanged(keywordEntry, new TextChangedEventArgs(keywordEntry.Text, keywordEntry.Text));
     }
 
     private void DetailsButton_OnClicked(object? sender, EventArgs e)

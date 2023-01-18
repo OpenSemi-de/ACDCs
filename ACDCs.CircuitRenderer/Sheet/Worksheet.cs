@@ -21,7 +21,7 @@ public sealed class Worksheet
 
     public Coordinate? DisplayOffset { get; set; }
 
-    public string Filename { get; set; } = "";
+    public string Filename { get; set; } = string.Empty;
 
     public Color? ForegroundColor { get; set; }
 

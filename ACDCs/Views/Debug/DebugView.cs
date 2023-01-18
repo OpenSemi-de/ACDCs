@@ -1,5 +1,5 @@
 ﻿using ACDCs.Components;
-using ACDCs.Components.Window;
+using ACDCs.Views.Window;
 using CSScriptLib;
 using Microsoft.Maui.Layouts;
 using UraniumUI.Material.Controls;
@@ -14,10 +14,9 @@ public class DebugWindow : WindowView
     private readonly Grid _debugGrid;
     private readonly Label _label;
     private readonly TextField _textField;
-    private string _script;
+    private string? _script;
 
-    public StartCenterPage StartCenterPage
-    { get; set; }
+    public StartCenterPage? StartCenterPage { get; set; }
 
     public DebugWindow(SharpAbsoluteLayout layout) : base(layout, "Debug")
     {

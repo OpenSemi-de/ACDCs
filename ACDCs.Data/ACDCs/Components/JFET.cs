@@ -2,10 +2,10 @@
 
 public class JFET : JFETParameters, IElectronicComponent
 {
-    public string Model { get; set; }
-    public string Name { get; set; }
+    public string Model { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
     public IComponentRuntimeParameters ParametersRuntime => new JFETParametersRuntimeParameters();
-    public string Type { get; set; }
+    public string Type { get; set; } = string.Empty;
 
     public string Value
     {
@@ -34,7 +34,7 @@ public class JFETParameters : IComponentParameters
     public double SourceConductance { get; set; }
     public double SourceResistance { get; set; }
     public double Threshold { get; set; }
-    public string TypeName { get; set; }
+    public string TypeName { get; set; } = string.Empty; 
 }
 
 public class JFETParametersRuntimeParameters : IComponentRuntimeParameters

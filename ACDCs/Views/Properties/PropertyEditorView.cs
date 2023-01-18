@@ -1,23 +1,19 @@
 ﻿using ACDCs.Data.ACDCs.Components;
+using ACDCs.Interfaces;
 
 namespace ACDCs.Views.Properties;
 
 using Sharp.UI;
 
-[SharpObject()]
+[SharpObject]
 public partial class PropertyEditorView : ContentView, IPropertyEditorViewProperties
 {
     private int _fontSize;
-    private string _valueType;
 
     public Action<PropertyEditorView>? OnModelSelectionClicked { get; set; }
     public Action<object>? OnValueChanged { get; set; }
 
-    public string ValueType
-    {
-        get => _valueType;
-        set => _valueType = value;
-    }
+    public string ValueType { get; set; } = string.Empty;
 
     public PropertyEditorView()
     {

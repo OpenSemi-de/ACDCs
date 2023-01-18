@@ -17,7 +17,7 @@ public class PropertiesView : WindowView
     private object? _currentObject;
 
     public Action<PropertyEditorView>? OnModelSelectionClicked { get; set; }
-    public Action<IElectronicComponent> OnModelSelectionForward { get; set; }
+    public Action<IElectronicComponent>? OnModelSelectionForward { get; set; }
     public Action? OnUpdate { get; set; }
     public List<string> PropertyExcludeList { get; set; } = new();
 
@@ -81,7 +81,7 @@ public class PropertiesView : WindowView
 
     public void OnModelSelected(IElectronicComponent obj)
     {
-        OnModelSelectionForward(obj);
+        OnModelSelectionForward?.Invoke(obj);
     }
 
     private void ModelSelectionClicked(PropertyEditorView obj)
@@ -100,7 +100,7 @@ public class PropertiesView : WindowView
                 PropertyInfo? propertyInfo = currentType.GetProperty(propertyName);
                 if (propertyInfo != null)
                 {
-                    object? outputValue = value;
+                    object outputValue = value;
 
                     if (propertyInfo.PropertyType == typeof(float))
                     {

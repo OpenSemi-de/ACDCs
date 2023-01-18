@@ -12,7 +12,7 @@ public class WorksheetItem : IWorksheetItem
 {
     private string? _value;
 
-    public virtual string DefaultValue { get; set; } = "";
+    public virtual string DefaultValue { get; set; } = string.Empty;
     [JsonIgnore] public IDrawableComponent DrawableComponent { get; set; }
 
     public int Height

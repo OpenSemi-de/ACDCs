@@ -2,13 +2,15 @@
 using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Sheet;
+using ACDCs.Components.Items;
+using ACDCs.Interfaces;
 using Microsoft.Maui.Layouts;
 
 namespace ACDCs.Views.Items;
 
 using Sharp.UI;
 
-[SharpObject()]
+[SharpObject]
 public partial class ItemsView: StackLayout, IItemsViewProperties
 {
     private readonly StackLayout _layout;

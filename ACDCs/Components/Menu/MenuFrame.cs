@@ -1,4 +1,4 @@
-using ACDCs.Components.Window;
+using WindowView = ACDCs.Views.Window.WindowView;
 
 namespace ACDCs.Components.Menu;
 
@@ -41,7 +41,7 @@ public class MenuFrame : StackLayout
                 MenuFrameList.Add(this);
             }
 
-            List<IMenuItem> menuParts = new();
+            List<Interfaces.IMenuItem> menuParts = new();
             foreach (MenuItemDefinition menuItem in items)
             {
                 if (menuItem.Text != "" && menuItem.IsChecked == "")
@@ -90,10 +90,10 @@ public class MenuFrame : StackLayout
         {
             if (menuButton.MenuFrame != null)
             {
-                double childrenWidth = menuButton.MenuFrame.Children.Max(child => ((IMenuItem)child).ItemWidth);
+                double childrenWidth = menuButton.MenuFrame.Children.Max(child => ((Interfaces.IMenuItem)child).ItemWidth);
                 if (childrenWidth < 100)
                     childrenWidth = 100;
-                double childrenHeight = menuButton.MenuFrame.Children.Sum(child => ((IMenuItem)child).ItemHeight);
+                double childrenHeight = menuButton.MenuFrame.Children.Sum(child => ((Interfaces.IMenuItem)child).ItemHeight);
                 double mainX = Microsoft.Maui.Controls.AbsoluteLayout.GetLayoutBounds(MainContainer).X;
                 double mainY = Microsoft.Maui.Controls.AbsoluteLayout.GetLayoutBounds(MainContainer).Y + Microsoft.Maui.Controls.AbsoluteLayout.GetLayoutBounds(MainContainer).Height;
                 if (WindowFrame != null)

@@ -8,9 +8,9 @@ namespace ACDCs.Views;
 
 public partial class CircuitSheetView : SharpAbsoluteLayout
 {
-    private EditView _editWindow;
-    private ModelSelectionWindowView _modelSelectionWindow;
-    private PropertiesView _propertiesWindow;
+    private EditView? _editWindow;
+    private ModelSelectionWindowView? _modelSelectionWindow;
+    private PropertiesView? _propertiesWindow;
 
     public CircuitSheetView()
     {
@@ -45,8 +45,11 @@ public partial class CircuitSheetView : SharpAbsoluteLayout
 
     private void OnModelSelectionClicked(PropertyEditorView obj)
     {
-        _modelSelectionWindow.SetComponentType(obj.ValueType);
-        _modelSelectionWindow.IsVisible = true;
+        if (_modelSelectionWindow != null)
+        {
+            _modelSelectionWindow.SetComponentType(obj.ValueType);
+            _modelSelectionWindow.IsVisible = true;
+        }
     }
 
     private void OnUpdate()

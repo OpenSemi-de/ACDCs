@@ -6,6 +6,7 @@ using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Scene;
 using ACDCs.CircuitRenderer.Sheet;
 using ACDCs.Components.Circuit;
+using ACDCs.Interfaces;
 using Newtonsoft.Json;
 using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
 
@@ -17,27 +18,16 @@ using Sharp.UI;
 public partial class CircuitView : ContentView, ICircuitViewProperties
 {
     private readonly Workbook _currentWorkbook;
-
     private readonly GraphicsView _graphicsView;
-
     private readonly PanGestureRecognizer _panRecognizer;
-
     private readonly PointerGestureRecognizer _pointerRecognizer;
-
     private readonly TapGestureRecognizer _tapRecognizer;
-
     private Worksheet _currentSheet;
-
-    private Dictionary<string, string> _cursorDebugValues = new();
+    private readonly Dictionary<string, string> _cursorDebugValues = new();
     private Point _cursorPosition;
-
     private PointF _dragStartPosition;
-
     private bool _isDraggingItem;
     private Coordinate? _lastDisplayOffset;
-
-    private bool _multiSelectionMode;
-
     private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions = new();
 
     public Worksheet CurrentWorksheet
@@ -46,9 +36,11 @@ public partial class CircuitView : ContentView, ICircuitViewProperties
         set => _currentSheet = value;
     }
 
+    public ItemsView? ItemsView { get; set; }
+
     public Action? CursorDebugChanged { get; set; }
 
-    public string CursorDebugOutput { get; set; }
+    public string? CursorDebugOutput { get; set; }
 
     public Action<WorksheetItem>? OnSelectedItemChange { get; set; }
     public WorksheetItem? SelectedItem { get; set; }
@@ -58,9 +50,11 @@ public partial class CircuitView : ContentView, ICircuitViewProperties
         get => API.Com<Action<WorksheetItemList, WorksheetItemList>>("ItemList", "SetItems");
     }
 
+    public bool MultiSelectionMode { get; set; }
+
     public CircuitView()
     {
-        _multiSelectionMode = false;
+        MultiSelectionMode = false;
         _currentWorkbook = new Workbook();
         _currentWorkbook.SetBaseFont("Maple Mono");
 
@@ -103,28 +97,6 @@ public partial class CircuitView : ContentView, ICircuitViewProperties
     {
         _currentWorkbook.Sheets.Clear();
         _currentSheet = _currentWorkbook.AddNewSheet();
-    }
-
-    public async Task InsertToPosition(float x, float y, WorksheetItem? newItem)
-    {
-        await API.Call(() =>
-        {
-            if (newItem != null)
-            {
-                newItem.DrawableComponent.Position.X = x;
-                newItem.DrawableComponent.Position.Y = y;
-                newItem.X -= newItem.Width / 2;
-                newItem.Y -= newItem.Height / 2;
-
-                _currentSheet.Items.AddItem(newItem);
-            }
-
-            API.Com<bool>("Items", "IsInserting", false);
-
-            ListSetItems?.Invoke(_currentSheet.Items, _currentSheet.SelectedItems);
-
-            return Task.CompletedTask;
-        });
     }
 
     public async Task InsertToPosition(float x, float y)

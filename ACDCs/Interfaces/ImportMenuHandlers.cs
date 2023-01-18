@@ -1,8 +1,9 @@
-﻿using ACDCs.Data.ACDCs.Components;
+﻿using ACDCs.Components.Menu.MenuHandlers;
+using ACDCs.Components.ModelSelection;
+using ACDCs.Data.ACDCs.Components;
 using ACDCs.IO.DB;
-using ACDCs.Views.ModelSelection;
 
-namespace ACDCs.Components.Menu.MenuHandlers;
+namespace ACDCs.Interfaces;
 
 public class ImportMenuHandlers : MenuHandlerView
 {
@@ -37,8 +38,8 @@ public class ImportMenuHandlers : MenuHandlerView
     {
         await API.Call(() =>
         {
-            DBConnection defaultdb = new("default");
-            List<IElectronicComponent> defaultComponents = defaultdb.Read<IElectronicComponent>("Components");
+            DefaultModelRepository repo = new DefaultModelRepository();
+            var defaultComponents = repo.GetModels();
             ComponentsView.LoadFromSource(defaultComponents);
             return Task.CompletedTask;
         });
@@ -49,7 +50,13 @@ public class ImportMenuHandlers : MenuHandlerView
         DBConnection db = new("default");
         List<IElectronicComponent> newComponents = new();
 
-        List<IElectronicComponent> components = Enumerable.Select<ComponentViewModel, IElectronicComponent>(ComponentsView.dataSource, m => m.Model).ToList();
+        List<IElectronicComponent> components = Enumerable.Select<ComponentViewModel, IElectronicComponent>(ComponentsView.dataSource, m =>
+        {
+            
+                return m.Model;
+            
+
+        }).ToList();
         List<IElectronicComponent> existingComponents = db.Read<IElectronicComponent>("Components");
 
         foreach (IElectronicComponent newComponent in components)

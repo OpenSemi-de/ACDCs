@@ -1,14 +1,14 @@
+﻿using ACDCs.Views;
 using ACDCs.Views.Circuit;
 
-namespace ACDCs.Views.Menu;
+namespace ACDCs.Components.Menu.MenuHandlers;
 
 using Sharp.UI;
 
 [BindableProperties]
-public interface IMenuViewProperties
+public interface IMenuHandlerView
 {
     CircuitView CircuitView { get; set; }
     ComponentsView ComponentsView { get; set; }
-    string MenuFilename { get; set; }
-    AbsoluteLayout PopupTarget { get; set; }
+    Page PopupPage { get; set; }
 }

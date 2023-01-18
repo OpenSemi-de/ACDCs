@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Reflection;
-using ACDCs.Views.ModelSelection;
+using ACDCs.Components.ModelSelection;
 using CommunityToolkit.Maui.Views;
 
 namespace ACDCs.Views;
@@ -25,13 +25,16 @@ public partial class ComponentsDetailPopup : Popup
         Close();
     }
 
-    private Dictionary<string, string> GetParameters(ComponentViewModel model)
+    private Dictionary<string, string?> GetParameters(ComponentViewModel model)
     {
-        Dictionary<string, string> parametersdic = new();
-        object parameterSet = model.Model;
-        foreach (PropertyInfo info in parameterSet.GetType().GetProperties())
+        Dictionary<string, string?> parametersdic = new();
+        object? parameterSet = model.Model;
+        if (parameterSet != null)
         {
-            parametersdic.Add(info.Name, Convert.ToString(info.GetValue(parameterSet)));
+            foreach (PropertyInfo info in parameterSet.GetType().GetProperties())
+            {
+                parametersdic.Add(info.Name, Convert.ToString(info.GetValue(parameterSet)));
+            }
         }
 
         return parametersdic;
@@ -41,9 +44,9 @@ public partial class ComponentsDetailPopup : Popup
     {
         PropertyItem root = new(model.Name) { IsExpanded = true };
 
-        Dictionary<string, string> parameters = GetParameters(model);
+        Dictionary<string, string?> parameters = GetParameters(model);
 
-        foreach (KeyValuePair<string, string> modelParameter in parameters)
+        foreach (KeyValuePair<string, string?> modelParameter in parameters)
         {
             if (modelParameter.Value != "")
             {
@@ -60,16 +63,16 @@ public partial class ComponentsDetailPopup : Popup
 
 public class PropertyItem
 {
-    public virtual IList<PropertyItem> Children { get; set; } = new ObservableCollection<PropertyItem>();
+    public IList<PropertyItem> Children { get; set; } = new ObservableCollection<PropertyItem>();
 
-    public virtual bool IsExpanded { get; set; }
-    public virtual string Name { get; set; } = "";
+    public bool IsExpanded { get; set; }
+    public string? Name { get; set; } = string.Empty;
 
     public PropertyItem()
     {
     }
 
-    public PropertyItem(string name)
+    public PropertyItem(string? name)
     {
         Name = name;
     }

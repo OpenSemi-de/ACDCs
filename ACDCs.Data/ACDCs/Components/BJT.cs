@@ -2,10 +2,10 @@
 
 public class Bjt : BjtModelParameters, IElectronicComponent
 {
-    public string Model { get; set; }
-    public string Name { get; set; }
-    public IComponentRuntimeParameters ParametersRuntime { get; set; }
-    public string Type { get; set; }
+    public string Model { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+    public IComponentRuntimeParameters ParametersRuntime => new BjtRuntimeParameters();
+    public string Type { get; set; } = string.Empty;
 
     public string Value
     {
@@ -61,7 +61,7 @@ public class BjtModelParameters : IComponentParameters
     public double TransitTimeForwardVoltageBc { get; set; }
     public double TransitTimeHighCurrentForward { get; set; }
     public double TransitTimeReverse { get; set; }
-    public string TypeName { get; set; }
+    public string TypeName { get; set; } = string.Empty;
 }
 
 public class BjtRuntimeParameters : IComponentRuntimeParameters

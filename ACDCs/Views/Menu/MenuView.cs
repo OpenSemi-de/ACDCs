@@ -1,4 +1,5 @@
 ﻿using ACDCs.Components.Menu;
+using ACDCs.Interfaces;
 using Microsoft.Maui.Layouts;
 using Newtonsoft.Json;
 
@@ -11,9 +12,9 @@ public partial class MenuView : StackLayout, IMenuViewProperties
 {
     private readonly StackLayout _menuLayout;
 
-    private Label _fileNameLabel;
+    private Label? _fileNameLabel;
 
-    private MenuFrame _menuFrame;
+    private MenuFrame? _menuFrame;
 
     public MenuView()
     {
@@ -37,7 +38,7 @@ public partial class MenuView : StackLayout, IMenuViewProperties
         {
             string jsonData = await API.LoadMauiAssetAsString(menuMainJson);
             List<MenuItemDefinition>? items = JsonConvert.DeserializeObject<List<MenuItemDefinition>>(jsonData);
-            if (items != null) _menuFrame.LoadMenu(items, true);
+            if (items != null) _menuFrame?.LoadMenu(items, true);
         });
     }
 
@@ -77,11 +78,17 @@ public partial class MenuView : StackLayout, IMenuViewProperties
 
     private void Sheet_Loaded(object? sender, EventArgs e)
     {
-        _fileNameLabel.Text = CircuitView?.CurrentWorksheet.Filename;
+        if (_fileNameLabel != null)
+        {
+            _fileNameLabel.Text = CircuitView?.CurrentWorksheet.Filename;
+        }
     }
 
     private void Sheet_Saved(object? sender, EventArgs e)
     {
-        _fileNameLabel.Text = CircuitView?.CurrentWorksheet.Filename;
+        if (_fileNameLabel != null)
+        {
+            _fileNameLabel.Text = CircuitView?.CurrentWorksheet.Filename;
+        }
     }
 }

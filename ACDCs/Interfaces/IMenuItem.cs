@@ -1,4 +1,4 @@
-namespace ACDCs.Components.Menu;
+namespace ACDCs.Interfaces;
 
 public interface IMenuItem
 {

@@ -16,7 +16,7 @@ public sealed class TerminalDrawable : DrawableComponent
         TerminalType = terminalType;
         TerminalText = terminalName != "" ? terminalName : TerminalType.ToString();
         if (TerminalText == "Null")
-            TerminalText = "";
+            TerminalText = string.Empty;
 
         switch (terminalType)
         {

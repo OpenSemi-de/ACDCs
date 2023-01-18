@@ -2,10 +2,10 @@
 
 public class Diode : DiodeParameters, IElectronicComponent
 {
-    public string Model { get; set; }
-    public string Name { get; set; }
+    public string Model { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
     public IComponentRuntimeParameters ParametersRuntime => new DiodeRuntimeParameters();
-    public string Type { get; set; }
+    public string Type { get; set; } = string.Empty;
 
     public string Value
     {

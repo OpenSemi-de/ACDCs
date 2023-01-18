@@ -4,7 +4,7 @@ namespace ACDCs.Components.Menu;
 
 using Sharp.UI;
 
-public class MenuButton : Button, IMenuItem
+public class MenuButton : Button, Interfaces.IMenuItem
 {
     private readonly Action? _clickAction;
     public double ItemHeight { get; set; }

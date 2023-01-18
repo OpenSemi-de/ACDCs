@@ -4,7 +4,7 @@ namespace ACDCs.Components.Menu;
 
 using Sharp.UI;
 
-public class MenuToggle : StackLayout, IMenuItem
+public class MenuToggle : StackLayout, Interfaces.IMenuItem
 {
     private readonly Button _button;
     private readonly CheckBox _checkbox;

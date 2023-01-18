@@ -9,6 +9,7 @@ using CommunityToolkit.Maui.Core.Extensions;
 
 namespace ACDCs.Views.ModelSelection;
 
+using ACDCs.Components.ModelSelection;
 using Sharp.UI;
 
 public class ModelSelectionWindowView : WindowView
@@ -25,7 +26,7 @@ public class ModelSelectionWindowView : WindowView
     private ObservableCollection<ComponentViewModel>? _fullCollection;
     private ComponentViewModel? _lastSelectedItem;
     private IElectronicComponent? _selectedModel;
-    public Action<IElectronicComponent> OnModelSelected { get; set; }
+    public Action<IElectronicComponent>? OnModelSelected { get; set; }
 
     public ModelSelectionWindowView(SharpAbsoluteLayout layout) : base(layout, "Select Model")
     {
@@ -197,7 +198,7 @@ public class ModelSelectionWindowView : WindowView
     {
         if (_selectedModel != null)
         {
-            OnModelSelected(_selectedModel);
+            OnModelSelected?.Invoke(_selectedModel);
             IsVisible = false;
         }
     }
@@ -205,7 +206,7 @@ public class ModelSelectionWindowView : WindowView
     private void SearchTextChanged(object? sender, TextChangedEventArgs e)
     {
         _componentsList.ItemsSource(e.NewTextValue != ""
-            ? _fullCollection?.Where(c => c.Name.ToLower().Contains(e.NewTextValue))
+            ? _fullCollection?.Where(c => c.Name != null && c.Name.ToLower().Contains(e.NewTextValue))
             : _fullCollection);
     }
 

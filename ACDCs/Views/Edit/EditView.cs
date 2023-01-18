@@ -1,8 +1,9 @@
 ﻿using ACDCs.Components;
 using ACDCs.Components.Edit;
 using ACDCs.Components.Menu.MenuHandlers;
+using ACDCs.Interfaces;
 using Microsoft.Maui.Layouts;
-using ACDCs.Components.Window;
+using ACDCs.Views.Window;
 
 namespace ACDCs.Views.Edit;
 

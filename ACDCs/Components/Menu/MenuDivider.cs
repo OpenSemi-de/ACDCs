@@ -2,16 +2,16 @@ namespace ACDCs.Components.Menu;
 
 using Sharp.UI;
 
-public class MenuDivider : Frame, IMenuItem
+public class MenuDivider : Frame, Interfaces.IMenuItem
 {
     public double ItemHeight { get; set; } = 4;
     public double ItemWidth { get; set; }
 
-    public string MenuCommand { get; set; } = "";
+    public string MenuCommand { get; set; } = string.Empty;
 
-    public List<IMenuItem> MenuItems { get; set; } = new();
+    public List<Interfaces.IMenuItem> MenuItems { get; set; } = new();
 
-    public string Text { get; set; } = "";
+    public string Text { get; set; } = string.Empty;
 
     public MenuDivider()
     {

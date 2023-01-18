@@ -69,8 +69,8 @@ public sealed class PathReader
         _width = 0;
         _height = 0;
         svgPath += "Z";
-        string? buffer = "";
-        string? command = "";
+        string? buffer = string.Empty;
+        string? command = string.Empty;
         foreach (char chrBuffer in svgPath)
             if ((chrBuffer > 64 && chrBuffer < 91) ||
                 (chrBuffer > 96 && chrBuffer < 123))
@@ -101,7 +101,7 @@ public sealed class PathReader
                 }
 
                 command = chrBuffer.ToString();
-                buffer = "";
+                buffer = string.Empty;
             }
             else
             {

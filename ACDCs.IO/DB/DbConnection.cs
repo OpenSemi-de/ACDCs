@@ -1,4 +1,4 @@
-﻿using ACDCs.Data.ACDCs.Components;
+﻿using System.Diagnostics.CodeAnalysis;
 using ACDCs.Data.ACDCs.Components.BJT;
 using ACDCs.Data.ACDCs.Components.Diode;
 using ACDCs.Data.ACDCs.Interfaces;
@@ -23,10 +23,7 @@ public class DBConnection
     public List<T> Read<T>(string collectionName)
     {
         using LiteDatabase db = new(_connectionString);
-        if (db.CollectionExists(collectionName))
-            return db.GetCollection<T>(collectionName).FindAll().ToList();
-
-        return new();
+        return db.CollectionExists(collectionName) ? db.GetCollection<T>(collectionName).FindAll().ToList() : new List<T>();
     }
 
     public void Write<T>(List<T> items, string collectionName)
@@ -39,9 +36,10 @@ public class DBConnection
     }
 }
 
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public class DefaultModelRepository
 {
-    private DBConnection _connection;
+    private readonly DBConnection _connection;
 
     public DefaultModelRepository()
     {
@@ -52,18 +50,20 @@ public class DefaultModelRepository
     {
         List<IElectronicComponent> models = new();
 
-        if (type.ToLower() == "pnp" || type.ToLower() == "npn")
+        switch (type.ToLower())
         {
-            models = GetModels()
-                .Where(c => (c is Bjt bjt) && bjt.TypeName == type.ToLower())
-                .ToList();
-        }
+            case "pnp":
+            case "npn":
+                models = GetModels()
+                    .Where(c => c is Bjt bjt && bjt.TypeName == type.ToLower())
+                    .ToList();
+                break;
 
-        if (type.ToLower() == "diode")
-        {
-            models = GetModels()
-                .Where(c => (c is Diode))
-                .ToList();
+            case "diode":
+                models = GetModels()
+                    .Where(c => c is Diode)
+                    .ToList();
+                break;
         }
 
         return models.Cast<T>().ToList();

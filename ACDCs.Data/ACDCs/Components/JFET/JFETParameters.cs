@@ -1,7 +1,9 @@
-﻿using ACDCs.Data.ACDCs.Interfaces;
+﻿using System.Diagnostics.CodeAnalysis;
+using ACDCs.Data.ACDCs.Interfaces;
 
 namespace ACDCs.Data.ACDCs.Components.JFET;
 
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public class JFETParameters : IComponentParameters
 {
     public double B { get; set; }

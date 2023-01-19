@@ -1,7 +1,9 @@
-﻿using ACDCs.Data.ACDCs.Interfaces;
+﻿using System.Diagnostics.CodeAnalysis;
+using ACDCs.Data.ACDCs.Interfaces;
 
 namespace ACDCs.Data.ACDCs.Components.Diode;
 
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public class DiodeParameters : IComponentParameters
 {
     public double ActivationEnergy { get; set; }

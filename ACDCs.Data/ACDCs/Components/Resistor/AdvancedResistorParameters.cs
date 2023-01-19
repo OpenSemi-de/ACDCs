@@ -1,5 +1,8 @@
-﻿namespace ACDCs.Data.ACDCs.Components.Resistor;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace ACDCs.Data.ACDCs.Components.Resistor;
+
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public class AdvancedResistorParameters
 {
     public double Multiplicator { get; set; }

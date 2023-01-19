@@ -8,56 +8,49 @@ public static class ResistorCalculator
 
     public static List<Resistor> GetAllValues()
     {
-        if (s_resistors == null)
+        if (s_resistors != null)
         {
-            List<Resistor> resistors = new();
-            foreach (string resistorSeries in Enum.GetNames(typeof(ResistorSeries)))
+            return s_resistors;
+        }
+
+        List<Resistor> resistors = new();
+        foreach (string resistorSeries in Enum.GetNames(typeof(ResistorSeries)))
+        {
+            ResistorSeries series = Enum.Parse<ResistorSeries>(resistorSeries);
+            foreach (double baseValue in s_values[series])
             {
-                ResistorSeries series = Enum.Parse<ResistorSeries>(resistorSeries);
-                foreach (double baseValue in s_values[series])
+                foreach (double tolerance in s_tolerance[series])
                 {
-                    foreach (double tolerance in s_tolerance[series])
+                    for (double multiplicator = 1d; multiplicator < 1000000000; multiplicator *= 10)
                     {
-                        for (double multiplicator = 1d; multiplicator < 1000000000; multiplicator *= 10)
+                        double value = baseValue * multiplicator;
+                        Resistor resistor = new()
                         {
-                            double value = baseValue * multiplicator;
-                            Resistor resistor = new()
-                            {
-                                Name = $"{GetStringValue(value)}/{series}/{tolerance}%",
-                                Series = series,
-                                Multiplicator = multiplicator,
-                                Tolerance = tolerance,
-                                Value = Convert.ToString(value),
-                            };
-                            resistors.Add(resistor);
-                        }
+                            Name = $"{GetStringValue(value)}/{series}/{tolerance}%",
+                            Series = series,
+                            Multiplicator = multiplicator,
+                            Tolerance = tolerance,
+                            Value = Convert.ToString(value)
+                        };
+                        resistors.Add(resistor);
                     }
                 }
             }
-
-            s_resistors = resistors;
         }
+
+        s_resistors = resistors;
 
         return s_resistors;
     }
 
     public static string GetStringValue(double value)
     {
-        if (value >= 1000000000)
+        return value switch
         {
-            return value / 1000000000 + "G";
-        }
-
-        if (value >= 1000000)
-        {
-            return value / 1000000 + "M";
-        }
-
-        if (value >= 1000)
-        {
-            return value / 1000 + "K";
-        }
-
-        return Convert.ToString(value);
+            >= 1000000000 => value / 1000000000 + "G",
+            >= 1000000 => value / 1000000 + "M",
+            >= 1000 => value / 1000 + "K",
+            _ => Convert.ToString(value)
+        };
     }
 }

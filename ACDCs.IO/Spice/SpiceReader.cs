@@ -1,4 +1,4 @@
-﻿using ACDCs.Data.ACDCs.Components;
+﻿using System.Diagnostics.CodeAnalysis;
 using ACDCs.Data.ACDCs.Components.BJT;
 using ACDCs.Data.ACDCs.Interfaces;
 using AutoMapper;
@@ -13,21 +13,16 @@ using Resistor = ACDCs.Data.ACDCs.Components.Resistor.Resistor;
 
 namespace ACDCs.IO.Spice;
 
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public class SpiceReader
 {
-    private Mapper _mapper;
-    private IEnumerable<Profile> _profiles;
+    private readonly Mapper _mapper;
     public List<ValidationEntry>? Errors { get; set; }
 
     public bool HasErrors { get; set; }
 
     public SpiceReader()
     {
-        _profiles = new List<Profile>()
-        {
-            new MapperConfigurationExpression()
-        };
-
         IConfigurationProvider configuration =
             new MapperConfiguration(configure =>
             {

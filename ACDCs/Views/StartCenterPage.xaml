@@ -5,7 +5,6 @@
              xmlns:components="clr-namespace:ACDCs.Components"
              xmlns:window="clr-namespace:ACDCs.Components.Window"
              x:Class="ACDCs.Views.StartCenterPage"
-             x:Name="Page"
              Title="Main">
     <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
         <Grid.ColumnDefinitions>

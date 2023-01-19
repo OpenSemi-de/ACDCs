@@ -4,18 +4,18 @@ public class ResistorValues : Dictionary<ResistorSeries, List<double>>
 {
     public ResistorValues()
     {
-        Add(ResistorSeries.E6, new List<double>()
+        Add(ResistorSeries.E6, new List<double>
         {
             10, 15, 22, 33, 47, 68
         });
 
-        Add(ResistorSeries.E12, new List<double>()
+        Add(ResistorSeries.E12, new List<double>
         {
             10, 12, 15, 18, 22, 27,
             33, 39, 47, 56, 68, 82
         });
 
-        Add(ResistorSeries.E24, new List<double>()
+        Add(ResistorSeries.E24, new List<double>
         {
             10, 11, 12, 13, 15, 16,
             18, 20, 22, 24, 27, 30,
@@ -23,7 +23,7 @@ public class ResistorValues : Dictionary<ResistorSeries, List<double>>
             56, 62, 68, 75, 82, 91
         });
 
-        Add(ResistorSeries.E48, new List<double>()
+        Add(ResistorSeries.E48, new List<double>
         {
             100, 105, 110, 115, 121, 127,
             133, 140, 147, 154, 162, 169,
@@ -35,7 +35,7 @@ public class ResistorValues : Dictionary<ResistorSeries, List<double>>
             750, 787, 825, 866, 909, 953
         });
 
-        Add(ResistorSeries.E96, new List<double>()
+        Add(ResistorSeries.E96, new List<double>
         {
             100, 102, 105, 107, 110, 113,
             115, 118, 121, 124, 127, 130,
@@ -55,7 +55,7 @@ public class ResistorValues : Dictionary<ResistorSeries, List<double>>
             866, 887, 909, 931, 953, 976
         });
 
-        Add(ResistorSeries.E192, new List<double>()
+        Add(ResistorSeries.E192, new List<double>
         {
             100, 101, 102, 104, 105, 106, 107, 109, 110, 111, 113, 114,
             115, 117, 118, 120, 121, 123, 124, 126, 127, 129, 130, 132,

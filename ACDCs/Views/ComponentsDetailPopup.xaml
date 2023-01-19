@@ -15,7 +15,7 @@
                     <controls:TreeView x:Name="propertiesTreeView">
                     </controls:TreeView>
                 </ScrollView>
-                <Button Text="Back" x:Name="closeButton" Clicked="CloseButton_OnClicked"></Button>
+                <Button Text="Back" Clicked="CloseButton_OnClicked"></Button>
             </StackLayout>
         </Frame>
     </toolkit:Popup.Content>

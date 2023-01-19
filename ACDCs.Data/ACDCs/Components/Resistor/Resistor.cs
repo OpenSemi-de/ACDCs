@@ -1,7 +1,9 @@
-﻿using ACDCs.Data.ACDCs.Interfaces;
+﻿using System.Diagnostics.CodeAnalysis;
+using ACDCs.Data.ACDCs.Interfaces;
 
 namespace ACDCs.Data.ACDCs.Components.Resistor;
 
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public class Resistor : ResistorParameters, IElectronicComponent
 {
     private string _value = string.Empty;

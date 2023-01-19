@@ -14,19 +14,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACDCs.Web", "ACDCs.Web\ACDC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACDCs", "ACDCs\ACDCs.csproj", "{E84948D4-39A1-45FD-AB2E-7C8361EA17CB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{B4ACA9EB-8DB3-4B88-BD1E-71D98C71741E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACDCs.Data", "ACDCs.Data\ACDCs.Data.csproj", "{9A16BB21-FE55-470D-90D6-B2938425D6D6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACDCs.IO", "ACDCs.IO\ACDCs.IO.csproj", "{672C623E-3ABC-4983-85FB-C72AE8E1ADFE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpiceSharp", "libs\SpiceSharp\SpiceSharp\SpiceSharp.csproj", "{5817A30A-822C-4188-8EA7-3507F9115D70}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpiceSharpParser", "libs\SpiceSharpParser\src\SpiceSharpParser\SpiceSharpParser.csproj", "{DF3DD787-71CC-4C89-9E33-DC4536A52278}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpiceSharpGenerator", "libs\SpiceSharp\SpiceSharpGenerator\SpiceSharpGenerator.csproj", "{660EFDA4-2A3A-42D7-9165-9AB22832E154}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpiceSharpBehavioral", "libs\SpiceSharpBehavioral\SpiceSharpBehavioral\SpiceSharpBehavioral.csproj", "{A620DAA0-1F9B-413A-B853-7767AD81E0C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,31 +46,9 @@ Global
 		{672C623E-3ABC-4983-85FB-C72AE8E1ADFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{672C623E-3ABC-4983-85FB-C72AE8E1ADFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{672C623E-3ABC-4983-85FB-C72AE8E1ADFE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5817A30A-822C-4188-8EA7-3507F9115D70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5817A30A-822C-4188-8EA7-3507F9115D70}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5817A30A-822C-4188-8EA7-3507F9115D70}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5817A30A-822C-4188-8EA7-3507F9115D70}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DF3DD787-71CC-4C89-9E33-DC4536A52278}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF3DD787-71CC-4C89-9E33-DC4536A52278}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF3DD787-71CC-4C89-9E33-DC4536A52278}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF3DD787-71CC-4C89-9E33-DC4536A52278}.Release|Any CPU.Build.0 = Release|Any CPU
-		{660EFDA4-2A3A-42D7-9165-9AB22832E154}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{660EFDA4-2A3A-42D7-9165-9AB22832E154}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{660EFDA4-2A3A-42D7-9165-9AB22832E154}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{660EFDA4-2A3A-42D7-9165-9AB22832E154}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A620DAA0-1F9B-413A-B853-7767AD81E0C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A620DAA0-1F9B-413A-B853-7767AD81E0C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A620DAA0-1F9B-413A-B853-7767AD81E0C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A620DAA0-1F9B-413A-B853-7767AD81E0C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{5817A30A-822C-4188-8EA7-3507F9115D70} = {B4ACA9EB-8DB3-4B88-BD1E-71D98C71741E}
-		{DF3DD787-71CC-4C89-9E33-DC4536A52278} = {B4ACA9EB-8DB3-4B88-BD1E-71D98C71741E}
-		{660EFDA4-2A3A-42D7-9165-9AB22832E154} = {B4ACA9EB-8DB3-4B88-BD1E-71D98C71741E}
-		{A620DAA0-1F9B-413A-B853-7767AD81E0C1} = {B4ACA9EB-8DB3-4B88-BD1E-71D98C71741E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}

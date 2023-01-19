@@ -1,6 +1,5 @@
 ﻿using ACDCs.Components;
 using ACDCs.Views.Window;
-using CSScriptLib;
 using Microsoft.Maui.Layouts;
 using UraniumUI.Material.Controls;
 
@@ -60,7 +59,7 @@ public class DebugWindow : WindowView
     private void ButtonOnClicked(object? sender, EventArgs e)
     {
         try
-        {
+        {/*
             dynamic script = CSScript.Evaluator
                 .LoadCode(@$"
 using ACDCs;
@@ -89,6 +88,7 @@ try{{
 ");
 
             script.Execute(this);
+        */
         }
         catch (Exception exception)
         {

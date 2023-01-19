@@ -26,4 +26,8 @@
 	  <None Remove="Platforms\**" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="ACDCs\Interfaces\" />
+	</ItemGroup>
+
 </Project>

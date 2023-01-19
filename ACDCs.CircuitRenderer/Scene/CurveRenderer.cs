@@ -8,7 +8,7 @@ public class CurveRenderer : IRenderer, IRenderer<CurveInstruction>
 {
     public void Render(ICanvas canvas, RenderInstruction renderInstruction, CurveInstruction curve)
     {
-        DrawableScene.SetStrokeColor(canvas, curve.StrokeColor);
+        DrawableScene.SetStrokeColor(canvas, renderInstruction.ForegroundColor ?? curve.StrokeColor);
 
         float startX = DrawableScene.GetScale(renderInstruction.DrawSize.X, curve.Position.X);
         float startY = DrawableScene.GetScale(renderInstruction.DrawSize.Y, curve.Position.Y);

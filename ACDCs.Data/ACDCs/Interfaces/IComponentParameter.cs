@@ -1,4 +1,4 @@
-﻿namespace ACDCs.Data.ACDCs.Components;
+﻿namespace ACDCs.Data.ACDCs.Interfaces;
 
 public interface IComponentParameters
 {

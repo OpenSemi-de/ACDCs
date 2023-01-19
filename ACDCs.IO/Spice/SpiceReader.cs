@@ -1,12 +1,14 @@
 ﻿using ACDCs.Data.ACDCs.Components;
+using ACDCs.Data.ACDCs.Components.BJT;
+using ACDCs.Data.ACDCs.Interfaces;
 using AutoMapper;
 using SpiceSharp.Components;
 using SpiceSharp.Entities;
 using SpiceSharpParser;
 using SpiceSharpParser.Common.Validation;
 using SpiceSharpParser.ModelReaders.Netlist.Spice;
-using Capacitor = ACDCs.Data.ACDCs.Components.Capacitor;
-using Diode = ACDCs.Data.ACDCs.Components.Diode;
+using Capacitor = ACDCs.Data.ACDCs.Components.Capacitor.Capacitor;
+using Diode = ACDCs.Data.ACDCs.Components.Diode.Diode;
 using Resistor = ACDCs.Data.ACDCs.Components.Resistor.Resistor;
 
 namespace ACDCs.IO.Spice;

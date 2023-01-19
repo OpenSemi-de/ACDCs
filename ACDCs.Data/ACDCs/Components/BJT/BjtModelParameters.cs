@@ -1,18 +1,6 @@
-﻿namespace ACDCs.Data.ACDCs.Components;
+﻿using ACDCs.Data.ACDCs.Interfaces;
 
-public class Bjt : BjtModelParameters, IElectronicComponent
-{
-    public string Model { get; set; } = string.Empty;
-    public string Name { get; set; } = string.Empty;
-    public IComponentRuntimeParameters ParametersRuntime => new BjtRuntimeParameters();
-    public string Type { get; set; } = string.Empty;
-
-    public string Value
-    {
-        get => Name;
-        set => Name = value;
-    }
-}
+namespace ACDCs.Data.ACDCs.Components.BJT;
 
 public class BjtModelParameters : IComponentParameters
 {
@@ -62,15 +50,4 @@ public class BjtModelParameters : IComponentParameters
     public double TransitTimeHighCurrentForward { get; set; }
     public double TransitTimeReverse { get; set; }
     public string TypeName { get; set; } = string.Empty;
-}
-
-public class BjtRuntimeParameters : IComponentRuntimeParameters
-{
-    public double Area { get; set; }
-    public double InitialVoltageBe { get; set; }
-    public double InitialVoltageCe { get; set; }
-    public bool Off { get; set; }
-    public double ParallelMultiplier { get; set; }
-    public double Temperature { get; set; }
-    public double TemperatureCelsius { get; set; }
 }

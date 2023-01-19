@@ -48,7 +48,6 @@ public partial class ItemsView : StackLayout, IItemsViewProperties
             .Content(_layout);
 
         Add(_scroll);
-
         Loaded += OnLoaded;
     }
 
@@ -69,9 +68,11 @@ public partial class ItemsView : StackLayout, IItemsViewProperties
         });
     }
 
-    public async Task SetupView()
+    public void SetupView()
     {
-        await API.Call(() =>
+#pragma warning disable CS4014
+        API.Call(() =>
+#pragma warning restore CS4014
         {
             BackgroundColor = BackgroundColor?.WithAlpha(0.5f);
 
@@ -91,7 +92,8 @@ public partial class ItemsView : StackLayout, IItemsViewProperties
                     }
 
                     object? instance = Activator.CreateInstance(type);
-                    bool isInsertable = (bool)(isInsertableProp.GetValue(instance, BindingFlags.Instance, null, null, null) ?? false);
+                    bool isInsertable =
+                        (bool)(isInsertableProp.GetValue(instance, BindingFlags.Instance, null, null, null) ?? false);
 
                     if (!isInsertable)
                     {
@@ -111,7 +113,9 @@ public partial class ItemsView : StackLayout, IItemsViewProperties
                 }
                 catch (Exception exception)
                 {
-                    API.PopupException(exception).Wait();
+#pragma warning disable CS4014
+                    API.PopupException(exception);
+#pragma warning restore CS4014
                 }
             }
 
@@ -191,9 +195,9 @@ public partial class ItemsView : StackLayout, IItemsViewProperties
         }).Wait();
     }
 
-    private async void OnLoaded(object? sender, EventArgs e)
+    private void OnLoaded(object? sender, EventArgs e)
     {
-        await SetupView();
+        SetupView();
     }
 
     private async Task SelectButton(ItemButton selectedButton)

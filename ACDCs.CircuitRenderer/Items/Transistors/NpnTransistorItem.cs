@@ -1,5 +1,6 @@
 ﻿using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.Data.ACDCs.Components;
+using ACDCs.Data.ACDCs.Components.BJT;
 
 namespace ACDCs.CircuitRenderer.Items.Transistors;
 

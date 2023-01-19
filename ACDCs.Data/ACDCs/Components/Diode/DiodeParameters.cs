@@ -1,17 +1,6 @@
-﻿namespace ACDCs.Data.ACDCs.Components;
+﻿using ACDCs.Data.ACDCs.Interfaces;
 
-public class Diode : DiodeParameters, IElectronicComponent
-{
-    public string Model { get; set; } = string.Empty;
-    public string Name { get; set; } = string.Empty;
-    public IComponentRuntimeParameters ParametersRuntime => new DiodeRuntimeParameters();
-    public string Type { get; set; } = string.Empty;
-
-    public string Value
-    {
-        get => Name; set => Name = value;
-    }
-}
+namespace ACDCs.Data.ACDCs.Components.Diode;
 
 public class DiodeParameters : IComponentParameters
 {
@@ -31,15 +20,4 @@ public class DiodeParameters : IComponentParameters
     public double SaturationCurrent { get; set; }
     public double SaturationCurrentExp { get; set; }
     public double TransitTime { get; set; }
-}
-
-public class DiodeRuntimeParameters : IComponentRuntimeParameters
-{
-    public double Area { get; set; }
-    public double InitCond { get; set; }
-    public bool Off { get; set; }
-    public double ParallelMultiplier { get; set; }
-    public double SeriesMultiplier { get; set; }
-    public double Temperature { get; set; }
-    public double TemperatureCelsius { get; set; }
 }

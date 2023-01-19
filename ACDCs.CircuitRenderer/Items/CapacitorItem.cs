@@ -1,5 +1,6 @@
 ﻿using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.Data.ACDCs.Components;
+using ACDCs.Data.ACDCs.Components.Capacitor;
 
 namespace ACDCs.CircuitRenderer.Items;
 

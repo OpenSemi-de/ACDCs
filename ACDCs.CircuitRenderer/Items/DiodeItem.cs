@@ -1,5 +1,5 @@
 ﻿using ACDCs.CircuitRenderer.Drawables;
-using ACDCs.Data.ACDCs.Components;
+using ACDCs.Data.ACDCs.Components.Diode;
 
 namespace ACDCs.CircuitRenderer.Items;
 

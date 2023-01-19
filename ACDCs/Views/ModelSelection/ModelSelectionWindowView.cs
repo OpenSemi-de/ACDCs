@@ -1,7 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using ACDCs.Components;
 using ACDCs.Data.ACDCs.Components;
+using ACDCs.Data.ACDCs.Components.BJT;
+using ACDCs.Data.ACDCs.Components.Diode;
 using ACDCs.Data.ACDCs.Components.Resistor;
+using ACDCs.Data.ACDCs.Interfaces;
 using ACDCs.IO.DB;
 using ACDCs.Services;
 using ACDCs.Views.Window;
@@ -133,12 +136,17 @@ public class ModelSelectionWindowView : WindowView
 
     private static string SourceName(IElectronicComponent c)
     {
-        if (c is Resistor)
+        if (c is Resistor && double.TryParse(c.Value, out double resValue))
         {
-            return ResistorCalculator.GetStringValue(c.Value);
+            return ResistorCalculator.GetStringValue(resValue);
         }
 
         return c.Name != "" ? c.Name : c.Value;
+    }
+
+    private static string SourceType(IElectronicComponent model)
+    {
+        return model.Type != "" ? model.Type : model is Bjt bjt ? bjt.TypeName : "";
     }
 
     private void CancelButton_Clicked(object? sender, EventArgs e)
@@ -154,6 +162,7 @@ public class ModelSelectionWindowView : WindowView
         }
 
         SetItemBackground(selectedItem);
+
         if (_componentsList.ItemsSource is ObservableCollection<ComponentViewModel> model)
         {
             model.Move(0, 0);
@@ -174,13 +183,11 @@ public class ModelSelectionWindowView : WindowView
                     {
                         List<Bjt> bjts = repository.GetModels<Bjt>(type.ToLower());
                         SetItemSource(bjts);
-
                         return Task.CompletedTask;
                     }
                 case "Resistor":
                     {
                         List<Resistor> resistors = repository.GetModels<Resistor>(type.ToLower());
-
                         SetItemSource(resistors.Union(ResistorCalculator.GetAllValues()));
                         return Task.CompletedTask;
                     }
@@ -245,8 +252,7 @@ public class ModelSelectionWindowView : WindowView
         {
             Model = c,
             Name = SourceName(c),
-            Type = c.Type != "" ? c.Type :
-                   c is Bjt bjt ? bjt.TypeName : "",
+            Type = SourceType(c),
             Value = SourceDescription(c)
         }).ToObservableCollection();
 

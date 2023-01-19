@@ -1,4 +1,6 @@
-﻿namespace ACDCs.Data.ACDCs.Components.Resistor;
+﻿using ACDCs.Data.ACDCs.Interfaces;
+
+namespace ACDCs.Data.ACDCs.Components.Resistor;
 
 public class Resistor : ResistorParameters, IElectronicComponent
 {

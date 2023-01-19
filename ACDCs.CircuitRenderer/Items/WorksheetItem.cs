@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.CircuitRenderer.Interfaces;
-using ACDCs.Data.ACDCs.Components;
+using ACDCs.Data.ACDCs.Interfaces;
 using Newtonsoft.Json;
 
 namespace ACDCs.CircuitRenderer.Items;

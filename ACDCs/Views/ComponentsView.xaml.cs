@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
 using ACDCs.Components;
 using ACDCs.Data.ACDCs.Components;
+using ACDCs.Data.ACDCs.Components.BJT;
+using ACDCs.Data.ACDCs.Interfaces;
 using ACDCs.IO.Spice;
 using CommunityToolkit.Maui.Views;
 

@@ -2,6 +2,7 @@
 
 namespace ACDCs.CircuitRenderer.Items.Sources;
 
+// ReSharper disable once UnusedMember.Global
 public class VoltageSourceItem : SourceItem
 {
     public override string DefaultValue => "5v";

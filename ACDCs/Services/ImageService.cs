@@ -57,9 +57,11 @@ public static class ImageService
             ImageSource? source = ImageSource.FromStream(() => ms);
             return source;
         }
-        catch (Exception e)
+        catch
         {
+            // ignored
         }
+
         return null;
     }
 
@@ -99,8 +101,9 @@ public static class ImageService
             ImageSource? source = ImageSource.FromStream(() => ms);
             return source;
         }
-        catch (Exception e)
+        catch
         {
+            // ignored
         }
 
         return null;
@@ -142,8 +145,9 @@ public static class ImageService
             ImageSource? source = ImageSource.FromStream(() => ms);
             return source;
         }
-        catch (Exception e)
+        catch
         {
+            // ignored
         }
 
         return null;

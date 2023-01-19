@@ -4,7 +4,7 @@ using Microsoft.Maui.Graphics;
 
 namespace ACDCs.CircuitRenderer.Scene;
 
-public class PathRenderer : IRenderer, IRenderer<PathInstruction>
+public sealed class PathRenderer : IRenderer, IRenderer<PathInstruction>
 {
     public void Render(ICanvas canvas, RenderInstruction renderInstruction, PathInstruction path) => s_Render(canvas, renderInstruction, path);
 

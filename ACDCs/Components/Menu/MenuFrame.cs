@@ -1,3 +1,4 @@
+using ACDCs.Services;
 using ACDCs.Views.Window;
 
 namespace ACDCs.Components.Menu;
@@ -15,6 +16,7 @@ public class MenuFrame : StackLayout
 
     public MenuFrame()
     {
+        BackgroundColor = ColorService.BackgroundHigh;
         HorizontalOptions = LayoutOptions.Fill;
         VerticalOptions = LayoutOptions.Fill;
         Orientation = StackOrientation.Horizontal;
@@ -98,10 +100,6 @@ public class MenuFrame : StackLayout
             return;
         }
 
-        double childrenWidth = menuButton.MenuFrame.Children.Max(child => ((IMenuComponent)child).ItemWidth);
-        if (childrenWidth < 100)
-            childrenWidth = 100;
-        double childrenHeight = menuButton.MenuFrame.Children.Sum(child => ((IMenuComponent)child).ItemHeight);
         double mainX = Microsoft.Maui.Controls.AbsoluteLayout.GetLayoutBounds(MainContainer).X;
         double mainY = Microsoft.Maui.Controls.AbsoluteLayout.GetLayoutBounds(MainContainer).Y + Microsoft.Maui.Controls.AbsoluteLayout.GetLayoutBounds(MainContainer).Height;
         if (WindowFrame != null)
@@ -112,7 +110,7 @@ public class MenuFrame : StackLayout
         }
 
         Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(menuButton.MenuFrame,
-            new Rect(menuButton.X + mainX, mainY, childrenWidth + 2, childrenHeight));
+                    new Rect(menuButton.X + mainX, mainY, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
     }
 
     private static void App_Reset(object sender, ResetEventArgs args)

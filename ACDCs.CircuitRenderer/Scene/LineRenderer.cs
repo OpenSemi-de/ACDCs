@@ -5,7 +5,7 @@ using Microsoft.Maui.Graphics;
 
 namespace ACDCs.CircuitRenderer.Scene;
 
-public class LineRenderer : IRenderer<LineInstruction>, IRenderer
+public sealed class LineRenderer : IRenderer<LineInstruction>, IRenderer
 {
     public void Render(ICanvas canvas, RenderInstruction renderInstruction, LineInstruction line) => s_Render(canvas, renderInstruction, line);
 

@@ -5,7 +5,7 @@ using Microsoft.Maui.Graphics;
 
 namespace ACDCs.CircuitRenderer.Scene
 {
-    public class CircleRenderer : IRenderer, IRenderer<CircleInstruction>
+    public sealed class CircleRenderer : IRenderer, IRenderer<CircleInstruction>
     {
         public void Render(ICanvas canvas, RenderInstruction renderInstruction, CircleInstruction circle) => s_Render(canvas, renderInstruction, circle);
 

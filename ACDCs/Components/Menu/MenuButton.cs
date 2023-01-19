@@ -9,20 +9,26 @@ public class MenuButton : Button, IMenuComponent
 {
     private readonly Action? _clickAction;
     public double ItemHeight { get; set; } = 36;
-    public double ItemWidth { get; set; } = 84;
+    public double ItemWidth { get; set; } = 104;
     public string MenuCommand { get; set; }
     public MenuFrame? MenuFrame { get; set; }
 
     public MenuButton(string text, string menuCommand, Action? clickAction = null)
     {
         _clickAction = clickAction;
+        BackgroundColor = ColorService.Foreground;
+        TextColor = ColorService.Text;
+        BorderColor = Colors.Transparent;
+
         Text = text;
         MenuCommand = menuCommand;
         Clicked += clickAction != null ? ClickAction_Click : MenuButton_Clicked;
-        Padding = new Thickness(2, 2, 2, 2);
-        Margin = new Thickness(2, 2, 2, 2);
-        MinimumWidthRequest = 80;
+        Padding = 0;
+        Margin = 1;
+        CornerRadius = 1;
+        WidthRequest = 100;
         MinimumHeightRequest = 32;
+        HorizontalOptions = LayoutOptions.Fill;
     }
 
     private void ClickAction_Click(object? sender, EventArgs e)

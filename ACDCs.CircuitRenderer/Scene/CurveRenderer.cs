@@ -4,9 +4,11 @@ using Microsoft.Maui.Graphics;
 
 namespace ACDCs.CircuitRenderer.Scene;
 
-public class CurveRenderer : IRenderer, IRenderer<CurveInstruction>
+public sealed class CurveRenderer : IRenderer, IRenderer<CurveInstruction>
 {
-    public void Render(ICanvas canvas, RenderInstruction renderInstruction, CurveInstruction curve)
+    public void Render(ICanvas canvas, RenderInstruction renderInstruction, CurveInstruction curve) => s_Render(canvas, renderInstruction, curve);
+
+    private static void s_Render(ICanvas canvas, RenderInstruction renderInstruction, CurveInstruction curve)
     {
         DrawableScene.SetStrokeColor(canvas, renderInstruction.ForegroundColor ?? curve.StrokeColor);
 

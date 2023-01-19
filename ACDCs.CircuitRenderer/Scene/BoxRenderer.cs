@@ -5,9 +5,11 @@ using Microsoft.Maui.Graphics;
 
 namespace ACDCs.CircuitRenderer.Scene;
 
-public class BoxRenderer : IRenderer, IRenderer<BoxInstruction>
+public sealed class BoxRenderer : IRenderer, IRenderer<BoxInstruction>
 {
-    public void Render(ICanvas canvas, RenderInstruction renderInstruction, BoxInstruction box)
+    public void Render(ICanvas canvas, RenderInstruction renderInstruction, BoxInstruction box) => s_Render(canvas, renderInstruction, box);
+
+    private static void s_Render(ICanvas canvas, RenderInstruction renderInstruction, BoxInstruction box)
     {
         Coordinate upperLeft = new(box.Position);
         Coordinate lowerRight = new(box.Size);

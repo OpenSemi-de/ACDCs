@@ -8,8 +8,8 @@ using Sharp.UI;
 public class MenuButton : Button, IMenuComponent
 {
     private readonly Action? _clickAction;
-    public double ItemHeight { get; set; }
-    public double ItemWidth { get; set; }
+    public double ItemHeight { get; set; } = 36;
+    public double ItemWidth { get; set; } = 84;
     public string MenuCommand { get; set; }
     public MenuFrame? MenuFrame { get; set; }
 
@@ -21,9 +21,8 @@ public class MenuButton : Button, IMenuComponent
         Clicked += clickAction != null ? ClickAction_Click : MenuButton_Clicked;
         Padding = new Thickness(2, 2, 2, 2);
         Margin = new Thickness(2, 2, 2, 2);
-        WidthRequest = 100;
+        MinimumWidthRequest = 80;
         MinimumHeightRequest = 32;
-        ItemHeight = MinimumHeightRequest + Margin.Top + Margin.Bottom;
     }
 
     private void ClickAction_Click(object? sender, EventArgs e)

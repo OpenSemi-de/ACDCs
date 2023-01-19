@@ -30,6 +30,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
     private readonly ContentView _windowContentView;
     private bool _isActive;
     private Rect _lastBounds = Rect.Zero;
+
     public SharpAbsoluteLayout MainContainer { get; set; }
     public Func<bool>? OnClose { get; set; }
     public WindowState State { get; set; } = WindowState.Standard;
@@ -70,7 +71,9 @@ public partial class WindowView : ContentView, IWindowViewProperties
         _menuButton = new MenuButton("*", "")
             .HeightRequest(32)
             .WidthRequest(32)
-            .FontSize(30)
+            .FontSize(10)
+            .Padding(0)
+            .BackgroundColor(ColorService.Foreground)
             .Margin(new Thickness(2, 4, 0, 0));
 
         SetRowAndColumn(_menuButton, 0, 0);
@@ -111,8 +114,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
 
         _resizeField.GestureRecognizers.Add(resizeRecognizer);
 
-        _menuFrame = new MenuFrame();
-        List<MenuItemDefinition> menuItems = new()
+        var menuItems = new List<MenuItemDefinition>
         {
             new MenuItemDefinition
             {
@@ -140,8 +142,13 @@ public partial class WindowView : ContentView, IWindowViewProperties
             }
         };
 
-        _menuFrame.MainContainer = MainContainer;
-        _menuFrame.WindowFrame = this;
+        _menuFrame = new MenuFrame
+        {
+            BackgroundColor = ColorService.Background,
+            HeightRequest = 54,
+            MainContainer = MainContainer,
+            WindowFrame = this
+        };
         _menuFrame.LoadMenu(menuItems);
         _menuButton.MenuFrame = _menuFrame;
 

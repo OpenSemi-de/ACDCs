@@ -33,6 +33,7 @@ public class MenuToggle : StackLayout, IMenuComponent
 
         _button = new Button()
             .Text(text)
+            .TextColor(ColorService.Text)
             .HorizontalOptions(LayoutOptions.Start)
             .BackgroundColor(Colors.Transparent)
             .BorderColor(Colors.Transparent);

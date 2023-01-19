@@ -1,10 +1,10 @@
+using ACDCs.Interfaces;
 using ACDCs.Services;
 using ACDCs.Views.Window;
 
 namespace ACDCs.Components.Menu;
 
 using Sharp.UI;
-using IMenuComponent = Interfaces.IMenuComponent;
 
 public class MenuFrame : StackLayout
 {

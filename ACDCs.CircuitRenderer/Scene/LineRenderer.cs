@@ -7,12 +7,15 @@ namespace ACDCs.CircuitRenderer.Scene;
 
 public class LineRenderer : IRenderer<LineInstruction>, IRenderer
 {
-    public void Render(ICanvas canvas, RenderInstruction renderInstruction, LineInstruction line)
+    public void Render(ICanvas canvas, RenderInstruction renderInstruction, LineInstruction line) => s_Render(canvas, renderInstruction, line);
+
+    private static void s_Render(ICanvas canvas, RenderInstruction renderInstruction, LineInstruction line)
     {
         canvas.SaveState();
 
         Coordinate centerPos = new(line.Position);
-        DrawableScene.SetStrokeColor(canvas, Equals(line.StrokeColor?.ToMauiColor(), Colors.Black) ? renderInstruction.ForegroundColor : line.StrokeColor);
+        DrawableScene.SetStrokeColor(canvas,
+            Equals(line.StrokeColor?.ToMauiColor(), Colors.Black) ? renderInstruction.ForegroundColor : line.StrokeColor);
         DrawableScene.SetStrokeWidth(canvas, line.StrokeWidth);
 
         canvas.DrawLine(

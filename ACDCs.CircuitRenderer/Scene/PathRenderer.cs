@@ -6,7 +6,9 @@ namespace ACDCs.CircuitRenderer.Scene;
 
 public class PathRenderer : IRenderer, IRenderer<PathInstruction>
 {
-    public void Render(ICanvas canvas, RenderInstruction renderInstruction, PathInstruction path)
+    public void Render(ICanvas canvas, RenderInstruction renderInstruction, PathInstruction path) => s_Render(canvas, renderInstruction, path);
+
+    private static void s_Render(ICanvas canvas, RenderInstruction renderInstruction, PathInstruction path)
     {
         PathF pathF = new();
         DrawableScene.SetStrokeColor(canvas, renderInstruction.ForegroundColor ?? path.StrokeColor);

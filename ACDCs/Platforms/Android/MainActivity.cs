@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content.PM;
 
+// ReSharper disable once CheckNamespace
 namespace ACDCs;
 
 [Activity(Theme = "@style/Maui.SplashTheme", MainLauncher = true,

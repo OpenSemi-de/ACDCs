@@ -36,7 +36,7 @@ public class DrawableScene : IDrawable
     public DrawableScene(SheetScene? scene)
     {
         Scene = scene;
-        SheetSize = scene?.SheetSize != null ? scene.SheetSize : new(100, 100, 0);
+        SheetSize = scene?.SheetSize != null ? scene.SheetSize : new Coordinate(100, 100, 0);
         SetScene(scene);
     }
 
@@ -151,7 +151,7 @@ public class DrawableScene : IDrawable
             BackgroundColor = Scene?.BackgroundColor ?? BackgroundColor,
             DrawPos = drawPos,
             DrawSize = drawSize,
-            FontSize = _fontSize,
+            FontSize = _fontSize
         };
 
         foreach (IDrawInstruction instruction in drawable.DrawInstructions)
@@ -274,13 +274,13 @@ public class DrawableScene : IDrawable
             GetScale(drawSize.Y, lowerRight.Y));
     }
 
-    private static void GetScaleAndZoom(IDrawableComponent drawable, out Coordinate drawPos, out Coordinate drawSize, float Zoom, float BaseGridSize)
+    private static void GetScaleAndZoom(IDrawableComponent drawable, out Coordinate drawPos, out Coordinate drawSize, float zoom, float baseGridSize)
     {
         drawPos = new Coordinate(drawable.Position);
         drawSize = new Coordinate(drawable.Size);
-        drawSize.X = drawSize.X * Zoom * BaseGridSize;
-        drawSize.Y = drawSize.Y * Zoom * BaseGridSize;
-        drawPos.X = drawPos.X * Zoom * BaseGridSize;
-        drawPos.Y = drawPos.Y * Zoom * BaseGridSize;
+        drawSize.X = drawSize.X * zoom * baseGridSize;
+        drawSize.Y = drawSize.Y * zoom * baseGridSize;
+        drawPos.X = drawPos.X * zoom * baseGridSize;
+        drawPos.Y = drawPos.Y * zoom * baseGridSize;
     }
 }

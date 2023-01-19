@@ -41,7 +41,7 @@ public class PinDrawable : DrawableComponent
 
     private void Setup(float x, float y)
     {
-        if (ParentItem != null && !ParentItem.Pins.Contains(this))
+        if (!ParentItem.Pins.Contains(this))
         {
             ParentItem.Pins.Add(this);
         }

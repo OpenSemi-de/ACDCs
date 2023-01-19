@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Interfaces;
 using Microsoft.Maui.Graphics;
@@ -44,12 +45,7 @@ namespace ACDCs.CircuitRenderer.Sheet
                                  (line1Point1.X - line2Point1.X) * (line1Point2.Y - line1Point1.Y));
             float s = q / d;
 
-            if (r < 0 || r > 1 || s < 0 || s > 1)
-            {
-                return false;
-            }
-
-            return true;
+            return !(r < 0) && !(r > 1) && !(s < 0) && !(s > 1);
         }
 
         public static Direction LineIntersectsRect(Point p1, Point p2, RectFr r)
@@ -92,12 +88,7 @@ namespace ACDCs.CircuitRenderer.Sheet
             if (PointInTriangle(p2, new Point(r.X1, r.Y1), new Point(r.X2, r.Y2), new Point(r.X3, r.Y3)))
                 hitContains++;
 
-            if (hitContains > 1)
-            {
-                return Direction.Contains;
-            }
-
-            return Direction.None;
+            return hitContains > 1 ? Direction.Contains : Direction.None;
         }
 
         public static bool PointInTriangle(Point pt, Point v1, Point v2, Point v3)
@@ -106,8 +97,8 @@ namespace ACDCs.CircuitRenderer.Sheet
             float d2 = Sign(pt, v2, v3);
             float d3 = Sign(pt, v3, v1);
 
-            bool hasNeg = (d1 < 0) || (d2 < 0) || (d3 < 0);
-            bool hasPos = (d1 > 0) || (d2 > 0) || (d3 > 0);
+            bool hasNeg = d1 < 0 || d2 < 0 || d3 < 0;
+            bool hasPos = d1 > 0 || d2 > 0 || d3 > 0;
 
             return !(hasNeg && hasPos);
         }
@@ -121,8 +112,7 @@ namespace ACDCs.CircuitRenderer.Sheet
         {
             PathCoordinates.Clear();
             PathCoordinates.Add(_startCoordinate);
-            Coordinate lastPosition = _pinAbsoluteCoordinateFrom;
-            Coordinate lastStepOffset = new();
+
             while (!Stuck() && !Arrived())
             {
                 var diffCoordinate = _currentCoordinate.Substract(_endCoordinate);
@@ -147,8 +137,6 @@ namespace ACDCs.CircuitRenderer.Sheet
                 }
 
                 PathCoordinates.Add(nextStep);
-                lastPosition = _currentCoordinate;
-                lastStepOffset = nextStepOffset;
                 _currentCoordinate = nextStep;
             }
         }
@@ -160,18 +148,13 @@ namespace ACDCs.CircuitRenderer.Sheet
 
         private Direction CheckCollision(Coordinate nextStepOffset, Coordinate currentCoordinate)
         {
-            foreach (var collisionRect in CollisionRects.Keys)
+            foreach (var collisionDirection in CollisionRects.Keys.Select(collisionRect => LineIntersectsRect(
+                         currentCoordinate.ToPointF(),
+                         currentCoordinate.Add(nextStepOffset.Multiply(1.01f)).ToPointF(),
+                         collisionRect
+                     )).Where(collisionDirection => collisionDirection != Direction.None))
             {
-                var collisionDirection = LineIntersectsRect(
-                    currentCoordinate.ToPointF(),
-                    currentCoordinate.Add(nextStepOffset.Multiply(1.01f)).ToPointF(),
-                    collisionRect
-                );
-
-                if (collisionDirection != Direction.None)
-                {
-                    return collisionDirection;
-                }
+                return collisionDirection;
             }
 
             return Direction.None;
@@ -190,22 +173,12 @@ namespace ACDCs.CircuitRenderer.Sheet
                     case Direction.Bottom:
                     case Direction.Top:
                         {
-                            if (diffCoordinate.X < 0)
-                            {
-                                return new Coordinate(-1, 0);
-                            }
-
-                            return new Coordinate(1, 0);
+                            return diffCoordinate.X < 0 ? new Coordinate(-1, 0) : new Coordinate(1, 0);
                         }
                     case Direction.Left:
                     case Direction.Right:
                         {
-                            if (diffCoordinate.Y < 0)
-                            {
-                                return new Coordinate(0, -1);
-                            }
-
-                            return new Coordinate(0, 1);
+                            return diffCoordinate.Y < 0 ? new Coordinate(0, -1) : new Coordinate(0, 1);
                         }
                 }
             }
@@ -223,8 +196,7 @@ namespace ACDCs.CircuitRenderer.Sheet
         private bool Stuck()
         {
             _stepCount++;
-            if (_stepCount > 1000) return true;
-            return false;
+            return _stepCount > 1000;
         }
     }
 }

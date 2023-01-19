@@ -9,5 +9,5 @@ public enum Direction
     Bottom = 2,
     Left = 3,
     Contains = 4,
-    None = 999,
+    None = 999
 }

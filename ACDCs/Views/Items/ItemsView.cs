@@ -52,6 +52,7 @@ public partial class ItemsView : StackLayout, IItemsViewProperties
         Loaded += OnLoaded;
     }
 
+    // ReSharper disable once UnusedMember.Global
     public async Task InsertToPosition(float x, float y)
     {
         await API.Call(async () =>
@@ -89,10 +90,8 @@ public partial class ItemsView : StackLayout, IItemsViewProperties
                         continue;
                     }
 
-                    bool isInsertable =
-                        (bool)(isInsertableProp.GetValue(Activator.CreateInstance(type), BindingFlags.Instance, null,
-                            null,
-                            null) ?? false);
+                    object? instance = Activator.CreateInstance(type);
+                    bool isInsertable = (bool)(isInsertableProp.GetValue(instance, BindingFlags.Instance, null, null, null) ?? false);
 
                     if (!isInsertable)
                     {
@@ -107,13 +106,12 @@ public partial class ItemsView : StackLayout, IItemsViewProperties
                     }
 
                     button.Draw();
-                    _layout.Add(
-                        button
-                               );
+                    _layout.Add(button);
                     _layout.WidthRequest += 60;
                 }
-                catch
+                catch (Exception exception)
                 {
+                    API.PopupException(exception).Wait();
                 }
             }
 

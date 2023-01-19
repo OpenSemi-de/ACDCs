@@ -1,5 +1,4 @@
-﻿using ACDCs.CircuitRenderer.Definitions;
-using ACDCs.CircuitRenderer.Instructions;
+﻿using ACDCs.CircuitRenderer.Instructions;
 using ACDCs.CircuitRenderer.Interfaces;
 using Microsoft.Maui.Graphics;
 
@@ -9,7 +8,6 @@ public class CurveRenderer : IRenderer, IRenderer<CurveInstruction>
 {
     public void Render(ICanvas canvas, RenderInstruction renderInstruction, CurveInstruction curve)
     {
-        Coordinate centerPos = new(curve.Position);
         DrawableScene.SetStrokeColor(canvas, curve.StrokeColor);
 
         float startX = DrawableScene.GetScale(renderInstruction.DrawSize.X, curve.Position.X);

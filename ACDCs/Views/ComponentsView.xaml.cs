@@ -68,6 +68,7 @@ public partial class ComponentsView : SharpAbsoluteLayout
         Reload();
     }
 
+    // ReSharper disable once UnusedMember.Global
     public bool OnClose()
     {
         return true;
@@ -80,9 +81,9 @@ public partial class ComponentsView : SharpAbsoluteLayout
         */
     }
 
-    private static bool ReflectedSearch(ComponentViewModel ComponentViewModel, string text)
+    private static bool ReflectedSearch(ComponentViewModel componentViewModel, string text)
     {
-        Type? modelType = ComponentViewModel.Model?.GetType();
+        Type? modelType = componentViewModel.Model?.GetType();
         text = text.ToLower();
         if (modelType == null)
         {
@@ -91,7 +92,7 @@ public partial class ComponentsView : SharpAbsoluteLayout
 
         foreach (PropertyInfo propertyInfo in modelType.GetProperties())
         {
-            string? value = Convert.ToString(propertyInfo.GetValue(ComponentViewModel.Model));
+            string? value = Convert.ToString(propertyInfo.GetValue(componentViewModel.Model));
             if (value != null)
             {
                 value = value.ToLower();
@@ -115,8 +116,7 @@ public partial class ComponentsView : SharpAbsoluteLayout
 
     private void DetailsButton_OnClicked(object? sender, EventArgs e)
     {
-        if (sender is not Button button ||
-            button.CommandParameter is not int row)
+        if (sender is not Button { CommandParameter: int row })
         {
             return;
         }
@@ -166,7 +166,7 @@ public partial class ComponentsView : SharpAbsoluteLayout
     private void OnSizeChanged(object? sender, EventArgs e)
     {
         InvalidateMeasure();
-        foreach (var child in this.Children)
+        foreach (var child in Children)
         {
             child.InvalidateMeasure();
             child.InvalidateArrange();

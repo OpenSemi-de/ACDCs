@@ -31,9 +31,11 @@ public sealed class DefaultSceneManager : ISceneManager
     public void PutFeedbackRect(bool isSelected, DrawableComponent? drawable, Coordinate drawPos, Coordinate drawSize,
         Coordinate? displayOffset)
     {
-        FeedbackRect feedBackRect = new(isSelected, drawable);
-        feedBackRect.Rect = new RectF(drawPos.Substract(displayOffset).ToPointF(),
-            drawPos.Add(drawSize).Substract(displayOffset).ToSizeF());
+        FeedbackRect feedBackRect = new(isSelected, drawable)
+        {
+            Rect = new RectF(drawPos.Substract(displayOffset).ToPointF(),
+            drawPos.Add(drawSize).Substract(displayOffset).ToSizeF())
+        };
 
         FeedbackRects?.Add(feedBackRect);
     }
@@ -58,10 +60,12 @@ public sealed class DefaultSceneManager : ISceneManager
 
     public void SetSizeAndScale(Coordinate sheetSize, float gridSize)
     {
-        if (Scene != null)
+        if (Scene == null)
         {
-            Scene.GridSize = gridSize;
-            Scene.SheetSize = sheetSize;
+            return;
         }
+
+        Scene.GridSize = gridSize;
+        Scene.SheetSize = sheetSize;
     }
 }

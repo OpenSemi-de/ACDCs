@@ -37,12 +37,7 @@ public partial class ComponentsDetailPopup : Popup
         return parametersdic;
     }
 
-    private void CloseButton_OnClicked(object? sender, EventArgs e)
-    {
-        Close();
-    }
-
-    private ObservableCollection<PropertyItem> ToItemSource(ComponentViewModel model)
+    private static ObservableCollection<PropertyItem> ToItemSource(ComponentViewModel model)
     {
         PropertyItem root = new(model.Name) { IsExpanded = true };
 
@@ -63,6 +58,11 @@ public partial class ComponentsDetailPopup : Popup
 
         return new ObservableCollection<PropertyItem> { root };
     }
+
+    private void CloseButton_OnClicked(object? sender, EventArgs e)
+    {
+        Close();
+    }
 }
 
 public class PropertyItem
@@ -70,7 +70,7 @@ public class PropertyItem
     public IList<PropertyItem> Children { get; set; } = new ObservableCollection<PropertyItem>();
 
     public bool IsExpanded { get; set; }
-    public string? Name { get; set; } = string.Empty;
+    public string? Name { get; set; }
 
     public PropertyItem(string? name)
     {

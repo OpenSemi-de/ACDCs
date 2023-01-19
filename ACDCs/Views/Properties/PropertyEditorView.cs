@@ -40,12 +40,6 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
         }
     }
 
-    private void Knob_OnValueChanged(object obj)
-    {
-        OnValueChanged?.Invoke(obj);
-        Value = obj;
-    }
-
     private void ModelButton_Clicked(object? sender, EventArgs e)
     {
         OnModelSelectionClicked?.Invoke(this);

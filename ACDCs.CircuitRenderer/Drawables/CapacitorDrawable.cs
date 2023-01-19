@@ -24,23 +24,24 @@ public sealed class CapacitorDrawable : DrawableComponent
         CapacitorType = capacitorType;
         DrawInstructions.Add(new LineInstruction(0f, 0.5f, 0.3f, 0.5f));
 
-        if (CapacitorType == CapacitorDrawableType.Standard)
+        switch (CapacitorType)
         {
-            DrawablePins.Add(new PinDrawable(ParentItem, 0, 0.5f));
-            DrawablePins.Add(new PinDrawable(ParentItem, 1f, 0.5f));
+            case CapacitorDrawableType.Standard:
+                DrawablePins.Add(new PinDrawable(ParentItem, 0, 0.5f));
+                DrawablePins.Add(new PinDrawable(ParentItem, 1f, 0.5f));
 
-            DrawInstructions.Add(new BoxInstruction(0.3f, 0.1f, 0.15f, 0.8f));
-            DrawInstructions.Add(new BoxInstruction(0.55f, 0.1f, 0.15f, 0.8f));
-            DrawInstructions.Add(new LineInstruction(0.7f, 0.5f, 1f, 0.5f));
-        }
+                DrawInstructions.Add(new BoxInstruction(0.3f, 0.1f, 0.15f, 0.8f));
+                DrawInstructions.Add(new BoxInstruction(0.55f, 0.1f, 0.15f, 0.8f));
+                DrawInstructions.Add(new LineInstruction(0.7f, 0.5f, 1f, 0.5f));
+                break;
 
-        if (CapacitorType == CapacitorDrawableType.Polarized)
-        {
-            DrawablePins.Add(new PinDrawable(ParentItem, 0, 0.5f, "+"));
-            DrawablePins.Add(new PinDrawable(ParentItem, 1f, 0.5f, "-"));
-            DrawInstructions.Add(new BoxInstruction(0.3f, 0.1f, 0.1f, 0.8f, new Color(0, 0, 0)));
-            DrawInstructions.Add(new CurveInstruction(0.5f, 0.1f, 0.8f, 0.9f, 90f, 270f));
-            DrawInstructions.Add(new LineInstruction(0.5f, 0.5f, 1f, 0.5f));
+            case CapacitorDrawableType.Polarized:
+                DrawablePins.Add(new PinDrawable(ParentItem, 0, 0.5f, "+"));
+                DrawablePins.Add(new PinDrawable(ParentItem, 1f, 0.5f, "-"));
+                DrawInstructions.Add(new BoxInstruction(0.3f, 0.1f, 0.1f, 0.8f, new Color(0, 0, 0)));
+                DrawInstructions.Add(new CurveInstruction(0.5f, 0.1f, 0.8f, 0.9f, 90f, 270f));
+                DrawInstructions.Add(new LineInstruction(0.5f, 0.5f, 1f, 0.5f));
+                break;
         }
 
         _textInstruction = new TextInstruction(value, 0f, 12f, 0.5f, 1.35f);

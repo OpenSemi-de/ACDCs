@@ -12,13 +12,7 @@ namespace ACDCs.CircuitRenderer.Sheet;
 
 public class Turtlor
 {
-    private readonly WorksheetItemList _items;
-
-    private readonly WorksheetItemList _nets;
-
-    private readonly Worksheet _worksheet;
-
-    private Dictionary<DirectionNine, Coordinate> _directionCoordinates = new Dictionary<DirectionNine, Coordinate>
+    private readonly Dictionary<DirectionNine, Coordinate> _directionCoordinates = new()
     {
         { DirectionNine.Up, new Coordinate(0, -1, 0) },
         { DirectionNine.Down, new Coordinate(0, 1, 0) },
@@ -26,7 +20,12 @@ public class Turtlor
         { DirectionNine.Left, new Coordinate(-1, 0, 0) }
     };
 
-    private Turtle _turtle;
+    private readonly WorksheetItemList _items;
+
+    private readonly WorksheetItemList _nets;
+
+    private readonly Worksheet _worksheet;
+    private Turtle? _turtle;
 
     public Turtlor(WorksheetItemList? items, WorksheetItemList? nets, Coordinate? sheetSize, Worksheet worksheet)
     {
@@ -51,19 +50,21 @@ public class Turtlor
     public static void Rotate(IDrawableComponent pindrawable, ref float positionX, ref float positionY, ref float pinX,
         ref float pinY)
     {
-        if (pindrawable.Rotation != 0)
+        if (pindrawable.Rotation == 0)
         {
-            float centerX = pindrawable.Position.X + pindrawable.Size.X / 2;
-            float centerY = pindrawable.Position.Y + pindrawable.Size.Y / 2;
-            Coordinate rotatedPinPos = new(positionX, positionY);
-            rotatedPinPos = rotatedPinPos.RotateCoordinate(centerX, centerY, pindrawable.Rotation);
-            positionX = rotatedPinPos.X;
-            positionY = rotatedPinPos.Y;
-            Coordinate rotatedPinRelPos = new(pinX, pinY);
-            rotatedPinRelPos.RotateCoordinate(0.5f, 0.5f, pindrawable.Rotation);
-            pinX = rotatedPinRelPos.X;
-            pinY = rotatedPinRelPos.Y;
+            return;
         }
+
+        float centerX = pindrawable.Position.X + pindrawable.Size.X / 2;
+        float centerY = pindrawable.Position.Y + pindrawable.Size.Y / 2;
+        Coordinate rotatedPinPos = new(positionX, positionY);
+        rotatedPinPos = rotatedPinPos.RotateCoordinate(centerX, centerY, pindrawable.Rotation);
+        positionX = rotatedPinPos.X;
+        positionY = rotatedPinPos.Y;
+        Coordinate rotatedPinRelPos = new(pinX, pinY);
+        rotatedPinRelPos.RotateCoordinate(0.5f, 0.5f, pindrawable.Rotation);
+        pinX = rotatedPinRelPos.X;
+        pinY = rotatedPinRelPos.Y;
     }
 
     public Dictionary<RectFr, IWorksheetItem> GetCollisionRects()
@@ -122,8 +123,7 @@ public class Turtlor
         int pinX = Convert.ToInt32(Math.Round(pin.Position.X * 2));
         int pinY = Convert.ToInt32(Math.Round(pin.Position.Y * 2));
 
-        DirectionNine[,] position = new DirectionNine[3, 3]
-        {
+        DirectionNine[,] position = {
             { DirectionNine.UpLeft, DirectionNine.Up, DirectionNine.UpRight },
             { DirectionNine.Left, DirectionNine.Middle, DirectionNine.Right },
             { DirectionNine.DownLeft, DirectionNine.Down, DirectionNine.DownRight }
@@ -150,12 +150,7 @@ public class Turtlor
 
     public Coordinate GetStepCoordinate(Coordinate position, DirectionNine direction)
     {
-        if (_directionCoordinates.ContainsKey(direction))
-        {
-            return _directionCoordinates[direction].Add(position);
-        }
-
-        return new Coordinate(-100, -100, 0);
+        return _directionCoordinates.ContainsKey(direction) ? _directionCoordinates[direction].Add(position) : new Coordinate(-100, -100, 0);
     }
 
     public List<WorksheetItem> GetTraces()
@@ -186,12 +181,11 @@ public class Turtlor
         return traces;
     }
 
-    private float GetDistance(Coordinate fromCoordinate, Coordinate toCoordinate)
+    private static List<PinDrawable> SortDistance(DrawablePinList pins)
     {
-        float x = Math.Abs(fromCoordinate.X - toCoordinate.X);
-        float y = Math.Abs(fromCoordinate.Y - toCoordinate.Y);
+        var orderedPins = pins.OrderBy(pin => pin.Position.X).ToList();
 
-        return Convert.ToSingle(Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2)));
+        return orderedPins;
     }
 
     private TraceItem GetTrace(TraceItem trace, PinDrawable fromPin, PinDrawable toPin)
@@ -207,9 +201,7 @@ public class Turtlor
 
         trace.AddPart(pinAbsoluteCoordinateFrom, firstStepCoordinateFrom);
 
-        Coordinate currentPositionCoordinate = firstStepCoordinateFrom;
-
-        _turtle = new Turtle(currentPositionCoordinate, firstStepCoordinateTo, pinAbsoluteCoordinateFrom)
+        _turtle = new Turtle(firstStepCoordinateFrom, firstStepCoordinateTo, pinAbsoluteCoordinateFrom)
         {
             CollisionRects = GetCollisionRects()
         };
@@ -230,12 +222,5 @@ public class Turtlor
     private int R(float number)
     {
         return Convert.ToInt32(Math.Round(number));
-    }
-
-    private List<PinDrawable> SortDistance(DrawablePinList pins)
-    {
-        var orderedPins = pins.OrderBy(pin => pin.Position.X).ToList();
-
-        return orderedPins;
     }
 }

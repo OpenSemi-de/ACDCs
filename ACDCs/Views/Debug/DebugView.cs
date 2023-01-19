@@ -13,7 +13,6 @@ public class DebugWindow : WindowView
     private readonly Grid _debugGrid;
     private readonly Label _label;
     private readonly TextField _textField;
-    private string? _script;
 
     public StartCenterPage? StartCenterPage { get; set; }
 
@@ -56,6 +55,10 @@ public class DebugWindow : WindowView
         _label.Text = text;
     }
 
+    private static void TextFieldOnTextChanged(object? sender, TextChangedEventArgs e)
+    {
+    }
+
     private void ButtonOnClicked(object? sender, EventArgs e)
     {
         try
@@ -94,10 +97,5 @@ try{{
         {
             Write(exception.ToString());
         }
-    }
-
-    private void TextFieldOnTextChanged(object? sender, TextChangedEventArgs e)
-    {
-        _script = e.NewTextValue;
     }
 }

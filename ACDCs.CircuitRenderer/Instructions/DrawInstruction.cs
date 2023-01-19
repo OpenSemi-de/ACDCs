@@ -18,6 +18,6 @@ public class DrawInstruction : IDrawInstruction
     public DrawInstruction(Type type)
     {
         Type = type.Name;
-        Position = new();
+        Position = new Coordinate();
     }
 }

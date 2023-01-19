@@ -105,22 +105,24 @@ public sealed class Worksheet
         SceneManager.BackgroundColor = BackgroundColor;
         SceneManager.ForegroundColor = ForegroundColor;
         SceneManager.BackgroundHighColor = BackgroundHighColor;
-        if (SceneManager.SetScene(GetDrawableComponents(), GetSelectedComponents(), SelectedPin))
+        if (!SceneManager.SetScene(GetDrawableComponents(), GetSelectedComponents(), SelectedPin))
         {
-            SceneManager.DisplayOffset = DisplayOffset;
-
-            SceneManager.SetSizeAndScale(SheetSize, GridSize);
-            Log.L("Getting backend scene");
-            object? backendScene = SceneManager.GetSceneForBackend();
-            if (SceneManager.SendToBackend(backendScene))
-            {
-                Log.L("Backend received scene");
-
-                return true;
-            }
+            return false;
         }
 
-        return false;
+        SceneManager.DisplayOffset = DisplayOffset;
+
+        SceneManager.SetSizeAndScale(SheetSize, GridSize);
+        Log.L("Getting backend scene");
+        object? backendScene = SceneManager.GetSceneForBackend();
+        if (!SceneManager.SendToBackend(backendScene))
+        {
+            return false;
+        }
+
+        Log.L("Backend received scene");
+
+        return true;
     }
 
     public void DeleteItem(WorksheetItem item)
@@ -136,19 +138,21 @@ public sealed class Worksheet
 
     public void DeselectItem(WorksheetItem item)
     {
-        if (SelectedItems.Contains(item))
+        if (!SelectedItems.Contains(item))
         {
-            foreach (PinDrawable pin in item.Pins)
-            {
-                pin.Size = new(1, 1, 0);
-            }
-            SelectedItems.Remove(item);
+            return;
         }
+
+        foreach (PinDrawable pin in item.Pins)
+        {
+            pin.Size = new Coordinate(1, 1, 0);
+        }
+        SelectedItems.Remove(item);
     }
 
     public WorksheetItem DuplicateItem(WorksheetItem item)
     {
-        WorksheetItem? newItem = item.Clone<WorksheetItem>(CloneOptions.DisableIgnoreAttributes);
+        WorksheetItem? newItem = item.Clone(CloneOptions.DisableIgnoreAttributes);
         StartRouter();
         return newItem;
     }
@@ -211,15 +215,17 @@ public sealed class Worksheet
 
     public void SelectItem(WorksheetItem item)
     {
-        if (!SelectedItems.Contains(item))
+        if (SelectedItems.Contains(item))
         {
-            foreach (PinDrawable pin in item.Pins)
-            {
-                pin.Size = new(10, 10, 0);
-            }
-
-            SelectedItems.AddItem(item);
+            return;
         }
+
+        foreach (PinDrawable pin in item.Pins)
+        {
+            pin.Size = new Coordinate(10, 10, 0);
+        }
+
+        SelectedItems.AddItem(item);
     }
 
     public void StartRouter()
@@ -258,18 +264,7 @@ public sealed class Worksheet
         }
     }
 
-    private DrawableComponentList GetSelectedComponents()
-    {
-        DrawableComponentList list = new(this);
-
-        foreach (IDrawableComponent item in SelectedItems.Select(item => item.DrawableComponent))
-        {
-            list.Add(item);
-        }
-        return list;
-    }
-
-    private void MirrorInstruction(float centerX, IDrawInstruction instruction)
+    private static void MirrorInstruction(float centerX, IDrawInstruction instruction)
     {
         instruction.Coordinates.ForEach(coordinate =>
             {
@@ -282,6 +277,17 @@ public sealed class Worksheet
                     coordinate.X = centerX + (centerX - coordinate.X);
                 }
             });
+    }
+
+    private DrawableComponentList GetSelectedComponents()
+    {
+        DrawableComponentList list = new(this);
+
+        foreach (IDrawableComponent item in SelectedItems.Select(item => item.DrawableComponent))
+        {
+            list.Add(item);
+        }
+        return list;
     }
 
     private void OnItemAdded(IWorksheetItem item)

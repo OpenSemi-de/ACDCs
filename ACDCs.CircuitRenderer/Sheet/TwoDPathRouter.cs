@@ -14,13 +14,12 @@ public class TwoDPathRouter : IPathRouter
 
     private readonly int _sheetWidth;
 
-    private readonly Worksheet _worksheet;
-
-    private Color[] _traceColors = {
-        new Color(255, 0, 0), new Color(0, 255, 0), new Color(0, 0, 255), new Color(255, 255, 0),
-        new Color(0, 255, 255),
+    private readonly Color[] _traceColors = {
+        new(255, 0, 0), new(0, 255, 0), new(0, 0, 255), new(255, 255, 0),
+        new(0, 255, 255)
     };
 
+    private readonly Worksheet _worksheet;
     public float GridSize { get; set; }
 
     public WorksheetItemList Items { get; set; }
@@ -53,31 +52,35 @@ public class TwoDPathRouter : IPathRouter
 
         foreach (IWorksheetItem worksheetItem in Traces)
         {
-            if (worksheetItem is TraceItem trace)
+            if (worksheetItem is not TraceItem trace)
             {
-                trace.DrawableComponent.Position =
-                    trace.DrawableComponent.Position.Round();
-                if (trace.DrawableComponent is TraceDrawable traceDrawable)
-                {
-                    Color traceColor = _traceColors[i];
-                    float lum = 0.5f;
-                    foreach (IDrawInstruction drawInstruction in traceDrawable.DrawInstructions)
-                    {
-                        if (drawInstruction is LineInstruction lineInstruction)
-                        {
-                            lineInstruction.StrokeColor = new Color(traceColor.ToMauiColor().WithLuminosity(lum));
-                            lineInstruction.Position = lineInstruction.Position.Round();
-                            lineInstruction.End = lineInstruction.End.Round();
-                        }
-
-                        lum += 0.2f / traceDrawable.DrawInstructions.Count;
-                    }
-
-                    i++;
-                    if (i == _traceColors.Length)
-                        i = 0;
-                }
+                continue;
             }
+
+            trace.DrawableComponent.Position = trace.DrawableComponent.Position.Round();
+
+            if (trace.DrawableComponent is not TraceDrawable traceDrawable)
+            {
+                continue;
+            }
+
+            Color traceColor = _traceColors[i];
+            float lum = 0.5f;
+            foreach (IDrawInstruction drawInstruction in traceDrawable.DrawInstructions)
+            {
+                if (drawInstruction is LineInstruction lineInstruction)
+                {
+                    lineInstruction.StrokeColor = new Color(traceColor.ToMauiColor().WithLuminosity(lum));
+                    lineInstruction.Position = lineInstruction.Position.Round();
+                    lineInstruction.End = lineInstruction.End.Round();
+                }
+
+                lum += 0.2f / traceDrawable.DrawInstructions.Count;
+            }
+
+            i++;
+            if (i == _traceColors.Length)
+                i = 0;
         }
 
         return Traces;

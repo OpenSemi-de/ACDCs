@@ -23,21 +23,6 @@ public partial class StartCenterPage : ContentPage
         MainWindowLayout.GestureRecognizers.Add(pointerMovement);
     }
 
-    private async void Button_OnClicked(object? sender, EventArgs e)
-    {
-        await API.Call(() =>
-         {
-             _circuitCount++;
-             WindowView windowView = new(MainWindowLayout, $"Circuit {_circuitCount}")
-             {
-                 WindowContent = new CircuitSheetView()
-             };
-             windowView.Maximize();
-             windowTabBar.AddWindow(windowView);
-             return Task.CompletedTask;
-         });
-    }
-
     private async void ComponentsButton_OnClicked(object? sender, EventArgs e)
     {
         await API.Call(() =>
@@ -58,6 +43,21 @@ public partial class StartCenterPage : ContentPage
             _componentsWindowView?.Maximize();
             return Task.CompletedTask;
         });
+    }
+
+    private async void NewCircuitButton_OnClicked(object? sender, EventArgs e)
+    {
+        await API.Call(() =>
+         {
+             _circuitCount++;
+             WindowView windowView = new(MainWindowLayout, $"Circuit {_circuitCount}")
+             {
+                 WindowContent = new CircuitSheetView()
+             };
+             windowView.Maximize();
+             windowTabBar.AddWindow(windowView);
+             return Task.CompletedTask;
+         });
     }
 
     private bool OnCloseComponentsView()

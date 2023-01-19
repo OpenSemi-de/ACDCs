@@ -19,18 +19,20 @@ public static class RenderManager
             { typeof(CircleInstruction), new CircleRenderer() },
             { typeof(CurveInstruction), new CurveRenderer() },
             { typeof(PathInstruction), new PathRenderer() },
-            { typeof(BoxInstruction), new BoxRenderer() },
+            { typeof(BoxInstruction), new BoxRenderer() }
         };
     }
 
     public static void Render<T>(ICanvas canvas, RenderInstruction renderInstruction, T instruction)
     {
-        if (s_renderers.TryGetValue(typeof(T), out IRenderer? rendererHook))
+        if (!s_renderers.TryGetValue(typeof(T), out IRenderer? rendererHook))
         {
-            if (rendererHook is IRenderer<T> renderer)
-            {
-                renderer.Render(canvas, renderInstruction, instruction);
-            }
+            return;
+        }
+
+        if (rendererHook is IRenderer<T> renderer)
+        {
+            renderer.Render(canvas, renderInstruction, instruction);
         }
     }
 }

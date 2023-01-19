@@ -26,26 +26,27 @@ public sealed class TransistorDrawable : DrawableComponent
         _textInstruction = new TextInstruction(Value, 0f, 12f, 0.3f, 1f);
         DrawInstructions.Add(_textInstruction);
 
-        if (type == TransistorDrawableType.Pnp)
+        switch (type)
         {
-            DrawablePins.Add(new PinDrawable(ParentItem, 0, 0.5f, "B"));
-            DrawablePins.Add(new PinDrawable(ParentItem, 1f, 0f, "E"));
-            DrawablePins.Add(new PinDrawable(ParentItem, 1f, 1f, "C"));
+            case TransistorDrawableType.Pnp:
+                DrawablePins.Add(new PinDrawable(ParentItem, 0, 0.5f, "B"));
+                DrawablePins.Add(new PinDrawable(ParentItem, 1f, 0f, "E"));
+                DrawablePins.Add(new PinDrawable(ParentItem, 1f, 1f, "C"));
 
-            DrawInstructions.Add(new LineInstruction(0.7f, 0.4f, 0.7f, 0.25f));
-            DrawInstructions.Add(new LineInstruction(0.7f, 0.4f, 0.85f, 0.4f));
-            DrawInstructions.Add(new LineInstruction(0.7f, 0.25f, 0.85f, 0.4f));
-        }
+                DrawInstructions.Add(new LineInstruction(0.7f, 0.4f, 0.7f, 0.25f));
+                DrawInstructions.Add(new LineInstruction(0.7f, 0.4f, 0.85f, 0.4f));
+                DrawInstructions.Add(new LineInstruction(0.7f, 0.25f, 0.85f, 0.4f));
+                break;
 
-        if (type == TransistorDrawableType.Npn)
-        {
-            DrawablePins.Add(new PinDrawable(ParentItem, 0, 0.5f, "B"));
-            DrawablePins.Add(new PinDrawable(ParentItem, 1f, 0f, "C"));
-            DrawablePins.Add(new PinDrawable(ParentItem, 1f, 1f, "E"));
+            case TransistorDrawableType.Npn:
+                DrawablePins.Add(new PinDrawable(ParentItem, 0, 0.5f, "B"));
+                DrawablePins.Add(new PinDrawable(ParentItem, 1f, 0f, "C"));
+                DrawablePins.Add(new PinDrawable(ParentItem, 1f, 1f, "E"));
 
-            DrawInstructions.Add(new LineInstruction(0.8f, 0.7f, 0.8f, 0.55f));
-            DrawInstructions.Add(new LineInstruction(0.8f, 0.7f, 0.65f, 0.7f));
-            DrawInstructions.Add(new LineInstruction(0.65f, 0.7f, 0.8f, 0.55f));
+                DrawInstructions.Add(new LineInstruction(0.8f, 0.7f, 0.8f, 0.55f));
+                DrawInstructions.Add(new LineInstruction(0.8f, 0.7f, 0.65f, 0.7f));
+                DrawInstructions.Add(new LineInstruction(0.65f, 0.7f, 0.8f, 0.55f));
+                break;
         }
 
         SetSize(2, 2);

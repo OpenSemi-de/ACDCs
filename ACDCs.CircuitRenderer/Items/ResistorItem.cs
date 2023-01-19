@@ -11,14 +11,14 @@ public sealed class ResistorItem : WorksheetItem
 
     public ResistorItem()
     {
-        this.Model = new Resistor();
+        Model = new Resistor();
         DrawableComponent = new ResistorDrawable(this, DefaultValue, 1, 1);
         Value = DefaultValue;
     }
 
     public ResistorItem(string value, float x, float y)
     {
-        this.Model = new Resistor();
+        Model = new Resistor();
         DrawableComponent = new ResistorDrawable(this, value, x, y);
         Value = value;
     }

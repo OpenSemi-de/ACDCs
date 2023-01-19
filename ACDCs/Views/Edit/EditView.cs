@@ -33,6 +33,26 @@ public partial class EditView : WindowView, IEditViewProperties
         }).Wait();
     }
 
+    private static void Delete()
+    {
+        CallHandler("delete");
+    }
+
+    private static void Mirror()
+    {
+        CallHandler("mirror");
+    }
+
+    private static void Rotate()
+    {
+        CallHandler("rotate");
+    }
+
+    private static void SelectArea()
+    {
+        CallHandler("selectarea");
+    }
+
     private void AddButtons()
     {
         if (ButtonHeight == 0) ButtonHeight = 60;
@@ -46,11 +66,6 @@ public partial class EditView : WindowView, IEditViewProperties
         _buttonLayout.Add(_rotateButton);
         _buttonLayout.Add(_mirrorButton);
         _buttonLayout.Add(_deleteButton);
-    }
-
-    private void Delete()
-    {
-        CallHandler("delete");
     }
 
     private void Initialize()
@@ -68,24 +83,9 @@ public partial class EditView : WindowView, IEditViewProperties
         AddButtons();
     }
 
-    private void Mirror()
-    {
-        CallHandler("mirror");
-    }
-
     private void OnSelectButtonChange(EditButton editButton)
     {
         _lastButton?.Deselect();
         _lastButton = editButton;
-    }
-
-    private void Rotate()
-    {
-        CallHandler("rotate");
-    }
-
-    private void SelectArea()
-    {
-        CallHandler("selectarea");
     }
 }

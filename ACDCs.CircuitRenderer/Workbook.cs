@@ -41,21 +41,21 @@ public sealed class Workbook
 
     public Worksheet LoadSheet(string fileName)
     {
-        string? json = File.ReadAllText(fileName);
+        string json = File.ReadAllText(fileName);
         Worksheet? ws = JsonConvert.DeserializeObject<Worksheet>(json, _jsonSerializerSettings);
 
-        if (ws != null)
+        if (ws == null)
         {
-            Sheets.AddSheet(ws);
-            return ws;
+            return AddNewSheet();
         }
 
-        return AddNewSheet();
+        Sheets.AddSheet(ws);
+        return ws;
     }
 
     public void SaveSheet(Worksheet ws, string fileName)
     {
-        string? json = JsonConvert.SerializeObject(ws, _jsonSerializerSettings);
+        string json = JsonConvert.SerializeObject(ws, _jsonSerializerSettings);
         File.WriteAllText(fileName, json);
     }
 

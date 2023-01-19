@@ -2,6 +2,7 @@
 
 namespace ACDCs.CircuitRenderer.Items.Capacitors;
 
+// ReSharper disable once UnusedMember.Global
 public sealed class PolarizedCapacitorItem : CapacitorItem
 {
     public override string DefaultValue => "";

@@ -1,6 +1,7 @@
 ﻿#nullable enable
 
 using System;
+using System.Linq;
 using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.Data.ACDCs.Components;
@@ -13,7 +14,9 @@ public class WorksheetItem : IWorksheetItem
     private string? _value;
 
     public virtual string DefaultValue { get; set; } = string.Empty;
-    [JsonIgnore] public IDrawableComponent DrawableComponent { get; set; }
+
+    [JsonIgnore]
+    public IDrawableComponent DrawableComponent { get; set; }
 
     public int Height
     {
@@ -86,15 +89,7 @@ public class WorksheetItem : IWorksheetItem
         DrawableComponent = new DrawableComponent(typeof(DrawableComponent), this);
     }
 
-    private static double PartialValue(double partialValue, double multiplier, ref double result)
-    {
-        partialValue *= multiplier;
-        result += partialValue;
-        partialValue = 0;
-        return partialValue;
-    }
-
-    private string ParseUnits(string stringValue)
+    public static string ParseUnits(string stringValue)
     {
         double partialValue = 0;
         double result = 0;
@@ -102,9 +97,8 @@ public class WorksheetItem : IWorksheetItem
 
         stringValue = stringValue.Trim();
 
-        foreach (char c in stringValue)
+        foreach (string ch in stringValue.Select(c => Convert.ToString(c)))
         {
-            string ch = Convert.ToString(c);
             switch (ch)
             {
                 case "k":
@@ -173,5 +167,13 @@ public class WorksheetItem : IWorksheetItem
         if (result == 0) { result = partialValue; }
 
         return Convert.ToString(result);
+    }
+
+    private static double PartialValue(double partialValue, double multiplier, ref double result)
+    {
+        partialValue *= multiplier;
+        result += partialValue;
+        partialValue = 0;
+        return partialValue;
     }
 }

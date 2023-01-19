@@ -4,8 +4,9 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:menu="using:ACDCs.Components.Menu"
-    xmlns:window="using:ACDCs.Components.Window">
+
+    xmlns:menu="clr-namespace:ACDCs.Components.Menu"
+    xmlns:window="clr-namespace:ACDCs.Components.Window">
 
 
  

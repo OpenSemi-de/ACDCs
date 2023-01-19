@@ -23,7 +23,7 @@ public class TextRenderer : IRenderer<TextInstruction>, IRenderer
         }
         else
         {
-            canvas.FontSize = (instruction.FontSize / text.FontSize) * 12;
+            canvas.FontSize = instruction.FontSize / text.FontSize * 12;
         }
 
         canvas.Translate(x, y);

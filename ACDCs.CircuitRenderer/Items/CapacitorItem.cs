@@ -17,7 +17,7 @@ public class CapacitorItem : WorksheetItem
     {
         DrawableComponent = new CapacitorDrawable(this, DefaultValue, DefaultType, 1, 1);
         Value = DefaultValue;
-        this.Model = new Capacitor();
+        Model = new Capacitor();
     }
 
     public CapacitorItem(string value, CapacitorDrawableType type, float x, float y)
@@ -25,7 +25,7 @@ public class CapacitorItem : WorksheetItem
         DrawableComponent = new CapacitorDrawable(this, value, type, x, y);
         Value = value;
         Type = type;
-        this.Model = new Capacitor();
+        Model = new Capacitor();
     }
 
     public CapacitorItem(string value, CapacitorDrawableType type)
@@ -33,6 +33,6 @@ public class CapacitorItem : WorksheetItem
         Value = value;
         Type = type;
         DrawableComponent = new CapacitorDrawable(this, value, type, 1, 1);
-        this.Model = new Capacitor();
+        Model = new Capacitor();
     }
 }

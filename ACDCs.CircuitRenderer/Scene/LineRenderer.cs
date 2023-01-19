@@ -14,8 +14,6 @@ public class LineRenderer : IRenderer<LineInstruction>, IRenderer
         Coordinate centerPos = new(line.Position);
         DrawableScene.SetStrokeColor(canvas, Equals(line.StrokeColor?.ToMauiColor(), Colors.Black) ? renderInstruction.ForegroundColor : line.StrokeColor);
         DrawableScene.SetStrokeWidth(canvas, line.StrokeWidth);
-        float x = DrawableScene.GetScale(renderInstruction.DrawSize.X, centerPos.X);
-        float y = DrawableScene.GetScale(renderInstruction.DrawSize.Y, centerPos.Y);
 
         canvas.DrawLine(
             DrawableScene.GetScale(renderInstruction.DrawSize.X, line.Position.X),

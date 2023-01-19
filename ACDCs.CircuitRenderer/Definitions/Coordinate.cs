@@ -94,12 +94,12 @@ public sealed class Coordinate
         {
             X =
                 Convert.ToSingle(
-                    (cosTheta * (X - centerX) -
-                        sinTheta * (Y - centerY) + centerX)),
+                    cosTheta * (X - centerX) -
+                    sinTheta * (Y - centerY) + centerX),
             Y =
                 Convert.ToSingle(
-                    (sinTheta * (X - centerX) +
-                     cosTheta * (Y - centerY) + centerY))
+                    sinTheta * (X - centerX) +
+                    cosTheta * (Y - centerY) + centerY)
         };
     }
 

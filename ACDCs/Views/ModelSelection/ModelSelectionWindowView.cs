@@ -1,14 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using ACDCs.Components;
-using ACDCs.Data.ACDCs.Components;
 using ACDCs.Data.ACDCs.Components.BJT;
 using ACDCs.Data.ACDCs.Components.Diode;
 using ACDCs.Data.ACDCs.Components.Resistor;
 using ACDCs.Data.ACDCs.Interfaces;
 using ACDCs.IO.DB;
 using ACDCs.Services;
-using ACDCs.Views.Window;
 using CommunityToolkit.Maui.Core.Extensions;
+using WindowView = ACDCs.Components.Window.WindowView;
 
 namespace ACDCs.Views.ModelSelection;
 

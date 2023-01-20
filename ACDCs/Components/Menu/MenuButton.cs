@@ -9,7 +9,7 @@ public class MenuButton : Button, IMenuComponent
 {
     private readonly Action? _clickAction;
     public double ItemHeight { get; set; } = 36;
-    public double ItemWidth { get; set; } = 104;
+    public double ItemWidth { get; set; } = 134;
     public string MenuCommand { get; set; }
     public MenuFrame? MenuFrame { get; set; }
 
@@ -26,7 +26,7 @@ public class MenuButton : Button, IMenuComponent
         Padding = 0;
         Margin = 1;
         CornerRadius = 1;
-        WidthRequest = 100;
+        WidthRequest = 130;
         MinimumHeightRequest = 32;
         HorizontalOptions = LayoutOptions.Fill;
     }

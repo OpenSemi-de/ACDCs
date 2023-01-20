@@ -1,7 +1,7 @@
 ﻿using ACDCs.Services;
 using ACDCs.Views.Debug;
 using ContentPage = Microsoft.Maui.Controls.ContentPage;
-using WindowView = ACDCs.Views.Window.WindowView;
+using WindowView = ACDCs.Components.Window.WindowView;
 
 namespace ACDCs.Views;
 

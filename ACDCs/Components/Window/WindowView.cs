@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel;
-using ACDCs.Components;
 using ACDCs.Components.Menu;
-using ACDCs.Components.Window;
 using ACDCs.Interfaces;
 using ACDCs.Services;
 using Sharp.UI;
@@ -15,7 +13,7 @@ using Label = Sharp.UI.Label;
 using PanGestureRecognizer = Sharp.UI.PanGestureRecognizer;
 using RowDefinition = Microsoft.Maui.Controls.RowDefinition;
 
-namespace ACDCs.Views.Window;
+namespace ACDCs.Components.Window;
 
 [SharpObject]
 public partial class WindowView : ContentView, IWindowViewProperties
@@ -26,7 +24,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
     private readonly MenuButton _menuButton;
     private readonly MenuFrame _menuFrame;
     private readonly Label _resizeField;
-    private readonly TitleLabel _titleLabel;
+    private readonly WindowTitleLabel _titleLabel;
     private readonly ContentView _windowContentView;
     private bool _isActive;
     private Rect _lastBounds = Rect.Zero;
@@ -78,7 +76,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
 
         SetRowAndColumn(_menuButton, 0, 0);
 
-        _titleLabel = new TitleLabel(WindowTitle)
+        _titleLabel = new WindowTitleLabel(WindowTitle)
             .HorizontalOptions(LayoutOptions.Fill)
             .HeightRequest(34)
             .TextColor(ColorService.Text);
@@ -145,7 +143,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
         _menuFrame = new MenuFrame
         {
             BackgroundColor = ColorService.Background,
-            HeightRequest = 54,
+            HeightRequest = 34,
             MainContainer = MainContainer,
             WindowFrame = this
         };
@@ -343,35 +341,5 @@ public partial class WindowView : ContentView, IWindowViewProperties
 
             return Task.CompletedTask;
         }).Wait();
-    }
-}
-
-public class TitleLabel : ContentView
-{
-    private readonly Label _label;
-
-    public TitleLabel(string windowTitle)
-    {
-        _label = new Label(windowTitle)
-            .HorizontalOptions(LayoutOptions.Fill)
-            .VerticalOptions(LayoutOptions.Fill)
-            .VerticalTextAlignment(TextAlignment.Center)
-            .HorizontalTextAlignment(TextAlignment.Center)
-            .FontSize(14)
-            .FontAttributes(FontAttributes.Bold)
-            .Padding(0)
-            .Margin(0);
-
-        this.Padding(0).Margin(1)
-            .HorizontalOptions(LayoutOptions.Fill)
-            .VerticalOptions(LayoutOptions.Fill);
-
-        Content = _label;
-    }
-
-    public TitleLabel TextColor(Color color)
-    {
-        _label.TextColor(color);
-        return this;
     }
 }

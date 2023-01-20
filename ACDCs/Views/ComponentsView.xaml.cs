@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using ACDCs.Components;
-using ACDCs.Data.ACDCs.Components;
 using ACDCs.Data.ACDCs.Components.BJT;
 using ACDCs.Data.ACDCs.Interfaces;
 using ACDCs.IO.Spice;
@@ -110,12 +109,6 @@ public partial class ComponentsView : SharpAbsoluteLayout
         return false;
     }
 
-    private void CategoryPicker_OnSelectedIndexChanged(object? sender, EventArgs e)
-    {
-        _category = CategoryPicker.SelectedItem as string ?? string.Empty;
-        KeywordEntry_OnTextChanged(keywordEntry, new TextChangedEventArgs(keywordEntry.Text, keywordEntry.Text));
-    }
-
     private void DetailsButton_OnClicked(object? sender, EventArgs e)
     {
         if (sender is not Button { CommandParameter: int row })
@@ -161,8 +154,6 @@ public partial class ComponentsView : SharpAbsoluteLayout
 
     private void OnLoaded(object? sender, EventArgs e)
     {
-        CategoryPicker.ItemsSource = dataSource
-            .Select(cm => cm.Type).Distinct().ToList();
     }
 
     private void OnSizeChanged(object? sender, EventArgs e)

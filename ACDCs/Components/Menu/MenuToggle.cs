@@ -23,7 +23,8 @@ public class MenuToggle : StackLayout, IMenuComponent
 
         this.HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill)
-            .Orientation(StackOrientation.Horizontal);
+            .Orientation(StackOrientation.Horizontal)
+            .BackgroundColor(ColorService.Foreground);
 
         _checkbox = new CheckBox();
         _checkbox.CheckedChanged += CheckboxOnCheckedChanged;

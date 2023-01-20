@@ -10,9 +10,8 @@
                                 x:Name="AbsoluteLayoutSheetPage">
     <menu:MenuView PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" MenuFilename="menu_components.json"/>
     <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutFlags="WidthProportional" AbsoluteLayout.LayoutBounds="0,50,1,30">
+        <Label Text="Search:"></Label>
         <Entry WidthRequest="200" x:Name="keywordEntry" TextChanged="KeywordEntry_OnTextChanged"></Entry>
-        <Picker WidthRequest="120" x:Name="CategoryPicker" SelectedIndexChanged="CategoryPicker_OnSelectedIndexChanged">
-        </Picker>
     </StackLayout>
     <StackLayout AbsoluteLayout.LayoutBounds="0,80,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
         <Grid HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="6000">

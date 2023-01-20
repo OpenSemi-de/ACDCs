@@ -1,7 +1,7 @@
 ﻿using ACDCs.Components;
-using ACDCs.Views.Window;
 using Microsoft.Maui.Layouts;
 using UraniumUI.Material.Controls;
+using WindowView = ACDCs.Components.Window.WindowView;
 
 namespace ACDCs.Views.Debug;
 

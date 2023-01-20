@@ -2,8 +2,8 @@
 using ACDCs.Components.Edit;
 using ACDCs.Interfaces;
 using ACDCs.Services;
-using ACDCs.Views.Window;
 using Microsoft.Maui.Layouts;
+using WindowView = ACDCs.Components.Window.WindowView;
 
 namespace ACDCs.Views.Edit;
 

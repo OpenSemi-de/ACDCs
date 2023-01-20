@@ -177,6 +177,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Views\Debug\" />
+	  <Folder Include="Views\Window\" />
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionACDCsHideInfoBar="True" /></VisualStudio></ProjectExtensions>

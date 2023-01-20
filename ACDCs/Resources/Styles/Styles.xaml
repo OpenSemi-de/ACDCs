@@ -38,11 +38,6 @@
                 Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
     </Style>
 
-    <Style TargetType="menu:MenuButton">
-        <Setter Property="FontSize" Value="11"></Setter>
-    </Style>
-
-
     <Style TargetType="Button" ApplyToDerivedTypes="True">
         <Setter Property="TextColor"
                 Value="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" />
@@ -145,7 +140,8 @@
     <Style TargetType="Entry">
         <Setter Property="TextColor"
                 Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
-        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource BackgroundHighLight}, Dark={StaticResource BackgroundHighDark}}" />
         <Setter Property="FontFamily" Value="MapleMonoRegular" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="PlaceholderColor"
@@ -260,7 +256,8 @@
                 Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
         <Setter Property="TitleColor"
                 Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
-        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource BackgroundHighLight}, Dark={StaticResource BackgroundHighDark}}" />
         <Setter Property="FontFamily" Value="MapleMonoRegular" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="VisualStateManager.VisualStateGroups">

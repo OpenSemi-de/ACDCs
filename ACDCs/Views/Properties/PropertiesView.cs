@@ -2,10 +2,9 @@
 using System.Reflection;
 using ACDCs.Components;
 using ACDCs.Components.Properties;
-using ACDCs.Data.ACDCs.Components;
 using ACDCs.Data.ACDCs.Interfaces;
-using ACDCs.Views.Window;
 using Microsoft.Maui.Layouts;
+using WindowView = ACDCs.Components.Window.WindowView;
 
 namespace ACDCs.Views.Properties;
 

@@ -1,6 +1,6 @@
 using ACDCs.Interfaces;
 using ACDCs.Services;
-using ACDCs.Views.Window;
+using WindowView = ACDCs.Components.Window.WindowView;
 
 namespace ACDCs.Components.Menu;
 
@@ -49,7 +49,13 @@ public class MenuFrame : StackLayout
                 if (menuItem.Text != "" && menuItem.IsChecked == "")
                 {
                     MenuButton menuButton = new(menuItem.Text, menuItem.MenuCommand, menuItem.ClickAction);
-                    menuButton.ItemWidth = menuButton.Width;
+
+                    if (Orientation == StackOrientation.Horizontal)
+                    {
+                        menuButton.WidthRequest(80);
+                        menuButton.ItemWidth = 84;
+                    }
+
                     menuParts.Add(menuButton);
                     if (menuItem.MenuItems is not { Count: > 0 })
                     {

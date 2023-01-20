@@ -1,6 +1,4 @@
-﻿using ACDCs.Views.Window;
-
-namespace ACDCs.Components.Window;
+﻿namespace ACDCs.Components.Window;
 
 using Sharp.UI;
 

@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACDCs.Data", "ACDCs.Data\AC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACDCs.IO", "ACDCs.IO\ACDCs.IO.csproj", "{672C623E-3ABC-4983-85FB-C72AE8E1ADFE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AStar", "libs\AStar\AStar\AStar.csproj", "{EE42C967-8028-4911-9F14-1B549AD0AC3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{672C623E-3ABC-4983-85FB-C72AE8E1ADFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{672C623E-3ABC-4983-85FB-C72AE8E1ADFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{672C623E-3ABC-4983-85FB-C72AE8E1ADFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE42C967-8028-4911-9F14-1B549AD0AC3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE42C967-8028-4911-9F14-1B549AD0AC3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE42C967-8028-4911-9F14-1B549AD0AC3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE42C967-8028-4911-9F14-1B549AD0AC3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

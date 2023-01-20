@@ -1,5 +1,4 @@
-﻿using ACDCs.Data.ACDCs.Components;
-using ACDCs.Data.ACDCs.Interfaces;
+﻿using ACDCs.Data.ACDCs.Interfaces;
 using ACDCs.Interfaces;
 
 namespace ACDCs.Views.Properties;
@@ -11,6 +10,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
 {
     private int _fontSize;
 
+    public Action<PropertyEditorView>? OnModelEditorClicked { get; set; }
     public Action<PropertyEditorView>? OnModelSelectionClicked { get; set; }
     public Action<object>? OnValueChanged { get; set; }
 
@@ -27,10 +27,19 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
         return this;
     }
 
+    public void OnModelEdited(IElectronicComponent obj)
+    {
+    }
+
     public void OnModelSelected(IElectronicComponent model)
     {
         OnValueChanged?.Invoke(model);
         Value = model;
+    }
+
+    private void EditModel_Clicked(object? sender, EventArgs e)
+    {
+        OnModelEditorClicked?.Invoke(this);
     }
 
     private void Entry_OnTextChanged(object? sender, TextChangedEventArgs e)
@@ -119,7 +128,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
             else if (value is IElectronicComponent c)
             {
                 IElectronicComponent? component = (IElectronicComponent?)c;
-                string text = component != null ? component.Name : "";
+                string text = "Select model";
                 Button modelButton = new Button()
                     .HorizontalOptions(LayoutOptions.Fill)
                     .VerticalOptions(LayoutOptions.Fill)
@@ -128,8 +137,29 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
                     .Text(text)
                     .OnClicked(ModelButton_Clicked);
 
+                Button editButton = new Button("Edit model")
+                    .HorizontalOptions(LayoutOptions.Fill)
+                    .VerticalOptions(LayoutOptions.Fill)
+                    .Margin(0)
+                    .FontSize(_fontSize)
+                    .OnClicked(EditModel_Clicked);
+
+                Grid.SetRow(editButton, 1);
+
                 ValueType = c.GetType().Name + (c.Type != "" ? ":" + c.Type : "");
-                Content = modelButton;
+
+                Grid grid = new Grid()
+                    .HorizontalOptions(LayoutOptions.Fill)
+                    .VerticalOptions(LayoutOptions.Fill)
+                    .Margin(0)
+                    .Padding(0);
+                grid.RowDefinitions.Add(new RowDefinition(34));
+                grid.RowDefinitions.Add(new RowDefinition(34));
+
+                grid.Add(modelButton);
+                grid.Add(editButton);
+
+                Content = grid;
             }
             else
             {

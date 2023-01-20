@@ -7,6 +7,9 @@ using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
+using AStar;
+using AStar.Options;
+using Point = System.Drawing.Point;
 
 namespace ACDCs.CircuitRenderer.Sheet;
 
@@ -25,7 +28,6 @@ public class Turtlor
     private readonly WorksheetItemList _nets;
 
     private readonly Worksheet _worksheet;
-    private Turtle? _turtle;
 
     public Turtlor(WorksheetItemList? items, WorksheetItemList? nets, Coordinate? sheetSize, Worksheet worksheet)
     {
@@ -47,24 +49,40 @@ public class Turtlor
         return rotatedPinPos;
     }
 
-    public static void Rotate(IDrawableComponent pindrawable, ref float positionX, ref float positionY, ref float pinX,
-        ref float pinY)
+    public static bool PointInRect(Microsoft.Maui.Graphics.Point p1, RectFr r)
     {
-        if (pindrawable.Rotation == 0)
-        {
-            return;
-        }
+        if (PointInTriangle(p1, new Microsoft.Maui.Graphics.Point(r.X1, r.Y1),
+                new Microsoft.Maui.Graphics.Point(r.X2, r.Y2), new Microsoft.Maui.Graphics.Point(r.X4, r.Y4)))
+            return true;
+        if (PointInTriangle(p1, new Microsoft.Maui.Graphics.Point(r.X1, r.Y1),
+                new Microsoft.Maui.Graphics.Point(r.X2, r.Y2), new Microsoft.Maui.Graphics.Point(r.X3, r.Y3)))
+            return true;
 
-        float centerX = pindrawable.Position.X + pindrawable.Size.X / 2;
-        float centerY = pindrawable.Position.Y + pindrawable.Size.Y / 2;
-        Coordinate rotatedPinPos = new(positionX, positionY);
-        rotatedPinPos = rotatedPinPos.RotateCoordinate(centerX, centerY, pindrawable.Rotation);
-        positionX = rotatedPinPos.X;
-        positionY = rotatedPinPos.Y;
-        Coordinate rotatedPinRelPos = new(pinX, pinY);
-        rotatedPinRelPos.RotateCoordinate(0.5f, 0.5f, pindrawable.Rotation);
-        pinX = rotatedPinRelPos.X;
-        pinY = rotatedPinRelPos.Y;
+        return false;
+    }
+
+    public static bool PointInTriangle(
+        Microsoft.Maui.Graphics.Point pt,
+        Microsoft.Maui.Graphics.Point v1,
+        Microsoft.Maui.Graphics.Point v2,
+        Microsoft.Maui.Graphics.Point v3)
+    {
+        float d1 = Sign(pt, v1, v2);
+        float d2 = Sign(pt, v2, v3);
+        float d3 = Sign(pt, v3, v1);
+
+        bool hasNeg = d1 < 0 || d2 < 0 || d3 < 0;
+        bool hasPos = d1 > 0 || d2 > 0 || d3 > 0;
+
+        return !(hasNeg && hasPos);
+    }
+
+    public static float Sign(
+        Microsoft.Maui.Graphics.Point p1,
+        Microsoft.Maui.Graphics.Point p2,
+        Microsoft.Maui.Graphics.Point p3)
+    {
+        return Convert.ToSingle((p1.X - p3.X) * (p2.Y - p3.Y) - (p2.X - p3.X) * (p1.Y - p3.Y));
     }
 
     public Dictionary<RectFr, IWorksheetItem> GetCollisionRects()
@@ -155,8 +173,34 @@ public class Turtlor
 
     public List<WorksheetItem> GetTraces()
     {
-        GetCollisionRects();
+        Dictionary<RectFr, IWorksheetItem> collisionRects = GetCollisionRects();
         List<WorksheetItem> traces = new();
+
+        short[,] tiles = new short[(int)_worksheet.SheetSize.X, (int)_worksheet.SheetSize.Y];
+        int width = Convert.ToInt32(_worksheet.SheetSize.X);
+        int height = Convert.ToInt32(_worksheet.SheetSize.Y);
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                tiles[y, x] = 1;
+                foreach (RectFr rectFr in collisionRects.Keys)
+                {
+                    if (PointInRect(new Microsoft.Maui.Graphics.Point(x, y), rectFr))
+                    {
+                        tiles[y, x] = 0;
+                    }
+                }
+            }
+        }
+
+        var pathfinderOptions = new PathFinderOptions
+        {
+            PunishChangeDirection = true,
+            UseDiagonals = false,
+        };
+        var worldGrid = new WorldGrid(tiles);
+        var pathfinder = new PathFinder(worldGrid, pathfinderOptions);
 
         foreach (IWorksheetItem net in _nets)
         {
@@ -169,7 +213,7 @@ public class Turtlor
             {
                 if (lastPin != null)
                 {
-                    trace = GetTrace(trace, lastPin, pin);
+                    trace = GetTrace(trace, lastPin, pin, pathfinder);
                 }
 
                 lastPin = pin;
@@ -188,7 +232,8 @@ public class Turtlor
         return orderedPins;
     }
 
-    private TraceItem GetTrace(TraceItem trace, PinDrawable fromPin, PinDrawable toPin)
+    private TraceItem GetTrace(TraceItem trace, PinDrawable fromPin, PinDrawable toPin,
+        PathFinder pathFinder)
     {
         DirectionNine startDirectionPinFrom = GetPinStartDirection(fromPin, toPin);
         DirectionNine startDirectionPinTo = GetPinStartDirection(toPin, fromPin);
@@ -201,15 +246,12 @@ public class Turtlor
 
         trace.AddPart(pinAbsoluteCoordinateFrom, firstStepCoordinateFrom);
 
-        _turtle = new Turtle(firstStepCoordinateFrom, firstStepCoordinateTo, pinAbsoluteCoordinateFrom)
-        {
-            CollisionRects = GetCollisionRects()
-        };
-        _turtle.Run();
+        Point[] path = pathFinder.FindPath(new Point((int)firstStepCoordinateFrom.X, (int)firstStepCoordinateFrom.Y), new Point((int)firstStepCoordinateTo.X, (int)firstStepCoordinateTo.Y));
 
         Coordinate loopPos = firstStepCoordinateFrom;
-        foreach (Coordinate pathCoordinate in _turtle.PathCoordinates)
+        foreach (Point point in path)
         {
+            Coordinate pathCoordinate = new(point.X, point.Y);
             trace.AddPart(loopPos, pathCoordinate);
             loopPos = pathCoordinate;
         }

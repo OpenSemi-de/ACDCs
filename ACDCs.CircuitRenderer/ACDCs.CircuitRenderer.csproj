@@ -22,8 +22,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="AnyClone" Version="1.1.6" />
-		<PackageReference Include="MathNet.Numerics" Version="5.0.0" />
-		<PackageReference Include="MathNet.Spatial" Version="0.6.0" />
 		<PackageReference Include="Microsoft.Maui.Graphics.Skia" Version="7.0.52" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 	</ItemGroup>
@@ -34,6 +32,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\ACDCs.Data\ACDCs.Data.csproj" />
+	  <ProjectReference Include="..\libs\AStar\AStar\AStar.csproj" />
 	</ItemGroup>
 
 </Project>

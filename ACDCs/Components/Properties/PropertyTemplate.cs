@@ -6,19 +6,23 @@ using Sharp.UI;
 
 public class PropertyTemplate : ViewCell
 {
+    private readonly Action<PropertyEditorView> _onModelEditorClicked;
     private readonly Action<PropertyEditorView> _onModelSelectionClicked;
     private readonly Action<string, object> _updatePropertyAction;
 
-    public PropertyTemplate(Action<string, object> updatePropertyAction, Action<PropertyEditorView> onModelSelectionClicked)
+    public PropertyTemplate(Action<string, object> updatePropertyAction,
+        Action<PropertyEditorView> onModelSelectionClicked, Action<PropertyEditorView> onModelEditorClicked)
     {
         _updatePropertyAction = updatePropertyAction;
         _onModelSelectionClicked = onModelSelectionClicked;
+        _onModelEditorClicked = onModelEditorClicked;
         Grid grid = new Grid()
             .HorizontalOptions(LayoutOptions.Fill)
-            .HeightRequest(30);
+            .VerticalOptions(LayoutOptions.Start);
+
         grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(new GridLength(80)));
         grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
-        grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(new GridLength(30)));
+        grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(GridLength.Auto));
         Label label = new Label()
             .FontSize(11);
 
@@ -27,13 +31,12 @@ public class PropertyTemplate : ViewCell
 
         PropertyEditorView entry = new PropertyEditorView()
             .HorizontalOptions(LayoutOptions.Fill)
-            .HeightRequest(30)
             .Fontsize(11);
         entry.SetBinding(PropertyEditorView.PropertyNameProperty, "Name", BindingMode.OneTime);
         entry.SetBinding(PropertyEditorView.ValueProperty, "Value", BindingMode.OneTime);
 
         entry.OnModelSelectionClicked = _onModelSelectionClicked;
-
+        entry.OnModelEditorClicked = _onModelEditorClicked;
         entry.OnValueChanged += newValue =>
         {
             UpdateProperty(entry.PropertyName, newValue);

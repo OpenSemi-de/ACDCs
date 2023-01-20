@@ -27,8 +27,8 @@
       14.0
     </SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
-    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</TargetPlatformMinVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
     <Nullable>enable</Nullable>
     <IncrementVersionOnBuild>1.100+.yy.Mdd</IncrementVersionOnBuild>
@@ -111,15 +111,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="3.1.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.1" />
     <PackageReference Include="Microsoft.Maui.Graphics.Skia" Version="7.0.52" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="ObjectsComparer" Version="1.4.1" />
     <PackageReference Include="Sharp.UI" Version="0.2.3-alpha.6" />
-    <PackageReference Include="SkiaSharp" Version="2.88.2" />
-    <PackageReference Include="UraniumUI" Version="2.2.0" />
-    <PackageReference Include="UraniumUI.Material" Version="2.2.0" />
+    <PackageReference Include="UraniumUI" Version="2.3.0-pre.2" />
+    <PackageReference Include="UraniumUI.Material" Version="2.3.0-pre.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -16,8 +16,10 @@ public class PropertiesView : WindowView
     private readonly ListView _propertiesView;
     private object? _currentObject;
 
+    public Action<IElectronicComponent>? OnModelEditorCallback { get; set; }
+    public Action<PropertyEditorView>? OnModelEditorClicked { get; set; }
+    public Action<IElectronicComponent>? OnModelSelectionCallback { get; set; }
     public Action<PropertyEditorView>? OnModelSelectionClicked { get; set; }
-    public Action<IElectronicComponent>? OnModelSelectionForward { get; set; }
     public Action? OnUpdate { get; set; }
     public List<string> PropertyExcludeList { get; set; } = new();
 
@@ -35,7 +37,7 @@ public class PropertiesView : WindowView
 
         DataTemplate itemTemplate = new()
         {
-            LoadTemplate = () => new PropertyTemplate(OnPropertyUpdated, ModelSelectionClicked)
+            LoadTemplate = () => new PropertyTemplate(OnPropertyUpdated, ModelSelectionClicked, ModelEditorClicked)
         };
 
         _propertiesView.ItemTemplate(itemTemplate);
@@ -79,15 +81,26 @@ public class PropertiesView : WindowView
         _propertiesView.ItemsSource(propertyItems);
     }
 
-    public void OnModelSelected(IElectronicComponent obj)
+    public void ModelEditorClicked(PropertyEditorView editorView)
     {
-        OnModelSelectionForward?.Invoke(obj);
+        OnModelEditorClicked?.Invoke(editorView);
+        OnModelEditorCallback = editorView.OnModelEdited;
     }
 
-    private void ModelSelectionClicked(PropertyEditorView obj)
+    public void OnModelEdited(IElectronicComponent component)
     {
-        OnModelSelectionClicked?.Invoke(obj);
-        OnModelSelectionForward = obj.OnModelSelected;
+        OnModelEditorCallback?.Invoke(component);
+    }
+
+    public void OnModelSelected(IElectronicComponent component)
+    {
+        OnModelSelectionCallback?.Invoke(component);
+    }
+
+    private void ModelSelectionClicked(PropertyEditorView editorView)
+    {
+        OnModelSelectionClicked?.Invoke(editorView);
+        OnModelSelectionCallback = editorView.OnModelSelected;
     }
 
     private void OnPropertyUpdated(string? propertyName, object value)

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Concurrent;
+using ACDCs.Components;
+using ACDCs.Components.Window;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Maui.Graphics.Skia;
 
@@ -14,9 +16,12 @@ public static class API
 {
     private static readonly ConcurrentDictionary<string, ConcurrentDictionary<string, object?>> s_comValues = new();
     public static PlatformBitmapExportService BitmapExportContextService { get; set; } = new();
+    public static SharpAbsoluteLayout MainContainer { get; set; }
     public static Page? MainPage { get; set; }
     public static Action<Point>? PointerCallback { get; set; }
     public static Element? PointerLayoutObjectToMeasure { get; set; }
+
+    public static WindowTabBar? TabBar { get; set; }
 
     public static event ResetEvent? Reset;
 

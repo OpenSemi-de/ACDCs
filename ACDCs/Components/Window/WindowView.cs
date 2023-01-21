@@ -18,8 +18,8 @@ namespace ACDCs.Components.Window;
 [SharpObject]
 public partial class WindowView : ContentView, IWindowViewProperties
 {
+    protected readonly Grid _grid;
     private readonly WindowFrame _border;
-    private readonly Grid _grid;
     private readonly Image _headerImage;
     private readonly MenuButton _menuButton;
     private readonly MenuFrame _menuFrame;

@@ -177,6 +177,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Views\Debug\" />
+	  <Folder Include="Views\Preferences\" />
 	  <Folder Include="Views\Window\" />
 	</ItemGroup>
 

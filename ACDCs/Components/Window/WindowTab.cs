@@ -1,10 +1,11 @@
-﻿namespace ACDCs.Components.Window;
+﻿using ACDCs.Services;
+
+namespace ACDCs.Components.Window;
 
 using Sharp.UI;
 
 public class WindowTab : Frame
 {
-    private readonly Color _backgroundColor;
     private readonly Action<WindowTab>? _callBack;
     private readonly Button _tabButton;
 
@@ -19,25 +20,34 @@ public class WindowTab : Frame
         _tabButton = new Button(title)
             .VerticalOptions(LayoutOptions.Fill)
             .HorizontalOptions(LayoutOptions.Fill)
-            .Padding(new Thickness(3, 0, 3, 0))
+            .Padding(new Thickness(6, 0, 6, 0))
             .Margin(0)
             .CornerRadius(1)
             .BackgroundColor(Colors.LightBlue)
             .OnClicked(WindowTabClicked);
+
+        _tabButton.BackgroundColor = ColorService.Foreground;
+        _tabButton.TextColor = ColorService.Text;
+        _tabButton.BorderColor = Colors.Transparent;
+
         Content = _tabButton;
-        _backgroundColor = _tabButton.BackgroundColor;
+
         SetInactive();
         _callBack = callBack;
     }
 
     public void SetActive()
     {
-        _tabButton.BackgroundColor(_backgroundColor.WithAlpha(0.8f));
+        _tabButton.BackgroundColor(ColorService.Foreground);
+        _tabButton.TextColor(ColorService.Text);
+        _tabButton.BorderColor(ColorService.Border);
     }
 
     public void SetInactive()
     {
-        _tabButton.BackgroundColor(_backgroundColor.WithAlpha(0.2f));
+        _tabButton.BackgroundColor(ColorService.Background);
+        _tabButton.TextColor(ColorService.Foreground);
+        _tabButton.BorderColor(Colors.Transparent);
     }
 
     private void WindowTabClicked(object? sender, EventArgs e)

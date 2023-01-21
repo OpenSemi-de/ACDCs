@@ -11,21 +11,12 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="34"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="34"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackLayout Orientation="Horizontal" Grid.Row="0"
-            Spacing="0"
-            Padding="0,0"
-            HorizontalOptions="Fill"
-            VerticalOptions="Fill">
-            <Button Text="New sheet" WidthRequest="100" Clicked="NewCircuitButton_OnClicked"></Button>
-            <Button Text="Components" WidthRequest="100" Clicked="ComponentsButton_OnClicked"></Button>
-        </StackLayout>
-
-        <components:SharpAbsoluteLayout Grid.Row="1" x:Name="MainWindowLayout">
+        <components:SharpAbsoluteLayout Grid.Row="0" x:Name="MainWindowLayout">
+            <window:WindowStarterFrame x:Name="StarterFrame" AbsoluteLayout.LayoutFlags="YProportional" AbsoluteLayout.LayoutBounds="0,1,240,400"></window:WindowStarterFrame>
         </components:SharpAbsoluteLayout>
-        <window:WindowTabBar Grid.Row="2" x:Name="windowTabBar" HorizontalOptions="Fill" HeightRequest="36"></window:WindowTabBar>
+        <window:WindowTabBar StarterFrame="{x:Reference StarterFrame}" Grid.Row="1" x:Name="windowTabBar" HorizontalOptions="Fill" HeightRequest="42"></window:WindowTabBar>
     </Grid>
 </ContentPage>

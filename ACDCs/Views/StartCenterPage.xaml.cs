@@ -23,9 +23,13 @@ public partial class StartCenterPage : ContentPage
     private void OnLoaded(object? sender, EventArgs e)
     {
         BackgroundImageSource = ImageService.BackgroundImageSource(this);
-        _debugWindow = new DebugWindow(MainWindowLayout) { StartCenterPage = this, TabBar = windowTabBar };
-        windowTabBar.AddWindow(_debugWindow);
-        _debugWindow.Minimize();
+
+        if (Convert.ToBoolean(API.GetPreference("StartDebugConsole")))
+        {
+            _debugWindow = new DebugWindow(MainWindowLayout) { StartCenterPage = this, TabBar = windowTabBar };
+            windowTabBar.AddWindow(_debugWindow);
+            _debugWindow.Minimize();
+        }
     }
 
     private void PointerMovementOnPointerMoved(object? sender, PointerEventArgs e)

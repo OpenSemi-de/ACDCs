@@ -9,13 +9,15 @@ using Sharp.UI;
 
 public class PreferencesWindowView : WindowView
 {
-    public static List<IPreferenceSetting> preference = new()
+    public static List<PreferenceSetting> preferences = new()
     {
-        new PreferenceSetting<bool>(false, "DarkMode"),
+        new PreferenceSetting {Key = "DarkMode", Value = false},
+        new PreferenceSetting {Key = "StartDebugConsole", Value = false}
     };
 
     private readonly Grid _layoutGrid;
     private readonly StackLayout _preferencesLayout;
+    private readonly PreferencesRepository _repository = new();
 
     public PreferencesWindowView(SharpAbsoluteLayout layout) : base(layout, "Preferences")
     {
@@ -45,14 +47,44 @@ public class PreferencesWindowView : WindowView
 
         _layoutGrid.Add(_preferencesLayout);
 
-        foreach (IPreferenceSetting preferenceSetting in preference)
+        foreach (PreferenceSetting preferenceSetting in preferences)
         {
-            PropertyEditorView propertyEditorView = new PropertyEditorView();
-            propertyEditorView.PropertyName = preferenceSetting.Key;
-            propertyEditorView.Value = preferenceSetting.ObjectValue;
-            _preferencesLayout.Add(propertyEditorView);
+            object? loadedPreference = _repository?.GetPreference(preferenceSetting.Key);
+            StackLayout horizontaLayout = new StackLayout()
+                .HorizontalOptions(LayoutOptions.Fill)
+                .Orientation(StackOrientation.Horizontal);
+
+            Label propertyLabel = new Label(preferenceSetting.Key)
+                .WidthRequest(100);
+
+            PropertyEditorView propertyEditorView = new()
+            {
+                PropertyName = preferenceSetting.Key,
+                Value = loadedPreference ?? preferenceSetting.Value,
+                OnValueChanged = o => OnValueChanged(preferenceSetting.Key, o)
+            };
+
+            horizontaLayout.Add(propertyLabel);
+            horizontaLayout.Add(propertyEditorView);
+            _preferencesLayout.Add(horizontaLayout);
         }
 
+        _repository = new PreferencesRepository();
+
         WindowContent = _layoutGrid;
+    }
+
+    private void OnValueChanged(string key, object obj)
+    {
+        switch (obj)
+        {
+            case bool b:
+                _repository.SetPreference(key, b);
+                break;
+
+            case string s:
+                _repository.SetPreference(key, s);
+                break;
+        }
     }
 }

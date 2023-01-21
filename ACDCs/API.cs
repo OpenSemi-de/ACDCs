@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using ACDCs.Components;
 using ACDCs.Components.Window;
+using ACDCs.IO.DB;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Maui.Graphics.Skia;
 
@@ -22,6 +23,8 @@ public static class API
     public static Element? PointerLayoutObjectToMeasure { get; set; }
 
     public static WindowTabBar? TabBar { get; set; }
+
+    private static PreferencesRepository PreferencesRepository { get; set; } = new();
 
     public static event ResetEvent? Reset;
 
@@ -73,6 +76,11 @@ public static class API
         }
 
         return default;
+    }
+
+    public static object GetPreference(string key)
+    {
+        return PreferencesRepository.GetPreference(key)!;
     }
 
     public static async Task<string> LoadMauiAssetAsString(string name)

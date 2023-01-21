@@ -8,7 +8,12 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
-        UserAppTheme = AppTheme.Dark;
+        bool DarkMode = Convert.ToBoolean(API.GetPreference("DarkMode"));
+        if (DarkMode)
+        {
+            UserAppTheme = AppTheme.Dark;
+        }
+
         MainPage = new StartCenterPage();
 
         AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;

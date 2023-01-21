@@ -9,17 +9,35 @@
             _connection = new DBConnection("preferences");
         }
 
-        public T? GetPreference<T>(string key)
+        public void Delete(string key)
         {
-            List<PreferenceSetting<T>> values = _connection.Read<PreferenceSetting<T>>("Pereferences");
-            PreferenceSetting<T>? value = values.FirstOrDefault(p => p.Key == key);
-            return value != default ? value.Value : default;
         }
 
-        public PreferenceSetting<T> SetPreference<T>(string key, T value)
+        public object? GetPreference(string key)
         {
-            PreferenceSetting<T> setting = new(value, key);
-            _connection.Write(new List<PreferenceSetting<T>> { setting }, "Preferences");
+            PreferenceSetting? setting = _connection.GetOrSet<PreferenceSetting>("Preferences", "Key", key);
+            if (setting == null)
+            {
+                return null;
+            }
+
+            return setting.Value;
+        }
+
+        public PreferenceSetting SetPreference(string key, object value)
+        {
+            PreferenceSetting setting = new() { Key = key, Value = value };
+
+            var existingValue = GetPreference(key);
+            if (existingValue != null)
+            {
+                _connection.GetOrSet("Preferences", "Key", key, value);
+            }
+            else
+            {
+                _connection.Write(new List<PreferenceSetting> { setting }, "Preferences");
+            }
+
             return setting;
         }
     }

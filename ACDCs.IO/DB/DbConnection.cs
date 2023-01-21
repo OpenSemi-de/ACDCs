@@ -16,6 +16,24 @@ public class DBConnection
         _connectionString = $"Filename={dbdir}";
     }
 
+    public T? GetOrSet<T>(string collectionName, string keyName, string keyValue, T? newValue = default)
+    {
+        using LiteDatabase db = new(_connectionString);
+        T? retValue = default;
+        if (db.CollectionExists(collectionName))
+        {
+            var col = db.GetCollection<T>(collectionName);
+            retValue = col.FindOne(Query.EQ(keyName, keyValue));
+            if (newValue != null)
+            {
+                col.DeleteMany(Query.EQ(keyName, keyValue));
+                col.Insert(newValue);
+            }
+        }
+
+        return retValue;
+    }
+
     public List<T> Read<T>(string collectionName)
     {
         using LiteDatabase db = new(_connectionString);

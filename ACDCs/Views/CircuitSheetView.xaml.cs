@@ -1,4 +1,5 @@
 using ACDCs.Components;
+using ACDCs.Views.ModelEditor;
 using ACDCs.Views.ModelSelection;
 using ACDCs.Views.Properties;
 using EditView = ACDCs.Views.Edit.EditView;
@@ -11,6 +12,7 @@ public partial class CircuitSheetView : SharpAbsoluteLayout
     // ReSharper disable once NotAccessedField.Local
     private EditView? _editWindow;
 
+    private ModelEditorWindowView? _modelEditorWindow;
     private ModelSelectionWindowView? _modelSelectionWindow;
     private PropertiesView? _propertiesWindow;
 
@@ -44,7 +46,24 @@ public partial class CircuitSheetView : SharpAbsoluteLayout
             OnModelSelected = _propertiesWindow.OnModelSelected
         };
 
+        _modelEditorWindow = new ModelEditorWindowView(AbsoluteLayoutSheetPage)
+        {
+            IsVisible = false,
+            OnModelEdited = _propertiesWindow.OnModelEditorCallback,
+        };
+
+        _propertiesWindow.OnModelEditorClicked = OnModelEditorClicked;
+
         //    BackgroundImageSource = ImageService.BackgroundImageSource(this);
+    }
+
+    private void OnModelEditorClicked(PropertyEditorView obj)
+    {
+        if (_modelEditorWindow != null)
+        {
+            _modelEditorWindow.IsVisible = true;
+            _modelEditorWindow.GetProperties(obj.Value);
+        }
     }
 
     private void OnModelSelectionClicked(PropertyEditorView obj)

@@ -93,6 +93,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AndroidResource Remove="Views\Window\**" />
+    <Compile Remove="Views\Window\**" />
+    <EmbeddedResource Remove="Views\Window\**" />
+    <MauiCss Remove="Views\Window\**" />
+    <MauiXaml Remove="Views\Window\**" />
+    <None Remove="Views\Window\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <MauiXaml Remove="Components\Window\WindowView.xaml" />
   </ItemGroup>
 
@@ -177,8 +186,8 @@
 
 	<ItemGroup>
 	  <Folder Include="Views\Debug\" />
+	  <Folder Include="Views\ModelEditor\" />
 	  <Folder Include="Views\Preferences\" />
-	  <Folder Include="Views\Window\" />
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionACDCsHideInfoBar="True" /></VisualStudio></ProjectExtensions>

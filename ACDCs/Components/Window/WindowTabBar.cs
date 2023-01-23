@@ -129,7 +129,7 @@ public partial class WindowTabBar : Grid, IWindowTabBarProperties
 
     private void OnStarterButton_Clicked(object? sender, EventArgs e)
     {
-        StarterFrame.FadeTo(StarterFrame.Opacity == 1 ? 0 : 1, 500);
+        StarterFrame.FadeIn();
     }
 
     private async void OnTabClicked(WindowTab tab)

@@ -49,7 +49,7 @@ public partial class CircuitSheetView : SharpAbsoluteLayout
         _modelEditorWindow = new ModelEditorWindowView(AbsoluteLayoutSheetPage)
         {
             IsVisible = false,
-            OnModelEdited = _propertiesWindow.OnModelEditorCallback,
+            OnModelEdited = _propertiesWindow.OnModelEdited,
         };
 
         _propertiesWindow.OnModelEditorClicked = OnModelEditorClicked;

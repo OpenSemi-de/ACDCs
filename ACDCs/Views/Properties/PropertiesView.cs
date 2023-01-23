@@ -4,6 +4,7 @@ using ACDCs.Components;
 using ACDCs.Components.Properties;
 using ACDCs.Data.ACDCs.Interfaces;
 using Microsoft.Maui.Layouts;
+using UraniumUI.Material.Controls;
 using WindowView = ACDCs.Components.Window.WindowView;
 
 namespace ACDCs.Views.Properties;
@@ -13,7 +14,7 @@ using Sharp.UI;
 public class PropertiesView : WindowView
 {
     private readonly Grid _propertiesGrid;
-    private readonly ListView _propertiesView;
+    private readonly TreeView _propertiesView;
     private object? _currentObject;
 
     public Action<IElectronicComponent>? OnModelEditorCallback { get; set; }
@@ -31,16 +32,20 @@ public class PropertiesView : WindowView
             .Padding(0)
             .Margin(0);
 
-        _propertiesView = new ListView()
-            .HorizontalOptions(LayoutOptions.Fill)
-            .VerticalOptions(LayoutOptions.Fill);
-
-        DataTemplate itemTemplate = new()
+        _propertiesView = new TreeView
         {
-            LoadTemplate = () => new PropertyTemplate(OnPropertyUpdated, ModelSelectionClicked, ModelEditorClicked)
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+            IsExpandedPropertyName = "IsExpanded",
+            IsLeafPropertyName = "IsLeaf",
         };
 
-        _propertiesView.ItemTemplate(itemTemplate);
+        /* BindableLayout.SetItemTemplate(_propertiesView, new Microsoft.Maui.Controls.DataTemplate
+         {
+             LoadTemplate = () => new PropertyTemplate(OnPropertyUpdated, ModelSelectionClicked, ModelEditorClicked)
+         });*/
+        _propertiesView.ItemTemplate = new Microsoft.Maui.Controls.DataTemplate(() =>
+            new PropertyTemplate(OnPropertyUpdated, ModelSelectionClicked, ModelEditorClicked));
 
         _propertiesGrid.Add(_propertiesView);
 
@@ -48,7 +53,7 @@ public class PropertiesView : WindowView
 
         HideMenuButton();
         HideResizer();
-        layout.SizeChanged += PropertiesView_SizeChanged;
+        SizeChanged += PropertiesView_SizeChanged;
     }
 
     public void GetProperties(object? currentObject)
@@ -66,8 +71,8 @@ public class PropertiesView : WindowView
                     continue;
                 }
 
-                // && (propertyInfo.PropertyType.IsPrimitive || propertyInfo.PropertyType.IsEnum)
-                Components.Properties.PropertyItem item = new() { Name = propertyInfo.Name };
+                PropertyItem item = new(propertyInfo.Name) { IsLeaf = true };
+
                 object? value = propertyInfo.GetValue(currentObject, null);
                 if (value != null)
                 {
@@ -78,7 +83,39 @@ public class PropertiesView : WindowView
             }
         }
 
-        _propertiesView.ItemsSource(propertyItems);
+        var roots = new List<PropertyItem>();
+
+        var defaultRoot = new PropertyItem("Values")
+        {
+            IsExpanded = true
+        };
+        var modelRoot = new PropertyItem("Model")
+        {
+            IsExpanded = true
+        };
+        var extRoot = new PropertyItem("Extended") { IsExpanded = true };
+
+        PropertyItem? valueItem = propertyItems.FirstOrDefault(p => p.Name == "Value");
+        if (valueItem != null)
+        {
+            propertyItems.Remove(valueItem);
+            defaultRoot.Children.Add(valueItem);
+        }
+
+        PropertyItem? modelItem = propertyItems.FirstOrDefault(p => p.Name == "Model");
+        if (modelItem != null)
+        {
+            propertyItems.Remove(modelItem);
+            modelRoot.Children.Add(modelItem);
+        }
+
+        extRoot.Children.AddRange(propertyItems);
+
+        roots.Add(defaultRoot);
+        roots.Add(modelRoot);
+        roots.Add(extRoot);
+
+        _propertiesView.ItemsSource = roots;
     }
 
     public void ModelEditorClicked(PropertyEditorView editorView)
@@ -140,7 +177,8 @@ public class PropertiesView : WindowView
 
     private void PropertiesView_SizeChanged(object? sender, EventArgs e)
     {
-        if (MainContainer.Width < 150) return;
+        WidthRequest = 200;
+        HeightRequest = 500;
         Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
         Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(this, new Rect(MainContainer.Width - 202, 60, 200, 500));
     }

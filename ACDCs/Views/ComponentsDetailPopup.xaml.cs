@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Reflection;
 using ACDCs.Components.ModelSelection;
+using ACDCs.Components.Properties;
 using CommunityToolkit.Maui.Views;
 
 namespace ACDCs.Views;
@@ -62,18 +63,5 @@ public partial class ComponentsDetailPopup : Popup
     private void CloseButton_OnClicked(object? sender, EventArgs e)
     {
         Close();
-    }
-}
-
-public class PropertyItem
-{
-    public IList<PropertyItem> Children { get; set; } = new ObservableCollection<PropertyItem>();
-
-    public bool IsExpanded { get; set; }
-    public string? Name { get; set; }
-
-    public PropertyItem(string? name)
-    {
-        Name = name;
     }
 }

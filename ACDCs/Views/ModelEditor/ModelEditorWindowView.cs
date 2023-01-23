@@ -107,7 +107,7 @@ public class ModelEditorWindowView : WindowView
                 }
 
                 // && (propertyInfo.PropertyType.IsPrimitive || propertyInfo.PropertyType.IsEnum)
-                Components.Properties.PropertyItem item = new() { Name = propertyInfo.Name };
+                Components.Properties.PropertyItem item = new(propertyInfo.Name);
                 object? value = propertyInfo.GetValue(currentObject, null);
                 if (value != null)
                 {
@@ -123,10 +123,12 @@ public class ModelEditorWindowView : WindowView
 
     private void CancelButton_Clicked(object? sender, EventArgs e)
     {
+        this.IsVisible = false;
     }
 
     private void OKButton_Click(object? sender, EventArgs e)
     {
+        OnModelEdited?.Invoke((IElectronicComponent)_currentObject);
     }
 
     private void OnPropertyUpdated(string? propertyName, object value)

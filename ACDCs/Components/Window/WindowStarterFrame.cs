@@ -73,12 +73,26 @@ public class WindowStarterFrame : Frame
         Margin = 0;
         Content = _grid;
         this.ZIndex(1000);
+        API.Reset += API_Reset;
         Opacity = 0;
+    }
+
+    public void FadeIn()
+    {
+        this.IsVisible = true;
+        this.FadeTo(1, 500);
+    }
+
+    private void API_Reset(object sender, ResetEventArgs args)
+    {
+        FadeOut();
     }
 
     private void FadeOut()
     {
         this.FadeTo(0, 500);
+        Task.Delay(500);
+        this.IsVisible = false;
     }
 
     private async void NewCircuit(object? sender, EventArgs e)

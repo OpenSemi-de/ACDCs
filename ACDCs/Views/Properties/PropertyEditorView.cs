@@ -27,8 +27,10 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
         return this;
     }
 
-    public void OnModelEdited(IElectronicComponent obj)
+    public void OnModelEdited(IElectronicComponent model)
     {
+        OnValueChanged?.Invoke(model);
+        Value = model;
     }
 
     public void OnModelSelected(IElectronicComponent model)

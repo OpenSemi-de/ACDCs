@@ -4,7 +4,7 @@ namespace ACDCs.Components.Properties;
 
 using Sharp.UI;
 
-public class PropertyTemplate : ViewCell
+public class PropertyTemplate : ContentView
 {
     private readonly Action<PropertyEditorView> _onModelEditorClicked;
     private readonly Action<PropertyEditorView> _onModelSelectionClicked;
@@ -44,7 +44,7 @@ public class PropertyTemplate : ViewCell
 
         grid.Add(entry);
         Grid.SetColumn(entry, 1);
-        Add(grid);
+        Content = grid;
     }
 
     private void UpdateProperty(string entryPropertyName, object newValue)

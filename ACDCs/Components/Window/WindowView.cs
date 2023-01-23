@@ -41,6 +41,8 @@ public partial class WindowView : ContentView, IWindowViewProperties
         AbsoluteLayout.SetLayoutBounds(this, new Rect(30, 30, 500, 400));
         MainContainer = sharpAbsoluteLayout;
 
+        this.SizeChanged += OnSizeChanged;
+
         _grid = new Grid()
             .VerticalOptions(LayoutOptions.Fill)
             .HorizontalOptions(LayoutOptions.Fill)
@@ -169,9 +171,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
 
         MainContainer.Add(_menuFrame);
         MenuFrame.HideAllMenus();
-        _lastBounds = AbsoluteLayout.GetLayoutBounds(this);
-
-        _headerImage.Source = ImageService.WindowImageSource(Convert.ToSingle(_lastBounds.Width), Convert.ToSingle(_lastBounds.Height));
+        this.Loaded += OnLoaded;
     }
 
     public void Close()
@@ -195,7 +195,9 @@ public partial class WindowView : ContentView, IWindowViewProperties
 
         this.TranslateTo(0, 0);
         AbsoluteLayout.SetLayoutBounds(this, new Rect(0, 0, MainContainer.Width, MainContainer.Height));
+        Thread.Sleep(10);
         _lastBounds = AbsoluteLayout.GetLayoutBounds(this);
+
         _headerImage.Source = ImageService.WindowImageSource(Convert.ToSingle(_lastBounds.Width), Convert.ToSingle(_lastBounds.Height));
     }
 
@@ -260,12 +262,24 @@ public partial class WindowView : ContentView, IWindowViewProperties
             Microsoft.Maui.Controls.Grid.SetRowSpan((BindableObject)view, rowSpan);
     }
 
+    private void OnLoaded(object? sender, EventArgs e)
+    {
+        _lastBounds = AbsoluteLayout.GetLayoutBounds(this);
+
+        _headerImage.Source = ImageService.WindowImageSource(Convert.ToSingle(_lastBounds.Width), Convert.ToSingle(_lastBounds.Height));
+    }
+
     private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName != null && e.PropertyName.StartsWith("WindowContent"))
         {
             _windowContentView.Content = WindowContent;
         }
+    }
+
+    private void OnSizeChanged(object? sender, EventArgs e)
+    {
+        _headerImage.Source = ImageService.WindowImageSource(Convert.ToSingle(_lastBounds.Width), Convert.ToSingle(_lastBounds.Height));
     }
 
     private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.CircuitRenderer.Instructions;
@@ -20,6 +22,8 @@ public class TwoDPathRouter : IPathRouter
     };
 
     private readonly Worksheet _worksheet;
+    public short[,] CollisionMap { get; set; }
+    public List<RectFr> DebugRects { get; set; }
     public float GridSize { get; set; }
 
     public WorksheetItemList Items { get; set; }
@@ -47,6 +51,7 @@ public class TwoDPathRouter : IPathRouter
         Traces.Clear();
         Turtlor turtle = new(Items, Nets, SheetSize, _worksheet);
         Traces.AddRange(turtle.GetTraces());
+        CollisionMap = turtle.CollisionMap;
 
         int i = 0;
 
@@ -83,6 +88,7 @@ public class TwoDPathRouter : IPathRouter
                 i = 0;
         }
 
+        DebugRects = turtle.DebugCollisionRects.Keys.ToList();
         return Traces;
     }
 

@@ -9,6 +9,12 @@ public class SourceItem : WorksheetItem
 
     public override bool IsInsertable => false;
 
+    public SourceDrawableType Type
+    {
+        get => ((SourceDrawable)DrawableComponent).SourceType;
+        set => ((SourceDrawable)DrawableComponent).SourceType = value;
+    }
+
     public SourceItem()
     {
         DrawableComponent = new SourceDrawable(this, DefaultValue, SourceDrawableType.Voltage, 1, 1);

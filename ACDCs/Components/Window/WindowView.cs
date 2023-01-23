@@ -85,7 +85,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
 
         SetRowAndColumn(_titleLabel, 0, 0, 3);
 
-        var panGesture = new PanGestureRecognizer()
+        PanGestureRecognizer? panGesture = new PanGestureRecognizer()
             .OnPanUpdated(PanGestureRecognizer_OnPanUpdated);
 
         _titleLabel.GestureRecognizers.Add(panGesture);
@@ -109,12 +109,12 @@ public partial class WindowView : ContentView, IWindowViewProperties
         _grid.Add(_resizeField);
         SetRowAndColumn(_resizeField, 2, 2);
 
-        var resizeRecognizer = new PanGestureRecognizer()
+        PanGestureRecognizer? resizeRecognizer = new PanGestureRecognizer()
             .OnPanUpdated(resizeRecognizer_PanUpdated);
 
         _resizeField.GestureRecognizers.Add(resizeRecognizer);
 
-        var menuItems = new List<MenuItemDefinition>
+        List<MenuItemDefinition> menuItems = new List<MenuItemDefinition>
         {
             new MenuItemDefinition
             {

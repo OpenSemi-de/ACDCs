@@ -11,6 +11,8 @@ public sealed class DefaultSceneManager : ISceneManager
 {
     public Color? BackgroundColor { get; set; }
     public Color? BackgroundHighColor { get; set; }
+    public short[,] CollisionMap { get; set; } = new short[0, 0];
+    public List<RectFr> DebugRects { get; set; } = new();
     public Coordinate? DisplayOffset { get; set; }
     public object? DrawableScene { get; set; }
     public List<FeedbackRect>? FeedbackRects { get; } = new();
@@ -55,6 +57,8 @@ public sealed class DefaultSceneManager : ISceneManager
         Scene.BackgroundHighColor = BackgroundHighColor;
         Scene.DisplayOffset = DisplayOffset;
         Scene.SelectedPin = selectedPin;
+        Scene.DebugRects = DebugRects;
+        Scene.CollisionMap = CollisionMap;
         return true;
     }
 

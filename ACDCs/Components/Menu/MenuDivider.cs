@@ -18,7 +18,7 @@ public class MenuDivider : ContentView, IMenuComponent
 
     public MenuDivider()
     {
-        var line = new Line(0, 0, 80, 0)
+        Line line = new Line(0, 0, 80, 0)
         {
             X1 = 1,
             Y1 = 1,

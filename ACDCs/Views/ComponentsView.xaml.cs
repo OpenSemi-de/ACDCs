@@ -159,7 +159,7 @@ public partial class ComponentsView : SharpAbsoluteLayout
     private void OnSizeChanged(object? sender, EventArgs e)
     {
         InvalidateMeasure();
-        foreach (var child in Children)
+        foreach (Microsoft.Maui.IView? child in Children)
         {
             child.InvalidateMeasure();
             child.InvalidateArrange();

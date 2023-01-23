@@ -112,9 +112,31 @@ public class DrawableScene : IDrawable
 
         canvas.RestoreState();
 
-        Scene?.Drawables?.ForEach(
-               component => Render(canvas, component)
-                                 );
+        if (Scene != null && Scene.CollisionMap.Length > 0)
+        {
+            for (int y = 0; y < Scene.SheetSize.Y - 1; y++)
+            {
+                for (int x = 0; x < Scene.SheetSize.X - 1; x++)
+                {
+                    DrawInstructionsList drawInstructions = new()
+                    {
+                        new TextInstruction(Scene.CollisionMap[y, x] + "", 0, 12, 0, 0)
+                    };
+
+                    DrawableComponent drawableComponent = new(typeof(DrawableComponent), null)
+                    {
+                        Position = new Coordinate(x, y),
+                        Size = new Coordinate(1, 1),
+                        DrawInstructions = drawInstructions
+                    };
+
+                    Scene?.Drawables?.Add(drawableComponent);
+                }
+            }
+        }
+
+        Scene?.Drawables?.ForEach(component => Render(canvas, component));
+
         IsRendering = false;
     }
 

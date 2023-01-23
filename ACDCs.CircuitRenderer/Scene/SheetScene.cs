@@ -1,4 +1,5 @@
-﻿using ACDCs.CircuitRenderer.Definitions;
+﻿using System.Collections.Generic;
+using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.CircuitRenderer.Interfaces;
 
@@ -10,6 +11,8 @@ public sealed class SheetScene
 
     public Color? BackgroundHighColor { get; set; }
 
+    public short[,] CollisionMap { get; set; }
+    public List<RectFr>? DebugRects { get; set; }
     public Coordinate? DisplayOffset { get; set; }
 
     public DrawableComponentList? Drawables { get; set; }

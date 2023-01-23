@@ -94,7 +94,7 @@ public class ModelEditorWindowView : WindowView
     public void GetProperties(object? currentObject)
     {
         _currentObject = currentObject;
-        var properties = currentObject?.GetType().GetRuntimeProperties();
+        IEnumerable<PropertyInfo>? properties = currentObject?.GetType().GetRuntimeProperties();
 
         ObservableCollection<Components.Properties.PropertyItem> propertyItems = new();
         if (properties != null)

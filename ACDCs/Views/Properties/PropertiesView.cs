@@ -14,9 +14,9 @@ using Sharp.UI;
 public class PropertiesView : WindowView
 {
     private readonly Grid _propertiesGrid;
+    private readonly ScrollView _propertiesScroll;
     private readonly TreeView _propertiesView;
     private object? _currentObject;
-
     public Action<IElectronicComponent>? OnModelEditorCallback { get; set; }
     public Action<PropertyEditorView>? OnModelEditorClicked { get; set; }
     public Action<IElectronicComponent>? OnModelSelectionCallback { get; set; }
@@ -32,22 +32,23 @@ public class PropertiesView : WindowView
             .Padding(0)
             .Margin(0);
 
+        _propertiesScroll = new ScrollView()
+            .HorizontalOptions(LayoutOptions.Fill)
+            .VerticalOptions(LayoutOptions.Fill);
+
         _propertiesView = new TreeView
         {
+            Spacing = 0,
             HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill,
             IsExpandedPropertyName = "IsExpanded",
             IsLeafPropertyName = "IsLeaf",
+            ItemTemplate = new Microsoft.Maui.Controls.DataTemplate(() =>
+                new PropertyTemplate(OnPropertyUpdated, ModelSelectionClicked, ModelEditorClicked))
         };
 
-        /* BindableLayout.SetItemTemplate(_propertiesView, new Microsoft.Maui.Controls.DataTemplate
-         {
-             LoadTemplate = () => new PropertyTemplate(OnPropertyUpdated, ModelSelectionClicked, ModelEditorClicked)
-         });*/
-        _propertiesView.ItemTemplate = new Microsoft.Maui.Controls.DataTemplate(() =>
-            new PropertyTemplate(OnPropertyUpdated, ModelSelectionClicked, ModelEditorClicked));
+        _propertiesScroll.Content(_propertiesView);
 
-        _propertiesGrid.Add(_propertiesView);
+        _propertiesGrid.Add(_propertiesScroll);
 
         WindowContent = _propertiesGrid;
 
@@ -59,7 +60,7 @@ public class PropertiesView : WindowView
     public void GetProperties(object? currentObject)
     {
         _currentObject = currentObject;
-        var properties = currentObject?.GetType().GetRuntimeProperties();
+        IEnumerable<PropertyInfo>? properties = currentObject?.GetType().GetRuntimeProperties();
 
         ObservableCollection<Components.Properties.PropertyItem> propertyItems = new();
         if (properties != null)
@@ -83,32 +84,23 @@ public class PropertiesView : WindowView
             }
         }
 
-        var roots = new List<PropertyItem>();
+        List<PropertyItem> roots = new List<PropertyItem>();
 
-        var defaultRoot = new PropertyItem("Values")
+        PropertyItem defaultRoot = new PropertyItem("Values")
         {
             IsExpanded = true
         };
-        var modelRoot = new PropertyItem("Model")
+        PropertyItem modelRoot = new PropertyItem("Model")
         {
             IsExpanded = true
         };
-        var extRoot = new PropertyItem("Extended") { IsExpanded = true };
+        PropertyItem extRoot = new PropertyItem("Extended") { IsExpanded = true };
 
-        PropertyItem? valueItem = propertyItems.FirstOrDefault(p => p.Name == "Value");
-        if (valueItem != null)
-        {
-            propertyItems.Remove(valueItem);
-            defaultRoot.Children.Add(valueItem);
-        }
-
-        PropertyItem? modelItem = propertyItems.FirstOrDefault(p => p.Name == "Model");
-        if (modelItem != null)
-        {
-            propertyItems.Remove(modelItem);
-            modelRoot.Children.Add(modelItem);
-        }
-
+        RerootItem(propertyItems, "Value", defaultRoot);
+        RerootItem(propertyItems, "Type", defaultRoot);
+        RerootItem(propertyItems, "Model", modelRoot);
+        RerootItem(propertyItems, "IsMirrored", defaultRoot);
+        RerootItem(propertyItems, "Rotation", defaultRoot);
         extRoot.Children.AddRange(propertyItems);
 
         roots.Add(defaultRoot);
@@ -132,6 +124,16 @@ public class PropertiesView : WindowView
     public void OnModelSelected(IElectronicComponent component)
     {
         OnModelSelectionCallback?.Invoke(component);
+    }
+
+    private static void RerootItem(ObservableCollection<PropertyItem> propertyItems, string name, PropertyItem newRoot)
+    {
+        PropertyItem? valueItem = propertyItems.FirstOrDefault(p => p.Name == name);
+        if (valueItem != null)
+        {
+            propertyItems.Remove(valueItem);
+            newRoot.Children.Add(valueItem);
+        }
     }
 
     private void ModelSelectionClicked(PropertyEditorView editorView)

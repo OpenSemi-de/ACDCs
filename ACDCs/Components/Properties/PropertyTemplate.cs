@@ -18,20 +18,27 @@ public class PropertyTemplate : ContentView
         _onModelEditorClicked = onModelEditorClicked;
         Grid grid = new Grid()
             .HorizontalOptions(LayoutOptions.Fill)
-            .VerticalOptions(LayoutOptions.Start);
+            .VerticalOptions(LayoutOptions.Start)
+            .Margin(1)
+            .Padding(0)
+            .ColumnSpacing(0)
+            .RowSpacing(0);
 
-        grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(new GridLength(80)));
+        grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(new GridLength(60)));
         grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
         grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(GridLength.Auto));
-        Label label = new Label()
-            .FontSize(11);
+        Label label = new Label().FontSize(13)
+            .Margin(1).Padding(1);
 
         label.SetBinding(Label.TextProperty, "Name");
         grid.Add(label);
 
         PropertyEditorView entry = new PropertyEditorView()
             .HorizontalOptions(LayoutOptions.Fill)
-            .Fontsize(11);
+            .Fontsize(13)
+            .Margin(1)
+            .Padding(1);
+
         entry.SetBinding(PropertyEditorView.PropertyNameProperty, "Name", BindingMode.OneTime);
         entry.SetBinding(PropertyEditorView.ValueProperty, "Value", BindingMode.OneTime);
 

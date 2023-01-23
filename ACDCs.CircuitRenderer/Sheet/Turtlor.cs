@@ -28,6 +28,15 @@ public class Turtlor
     private readonly WorksheetItemList _nets;
 
     private readonly Worksheet _worksheet;
+    private Dictionary<RectFr, IWorksheetItem> _debugCollisionRects;
+
+    public short[,] CollisionMap { get; set; }
+
+    public Dictionary<RectFr, IWorksheetItem> DebugCollisionRects
+    {
+        get => _debugCollisionRects;
+        set => _debugCollisionRects = value;
+    }
 
     public Turtlor(WorksheetItemList? items, WorksheetItemList? nets, Coordinate? sheetSize, Worksheet worksheet)
     {
@@ -174,6 +183,7 @@ public class Turtlor
     public List<WorksheetItem> GetTraces()
     {
         Dictionary<RectFr, IWorksheetItem> collisionRects = GetCollisionRects();
+        DebugCollisionRects = collisionRects;
         List<WorksheetItem> traces = new();
 
         short[,] tiles = new short[(int)_worksheet.SheetSize.X, (int)_worksheet.SheetSize.Y];
@@ -194,13 +204,13 @@ public class Turtlor
             }
         }
 
+        CollisionMap = tiles;
+
         var pathfinderOptions = new PathFinderOptions
         {
             PunishChangeDirection = true,
             UseDiagonals = false,
         };
-        var worldGrid = new WorldGrid(tiles);
-        var pathfinder = new PathFinder(worldGrid, pathfinderOptions);
 
         foreach (IWorksheetItem net in _nets)
         {
@@ -213,7 +223,7 @@ public class Turtlor
             {
                 if (lastPin != null)
                 {
-                    trace = GetTrace(trace, lastPin, pin, pathfinder);
+                    trace = GetTrace(trace, lastPin, pin, pathfinderOptions, tiles);
                 }
 
                 lastPin = pin;
@@ -233,22 +243,20 @@ public class Turtlor
     }
 
     private TraceItem GetTrace(TraceItem trace, PinDrawable fromPin, PinDrawable toPin,
-        PathFinder pathFinder)
+        PathFinderOptions pathfinderOptions, short[,] tiles)
     {
-        DirectionNine startDirectionPinFrom = GetPinStartDirection(fromPin, toPin);
-        DirectionNine startDirectionPinTo = GetPinStartDirection(toPin, fromPin);
-
         Coordinate pinAbsoluteCoordinateFrom = GetAbsolutePinPosition(fromPin);
         Coordinate pinAbsoluteCoordinateTo = GetAbsolutePinPosition(toPin);
+        tiles[(int)pinAbsoluteCoordinateFrom.Y, (int)pinAbsoluteCoordinateFrom.X] = 999;
+        tiles[(int)pinAbsoluteCoordinateTo.Y, (int)pinAbsoluteCoordinateTo.X] = 999;
+        var worldGrid = new WorldGrid(tiles);
+        var pathFinder = new PathFinder(worldGrid, pathfinderOptions);
 
-        Coordinate firstStepCoordinateFrom = GetStepCoordinate(pinAbsoluteCoordinateFrom, startDirectionPinFrom);
-        Coordinate firstStepCoordinateTo = GetStepCoordinate(pinAbsoluteCoordinateTo, startDirectionPinTo);
+        Point[] path = pathFinder.FindPath(new Point((int)pinAbsoluteCoordinateFrom.X, (int)pinAbsoluteCoordinateFrom.Y), new Point((int)pinAbsoluteCoordinateTo.X, (int)pinAbsoluteCoordinateTo.Y));
+        tiles[(int)pinAbsoluteCoordinateFrom.Y, (int)pinAbsoluteCoordinateFrom.X] = 0;
+        tiles[(int)pinAbsoluteCoordinateTo.Y, (int)pinAbsoluteCoordinateTo.X] = 0;
 
-        trace.AddPart(pinAbsoluteCoordinateFrom, firstStepCoordinateFrom);
-
-        Point[] path = pathFinder.FindPath(new Point((int)firstStepCoordinateFrom.X, (int)firstStepCoordinateFrom.Y), new Point((int)firstStepCoordinateTo.X, (int)firstStepCoordinateTo.Y));
-
-        Coordinate loopPos = firstStepCoordinateFrom;
+        Coordinate loopPos = pinAbsoluteCoordinateFrom;
         foreach (Point point in path)
         {
             Coordinate pathCoordinate = new(point.X, point.Y);
@@ -256,7 +264,7 @@ public class Turtlor
             loopPos = pathCoordinate;
         }
 
-        trace.AddPart(pinAbsoluteCoordinateTo, firstStepCoordinateTo);
+        trace.AddPart(loopPos, pinAbsoluteCoordinateTo);
 
         return trace;
     }

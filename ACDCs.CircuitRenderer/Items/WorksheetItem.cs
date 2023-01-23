@@ -33,7 +33,9 @@ public class WorksheetItem : IWorksheetItem
     }
 
     public Guid ItemGuid { get; set; } = Guid.NewGuid();
+
     public IElectronicComponent? Model { get; set; }
+
     public string Name { get; set; } = string.Empty;
 
     [JsonIgnore] public DrawablePinList Pins { get; set; } = new();
@@ -167,6 +169,16 @@ public class WorksheetItem : IWorksheetItem
         if (result == 0) { result = partialValue; }
 
         return Convert.ToString(result);
+    }
+
+    public T GetModel<T>()
+    {
+        if (Model != null)
+        {
+            return (T)Model;
+        }
+
+        return default;
     }
 
     private static double PartialValue(double partialValue, double multiplier, ref double result)

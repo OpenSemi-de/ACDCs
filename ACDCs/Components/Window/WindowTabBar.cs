@@ -57,7 +57,7 @@ public partial class WindowTabBar : Grid, IWindowTabBarProperties
 
     public void AddWindow(WindowView window)
     {
-        var tab = new WindowTab(window.WindowTitle, OnTabClicked);
+        WindowTab tab = new WindowTab(window.WindowTitle, OnTabClicked);
         window.TabBar = this;
         TapGestureRecognizer tapGestureRecognizer = new();
         tapGestureRecognizer.Tapped += TapGestureRecognizerOnTapped;
@@ -79,7 +79,7 @@ public partial class WindowTabBar : Grid, IWindowTabBarProperties
             return;
         }
 
-        var window = (WindowView)sender;
+        WindowView window = (WindowView)sender;
         if (_focusWindow != window)
         {
             if (_focusWindow != null)

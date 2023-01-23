@@ -7,9 +7,11 @@ public class SourceDrawable : DrawableComponent
 {
     public static string DefaultValue { get; set; } = "5v";
 
+    public SourceDrawableType SourceType { get; set; }
+
     public SourceDrawable(WorksheetItem parent, SourceDrawableType type) : base(typeof(SourceDrawable), parent)
     {
-        Setup(DefaultValue);
+        Setup(DefaultValue, type);
     }
 
     public SourceDrawable(WorksheetItem parent, string value, SourceDrawableType type, float x, float y) : base(typeof(SourceDrawable), parent)
@@ -20,6 +22,7 @@ public class SourceDrawable : DrawableComponent
 
     private void Setup(string value = "N/A", SourceDrawableType type = SourceDrawableType.Voltage, float x = 0, float y = 0)
     {
+        SourceType = type;
         DrawablePins.Add(new PinDrawable(ParentItem, 0, 0.5f));
         DrawablePins.Add(new PinDrawable(ParentItem, 1f, 0.5f));
         DrawInstructions.Add(new LineInstruction(0f, 0.5f, 0.25f, 0.5f));

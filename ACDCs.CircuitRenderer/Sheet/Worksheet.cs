@@ -233,6 +233,11 @@ public sealed class Worksheet
         Router.SetItems(Items, Nets);
         Traces.Clear();
         Traces.AddRange(Router.GetTraces());
+        if (SceneManager != null)
+        {
+            SceneManager.DebugRects = Router.DebugRects;
+            SceneManager.CollisionMap = Router.CollisionMap;
+        }
     }
 
     public bool ToggleSelectItem(WorksheetItem selectedItem)

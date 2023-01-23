@@ -9,6 +9,8 @@ public interface ISceneManager
 {
     Color? BackgroundColor { get; set; }
     Color? BackgroundHighColor { get; set; }
+    short[,] CollisionMap { get; set; }
+    List<RectFr> DebugRects { get; set; }
     Coordinate? DisplayOffset { get; set; }
     List<FeedbackRect>? FeedbackRects { get; }
     Color? ForegroundColor { get; set; }

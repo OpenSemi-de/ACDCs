@@ -39,6 +39,7 @@ public partial class CircuitView : ContentView, ICircuitViewProperties
     public bool MultiSelectionMode { get; set; }
     public Action<WorksheetItem>? OnSelectedItemChange { get; set; }
     public WorksheetItem? SelectedItem { get; set; }
+    public bool ShowCollisionMap { get; set; }
 
     public CircuitView()
     {
@@ -156,6 +157,11 @@ public partial class CircuitView : ContentView, ICircuitViewProperties
 
             if (ItemsView != null && ItemsView.IsInserting)
                 return Task.CompletedTask;
+
+            if (CurrentWorksheet.SceneManager != null)
+            {
+                CurrentWorksheet.SceneManager.ShowCollisionMap = ShowCollisionMap;
+            }
 
             _graphicsView.Drawable = null;
             CurrentWorksheet.CalculateScene();

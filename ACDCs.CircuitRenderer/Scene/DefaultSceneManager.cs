@@ -18,6 +18,7 @@ public sealed class DefaultSceneManager : ISceneManager
     public List<FeedbackRect>? FeedbackRects { get; } = new();
     public Color? ForegroundColor { get; set; }
     public SheetScene? Scene { get; set; }
+    public bool ShowCollisionMap { get; set; }
     public bool ShowGrid { get; set; } = true;
 
     public object? GetSceneForBackend()
@@ -59,6 +60,7 @@ public sealed class DefaultSceneManager : ISceneManager
         Scene.SelectedPin = selectedPin;
         Scene.DebugRects = DebugRects;
         Scene.CollisionMap = CollisionMap;
+        Scene.ShowCollisionMap = ShowCollisionMap;
         return true;
     }
 

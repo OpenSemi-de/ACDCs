@@ -20,6 +20,7 @@ public partial class CircuitSheetView : SharpAbsoluteLayout
     {
         InitializeComponent();
         Loaded += OnLoaded;
+        CircuitView.ShowCollisionMap = Convert.ToBoolean(API.GetPreference("ShowTraceCollisionMap"));
         CircuitView.CursorDebugChanged = CursorDebugChanged;
         CircuitView.ItemsView = ItemsView;
     }

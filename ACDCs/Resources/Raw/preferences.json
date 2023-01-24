@@ -1,0 +1,29 @@
+[
+    {
+        "Description": "Use dark mode only",
+        "Group": "Visual",
+        "Key": "DarkMode",
+        "TypeName": "System.Boolean",
+        "Value": "false"
+    },
+    {
+        "Description": "Start debug console",
+        "Group": "Debug",
+        "Key": "StartDebugConsole",
+        "TypeName": "System.Boolean",
+        "Value": "false"
+    },
+    {
+        "Description": "Show collision grid",
+        "Group": "Debug",
+        "Key": "ShowTraceCollisionMap",
+        "TypeName": "System.Boolean",
+        "Value": "false"
+    }
+    
+]
+
+/*       new PreferenceSetting {Key = "DarkMode", Value = false},
+        new PreferenceSetting {Key = "StartDebugConsole", Value = false},
+        new PreferenceSetting {Key = "ShowTraceCollisionMap", Value = false}
+ */

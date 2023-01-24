@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net7.0-android</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
@@ -111,6 +111,7 @@
     <None Remove="Resources\Fonts\MapleMono-Regular.ttf" />
     <None Remove="Resources\Raw\menu_components.json" />
     <None Remove="Resources\Raw\menu_main.json" />
+    <None Remove="Resources\Raw\preferences.json" />
     <None Remove="Resources\Splash\splash.svg" />
   </ItemGroup>
 
@@ -121,7 +122,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
-    <PackageReference Include="CommunityToolkit.Maui" Version="3.1.0" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="4.0.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.1" />
     <PackageReference Include="Microsoft.Maui.Graphics.Skia" Version="7.0.52" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />

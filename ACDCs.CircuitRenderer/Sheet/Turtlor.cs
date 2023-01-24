@@ -145,36 +145,6 @@ public class Turtlor
         return collList;
     }
 
-    public DirectionNine GetPinStartDirection(PinDrawable pin, PinDrawable targetPin)
-    {
-        int pinX = Convert.ToInt32(Math.Round(pin.Position.X * 2));
-        int pinY = Convert.ToInt32(Math.Round(pin.Position.Y * 2));
-
-        DirectionNine[,] position = {
-            { DirectionNine.UpLeft, DirectionNine.Up, DirectionNine.UpRight },
-            { DirectionNine.Left, DirectionNine.Middle, DirectionNine.Right },
-            { DirectionNine.DownLeft, DirectionNine.Down, DirectionNine.DownRight }
-        };
-
-        DirectionNine direction = position[pinY, pinX];
-
-        if (direction == DirectionNine.Middle)
-        {
-            direction = DirectionNine.Up;
-        }
-        else
-        {
-            if ((int)direction % 2 == 1)
-            {
-                direction = pin.Position.Y > targetPin.Position.Y
-                    ? (DirectionNine)((int)direction + 1)
-                    : (DirectionNine)((int)direction - 1);
-            }
-        }
-
-        return direction;
-    }
-
     public Coordinate GetStepCoordinate(Coordinate position, DirectionNine direction)
     {
         return _directionCoordinates.ContainsKey(direction) ? _directionCoordinates[direction].Add(position) : new Coordinate(-100, -100, 0);
@@ -250,6 +220,7 @@ public class Turtlor
         tiles[(int)pinAbsoluteCoordinateFrom.Y, (int)pinAbsoluteCoordinateFrom.X] = 999;
         tiles[(int)pinAbsoluteCoordinateTo.Y, (int)pinAbsoluteCoordinateTo.X] = 999;
         var worldGrid = new WorldGrid(tiles);
+
         var pathFinder = new PathFinder(worldGrid, pathfinderOptions);
 
         Point[] path = pathFinder.FindPath(new Point((int)pinAbsoluteCoordinateFrom.X, (int)pinAbsoluteCoordinateFrom.Y), new Point((int)pinAbsoluteCoordinateTo.X, (int)pinAbsoluteCoordinateTo.Y));
@@ -267,10 +238,5 @@ public class Turtlor
         trace.AddPart(loopPos, pinAbsoluteCoordinateTo);
 
         return trace;
-    }
-
-    private int R(float number)
-    {
-        return Convert.ToInt32(Math.Round(number));
     }
 }

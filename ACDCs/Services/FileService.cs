@@ -1,4 +1,5 @@
 ﻿using ACDCs.Views.Circuit;
+using CommunityToolkit.Maui.Core.Primitives;
 
 namespace ACDCs.Services;
 
@@ -48,11 +49,12 @@ public static class FileService
 
     public static async Task SaveFileAs(Page popupPage, CircuitView circuitView)
     {
-        string? result = await popupPage.DisplayPromptAsync("filename", "filename");
-        if (result != null)
+        Folder filePath = await CommunityToolkit.Maui.Storage.FolderPicker.Default.PickAsync(FileSystem.Current.AppDataDirectory,
+             new CancellationToken());
+        string? result = await popupPage.DisplayPromptAsync("filename", "filename", initialValue: circuitView.CurrentWorksheet.Filename + ".acc");
+        if (result != null && filePath.Path != "")
         {
-            string mainDir = FileSystem.Current.AppDataDirectory;
-            circuitView.SaveAs(Path.Combine(mainDir, result));
+            circuitView.SaveAs(Path.Combine(filePath.Path, result));
         }
     }
 }

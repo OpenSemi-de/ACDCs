@@ -26,7 +26,7 @@
 
         public PreferenceSetting SetPreference(string key, object value)
         {
-            PreferenceSetting setting = new() { Key = key, Value = value };
+            PreferenceSetting setting = new() { Key = key, Value = value, TypeName = value.GetType().Name };
 
             var existingValue = GetPreference(key);
             if (existingValue != null)

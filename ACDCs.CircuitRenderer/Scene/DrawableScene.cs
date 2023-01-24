@@ -112,7 +112,7 @@ public class DrawableScene : IDrawable
 
         canvas.RestoreState();
 
-        if (Scene != null && Scene.CollisionMap.Length > 0)
+        if (Scene != null && Scene.ShowCollisionMap && Scene.CollisionMap.Length > 0)
         {
             for (int y = 0; y < Scene.SheetSize.Y - 1; y++)
             {

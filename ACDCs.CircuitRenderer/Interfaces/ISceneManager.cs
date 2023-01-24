@@ -15,6 +15,7 @@ public interface ISceneManager
     List<FeedbackRect>? FeedbackRects { get; }
     Color? ForegroundColor { get; set; }
     SheetScene? Scene { get; set; }
+    bool ShowCollisionMap { get; set; }
     bool ShowGrid { get; set; }
 
     object? GetSceneForBackend();

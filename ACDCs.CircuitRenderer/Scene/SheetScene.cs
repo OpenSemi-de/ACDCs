@@ -29,6 +29,7 @@ public sealed class SheetScene
 
     public Coordinate SheetSize { get; set; }
 
+    public bool ShowCollisionMap { get; set; }
     public bool ShowGrid { get; set; } = true;
 
     public SheetScene(ISceneManager sceneManager)

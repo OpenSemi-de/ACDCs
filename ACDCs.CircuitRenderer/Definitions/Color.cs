@@ -12,7 +12,15 @@ public sealed class Color
 
     public int R;
 
-    public Color(int r, int g, int b, int a = 100)
+    public Color()
+    {
+        R = 255;
+        G = 255;
+        B = 255;
+        A = 255;
+    }
+
+    public Color(int r, int g, int b, int a = 255)
     {
         R = r;
         G = g;

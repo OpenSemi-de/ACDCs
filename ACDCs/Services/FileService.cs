@@ -1,5 +1,6 @@
 ﻿using ACDCs.Views.Circuit;
 using CommunityToolkit.Maui.Core.Primitives;
+using CommunityToolkit.Maui.Storage;
 
 namespace ACDCs.Services;
 
@@ -32,6 +33,8 @@ public static class FileService
         {
             string fileName = result.FullPath;
             circuitView.Open(fileName);
+            circuitView.CurrentWorksheet.Directory = Path.GetFullPath(fileName);
+            circuitView.CurrentWorksheet.Filename = Path.GetFileNameWithoutExtension(fileName);
         }
     }
 
@@ -39,7 +42,7 @@ public static class FileService
     {
         if (circuitView.CurrentWorksheet.Filename != "")
         {
-            circuitView.SaveAs(circuitView.CurrentWorksheet.Filename);
+            circuitView.SaveAs(Path.Combine(circuitView.CurrentWorksheet.Directory, circuitView.CurrentWorksheet.Filename));
         }
         else
         {
@@ -49,12 +52,21 @@ public static class FileService
 
     public static async Task SaveFileAs(Page popupPage, CircuitView circuitView)
     {
-        Folder filePath = await CommunityToolkit.Maui.Storage.FolderPicker.Default.PickAsync(FileSystem.Current.AppDataDirectory,
-             new CancellationToken());
-        string? result = await popupPage.DisplayPromptAsync("filename", "filename", initialValue: circuitView.CurrentWorksheet.Filename + ".acc");
-        if (result != null && filePath.Path != "")
+        try
         {
-            circuitView.SaveAs(Path.Combine(filePath.Path, result));
+            Folder filePath = await CommunityToolkit.Maui.Storage.FolderPicker.Default.PickAsync(
+                FileSystem.Current.AppDataDirectory,
+                new CancellationToken());
+            string? result = await popupPage.DisplayPromptAsync("filename", "filename",
+                initialValue: Path.GetFileNameWithoutExtension(circuitView.CurrentWorksheet.Filename) + ".acc");
+            if (result != null && filePath.Path != "")
+            {
+                circuitView.SaveAs(Path.Combine(filePath.Path, result));
+            }
+        }
+        catch (FolderPickerException)
+        {
+            // i
         }
     }
 }

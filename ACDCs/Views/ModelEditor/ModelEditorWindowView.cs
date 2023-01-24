@@ -94,6 +94,7 @@ public class ModelEditorWindowView : WindowView
     public void GetProperties(object? currentObject)
     {
         _currentObject = currentObject;
+        Type? parentType = currentObject?.GetType();
         IEnumerable<PropertyInfo>? properties = currentObject?.GetType().GetRuntimeProperties();
 
         ObservableCollection<Components.Properties.PropertyItem> propertyItems = new();
@@ -114,6 +115,7 @@ public class ModelEditorWindowView : WindowView
                     item.Value = value;
                 }
 
+                item.ParentType = parentType;
                 propertyItems.Add(item);
             }
         }

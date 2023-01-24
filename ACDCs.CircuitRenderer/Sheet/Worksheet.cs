@@ -19,10 +19,10 @@ public sealed class Worksheet
 
     public Color? BackgroundHighColor { get; set; }
 
+    public string Directory { get; set; } = string.Empty;
     public Coordinate? DisplayOffset { get; set; }
 
     public string Filename { get; set; } = string.Empty;
-
     public Color? ForegroundColor { get; set; }
 
     public float GridSize { get; set; } = 2.54f;

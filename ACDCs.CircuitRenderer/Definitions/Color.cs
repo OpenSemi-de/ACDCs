@@ -41,7 +41,8 @@ public sealed class Color
         return new Microsoft.Maui.Graphics.Color(
             R / 255f,
             G / 255f,
-            B / 255f
+            B / 255f,
+            A / 255f
         );
     }
 }

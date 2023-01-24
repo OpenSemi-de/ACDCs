@@ -185,6 +185,8 @@ public partial class CircuitView : ContentView, ICircuitViewProperties
         };
         string jsonData = JsonConvert.SerializeObject(CurrentWorksheet, settings: settings);
         CurrentWorksheet.Filename = System.IO.Path.GetFileName(fileName);
+        CurrentWorksheet.Filename = System.IO.Path.GetFullPath(fileName);
+
         await File.WriteAllTextAsync(fileName, jsonData);
         OnSavedSheet();
     }

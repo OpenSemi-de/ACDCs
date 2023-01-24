@@ -1,5 +1,6 @@
 ﻿using ACDCs.Data.ACDCs.Interfaces;
 using ACDCs.Interfaces;
+using ACDCs.Services;
 
 namespace ACDCs.Views.Properties;
 
@@ -9,11 +10,10 @@ using Sharp.UI;
 public partial class PropertyEditorView : ContentView, IPropertyEditorViewProperties
 {
     private int _fontSize;
-
     public Action<PropertyEditorView>? OnModelEditorClicked { get; set; }
     public Action<PropertyEditorView>? OnModelSelectionClicked { get; set; }
     public Action<object>? OnValueChanged { get; set; }
-
+    public bool ShowDescription { get; set; }
     public string ValueType { get; set; } = string.Empty;
 
     public PropertyEditorView()
@@ -82,22 +82,32 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
 
             ValueType = value.GetType().Name;
 
+            Grid grid = new Grid()
+                .HorizontalOptions(LayoutOptions.Fill)
+                .VerticalOptions(LayoutOptions.Fill)
+                .Margin(0)
+                .Padding(0);
+            grid.ColumnDefinitions.Add(new ColumnDefinition(100));
+            grid.RowDefinitions.Add(new RowDefinition(34));
+
+            Content = grid;
+
             if (PropertyName == "Value")
             {
-                Content = new Entry()
+                grid.Add(new Entry()
                     .HorizontalOptions(LayoutOptions.Fill)
                     .VerticalOptions(LayoutOptions.Fill)
                     .FontSize(_fontSize)
                     .OnTextChanged(Value_OnTextChanged)
-                    .Text(Convert.ToString(value));
+                    .Text(Convert.ToString(value)));
             }
             else if (value is bool boolValue)
             {
-                Content = new Switch()
+                grid.Add(new Switch()
                     .HorizontalOptions(LayoutOptions.Start)
                     .VerticalOptions(LayoutOptions.Start)
                     .IsToggled(boolValue)
-                    .OnToggled(Toggle_OnToggle);
+                    .OnToggled(Toggle_OnToggle));
             }
             else if (value.GetType().IsEnum)
             {
@@ -114,7 +124,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
 
                 picker.SelectedItem = Convert.ToString(value);
                 picker.OnSelectedIndexChanged(Picker_OnSelectedIndexChange);
-                Content = picker;
+                grid.Add(picker);
             }
             // else if (value is int intValue)
             // {
@@ -150,12 +160,6 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
 
                 ValueType = c.GetType().Name + (c.Type != "" ? ":" + c.Type : "");
 
-                Grid grid = new Grid()
-                    .HorizontalOptions(LayoutOptions.Fill)
-                    .VerticalOptions(LayoutOptions.Fill)
-                    .Margin(0)
-                    .Padding(0);
-                grid.RowDefinitions.Add(new RowDefinition(34));
                 grid.RowDefinitions.Add(new RowDefinition(34));
 
                 grid.Add(modelButton);
@@ -165,12 +169,19 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
             }
             else
             {
-                Content = new Entry()
+                grid.Add(new Entry().
+                    HorizontalOptions(LayoutOptions.Fill).VerticalOptions(LayoutOptions.Fill).FontSize(_fontSize).OnTextChanged(Entry_OnTextChanged).Text(Convert.ToString(value)));
+            }
+
+            if (ShowDescription)
+            {
+                grid.ColumnDefinitions.Add(new ColumnDefinition(200));
+                Label descriptionLabel = new Label()
                     .HorizontalOptions(LayoutOptions.Fill)
                     .VerticalOptions(LayoutOptions.Fill)
-                    .FontSize(_fontSize)
-                    .OnTextChanged(Entry_OnTextChanged)
-                    .Text(Convert.ToString(value));
+                    .Text(DescriptionService.GetComponentDescription(ParentType, PropertyName));
+                Grid.SetColumn(descriptionLabel, 2);
+                grid.Add(descriptionLabel);
             }
 
             return Task.CompletedTask;

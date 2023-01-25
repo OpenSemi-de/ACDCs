@@ -27,7 +27,7 @@ public class PropertyTemplate : ContentView
         grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(new GridLength(60)));
         grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
         grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(GridLength.Auto));
-        Label label = new Label().FontSize(13)
+        Label label = new Label()
             .Margin(1).Padding(1);
 
         label.SetBinding(Label.TextProperty, "Name");
@@ -35,7 +35,6 @@ public class PropertyTemplate : ContentView
 
         PropertyEditorView entry = new PropertyEditorView()
             .HorizontalOptions(LayoutOptions.Fill)
-            .Fontsize(13)
             .Margin(1)
             .Padding(1);
 

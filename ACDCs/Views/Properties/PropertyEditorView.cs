@@ -21,12 +21,6 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
         PropertyChanged += PropertyEditor_PropertyChanged;
     }
 
-    public PropertyEditorView Fontsize(int fontSize)
-    {
-        _fontSize = fontSize;
-        return this;
-    }
-
     public void OnModelEdited(IElectronicComponent model)
     {
         OnValueChanged?.Invoke(model);
@@ -97,7 +91,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
                 grid.Add(new Entry()
                     .HorizontalOptions(LayoutOptions.Fill)
                     .VerticalOptions(LayoutOptions.Fill)
-                    .FontSize(_fontSize)
+
                     .OnTextChanged(Value_OnTextChanged)
                     .Text(Convert.ToString(value)));
             }
@@ -114,8 +108,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
                 Picker? picker = new Picker()
                     .HorizontalOptions(LayoutOptions.Fill)
                     .VerticalOptions(LayoutOptions.Fill)
-                    .Margin(0)
-                    .FontSize(_fontSize);
+                    .Margin(0);
 
                 foreach (object? enumValue in value.GetType().GetEnumValues())
                 {
@@ -145,7 +138,6 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
                     .HorizontalOptions(LayoutOptions.Fill)
                     .VerticalOptions(LayoutOptions.Fill)
                     .Margin(0)
-                    .FontSize(_fontSize)
                     .Text(text)
                     .OnClicked(ModelButton_Clicked);
 
@@ -153,7 +145,6 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
                     .HorizontalOptions(LayoutOptions.Fill)
                     .VerticalOptions(LayoutOptions.Fill)
                     .Margin(0)
-                    .FontSize(_fontSize)
                     .OnClicked(EditModel_Clicked);
 
                 Grid.SetRow(editButton, 1);
@@ -170,12 +161,12 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
             else
             {
                 grid.Add(new Entry().
-                    HorizontalOptions(LayoutOptions.Fill).VerticalOptions(LayoutOptions.Fill).FontSize(_fontSize).OnTextChanged(Entry_OnTextChanged).Text(Convert.ToString(value)));
+                    HorizontalOptions(LayoutOptions.Fill).VerticalOptions(LayoutOptions.Fill).OnTextChanged(Entry_OnTextChanged).Text(Convert.ToString(value)));
             }
 
             if (ShowDescription)
             {
-                grid.ColumnDefinitions.Add(new ColumnDefinition(200));
+                grid.ColumnDefinitions.Add(new ColumnDefinition().Width(GridLength.Star));
                 Label descriptionLabel = new Label()
                     .HorizontalOptions(LayoutOptions.Fill)
                     .VerticalOptions(LayoutOptions.Fill)

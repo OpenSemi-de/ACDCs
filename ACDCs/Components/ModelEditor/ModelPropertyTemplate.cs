@@ -17,8 +17,8 @@ public class ModelPropertyTemplate : ViewCell
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Start);
 
+        grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(new GridLength(100)));
         grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
-        grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(new GridLength(300)));
         grid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(new GridLength(34)));
         Label label = new Label()
             .FontSize(11);
@@ -27,8 +27,7 @@ public class ModelPropertyTemplate : ViewCell
         grid.Add(label);
 
         PropertyEditorView entry = new PropertyEditorView()
-            .HorizontalOptions(LayoutOptions.Fill)
-            .Fontsize(11);
+            .HorizontalOptions(LayoutOptions.Fill);
         entry.ShowDescription = true;
         entry.SetBinding(PropertyEditorView.ParentTypeProperty, "ParentType", BindingMode.OneTime);
         entry.SetBinding(PropertyEditorView.PropertyNameProperty, "Name", BindingMode.OneTime);

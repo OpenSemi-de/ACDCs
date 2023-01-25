@@ -2,7 +2,6 @@
 using ACDCs.Views;
 using ACDCs.Views.Preferences;
 using Sharp.UI;
-using Button = Sharp.UI.Button;
 using Frame = Sharp.UI.Frame;
 using Grid = Sharp.UI.Grid;
 using ScrollView = Sharp.UI.ScrollView;
@@ -54,21 +53,21 @@ public class WindowStarterFrame : Frame
 
         _scrollView.Content = _buttonStack;
 
-        Button newCircuit = new Button("New circuit")
+        StarterButton newCircuit = new StarterButton("New circuit")
             .OnClicked(NewCircuit);
         _buttonStack.Add(newCircuit);
 
-        Button components = new Button("Components")
+        StarterButton components = new StarterButton("Components")
             .OnClicked(ShowComponents);
         _buttonStack.Add(components);
 
-        Button preferences = new Button("Preferences")
+        StarterButton preferences = new StarterButton("Preferences")
             .OnClicked(ShowPreferences);
         _buttonStack.Add(preferences);
 
         BorderColor = ColorService.Border;
         BackgroundColor = ColorService.BackgroundHigh;
-        WidthRequest = 240;
+        WidthRequest = 200;
         Padding = 0;
         Margin = 0;
         Content = _grid;
@@ -167,5 +166,12 @@ public class WindowStarterFrame : Frame
         });
 
         FadeOut();
+    }
+}
+
+public class StarterButton : Sharp.UI.Button
+{
+    public StarterButton(string text) : base(text)
+    {
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace ACDCs.Services;
+﻿using Font = Microsoft.Maui.Graphics.Font;
+
+namespace ACDCs.Services;
 
 public static class ImageService
 {
@@ -23,7 +25,7 @@ public static class ImageService
 
             canvas.SetShadow(new SizeF(2, 4), 10f, colors[1]);
 
-            LinearGradientPaint paintFrom = new(Point.Zero, new Point(1, 1))
+            RadialGradientPaint paintFrom = new(new Point(1, 1), 1)
             {
                 StartColor = colors[0],
                 EndColor = colors[1]
@@ -32,22 +34,13 @@ public static class ImageService
             canvas.SetFillPaint(paintFrom, new RectF(0f, 0f, width, height));
             canvas.FillRectangle(0, 0, width, height);
 
-            LinearGradientPaint paintTo = new(Point.Zero, new Point(1, 1)) { StartColor = colors[1], EndColor = colors[0] };
+            RadialGradientPaint paintTo = new(new Point(1, 1), 1) { StartColor = colors[1], EndColor = colors[0] };
 
             canvas.SetFillPaint(paintTo, new RectF(0f, 0f, width, height));
-
-            PathF path = new();
-
-            path.MoveTo(0, 0)
-                .LineTo(width, 0)
-                .LineTo(width, 10)
-                .LineTo(30, 10)
-                .CurveTo(10, 10, 10, 10, 10, 30)
-                .LineTo(10, height)
-                .LineTo(0, height)
-                .LineTo(0, 0);
-
-            canvas.FillPath(path, WindingMode.EvenOdd);
+            canvas.FontSize = 120;
+            canvas.Font = new Font("Maple Mono");
+            canvas.FontColor = paintTo.ToColor();
+            canvas.DrawString("ACDCs", 0, 0, width, height, HorizontalAlignment.Center, VerticalAlignment.Center);
 
             MemoryStream ms = new();
 
@@ -91,6 +84,7 @@ public static class ImageService
             canvas.Antialias = true;
 
             canvas.FontColor = ColorService.Text;
+            canvas.Font = new Font("Maple Mono");
             canvas.DrawString(text, width / 2, height / 2, HorizontalAlignment.Center);
 
             MemoryStream ms = new();
@@ -119,7 +113,7 @@ public static class ImageService
 
             List<Color> colors = new() { ColorService.Background, ColorService.Foreground };
 
-            LinearGradientPaint paintFrom = new(Point.Zero, new Point(1, 0))
+            RadialGradientPaint paintFrom = new(new Point(1, 0), 1)
             {
                 StartColor = colors[0],
                 EndColor = colors[1]
@@ -127,7 +121,7 @@ public static class ImageService
 
             canvas.SetFillPaint(paintFrom, new RectF(0f, 0f, width, height));
             canvas.FillRoundedRectangle(0, 0, width, height, 2);
-            canvas.StrokeSize = 3;
+            canvas.StrokeSize = 1;
             canvas.StrokeColor = ColorService.Border;
             canvas.Antialias = false;
             canvas.DrawRoundedRectangle(2, 2, width - 4, height - 4, 2);
@@ -135,7 +129,7 @@ public static class ImageService
             canvas.Antialias = true;
             canvas.FillRoundedRectangle(0, 0, width, 34, 2);
             canvas.Antialias = false;
-            canvas.DrawRoundedRectangle(2, 2, width - 4, 34, 2);
+            canvas.DrawRoundedRectangle(2, 2, width - 4, 36, 2);
 
             MemoryStream ms = new();
 

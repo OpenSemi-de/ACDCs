@@ -4,13 +4,15 @@ using Label = Sharp.UI.Label;
 
 namespace ACDCs.Components.Window;
 
-public class WindowTitleLabel : ContentView
+[SharpObject]
+public partial class WindowTitleLabel : ContentView, IWindowTitleLabelProperties
 {
     private readonly Label _label;
 
     public WindowTitleLabel(string windowTitle)
     {
         _label = new Label(windowTitle)
+            .FontFamily(FontFamily)
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill)
             .VerticalTextAlignment(TextAlignment.Center)
@@ -32,4 +34,10 @@ public class WindowTitleLabel : ContentView
         _label.TextColor(color);
         return this;
     }
+}
+
+[BindableProperties]
+public interface IWindowTitleLabelProperties
+{
+    string FontFamily { get; set; }
 }

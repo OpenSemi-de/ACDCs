@@ -13,12 +13,17 @@ public class MenuButton : Button, IMenuComponent
     public string MenuCommand { get; set; }
     public MenuFrame? MenuFrame { get; set; }
 
-    public MenuButton(string text, string menuCommand, Action? clickAction = null)
+    public MenuButton(string text, string menuCommand, Action? clickAction = null, string fontFamily = "")
     {
         _clickAction = clickAction;
         BackgroundColor = ColorService.Foreground;
         TextColor = ColorService.Text;
         BorderColor = Colors.Transparent;
+
+        if (fontFamily != "")
+        {
+            FontFamily = fontFamily;
+        }
 
         Text = text;
         MenuCommand = menuCommand;

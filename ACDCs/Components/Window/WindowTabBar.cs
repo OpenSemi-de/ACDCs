@@ -1,5 +1,6 @@
 ﻿using ACDCs.Services;
 using ACDCs.Views;
+using UraniumUI.Icons.FontAwesome;
 
 namespace ACDCs.Components.Window;
 
@@ -25,7 +26,8 @@ public partial class WindowTabBar : Grid, IWindowTabBarProperties
         ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
         RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(new GridLength(43)));
 
-        _starterButton = new Button("∆")
+        _starterButton = new Button(Solid.Atom)
+            .FontFamily("FASolid")
             .FontSize(20)
             .FontAttributes(FontAttributes.Bold)
             .HorizontalOptions(LayoutOptions.Fill)

@@ -3,6 +3,7 @@ using ACDCs.Components.Menu;
 using ACDCs.Interfaces;
 using ACDCs.Services;
 using Sharp.UI;
+using UraniumUI.Icons.FontAwesome;
 using AbsoluteLayout = Sharp.UI.AbsoluteLayout;
 using ColumnDefinition = Microsoft.Maui.Controls.ColumnDefinition;
 using ContentView = Sharp.UI.ContentView;
@@ -68,10 +69,10 @@ public partial class WindowView : ContentView, IWindowViewProperties
         SetRowAndColumn(_headerImage, 0, 0, 3, 3);
         _grid.Add(_headerImage);
 
-        _menuButton = new MenuButton("*", "")
+        _menuButton = new MenuButton(Solid.WindowRestore, "", fontFamily: "FARegular")
             .HeightRequest(32)
             .WidthRequest(32)
-            .FontSize(10)
+            .FontSize(20)
             .Padding(0)
             .BackgroundColor(ColorService.Foreground)
             .Margin(new Thickness(2, 4, 0, 0));

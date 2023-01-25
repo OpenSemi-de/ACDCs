@@ -1,4 +1,5 @@
-﻿using ACDCs.Data.ACDCs.Components.BJT;
+﻿using System.Reflection;
+using ACDCs.Data.ACDCs.Components.BJT;
 using ACDCs.Data.ACDCs.Components.Inductor;
 using ACDCs.Data.ACDCs.Components.Resistor;
 using ACDCs.Data.ACDCs.Interfaces;
@@ -17,28 +18,37 @@ public static class DescriptionService
 
     public static string GetComponentDescription(Type parentType, string propertyName)
     {
-        if (parentType.GetInterfaces().Any(i => i == typeof(IElectronicComponent)))
+        if (parentType.GetInterfaces().All(i => i != typeof(IElectronicComponent)))
         {
-            Type componentType = parentType;
-            if (DescriptionTypes.ContainsKey(componentType))
+            return "";
+        }
+
+        if (!DescriptionTypes.ContainsKey(parentType))
+        {
+            return "";
+        }
+
+        Type targetNamespaceType = DescriptionTypes[parentType];
+        List<Type> targetTypes = targetNamespaceType.Assembly.GetTypes()
+            .Where(type => type.Namespace == targetNamespaceType.Namespace).ToList();
+
+        foreach (Type targetType in targetTypes)
+        {
+            PropertyInfo? property = targetType.GetProperty(propertyName);
+            if (property == null)
             {
-                Type targetNamespaceType = DescriptionTypes[componentType];
-                List<Type> targetTypes = targetNamespaceType.Assembly.GetTypes()
-                    .Where(type => type.Namespace == targetNamespaceType.Namespace).ToList();
-                foreach (Type targetType in targetTypes)
-                {
-                    var property = targetType.GetProperty(propertyName);
-                    if (property != null)
-                    {
-                        var parameterInfo =
-                            property.CustomAttributes.FirstOrDefault(attr => attr.AttributeType == typeof(ParameterInfoAttribute));
-                        if (parameterInfo != null)
-                        {
-                            return Convert.ToString(parameterInfo.ConstructorArguments.First().Value);
-                        }
-                    }
-                }
+                continue;
             }
+
+            var parameterInfo =
+                property.CustomAttributes.FirstOrDefault(attr => attr.AttributeType == typeof(ParameterInfoAttribute));
+
+            if (parameterInfo == null)
+            {
+                continue;
+            }
+
+            return Convert.ToString(parameterInfo.ConstructorArguments.First().Value) ?? string.Empty;
         }
 
         return "";

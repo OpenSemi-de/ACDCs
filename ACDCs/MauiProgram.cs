@@ -28,6 +28,7 @@ public static class MauiProgram
             {
                 fonts.AddFont("MapleMono-Regular.ttf", "MapleMonoRegular");
                 fonts.AddFont("MapleMono-Bold.ttf", "MapleMonoBold");
+                fonts.AddFontAwesomeIconFonts();
             });
 
 #if WINDOWS

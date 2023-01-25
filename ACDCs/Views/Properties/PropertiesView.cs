@@ -16,6 +16,7 @@ public class PropertiesView : WindowView
     private readonly Grid _propertiesGrid;
     private readonly ScrollView _propertiesScroll;
     private readonly TreeView _propertiesView;
+    private readonly ObservableCollection<PropertyItem> _roots;
     private object? _currentObject;
     public Action<IElectronicComponent>? OnModelEditorCallback { get; set; }
     public Action<PropertyEditorView>? OnModelEditorClicked { get; set; }
@@ -50,6 +51,10 @@ public class PropertiesView : WindowView
 
         _propertiesGrid.Add(_propertiesScroll);
 
+        _roots = new ObservableCollection<PropertyItem>();
+
+        _propertiesView.ItemsSource = _roots;
+
         WindowContent = _propertiesGrid;
 
         HideMenuButton();
@@ -59,10 +64,13 @@ public class PropertiesView : WindowView
 
     public void GetProperties(object? currentObject)
     {
+        _roots.Clear();
+        GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
+        GC.WaitForFullGCComplete(1000);
         _currentObject = currentObject;
         IEnumerable<PropertyInfo>? properties = currentObject?.GetType().GetRuntimeProperties();
 
-        ObservableCollection<Components.Properties.PropertyItem> propertyItems = new();
+        List<PropertyItem> propertyItems = new();
         if (properties != null)
         {
             foreach (PropertyInfo propertyInfo in properties.OrderBy(p => p.PropertyType.Name).ThenBy(p => p.Name))
@@ -84,8 +92,6 @@ public class PropertiesView : WindowView
             }
         }
 
-        List<PropertyItem> roots = new List<PropertyItem>();
-
         PropertyItem defaultRoot = new PropertyItem("Values")
         {
             IsExpanded = true
@@ -103,11 +109,9 @@ public class PropertiesView : WindowView
         RerootItem(propertyItems, "Rotation", defaultRoot);
         extRoot.Children.AddRange(propertyItems);
 
-        roots.Add(defaultRoot);
-        roots.Add(modelRoot);
-        roots.Add(extRoot);
-
-        _propertiesView.ItemsSource = roots;
+        _roots.Add(defaultRoot);
+        _roots.Add(modelRoot);
+        _roots.Add(extRoot);
     }
 
     public void ModelEditorClicked(PropertyEditorView editorView)
@@ -126,7 +130,7 @@ public class PropertiesView : WindowView
         OnModelSelectionCallback?.Invoke(component);
     }
 
-    private static void RerootItem(ObservableCollection<PropertyItem> propertyItems, string name, PropertyItem newRoot)
+    private static void RerootItem(List<PropertyItem> propertyItems, string name, PropertyItem newRoot)
     {
         PropertyItem? valueItem = propertyItems.FirstOrDefault(p => p.Name == name);
         if (valueItem != null)

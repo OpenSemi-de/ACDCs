@@ -1,10 +1,18 @@
 ﻿using ACDCs.Data.ACDCs.Interfaces;
 using ACDCs.Interfaces;
 using ACDCs.Services;
-
-namespace ACDCs.Views.Properties;
-
 using Sharp.UI;
+using Button = Sharp.UI.Button;
+using ColumnDefinition = Sharp.UI.ColumnDefinition;
+using ContentView = Sharp.UI.ContentView;
+using Entry = Sharp.UI.Entry;
+using Grid = Sharp.UI.Grid;
+using Label = Sharp.UI.Label;
+using Picker = Sharp.UI.Picker;
+using RowDefinition = Sharp.UI.RowDefinition;
+using Switch = Sharp.UI.Switch;
+
+namespace ACDCs.Components.Properties;
 
 [SharpObject]
 public partial class PropertyEditorView : ContentView, IPropertyEditorViewProperties
@@ -133,11 +141,12 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
             else if (value is IElectronicComponent c)
             {
                 IElectronicComponent? component = (IElectronicComponent?)c;
-                string text = "Select model";
+                string text = c.Name != "" ? c.Name : "Select model";
                 Button modelButton = new Button()
                     .HorizontalOptions(LayoutOptions.Fill)
                     .VerticalOptions(LayoutOptions.Fill)
                     .Margin(0)
+                    .Padding(0)
                     .Text(text)
                     .OnClicked(ModelButton_Clicked);
 
@@ -145,6 +154,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
                     .HorizontalOptions(LayoutOptions.Fill)
                     .VerticalOptions(LayoutOptions.Fill)
                     .Margin(0)
+                    .Padding(0)
                     .OnClicked(EditModel_Clicked);
 
                 Grid.SetRow(editButton, 1);

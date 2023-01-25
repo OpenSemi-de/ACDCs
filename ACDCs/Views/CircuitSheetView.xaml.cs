@@ -3,7 +3,7 @@ using ACDCs.Views.ModelEditor;
 using ACDCs.Views.ModelSelection;
 using ACDCs.Views.Properties;
 using EditView = ACDCs.Views.Edit.EditView;
-using PropertyEditorView = ACDCs.Views.Properties.PropertyEditorView;
+using PropertyEditorView = ACDCs.Components.Properties.PropertyEditorView;
 
 namespace ACDCs.Views;
 

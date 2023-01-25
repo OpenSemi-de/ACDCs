@@ -2,6 +2,7 @@
 using ACDCs.Views;
 using ACDCs.Views.Preferences;
 using Sharp.UI;
+using Button = Sharp.UI.Button;
 using Frame = Sharp.UI.Frame;
 using Grid = Sharp.UI.Grid;
 using ScrollView = Sharp.UI.ScrollView;
@@ -23,7 +24,6 @@ public class WindowStarterFrame : Frame
     {
         ColumnDefinitionCollection columns = new()
         {
-            new Microsoft.Maui.Controls.ColumnDefinition(new GridLength(28)),
             new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star)
         };
 
@@ -35,7 +35,7 @@ public class WindowStarterFrame : Frame
 
         _grid = new Grid()
             .HeightRequest(400)
-            .WidthRequest(240)
+            .WidthRequest(200)
             .ColumnDefinitions(columns)
             .RowDefinitions(rows);
 
@@ -45,7 +45,6 @@ public class WindowStarterFrame : Frame
 
         _grid.Add(_scrollView);
         Grid.SetRow(_scrollView, 1);
-        Grid.SetColumn(_scrollView, 1);
 
         _buttonStack = new StackLayout()
             .HorizontalOptions(LayoutOptions.Fill)
@@ -169,7 +168,7 @@ public class WindowStarterFrame : Frame
     }
 }
 
-public class StarterButton : Sharp.UI.Button
+public class StarterButton : Button
 {
     public StarterButton(string text) : base(text)
     {

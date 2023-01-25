@@ -1,7 +1,7 @@
 ﻿using ACDCs.Components;
 using ACDCs.Components.Window;
 using ACDCs.IO.DB;
-using ACDCs.Views.Properties;
+using PropertyEditorView = ACDCs.Components.Properties.PropertyEditorView;
 
 namespace ACDCs.Views.Preferences;
 

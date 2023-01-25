@@ -1,14 +1,12 @@
-﻿using ACDCs.Views.Properties;
-
-namespace ACDCs.Components.Properties;
+﻿namespace ACDCs.Components.Properties;
 
 using Sharp.UI;
 
 public class PropertyTemplate : ContentView
 {
-    private readonly Action<PropertyEditorView> _onModelEditorClicked;
-    private readonly Action<PropertyEditorView> _onModelSelectionClicked;
-    private readonly Action<string, object> _updatePropertyAction;
+    private Action<PropertyEditorView>? _onModelEditorClicked;
+    private Action<PropertyEditorView>? _onModelSelectionClicked;
+    private Action<string, object>? _updatePropertyAction;
 
     public PropertyTemplate(Action<string, object> updatePropertyAction,
         Action<PropertyEditorView> onModelSelectionClicked, Action<PropertyEditorView> onModelEditorClicked)
@@ -53,8 +51,16 @@ public class PropertyTemplate : ContentView
         Content = grid;
     }
 
+    ~PropertyTemplate()
+    {
+        Content = null;
+        _onModelEditorClicked = null;
+        _onModelSelectionClicked = null;
+        _updatePropertyAction = null;
+    }
+
     private void UpdateProperty(string entryPropertyName, object newValue)
     {
-        _updatePropertyAction.Invoke(entryPropertyName, newValue);
+        _updatePropertyAction?.Invoke(entryPropertyName, newValue);
     }
 }

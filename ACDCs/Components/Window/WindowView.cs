@@ -74,6 +74,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
             .WidthRequest(32)
             .FontSize(20)
             .Padding(0)
+            .BorderColor(ColorService.Border)
             .BackgroundColor(ColorService.Foreground)
             .Margin(new Thickness(2, 4, 0, 0));
 

@@ -15,7 +15,7 @@
             <RowDefinition Height="34"></RowDefinition>
         </Grid.RowDefinitions>
         <components:SharpAbsoluteLayout Grid.Row="0" x:Name="MainWindowLayout">
-            <window:WindowStarterFrame x:Name="StarterFrame" AbsoluteLayout.LayoutFlags="YProportional" AbsoluteLayout.LayoutBounds="0,1,240,400"></window:WindowStarterFrame>
+            <window:WindowStarterFrame x:Name="StarterFrame" AbsoluteLayout.LayoutFlags="YProportional" AbsoluteLayout.LayoutBounds="0,1,200,400"></window:WindowStarterFrame>
         </components:SharpAbsoluteLayout>
         <window:WindowTabBar StarterFrame="{x:Reference StarterFrame}" Grid.Row="1" x:Name="windowTabBar" HorizontalOptions="Fill" HeightRequest="42"></window:WindowTabBar>
     </Grid>

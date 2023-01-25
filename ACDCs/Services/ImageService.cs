@@ -23,7 +23,7 @@ public static class ImageService
 
             List<Color> colors = new() { ColorService.Full, ColorService.Background };
 
-            canvas.SetShadow(new SizeF(2, 4), 10f, colors[1]);
+            canvas.SetShadow(new SizeF(6, 8), 10f, ColorService.BackgroundHigh);
 
             RadialGradientPaint paintFrom = new(new Point(1, 1), 1)
             {
@@ -34,7 +34,7 @@ public static class ImageService
             canvas.SetFillPaint(paintFrom, new RectF(0f, 0f, width, height));
             canvas.FillRectangle(0, 0, width, height);
 
-            RadialGradientPaint paintTo = new(new Point(1, 1), 1) { StartColor = colors[1], EndColor = colors[0] };
+            RadialGradientPaint paintTo = new(new Point(1, 1), 1) { StartColor = ColorService.Foreground, EndColor = colors[0] };
 
             canvas.SetFillPaint(paintTo, new RectF(0f, 0f, width, height));
             canvas.FontSize = 120;
@@ -120,16 +120,16 @@ public static class ImageService
             };
 
             canvas.SetFillPaint(paintFrom, new RectF(0f, 0f, width, height));
-            canvas.FillRoundedRectangle(0, 0, width, height, 2);
+            canvas.FillRoundedRectangle(0, 0, width, height, 1);
             canvas.StrokeSize = 1;
             canvas.StrokeColor = ColorService.Border;
             canvas.Antialias = false;
-            canvas.DrawRoundedRectangle(2, 2, width - 4, height - 4, 2);
+            canvas.DrawRoundedRectangle(2, 2, width - 4, height - 4, 1);
 
             canvas.Antialias = true;
-            canvas.FillRoundedRectangle(0, 0, width, 34, 2);
+            canvas.FillRoundedRectangle(0, 0, width, 34, 1);
             canvas.Antialias = false;
-            canvas.DrawRoundedRectangle(2, 2, width - 4, 36, 2);
+            canvas.DrawRoundedRectangle(2, 2, width - 4, 36, 1);
 
             MemoryStream ms = new();
 

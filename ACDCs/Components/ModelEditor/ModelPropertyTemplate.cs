@@ -1,7 +1,7 @@
-﻿using ACDCs.Views.Properties;
-using Sharp.UI;
+﻿using Sharp.UI;
 using Grid = Sharp.UI.Grid;
 using Label = Sharp.UI.Label;
+using PropertyEditorView = ACDCs.Components.Properties.PropertyEditorView;
 using ViewCell = Sharp.UI.ViewCell;
 
 namespace ACDCs.Components.ModelEditor;

@@ -29,10 +29,7 @@ jobs:
 
       - name: Restore Dependencies
         run: dotnet restore ACDCs/ACDCs.csproj
-
-      - name: Build Windows package
-        run: dotnet publish ACDCs/ACDCs.csproj -c Release -f net7.0-windows10.0.19041.0 --no-restore
-        
+  
       - name: Build Android package
         run: dotnet publish ACDCs/ACDCs.csproj -c Release -f net7.0-android --no-restore
           

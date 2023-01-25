@@ -25,7 +25,7 @@ jobs:
           certutil -decode cert.pfx.asc cert.pfx
           
       - name: Add Cert to Store
-        run: certutil -user -q -p ${{ secrets.WINDOWS_PFX_PASSWORD }} -importpfx cert.pfx
+        run: certutil -user -q -p ${{ secrets.WINDOWS_PFX_PASSWORD }} -importpfx cert.pfx NoRoot
         
       - name: Setup .NET 
         uses: actions/setup-dotnet@v2

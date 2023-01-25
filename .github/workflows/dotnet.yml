@@ -19,21 +19,21 @@ jobs:
         with:
           submodules: 'recursive'
 
-      - name: Setup .NET 
-        uses: actions/setup-dotnet@v2
-        with:
-          dotnet-version: 7.x
-
-      - name: Install MAUI Workload
-        run: dotnet workload install maui --ignore-failed-sources
-        
       - name: Decrypt PFX File
         run: |
           echo "${{ secrets.WINDOWS_PFX_FILE }}" > cert.pfx.asc
           certutil -decode cert.pfx.asc cert.pfx
           
       - name: Add Cert to Store
-        run: certutil -user -q -p ${{ secrets.WINDOWS_PFX_PASSWORD }} -importpfx cert.pfx NoRoot
+        run: certutil -user -q -p ${{ secrets.WINDOWS_PFX_PASSWORD }} -importpfx cert.pfx
+        
+      - name: Setup .NET 
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 7.x
+
+      - name: Install MAUI Workload
+        run: dotnet workload install maui --ignore-failed-sources        
 
       - name: Build Windows package
         run: dotnet publish ACDCs/ACDCs.csproj -c Release -f net7.0-windows10.0.19041.0 -p:PublishReadyToRun=false -p:PackageCertificateThumbprint="${{ secrets.WINDOWS_PFX_THUMBPRINT }}"

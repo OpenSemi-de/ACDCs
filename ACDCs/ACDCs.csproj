@@ -19,7 +19,7 @@
     <ApplicationIdGuid>4eec3b89-ed9c-49fa-96bf-705503c4fed1</ApplicationIdGuid>
 
     <!-- Versions -->
-    <ApplicationDisplayVersion>1.171</ApplicationDisplayVersion>
+    <ApplicationDisplayVersion>1.172</ApplicationDisplayVersion>
     <ApplicationVersion>1</ApplicationVersion>
 
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
@@ -33,8 +33,8 @@
     <Nullable>enable</Nullable>
     <IncrementVersionOnBuild>1.100+.yy.Mdd</IncrementVersionOnBuild>
     <Version>1.172.23.125</Version>
-    <FileVersion>1.170.23.0110</FileVersion>
-    <AssemblyVersion>1.170.23.0110</AssemblyVersion>
+    <FileVersion>$(Version)</FileVersion>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
 
     <Optimize>False</Optimize>
     <PublishTrimmed>False</PublishTrimmed>

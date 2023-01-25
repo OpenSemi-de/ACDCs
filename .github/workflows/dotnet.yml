@@ -27,16 +27,16 @@ jobs:
       - name: Install MAUI Workload
         run: dotnet workload install maui --ignore-failed-sources
 
-      - name: Restore Dependencies
-        run: dotnet restore ACDCs/ACDCs.csproj
-  
+      - name: Build Windows package
+        run: dotnet publish ACDCs/ACDCs.csproj -c Release -f net7.0-windows10.0.19041.0 -p:PublishReadyToRun=false
+        
       - name: Build Android package
-        run: dotnet publish ACDCs/ACDCs.csproj -c Release -f net7.0-android --no-restore
+        run: dotnet publish ACDCs/ACDCs.csproj -c Release -f net7.0-android 
           
       - name: Upload Android Artifact
         uses: actions/upload-artifact@v3.1.0
         with:
-          name: mauibeach-android-ci-build
+          name: acdcs-android-build
           path: ACDCs/bin/Release/net7.0-android/*Signed.a*
 
       

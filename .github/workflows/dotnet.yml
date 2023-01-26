@@ -19,27 +19,40 @@ jobs:
         with:
           submodules: 'recursive'
 
+      - name: Decrypt PFX File
+        run: |
+          echo "${{ secrets.WINDOWS_PFX_FILE }}" > cert.pfx.asc
+          certutil -decode cert.pfx.asc cert.pfx
+          
+      - name: Add Cert to Store
+        run: certutil -user -f -v -q -p ${{ secrets.WINDOWS_PFX_PASSWORD }} -importpfx cert.pfx NoRoot
+        
       - name: Setup .NET 
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: 7.x
 
       - name: Install MAUI Workload
-        run: dotnet workload install maui --ignore-failed-sources
+        run: dotnet workload install maui --ignore-failed-sources        
 
-      - name: Restore Dependencies
-        run: dotnet restore ACDCs/ACDCs.csproj
-  
+      - name: Build Windows package
+        run: dotnet publish ACDCs/ACDCs.csproj -c Release -f net7.0-windows10.0.19041.0 -p:PublishReadyToRun=false -p:PackageCertificateThumbprint="${{ secrets.WINDOWS_PFX_THUMBPRINT }}"
+        
+      - name: Upload Windows Artifact
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: acdcs-windows-build
+          path: ACDCs/bin/Release/net7.0-windows10.0.19041.0/win10-x64/AppPackages/ACDCs_1.154.0.0_Test/*.msix
+        
       - name: Build Android package
-        run: dotnet publish ACDCs/ACDCs.csproj -c Release -f net7.0-android --no-restore
+        run: dotnet publish ACDCs/ACDCs.csproj -c Release -f net7.0-android 
           
       - name: Upload Android Artifact
         uses: actions/upload-artifact@v3.1.0
         with:
-          name: mauibeach-android-ci-build
+          name: acdcs-android-build
           path: ACDCs/bin/Release/net7.0-android/*Signed.a*
-
-      
+         
 env:
   DOTNET_NOLOGO: true                     # Disable the .NET logo
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true # Disable the .NET first time experience

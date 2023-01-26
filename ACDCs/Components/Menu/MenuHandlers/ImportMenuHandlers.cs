@@ -1,9 +1,8 @@
 ﻿using ACDCs.Services;
-using MenuHandlerView = ACDCs.Views.Menu.MenuHandlerView;
 
 namespace ACDCs.Components.Menu.MenuHandlers;
 
-public class ImportMenuHandlers : MenuHandlerView
+public class ImportMenuHandlers : MenuHandler
 {
     public ImportMenuHandlers()
     {

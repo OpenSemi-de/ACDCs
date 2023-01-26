@@ -2,7 +2,7 @@
 
 namespace ACDCs.Components.Menu.MenuHandlers;
 
-public class InfoMenuHandlers : Views.Menu.MenuHandlerView
+public class InfoMenuHandlers : MenuHandler
 {
     public InfoMenuHandlers()
     {

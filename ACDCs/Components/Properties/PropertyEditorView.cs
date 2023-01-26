@@ -15,18 +15,26 @@ using Switch = Sharp.UI.Switch;
 namespace ACDCs.Components.Properties;
 
 [SharpObject]
-public partial class PropertyEditorView : ContentView, IPropertyEditorViewProperties
+public partial class PropertyEditorView : ContentView, IPropertyEditorViewProperties, IDisposable
 {
     private int _fontSize;
-    public Action<PropertyEditorView>? OnModelEditorClicked { get; set; }
-    public Action<PropertyEditorView>? OnModelSelectionClicked { get; set; }
-    public Action<object>? OnValueChanged { get; set; }
     public bool ShowDescription { get; set; }
     public string ValueType { get; set; } = string.Empty;
 
     public PropertyEditorView()
     {
         PropertyChanged += PropertyEditor_PropertyChanged;
+    }
+
+    ~PropertyEditorView()
+    {
+        ReleaseUnmanagedResources();
+    }
+
+    public void Dispose()
+    {
+        ReleaseUnmanagedResources();
+        GC.SuppressFinalize(this);
     }
 
     public void OnModelEdited(IElectronicComponent model)
@@ -43,7 +51,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
 
     private void EditModel_Clicked(object? sender, EventArgs e)
     {
-        OnModelEditorClicked?.Invoke(this);
+        ModelEditorClicked?.Invoke(this);
     }
 
     private void Entry_OnTextChanged(object? sender, TextChangedEventArgs e)
@@ -56,7 +64,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
 
     private void ModelButton_Clicked(object? sender, EventArgs e)
     {
-        OnModelSelectionClicked?.Invoke(this);
+        ModelSelectionClicked?.Invoke(this);
     }
 
     private void Picker_OnSelectedIndexChange(object? sender, EventArgs e)
@@ -187,6 +195,11 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
 
             return Task.CompletedTask;
         });
+    }
+
+    private void ReleaseUnmanagedResources()
+    {
+        // TODO release unmanaged resources here
     }
 
     private void Toggle_OnToggle(object? sender, ToggledEventArgs e)

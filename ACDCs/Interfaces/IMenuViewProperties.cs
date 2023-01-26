@@ -1,7 +1,7 @@
 using ACDCs.Views;
-using ACDCs.Views.Circuit;
 using Sharp.UI;
 using AbsoluteLayout = Sharp.UI.AbsoluteLayout;
+using CircuitView = ACDCs.Components.Circuit.CircuitView;
 
 namespace ACDCs.Interfaces;
 

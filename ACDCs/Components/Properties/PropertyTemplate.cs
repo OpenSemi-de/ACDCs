@@ -38,13 +38,13 @@ public class PropertyTemplate : ContentView
 
         entry.SetBinding(PropertyEditorView.PropertyNameProperty, "Name", BindingMode.OneTime);
         entry.SetBinding(PropertyEditorView.ValueProperty, "Value", BindingMode.OneTime);
-
-        entry.OnModelSelectionClicked = _onModelSelectionClicked;
-        entry.OnModelEditorClicked = _onModelEditorClicked;
+        entry.SetBinding(PropertyEditorView.ModelSelectionClickedProperty, "ModelSelectionClicked",
+            BindingMode.OneTime);
+        entry.SetBinding(PropertyEditorView.ModelEditorClickedProperty, "ModelEditorClicked", BindingMode.OneTime);
         entry.OnValueChanged += newValue =>
-        {
-            UpdateProperty(entry.PropertyName, newValue);
-        };
+                {
+                    UpdateProperty(entry.PropertyName, newValue);
+                };
 
         grid.Add(entry);
         Grid.SetColumn(entry, 1);

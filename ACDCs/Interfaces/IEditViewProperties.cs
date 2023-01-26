@@ -1,5 +1,5 @@
-﻿using ACDCs.Views.Circuit;
-using Sharp.UI;
+﻿using Sharp.UI;
+using CircuitView = ACDCs.Components.Circuit.CircuitView;
 
 namespace ACDCs.Interfaces;
 

@@ -1,6 +1,6 @@
-﻿using ACDCs.Views.Circuit;
-using CommunityToolkit.Maui.Core.Primitives;
+﻿using CommunityToolkit.Maui.Core.Primitives;
 using CommunityToolkit.Maui.Storage;
+using CircuitView = ACDCs.Components.Circuit.CircuitView;
 
 namespace ACDCs.Services;
 

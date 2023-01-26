@@ -4,7 +4,6 @@ using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Sheet;
 using ACDCs.Components.Items;
 using ACDCs.Interfaces;
-using Microsoft.Maui.Layouts;
 
 namespace ACDCs.Views.Items;
 
@@ -35,8 +34,6 @@ public partial class ItemsView : StackLayout, IItemsViewProperties
     {
         IsInserting = false;
         this.Orientation(StackOrientation.Horizontal);
-        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(this, new Rect(0, 1, 1, 60));
-        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.YProportional);
 
         _layout = new StackLayout()
             .Orientation(StackOrientation.Horizontal);

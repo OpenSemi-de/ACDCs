@@ -58,5 +58,5 @@
             </ListView>
         </Grid>
     </StackLayout>
-    <menuHandlers:ImportMenuHandlers ComponentsView="{x:Reference AbsoluteLayoutSheetPage}"></menuHandlers:ImportMenuHandlers>
+   <!-- <menuHandlers:ImportMenuHandlers ComponentsView="{x:Reference AbsoluteLayoutSheetPage}" />-->
 </components:SharpAbsoluteLayout>

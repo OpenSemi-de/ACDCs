@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net7.0-android</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
@@ -40,16 +40,16 @@
     <PublishTrimmed>False</PublishTrimmed>
     <RunAOTCompilation>False</RunAOTCompilation>
     <AndroidLinkResources>false</AndroidLinkResources>
-    <GenerateAppInstallerFile>True</GenerateAppInstallerFile>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <PackageCertificateThumbprint>8AF979885A6B5BC061145E0F3A7AFB00A284A63D</PackageCertificateThumbprint>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppInstallerUri>https://www.opensemi.de/acdcs-update</AppInstallerUri>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <PackageCertificateThumbprint>18B1D9F1FD83F819CD5571075A2DB632B713941A</PackageCertificateThumbprint>
 
   </PropertyGroup>
 
@@ -103,6 +103,8 @@
 
   <ItemGroup>
     <MauiXaml Remove="Components\Window\WindowView.xaml" />
+    <MauiXaml Remove="Views\CircuitSheetView.xaml" />
+    <MauiXaml Remove="Views\StartCenterPage.xaml" />
   </ItemGroup>
 
 
@@ -127,7 +129,7 @@
     <PackageReference Include="Microsoft.Maui.Graphics.Skia" Version="7.0.52" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="ObjectsComparer" Version="1.4.1" />
-    <PackageReference Include="Sharp.UI" Version="0.2.3-alpha.6" />
+    <PackageReference Include="Sharp.UI" Version="0.2.5-alpha.1" />
     <PackageReference Include="UraniumUI" Version="2.3.0-pre.2" />
     <PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.3.0-pre.2" />
     <PackageReference Include="UraniumUI.Material" Version="2.3.0-pre.1" />
@@ -142,17 +144,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\CircuitSheetView.xaml.cs">
-      <DependentUpon>CircuitSheetView.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\ComponentsDetailPopup.xaml.cs">
       <DependentUpon>ComponentsDetailPopup.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\ComponentsView.xaml.cs">
       <DependentUpon>ComponentsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\StartCenterPage.xaml.cs">
-      <DependentUpon>StartCenterPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -187,6 +183,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Views\Circuit\" />
 	  <Folder Include="Views\Debug\" />
 	  <Folder Include="Views\ModelEditor\" />
 	  <Folder Include="Views\Preferences\" />

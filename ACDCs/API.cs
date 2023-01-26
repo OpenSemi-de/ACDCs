@@ -22,11 +22,16 @@ public static class API
     public static Action<Point>? PointerCallback { get; set; }
     public static Element? PointerLayoutObjectToMeasure { get; set; }
 
+    public static IServiceProvider? ServiceProvider { get; set; }
     public static WindowTabBar? TabBar { get; set; }
 
     private static PreferencesRepository PreferencesRepository { get; set; } = new();
 
     public static event ResetEvent? Reset;
+
+    public static void AddServices(IServiceCollection services)
+    {
+    }
 
     public static async Task Call(Func<Task> action, bool disableReset = false)
     {
@@ -78,6 +83,20 @@ public static class API
         return default;
     }
 
+    public static T? FindParent<T>(IElement child)
+    {
+        IElement? parent = child.Parent;
+        while (parent != null)
+        {
+            if (parent is not T tElement)
+                parent = parent.Parent;
+            else
+                return tElement;
+        }
+
+        return default;
+    }
+
     public static object GetPreference(string key)
     {
         return PreferencesRepository.GetPreference(key)!;
@@ -90,6 +109,16 @@ public static class API
 
         string contents = await reader.ReadToEndAsync();
         return contents;
+    }
+
+    public static async Task Open(WindowView window)
+    {
+        await API.Call(() =>
+        {
+            window.Maximize();
+            API.TabBar?.AddWindow(window);
+            return Task.CompletedTask;
+        });
     }
 
     public static async Task PopupException(Exception exception)

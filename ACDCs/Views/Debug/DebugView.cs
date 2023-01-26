@@ -14,7 +14,7 @@ public class DebugWindow : WindowView
     private readonly Label _label;
     private readonly TextField _textField;
 
-    public StartCenterPage? StartCenterPage { get; set; }
+    public Workbench? StartCenterPage { get; set; }
 
     public DebugWindow(SharpAbsoluteLayout layout) : base(layout, "Debug")
     {

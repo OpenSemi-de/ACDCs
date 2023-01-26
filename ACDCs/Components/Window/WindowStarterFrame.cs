@@ -1,4 +1,5 @@
-﻿using ACDCs.Services;
+﻿using ACDCs.Components.Circuit;
+using ACDCs.Services;
 using ACDCs.Views;
 using ACDCs.Views.Preferences;
 using Sharp.UI;
@@ -15,7 +16,6 @@ public class WindowStarterFrame : Frame
     private readonly StackLayout _buttonStack;
     private readonly Grid _grid;
     private readonly ScrollView _scrollView;
-    private int _circuitCount;
     private ComponentsView? _componentsView;
     private WindowView? _componentsWindowView;
     private PreferencesWindowView? _preferencesWindowView;
@@ -94,20 +94,8 @@ public class WindowStarterFrame : Frame
     }
 
     private async void NewCircuit(object? sender, EventArgs e)
-
     {
-        await API.Call(() =>
-        {
-            _circuitCount++;
-            WindowView windowView = new(API.MainContainer, $"Circuit {_circuitCount}")
-            {
-                WindowContent = new CircuitSheetView()
-            };
-            windowView.Maximize();
-            API.TabBar?.AddWindow(windowView);
-            return Task.CompletedTask;
-        });
-
+        await API.Open(new CircuitViewWindow());
         FadeOut();
     }
 

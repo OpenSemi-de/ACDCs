@@ -5,16 +5,18 @@ using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Scene;
 using ACDCs.CircuitRenderer.Sheet;
-using ACDCs.Components.Circuit;
 using ACDCs.Interfaces;
 using Newtonsoft.Json;
-using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
-
-using ItemsView = ACDCs.Views.Items.ItemsView;
-
-namespace ACDCs.Views.Circuit;
-
 using Sharp.UI;
+using ContentView = Sharp.UI.ContentView;
+using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
+using GraphicsView = Sharp.UI.GraphicsView;
+using ItemsView = ACDCs.Views.Items.ItemsView;
+using PanGestureRecognizer = Sharp.UI.PanGestureRecognizer;
+using PointerGestureRecognizer = Sharp.UI.PointerGestureRecognizer;
+using TapGestureRecognizer = Sharp.UI.TapGestureRecognizer;
+
+namespace ACDCs.Components.Circuit;
 
 [SharpObject]
 public partial class CircuitView : ContentView, ICircuitViewProperties
@@ -197,26 +199,6 @@ public partial class CircuitView : ContentView, ICircuitViewProperties
         Paint().Wait();
     }
 
-    protected virtual void OnCursorPositionChanged(CursorPositionChangeEventArgs args)
-    {
-        CursorPositionChanged?.Invoke(this, args);
-    }
-
-    protected virtual void OnLoadedSheet()
-    {
-        LoadedSheet?.Invoke(this, EventArgs.Empty);
-    }
-
-    protected virtual void OnSavedSheet()
-    {
-        SavedSheet?.Invoke(this, EventArgs.Empty);
-    }
-
-    protected virtual void OnTapPositionChanged(CursorPositionChangeEventArgs args)
-    {
-        TapPositionChanged?.Invoke(this, args);
-    }
-
     private static float GetRelPos(double pos)
     {
         float relPos = 0f;
@@ -265,9 +247,29 @@ public partial class CircuitView : ContentView, ICircuitViewProperties
         return selectedItem;
     }
 
+    private void OnCursorPositionChanged(CursorPositionChangeEventArgs args)
+    {
+        CursorPositionChanged?.Invoke(this, args);
+    }
+
     private async void OnLoaded(object? sender, EventArgs e)
     {
         await Paint();
+    }
+
+    private void OnLoadedSheet()
+    {
+        LoadedSheet?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void OnSavedSheet()
+    {
+        SavedSheet?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void OnTapPositionChanged(CursorPositionChangeEventArgs args)
+    {
+        TapPositionChanged?.Invoke(this, args);
     }
 
     private void PanGestureRecognizer_OnPanUpdated(object? sender, PanUpdatedEventArgs e)

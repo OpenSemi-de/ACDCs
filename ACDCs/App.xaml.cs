@@ -14,7 +14,7 @@ public partial class App : Application
             UserAppTheme = AppTheme.Dark;
         }
 
-        MainPage = new StartCenterPage();
+        MainPage = new Workbench();
 
         AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
     }

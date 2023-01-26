@@ -44,7 +44,9 @@ public class PropertiesView : WindowView
             IsExpandedPropertyName = "IsExpanded",
             IsLeafPropertyName = "IsLeaf",
             ItemTemplate = new Microsoft.Maui.Controls.DataTemplate(() =>
-                new PropertyTemplate(OnPropertyUpdated, ModelSelectionClicked, ModelEditorClicked))
+            {
+                return new PropertyTemplate(OnPropertyUpdated, ModelSelectionClicked, ModelEditorClicked);
+            })
         };
 
         _propertiesScroll.Content(_propertiesView);
@@ -54,7 +56,8 @@ public class PropertiesView : WindowView
         _roots = new ObservableCollection<PropertyItem>();
 
         _propertiesView.ItemsSource = _roots;
-
+        _propertiesView.ChildrenBinding.Mode = BindingMode.OneTime;
+        _propertiesView.ChildAdded += _propertiesView_ChildAdded;
         WindowContent = _propertiesGrid;
 
         HideMenuButton();
@@ -88,6 +91,8 @@ public class PropertiesView : WindowView
                     item.Value = value;
                 }
 
+                item.ModelEditorClicked = OnModelEditorClicked!;
+                item.ModelSelectionClicked = OnModelSelectionClicked!;
                 propertyItems.Add(item);
             }
         }
@@ -107,7 +112,7 @@ public class PropertiesView : WindowView
         RerootItem(propertyItems, "Model", modelRoot);
         RerootItem(propertyItems, "IsMirrored", defaultRoot);
         RerootItem(propertyItems, "Rotation", defaultRoot);
-        extRoot.Children.AddRange(propertyItems);
+        propertyItems.ForEach(item => extRoot.Children.Add(item));
 
         _roots.Add(defaultRoot);
         _roots.Add(modelRoot);
@@ -138,6 +143,10 @@ public class PropertiesView : WindowView
             propertyItems.Remove(valueItem);
             newRoot.Children.Add(valueItem);
         }
+    }
+
+    private void _propertiesView_ChildAdded(object? sender, ElementEventArgs e)
+    {
     }
 
     private void ModelSelectionClicked(PropertyEditorView editorView)

@@ -1,6 +1,6 @@
 ﻿using ACDCs.CircuitRenderer.Items;
 using ACDCs.CircuitRenderer.Sheet;
-using ACDCs.Views.Circuit;
+using CircuitView = ACDCs.Components.Circuit.CircuitView;
 
 namespace ACDCs.Services;
 

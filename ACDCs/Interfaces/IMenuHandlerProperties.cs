@@ -1,12 +1,12 @@
 ﻿using ACDCs.Views;
-using ACDCs.Views.Circuit;
+using CircuitView = ACDCs.Components.Circuit.CircuitView;
 
 namespace ACDCs.Interfaces;
 
 using Sharp.UI;
 
 [BindableProperties]
-public interface IMenuHandlerViewProperties
+public interface IMenuHandlerProperties
 {
     CircuitView CircuitView { get; set; }
     ComponentsView ComponentsView { get; set; }

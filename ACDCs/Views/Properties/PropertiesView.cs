@@ -2,7 +2,6 @@
 using System.Reflection;
 using ACDCs.Components;
 using ACDCs.Components.Properties;
-using ACDCs.Data.ACDCs.Interfaces;
 using Microsoft.Maui.Layouts;
 using UraniumUI.Material.Controls;
 using WindowView = ACDCs.Components.Window.WindowView;
@@ -11,18 +10,14 @@ namespace ACDCs.Views.Properties;
 
 using Sharp.UI;
 
-public class PropertiesView : WindowView
+public class PropertiesView : WindowView, IGetPropertyUpdates
 {
+    public Action? OnUpdate;
     private readonly Grid _propertiesGrid;
     private readonly ScrollView _propertiesScroll;
     private readonly TreeView _propertiesView;
     private readonly ObservableCollection<PropertyItem> _roots;
     private object? _currentObject;
-    public Action<IElectronicComponent>? OnModelEditorCallback { get; set; }
-    public Action<PropertyEditorView>? OnModelEditorClicked { get; set; }
-    public Action<IElectronicComponent>? OnModelSelectionCallback { get; set; }
-    public Action<PropertyEditorView>? OnModelSelectionClicked { get; set; }
-    public Action? OnUpdate { get; set; }
     public List<string> PropertyExcludeList { get; set; } = new();
 
     public PropertiesView(SharpAbsoluteLayout layout) : base(layout, "Properties")
@@ -43,10 +38,7 @@ public class PropertiesView : WindowView
             HorizontalOptions = LayoutOptions.Fill,
             IsExpandedPropertyName = "IsExpanded",
             IsLeafPropertyName = "IsLeaf",
-            ItemTemplate = new Microsoft.Maui.Controls.DataTemplate(() =>
-            {
-                return new PropertyTemplate(OnPropertyUpdated, ModelSelectionClicked, ModelEditorClicked);
-            })
+            ItemTemplate = new Microsoft.Maui.Controls.DataTemplate(() => new PropertyTemplate(this as IGetPropertyUpdates))
         };
 
         _propertiesScroll.Content(_propertiesView);
@@ -91,21 +83,19 @@ public class PropertiesView : WindowView
                     item.Value = value;
                 }
 
-                item.ModelEditorClicked = OnModelEditorClicked!;
-                item.ModelSelectionClicked = OnModelSelectionClicked!;
                 propertyItems.Add(item);
             }
         }
 
-        PropertyItem defaultRoot = new PropertyItem("Values")
+        PropertyItem defaultRoot = new("Values")
         {
             IsExpanded = true
         };
-        PropertyItem modelRoot = new PropertyItem("Model")
+        PropertyItem modelRoot = new("Model")
         {
             IsExpanded = true
         };
-        PropertyItem extRoot = new PropertyItem("Extended") { IsExpanded = true };
+        PropertyItem extRoot = new("Extended") { IsExpanded = true };
 
         RerootItem(propertyItems, "Value", defaultRoot);
         RerootItem(propertyItems, "Type", defaultRoot);
@@ -119,43 +109,7 @@ public class PropertiesView : WindowView
         _roots.Add(extRoot);
     }
 
-    public void ModelEditorClicked(PropertyEditorView editorView)
-    {
-        OnModelEditorClicked?.Invoke(editorView);
-        OnModelEditorCallback = editorView.OnModelEdited;
-    }
-
-    public void OnModelEdited(IElectronicComponent component)
-    {
-        OnModelEditorCallback?.Invoke(component);
-    }
-
-    public void OnModelSelected(IElectronicComponent component)
-    {
-        OnModelSelectionCallback?.Invoke(component);
-    }
-
-    private static void RerootItem(List<PropertyItem> propertyItems, string name, PropertyItem newRoot)
-    {
-        PropertyItem? valueItem = propertyItems.FirstOrDefault(p => p.Name == name);
-        if (valueItem != null)
-        {
-            propertyItems.Remove(valueItem);
-            newRoot.Children.Add(valueItem);
-        }
-    }
-
-    private void _propertiesView_ChildAdded(object? sender, ElementEventArgs e)
-    {
-    }
-
-    private void ModelSelectionClicked(PropertyEditorView editorView)
-    {
-        OnModelSelectionClicked?.Invoke(editorView);
-        OnModelSelectionCallback = editorView.OnModelSelected;
-    }
-
-    private void OnPropertyUpdated(string? propertyName, object value)
+    public void OnPropertyUpdated(string? propertyName, object value)
     {
         try
         {
@@ -190,6 +144,20 @@ public class PropertiesView : WindowView
         OnUpdate?.Invoke();
     }
 
+    private static void RerootItem(List<PropertyItem> propertyItems, string name, PropertyItem newRoot)
+    {
+        PropertyItem? valueItem = propertyItems.FirstOrDefault(p => p.Name == name);
+        if (valueItem != null)
+        {
+            propertyItems.Remove(valueItem);
+            newRoot.Children.Add(valueItem);
+        }
+    }
+
+    private void _propertiesView_ChildAdded(object? sender, ElementEventArgs e)
+    {
+    }
+
     private void PropertiesView_SizeChanged(object? sender, EventArgs e)
     {
         WidthRequest = 200;
@@ -197,4 +165,9 @@ public class PropertiesView : WindowView
         Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
         Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(this, new Rect(MainContainer.Width - 202, 60, 200, 500));
     }
+}
+
+public interface IGetPropertyUpdates
+{
+    void OnPropertyUpdated(string? propertyName, object value);
 }

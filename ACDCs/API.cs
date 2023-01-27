@@ -111,12 +111,13 @@ public static class API
         return contents;
     }
 
-    public static async Task Open(WindowView window)
+    public static async Task Open(WindowView window, WindowState windowState = WindowState.Maximized)
     {
-        await API.Call(() =>
+        await Call(() =>
         {
-            window.Maximize();
-            API.TabBar?.AddWindow(window);
+            if (windowState == WindowState.Maximized)
+                window.Maximize();
+            TabBar?.AddWindow(window);
             return Task.CompletedTask;
         });
     }

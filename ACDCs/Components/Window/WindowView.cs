@@ -116,7 +116,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
 
         _resizeField.GestureRecognizers.Add(resizeRecognizer);
 
-        List<MenuItemDefinition> menuItems = new List<MenuItemDefinition>
+        List<MenuItemDefinition> menuItems = new()
         {
             new MenuItemDefinition
             {
@@ -180,12 +180,13 @@ public partial class WindowView : ContentView, IWindowViewProperties
     {
         if (OnClose != null && OnClose()) return;
         TabBar?.RemoveWindow(this);
-
         IsVisible = false;
-        PropertyChanged -= OnPropertyChanged;
+        UnapplyBindings();
         MainContainer.Remove(this);
         MainContainer.Remove(_menuFrame);
-
+        Loaded -= OnLoaded;
+        Content = null;
+        PropertyChanged -= OnPropertyChanged;
         GC.Collect(GC.MaxGeneration, GCCollectionMode.Aggressive, true, true);
         GC.WaitForFullGCComplete(100000);
         GC.WaitForPendingFinalizers();

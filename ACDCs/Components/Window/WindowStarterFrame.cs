@@ -3,7 +3,6 @@ using ACDCs.Services;
 using ACDCs.Views;
 using ACDCs.Views.Preferences;
 using Sharp.UI;
-using Button = Sharp.UI.Button;
 using Frame = Sharp.UI.Frame;
 using Grid = Sharp.UI.Grid;
 using ScrollView = Sharp.UI.ScrollView;
@@ -52,15 +51,15 @@ public class WindowStarterFrame : Frame
 
         _scrollView.Content = _buttonStack;
 
-        StarterButton newCircuit = new StarterButton("New circuit")
+        WindowStarterButton newCircuit = new WindowStarterButton("New circuit")
             .OnClicked(NewCircuit);
         _buttonStack.Add(newCircuit);
 
-        StarterButton components = new StarterButton("Components")
+        WindowStarterButton components = new WindowStarterButton("Components")
             .OnClicked(ShowComponents);
         _buttonStack.Add(components);
 
-        StarterButton preferences = new StarterButton("Preferences")
+        WindowStarterButton preferences = new WindowStarterButton("Preferences")
             .OnClicked(ShowPreferences);
         _buttonStack.Add(preferences);
 
@@ -133,32 +132,19 @@ public class WindowStarterFrame : Frame
     {
         await API.Call(() =>
         {
-            if (_preferencesWindowView == null)
+            if (PreferencesWindowView.PreferencesWindow == null)
             {
-                _preferencesWindowView = new PreferencesWindowView(API.MainContainer);
-                _preferencesWindowView.OnClose = () =>
-                {
-                    _preferencesWindowView = null;
-                    return false;
-                };
-
-                API.TabBar?.AddWindow(_preferencesWindowView);
+                PreferencesWindowView.PreferencesWindow = new PreferencesWindowView();
+                API.Open(PreferencesWindowView.PreferencesWindow);
             }
             else
             {
-                API.TabBar?.BringToFront(_preferencesWindowView);
+                API.TabBar?.BringToFront(PreferencesWindowView.PreferencesWindow);
             }
 
             return Task.CompletedTask;
         });
 
         FadeOut();
-    }
-}
-
-public class StarterButton : Button
-{
-    public StarterButton(string text) : base(text)
-    {
     }
 }

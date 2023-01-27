@@ -11,16 +11,25 @@ using Sharp.UI;
 public class PreferencesWindowView : WindowView
 {
     private static List<PreferenceSetting>? s_preferences;
-
+    private static PreferencesWindowView? s_preferencesWindow;
     private Grid _layoutGrid;
-
     private StackLayout _preferencesLayout;
-
     private PreferencesRepository _repository = new();
+
+    public static PreferencesWindowView? PreferencesWindow
+    {
+        get => s_preferencesWindow;
+        set => s_preferencesWindow = value;
+    }
+
+    public PreferencesWindowView() : base(API.MainContainer, "Preferences")
+    {
+        Initialize();
+    }
 
     public PreferencesWindowView(SharpAbsoluteLayout layout) : base(layout, "Preferences")
     {
-        Loaded += OnLoaded;
+        Initialize();
     }
 
     private static async Task<List<PreferenceSetting>> GetPreferenceTemplate()
@@ -28,6 +37,17 @@ public class PreferencesWindowView : WindowView
         string jsonData = await API.LoadMauiAssetAsString("preferences.json");
         List<PreferenceSetting>? items = JsonConvert.DeserializeObject<List<PreferenceSetting>>(jsonData);
         return items;
+    }
+
+    private void Initialize()
+    {
+        PreferencesWindow = this;
+        Loaded += OnLoaded;
+        OnClose = () =>
+        {
+            PreferencesWindow = null;
+            return false;
+        };
     }
 
     private async void OnLoaded(object? sender, EventArgs e)

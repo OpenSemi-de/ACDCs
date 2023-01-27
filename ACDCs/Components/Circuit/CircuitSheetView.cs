@@ -1,10 +1,7 @@
 using ACDCs.Components.Menu;
 using ACDCs.Components.Menu.MenuHandlers;
-using ACDCs.Components.Properties;
 using ACDCs.Views.Edit;
 using ACDCs.Views.Menu;
-using ACDCs.Views.ModelEditor;
-using ACDCs.Views.ModelSelection;
 using ACDCs.Views.Properties;
 using Microsoft.Maui.Layouts;
 using AbsoluteLayout = Sharp.UI.AbsoluteLayout;
@@ -28,8 +25,6 @@ public sealed class CircuitSheetView : SharpAbsoluteLayout
     // ReSharper disable once NotAccessedField.Local
     private EditView? _editWindow;
 
-    private ModelEditorWindowView? _modelEditorWindow;
-    private ModelSelectionWindowView? _modelSelectionWindow;
     private PropertiesView? _propertiesWindow;
 
     public CircuitSheetView()
@@ -104,44 +99,9 @@ public sealed class CircuitSheetView : SharpAbsoluteLayout
         new[]{
             "IsInsertable", "DefaultValue", "DefaultType", "DrawableComponent", "Pins", "TypeName", "RefName", "ItemGuid"
         });
-        _propertiesWindow.OnModelSelectionClicked = OnModelSelectionClicked;
         _circuitView.OnSelectedItemChange = _propertiesWindow.GetProperties;
 
-        _modelSelectionWindow = new ModelSelectionWindowView(this)
-        {
-            IsVisible = false,
-            OnModelSelected = _propertiesWindow.OnModelSelected
-        };
-
-        _modelEditorWindow = new ModelEditorWindowView(this)
-        {
-            IsVisible = false,
-            OnModelEdited = _propertiesWindow.OnModelEdited,
-        };
-
-        _propertiesWindow.OnModelEditorClicked = OnModelEditorClicked;
-
         //    BackgroundImageSource = ImageService.BackgroundImageSource(this);
-    }
-
-    private void OnModelEditorClicked(PropertyEditorView obj)
-    {
-        if (_modelEditorWindow != null)
-        {
-            _modelEditorWindow.IsVisible = true;
-            _modelEditorWindow.GetProperties(obj.Value);
-        }
-    }
-
-    private void OnModelSelectionClicked(PropertyEditorView obj)
-    {
-        if (_modelSelectionWindow == null)
-        {
-            return;
-        }
-
-        _modelSelectionWindow.SetComponentType(obj.ValueType);
-        _modelSelectionWindow.IsVisible = true;
     }
 
     private void OnUpdate()

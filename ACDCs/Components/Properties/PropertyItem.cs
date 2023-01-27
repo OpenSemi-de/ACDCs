@@ -9,8 +9,6 @@ public class PropertyItem : INotifyPropertyChanged, INotifyCollectionChanged
     public ObservableCollection<PropertyItem> Children { get; set; } = new();
     public bool IsExpanded { get; set; }
     public bool IsLeaf { get; set; }
-    public Action<PropertyEditorView> ModelEditorClicked { get; set; } = view => { };
-    public Action<PropertyEditorView> ModelSelectionClicked { get; set; } = view => { };
     public string Name { get; set; } = string.Empty;
     public Type ParentType { get; set; }
     public object? Value { get; set; } = null;

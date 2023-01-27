@@ -1,4 +1,6 @@
-﻿using Sharp.UI;
+﻿using ACDCs.Components.Window;
+using ACDCs.Views.Properties;
+using Sharp.UI;
 using Grid = Sharp.UI.Grid;
 using Label = Sharp.UI.Label;
 using PropertyEditorView = ACDCs.Components.Properties.PropertyEditorView;
@@ -10,9 +12,9 @@ public class ModelPropertyTemplate : ViewCell
 {
     private readonly Action<string, object> _updatePropertyAction;
 
-    public ModelPropertyTemplate(Action<string, object> updatePropertyAction)
+    public ModelPropertyTemplate(IGetPropertyUpdates window)
     {
-        _updatePropertyAction = updatePropertyAction;
+        _updatePropertyAction = window.OnPropertyUpdated;
         Grid grid = new Grid()
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Start);
@@ -26,7 +28,7 @@ public class ModelPropertyTemplate : ViewCell
         label.SetBinding(Label.TextProperty, "Name");
         grid.Add(label);
 
-        PropertyEditorView entry = new PropertyEditorView()
+        PropertyEditorView entry = new PropertyEditorView(window as WindowView)
             .HorizontalOptions(LayoutOptions.Fill);
         entry.ShowDescription = true;
         entry.SetBinding(PropertyEditorView.ParentTypeProperty, "ParentType", BindingMode.OneTime);

@@ -59,7 +59,7 @@ public partial class WindowTabBar : Grid, IWindowTabBarProperties
 
     public void AddWindow(WindowView window)
     {
-        WindowTab tab = new WindowTab(window.WindowTitle, OnTabClicked);
+        WindowTab tab = new(window.WindowTitle, OnTabClicked);
         window.TabBar = this;
         TapGestureRecognizer tapGestureRecognizer = new();
         tapGestureRecognizer.Tapped += TapGestureRecognizerOnTapped;
@@ -87,6 +87,10 @@ public partial class WindowTabBar : Grid, IWindowTabBarProperties
             if (_focusWindow != null)
             {
                 window.ZIndex = _focusWindow.ZIndex + 1;
+            }
+            else
+            {
+                window.ZIndex++;
             }
         }
 

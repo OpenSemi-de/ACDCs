@@ -1,6 +1,9 @@
-﻿using ACDCs.Data.ACDCs.Interfaces;
+﻿using ACDCs.Components.Window;
+using ACDCs.Data.ACDCs.Interfaces;
 using ACDCs.Interfaces;
 using ACDCs.Services;
+using ACDCs.Views.ModelEditor;
+using ACDCs.Views.ModelSelection;
 using Sharp.UI;
 using Button = Sharp.UI.Button;
 using ColumnDefinition = Sharp.UI.ColumnDefinition;
@@ -15,26 +18,18 @@ using Switch = Sharp.UI.Switch;
 namespace ACDCs.Components.Properties;
 
 [SharpObject]
-public partial class PropertyEditorView : ContentView, IPropertyEditorViewProperties, IDisposable
+public partial class PropertyEditorView : ContentView, IPropertyEditorViewProperties
 {
-    private int _fontSize;
+    private readonly WindowView? _parentWindow;
+    private ModelEditorWindowView? _modelEditorWindow;
+    private ModelSelectionWindowView? _modelSelectionWindow;
     public bool ShowDescription { get; set; }
     public string ValueType { get; set; } = string.Empty;
 
-    public PropertyEditorView()
+    public PropertyEditorView(WindowView? parentWindow)
     {
+        _parentWindow = parentWindow;
         PropertyChanged += PropertyEditor_PropertyChanged;
-    }
-
-    ~PropertyEditorView()
-    {
-        ReleaseUnmanagedResources();
-    }
-
-    public void Dispose()
-    {
-        ReleaseUnmanagedResources();
-        GC.SuppressFinalize(this);
     }
 
     public void OnModelEdited(IElectronicComponent model)
@@ -51,7 +46,26 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
 
     private void EditModel_Clicked(object? sender, EventArgs e)
     {
-        ModelEditorClicked?.Invoke(this);
+        if (_modelEditorWindow == null)
+        {
+            _modelEditorWindow = new ModelEditorWindowView(_parentWindow?.MainContainer ?? API.MainContainer)
+            {
+                OnModelEdited = OnModelEdited,
+                ZIndex = 10
+            };
+
+            _modelEditorWindow.GetProperties(Value as IElectronicComponent);
+
+            _modelEditorWindow.OnClose = () =>
+            {
+                _modelEditorWindow = null;
+                return false;
+            };
+        }
+        else
+        {
+            API.TabBar?.BringToFront(_modelEditorWindow);
+        }
     }
 
     private void Entry_OnTextChanged(object? sender, TextChangedEventArgs e)
@@ -64,7 +78,26 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
 
     private void ModelButton_Clicked(object? sender, EventArgs e)
     {
-        ModelSelectionClicked?.Invoke(this);
+        if (_modelSelectionWindow == null)
+        {
+            _modelSelectionWindow = new ModelSelectionWindowView(_parentWindow?.MainContainer ?? API.MainContainer)
+            {
+                OnModelSelected = OnModelSelected,
+                ZIndex = 10
+            };
+
+            _modelSelectionWindow.SetComponentType(Value.GetType().Name);
+
+            _modelSelectionWindow.OnClose = () =>
+            {
+                _modelSelectionWindow = null;
+                return false;
+            };
+        }
+        else
+        {
+            API.TabBar?.BringToFront(_modelSelectionWindow);
+        }
     }
 
     private void Picker_OnSelectedIndexChange(object? sender, EventArgs e)

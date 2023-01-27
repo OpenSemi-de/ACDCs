@@ -118,9 +118,11 @@ public class ModelSelectionWindowView : WindowView
             case "Bjt:PNP":
                 LoadDB("PNP");
                 return;
-        }
 
-        LoadDB(componentType);
+            default:
+                LoadDB(_componentType);
+                return;
+        }
     }
 
     private static string SourceDescription(IElectronicComponent electronicComponent)
@@ -150,7 +152,7 @@ public class ModelSelectionWindowView : WindowView
 
     private void CancelButton_Clicked(object? sender, EventArgs e)
     {
-        IsVisible = false;
+        Close();
     }
 
     private void ComponentsList_ItemTapped(object? sender, ItemTappedEventArgs e)
@@ -223,7 +225,7 @@ public class ModelSelectionWindowView : WindowView
         }
 
         OnModelSelected?.Invoke(_selectedModel);
-        IsVisible = false;
+        Close();
     }
 
     private void SearchTextChanged(object? sender, TextChangedEventArgs e)

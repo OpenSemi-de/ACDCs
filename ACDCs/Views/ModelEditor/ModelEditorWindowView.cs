@@ -4,6 +4,7 @@ using ACDCs.Components;
 using ACDCs.Components.ModelEditor;
 using ACDCs.Components.Window;
 using ACDCs.Data.ACDCs.Interfaces;
+using ACDCs.Views.Properties;
 using Sharp.UI;
 using Button = Sharp.UI.Button;
 using DataTemplate = Sharp.UI.DataTemplate;
@@ -15,7 +16,7 @@ using StackLayout = Sharp.UI.StackLayout;
 
 namespace ACDCs.Views.ModelEditor;
 
-public class ModelEditorWindowView : WindowView
+public class ModelEditorWindowView : WindowView, IGetPropertyUpdates
 {
     private readonly StackLayout _buttonStack;
     private readonly Button _cancelButton;
@@ -50,7 +51,7 @@ public class ModelEditorWindowView : WindowView
 
         DataTemplate itemTemplate = new()
         {
-            LoadTemplate = () => new ModelPropertyTemplate(OnPropertyUpdated)
+            LoadTemplate = () => new ModelPropertyTemplate(this)
         };
 
         _modelView.ItemTemplate(itemTemplate);
@@ -123,17 +124,7 @@ public class ModelEditorWindowView : WindowView
         _modelView.ItemsSource(propertyItems);
     }
 
-    private void CancelButton_Clicked(object? sender, EventArgs e)
-    {
-        this.IsVisible = false;
-    }
-
-    private void OKButton_Click(object? sender, EventArgs e)
-    {
-        OnModelEdited?.Invoke((IElectronicComponent)_currentObject);
-    }
-
-    private void OnPropertyUpdated(string? propertyName, object value)
+    public void OnPropertyUpdated(string? propertyName, object value)
     {
         try
         {
@@ -166,5 +157,16 @@ public class ModelEditorWindowView : WindowView
         }
 
         OnUpdate?.Invoke();
+    }
+
+    private void CancelButton_Clicked(object? sender, EventArgs e)
+    {
+        Close();
+    }
+
+    private void OKButton_Click(object? sender, EventArgs e)
+    {
+        OnModelEdited?.Invoke((IElectronicComponent)_currentObject);
+        Close();
     }
 }

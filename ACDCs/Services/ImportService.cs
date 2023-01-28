@@ -1,5 +1,6 @@
 ﻿using ACDCs.Data.ACDCs.Interfaces;
 using ACDCs.IO.DB;
+using ACDCs.IO.Spice;
 using ACDCs.Views;
 
 namespace ACDCs.Services;
@@ -40,6 +41,12 @@ public static class ImportService
             componentsView.LoadFromSource(defaultComponents);
             return Task.CompletedTask;
         });
+    }
+
+    public static void SaveJson()
+    {
+        SpiceReader spiceReader = new();
+        spiceReader.CreateJson();
     }
 
     public static void SaveToDB(ComponentsView componentsView)

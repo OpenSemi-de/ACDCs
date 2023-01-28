@@ -1,6 +1,6 @@
-﻿namespace ACDCs.Components.Window;
+﻿using Frame = Sharp.UI.Frame;
 
-using Sharp.UI;
+namespace ACDCs.Components.Window;
 
 public class WindowFrame : Frame
 {

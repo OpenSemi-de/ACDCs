@@ -30,7 +30,7 @@ public class ModelSelectionWindowView : WindowView
     private IElectronicComponent? _selectedModel;
     public Action<IElectronicComponent>? OnModelSelected { get; set; }
 
-    public ModelSelectionWindowView(SharpAbsoluteLayout layout) : base(layout, "Select Model")
+    public ModelSelectionWindowView(SharpAbsoluteLayout? layout) : base(layout, "Select Model")
     {
         WidthRequest = 500;
         HeightRequest = 500;

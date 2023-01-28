@@ -16,22 +16,17 @@ public class ResetEventArgs
 public static class API
 {
     private static readonly ConcurrentDictionary<string, ConcurrentDictionary<string, object?>> s_comValues = new();
-    public static PlatformBitmapExportService BitmapExportContextService { get; set; } = new();
-    public static SharpAbsoluteLayout MainContainer { get; set; }
+    public static PlatformBitmapExportService BitmapExportContextService { get; } = new();
+    public static SharpAbsoluteLayout? MainContainer { get; set; }
     public static Page? MainPage { get; set; }
     public static Action<Point>? PointerCallback { get; set; }
     public static Element? PointerLayoutObjectToMeasure { get; set; }
 
-    public static IServiceProvider? ServiceProvider { get; set; }
     public static WindowTabBar? TabBar { get; set; }
 
-    private static PreferencesRepository PreferencesRepository { get; set; } = new();
+    private static PreferencesRepository PreferencesRepository { get; } = new();
 
     public static event ResetEvent? Reset;
-
-    public static void AddServices(IServiceCollection services)
-    {
-    }
 
     public static async Task Call(Func<Task> action, bool disableReset = false)
     {
@@ -78,20 +73,6 @@ public static class API
         if (s_comValues.ContainsKey(name) && s_comValues[name].ContainsKey(property))
         {
             return (T)s_comValues[name][property]!;
-        }
-
-        return default;
-    }
-
-    public static T? FindParent<T>(IElement child)
-    {
-        IElement? parent = child.Parent;
-        while (parent != null)
-        {
-            if (parent is not T tElement)
-                parent = parent.Parent;
-            else
-                return tElement;
         }
 
         return default;

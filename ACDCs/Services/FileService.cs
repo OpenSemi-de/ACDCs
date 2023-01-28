@@ -54,7 +54,7 @@ public static class FileService
     {
         try
         {
-            Folder filePath = await CommunityToolkit.Maui.Storage.FolderPicker.Default.PickAsync(
+            Folder filePath = await FolderPicker.Default.PickAsync(
                 FileSystem.Current.AppDataDirectory,
                 new CancellationToken());
             string? result = await popupPage.DisplayPromptAsync("filename", "filename",

@@ -8,7 +8,7 @@ using Sharp.UI;
 
 public class MenuFrame : StackLayout
 {
-    public static List<MenuFrame> MenuFrameList = new();
+    private static readonly List<MenuFrame> s_menuFrameList = new();
     private readonly bool _eventSet;
     public View? MainContainer { get; set; }
     public AbsoluteLayout? PopupTarget { get; set; }
@@ -31,7 +31,7 @@ public class MenuFrame : StackLayout
 
     public static void HideAllMenus()
     {
-        MenuFrameList.ForEach(menuFrame => { menuFrame.IsVisible = false; });
+        s_menuFrameList.ForEach(menuFrame => { menuFrame.IsVisible = false; });
     }
 
     public void LoadMenu(List<MenuItemDefinition> items, bool isRoot = false)
@@ -40,7 +40,7 @@ public class MenuFrame : StackLayout
         {
             if (!isRoot)
             {
-                MenuFrameList.Add(this);
+                s_menuFrameList.Add(this);
             }
 
             List<IMenuComponent> menuParts = new();

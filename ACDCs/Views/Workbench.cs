@@ -11,7 +11,7 @@ using Sharp.UI;
 public class Workbench : ContentPage
 {
     private readonly Grid _mainGrid;
-    private readonly SharpAbsoluteLayout _mainWindowLayout;
+    private readonly SharpAbsoluteLayout? _mainWindowLayout;
     private readonly WindowStarterFrame _starterFrame;
     private readonly WindowTabBar _windowTabBar;
     private DebugWindow? _debugWindow;
@@ -54,18 +54,27 @@ public class Workbench : ContentPage
         PointerGestureRecognizer pointerMovement = new();
         pointerMovement.PointerMoved += PointerMovementOnPointerMoved;
         _mainWindowLayout.GestureRecognizers.Add(pointerMovement.MauiObject);
+
+        SizeChanged += OnSizeChanged;
     }
 
     private void OnLoaded(object? sender, EventArgs e)
     {
         BackgroundImageSource = ImageService.BackgroundImageSource(this);
 
-        if (Convert.ToBoolean(API.GetPreference("StartDebugConsole")))
+        if (!Convert.ToBoolean(API.GetPreference("StartDebugConsole")))
         {
-            _debugWindow = new DebugWindow(_mainWindowLayout) { StartCenterPage = this, TabBar = _windowTabBar };
-            _windowTabBar.AddWindow(_debugWindow);
-            _debugWindow.Minimize();
+            return;
         }
+
+        _debugWindow = new DebugWindow(_mainWindowLayout) { StartCenterPage = this, TabBar = _windowTabBar };
+        _windowTabBar.AddWindow(_debugWindow);
+        _debugWindow.Minimize();
+    }
+
+    private void OnSizeChanged(object? sender, EventArgs e)
+    {
+        _windowTabBar.OnSizeChanged();
     }
 
     private void PointerMovementOnPointerMoved(object? sender, PointerEventArgs e)

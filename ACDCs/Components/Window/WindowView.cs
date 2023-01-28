@@ -19,8 +19,8 @@ namespace ACDCs.Components.Window;
 [SharpObject]
 public partial class WindowView : ContentView, IWindowViewProperties
 {
-    protected readonly Grid _grid;
     private readonly WindowFrame _border;
+    private readonly Grid _grid;
     private readonly Image _headerImage;
     private readonly MenuButton _menuButton;
     private readonly MenuFrame _menuFrame;
@@ -30,19 +30,19 @@ public partial class WindowView : ContentView, IWindowViewProperties
     private bool _isActive;
     private Rect _lastBounds = Rect.Zero;
 
-    public SharpAbsoluteLayout MainContainer { get; set; }
+    public SharpAbsoluteLayout? MainContainer { get; set; }
     public Func<bool>? OnClose { get; set; }
     public WindowState State { get; set; } = WindowState.Standard;
     public WindowTabBar? TabBar { get; set; }
     public string WindowTitle { get; set; }
 
-    public WindowView(SharpAbsoluteLayout sharpAbsoluteLayout, string title)
+    public WindowView(SharpAbsoluteLayout? sharpAbsoluteLayout, string title)
     {
         WindowTitle = title;
         AbsoluteLayout.SetLayoutBounds(this, new Rect(30, 30, 500, 400));
         MainContainer = sharpAbsoluteLayout;
 
-        this.SizeChanged += OnSizeChanged;
+        SizeChanged += OnSizeChanged;
 
         _grid = new Grid()
             .VerticalOptions(LayoutOptions.Fill)
@@ -169,11 +169,11 @@ public partial class WindowView : ContentView, IWindowViewProperties
         PropertyChanged += OnPropertyChanged;
         Content = _border;
 
-        sharpAbsoluteLayout.Add(this);
+        sharpAbsoluteLayout?.Add(this);
 
-        MainContainer.Add(_menuFrame);
+        MainContainer?.Add(_menuFrame);
         MenuFrame.HideAllMenus();
-        this.Loaded += OnLoaded;
+        Loaded += OnLoaded;
     }
 
     public void Close()
@@ -182,8 +182,8 @@ public partial class WindowView : ContentView, IWindowViewProperties
         TabBar?.RemoveWindow(this);
         IsVisible = false;
         UnapplyBindings();
-        MainContainer.Remove(this);
-        MainContainer.Remove(_menuFrame);
+        MainContainer?.Remove(this);
+        MainContainer?.Remove(_menuFrame);
         Loaded -= OnLoaded;
         Content = null;
         PropertyChanged -= OnPropertyChanged;
@@ -209,16 +209,23 @@ public partial class WindowView : ContentView, IWindowViewProperties
         if (State == WindowState.Minimized) return;
         State = WindowState.Minimized;
 
-        if (TabBar != null)
+        if (TabBar == null)
         {
+            AbsoluteLayout.SetLayoutBounds(this, new Rect(MainContainer.Height + 100, 1, 120, 32));
+        }
+        else
+        {
+            if (MainContainer == null)
+            {
+                return;
+            }
+
             await this.TranslateTo(-_lastBounds.Width - 100, MainContainer.Height + 100);
             //   await this.LayoutTo(new Rect(0, 0, 120, 30));
 
             //     AbsoluteLayout.SetLayoutBounds(this, bounds)t;
             return;
         }
-
-        AbsoluteLayout.SetLayoutBounds(this, new Rect(MainContainer.Height + 100, 1, 120, 32));
     }
 
     public void Restore()

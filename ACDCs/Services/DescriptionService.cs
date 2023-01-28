@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using ACDCs.Data.ACDCs.Components.BJT;
+﻿using ACDCs.Data.ACDCs.Components.BJT;
 using ACDCs.Data.ACDCs.Components.Inductor;
 using ACDCs.Data.ACDCs.Components.Resistor;
 using ACDCs.Data.ACDCs.Interfaces;
@@ -9,7 +8,7 @@ namespace ACDCs.Services;
 
 public static class DescriptionService
 {
-    public static Dictionary<Type, Type> DescriptionTypes = new()
+    private static readonly Dictionary<Type, Type> s_descriptionTypes = new()
     {
         {typeof(Resistor), typeof(SpiceSharp.Components.Resistors.Parameters)},
         {typeof(Bjt), typeof(SpiceSharp.Components.Bipolars.Parameters)},
@@ -23,31 +22,22 @@ public static class DescriptionService
             return "";
         }
 
-        if (!DescriptionTypes.ContainsKey(parentType))
+        if (!s_descriptionTypes.ContainsKey(parentType))
         {
             return "";
         }
 
-        Type targetNamespaceType = DescriptionTypes[parentType];
+        Type targetNamespaceType = s_descriptionTypes[parentType];
         List<Type> targetTypes = targetNamespaceType.Assembly.GetTypes()
             .Where(type => type.Namespace == targetNamespaceType.Namespace).ToList();
 
-        foreach (Type targetType in targetTypes)
+        foreach (var parameterInfo in targetTypes.Select(targetType => targetType.GetProperty(propertyName))
+                     .Where(property => property != null)
+                     .Select(property =>
+                         property.CustomAttributes.FirstOrDefault(attr =>
+                             attr.AttributeType == typeof(ParameterInfoAttribute)))
+                     .Where(parameterInfo => parameterInfo != null))
         {
-            PropertyInfo? property = targetType.GetProperty(propertyName);
-            if (property == null)
-            {
-                continue;
-            }
-
-            var parameterInfo =
-                property.CustomAttributes.FirstOrDefault(attr => attr.AttributeType == typeof(ParameterInfoAttribute));
-
-            if (parameterInfo == null)
-            {
-                continue;
-            }
-
             return Convert.ToString(parameterInfo.ConstructorArguments.First().Value) ?? string.Empty;
         }
 

@@ -8,8 +8,8 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
-        bool DarkMode = Convert.ToBoolean(API.GetPreference("DarkMode"));
-        if (DarkMode)
+        bool darkMode = Convert.ToBoolean(API.GetPreference("DarkMode"));
+        if (darkMode)
         {
             UserAppTheme = AppTheme.Dark;
         }

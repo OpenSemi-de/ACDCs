@@ -19,7 +19,7 @@ public partial class EditView : WindowView, IEditViewProperties
     private EditButton? _rotateButton;
     private EditButton? _selectAreaButton;
 
-    public EditView(SharpAbsoluteLayout layout) : base(layout, "Tools")
+    public EditView(SharpAbsoluteLayout? layout) : base(layout, "Tools")
     {
         Initialize();
     }

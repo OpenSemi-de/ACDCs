@@ -1,10 +1,16 @@
 ﻿using ACDCs.Services;
 using ACDCs.Views;
+using Sharp.UI;
 using UraniumUI.Icons.FontAwesome;
+using Button = Sharp.UI.Button;
+using ColumnDefinition = Microsoft.Maui.Controls.ColumnDefinition;
+using Grid = Sharp.UI.Grid;
+using RowDefinition = Microsoft.Maui.Controls.RowDefinition;
+using ScrollView = Sharp.UI.ScrollView;
+using StackLayout = Sharp.UI.StackLayout;
+using TapGestureRecognizer = Sharp.UI.TapGestureRecognizer;
 
 namespace ACDCs.Components.Window;
-
-using Sharp.UI;
 
 [SharpObject]
 public partial class WindowTabBar : Grid, IWindowTabBarProperties
@@ -22,9 +28,9 @@ public partial class WindowTabBar : Grid, IWindowTabBarProperties
     public WindowTabBar()
     {
         API.TabBar = this;
-        ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(new GridLength(84)));
-        ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
-        RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(new GridLength(43)));
+        ColumnDefinitions.Add(new ColumnDefinition(new GridLength(84)));
+        ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
+        RowDefinitions.Add(new RowDefinition(new GridLength(43)));
 
         _starterButton = new Button(Solid.Atom)
             .FontFamily("FASolid")
@@ -95,6 +101,17 @@ public partial class WindowTabBar : Grid, IWindowTabBarProperties
         }
 
         _focusWindow = window;
+    }
+
+    public void OnSizeChanged()
+    {
+        foreach (WindowView windowView in _windowViews.Values)
+        {
+            if (windowView.State == WindowState.Maximized)
+            {
+                windowView.Maximize();
+            }
+        }
     }
 
     public void RemoveWindow(WindowView windowView)

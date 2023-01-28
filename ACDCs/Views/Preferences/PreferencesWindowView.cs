@@ -10,24 +10,20 @@ using Sharp.UI;
 
 public class PreferencesWindowView : WindowView
 {
-    private static List<PreferenceSetting>? s_preferences;
-    private static PreferencesWindowView? s_preferencesWindow;
-    private Grid _layoutGrid;
-    private StackLayout _preferencesLayout;
+    private static List<PreferenceSetting>? s_preferences = new();
+    private Grid? _layoutGrid;
+    private StackLayout? _preferencesLayout;
     private PreferencesRepository _repository = new();
 
-    public static PreferencesWindowView? PreferencesWindow
-    {
-        get => s_preferencesWindow;
-        set => s_preferencesWindow = value;
-    }
+    public static PreferencesWindowView? PreferencesWindow { get; set; }
 
     public PreferencesWindowView() : base(API.MainContainer, "Preferences")
     {
         Initialize();
     }
 
-    public PreferencesWindowView(SharpAbsoluteLayout layout) : base(layout, "Preferences")
+    // ReSharper disable once UnusedMember.Global
+    public PreferencesWindowView(SharpAbsoluteLayout? layout) : base(layout, "Preferences")
     {
         Initialize();
     }
@@ -36,7 +32,7 @@ public class PreferencesWindowView : WindowView
     {
         string jsonData = await API.LoadMauiAssetAsString("preferences.json");
         List<PreferenceSetting>? items = JsonConvert.DeserializeObject<List<PreferenceSetting>>(jsonData);
-        return items;
+        return items ?? new List<PreferenceSetting>();
     }
 
     private void Initialize()
@@ -52,8 +48,7 @@ public class PreferencesWindowView : WindowView
 
     private async void OnLoaded(object? sender, EventArgs e)
     {
-        if (s_preferences == null)
-            s_preferences = await GetPreferenceTemplate();
+        s_preferences ??= await GetPreferenceTemplate();
 
         ColumnDefinitionCollection columns = new()
         {
@@ -83,6 +78,11 @@ public class PreferencesWindowView : WindowView
 
         foreach (PreferenceSetting preferenceSetting in s_preferences.OrderBy(preference => preference.Group))
         {
+            if (preferenceSetting.Key == null)
+            {
+                continue;
+            }
+
             object? loadedPreference = _repository?.GetPreference(preferenceSetting.Key);
             StackLayout horizontaLayout = new StackLayout()
                 .HorizontalOptions(LayoutOptions.Fill)

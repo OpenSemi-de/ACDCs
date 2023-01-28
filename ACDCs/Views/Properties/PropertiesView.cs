@@ -18,9 +18,9 @@ public class PropertiesView : WindowView, IGetPropertyUpdates
     private readonly TreeView _propertiesView;
     private readonly ObservableCollection<PropertyItem> _roots;
     private object? _currentObject;
-    public List<string> PropertyExcludeList { get; set; } = new();
+    public List<string> PropertyExcludeList { get; } = new();
 
-    public PropertiesView(SharpAbsoluteLayout layout) : base(layout, "Properties")
+    public PropertiesView(SharpAbsoluteLayout? layout) : base(layout, "Properties")
     {
         _propertiesGrid = new Grid()
             .HorizontalOptions(LayoutOptions.Fill)
@@ -32,13 +32,25 @@ public class PropertiesView : WindowView, IGetPropertyUpdates
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
 
+        Microsoft.Maui.Controls.DataTemplate itemTemplate = new();
+
+        itemTemplate.LoadTemplate = () =>
+        {
+            PropertyTemplate propertyTemplate = new(this);
+            propertyTemplate.Unloaded += (sender, args) =>
+            {
+                itemTemplate.Bindings.Clear();
+            };
+            return propertyTemplate;
+        };
+
         _propertiesView = new TreeView
         {
             Spacing = 0,
             HorizontalOptions = LayoutOptions.Fill,
             IsExpandedPropertyName = "IsExpanded",
             IsLeafPropertyName = "IsLeaf",
-            ItemTemplate = new Microsoft.Maui.Controls.DataTemplate(() => new PropertyTemplate(this as IGetPropertyUpdates))
+            ItemTemplate = itemTemplate
         };
 
         _propertiesScroll.Content(_propertiesView);
@@ -49,7 +61,6 @@ public class PropertiesView : WindowView, IGetPropertyUpdates
 
         _propertiesView.ItemsSource = _roots;
         _propertiesView.ChildrenBinding.Mode = BindingMode.OneTime;
-        _propertiesView.ChildAdded += _propertiesView_ChildAdded;
         WindowContent = _propertiesGrid;
 
         HideMenuButton();
@@ -147,15 +158,13 @@ public class PropertiesView : WindowView, IGetPropertyUpdates
     private static void RerootItem(List<PropertyItem> propertyItems, string name, PropertyItem newRoot)
     {
         PropertyItem? valueItem = propertyItems.FirstOrDefault(p => p.Name == name);
-        if (valueItem != null)
+        if (valueItem == null)
         {
-            propertyItems.Remove(valueItem);
-            newRoot.Children.Add(valueItem);
+            return;
         }
-    }
 
-    private void _propertiesView_ChildAdded(object? sender, ElementEventArgs e)
-    {
+        propertyItems.Remove(valueItem);
+        newRoot.Children.Add(valueItem);
     }
 
     private void PropertiesView_SizeChanged(object? sender, EventArgs e)
@@ -163,7 +172,11 @@ public class PropertiesView : WindowView, IGetPropertyUpdates
         WidthRequest = 200;
         HeightRequest = 500;
         Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
-        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(this, new Rect(MainContainer.Width - 202, 60, 200, 500));
+        if (MainContainer != null)
+        {
+            Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(this,
+                new Rect(MainContainer.Width - 202, 60, 200, 500));
+        }
     }
 }
 

@@ -6,12 +6,12 @@ namespace ACDCs.Components.Properties;
 
 public class PropertyItem : INotifyPropertyChanged, INotifyCollectionChanged
 {
-    public ObservableCollection<PropertyItem> Children { get; set; } = new();
+    public ObservableCollection<PropertyItem> Children { get; } = new();
     public bool IsExpanded { get; set; }
     public bool IsLeaf { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public Type ParentType { get; set; }
-    public object? Value { get; set; } = null;
+    public string Name { get; } = string.Empty;
+    public Type? ParentType { get; set; }
+    public object? Value { get; set; }
 
     public PropertyItem(string? name)
     {

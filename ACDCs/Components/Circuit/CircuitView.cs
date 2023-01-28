@@ -282,9 +282,6 @@ public partial class CircuitView : ContentView, ICircuitViewProperties
                 case GestureStatus.Started:
                 case GestureStatus.Completed:
                     {
-                        if (SelectedItem != null)
-                            OnSelectedItemChange?.Invoke(SelectedItem);
-
                         _lastDisplayOffset = CurrentWorksheet.DisplayOffset ??
                                              new Coordinate(
                                                  Convert.ToSingle(e.TotalX),

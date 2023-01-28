@@ -12,7 +12,7 @@ public class ItemButton : ImageButton
 {
     private IDrawable? _drawableSheet;
 
-    public Type? ItemType { get; set; }
+    public Type? ItemType { get; }
 
     public ItemButton(Type? itemType, double buttonWidth, double buttonHeight)
     {

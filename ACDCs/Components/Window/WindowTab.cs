@@ -1,8 +1,9 @@
 ﻿using ACDCs.Services;
+using Sharp.UI;
+using Button = Sharp.UI.Button;
+using Frame = Sharp.UI.Frame;
 
 namespace ACDCs.Components.Window;
-
-using Sharp.UI;
 
 public class WindowTab : Frame
 {

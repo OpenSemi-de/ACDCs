@@ -1,43 +1,47 @@
 [
-  {
-    "Text": "File",
-    "MenuItems": [
-      {
-        "Text": "New",
-        "MenuCommand": "new"
-      },
-      {
-        "Text": "Open...",
-        "MenuCommand": "openfile"
-      },
-      {
-        "Text": "Save",
-        "MenuCommand": "savefile"
-      },
-      {
-        "Text": "Save as..",
-        "MenuCommand": "saveasfile"
-      },
-      {
-        "Text": "Export",
-        "MenuCommand": "",
+    {
+        "Text": "File",
         "MenuItems": [
-          {
-            "Text": "PDF",
-            "MenuCommand": "exportpdf"
-          },
-          {
-            "Text": "BMP",
-            "MenuCommand": "exportbmp"
-          },
-          {
-            "Text": "JPG",
-            "MenuCommand": "exportjpg"
-          }
+            {
+                "Text": "New",
+                "MenuCommand": "new"
+            },
+            {
+                "Text": "Open...",
+                "MenuCommand": "openfile"
+            },
+            {
+                "Text": "Save",
+                "MenuCommand": "savefile"
+            },
+            {
+                "Text": "Save as..",
+                "MenuCommand": "saveasfile"
+            },
+            {
+                "Text": "Import spice",
+                "MenuCommand": "importspicenetlist"
+            },
+            {
+                "Text": "Export",
+                "MenuCommand": "",
+                "MenuItems": [
+                    {
+                        "Text": "PDF",
+                        "MenuCommand": "exportpdf"
+                    },
+                    {
+                        "Text": "BMP",
+                        "MenuCommand": "exportbmp"
+                    },
+                    {
+                        "Text": "JPG",
+                        "MenuCommand": "exportjpg"
+                    }
+                ]
+            }
         ]
-      }
-    ]
-  },
+    },
     {
         "Text": "Edit",
         "MenuItems": [

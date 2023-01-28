@@ -14,13 +14,15 @@ public sealed class CircuitSheetView : SharpAbsoluteLayout
 {
     private readonly CircuitView _circuitView;
 
-    private readonly Label _cursorDebugLabel;
+    private readonly Label? _cursorDebugLabel;
     private readonly ItemsView _itemsView;
 
     // ReSharper disable once NotAccessedField.Local
     private readonly List<MenuHandler> _menuHandlers;
 
     private readonly MenuView _menuView;
+
+    private readonly bool _showCursorDebugOutput = Convert.ToBoolean(API.GetPreference("ShowDebugCursorOutput"));
 
     // ReSharper disable once NotAccessedField.Local
     private EditView? _editWindow;
@@ -65,11 +67,14 @@ public sealed class CircuitSheetView : SharpAbsoluteLayout
             }
         };
 
-        _cursorDebugLabel = new Label() { ZIndex = 2 };
+        if (_showCursorDebugOutput)
+        {
+            _cursorDebugLabel = new Label { ZIndex = 2 };
 
-        AbsoluteLayout.SetLayoutFlags(_cursorDebugLabel, AbsoluteLayoutFlags.None);
-        AbsoluteLayout.SetLayoutBounds(_cursorDebugLabel, new Rect(0, 300, 100, 300));
-        Add(_cursorDebugLabel);
+            AbsoluteLayout.SetLayoutFlags(_cursorDebugLabel, AbsoluteLayoutFlags.None);
+            AbsoluteLayout.SetLayoutBounds(_cursorDebugLabel, new Rect(0, 300, 100, 300));
+            Add(_cursorDebugLabel);
+        }
 
         _menuView = new MenuView()
             .PopupTarget(this)
@@ -88,7 +93,10 @@ public sealed class CircuitSheetView : SharpAbsoluteLayout
 
     private void CursorDebugChanged()
     {
-        _cursorDebugLabel.Text = _circuitView.CursorDebugOutput;
+        if (_showCursorDebugOutput && _cursorDebugLabel != null)
+        {
+            _cursorDebugLabel.Text = _circuitView.CursorDebugOutput;
+        }
     }
 
     private void OnLoaded(object? sender, EventArgs e)
@@ -104,8 +112,8 @@ public sealed class CircuitSheetView : SharpAbsoluteLayout
         //    BackgroundImageSource = ImageService.BackgroundImageSource(this);
     }
 
-    private void OnUpdate()
+    private async void OnUpdate()
     {
-        _circuitView?.Paint();
+        await _circuitView.Paint();
     }
 }

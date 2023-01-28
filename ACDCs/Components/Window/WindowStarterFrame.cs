@@ -3,8 +3,10 @@ using ACDCs.Services;
 using ACDCs.Views;
 using ACDCs.Views.Preferences;
 using Sharp.UI;
+using ColumnDefinition = Microsoft.Maui.Controls.ColumnDefinition;
 using Frame = Sharp.UI.Frame;
 using Grid = Sharp.UI.Grid;
+using RowDefinition = Microsoft.Maui.Controls.RowDefinition;
 using ScrollView = Sharp.UI.ScrollView;
 using StackLayout = Sharp.UI.StackLayout;
 
@@ -17,19 +19,18 @@ public class WindowStarterFrame : Frame
     private readonly ScrollView _scrollView;
     private ComponentsView? _componentsView;
     private WindowView? _componentsWindowView;
-    private PreferencesWindowView? _preferencesWindowView;
 
     public WindowStarterFrame()
     {
         ColumnDefinitionCollection columns = new()
         {
-            new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star)
+            new ColumnDefinition(GridLength.Star)
         };
 
         RowDefinitionCollection rows = new()
         {
-            new Microsoft.Maui.Controls.RowDefinition(new GridLength(20)),
-            new Microsoft.Maui.Controls.RowDefinition(GridLength.Star)
+            new RowDefinition(new GridLength(20)),
+            new RowDefinition(GridLength.Star)
         };
 
         _grid = new Grid()
@@ -76,7 +77,7 @@ public class WindowStarterFrame : Frame
 
     public void FadeIn()
     {
-        this.IsVisible = true;
+        IsVisible = true;
         this.FadeTo(1, 500);
     }
 
@@ -89,7 +90,7 @@ public class WindowStarterFrame : Frame
     {
         this.FadeTo(0, 500);
         Task.Delay(500);
-        this.IsVisible = false;
+        IsVisible = false;
     }
 
     private async void NewCircuit(object? sender, EventArgs e)

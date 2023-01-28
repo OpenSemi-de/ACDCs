@@ -5,7 +5,6 @@
                                 xmlns:components="clr-namespace:ACDCs.Components"
                                 xmlns:menu="clr-namespace:ACDCs.Views.Menu"
                                 xmlns:modelSelection="clr-namespace:ACDCs.Components.ModelSelection"
-                                xmlns:menuHandlers="clr-namespace:ACDCs.Components.Menu.MenuHandlers"
                                 x:Class="ACDCs.Views.ComponentsView"
                                 x:Name="AbsoluteLayoutSheetPage">
     <menu:MenuView PopupTarget="{x:Reference AbsoluteLayoutSheetPage}" MenuFilename="menu_components.json"/>

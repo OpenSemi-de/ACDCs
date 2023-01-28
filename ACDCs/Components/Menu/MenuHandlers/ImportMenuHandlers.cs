@@ -9,6 +9,7 @@ public class ImportMenuHandlers : MenuHandler
         MenuService.Add("opendb", OpenDB);
         MenuService.Add("savetodb", SaveToDB);
         MenuService.Add("importspicemodels", ImportSpiceModels);
+        MenuService.Add("savejson", SaveJson);
     }
 
     private async void ImportSpiceModels(object? o)
@@ -19,6 +20,11 @@ public class ImportMenuHandlers : MenuHandler
     private async void OpenDB(object? o)
     {
         await ImportService.OpenDB(ComponentsView);
+    }
+
+    private async void SaveJson(object? obj)
+    {
+        ImportService.SaveJson();
     }
 
     private void SaveToDB(object? o)

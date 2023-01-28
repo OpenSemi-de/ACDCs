@@ -19,11 +19,12 @@
         "Key": "ShowTraceCollisionMap",
         "TypeName": "System.Boolean",
         "Value": "false"
+    },
+    {
+        "Description": "Show cursor debug output",
+        "Group": "Debug",
+        "Key": "ShowDebugCursorOutput",
+        "TypeName": "System.Boolean",
+        "Value": "false"
     }
-    
 ]
-
-/*       new PreferenceSetting {Key = "DarkMode", Value = false},
-        new PreferenceSetting {Key = "StartDebugConsole", Value = false},
-        new PreferenceSetting {Key = "ShowTraceCollisionMap", Value = false}
- */

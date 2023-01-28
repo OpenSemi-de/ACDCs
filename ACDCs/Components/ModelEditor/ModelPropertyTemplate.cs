@@ -1,14 +1,14 @@
 ﻿using ACDCs.Components.Window;
 using ACDCs.Views.Properties;
 using Sharp.UI;
+using ContentView = Sharp.UI.ContentView;
 using Grid = Sharp.UI.Grid;
 using Label = Sharp.UI.Label;
 using PropertyEditorView = ACDCs.Components.Properties.PropertyEditorView;
-using ViewCell = Sharp.UI.ViewCell;
 
 namespace ACDCs.Components.ModelEditor;
 
-public class ModelPropertyTemplate : ViewCell
+public class ModelPropertyTemplate : ContentView
 {
     private readonly Action<string, object> _updatePropertyAction;
 

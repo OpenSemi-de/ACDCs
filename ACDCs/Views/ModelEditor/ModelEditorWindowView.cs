@@ -27,9 +27,9 @@ public class ModelEditorWindowView : WindowView, IGetPropertyUpdates
     private object? _currentObject;
     public Action<IElectronicComponent>? OnModelEdited { get; set; }
     public Action? OnUpdate { get; set; }
-    public List<string> PropertyExcludeList { get; set; } = new();
+    private List<string> PropertyExcludeList { get; } = new();
 
-    public ModelEditorWindowView(SharpAbsoluteLayout layout) : base(layout, "Edit model")
+    public ModelEditorWindowView(SharpAbsoluteLayout? layout) : base(layout, "Edit model")
     {
         _modelGrid = new Grid()
             .HorizontalOptions(LayoutOptions.Fill)

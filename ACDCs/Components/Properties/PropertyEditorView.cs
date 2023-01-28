@@ -20,16 +20,20 @@ namespace ACDCs.Components.Properties;
 [SharpObject]
 public partial class PropertyEditorView : ContentView, IPropertyEditorViewProperties
 {
-    private readonly WindowView? _parentWindow;
     private ModelEditorWindowView? _modelEditorWindow;
     private ModelSelectionWindowView? _modelSelectionWindow;
+    private WindowView? _parentWindow;
     public bool ShowDescription { get; set; }
     public string ValueType { get; set; } = string.Empty;
 
+    public PropertyEditorView()
+    {
+        Initialize();
+    }
+
     public PropertyEditorView(WindowView? parentWindow)
     {
-        _parentWindow = parentWindow;
-        PropertyChanged += PropertyEditor_PropertyChanged;
+        Initialize(parentWindow);
     }
 
     public void OnModelEdited(IElectronicComponent model)
@@ -76,6 +80,13 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
         }
     }
 
+    private void Initialize(WindowView? parentWindow = null)
+    {
+        _parentWindow = parentWindow;
+        PropertyChanged += PropertyEditor_PropertyChanged;
+        Unloaded += OnUnloaded;
+    }
+
     private void ModelButton_Clicked(object? sender, EventArgs e)
     {
         if (_modelSelectionWindow == null)
@@ -98,6 +109,16 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
         {
             API.TabBar?.BringToFront(_modelSelectionWindow);
         }
+    }
+
+    private void OnUnloaded(object? sender, EventArgs e)
+    {
+        _modelSelectionWindow = null;
+        _modelEditorWindow = null;
+        _parentWindow = null;
+        OnValueChanged = null;
+        PropertyChanged -= PropertyEditor_PropertyChanged;
+        Unloaded -= OnUnloaded;
     }
 
     private void Picker_OnSelectedIndexChange(object? sender, EventArgs e)
@@ -181,7 +202,6 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
             // }
             else if (value is IElectronicComponent c)
             {
-                IElectronicComponent? component = (IElectronicComponent?)c;
                 string text = c.Name != "" ? c.Name : "Select model";
                 Button modelButton = new Button()
                     .HorizontalOptions(LayoutOptions.Fill)
@@ -215,24 +235,21 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
                     HorizontalOptions(LayoutOptions.Fill).VerticalOptions(LayoutOptions.Fill).OnTextChanged(Entry_OnTextChanged).Text(Convert.ToString(value)));
             }
 
-            if (ShowDescription)
+            if (!ShowDescription)
             {
-                grid.ColumnDefinitions.Add(new ColumnDefinition().Width(GridLength.Star));
-                Label descriptionLabel = new Label()
-                    .HorizontalOptions(LayoutOptions.Fill)
-                    .VerticalOptions(LayoutOptions.Fill)
-                    .Text(DescriptionService.GetComponentDescription(ParentType, PropertyName));
-                Grid.SetColumn(descriptionLabel, 2);
-                grid.Add(descriptionLabel);
+                return Task.CompletedTask;
             }
+
+            grid.ColumnDefinitions.Add(new ColumnDefinition().Width(GridLength.Star));
+            Label descriptionLabel = new Label()
+                .HorizontalOptions(LayoutOptions.Fill)
+                .VerticalOptions(LayoutOptions.Fill)
+                .Text(DescriptionService.GetComponentDescription(ParentType, PropertyName));
+            Grid.SetColumn(descriptionLabel, 2);
+            grid.Add(descriptionLabel);
 
             return Task.CompletedTask;
         });
-    }
-
-    private void ReleaseUnmanagedResources()
-    {
-        // TODO release unmanaged resources here
     }
 
     private void Toggle_OnToggle(object? sender, ToggledEventArgs e)

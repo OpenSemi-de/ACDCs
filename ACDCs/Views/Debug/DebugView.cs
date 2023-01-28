@@ -16,7 +16,7 @@ public class DebugWindow : WindowView
 
     public Workbench? StartCenterPage { get; set; }
 
-    public DebugWindow(SharpAbsoluteLayout layout) : base(layout, "Debug")
+    public DebugWindow(SharpAbsoluteLayout? layout) : base(layout, "Debug")
     {
         _debugGrid = new Grid()
             .ColumnDefinitions(new ColumnDefinitionCollection(

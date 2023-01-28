@@ -1,35 +1,39 @@
 [
-  {
-    "Text": "Data",
-    "MenuItems": [
-      {
-        "Text": "New",
-        "MenuCommand": "newdb"
-      },
-      {
-        "Text": "Open default DB",
-        "MenuCommand": "opendb"
-      },
-      {
-        "Text": "Save",
-        "MenuCommand": "savedb"
-      },
-      {
-        "Text": "Save to..",
-        "MenuCommand": "savetodb"
-      },
-      {
-        "Text": "Import",
-        "MenuCommand": "",
+    {
+        "Text": "Data",
         "MenuItems": [
-          {
-            "Text": "Spice models...",
-            "MenuCommand": "importspicemodels"
-          }
+            {
+                "Text": "New",
+                "MenuCommand": "newdb"
+            },
+            {
+                "Text": "Open default DB",
+                "MenuCommand": "opendb"
+            },
+            {
+                "Text": "Save",
+                "MenuCommand": "savedb"
+            },
+            {
+                "Text": "Save to..",
+                "MenuCommand": "savetodb"
+            },
+            {
+                "Text": "Import",
+                "MenuCommand": "",
+                "MenuItems": [
+                    {
+                        "Text": "Spice models...",
+                        "MenuCommand": "importspicemodels"
+                    }
+                ]
+            },
+            {
+                "Text": "Save json",
+                "MenuCommand": "savejson"
+            }
         ]
-      }
-    ]
-  },
+    },
     {
         "Text": "Edit",
         "MenuItems": [

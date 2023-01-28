@@ -30,7 +30,6 @@ public static class MauiProgram
                 fonts.AddFont("MapleMono-Bold.ttf", "MapleMonoBold");
                 fonts.AddFontAwesomeIconFonts();
             });
-        API.AddServices(builder.Services);
 
 #if WINDOWS
         builder.ConfigureLifecycleEvents(events =>
@@ -56,7 +55,6 @@ public static class MauiProgram
 #endif
 
         MauiApp mauiApp = builder.Build();
-        API.ServiceProvider = mauiApp.Services;
         return mauiApp;
     }
 }

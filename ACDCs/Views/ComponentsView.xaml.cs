@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using ACDCs.Components;
+using ACDCs.Components.Menu.MenuHandlers;
 using ACDCs.Data.ACDCs.Components.BJT;
 using ACDCs.Data.ACDCs.Interfaces;
 using ACDCs.IO.Spice;
@@ -13,6 +14,7 @@ using Sharp.UI;
 public partial class ComponentsView : SharpAbsoluteLayout
 {
     public List<ComponentViewModel> dataSource = new();
+    private readonly ImportMenuHandlers _handlers;
     private List<ComponentViewModel> _baseData = new();
     private string _category = string.Empty;
 
@@ -21,6 +23,7 @@ public partial class ComponentsView : SharpAbsoluteLayout
         InitializeComponent();
         Loaded += OnLoaded;
         SizeChanged += OnSizeChanged;
+        _handlers = new ImportMenuHandlers { ComponentsView = this };
     }
 
     public async void ImportSpiceModels(string fileName)

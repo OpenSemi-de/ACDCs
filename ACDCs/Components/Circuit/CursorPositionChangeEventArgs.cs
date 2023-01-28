@@ -2,10 +2,10 @@
 
 public class CursorPositionChangeEventArgs
 {
-    public Point CursorPosition { get; }
+    private Point _cursorPosition;
 
     public CursorPositionChangeEventArgs(Point cursorPosition)
     {
-        CursorPosition = cursorPosition;
+        _cursorPosition = cursorPosition;
     }
 }

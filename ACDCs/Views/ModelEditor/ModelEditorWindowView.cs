@@ -4,7 +4,9 @@ using ACDCs.Components;
 using ACDCs.Components.ModelEditor;
 using ACDCs.Components.Window;
 using ACDCs.Data.ACDCs.Interfaces;
+using ACDCs.Services;
 using ACDCs.Views.Properties;
+using CommunityToolkit.Maui.Core.Extensions;
 using Sharp.UI;
 using Button = Sharp.UI.Button;
 using DataTemplate = Sharp.UI.DataTemplate;
@@ -116,11 +118,13 @@ public class ModelEditorWindowView : WindowView, IGetPropertyUpdates
                     item.Value = value;
                 }
 
+                item.Order = DescriptionService.GetComponentPropertyOrder(parentType, propertyInfo.Name);
                 item.ParentType = parentType;
                 propertyItems.Add(item);
             }
         }
 
+        propertyItems = propertyItems.OrderBy(item => item.Order).ToObservableCollection();
         _modelView.ItemsSource(propertyItems);
     }
 

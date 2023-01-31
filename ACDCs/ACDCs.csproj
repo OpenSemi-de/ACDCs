@@ -130,9 +130,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="ObjectsComparer" Version="1.4.1" />
     <PackageReference Include="Sharp.UI" Version="0.2.5-alpha.1" />
-    <PackageReference Include="UraniumUI" Version="2.3.0-pre.2" />
-    <PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.3.0-pre.2" />
-    <PackageReference Include="UraniumUI.Material" Version="2.3.0-pre.1" />
+    <PackageReference Include="UraniumUI" Version="2.3.0" />
+    <PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.3.0" />
+    <PackageReference Include="UraniumUI.Material" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>

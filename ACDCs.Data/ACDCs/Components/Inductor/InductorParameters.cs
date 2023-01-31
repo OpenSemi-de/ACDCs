@@ -6,8 +6,8 @@ namespace ACDCs.Data.ACDCs.Components.Inductor;
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 public class InductorParameters : IComponentParameters
 {
-    public float Inductance { get; set; }
-    public float InitialCondition { get; set; }
-    public float ParallelMultiplier { get; set; }
-    public float SeriesMultiplier { get; set; }
+    public double Inductance { get; set; }
+    public double InitialCondition { get; set; }
+    public double ParallelMultiplier { get; set; }
+    public double SeriesMultiplier { get; set; }
 }

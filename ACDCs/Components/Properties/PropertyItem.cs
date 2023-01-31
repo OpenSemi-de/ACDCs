@@ -10,6 +10,7 @@ public class PropertyItem : INotifyPropertyChanged, INotifyCollectionChanged
     public bool IsExpanded { get; set; }
     public bool IsLeaf { get; set; }
     public string Name { get; } = string.Empty;
+    public int Order { get; set; }
     public Type? ParentType { get; set; }
     public object? Value { get; set; }
 

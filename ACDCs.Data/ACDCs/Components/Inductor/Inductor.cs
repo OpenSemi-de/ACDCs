@@ -11,5 +11,15 @@ public class Inductor : InductorParameters, IElectronicComponent
     public IComponentRuntimeParameters ParametersRuntime { get; } = new InductorRuntimeParameters();
     public string Type { get; set; } = string.Empty;
 
-    public string Value { get; set; } = string.Empty;
+    public string Value
+    {
+        get => Convert.ToString(((InductorRuntimeParameters)ParametersRuntime).Inductance);
+        set
+        {
+            if (ParametersRuntime is InductorRuntimeParameters inductorRuntimeParameters)
+            {
+                inductorRuntimeParameters.Inductance = Convert.ToDouble(value);
+            }
+        }
+    }
 }

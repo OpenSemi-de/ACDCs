@@ -14,7 +14,10 @@ public class Capacitor : CapacitorParameters, IElectronicComponent
         get => Convert.ToString(((CapacitorRuntimeParameters)ParametersRuntime).Capacitance);
         set
         {
-            ((CapacitorRuntimeParameters)ParametersRuntime).Capacitance = Convert.ToDouble(value);
+            if (ParametersRuntime is CapacitorRuntimeParameters capacitorRuntimeParameters)
+            {
+                capacitorRuntimeParameters.Capacitance = Convert.ToDouble(value);
+            }
         }
     }
 }

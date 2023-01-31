@@ -34,13 +34,51 @@ public static class DescriptionService
         foreach (var parameterInfo in targetTypes.Select(targetType => targetType.GetProperty(propertyName))
                      .Where(property => property != null)
                      .Select(property =>
+                         property?.CustomAttributes.FirstOrDefault(attr =>
+                             attr.AttributeType == typeof(ParameterInfoAttribute)))
+                     .Where(parameterInfo => parameterInfo != null))
+        {
+            return Convert.ToString(parameterInfo?.ConstructorArguments.First().Value) ?? string.Empty;
+        }
+
+        return "";
+    }
+
+    public static int GetComponentPropertyOrder(Type parentType, string propertyName)
+    {
+        if (parentType.GetInterfaces().All(i => i != typeof(IElectronicComponent)))
+        {
+            return 0;
+        }
+
+        if (!s_descriptionTypes.ContainsKey(parentType))
+        {
+            return 0;
+        }
+
+        Type targetNamespaceType = s_descriptionTypes[parentType];
+        List<Type> targetTypes = targetNamespaceType.Assembly.GetTypes()
+            .Where(type => type.Namespace == targetNamespaceType.Namespace).ToList();
+
+        foreach (var parameterInfo in targetTypes.Select(targetType => targetType.GetProperty(propertyName))
+                     .Where(property => property != null)
+                     .Select(property =>
                          property.CustomAttributes.FirstOrDefault(attr =>
                              attr.AttributeType == typeof(ParameterInfoAttribute)))
                      .Where(parameterInfo => parameterInfo != null))
         {
-            return Convert.ToString(parameterInfo.ConstructorArguments.First().Value) ?? string.Empty;
+            int order = 10;
+            if (parameterInfo != null)
+            {
+                bool interesting = Convert.ToBoolean(parameterInfo.NamedArguments.FirstOrDefault(argument => argument.MemberName == "Interesting").TypedValue.Value ?? true);
+                order += interesting ? -2 : 2;
+                bool isPrincipal = Convert.ToBoolean(parameterInfo.NamedArguments
+                    .FirstOrDefault(argument => argument.MemberName == "IsPrincipal").TypedValue.Value ?? false);
+                order += isPrincipal ? -5 : 1;
+            }
+            return order;
         }
 
-        return "";
+        return 0;
     }
 }

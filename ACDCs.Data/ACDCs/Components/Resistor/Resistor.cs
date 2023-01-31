@@ -20,7 +20,10 @@ public class Resistor : ResistorParameters, IElectronicComponent
         set
         {
             _value = value;
-            ((ResistorRuntimeParameters)ParametersRuntime).Resistance = Convert.ToDouble(value);
+            if (ParametersRuntime is ResistorRuntimeParameters resistorRuntimeParameters)
+            {
+                resistorRuntimeParameters.Resistance = Convert.ToDouble(value);
+            }
         }
     }
 }

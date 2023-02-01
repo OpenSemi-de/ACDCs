@@ -1,3 +1,4 @@
-[submodule "aster"]
+[submodule "astar"]
 	path = libs/AStar
 	url = https://github.com/OpenSemi-de/AStar.git
+

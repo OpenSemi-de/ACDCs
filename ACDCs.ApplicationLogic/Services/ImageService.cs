@@ -119,7 +119,6 @@ public class ImageService : IImageService
         {
             using BitmapExportContext context = API.BitmapExportContextService.CreateContext((int)width, (int)height);
             ICanvas? canvas = context.Canvas;
-            canvas.Alpha = 0.7f;
 
             List<Color> colors = new() { ColorService.Background, ColorService.Foreground };
 
@@ -137,7 +136,7 @@ public class ImageService : IImageService
             canvas.DrawRoundedRectangle(2, 2, width - 4, height - 4, 1);
 
             canvas.Antialias = true;
-            canvas.FillRoundedRectangle(0, 0, width, 34, 1);
+            canvas.FillRoundedRectangle(0, 0, width, 38, 1);
             canvas.Antialias = false;
             canvas.DrawRoundedRectangle(2, 2, width - 4, 36, 1);
 

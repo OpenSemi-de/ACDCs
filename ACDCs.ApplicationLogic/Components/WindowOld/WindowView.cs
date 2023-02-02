@@ -20,7 +20,7 @@ public partial class WindowView : ContentView, IWindowViewProperties
     private readonly MenuButton _menuButton;
     private readonly MenuFrame _menuFrame;
     private readonly Label _resizeField;
-    private readonly WindowTitleLabel _titleLabel;
+    private readonly WindowTitle _titleLabel;
     private readonly ContentView _windowContentView;
     private bool _isActive;
     private Rect _lastBounds = Rect.Zero;
@@ -74,9 +74,10 @@ public partial class WindowView : ContentView, IWindowViewProperties
 
         SetRowAndColumn(_menuButton, 0, 0);
 
-        _titleLabel = new WindowTitleLabel(WindowTitle)
+        _titleLabel = new WindowTitle(WindowTitle, null)
             .HorizontalOptions(LayoutOptions.Fill)
             .HeightRequest(34)
+            .BackgroundColor(API.Instance.Text)
             .TextColor(API.Instance.Text);
 
         SetRowAndColumn(_titleLabel, 0, 0, 3);
@@ -142,7 +143,6 @@ public partial class WindowView : ContentView, IWindowViewProperties
         {
             BackgroundColor = API.Instance.Background,
             HeightRequest = 34,
-            MainContainer = MainContainer,
             WindowFrame = this
         };
         _menuFrame.LoadMenu(menuItems);
@@ -295,18 +295,15 @@ public partial class WindowView : ContentView, IWindowViewProperties
             if (_lastBounds == Rect.Zero)
                 _lastBounds = AbsoluteLayout.GetLayoutBounds(this);
 
-            if (e.StatusType != GestureStatus.Started && e.StatusType != GestureStatus.Completed)
-            {
-                Rect newBounds = new(_lastBounds.Location, _lastBounds.Size);
-                newBounds.Top += e.TotalY;
-                newBounds.Left += e.TotalX;
+            Rect newBounds = new(_lastBounds.Location, _lastBounds.Size);
+            newBounds.Top += e.TotalY;
+            newBounds.Left += e.TotalX;
 
-                AbsoluteLayout.SetLayoutBounds(this, newBounds);
-            }
-            else
+            AbsoluteLayout.SetLayoutBounds(this, newBounds);
+
+            if (e.StatusType != GestureStatus.Running)
             {
                 _lastBounds = AbsoluteLayout.GetLayoutBounds(this);
-                _headerImage.Source = API.Instance.WindowImageSource(Convert.ToSingle(_lastBounds.Width), Convert.ToSingle(_lastBounds.Height));
             }
 
             return Task.CompletedTask;

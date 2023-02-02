@@ -3,6 +3,7 @@ using ACDCs.ApplicationLogic.Components.Menu;
 using ACDCs.ApplicationLogic.Interfaces;
 using Microsoft.Maui.Layouts;
 using Newtonsoft.Json;
+using Window = ACDCs.ApplicationLogic.Components.Window.Window;
 
 namespace ACDCs.ApplicationLogic.Views.Menu;
 
@@ -12,7 +13,7 @@ using Sharp.UI;
 
 #pragma warning restore IDE0065
 
-public class MenuView : StackLayout, IMenuViewProperties
+public class MenuView : ContentView, IMenuViewProperties
 {
     private readonly StackLayout _menuLayout;
 
@@ -20,20 +21,30 @@ public class MenuView : StackLayout, IMenuViewProperties
 
     private MenuFrame? _menuFrame;
 
-    public MenuView()
+    public MenuView(string? menuFile)
     {
+        if (menuFile != null)
+        {
+            MenuFilename = menuFile;
+        }
+
         this.HorizontalOptions(LayoutOptions.Start);
-        Orientation = StackOrientation.Horizontal;
         _menuLayout = new StackLayout
         {
             HorizontalOptions = LayoutOptions.Start,
             VerticalOptions = LayoutOptions.Fill,
             Orientation = StackOrientation.Horizontal,
-            Padding = 1
+            Padding = 0,
+            Margin = 0
         };
 
-        Add(_menuLayout);
+        this.BackgroundColor(Colors.Transparent);
+        Content = _menuLayout;
         Loaded += MenuDragContainer_Loaded;
+    }
+
+    public MenuView()
+    {
     }
 
     private async void LoadMenu(string menuMainJson)
@@ -50,13 +61,12 @@ public class MenuView : StackLayout, IMenuViewProperties
     {
         _menuFrame = new MenuFrame
         {
-            PopupTarget = PopupTarget,
-            MainContainer = this
+            ParentWindow = ParentWindow
         };
 
         _menuLayout.Add(_menuFrame);
 
-        LoadMenu(MenuFilename ?? "menu_main.json");
+        LoadMenu(MenuFilename);
 
         if (CircuitView != null)
         {
@@ -66,7 +76,7 @@ public class MenuView : StackLayout, IMenuViewProperties
 
         _fileNameLabel = new Label
         {
-            Text = "New file",
+            Text = "",
             WidthRequest = 200,
             HorizontalTextAlignment = TextAlignment.Start,
             VerticalTextAlignment = TextAlignment.Center,
@@ -76,8 +86,8 @@ public class MenuView : StackLayout, IMenuViewProperties
 
         _menuLayout.Add(_fileNameLabel);
 
-        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional | AbsoluteLayoutFlags.PositionProportional);
-        AbsoluteLayout.SetLayoutBounds(this, new Rect(0, 0, 1, 44));
+        AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional);
+        AbsoluteLayout.SetLayoutBounds(this, new Rect(2, 0, 1, 34));
     }
 
     private void Sheet_Loaded(object? sender, EventArgs e)
@@ -100,4 +110,5 @@ public class MenuView : StackLayout, IMenuViewProperties
     public ComponentsView ComponentsView { get; set; }
     public string MenuFilename { get; set; }
     public AbsoluteLayout PopupTarget { get; set; }
+    public Window ParentWindow { get; set; }
 }

@@ -13,13 +13,13 @@ public class MenuFrame : StackLayout
 {
     private static readonly List<MenuFrame> s_menuFrameList = new();
     private readonly bool _eventSet;
-    public View? MainContainer { get; set; }
-    public AbsoluteLayout? PopupTarget { get; set; }
     public WindowView? WindowFrame { get; set; }
+    public Window.Window ParentWindow { get; set; }
 
     public MenuFrame()
     {
-        BackgroundColor = API.Instance.BackgroundHigh;
+        this.BackgroundColor(Colors.Transparent);
+
         HorizontalOptions = LayoutOptions.Fill;
         VerticalOptions = LayoutOptions.Fill;
         Orientation = StackOrientation.Horizontal;
@@ -67,19 +67,18 @@ public class MenuFrame : StackLayout
 
                     menuButton.MenuFrame = new MenuFrame
                     {
-                        PopupTarget = PopupTarget,
+                        ParentWindow = ParentWindow,
                         Orientation = isRoot
                             ? Orientation == StackOrientation.Horizontal
                                 ? StackOrientation.Vertical
                                 : StackOrientation.Horizontal
                             : Orientation,
-                        MainContainer = MainContainer,
                         IsVisible = false
                     };
 
                     menuButton.MenuFrame.LoadMenu(menuItem.MenuItems);
 
-                    PopupTarget?.Add(menuButton.MenuFrame);
+                    ParentWindow.ChildLayout?.Add(menuButton.MenuFrame);
                 }
                 else if (menuItem.IsChecked != "")
                 {
@@ -109,8 +108,8 @@ public class MenuFrame : StackLayout
             return;
         }
 
-        double mainX = Microsoft.Maui.Controls.AbsoluteLayout.GetLayoutBounds(MainContainer).X;
-        double mainY = Microsoft.Maui.Controls.AbsoluteLayout.GetLayoutBounds(MainContainer).Y + Microsoft.Maui.Controls.AbsoluteLayout.GetLayoutBounds(MainContainer).Height;
+        double mainX = 0;
+        double mainY = menuButton.Height;
         if (WindowFrame != null)
         {
             mainX += AbsoluteLayout.GetLayoutBounds(WindowFrame).X;

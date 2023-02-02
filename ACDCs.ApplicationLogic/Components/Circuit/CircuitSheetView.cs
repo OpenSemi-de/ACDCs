@@ -80,7 +80,7 @@ public sealed class CircuitSheetView : AbsoluteLayout
             Add(_cursorDebugLabel);
         }
 
-        _menuView = new MenuView();
+        _menuView = new MenuView("menu_main.json");
         _menuView.PopupTarget = this;
         _menuView.CircuitView = _circuitView;
         _menuView.ZIndex = 2;

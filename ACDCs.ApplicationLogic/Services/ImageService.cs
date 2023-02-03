@@ -30,16 +30,13 @@ public class ImageService : IImageService
 
             canvas.SetShadow(new SizeF(6, 8), 10f, ColorService.BackgroundHigh);
 
-            RadialGradientPaint paintFrom = new(new Point(1, 1), 1)
-            {
-                StartColor = colors[0],
-                EndColor = colors[1]
-            };
+            RadialGradientPaint paintFrom = new(new Point(1, 1), 1) { StartColor = colors[0], EndColor = colors[1] };
 
             canvas.SetFillPaint(paintFrom, new RectF(0f, 0f, width, height));
             canvas.FillRectangle(0, 0, width, height);
 
-            RadialGradientPaint paintTo = new(new Point(1, 1), 1) { StartColor = ColorService.Foreground, EndColor = colors[0] };
+            RadialGradientPaint paintTo =
+                new(new Point(1, 1), 1) { StartColor = ColorService.Foreground, EndColor = colors[0] };
 
             canvas.SetFillPaint(paintTo, new RectF(0f, 0f, width, height));
             canvas.FontSize = 120;
@@ -47,12 +44,8 @@ public class ImageService : IImageService
             canvas.FontColor = paintTo.ToColor();
             canvas.DrawString("ACDCs", 0, 0, width, height, HorizontalAlignment.Center, VerticalAlignment.Center);
 
-            MemoryStream ms = new();
+            ImageSource source = GetImageSource(context).GetAwaiter().GetResult();
 
-            context.Image.Save(ms);
-            ms.Position = 0;
-
-            ImageSource? source = ImageSource.FromStream(() => ms);
             return source;
         }
         catch
@@ -97,12 +90,8 @@ public class ImageService : IImageService
             canvas.Font = new Font("Maple Mono");
             canvas.DrawString(text, width / 2, height / 2, HorizontalAlignment.Center);
 
-            MemoryStream ms = new();
+            ImageSource source = GetImageSource(context).GetAwaiter().GetResult();
 
-            context.Image.Save(ms);
-            ms.Position = 0;
-
-            ImageSource? source = ImageSource.FromStream(() => ms);
             return source;
         }
         catch
@@ -111,6 +100,24 @@ public class ImageService : IImageService
         }
 
         return null;
+    }
+
+    private static async Task<ImageSource> GetImageSource(BitmapExportContext context)
+    {
+        MemoryStream? ms = new();
+
+        await context.Image.SaveAsync(ms);
+        ms.Position = 0;
+
+        ImageSource? source = ImageSource.FromStream(() => ms);
+        Task.Run(() =>
+        {
+            Task.Delay(2000).Wait();
+            ms.Dispose();
+            ms = null;
+            GC.Collect();
+        });
+        return source;
     }
 
     public ImageSource? WindowImageSource(float width, float height)
@@ -140,12 +147,8 @@ public class ImageService : IImageService
             canvas.Antialias = false;
             canvas.DrawRoundedRectangle(2, 2, width - 4, 36, 1);
 
-            MemoryStream ms = new();
+            ImageSource source = GetImageSource(context).GetAwaiter().GetResult();
 
-            context.Image.Save(ms);
-            ms.Position = 0;
-
-            ImageSource? source = ImageSource.FromStream(() => ms);
             return source;
         }
         catch

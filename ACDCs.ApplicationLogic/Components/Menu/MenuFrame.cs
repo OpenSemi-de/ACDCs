@@ -13,6 +13,7 @@ public class MenuFrame : StackLayout
 {
     private static readonly List<MenuFrame> s_menuFrameList = new();
     private readonly bool _eventSet;
+    private List<MenuHandler> _handlers = new();
     public WindowView? WindowFrame { get; set; }
     public Window.Window ParentWindow { get; set; }
 
@@ -49,6 +50,11 @@ public class MenuFrame : StackLayout
             List<IMenuComponent> menuParts = new();
             foreach (MenuItemDefinition menuItem in items)
             {
+                if (menuItem.Handler != "")
+                {
+                    LoadHandler(menuItem.Handler);
+                }
+
                 if (menuItem.Text != "" && menuItem.IsChecked == "")
                 {
                     MenuButton menuButton = new(menuItem.Text, menuItem.MenuCommand, menuItem.ClickAction);
@@ -94,6 +100,23 @@ public class MenuFrame : StackLayout
             menuParts.ForEach(part => Add(part as Microsoft.Maui.IView));
             return Task.CompletedTask;
         }).Wait();
+    }
+
+    private void LoadHandler(string menuItemHandler)
+    {
+        Type? handlerType = this.GetType().Assembly.GetTypes().FirstOrDefault(t => t.Name.Contains($"{menuItemHandler}Handlers"));
+        if (handlerType == null)
+            return;
+
+        bool exists = _handlers.Any(h => h.GetType().Name.Contains(menuItemHandler));
+
+        if (exists) return;
+
+        MenuHandler? instance = Activator.CreateInstance(handlerType) as MenuHandler;
+        if (instance == null)
+            return;
+
+        _handlers.Add(instance);
     }
 
     public void SetPosition(View menuButtonView)

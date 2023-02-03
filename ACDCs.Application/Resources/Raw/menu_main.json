@@ -4,23 +4,28 @@
         "MenuItems": [
             {
                 "Text": "New",
-                "MenuCommand": "new"
+                "MenuCommand": "new",
+                "Handler": "FileMenu"
             },
             {
                 "Text": "Open...",
-                "MenuCommand": "openfile"
+                "MenuCommand": "openfile",
+                "Handler": "FileMenu"
             },
             {
                 "Text": "Save",
-                "MenuCommand": "savefile"
+                "MenuCommand": "savefile",
+                "Handler": "FileMenu"
             },
             {
                 "Text": "Save as..",
-                "MenuCommand": "saveasfile"
+                "MenuCommand": "saveasfile",
+                "Handler": "FileMenu"
             },
             {
                 "Text": "Import spice",
-                "MenuCommand": "importspicenetlist"
+                "MenuCommand": "importspicenetlist",
+                "Handler": "FileMenu"
             },
             {
                 "Text": "Export",
@@ -48,24 +53,29 @@
             {
                 "Text": "Multiselect",
                 "IsChecked": "False",
-                "MenuCommand": "multiselect"
+                "MenuCommand": "multiselect",
+                "Handler": "EditMenu"
             },
             {
                 "Text": "Deselect all",
+                "Handler": "EditMenu",
                 "MenuCommand": "deselectall"
             },
             {
                 "Text": "Select all",
+                "Handler": "EditMenu",
                 "MenuCommand": "selectall"
             },
             {},
             {
                 "Text": "Duplicate",
+                "Handler": "EditMenu",
                 "MenuCommand": "duplicate"
             },
             {},
             {
                 "Text": "Delete",
+                "Handler": "EditMenu",
                 "MenuCommand": "delete"
             }
         ]
@@ -75,14 +85,17 @@
         "MenuItems": [
             {
                 "Text": "About",
+                "Handler": "InfoMenu",
                 "MenuCommand": "about"
             },
             {
                 "Text": "License",
+                "Handler": "InfoMenu",
                 "MenuCommand": "license"
             },
             {
                 "Text": "Debug",
+                "Handler": "InfoMenu",
                 "MenuCommand": "debug"
             }
         ]

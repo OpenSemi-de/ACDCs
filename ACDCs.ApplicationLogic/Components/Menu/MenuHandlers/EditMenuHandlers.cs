@@ -1,7 +1,14 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Menu.MenuHandlers;
+﻿using ACDCs.ApplicationLogic.Components.Circuit;
+
+namespace ACDCs.ApplicationLogic.Components.Menu.MenuHandlers;
 
 public class EditMenuHandlers : MenuHandler
 {
+    public CircuitView? CircuitView
+    {
+        get => GetParameter<CircuitView>("CircuitView");
+    }
+
     public EditMenuHandlers()
     {
         API.Instance.Add("delete", Delete);
@@ -15,36 +22,57 @@ public class EditMenuHandlers : MenuHandler
 
     private async void Delete(object? o)
     {
-        await API.Instance.Delete(CircuitView);
+        if (CircuitView != null)
+        {
+            await API.Instance.Delete(CircuitView);
+        }
     }
 
     private async void DeselectAll(object? o)
     {
-        await API.Instance.DeselectAll(CircuitView);
+        if (CircuitView != null)
+        {
+            await API.Instance.DeselectAll(CircuitView);
+        }
     }
 
     private async void Duplicate(object? o)
     {
-        await API.Instance.Duplicate(CircuitView);
+        if (CircuitView != null)
+        {
+            await API.Instance.Duplicate(CircuitView);
+        }
     }
 
     private async void Mirror(object? o)
     {
-        await API.Instance.Mirror(CircuitView);
+        if (CircuitView != null)
+        {
+            await API.Instance.Mirror(CircuitView);
+        }
     }
 
     private async void Rotate(object? o)
     {
-        await API.Instance.Rotate(CircuitView);
+        if (CircuitView != null)
+        {
+            await API.Instance.Rotate(CircuitView);
+        }
     }
 
     private async void SelectAll(object? o)
     {
-        await API.Instance.SelectAll(CircuitView);
+        if (CircuitView != null)
+        {
+            await API.Instance.SelectAll(CircuitView);
+        }
     }
 
     private async void SwitchMultiselect(object? state)
     {
-        await API.Instance.SwitchMultiselect(state, CircuitView);
+        if (CircuitView != null)
+        {
+            await API.Instance.SwitchMultiselect(state, CircuitView);
+        }
     }
 }

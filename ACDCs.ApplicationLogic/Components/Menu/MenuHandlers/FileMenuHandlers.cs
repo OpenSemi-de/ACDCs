@@ -1,7 +1,14 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Menu.MenuHandlers;
+﻿using ACDCs.ApplicationLogic.Components.Circuit;
+
+namespace ACDCs.ApplicationLogic.Components.Menu.MenuHandlers;
 
 public class FileMenuHandlers : MenuHandler
 {
+    private CircuitView? CircuitView
+    {
+        get => GetParameter<CircuitView>("CircuitView");
+    }
+
     public FileMenuHandlers()
     {
         API.Instance.Add("new", NewFile);
@@ -12,21 +19,33 @@ public class FileMenuHandlers : MenuHandler
 
     private async void NewFile(object? o)
     {
-        await API.Instance.NewFile(CircuitView);
+        if (CircuitView != null)
+        {
+            await API.Instance.NewFile(CircuitView);
+        }
     }
 
     private async void OpenFile(object? o)
     {
-        await API.Instance.OpenFile(CircuitView);
+        if (CircuitView != null)
+        {
+            await API.Instance.OpenFile(CircuitView);
+        }
     }
 
     private async void SaveFile(object? o)
     {
-        await API.Instance.SaveFile(CircuitView, PopupPage);
+        if (CircuitView != null)
+        {
+            await API.Instance.SaveFile(CircuitView, API.MainPage);
+        }
     }
 
     private async void SaveFileAs(object? o)
     {
-        await API.Instance.SaveFileAs(PopupPage, CircuitView);
+        if (CircuitView != null)
+        {
+            await API.Instance.SaveFileAs(API.MainPage, CircuitView);
+        }
     }
 }

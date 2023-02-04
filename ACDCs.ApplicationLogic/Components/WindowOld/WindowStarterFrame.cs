@@ -12,14 +12,16 @@ using Sharp.UI;
 
 public class WindowStarterFrame : Frame
 {
+    private readonly WindowContainer? _windowContainer;
     private readonly StackLayout _buttonStack;
     private readonly Grid _grid;
     private readonly ScrollView _scrollView;
     private ComponentsView? _componentsView;
     private WindowView? _componentsWindowView;
 
-    public WindowStarterFrame()
+    public WindowStarterFrame(WindowContainer? windowContainer = null)
     {
+        _windowContainer = windowContainer;
         ColumnDefinitionCollection columns = new()
         {
             new ColumnDefinition()
@@ -50,9 +52,12 @@ public class WindowStarterFrame : Frame
 
         _scrollView.Content = _buttonStack;
 
-        WindowStarterButton newCircuit = new WindowStarterButton("New circuit")
-            .OnClicked(NewCircuit);
+        WindowStarterButton newCircuit = new("New circuit window", typeof(CircuitWindow), windowContainer);
         _buttonStack.Add(newCircuit);
+
+        WindowStarterButton newCircuitold = new WindowStarterButton("New circuit")
+            .OnClicked(NewCircuit);
+        _buttonStack.Add(newCircuitold);
 
         WindowStarterButton components = new WindowStarterButton("Components")
             .OnClicked(ShowComponents);

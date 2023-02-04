@@ -110,7 +110,9 @@ public class ImageService : IImageService
         ms.Position = 0;
 
         ImageSource? source = ImageSource.FromStream(() => ms);
+#pragma warning disable CS4014
         Task.Run(() =>
+#pragma warning restore CS4014
         {
             Task.Delay(2000).Wait();
             ms.Dispose();

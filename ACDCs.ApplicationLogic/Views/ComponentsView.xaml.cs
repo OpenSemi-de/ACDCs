@@ -26,7 +26,7 @@ public partial class ComponentsView : AbsoluteLayout
         InitializeComponent();
         Loaded += OnLoaded;
         SizeChanged += OnSizeChanged;
-        _handlers = new ImportMenuHandlers { ComponentsView = this };
+        //   _handlers = new ImportMenuHandlers { ComponentsView = this };
     }
 
     public async void ImportSpiceModels(string fileName)

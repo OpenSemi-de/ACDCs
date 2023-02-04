@@ -1,7 +1,14 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Menu.MenuHandlers;
+﻿using ACDCs.ApplicationLogic.Views;
+
+namespace ACDCs.ApplicationLogic.Components.Menu.MenuHandlers;
 
 public class ImportMenuHandlers : MenuHandler
 {
+    public ComponentsView? ComponentsView
+    {
+        get => GetParameter<ComponentsView>("ComponentsView");
+    }
+
     public ImportMenuHandlers()
     {
         API.Instance.Add("opendb", OpenDB);
@@ -12,12 +19,18 @@ public class ImportMenuHandlers : MenuHandler
 
     private async void ImportSpiceModels(object? o)
     {
-        await API.Instance.ImportSpiceModels(ComponentsView);
+        if (ComponentsView != null)
+        {
+            await API.Instance.ImportSpiceModels(ComponentsView);
+        }
     }
 
     private async void OpenDB(object? o)
     {
-        await API.Instance.OpenDB(ComponentsView);
+        if (ComponentsView != null)
+        {
+            await API.Instance.OpenDB(ComponentsView);
+        }
     }
 
     private async void SaveJson(object? obj)
@@ -27,6 +40,9 @@ public class ImportMenuHandlers : MenuHandler
 
     private void SaveToDB(object? o)
     {
-        API.Instance.SaveToDB(ComponentsView);
+        if (ComponentsView != null)
+        {
+            API.Instance.SaveToDB(ComponentsView);
+        }
     }
 }

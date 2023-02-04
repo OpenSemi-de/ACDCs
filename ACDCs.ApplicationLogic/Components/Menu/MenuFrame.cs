@@ -38,7 +38,7 @@ public class MenuFrame : StackLayout
         s_menuFrameList.ForEach(menuFrame => { menuFrame.IsVisible = false; });
     }
 
-    public void LoadMenu(List<MenuItemDefinition> items, bool isRoot = false)
+    public void LoadMenu(List<MenuItemDefinition> items, bool isRoot = false, Dictionary<string, object> menuParameters = null)
     {
         API.Call(() =>
         {
@@ -52,7 +52,7 @@ public class MenuFrame : StackLayout
             {
                 if (menuItem.Handler != "")
                 {
-                    LoadHandler(menuItem.Handler);
+                    LoadHandler(menuItem.Handler, menuParameters);
                 }
 
                 if (menuItem.Text != "" && menuItem.IsChecked == "")
@@ -82,7 +82,7 @@ public class MenuFrame : StackLayout
                         IsVisible = false
                     };
 
-                    menuButton.MenuFrame.LoadMenu(menuItem.MenuItems);
+                    menuButton.MenuFrame.LoadMenu(menuItem.MenuItems, false, menuParameters);
 
                     ParentWindow.ChildLayout?.Add(menuButton.MenuFrame);
                 }
@@ -102,7 +102,7 @@ public class MenuFrame : StackLayout
         }).Wait();
     }
 
-    private void LoadHandler(string menuItemHandler)
+    private void LoadHandler(string menuItemHandler, Dictionary<string, object> menuParameters)
     {
         Type? handlerType = this.GetType().Assembly.GetTypes().FirstOrDefault(t => t.Name.Contains($"{menuItemHandler}Handlers"));
         if (handlerType == null)
@@ -115,6 +115,11 @@ public class MenuFrame : StackLayout
         MenuHandler? instance = Activator.CreateInstance(handlerType) as MenuHandler;
         if (instance == null)
             return;
+
+        foreach (KeyValuePair<string, object> param in menuParameters)
+        {
+            instance.SetParameter(param.Key, param.Value);
+        }
 
         _handlers.Add(instance);
     }

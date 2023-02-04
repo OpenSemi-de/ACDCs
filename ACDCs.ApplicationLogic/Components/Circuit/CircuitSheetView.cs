@@ -1,7 +1,4 @@
-using ACDCs.ApplicationLogic.Components.Menu;
-using ACDCs.ApplicationLogic.Components.Menu.MenuHandlers;
 using ACDCs.ApplicationLogic.Views.Edit;
-using ACDCs.ApplicationLogic.Views.Menu;
 using ACDCs.ApplicationLogic.Views.Properties;
 using Microsoft.Maui.Layouts;
 
@@ -20,12 +17,6 @@ public sealed class CircuitSheetView : AbsoluteLayout
 
     private readonly Label? _cursorDebugLabel;
     private readonly Views.Items.ItemsView _itemsView;
-
-    // ReSharper disable once NotAccessedField.Local
-    private readonly List<MenuHandler> _menuHandlers;
-
-    private readonly MenuView _menuView;
-
     private readonly bool _showCursorDebugOutput = Convert.ToBoolean(API.GetPreference("ShowDebugCursorOutput"));
 
     // ReSharper disable once NotAccessedField.Local
@@ -54,23 +45,6 @@ public sealed class CircuitSheetView : AbsoluteLayout
         AbsoluteLayout.SetLayoutBounds(_circuitView, new Rect(0, 0, 1, 1));
         Add(_circuitView);
 
-        _menuHandlers = new List<MenuHandler>
-        {
-            new FileMenuHandlers
-            {
-                CircuitView = _circuitView,
-                PopupPage = API.MainPage
-            },
-            new EditMenuHandlers
-            {
-                CircuitView = _circuitView
-            },
-            new InfoMenuHandlers
-            {
-                CircuitView = _circuitView
-            }
-        };
-
         if (_showCursorDebugOutput)
         {
             _cursorDebugLabel = new Label { ZIndex = 2 };
@@ -80,20 +54,22 @@ public sealed class CircuitSheetView : AbsoluteLayout
             Add(_cursorDebugLabel);
         }
 
-        _menuView = new MenuView("menu_main.json");
-        _menuView.PopupTarget = this;
-        _menuView.CircuitView = _circuitView;
-        _menuView.ZIndex = 2;
-
-        AbsoluteLayout.SetLayoutFlags(_menuView, AbsoluteLayoutFlags.WidthProportional);
-        AbsoluteLayout.SetLayoutBounds(_menuView, new Rect(0, 0, 1, 36));
-        Add(_menuView);
+        // _menuView = new MenuView("menu_main.json");
+        // _menuView.PopupTarget = this;
+        // _menuView.CircuitView = _circuitView;
+        // _menuView.ZIndex = 2;
+        //
+        // AbsoluteLayout.SetLayoutFlags(_menuView, AbsoluteLayoutFlags.WidthProportional);
+        // AbsoluteLayout.SetLayoutBounds(_menuView, new Rect(0, 0, 1, 36));
+        // Add(_menuView);
 
         Loaded += OnLoaded;
         _circuitView.ShowCollisionMap = Convert.ToBoolean(API.GetPreference("ShowTraceCollisionMap"));
         _circuitView.CursorDebugChanged = CursorDebugChanged;
         _circuitView.ItemsView = _itemsView;
     }
+
+    public CircuitView CircuitView => _circuitView;
 
     private void CursorDebugChanged()
     {

@@ -1,6 +1,5 @@
 ﻿using ACDCs.ApplicationLogic.Components.Circuit;
 using ACDCs.ApplicationLogic.Components.Menu;
-using ACDCs.ApplicationLogic.Interfaces;
 using Microsoft.Maui.Layouts;
 using Newtonsoft.Json;
 using Window = ACDCs.ApplicationLogic.Components.Window.Window;
@@ -13,16 +12,18 @@ using Sharp.UI;
 
 #pragma warning restore IDE0065
 
-public class MenuView : ContentView, IMenuViewProperties
+public class MenuView : ContentView
 {
+    private readonly Dictionary<string, object> _menuParameters;
     private readonly StackLayout _menuLayout;
 
     private Label? _fileNameLabel;
 
     private MenuFrame? _menuFrame;
 
-    public MenuView(string? menuFile)
+    public MenuView(string? menuFile, Dictionary<string, object> menuParameters)
     {
+        _menuParameters = menuParameters;
         if (menuFile != null)
         {
             MenuFilename = menuFile;
@@ -53,7 +54,7 @@ public class MenuView : ContentView, IMenuViewProperties
         {
             string jsonData = await API.LoadMauiAssetAsString(menuMainJson);
             List<MenuItemDefinition>? items = JsonConvert.DeserializeObject<List<MenuItemDefinition>>(jsonData);
-            if (items != null) _menuFrame?.LoadMenu(items, true);
+            if (items != null) _menuFrame?.LoadMenu(items, true, _menuParameters);
         });
     }
 
@@ -106,7 +107,7 @@ public class MenuView : ContentView, IMenuViewProperties
         }
     }
 
-    public CircuitView CircuitView { get; set; }
+    public CircuitView? CircuitView { get; set; }
     public ComponentsView ComponentsView { get; set; }
     public string MenuFilename { get; set; }
     public AbsoluteLayout PopupTarget { get; set; }

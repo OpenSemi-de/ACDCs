@@ -1,6 +1,5 @@
 ﻿using ACDCs.ApplicationLogic.Components.Window;
 using Microsoft.Maui.Layouts;
-using WindowTabBar = ACDCs.ApplicationLogic.Components.Window.WindowTabBar;
 
 #pragma warning disable IDE0065
 
@@ -12,7 +11,7 @@ public class Workbench : ContentPage
 {
     private readonly API _api;
     private readonly Grid _mainGrid;
-    private readonly AbsoluteLayout? _mainWindowLayout;
+    private readonly WindowContainer? _windowContainer;
     private readonly WindowStarterFrame _starterFrame;
     private readonly WindowTabBar _windowTabBar;
 
@@ -32,13 +31,13 @@ public class Workbench : ContentPage
             .ColumnDefinitions(columns)
             .RowDefinitions(rows);
 
-        _mainWindowLayout = new AbsoluteLayout();
-        _mainGrid.Add(_mainWindowLayout);
+        _windowContainer = new();
+        _mainGrid.Add(_windowContainer);
 
-        _starterFrame = new WindowStarterFrame();
+        _starterFrame = new WindowStarterFrame(_windowContainer);
         AbsoluteLayout.SetLayoutFlags(_starterFrame, AbsoluteLayoutFlags.YProportional);
         AbsoluteLayout.SetLayoutBounds(_starterFrame, new Rect(0, 1, 200, 400));
-        _mainWindowLayout.Add(_starterFrame);
+        _windowContainer.Add(_starterFrame);
 
         _windowTabBar = new WindowTabBar(_starterFrame)
             .HorizontalOptions(LayoutOptions.Fill)
@@ -51,13 +50,15 @@ public class Workbench : ContentPage
 
         Loaded += OnLoaded;
         API.MainPage = this;
-        API.MainContainer = _mainWindowLayout;
+        API.MainContainer = _windowContainer;
         PointerGestureRecognizer pointerMovement = new();
         pointerMovement.PointerMoved += PointerMovementOnPointerMoved;
-        _mainWindowLayout.GestureRecognizers.Add(pointerMovement.MauiObject);
+        _windowContainer.GestureRecognizers.Add(pointerMovement.MauiObject);
 
         SizeChanged += OnSizeChanged;
     }
+
+    public WindowContainer? WindowContainer => _windowContainer;
 
     private void OnLoaded(object? sender, EventArgs e)
     {
@@ -71,7 +72,7 @@ public class Workbench : ContentPage
 
     private void PointerMovementOnPointerMoved(object? sender, PointerEventArgs e)
     {
-        Point? point = e.GetPosition(_mainWindowLayout);
+        Point? point = e.GetPosition(_windowContainer);
         if (API.PointerLayoutObjectToMeasure != null)
         {
             point = e.GetPosition(API.PointerLayoutObjectToMeasure);

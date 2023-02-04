@@ -14,21 +14,30 @@ public class Window : Grid
     private readonly WindowContainer _container;
     private readonly string _title;
     private readonly string? _menuFile;
+    private readonly bool _isWindowParent;
+    private View? _childView;
     private AbsoluteLayout _childLayout;
     private Image _backgroundImage;
     private WindowTitle _windowTitle;
     private WindowButtons _windowButtons;
     private MenuView _menuView;
+    private readonly Func<Window, View> _childViewFunction;
 
-    public Window(WindowContainer container, string title, string? menuFile = null, bool isWindowParent = false)
+    public Window(WindowContainer container, string title, string? menuFile = null, bool isWindowParent = false,
+        Func<Window, View> childViewFunction = null)
     {
         _container = container;
         _title = title;
         _menuFile = menuFile;
+        _isWindowParent = isWindowParent;
+        _childViewFunction = childViewFunction;
+    }
 
+    public void Start()
+    {
         AddGridDefinitions();
         AddBackgroundImage();
-        AddChildLayout(isWindowParent);
+        AddChildLayout(_isWindowParent);
         AddWindowTitle();
         AddWindowButtons();
 
@@ -37,10 +46,16 @@ public class Window : Grid
             LoadMenu();
         }
 
-        container.AddWindow(this);
+        _container.AddWindow(this);
 
         SetSize(500, 400);
-
+        _childView = _childViewFunction?.Invoke(this);
+        if (_childView != null)
+        {
+            AbsoluteLayout.SetLayoutFlags(_childView, AbsoluteLayoutFlags.SizeProportional);
+            AbsoluteLayout.SetLayoutBounds(_childView, new Rect(0, 0, 1, 1));
+            _childLayout?.Add(_childView);
+        }
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
         OnClose = DefaultClose;
         Loaded += Window_Loaded;
@@ -48,13 +63,17 @@ public class Window : Grid
 
     private void LoadMenu()
     {
-        _menuView = new MenuView(_menuFile)
+        _menuView = new MenuView(_menuFile, MenuParameters)
         {
+            PopupTarget = _childLayout,
             HeightRequest = 34,
             ParentWindow = this
         };
         _childLayout.Add(_menuView);
+        _menuView.ZIndex = 999;
     }
+
+    public Dictionary<string, object> MenuParameters { get; } = new();
 
     private void SetSize(int width, int height)
     {
@@ -81,7 +100,7 @@ public class Window : Grid
     private void AddChildLayout(bool isWindowParent)
     {
         _childLayout = isWindowParent ? new WindowContainer() : new AbsoluteLayout();
-        this.SetRowAndColumn(_childLayout, 1, 0, 2);
+        this.SetRowAndColumn(_childLayout, 1, 0, 2, 2);
         Add(_childLayout);
     }
 
@@ -112,7 +131,10 @@ public class Window : Grid
     private void Window_Loaded(object? sender, EventArgs e)
     {
         GetBackgroundImage();
+        Started?.Invoke(this);
     }
+
+    public Action<Window>? Started { get; set; }
 
     public void GetBackgroundImage()
     {
@@ -158,7 +180,16 @@ public class Window : Grid
     public AbsoluteLayout ChildLayout
     {
         get => _childLayout;
-        set => _childLayout = value;
+    }
+
+    public MenuView MenuView
+    {
+        get => _menuView;
+    }
+
+    public View? ChildView
+    {
+        get => _childView;
     }
 
     private bool DefaultClose()

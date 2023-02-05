@@ -1,19 +1,14 @@
-﻿using ACDCs.ApplicationLogic.Components.Circuit;
+﻿namespace ACDCs.ApplicationLogic.Components.Window;
 
-namespace ACDCs.ApplicationLogic.Components.Window;
-
-#pragma warning disable IDE0065
-
+using Circuit;
 using Sharp.UI;
-
-#pragma warning restore IDE0065
 
 public class WindowStarterFrame : Frame
 {
-    private readonly WindowContainer? _windowContainer;
     private readonly StackLayout _buttonStack;
     private readonly Grid _grid;
     private readonly ScrollView _scrollView;
+    private readonly WindowContainer? _windowContainer;
 
     public WindowStarterFrame(WindowContainer? windowContainer = null)
     {

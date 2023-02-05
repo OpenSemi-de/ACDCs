@@ -1,11 +1,11 @@
-﻿using ACDCs.ApplicationLogic.Components;
-using ACDCs.ApplicationLogic.Interfaces;
-using ACDCs.ApplicationLogic.Views;
-using ACDCs.Data.ACDCs.Interfaces;
-using ACDCs.IO.DB;
-using ACDCs.IO.Spice;
+﻿namespace ACDCs.ApplicationLogic.Services;
 
-namespace ACDCs.ApplicationLogic.Services;
+using ACDCs.Data.ACDCs.Interfaces;
+using Components;
+using Interfaces;
+using IO.DB;
+using IO.Spice;
+using Views;
 
 public class ImportService : IImportService
 {

@@ -1,13 +1,8 @@
-using ACDCs.ApplicationLogic.Views;
-using CircuitView = ACDCs.ApplicationLogic.Components.Circuit.CircuitView;
-
 namespace ACDCs.ApplicationLogic.Interfaces;
 
-#pragma warning disable IDE0065
-
+using Components.Circuit;
 using Sharp.UI;
-
-#pragma warning restore IDE0065
+using Views;
 
 public interface IMenuViewProperties
 {

@@ -1,10 +1,9 @@
-﻿using ACDCs.ApplicationLogic.Components.Window;
-
-namespace ACDCs.ApplicationLogic.Components.Circuit;
+﻿namespace ACDCs.ApplicationLogic.Components.Circuit;
 
 using Sharp.UI;
+using Window;
 
-public class CircuitWindow : Window.Window
+public class CircuitWindow : Window
 {
     public CircuitWindow(WindowContainer? container) : base(container, "Circuit view", "menu_main.json", true, GetView)
     {
@@ -12,7 +11,7 @@ public class CircuitWindow : Window.Window
         Start();
     }
 
-    private static View GetView(Window.Window window)
+    private static View GetView(Window window)
     {
         if (window.ChildLayout is WindowContainer container)
         {

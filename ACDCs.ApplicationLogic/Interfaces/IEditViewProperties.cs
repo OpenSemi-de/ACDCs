@@ -1,7 +1,7 @@
-﻿using Sharp.UI;
-using CircuitView = ACDCs.ApplicationLogic.Components.Circuit.CircuitView;
+﻿namespace ACDCs.ApplicationLogic.Interfaces;
 
-namespace ACDCs.ApplicationLogic.Interfaces;
+using Components.Circuit;
+using Sharp.UI;
 
 [BindableProperties]
 public interface IEditViewProperties

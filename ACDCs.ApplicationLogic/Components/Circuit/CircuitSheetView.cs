@@ -1,17 +1,11 @@
+namespace ACDCs.ApplicationLogic.Components.Circuit;
+
 using ACDCs.ApplicationLogic.Views.Edit;
 using ACDCs.ApplicationLogic.Views.Properties;
 using Microsoft.Maui.Layouts;
-using ItemsView = ACDCs.ApplicationLogic.Views.Items.ItemsView;
-
-namespace ACDCs.ApplicationLogic.Components.Circuit;
-
-using Window;
-
-#pragma warning disable IDE0065
-
 using Sharp.UI;
-
-#pragma warning restore IDE0065
+using Window;
+using ItemsView = Views.Items.ItemsView;
 
 public sealed class CircuitSheetView : AbsoluteLayout
 {
@@ -22,9 +16,11 @@ public sealed class CircuitSheetView : AbsoluteLayout
     private readonly bool _showCursorDebugOutput = Convert.ToBoolean(API.GetPreference("ShowDebugCursorOutput"));
 
     // ReSharper disable once NotAccessedField.Local
-    private EditView? _editWindow;
+    private EditWindow? _editWindow;
 
     private PropertiesWindow? _propertiesWindow;
+
+    public CircuitView CircuitView { get; }
 
     public CircuitSheetView(WindowContainer container)
     {
@@ -61,8 +57,6 @@ public sealed class CircuitSheetView : AbsoluteLayout
         CircuitView.ItemsView = _itemsView;
     }
 
-    public CircuitView CircuitView { get; }
-
     private void CursorDebugChanged()
     {
         if (_showCursorDebugOutput && _cursorDebugLabel != null)
@@ -73,7 +67,7 @@ public sealed class CircuitSheetView : AbsoluteLayout
 
     private void OnLoaded(object? sender, EventArgs e)
     {
-        _editWindow = new EditView(_container);
+        _editWindow = new EditWindow(_container);
         _propertiesWindow = new PropertiesWindow(_container) { OnUpdate = OnUpdate };
         _propertiesWindow.PropertyExcludeList.AddRange(
         new[]{

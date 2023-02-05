@@ -1,17 +1,12 @@
-﻿using System.Reflection;
+﻿namespace ACDCs.ApplicationLogic.Views.Items;
+
+using System.Reflection;
 using ACDCs.ApplicationLogic.Components.Items;
-using ACDCs.ApplicationLogic.Interfaces;
 using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
-using ACDCs.CircuitRenderer.Sheet;
-
-namespace ACDCs.ApplicationLogic.Views.Items;
-
-#pragma warning disable IDE0065
-
+using CircuitRenderer.Sheet;
+using Interfaces;
 using Sharp.UI;
-
-#pragma warning restore IDE0065
 
 [SharpObject]
 public partial class ItemsView : StackLayout, IItemsViewProperties

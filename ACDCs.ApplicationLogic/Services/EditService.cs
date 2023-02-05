@@ -1,9 +1,9 @@
-﻿using ACDCs.ApplicationLogic.Components.Circuit;
-using ACDCs.ApplicationLogic.Interfaces;
-using ACDCs.CircuitRenderer.Items;
-using ACDCs.CircuitRenderer.Sheet;
+﻿namespace ACDCs.ApplicationLogic.Services;
 
-namespace ACDCs.ApplicationLogic.Services;
+using CircuitRenderer.Items;
+using CircuitRenderer.Sheet;
+using Components.Circuit;
+using Interfaces;
 
 public class EditService : IEditService
 {

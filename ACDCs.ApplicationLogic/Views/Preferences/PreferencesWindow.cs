@@ -1,28 +1,22 @@
-﻿using ACDCs.ApplicationLogic.Components.Properties;
+﻿namespace ACDCs.ApplicationLogic.Views.Preferences;
+
+using ACDCs.ApplicationLogic.Components.Properties;
 using ACDCs.ApplicationLogic.Components.Window;
-using ACDCs.IO.DB;
+using IO.DB;
 using Newtonsoft.Json;
-using Window = ACDCs.ApplicationLogic.Components.Window.Window;
-
-namespace ACDCs.ApplicationLogic.Views.Preferences;
-
-#pragma warning disable IDE0065
-
 using Sharp.UI;
 
-#pragma warning restore IDE0065
-
-public class PreferencesWindowView : Window
+public class PreferencesWindow : Window
 {
     private static List<PreferenceSetting>? s_preferences;
     private Grid? _layoutGrid;
     private StackLayout? _preferencesLayout;
     private PreferencesRepository _repository = new();
 
-    public static PreferencesWindowView? PreferencesWindow { get; set; }
+    public static PreferencesWindow? Instance { get; set; }
 
     // ReSharper disable once UnusedMember.Global
-    public PreferencesWindowView(WindowContainer? layout) : base(layout, "Preferences")
+    public PreferencesWindow(WindowContainer? layout) : base(layout, "Preferences")
     {
         Initialize();
     }
@@ -36,11 +30,11 @@ public class PreferencesWindowView : Window
 
     private void Initialize()
     {
-        PreferencesWindow = this;
+        Instance = this;
         Loaded += OnLoaded;
         OnClose = () =>
         {
-            PreferencesWindow = null;
+            Instance = null;
             return false;
         };
     }

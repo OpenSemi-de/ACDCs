@@ -1,19 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿namespace ACDCs.ApplicationLogic.Views.ModelEditor;
+
+using System.Collections.ObjectModel;
 using System.Reflection;
 using ACDCs.ApplicationLogic.Components.ModelEditor;
 using ACDCs.ApplicationLogic.Components.Window;
-using ACDCs.ApplicationLogic.Views.Properties;
 using ACDCs.Data.ACDCs.Interfaces;
 using CommunityToolkit.Maui.Core.Extensions;
-using Window = ACDCs.ApplicationLogic.Components.Window.Window;
-
-namespace ACDCs.ApplicationLogic.Views.ModelEditor;
-
-#pragma warning disable IDE0065
-
+using Properties;
 using Sharp.UI;
-
-#pragma warning restore IDE0065
 
 public class ModelEditorWindow : Window, IGetPropertyUpdates
 {

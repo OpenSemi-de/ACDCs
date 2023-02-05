@@ -1,6 +1,6 @@
-﻿using ACDCs.ApplicationLogic.Views;
+﻿namespace ACDCs.ApplicationLogic.Interfaces;
 
-namespace ACDCs.ApplicationLogic.Interfaces;
+using Views;
 
 public interface IImportService
 {

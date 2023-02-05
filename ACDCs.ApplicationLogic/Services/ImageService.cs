@@ -2,13 +2,8 @@
 
 namespace ACDCs.ApplicationLogic.Services;
 
-using ACDCs.ApplicationLogic.Interfaces;
-
-#pragma warning disable IDE0065
-
+using Interfaces;
 using Sharp.UI;
-
-#pragma warning restore IDE0065
 
 public class ImageService : IImageService
 {

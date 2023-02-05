@@ -1,18 +1,14 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.Window;
 
-#pragma warning disable IDE0065
-
 using Sharp.UI;
-
-#pragma warning restore IDE0065
 
 public class WindowButtons : Grid
 {
-    private readonly Window _window;
-    private readonly WindowButton _minimizeButton;
-    private readonly WindowButton _maximizeButton;
-    private readonly WindowButton _restoreButton;
     private readonly WindowButton _closeButton;
+    private readonly WindowButton _maximizeButton;
+    private readonly WindowButton _minimizeButton;
+    private readonly WindowButton _restoreButton;
+    private readonly Window _window;
 
     public WindowButtons(Window window)
     {
@@ -42,15 +38,15 @@ public class WindowButtons : Grid
         Add(_closeButton);
     }
 
-    public void ShowRestore()
-    {
-        _restoreButton.IsVisible = true;
-        _maximizeButton.IsVisible = false;
-    }
-
     public void ShowMaximize()
     {
         _restoreButton.IsVisible = false;
         _maximizeButton.IsVisible = true;
+    }
+
+    public void ShowRestore()
+    {
+        _restoreButton.IsVisible = true;
+        _maximizeButton.IsVisible = false;
     }
 }

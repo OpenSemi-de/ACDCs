@@ -1,19 +1,15 @@
-using ACDCs.ApplicationLogic.Interfaces;
-
 namespace ACDCs.ApplicationLogic.Components.Menu;
 
-#pragma warning disable IDE0065
-
+using Interfaces;
 using Sharp.UI;
-
-#pragma warning restore IDE0065
+using Window;
 
 public class MenuFrame : StackLayout
 {
     private static readonly List<MenuFrame> s_menuFrameList = new();
     private readonly bool _eventSet;
     private List<MenuHandler> _handlers = new();
-    public Window.Window ParentWindow { get; set; }
+    public Window? ParentWindow { get; set; }
 
     public MenuFrame()
     {
@@ -100,28 +96,6 @@ public class MenuFrame : StackLayout
         }).Wait();
     }
 
-    private void LoadHandler(string menuItemHandler, Dictionary<string, object> menuParameters)
-    {
-        Type? handlerType = this.GetType().Assembly.GetTypes().FirstOrDefault(t => t.Name.Contains($"{menuItemHandler}Handlers"));
-        if (handlerType == null)
-            return;
-
-        bool exists = _handlers.Any(h => h.GetType().Name.Contains(menuItemHandler));
-
-        if (exists) return;
-
-        MenuHandler? instance = Activator.CreateInstance(handlerType) as MenuHandler;
-        if (instance == null)
-            return;
-
-        foreach (KeyValuePair<string, object> param in menuParameters)
-        {
-            instance.SetParameter(param.Key, param.Value);
-        }
-
-        _handlers.Add(instance);
-    }
-
     public void SetPosition(View menuButtonView)
     {
         if (menuButtonView is not MenuButton menuButton)
@@ -147,5 +121,27 @@ public class MenuFrame : StackLayout
     private static void App_Reset(object sender, ResetEventArgs args)
     {
         HideAllMenus();
+    }
+
+    private void LoadHandler(string menuItemHandler, Dictionary<string, object> menuParameters)
+    {
+        Type? handlerType = this.GetType().Assembly.GetTypes().FirstOrDefault(t => t.Name.Contains($"{menuItemHandler}Handlers"));
+        if (handlerType == null)
+            return;
+
+        bool exists = _handlers.Any(h => h.GetType().Name.Contains(menuItemHandler));
+
+        if (exists) return;
+
+        MenuHandler? instance = Activator.CreateInstance(handlerType) as MenuHandler;
+        if (instance == null)
+            return;
+
+        foreach (KeyValuePair<string, object> param in menuParameters)
+        {
+            instance.SetParameter(param.Key, param.Value);
+        }
+
+        _handlers.Add(instance);
     }
 }

@@ -1,6 +1,6 @@
-﻿using ACDCs.ApplicationLogic.Components.Circuit;
+﻿namespace ACDCs.ApplicationLogic.Components.Menu.MenuHandlers;
 
-namespace ACDCs.ApplicationLogic.Components.Menu.MenuHandlers;
+using Circuit;
 
 public class FileMenuHandlers : MenuHandler
 {

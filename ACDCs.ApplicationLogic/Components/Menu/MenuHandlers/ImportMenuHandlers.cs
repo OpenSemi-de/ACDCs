@@ -1,6 +1,6 @@
-﻿using ACDCs.ApplicationLogic.Views;
+﻿namespace ACDCs.ApplicationLogic.Components.Menu.MenuHandlers;
 
-namespace ACDCs.ApplicationLogic.Components.Menu.MenuHandlers;
+using Views;
 
 public class ImportMenuHandlers : MenuHandler
 {

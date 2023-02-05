@@ -1,12 +1,7 @@
-﻿using UraniumUI.Icons.FontAwesome;
-
-namespace ACDCs.ApplicationLogic.Components.Window;
-
-#pragma warning disable IDE0065
+﻿namespace ACDCs.ApplicationLogic.Components.Window;
 
 using Sharp.UI;
-
-#pragma warning restore IDE0065
+using UraniumUI.Icons.FontAwesome;
 
 public class WindowTabBar : Grid, IWindowTabBarProperties
 {
@@ -16,6 +11,8 @@ public class WindowTabBar : Grid, IWindowTabBarProperties
     private readonly Button _starterButton;
     private readonly Dictionary<WindowTab, Window> _windows;
     private Window? _focusWindow;
+
+    public WindowStarterFrame StarterFrame { get; set; }
 
     public WindowTabBar(WindowStarterFrame starterFrame)
     {
@@ -194,8 +191,6 @@ public class WindowTabBar : Grid, IWindowTabBarProperties
         BringToFront(sender);
         MarkFocused();
     }
-
-    public WindowStarterFrame StarterFrame { get; set; }
 }
 
 public interface IWindowTabBarProperties

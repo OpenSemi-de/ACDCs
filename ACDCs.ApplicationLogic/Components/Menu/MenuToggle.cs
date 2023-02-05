@@ -1,12 +1,7 @@
-using ACDCs.ApplicationLogic.Interfaces;
-
 namespace ACDCs.ApplicationLogic.Components.Menu;
 
-#pragma warning disable IDE0065
-
+using Interfaces;
 using Sharp.UI;
-
-#pragma warning restore IDE0065
 
 public class MenuToggle : StackLayout, IMenuComponent
 {

@@ -1,6 +1,6 @@
-﻿using ContentPage = Sharp.UI.ContentPage;
+﻿namespace ACDCs.ApplicationLogic.Interfaces;
 
-namespace ACDCs.ApplicationLogic.Interfaces;
+using Sharp.UI;
 
 public interface IImageService
 {

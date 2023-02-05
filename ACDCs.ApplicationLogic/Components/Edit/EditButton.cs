@@ -1,21 +1,13 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.Edit;
 
-#pragma warning disable IDE0065
-
 using Sharp.UI;
-
-#pragma warning restore IDE0065
 
 public class EditButton : ImageButton
 {
     private readonly double _buttonHeight;
-
     private readonly double _buttonWidth;
-
     private readonly bool _isSelectable;
-
     private readonly Action _onClickAction;
-
     private readonly Action<EditButton> _onSelectAction;
     private readonly string _text;
     private bool _isSelected;

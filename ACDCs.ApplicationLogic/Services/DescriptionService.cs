@@ -1,11 +1,11 @@
-﻿using ACDCs.ApplicationLogic.Interfaces;
+﻿namespace ACDCs.ApplicationLogic.Services;
+
 using ACDCs.Data.ACDCs.Components.BJT;
 using ACDCs.Data.ACDCs.Components.Inductor;
 using ACDCs.Data.ACDCs.Components.Resistor;
 using ACDCs.Data.ACDCs.Interfaces;
+using Interfaces;
 using SpiceSharp.Attributes;
-
-namespace ACDCs.ApplicationLogic.Services;
 
 public class DescriptionService : IDescriptionService
 {

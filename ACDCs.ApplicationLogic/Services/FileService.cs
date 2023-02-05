@@ -1,9 +1,9 @@
-﻿using ACDCs.ApplicationLogic.Components.Circuit;
-using ACDCs.ApplicationLogic.Interfaces;
+﻿namespace ACDCs.ApplicationLogic.Services;
+
 using CommunityToolkit.Maui.Core.Primitives;
 using CommunityToolkit.Maui.Storage;
-
-namespace ACDCs.ApplicationLogic.Services;
+using Components.Circuit;
+using Interfaces;
 
 public class FileService : IFileService
 {

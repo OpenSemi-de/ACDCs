@@ -1,12 +1,7 @@
-﻿using ACDCs.Data.ACDCs.Interfaces;
+﻿namespace ACDCs.ApplicationLogic.Components.ModelSelection;
 
-namespace ACDCs.ApplicationLogic.Components.ModelSelection;
-
-#pragma warning disable IDE0065
-
+using ACDCs.Data.ACDCs.Interfaces;
 using Sharp.UI;
-
-#pragma warning restore IDE0065
 
 [BindableProperties]
 public class ComponentViewModel

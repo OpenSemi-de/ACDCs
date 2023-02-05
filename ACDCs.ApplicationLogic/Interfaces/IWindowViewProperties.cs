@@ -1,6 +1,6 @@
-﻿using Sharp.UI;
+﻿namespace ACDCs.ApplicationLogic.Interfaces;
 
-namespace ACDCs.ApplicationLogic.Interfaces;
+using Sharp.UI;
 
 [BindableProperties]
 public interface IWindowViewProperties

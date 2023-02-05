@@ -1,22 +1,15 @@
-﻿using System.Collections.Concurrent;
-using ACDCs.ApplicationLogic.Components.Circuit;
+﻿namespace ACDCs.ApplicationLogic;
+
+using System.Collections.Concurrent;
 using ACDCs.ApplicationLogic.Components.Window;
-using ACDCs.ApplicationLogic.Services;
-using ACDCs.ApplicationLogic.Views;
-using ACDCs.IO.DB;
+using Components.Circuit;
+using Interfaces;
+using IO.DB;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Maui.Graphics.Skia;
-using Window = ACDCs.ApplicationLogic.Components.Window.Window;
-
-namespace ACDCs.ApplicationLogic;
-
-using ACDCs.ApplicationLogic.Interfaces;
-
-#pragma warning disable IDE0065
-
+using Services;
 using Sharp.UI;
-
-#pragma warning restore IDE0065
+using Views;
 
 public delegate void ResetEvent(object sender, ResetEventArgs args);
 
@@ -29,12 +22,12 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
     private static readonly ConcurrentDictionary<string, ConcurrentDictionary<string, object?>> s_comValues = new();
     private readonly IDescriptionService _descriptionService;
     private readonly IEditService _editService;
+    private readonly IFileService _fileService;
     private readonly IImageService _imageService;
+    private readonly IImportService _importService;
     private readonly IMenuService _menuService;
     private readonly IWorkbenchService _workbenchService;
     private IColorService _colorService;
-    private readonly IFileService _fileService;
-    private readonly IImportService _importService;
     public static PlatformBitmapExportService BitmapExportContextService { get; } = new();
     public static API Instance { get; set; }
     public static WindowContainer? MainContainer { get; set; }
@@ -149,7 +142,7 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
         return PreferencesRepository.GetPreference(key)!;
     }
 
-    public static async Task<string> LoadMauiAssetAsString(string name)
+    public static async Task<string> LoadMauiAssetAsString(string? name)
     {
         await using Stream stream = await FileSystem.OpenAppPackageFileAsync(name);
         using StreamReader reader = new(stream);
@@ -205,9 +198,25 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
 
     public Page GetWorkbenchPage() => _workbenchService.GetWorkbenchPage();
 
+    public Task ImportSpiceModels(ComponentsView componentsView) => _importService.ImportSpiceModels(componentsView);
+
     public Task Mirror(CircuitView circuitView) => _editService.Mirror(circuitView);
 
+    public Task NewFile(CircuitView circuitView) => _fileService.NewFile(circuitView);
+
+    public Task OpenDB(ComponentsView componentsView) => _importService.OpenDB(componentsView);
+
+    public Task OpenFile(CircuitView circuitView) => _fileService.OpenFile(circuitView);
+
     public Task Rotate(CircuitView circuitView) => _editService.Rotate(circuitView);
+
+    public Task SaveFile(CircuitView circuitView, Page popupPage) => _fileService.SaveFile(circuitView, popupPage);
+
+    public Task SaveFileAs(Page popupPage, CircuitView circuitView) => _fileService.SaveFileAs(popupPage, circuitView);
+
+    public void SaveJson() => _importService.SaveJson();
+
+    public void SaveToDB(ComponentsView componentsView) => _importService.SaveToDB(componentsView);
 
     public Task SelectAll(CircuitView circuitView) => _editService.SelectAll(circuitView);
 
@@ -219,20 +228,4 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
     {
         Reset?.Invoke(new object(), args);
     }
-
-    public Task NewFile(CircuitView circuitView) => _fileService.NewFile(circuitView);
-
-    public Task OpenFile(CircuitView circuitView) => _fileService.OpenFile(circuitView);
-
-    public Task SaveFile(CircuitView circuitView, Page popupPage) => _fileService.SaveFile(circuitView, popupPage);
-
-    public Task SaveFileAs(Page popupPage, CircuitView circuitView) => _fileService.SaveFileAs(popupPage, circuitView);
-
-    public Task ImportSpiceModels(ComponentsView componentsView) => _importService.ImportSpiceModels(componentsView);
-
-    public Task OpenDB(ComponentsView componentsView) => _importService.OpenDB(componentsView);
-
-    public void SaveJson() => _importService.SaveJson();
-
-    public void SaveToDB(ComponentsView componentsView) => _importService.SaveToDB(componentsView);
 }

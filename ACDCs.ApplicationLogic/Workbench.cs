@@ -1,19 +1,18 @@
-﻿using ACDCs.ApplicationLogic.Components.Window;
+﻿namespace ACDCs.ApplicationLogic;
+
+using ACDCs.ApplicationLogic.Components.Window;
 using Microsoft.Maui.Layouts;
-
-#pragma warning disable IDE0065
-
-namespace ACDCs.ApplicationLogic;
-
 using Sharp.UI;
 
 public class Workbench : ContentPage
 {
     private readonly API _api;
     private readonly Grid _mainGrid;
-    private readonly WindowContainer? _windowContainer;
     private readonly WindowStarterFrame _starterFrame;
+    private readonly WindowContainer? _windowContainer;
     private readonly WindowTabBar _windowTabBar;
+
+    public WindowContainer? WindowContainer => _windowContainer;
 
     public Workbench(API api)
     {
@@ -57,8 +56,6 @@ public class Workbench : ContentPage
 
         SizeChanged += OnSizeChanged;
     }
-
-    public WindowContainer? WindowContainer => _windowContainer;
 
     private void OnLoaded(object? sender, EventArgs e)
     {

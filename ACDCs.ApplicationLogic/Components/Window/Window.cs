@@ -1,27 +1,41 @@
-﻿using ACDCs.ApplicationLogic.Views.Menu;
+﻿namespace ACDCs.ApplicationLogic.Components.Window;
+
+using ACDCs.ApplicationLogic.Views.Menu;
 using Microsoft.Maui.Layouts;
-
-namespace ACDCs.ApplicationLogic.Components.Window;
-
-#pragma warning disable IDE0065
-
 using Sharp.UI;
-
-#pragma warning restore IDE0065
 
 public class Window : Grid
 {
-    private readonly WindowContainer? _container;
-    private readonly string _title;
-    private readonly string? _menuFile;
-    private readonly bool _isWindowParent;
-    private View? _childView;
-    private AbsoluteLayout _childLayout;
-    private Image _backgroundImage;
-    private WindowTitle _windowTitle;
-    private WindowButtons _windowButtons;
-    private MenuView _menuView;
     private readonly Func<Window, View> _childViewFunction;
+    private readonly WindowContainer? _container;
+    private readonly bool _isWindowParent;
+    private readonly string? _menuFile;
+    private readonly string _title;
+    private Image _backgroundImage;
+    private AbsoluteLayout _childLayout;
+    private View? _childView;
+    private MenuView _menuView;
+    private WindowButtons _windowButtons;
+    private WindowTitle _windowTitle;
+
+    public AbsoluteLayout ChildLayout
+    {
+        get => _childLayout;
+        set => _childLayout = value;
+    }
+
+    public View? ChildView
+    {
+        get => _childView;
+    }
+
+    public int LastHeight { get; set; }
+
+    public int LastWidth { get; set; }
+
+    public double LastX { get; set; }
+
+    public double LastY { get; set; }
 
     public WindowContainer? MainContainer
     {
@@ -32,14 +46,79 @@ public class Window : Grid
         }
     }
 
+    public Dictionary<string, object> MenuParameters { get; } = new();
+
+    public MenuView MenuView
+    {
+        get => _menuView;
+    }
+
+    // ReSharper disable once MemberCanBePrivate.Global
+    public Func<bool> OnClose { get; set; }
+
+    public Action<Window>? Started { get; set; }
+
+    public WindowTitle Title => _windowTitle;
+
+    public WindowState WindowState { get; set; }
+
+    public string WindowTitle
+    {
+        get => _title;
+    }
+
     public Window(WindowContainer? container, string title, string? menuFile = null, bool isWindowParent = false,
-        Func<Window, View> childViewFunction = null)
+                                    Func<Window, View> childViewFunction = null)
     {
         _container = container;
         _title = title;
         _menuFile = menuFile;
         _isWindowParent = isWindowParent;
         _childViewFunction = childViewFunction;
+    }
+
+    public void Close()
+    {
+        if (OnClose.Invoke())
+        {
+            _container.CloseWindow(this);
+        }
+    }
+
+    public void GetBackgroundImage()
+    {
+        Rect currentBounds = AbsoluteLayout.GetLayoutBounds(this);
+        _backgroundImage.Source =
+            API.Instance.WindowImageSource(Convert.ToSingle(currentBounds.Width),
+                Convert.ToSingle(currentBounds.Height));
+    }
+
+    public void Maximize()
+    {
+        WindowState = WindowState.Maximized;
+        _container.MaximizeWindow(this);
+        _windowButtons.ShowRestore();
+    }
+
+    public void Minimize()
+    {
+        WindowState = WindowState.Minimized;
+        _container.MinimizeWindow(this);
+    }
+
+    public void Restore()
+    {
+        WindowState = WindowState.Standard;
+        _container.RestoreWindow(this);
+        _windowButtons.ShowMaximize();
+    }
+
+    public void SetActive()
+    {
+    }
+
+    public void SetInactive()
+    {
     }
 
     public void Start()
@@ -70,54 +149,13 @@ public class Window : Grid
         Loaded += Window_Loaded;
     }
 
-    private void LoadMenu()
+    protected void HideResizer()
     {
-        _menuView = new MenuView(_menuFile, MenuParameters)
-        {
-            PopupTarget = _childLayout,
-            HeightRequest = 34,
-            ParentWindow = this
-        };
-        _childLayout.Add(_menuView);
-        _menuView.ZIndex = 999;
     }
 
-    public Dictionary<string, object> MenuParameters { get; } = new();
-
-    private void SetSize(int width, int height)
+    protected void HideWindowButtons()
     {
-        _container.SetWindowSize(this, width, height);
-    }
-
-    private void AddWindowButtons()
-    {
-        _windowButtons = new WindowButtons(this);
-        this.SetRowAndColumn(_windowButtons, 0, 1);
-        Add(_windowButtons);
-    }
-
-    private void AddGridDefinitions()
-    {
-        this.ColumnDefinitions(new ColumnDefinitionCollection { new ColumnDefinition(), new ColumnDefinition(102) });
-
-        this.RowDefinitions(new RowDefinitionCollection
-        {
-            new RowDefinition(38), new RowDefinition(), new RowDefinition(34)
-        });
-    }
-
-    private void AddChildLayout(bool isWindowParent)
-    {
-        _childLayout = isWindowParent ? new WindowContainer() : new AbsoluteLayout();
-        this.SetRowAndColumn(_childLayout, 1, 0, 2, 2);
-        Add(_childLayout);
-    }
-
-    private void AddWindowTitle()
-    {
-        _windowTitle = new WindowTitle(_title, this);
-        this.SetRowAndColumn(Title, 0, 0, 2);
-        Add(_windowTitle);
+        _windowButtons.IsVisible = false;
     }
 
     private void AddBackgroundImage()
@@ -131,80 +169,35 @@ public class Window : Grid
         Add(_backgroundImage);
     }
 
-    public WindowTitle Title => _windowTitle;
-    public int LastWidth { get; set; }
-    public int LastHeight { get; set; }
-    public double LastY { get; set; }
-    public double LastX { get; set; }
-
-    private void Window_Loaded(object? sender, EventArgs e)
+    private void AddChildLayout(bool isWindowParent)
     {
-        GetBackgroundImage();
-        Started?.Invoke(this);
+        _childLayout = isWindowParent ? new WindowContainer() : new AbsoluteLayout();
+        this.SetRowAndColumn(_childLayout, 1, 0, 2, 2);
+        Add(_childLayout);
     }
 
-    public Action<Window>? Started { get; set; }
-
-    public void GetBackgroundImage()
+    private void AddGridDefinitions()
     {
-        Rect currentBounds = AbsoluteLayout.GetLayoutBounds(this);
-        _backgroundImage.Source =
-            API.Instance.WindowImageSource(Convert.ToSingle(currentBounds.Width),
-                Convert.ToSingle(currentBounds.Height));
-    }
+        this.ColumnDefinitions(new ColumnDefinitionCollection { new ColumnDefinition(), new ColumnDefinition(102) });
 
-    public void Minimize()
-    {
-        WindowState = WindowState.Minimized;
-        _container.MinimizeWindow(this);
-    }
-
-    public WindowState WindowState { get; set; }
-
-    public void Maximize()
-    {
-        WindowState = WindowState.Maximized;
-        _container.MaximizeWindow(this);
-        _windowButtons.ShowRestore();
-    }
-
-    public void Restore()
-    {
-        WindowState = WindowState.Standard;
-        _container.RestoreWindow(this);
-        _windowButtons.ShowMaximize();
-    }
-
-    public void Close()
-    {
-        if (OnClose.Invoke())
+        this.RowDefinitions(new RowDefinitionCollection
         {
-            _container.CloseWindow(this);
-        }
+            new RowDefinition(38), new RowDefinition(), new RowDefinition(34)
+        });
     }
 
-    // ReSharper disable once MemberCanBePrivate.Global
-    public Func<bool> OnClose { get; set; }
-
-    public AbsoluteLayout ChildLayout
+    private void AddWindowButtons()
     {
-        get => _childLayout;
-        set => _childLayout = value;
+        _windowButtons = new WindowButtons(this);
+        this.SetRowAndColumn(_windowButtons, 0, 1);
+        Add(_windowButtons);
     }
 
-    public MenuView MenuView
+    private void AddWindowTitle()
     {
-        get => _menuView;
-    }
-
-    public View? ChildView
-    {
-        get => _childView;
-    }
-
-    public string WindowTitle
-    {
-        get => _title;
+        _windowTitle = new WindowTitle(_title, this);
+        this.SetRowAndColumn(Title, 0, 0, 2);
+        Add(_windowTitle);
     }
 
     private bool DefaultClose()
@@ -212,20 +205,26 @@ public class Window : Grid
         return true;
     }
 
-    protected void HideResizer()
+    private void LoadMenu()
     {
+        _menuView = new MenuView(_menuFile, MenuParameters)
+        {
+            PopupTarget = _childLayout,
+            HeightRequest = 34,
+            ParentWindow = this
+        };
+        _childLayout.Add(_menuView);
+        _menuView.ZIndex = 999;
     }
 
-    protected void HideWindowButtons()
+    private void SetSize(int width, int height)
     {
-        _windowButtons.IsVisible = false;
+        _container.SetWindowSize(this, width, height);
     }
 
-    public void SetInactive()
+    private void Window_Loaded(object? sender, EventArgs e)
     {
-    }
-
-    public void SetActive()
-    {
+        GetBackgroundImage();
+        Started?.Invoke(this);
     }
 }

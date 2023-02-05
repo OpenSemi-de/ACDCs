@@ -1,13 +1,8 @@
-﻿using ACDCs.ApplicationLogic.Views.Properties;
-using PropertyEditorView = ACDCs.ApplicationLogic.Components.Properties.PropertyEditorView;
+﻿namespace ACDCs.ApplicationLogic.Components.ModelEditor;
 
-namespace ACDCs.ApplicationLogic.Components.ModelEditor;
-
-#pragma warning disable IDE0065
-
+using ACDCs.ApplicationLogic.Views.Properties;
 using Sharp.UI;
-
-#pragma warning restore IDE0065
+using PropertyEditorView = Properties.PropertyEditorView;
 
 public class ModelPropertyTemplate : ViewCell
 {

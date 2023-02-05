@@ -1,6 +1,6 @@
-﻿using ACDCs.ApplicationLogic.Components.Circuit;
+﻿namespace ACDCs.ApplicationLogic.Interfaces;
 
-namespace ACDCs.ApplicationLogic.Interfaces;
+using Components.Circuit;
 
 public interface IFileService
 {

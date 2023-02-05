@@ -1,10 +1,10 @@
 ﻿namespace ACDCs.ApplicationLogic.Components;
 
-#pragma warning disable IDE0065
+
 
 using Sharp.UI;
 
-#pragma warning restore IDE0065
+
 
 public static class GridExtension
 {

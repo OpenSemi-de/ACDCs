@@ -1,21 +1,15 @@
-﻿using System.Collections.ObjectModel;
+﻿namespace ACDCs.ApplicationLogic.Views.ModelSelection;
+
+using System.Collections.ObjectModel;
 using ACDCs.ApplicationLogic.Components.ModelSelection;
 using ACDCs.ApplicationLogic.Components.Window;
 using ACDCs.Data.ACDCs.Components.BJT;
 using ACDCs.Data.ACDCs.Components.Diode;
 using ACDCs.Data.ACDCs.Components.Resistor;
 using ACDCs.Data.ACDCs.Interfaces;
-using ACDCs.IO.DB;
 using CommunityToolkit.Maui.Core.Extensions;
-using Window = ACDCs.ApplicationLogic.Components.Window.Window;
-
-namespace ACDCs.ApplicationLogic.Views.ModelSelection;
-
-#pragma warning disable Roslyn.IDE0065
-
+using IO.DB;
 using Sharp.UI;
-
-#pragma warning restore Roslyn.IDE0065
 
 public class ModelSelectionWindow : Window
 {

@@ -8,11 +8,7 @@ using CommunityToolkit.Maui.Views;
 
 namespace ACDCs.ApplicationLogic.Views;
 
-#pragma warning disable IDE0065
-
 using Sharp.UI;
-
-#pragma warning restore IDE0065
 
 public partial class ComponentsView : AbsoluteLayout
 {

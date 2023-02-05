@@ -1,23 +1,18 @@
-﻿using ACDCs.ApplicationLogic.Interfaces;
-using ACDCs.CircuitRenderer;
-using ACDCs.CircuitRenderer.Definitions;
-using ACDCs.CircuitRenderer.Drawables;
+﻿namespace ACDCs.ApplicationLogic.Components.Circuit;
+
 using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
-using ACDCs.CircuitRenderer.Scene;
-using ACDCs.CircuitRenderer.Sheet;
+using CircuitRenderer;
+using CircuitRenderer.Definitions;
+using CircuitRenderer.Drawables;
+using CircuitRenderer.Scene;
+using CircuitRenderer.Sheet;
+using Interfaces;
 using Newtonsoft.Json;
-using Color = Microsoft.Maui.Graphics.Color;
-using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
-using ItemsView = ACDCs.ApplicationLogic.Views.Items.ItemsView;
-
-namespace ACDCs.ApplicationLogic.Components.Circuit;
-
-#pragma warning disable IDE0065
-
 using Sharp.UI;
-
-#pragma warning restore IDE0065
+using Color = Color;
+using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
+using ItemsView = Views.Items.ItemsView;
 
 public class CircuitView : ContentView, ICircuitViewProperties
 {

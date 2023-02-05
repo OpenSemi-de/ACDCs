@@ -1,16 +1,12 @@
-﻿using UraniumUI.Icons.FontAwesome;
-
-namespace ACDCs.ApplicationLogic.Components.Window;
-#pragma warning disable IDE0065
+﻿namespace ACDCs.ApplicationLogic.Components.Window;
 
 using Sharp.UI;
-
-#pragma warning restore IDE0065
+using UraniumUI.Icons.FontAwesome;
 
 public class WindowButton : Button
 {
-    private readonly WindowButtonType _windowButtonType;
     private readonly Window _window;
+    private readonly WindowButtonType _windowButtonType;
 
     public WindowButton(WindowButtonType windowButtonType, Window window)
     {

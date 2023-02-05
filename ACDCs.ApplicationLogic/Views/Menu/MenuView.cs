@@ -1,25 +1,28 @@
-﻿using ACDCs.ApplicationLogic.Components.Circuit;
+﻿namespace ACDCs.ApplicationLogic.Views.Menu;
+
 using ACDCs.ApplicationLogic.Components.Menu;
+using Components.Circuit;
 using Microsoft.Maui.Layouts;
 using Newtonsoft.Json;
-using Window = ACDCs.ApplicationLogic.Components.Window.Window;
-
-namespace ACDCs.ApplicationLogic.Views.Menu;
-
-#pragma warning disable IDE0065
-
 using Sharp.UI;
-
-#pragma warning restore IDE0065
+using Window = Components.Window.Window;
 
 public class MenuView : ContentView
 {
-    private readonly Dictionary<string, object> _menuParameters;
     private readonly StackLayout _menuLayout;
-
+    private readonly Dictionary<string, object> _menuParameters;
     private Label? _fileNameLabel;
 
     private MenuFrame? _menuFrame;
+
+    // ReSharper disable once MemberCanBePrivate.Global
+    public CircuitView? CircuitView { get; set; }
+
+    public string? MenuFilename { get; set; }
+
+    public Window? ParentWindow { get; set; }
+
+    public AbsoluteLayout? PopupTarget { get; set; }
 
     public MenuView(string? menuFile, Dictionary<string, object> menuParameters)
     {
@@ -48,7 +51,7 @@ public class MenuView : ContentView
     {
     }
 
-    private async void LoadMenu(string menuMainJson)
+    private async void LoadMenu(string? menuMainJson)
     {
         await API.Call(async () =>
         {
@@ -107,10 +110,4 @@ public class MenuView : ContentView
             _fileNameLabel.Text = CircuitView?.CurrentWorksheet.Filename;
         }
     }
-
-    public CircuitView? CircuitView { get; set; }
-    public ComponentsView ComponentsView { get; set; }
-    public string MenuFilename { get; set; }
-    public AbsoluteLayout PopupTarget { get; set; }
-    public Window ParentWindow { get; set; }
 }

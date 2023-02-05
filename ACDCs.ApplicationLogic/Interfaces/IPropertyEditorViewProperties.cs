@@ -1,7 +1,7 @@
-﻿using ACDCs.ApplicationLogic.Components.Properties;
-using Sharp.UI;
+﻿namespace ACDCs.ApplicationLogic.Interfaces;
 
-namespace ACDCs.ApplicationLogic.Interfaces;
+using Components.Properties;
+using Sharp.UI;
 
 [BindableProperties]
 public interface IPropertyEditorViewProperties

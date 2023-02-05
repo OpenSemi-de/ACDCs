@@ -1,7 +1,6 @@
-﻿using Sharp.UI;
-using AbsoluteLayout = Sharp.UI.AbsoluteLayout;
+﻿namespace ACDCs.ApplicationLogic.Interfaces;
 
-namespace ACDCs.ApplicationLogic.Interfaces;
+using Sharp.UI;
 
 [BindableProperties]
 public interface ICircuitViewProperties

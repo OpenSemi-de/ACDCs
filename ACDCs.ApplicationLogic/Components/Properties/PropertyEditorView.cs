@@ -1,15 +1,10 @@
-﻿using ACDCs.ApplicationLogic.Interfaces;
+﻿namespace ACDCs.ApplicationLogic.Components.Properties;
+
 using ACDCs.ApplicationLogic.Views.ModelEditor;
 using ACDCs.ApplicationLogic.Views.ModelSelection;
 using ACDCs.Data.ACDCs.Interfaces;
-
-namespace ACDCs.ApplicationLogic.Components.Properties;
-
-#pragma warning disable IDE0065
-
+using Interfaces;
 using Sharp.UI;
-
-#pragma warning restore IDE0065
 
 [SharpObject]
 public partial class PropertyEditorView : ContentView, IPropertyEditorViewProperties

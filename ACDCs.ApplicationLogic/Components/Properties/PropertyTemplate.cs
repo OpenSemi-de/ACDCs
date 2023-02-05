@@ -1,12 +1,7 @@
-﻿using ACDCs.ApplicationLogic.Views.Properties;
+﻿namespace ACDCs.ApplicationLogic.Components.Properties;
 
-namespace ACDCs.ApplicationLogic.Components.Properties;
-
-#pragma warning disable IDE0065
-
+using ACDCs.ApplicationLogic.Views.Properties;
 using Sharp.UI;
-
-#pragma warning restore IDE0065
 
 public class PropertyTemplate : Grid
 {

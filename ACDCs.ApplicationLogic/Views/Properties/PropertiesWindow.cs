@@ -1,17 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿namespace ACDCs.ApplicationLogic.Views.Properties;
+
+using System.Collections.ObjectModel;
 using System.Reflection;
 using ACDCs.ApplicationLogic.Components.Properties;
 using ACDCs.ApplicationLogic.Components.Window;
-using UraniumUI.Material.Controls;
-using Window = ACDCs.ApplicationLogic.Components.Window.Window;
-
-namespace ACDCs.ApplicationLogic.Views.Properties;
-
-#pragma warning disable IDE0065
-
 using Sharp.UI;
-
-#pragma warning restore IDE0065
+using UraniumUI.Material.Controls;
 
 public class PropertiesWindow : Window, IGetPropertyUpdates
 {

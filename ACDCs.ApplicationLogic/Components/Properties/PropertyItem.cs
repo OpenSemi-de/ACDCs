@@ -1,8 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿namespace ACDCs.ApplicationLogic.Components.Properties;
+
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-
-namespace ACDCs.ApplicationLogic.Components.Properties;
 
 public class PropertyItem : INotifyPropertyChanged, INotifyCollectionChanged
 {

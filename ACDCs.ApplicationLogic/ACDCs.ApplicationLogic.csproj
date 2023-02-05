@@ -19,7 +19,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Components\WindowOld\**" />
+	  <Compile Remove="Components\WindowOld\**" />
+	  <EmbeddedResource Remove="Components\WindowOld\**" />
+	  <MauiCss Remove="Components\WindowOld\**" />
+	  <MauiXaml Remove="Components\WindowOld\**" />
+	  <None Remove="Components\WindowOld\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Remove="Components\Properties\TurnKnob.cs" />
+	  <Compile Remove="Views\Workbench.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -55,10 +65,6 @@
 	  <PackageReference Include="Sharp.UI">
 	    <Version>0.2.5-alpha.1</Version>
 	  </PackageReference>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Views\Circuit\" />
 	</ItemGroup>
 
 	<ItemGroup>

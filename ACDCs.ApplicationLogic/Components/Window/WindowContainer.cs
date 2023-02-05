@@ -53,8 +53,18 @@ public class WindowContainer : AbsoluteLayout
             newPosition.Y += totalY;
             _pickWindow.LastX = newPosition.X;
             _pickWindow.LastY = newPosition.Y;
-            AbsoluteLayout.SetLayoutBounds(_pickWindow, newPosition);
+            SetWindowPosition(_pickWindow, newPosition);
         }
+    }
+
+    public void SetWindowPosition(Window window, double x, double y)
+    {
+        SetWindowPosition(window, new Rect(x, y, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
+    }
+
+    private void SetWindowPosition(Window window, Rect newPosition)
+    {
+        AbsoluteLayout.SetLayoutBounds(window, newPosition);
     }
 
     private void SetWindowState(Window? window, GestureStatus statusType, double totalX, double totalY)

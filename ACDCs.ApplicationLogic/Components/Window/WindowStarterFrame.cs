@@ -1,6 +1,4 @@
 ﻿using ACDCs.ApplicationLogic.Components.Circuit;
-using ACDCs.ApplicationLogic.Views;
-using ACDCs.ApplicationLogic.Views.Preferences;
 
 namespace ACDCs.ApplicationLogic.Components.Window;
 
@@ -16,8 +14,6 @@ public class WindowStarterFrame : Frame
     private readonly StackLayout _buttonStack;
     private readonly Grid _grid;
     private readonly ScrollView _scrollView;
-    private ComponentsView? _componentsView;
-    private WindowView? _componentsWindowView;
 
     public WindowStarterFrame(WindowContainer? windowContainer = null)
     {
@@ -55,18 +51,6 @@ public class WindowStarterFrame : Frame
         WindowStarterButton newCircuit = new("New circuit window", typeof(CircuitWindow), windowContainer);
         _buttonStack.Add(newCircuit);
 
-        WindowStarterButton newCircuitold = new WindowStarterButton("New circuit")
-            .OnClicked(NewCircuit);
-        _buttonStack.Add(newCircuitold);
-
-        WindowStarterButton components = new WindowStarterButton("Components")
-            .OnClicked(ShowComponents);
-        _buttonStack.Add(components);
-
-        WindowStarterButton preferences = new WindowStarterButton("Preferences")
-            .OnClicked(ShowPreferences);
-        _buttonStack.Add(preferences);
-
         BorderColor = API.Instance.Border;
         BackgroundColor = API.Instance.BackgroundHigh;
         WidthRequest = 200;
@@ -96,18 +80,7 @@ public class WindowStarterFrame : Frame
         IsVisible = false;
     }
 
-    private async void NewCircuit(object? sender, EventArgs e)
-    {
-        await API.Open(new CircuitViewWindow());
-        FadeOut();
-    }
-
-    private bool OnCloseComponentsView()
-    {
-        _componentsWindowView?.Minimize();
-        return true;
-    }
-
+    /*
     private async void ShowComponents(object? sender, EventArgs e)
     {
         await API.Call(() =>
@@ -150,5 +123,5 @@ public class WindowStarterFrame : Frame
         });
 
         FadeOut();
-    }
+    }*/
 }

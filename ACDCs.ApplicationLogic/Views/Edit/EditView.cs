@@ -1,8 +1,7 @@
 ﻿using ACDCs.ApplicationLogic.Components.Circuit;
 using ACDCs.ApplicationLogic.Components.Edit;
 using ACDCs.ApplicationLogic.Components.Window;
-using ACDCs.ApplicationLogic.Interfaces;
-using Microsoft.Maui.Layouts;
+using Window = ACDCs.ApplicationLogic.Components.Window.Window;
 
 namespace ACDCs.ApplicationLogic.Views.Edit;
 
@@ -12,9 +11,10 @@ using Sharp.UI;
 
 #pragma warning restore IDE0065
 
-public class EditView : WindowView, IEditViewProperties
+public class EditView : Window
 {
-    private StackLayout _buttonLayout = null!;
+    private readonly WindowContainer? _layout;
+    private StackLayout _buttonLayout = new();
     private EditButton? _deleteButton;
     private EditButton? _lastButton;
     private EditButton? _mirrorButton;
@@ -27,9 +27,26 @@ public class EditView : WindowView, IEditViewProperties
 
     public CircuitView CircuitView { get; set; }
 
-    public EditView(AbsoluteLayout? layout) : base(layout, "Tools")
+    public StackLayout ButtonLayout
     {
+        get => _buttonLayout;
+        set => _buttonLayout = value;
+    }
+
+    public EditView(WindowContainer? layout) : base(layout, "Tools", "", false, GetView)
+    {
+        _layout = layout;
         Initialize();
+    }
+
+    private static View GetView(Window arg)
+    {
+        if (arg is EditView edit)
+        {
+            return edit.ButtonLayout;
+        }
+
+        return new Label();
     }
 
     private static void CallHandler(string command)
@@ -66,7 +83,7 @@ public class EditView : WindowView, IEditViewProperties
         if (ButtonHeight == 0) ButtonHeight = 60;
         if (ButtonWidth == 0) ButtonWidth = 60;
 
-        _selectAreaButton = new EditButton("Select area", SelectArea, OnSelectButtonChange, ButtonWidth, ButtonHeight, true);
+        _selectAreaButton = new EditButton("Select", SelectArea, OnSelectButtonChange, ButtonWidth, ButtonHeight, true);
         _rotateButton = new EditButton("Rotate", Rotate, OnSelectButtonChange, ButtonWidth, ButtonHeight);
         _mirrorButton = new EditButton("Mirror", Mirror, OnSelectButtonChange, ButtonWidth, ButtonHeight);
         _deleteButton = new EditButton("Delete", Delete, OnSelectButtonChange, ButtonWidth, ButtonHeight);
@@ -78,16 +95,16 @@ public class EditView : WindowView, IEditViewProperties
 
     private void Initialize()
     {
-        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
-        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(this, new Rect(0, 60, 68, AbsoluteLayout.AutoSize));
-
-        _buttonLayout = new StackLayout()
+        WidthRequest = 64;
+        _buttonLayout = _buttonLayout
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
+        Start();
 
-        WindowContent = _buttonLayout;
-        HideMenuButton();
-        HideResizer();
+        _layout?.SetWindowSize(this, 50, 200);
+        _layout?.SetWindowPosition(this, 4, 50);
+        base.HideWindowButtons();
+        base.HideResizer();
         AddButtons();
     }
 

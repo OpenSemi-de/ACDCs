@@ -1,5 +1,4 @@
-﻿using ACDCs.ApplicationLogic.Components.Window;
-using ACDCs.ApplicationLogic.Views.Properties;
+﻿using ACDCs.ApplicationLogic.Views.Properties;
 
 namespace ACDCs.ApplicationLogic.Components.Properties;
 
@@ -28,7 +27,7 @@ public class PropertyTemplate : Grid
         _label.SetBinding(Label.TextProperty, "Name");
         Add(_label);
 
-        _entry = new PropertyEditorView(getPropertyUpdates as WindowView)
+        _entry = new PropertyEditorView(getPropertyUpdates as Window.Window)
             .HorizontalOptions(LayoutOptions.Fill)
             .Margin(1)
             .Padding(1);

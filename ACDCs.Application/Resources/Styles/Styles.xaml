@@ -289,37 +289,10 @@
                 Value="{AppThemeBinding Light={StaticResource BackgroundHighLight}, Dark={StaticResource BackgroundHighDark}}" />
     </Style>
 
-    <Style TargetType="window:WindowFrame">
-        <Setter Property="HasShadow" Value="True" />
-        <Setter Property="Shadow">
-            <Shadow>
-                <Shadow.Offset>
-                    <Point X="20" Y="20"></Point>
-                </Shadow.Offset>
-                <Shadow.Opacity>0.7</Shadow.Opacity>
-                <Shadow.Radius>0.5</Shadow.Radius>
-            </Shadow>
-        </Setter>
-        <Setter Property="Shadow.Brush"
-                Value="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}"></Setter>
-        <Setter Property="BorderColor"
-                Value="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" />
-        <Setter Property="CornerRadius" Value="3" />
-        <Setter Property="Padding" Value="2" />
-        <Setter Property="BackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" />
-    </Style>
-
-
-
     <Style TargetType="Grid" BaseResourceKey="GridStyle">
         <Setter Property="RowSpacing" Value="0"></Setter>
         <Setter Property="ColumnSpacing" Value="0"></Setter>
     </Style>
-
-
-
-
 
     <Style TargetType="ui:ImageButton">
         <Setter Property="Opacity" Value="1" />

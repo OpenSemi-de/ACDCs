@@ -7,6 +7,7 @@ using ACDCs.Data.ACDCs.Components.Resistor;
 using ACDCs.Data.ACDCs.Interfaces;
 using ACDCs.IO.DB;
 using CommunityToolkit.Maui.Core.Extensions;
+using Window = ACDCs.ApplicationLogic.Components.Window.Window;
 
 namespace ACDCs.ApplicationLogic.Views.ModelSelection;
 
@@ -16,7 +17,7 @@ using Sharp.UI;
 
 #pragma warning restore Roslyn.IDE0065
 
-public class ModelSelectionWindowView : WindowView
+public class ModelSelectionWindow : Window
 {
     private readonly StackLayout _buttonStack;
     private readonly Button _cancelButton;
@@ -32,12 +33,10 @@ public class ModelSelectionWindowView : WindowView
     private IElectronicComponent? _selectedModel;
     public Action<IElectronicComponent>? OnModelSelected { get; set; }
 
-    public ModelSelectionWindowView(AbsoluteLayout? layout) : base(layout, "Select Model")
+    public ModelSelectionWindow(WindowContainer? layout) : base(layout, "Select Model")
     {
         WidthRequest = 500;
         HeightRequest = 500;
-        HideMenuButton();
-        HideResizer();
 
         _modelGrid = new Grid()
             .HorizontalOptions(LayoutOptions.Fill)
@@ -104,8 +103,8 @@ public class ModelSelectionWindowView : WindowView
         _modelGrid.Add(_componentsList);
         _modelGrid.Add(_pagingStack);
         _modelGrid.Add(_buttonStack);
-
-        WindowContent = _modelGrid;
+        Start();
+        ChildLayout.Add(_modelGrid);
     }
 
     public void SetComponentType(string componentType)

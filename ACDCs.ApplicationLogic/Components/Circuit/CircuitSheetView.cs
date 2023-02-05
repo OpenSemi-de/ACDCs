@@ -1,31 +1,34 @@
 using ACDCs.ApplicationLogic.Views.Edit;
 using ACDCs.ApplicationLogic.Views.Properties;
 using Microsoft.Maui.Layouts;
+using ItemsView = ACDCs.ApplicationLogic.Views.Items.ItemsView;
 
 namespace ACDCs.ApplicationLogic.Components.Circuit;
+
+using Window;
 
 #pragma warning disable IDE0065
 
 using Sharp.UI;
-using ItemsView = ACDCs.ApplicationLogic.Views.Items.ItemsView;
 
 #pragma warning restore IDE0065
 
 public sealed class CircuitSheetView : AbsoluteLayout
 {
-    private readonly CircuitView _circuitView;
+    private readonly WindowContainer _container;
 
     private readonly Label? _cursorDebugLabel;
-    private readonly Views.Items.ItemsView _itemsView;
+    private readonly ItemsView _itemsView;
     private readonly bool _showCursorDebugOutput = Convert.ToBoolean(API.GetPreference("ShowDebugCursorOutput"));
 
     // ReSharper disable once NotAccessedField.Local
     private EditView? _editWindow;
 
-    private PropertiesView? _propertiesWindow;
+    private PropertiesWindow? _propertiesWindow;
 
-    public CircuitSheetView()
+    public CircuitSheetView(WindowContainer container)
     {
+        _container = container;
         _itemsView = new ItemsView
         {
             ButtonWidth = 60,
@@ -37,13 +40,11 @@ public sealed class CircuitSheetView : AbsoluteLayout
         AbsoluteLayout.SetLayoutBounds(_itemsView, new Rect(0, 1, 1, 60));
         Add(_itemsView);
 
-        _circuitView = new CircuitView();
-        _circuitView.PopupTarget = this;
-        _circuitView.ZIndex = 0;
+        CircuitView = new CircuitView { PopupTarget = this, ZIndex = 0 };
 
-        AbsoluteLayout.SetLayoutFlags(_circuitView, AbsoluteLayoutFlags.SizeProportional);
-        AbsoluteLayout.SetLayoutBounds(_circuitView, new Rect(0, 0, 1, 1));
-        Add(_circuitView);
+        AbsoluteLayout.SetLayoutFlags(CircuitView, AbsoluteLayoutFlags.SizeProportional);
+        AbsoluteLayout.SetLayoutBounds(CircuitView, new Rect(0, 0, 1, 1));
+        Add(CircuitView);
 
         if (_showCursorDebugOutput)
         {
@@ -54,46 +55,35 @@ public sealed class CircuitSheetView : AbsoluteLayout
             Add(_cursorDebugLabel);
         }
 
-        // _menuView = new MenuView("menu_main.json");
-        // _menuView.PopupTarget = this;
-        // _menuView.CircuitView = _circuitView;
-        // _menuView.ZIndex = 2;
-        //
-        // AbsoluteLayout.SetLayoutFlags(_menuView, AbsoluteLayoutFlags.WidthProportional);
-        // AbsoluteLayout.SetLayoutBounds(_menuView, new Rect(0, 0, 1, 36));
-        // Add(_menuView);
-
         Loaded += OnLoaded;
-        _circuitView.ShowCollisionMap = Convert.ToBoolean(API.GetPreference("ShowTraceCollisionMap"));
-        _circuitView.CursorDebugChanged = CursorDebugChanged;
-        _circuitView.ItemsView = _itemsView;
+        CircuitView.ShowCollisionMap = Convert.ToBoolean(API.GetPreference("ShowTraceCollisionMap"));
+        CircuitView.CursorDebugChanged = CursorDebugChanged;
+        CircuitView.ItemsView = _itemsView;
     }
 
-    public CircuitView CircuitView => _circuitView;
+    public CircuitView CircuitView { get; }
 
     private void CursorDebugChanged()
     {
         if (_showCursorDebugOutput && _cursorDebugLabel != null)
         {
-            _cursorDebugLabel.Text = _circuitView.CursorDebugOutput;
+            _cursorDebugLabel.Text = CircuitView.CursorDebugOutput;
         }
     }
 
     private void OnLoaded(object? sender, EventArgs e)
     {
-        _editWindow = new EditView(this);
-        _propertiesWindow = new PropertiesView(this) { OnUpdate = OnUpdate };
+        _editWindow = new EditView(_container);
+        _propertiesWindow = new PropertiesWindow(_container) { OnUpdate = OnUpdate };
         _propertiesWindow.PropertyExcludeList.AddRange(
         new[]{
             "IsInsertable", "DefaultValue", "DefaultType", "DrawableComponent", "Pins", "TypeName", "RefName", "ItemGuid"
         });
-        _circuitView.OnSelectedItemChange = _propertiesWindow.GetProperties;
-
-        //    BackgroundImageSource = ImageService.BackgroundImageSource(this);
+        CircuitView.OnSelectedItemChange = _propertiesWindow.GetProperties;
     }
 
     private async void OnUpdate()
     {
-        await _circuitView.Paint();
+        await CircuitView.Paint();
     }
 }

@@ -2,6 +2,7 @@
 using ACDCs.ApplicationLogic.Components.Window;
 using ACDCs.IO.DB;
 using Newtonsoft.Json;
+using Window = ACDCs.ApplicationLogic.Components.Window.Window;
 
 namespace ACDCs.ApplicationLogic.Views.Preferences;
 
@@ -11,7 +12,7 @@ using Sharp.UI;
 
 #pragma warning restore IDE0065
 
-public class PreferencesWindowView : WindowView
+public class PreferencesWindowView : Window
 {
     private static List<PreferenceSetting>? s_preferences;
     private Grid? _layoutGrid;
@@ -20,13 +21,8 @@ public class PreferencesWindowView : WindowView
 
     public static PreferencesWindowView? PreferencesWindow { get; set; }
 
-    public PreferencesWindowView() : base(API.MainContainer, "Preferences")
-    {
-        Initialize();
-    }
-
     // ReSharper disable once UnusedMember.Global
-    public PreferencesWindowView(AbsoluteLayout? layout) : base(layout, "Preferences")
+    public PreferencesWindowView(WindowContainer? layout) : base(layout, "Preferences")
     {
         Initialize();
     }
@@ -110,8 +106,8 @@ public class PreferencesWindowView : WindowView
         }
 
         _repository = new PreferencesRepository();
-
-        WindowContent = _layoutGrid;
+        Start();
+        ChildLayout.Add(_layoutGrid);
     }
 
     private void OnValueChanged(string key, object obj)

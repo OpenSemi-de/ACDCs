@@ -1,5 +1,4 @@
-﻿using ACDCs.ApplicationLogic.Components.Window;
-using ACDCs.ApplicationLogic.Interfaces;
+﻿using ACDCs.ApplicationLogic.Interfaces;
 using ACDCs.ApplicationLogic.Views.ModelEditor;
 using ACDCs.ApplicationLogic.Views.ModelSelection;
 using ACDCs.Data.ACDCs.Interfaces;
@@ -15,9 +14,9 @@ using Sharp.UI;
 [SharpObject]
 public partial class PropertyEditorView : ContentView, IPropertyEditorViewProperties
 {
-    private ModelEditorWindowView? _modelEditorWindow;
-    private ModelSelectionWindowView? _modelSelectionWindow;
-    private WindowView? _parentWindow;
+    private ModelEditorWindow? _modelEditorWindow;
+    private ModelSelectionWindow? _modelSelectionWindow;
+    private Window.Window? _parentWindow;
     public bool ShowDescription { get; set; }
     public string ValueType { get; set; } = string.Empty;
 
@@ -26,7 +25,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
         Initialize();
     }
 
-    public PropertyEditorView(WindowView? parentWindow)
+    public PropertyEditorView(Window.Window? parentWindow)
     {
         Initialize(parentWindow);
     }
@@ -47,7 +46,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
     {
         if (_modelEditorWindow == null)
         {
-            _modelEditorWindow = new ModelEditorWindowView(_parentWindow?.MainContainer ?? API.MainContainer)
+            _modelEditorWindow = new ModelEditorWindow(_parentWindow?.MainContainer ?? API.MainContainer)
             {
                 OnModelEdited = OnModelEdited,
                 ZIndex = 10
@@ -75,7 +74,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
         }
     }
 
-    private void Initialize(WindowView? parentWindow = null)
+    private void Initialize(Window.Window? parentWindow = null)
     {
         _parentWindow = parentWindow;
         PropertyChanged += PropertyEditor_PropertyChanged;
@@ -86,7 +85,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
     {
         if (_modelSelectionWindow == null)
         {
-            _modelSelectionWindow = new ModelSelectionWindowView(_parentWindow?.MainContainer ?? API.MainContainer)
+            _modelSelectionWindow = new ModelSelectionWindow(_parentWindow?.MainContainer)
             {
                 OnModelSelected = OnModelSelected,
                 ZIndex = 10

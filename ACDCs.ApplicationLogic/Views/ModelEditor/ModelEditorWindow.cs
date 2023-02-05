@@ -5,6 +5,7 @@ using ACDCs.ApplicationLogic.Components.Window;
 using ACDCs.ApplicationLogic.Views.Properties;
 using ACDCs.Data.ACDCs.Interfaces;
 using CommunityToolkit.Maui.Core.Extensions;
+using Window = ACDCs.ApplicationLogic.Components.Window.Window;
 
 namespace ACDCs.ApplicationLogic.Views.ModelEditor;
 
@@ -14,7 +15,7 @@ using Sharp.UI;
 
 #pragma warning restore IDE0065
 
-public class ModelEditorWindowView : WindowView, IGetPropertyUpdates
+public class ModelEditorWindow : Window, IGetPropertyUpdates
 {
     private readonly StackLayout _buttonStack;
     private readonly Button _cancelButton;
@@ -27,7 +28,7 @@ public class ModelEditorWindowView : WindowView, IGetPropertyUpdates
     public Action? OnUpdate { get; set; }
     private List<string> PropertyExcludeList { get; } = new();
 
-    public ModelEditorWindowView(AbsoluteLayout? layout) : base(layout, "Edit model")
+    public ModelEditorWindow(WindowContainer? layout) : base(layout, "Edit model")
     {
         _modelGrid = new Grid()
             .HorizontalOptions(LayoutOptions.Fill)
@@ -84,10 +85,10 @@ public class ModelEditorWindowView : WindowView, IGetPropertyUpdates
         Grid.SetRow(_buttonStack, 1);
 
         _modelGrid.Add(_buttonStack);
+        Start();
 
-        WindowContent = _modelGrid;
-
-        HideMenuButton();
+        ChildLayout.Add(_modelGrid);
+        HideWindowButtons();
     }
 
     public void GetProperties(object? currentObject)

@@ -6,6 +6,7 @@ using ACDCs.ApplicationLogic.Views;
 using ACDCs.IO.DB;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Maui.Graphics.Skia;
+using Window = ACDCs.ApplicationLogic.Components.Window.Window;
 
 namespace ACDCs.ApplicationLogic;
 
@@ -36,7 +37,7 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
     private readonly IImportService _importService;
     public static PlatformBitmapExportService BitmapExportContextService { get; } = new();
     public static API Instance { get; set; }
-    public static AbsoluteLayout? MainContainer { get; set; }
+    public static WindowContainer? MainContainer { get; set; }
     public static Page? MainPage { get; set; }
     public static Action<Point>? PointerCallback { get; set; }
     public static Element? PointerLayoutObjectToMeasure { get; set; }
@@ -157,7 +158,7 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
         return contents;
     }
 
-    public static async Task Open(WindowView window, WindowState windowState = WindowState.Maximized)
+    public static async Task Open(Window window, WindowState windowState = WindowState.Maximized)
     {
         await Call(() =>
         {

@@ -11,7 +11,7 @@ using Sharp.UI;
 
 public class Window : Grid
 {
-    private readonly WindowContainer _container;
+    private readonly WindowContainer? _container;
     private readonly string _title;
     private readonly string? _menuFile;
     private readonly bool _isWindowParent;
@@ -23,7 +23,16 @@ public class Window : Grid
     private MenuView _menuView;
     private readonly Func<Window, View> _childViewFunction;
 
-    public Window(WindowContainer container, string title, string? menuFile = null, bool isWindowParent = false,
+    public WindowContainer? MainContainer
+    {
+        get
+        {
+            if (_childLayout is WindowContainer childlayout) return childlayout;
+            return _container;
+        }
+    }
+
+    public Window(WindowContainer? container, string title, string? menuFile = null, bool isWindowParent = false,
         Func<Window, View> childViewFunction = null)
     {
         _container = container;
@@ -180,6 +189,7 @@ public class Window : Grid
     public AbsoluteLayout ChildLayout
     {
         get => _childLayout;
+        set => _childLayout = value;
     }
 
     public MenuView MenuView
@@ -192,8 +202,30 @@ public class Window : Grid
         get => _childView;
     }
 
+    public string WindowTitle
+    {
+        get => _title;
+    }
+
     private bool DefaultClose()
     {
         return true;
+    }
+
+    protected void HideResizer()
+    {
+    }
+
+    protected void HideWindowButtons()
+    {
+        _windowButtons.IsVisible = false;
+    }
+
+    public void SetInactive()
+    {
+    }
+
+    public void SetActive()
+    {
     }
 }

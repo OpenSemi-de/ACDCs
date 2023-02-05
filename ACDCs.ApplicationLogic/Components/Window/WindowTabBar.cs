@@ -1,5 +1,4 @@
-﻿using ACDCs.ApplicationLogic.Views;
-using UraniumUI.Icons.FontAwesome;
+﻿using UraniumUI.Icons.FontAwesome;
 
 namespace ACDCs.ApplicationLogic.Components.Window;
 
@@ -15,11 +14,8 @@ public class WindowTabBar : Grid, IWindowTabBarProperties
     private readonly ScrollView _scrollView;
 
     private readonly Button _starterButton;
-    private readonly Dictionary<WindowTab, WindowView> _windowViews;
-    private int _circuitCount;
-    private ComponentsView _componentsView;
-    private WindowView? _componentsWindowView;
-    private WindowView? _focusWindow;
+    private readonly Dictionary<WindowTab, Window> _windows;
+    private Window? _focusWindow;
 
     public WindowTabBar(WindowStarterFrame starterFrame)
     {
@@ -41,7 +37,7 @@ public class WindowTabBar : Grid, IWindowTabBarProperties
         _starterButton.TextColor = API.Instance.Text;
         _starterButton.BorderColor = API.Instance.Border;
 
-        _windowViews = new Dictionary<WindowTab, WindowView>();
+        _windows = new Dictionary<WindowTab, Window>();
 
         _mainLayout = new StackLayout()
             .VerticalOptions(LayoutOptions.Fill)
@@ -60,10 +56,10 @@ public class WindowTabBar : Grid, IWindowTabBarProperties
         Add(_scrollView);
     }
 
-    public void AddWindow(WindowView window)
+    public void AddWindow(Window window)
     {
         WindowTab tab = new(window.WindowTitle, OnTabClicked);
-        window.TabBar = this;
+        //  window.TabBar = this;
         TapGestureRecognizer tapGestureRecognizer = new();
         tapGestureRecognizer.Tapped += TapGestureRecognizerOnTapped;
         window.GestureRecognizers.Add(
@@ -72,7 +68,7 @@ public class WindowTabBar : Grid, IWindowTabBarProperties
         window.OnFocused(OnWindowFocus);
 
         BringToFront(window);
-        _windowViews.Add(tab, window);
+        _windows.Add(tab, window);
         _mainLayout.Add(tab);
         MarkFocused();
     }
@@ -84,7 +80,7 @@ public class WindowTabBar : Grid, IWindowTabBarProperties
             return;
         }
 
-        WindowView window = (WindowView)sender;
+        Window window = (Window)sender;
         if (_focusWindow != window)
         {
             if (_focusWindow != null)
@@ -102,26 +98,26 @@ public class WindowTabBar : Grid, IWindowTabBarProperties
 
     public void OnSizeChanged()
     {
-        foreach (WindowView windowView in _windowViews.Values)
+        foreach (Window window in _windows.Values)
         {
-            if (windowView.State == WindowState.Maximized)
+            if (window.WindowState == WindowState.Maximized)
             {
-                windowView.Maximize();
+                window.Maximize();
             }
         }
     }
 
-    public void RemoveWindow(WindowView windowView)
+    public void RemoveWindow(Window windowView)
     {
-        if (!_windowViews.ContainsValue(windowView))
+        if (!_windows.ContainsValue(windowView))
         {
             return;
         }
 
-        WindowTab tab = _windowViews.First(kv => kv.Value == windowView).Key;
-        _windowViews.Remove(tab);
+        WindowTab tab = _windows.First(kv => kv.Value == windowView).Key;
+        _windows.Remove(tab);
         _mainLayout.Remove(tab);
-        windowView.TabBar = null;
+        // windowView.TabBar = null;
     }
 
     private void Debug()
@@ -130,10 +126,10 @@ public class WindowTabBar : Grid, IWindowTabBarProperties
 
     private void MarkFocused()
     {
-        foreach (WindowTab windowTab in _windowViews.Keys)
+        foreach (WindowTab windowTab in _windows.Keys)
         {
             windowTab.SetInactive();
-            _windowViews[windowTab].SetInactive();
+            _windows[windowTab].SetInactive();
         }
 
         if (_focusWindow == null)
@@ -141,7 +137,7 @@ public class WindowTabBar : Grid, IWindowTabBarProperties
             return;
         }
 
-        KeyValuePair<WindowTab, WindowView>? focusTab = _windowViews.First(kv => kv.Value == _focusWindow);
+        KeyValuePair<WindowTab, Window>? focusTab = _windows.First(kv => kv.Value == _focusWindow);
         focusTab?.Key.SetActive();
 
         _focusWindow.SetActive();
@@ -156,13 +152,13 @@ public class WindowTabBar : Grid, IWindowTabBarProperties
     {
         await API.Call(() =>
            {
-               if (!_windowViews.ContainsKey(tab))
+               if (!_windows.ContainsKey(tab))
                {
                    return Task.CompletedTask;
                }
 
-               WindowView window = _windowViews[tab];
-               if (window.State == WindowState.Minimized)
+               Window window = _windows[tab];
+               if (window.WindowState == WindowState.Minimized)
                {
                    window.Restore();
                    window.Focus();

@@ -1,5 +1,4 @@
-﻿using ACDCs.ApplicationLogic.Components.Window;
-using ACDCs.ApplicationLogic.Views.Properties;
+﻿using ACDCs.ApplicationLogic.Views.Properties;
 using PropertyEditorView = ACDCs.ApplicationLogic.Components.Properties.PropertyEditorView;
 
 namespace ACDCs.ApplicationLogic.Components.ModelEditor;
@@ -30,7 +29,7 @@ public class ModelPropertyTemplate : ViewCell
         label.SetBinding(Label.TextProperty, "Name");
         grid.Add(label);
 
-        PropertyEditorView entry = new PropertyEditorView(window as WindowView)
+        PropertyEditorView entry = new PropertyEditorView(window as Window.Window)
             .HorizontalOptions(LayoutOptions.Fill);
         entry.ShowDescription = true;
         entry.SetBinding(PropertyEditorView.ParentTypeProperty, "ParentType", BindingMode.OneTime);

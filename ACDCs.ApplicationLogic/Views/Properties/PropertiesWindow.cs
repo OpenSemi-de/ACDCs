@@ -2,8 +2,8 @@
 using System.Reflection;
 using ACDCs.ApplicationLogic.Components.Properties;
 using ACDCs.ApplicationLogic.Components.Window;
-using Microsoft.Maui.Layouts;
 using UraniumUI.Material.Controls;
+using Window = ACDCs.ApplicationLogic.Components.Window.Window;
 
 namespace ACDCs.ApplicationLogic.Views.Properties;
 
@@ -13,7 +13,7 @@ using Sharp.UI;
 
 #pragma warning restore IDE0065
 
-public class PropertiesView : WindowView, IGetPropertyUpdates
+public class PropertiesWindow : Window, IGetPropertyUpdates
 {
     public Action? OnUpdate;
     private readonly Grid _propertiesGrid;
@@ -23,7 +23,7 @@ public class PropertiesView : WindowView, IGetPropertyUpdates
     private object? _currentObject;
     public List<string> PropertyExcludeList { get; } = new();
 
-    public PropertiesView(AbsoluteLayout? layout) : base(layout, "Properties")
+    public PropertiesWindow(WindowContainer? layout) : base(layout, "Properties")
     {
         _propertiesGrid = new Grid()
             .HorizontalOptions(LayoutOptions.Fill)
@@ -64,9 +64,10 @@ public class PropertiesView : WindowView, IGetPropertyUpdates
 
         _propertiesView.ItemsSource = _roots;
         _propertiesView.ChildrenBinding.Mode = BindingMode.OneTime;
-        WindowContent = _propertiesGrid;
+        Start();
+        ChildLayout.Add(_propertiesGrid);
 
-        HideMenuButton();
+        HideWindowButtons();
         HideResizer();
         SizeChanged += PropertiesView_SizeChanged;
     }
@@ -172,14 +173,10 @@ public class PropertiesView : WindowView, IGetPropertyUpdates
 
     private void PropertiesView_SizeChanged(object? sender, EventArgs e)
     {
-        WidthRequest = 200;
-        HeightRequest = 500;
-        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
-        if (MainContainer != null)
-        {
-            Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(this,
-                new Rect(MainContainer.Width - 202, 60, 200, 500));
-        }
+        int width = 200;
+        int height = 500;
+        MainContainer?.SetWindowSize(this, width, height);
+        MainContainer?.SetWindowPosition(this, MainContainer.Width - width - 4, 50);
     }
 }
 

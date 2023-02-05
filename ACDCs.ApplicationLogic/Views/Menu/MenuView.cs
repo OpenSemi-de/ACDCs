@@ -52,6 +52,7 @@ public class MenuView : ContentView
     {
         await API.Call(async () =>
         {
+            if (menuMainJson == "") return;
             string jsonData = await API.LoadMauiAssetAsString(menuMainJson);
             List<MenuItemDefinition>? items = JsonConvert.DeserializeObject<List<MenuItemDefinition>>(jsonData);
             if (items != null) _menuFrame?.LoadMenu(items, true, _menuParameters);

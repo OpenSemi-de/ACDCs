@@ -1,4 +1,3 @@
-using ACDCs.ApplicationLogic.Components.Window;
 using ACDCs.ApplicationLogic.Interfaces;
 
 namespace ACDCs.ApplicationLogic.Components.Menu;
@@ -14,7 +13,6 @@ public class MenuFrame : StackLayout
     private static readonly List<MenuFrame> s_menuFrameList = new();
     private readonly bool _eventSet;
     private List<MenuHandler> _handlers = new();
-    public WindowView? WindowFrame { get; set; }
     public Window.Window ParentWindow { get; set; }
 
     public MenuFrame()
@@ -138,12 +136,9 @@ public class MenuFrame : StackLayout
 
         double mainX = 0;
         double mainY = menuButton.Height;
-        if (WindowFrame != null)
-        {
-            mainX += AbsoluteLayout.GetLayoutBounds(WindowFrame).X;
-            mainY += AbsoluteLayout.GetLayoutBounds(WindowFrame).Y + menuButton.Height;
-            menuButton.MenuFrame.ZIndex(999);
-        }
+        mainX += AbsoluteLayout.GetLayoutBounds(ParentWindow.ChildLayout).X;
+        mainY += AbsoluteLayout.GetLayoutBounds(ParentWindow.ChildLayout).Y + menuButton.Height;
+        menuButton.MenuFrame.ZIndex(999);
 
         Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(menuButton.MenuFrame,
                     new Rect(menuButton.X + mainX, mainY, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));

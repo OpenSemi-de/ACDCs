@@ -1,10 +1,10 @@
-﻿namespace ACDCs.ApplicationLogic.Views.Preferences;
+﻿namespace ACDCs.ApplicationLogic.Components.Preferences;
 
-using ACDCs.ApplicationLogic.Components.Properties;
-using ACDCs.ApplicationLogic.Components.Window;
 using IO.DB;
 using Newtonsoft.Json;
+using Properties;
 using Sharp.UI;
+using Window;
 
 public class PreferencesWindow : Window
 {

@@ -1,7 +1,5 @@
 namespace ACDCs.ApplicationLogic.Components.Circuit;
 
-using ACDCs.ApplicationLogic.Views.Edit;
-using ACDCs.ApplicationLogic.Views.Properties;
 using Microsoft.Maui.Layouts;
 using Sharp.UI;
 using Window;

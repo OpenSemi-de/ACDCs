@@ -50,7 +50,7 @@ public class WindowContainer : AbsoluteLayout
 
     public void SetWindowPosition(Window window, double x, double y)
     {
-        SetWindowPosition(window, new Rect(x, y, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
+        SetWindowPosition(window, new Rect(x, y, AutoSize, AutoSize));
     }
 
     public void SetWindowSize(Window window, int width, int height, bool isRestore = false)

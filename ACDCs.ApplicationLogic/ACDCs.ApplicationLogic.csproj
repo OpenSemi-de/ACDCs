@@ -29,7 +29,6 @@
 
 	<ItemGroup>
 	  <Compile Remove="Components\Properties\TurnKnob.cs" />
-	  <Compile Remove="Views\Workbench.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -45,7 +44,7 @@
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
 	  <PackageReference Include="Sharp.UI">
-	    <Version>0.2.5-alpha.1</Version>
+	    <Version>0.2.6-alpha.2</Version>
 	  </PackageReference>
 	</ItemGroup>
 
@@ -74,19 +73,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\ComponentsDetailPopup.xaml.cs">
+	  <Compile Update="Components\ComponentsDetailPopup.xaml.cs">
 	    <DependentUpon>%(Filename)</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\ComponentsView.xaml.cs">
+	  <Compile Update="Components\ComponentsView.xaml.cs">
 	    <DependentUpon>%(Filename)</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\ComponentsDetailPopup.xaml">
+	  <MauiXaml Update="Components\ComponentsDetailPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\ComponentsView.xaml">
+	  <MauiXaml Update="Components\ComponentsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

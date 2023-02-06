@@ -1,13 +1,12 @@
-﻿namespace ACDCs.ApplicationLogic.Views.ModelEditor;
+﻿namespace ACDCs.ApplicationLogic.Components.ModelEditor;
 
 using System.Collections.ObjectModel;
 using System.Reflection;
-using ACDCs.ApplicationLogic.Components.ModelEditor;
-using ACDCs.ApplicationLogic.Components.Window;
 using ACDCs.Data.ACDCs.Interfaces;
 using CommunityToolkit.Maui.Core.Extensions;
 using Properties;
 using Sharp.UI;
+using Window;
 
 public class ModelEditorWindow : Window, IGetPropertyUpdates
 {
@@ -91,7 +90,7 @@ public class ModelEditorWindow : Window, IGetPropertyUpdates
         Type? parentType = currentObject?.GetType();
         IEnumerable<PropertyInfo>? properties = currentObject?.GetType().GetRuntimeProperties();
 
-        ObservableCollection<Components.Properties.PropertyItem> propertyItems = new();
+        ObservableCollection<PropertyItem> propertyItems = new();
         if (properties != null)
         {
             foreach (PropertyInfo propertyInfo in properties.OrderBy(p => p.PropertyType.Name).ThenBy(p => p.Name))
@@ -102,7 +101,7 @@ public class ModelEditorWindow : Window, IGetPropertyUpdates
                 }
 
                 // && (propertyInfo.PropertyType.IsPrimitive || propertyInfo.PropertyType.IsEnum)
-                Components.Properties.PropertyItem item = new(propertyInfo.Name);
+                PropertyItem item = new(propertyInfo.Name);
                 object? value = propertyInfo.GetValue(currentObject, null);
                 if (value != null)
                 {

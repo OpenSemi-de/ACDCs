@@ -1,11 +1,10 @@
-﻿namespace ACDCs.ApplicationLogic.Views.Properties;
+﻿namespace ACDCs.ApplicationLogic.Components.Properties;
 
 using System.Collections.ObjectModel;
 using System.Reflection;
-using ACDCs.ApplicationLogic.Components.Properties;
-using ACDCs.ApplicationLogic.Components.Window;
 using Sharp.UI;
 using UraniumUI.Material.Controls;
+using Window;
 
 public class PropertiesWindow : Window, IGetPropertyUpdates
 {

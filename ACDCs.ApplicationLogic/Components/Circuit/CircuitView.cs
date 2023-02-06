@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 using Sharp.UI;
 using Color = Color;
 using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
-using ItemsView = Views.Items.ItemsView;
+using ItemsView = Items.ItemsView;
 
 public class CircuitView : ContentView, ICircuitViewProperties
 {

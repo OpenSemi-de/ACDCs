@@ -1,6 +1,5 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.ModelEditor;
 
-using ACDCs.ApplicationLogic.Views.Properties;
 using Sharp.UI;
 using PropertyEditorView = Properties.PropertyEditorView;
 

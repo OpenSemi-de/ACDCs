@@ -1,8 +1,7 @@
-﻿namespace ACDCs.ApplicationLogic.Views.Edit;
+﻿namespace ACDCs.ApplicationLogic.Components.Edit;
 
-using ACDCs.ApplicationLogic.Components.Edit;
-using ACDCs.ApplicationLogic.Components.Window;
 using Sharp.UI;
+using Window;
 
 public class EditWindow : Window
 {

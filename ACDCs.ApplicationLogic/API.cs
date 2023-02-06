@@ -2,6 +2,7 @@
 
 using System.Collections.Concurrent;
 using ACDCs.ApplicationLogic.Components.Window;
+using Components;
 using Components.Circuit;
 using Interfaces;
 using IO.DB;
@@ -9,7 +10,6 @@ using Microsoft.AppCenter.Crashes;
 using Microsoft.Maui.Graphics.Skia;
 using Services;
 using Sharp.UI;
-using Views;
 
 public delegate void ResetEvent(object sender, ResetEventArgs args);
 

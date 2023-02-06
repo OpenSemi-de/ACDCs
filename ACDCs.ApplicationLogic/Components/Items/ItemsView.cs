@@ -1,7 +1,6 @@
-﻿namespace ACDCs.ApplicationLogic.Views.Items;
+﻿namespace ACDCs.ApplicationLogic.Components.Items;
 
 using System.Reflection;
-using ACDCs.ApplicationLogic.Components.Items;
 using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
 using CircuitRenderer.Sheet;

@@ -1,8 +1,6 @@
-﻿namespace ACDCs.ApplicationLogic.Views.ModelSelection;
+﻿namespace ACDCs.ApplicationLogic.Components.ModelSelection;
 
 using System.Collections.ObjectModel;
-using ACDCs.ApplicationLogic.Components.ModelSelection;
-using ACDCs.ApplicationLogic.Components.Window;
 using ACDCs.Data.ACDCs.Components.BJT;
 using ACDCs.Data.ACDCs.Components.Diode;
 using ACDCs.Data.ACDCs.Components.Resistor;
@@ -10,6 +8,7 @@ using ACDCs.Data.ACDCs.Interfaces;
 using CommunityToolkit.Maui.Core.Extensions;
 using IO.DB;
 using Sharp.UI;
+using Window;
 
 public class ModelSelectionWindow : Window
 {

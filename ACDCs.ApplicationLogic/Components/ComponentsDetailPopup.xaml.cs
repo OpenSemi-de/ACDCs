@@ -1,10 +1,10 @@
-﻿using System.Collections.ObjectModel;
-using System.Reflection;
-using ACDCs.ApplicationLogic.Components.ModelSelection;
-using ACDCs.ApplicationLogic.Components.Properties;
-using CommunityToolkit.Maui.Views;
+﻿namespace ACDCs.ApplicationLogic.Components;
 
-namespace ACDCs.ApplicationLogic.Views;
+using System.Collections.ObjectModel;
+using System.Reflection;
+using CommunityToolkit.Maui.Views;
+using ModelSelection;
+using Properties;
 
 public partial class ComponentsDetailPopup : Popup
 {

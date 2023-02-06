@@ -1,11 +1,10 @@
-﻿namespace ACDCs.ApplicationLogic.Views.Menu;
+﻿namespace ACDCs.ApplicationLogic.Components.Menu;
 
-using ACDCs.ApplicationLogic.Components.Menu;
-using Components.Circuit;
+using Circuit;
 using Microsoft.Maui.Layouts;
 using Newtonsoft.Json;
 using Sharp.UI;
-using Window = Components.Window.Window;
+using Window = Window.Window;
 
 public class MenuView : ContentView
 {

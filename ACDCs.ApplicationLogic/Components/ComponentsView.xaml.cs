@@ -1,13 +1,12 @@
-﻿using System.Reflection;
-using ACDCs.ApplicationLogic.Components.Menu.MenuHandlers;
-using ACDCs.ApplicationLogic.Components.ModelSelection;
+﻿namespace ACDCs.ApplicationLogic.Components;
+
+using System.Reflection;
 using ACDCs.Data.ACDCs.Components.BJT;
 using ACDCs.Data.ACDCs.Interfaces;
-using ACDCs.IO.Spice;
 using CommunityToolkit.Maui.Views;
-
-namespace ACDCs.ApplicationLogic.Views;
-
+using IO.Spice;
+using Menu.MenuHandlers;
+using ModelSelection;
 using Sharp.UI;
 
 public partial class ComponentsView : AbsoluteLayout

@@ -1,6 +1,5 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.Window;
 
-using ACDCs.ApplicationLogic.Views.Menu;
 using Microsoft.Maui.Layouts;
 using Sharp.UI;
 

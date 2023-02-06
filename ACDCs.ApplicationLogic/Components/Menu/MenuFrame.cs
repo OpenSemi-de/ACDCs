@@ -125,7 +125,7 @@ public class MenuFrame : StackLayout
 
     private void LoadHandler(string menuItemHandler, Dictionary<string, object> menuParameters)
     {
-        Type? handlerType = this.GetType().Assembly.GetTypes().FirstOrDefault(t => t.Name.Contains($"{menuItemHandler}Handlers"));
+        Type? handlerType = GetType().Assembly.GetTypes().FirstOrDefault(t => t.Name.Contains($"{menuItemHandler}Handlers"));
         if (handlerType == null)
             return;
 

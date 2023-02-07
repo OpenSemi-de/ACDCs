@@ -62,7 +62,11 @@ public class PropertiesWindow : Window, IGetPropertyUpdates
 
         HideWindowButtons();
         HideResizer();
-        SizeChanged += PropertiesView_SizeChanged;
+        const int width = 176;
+        const int height = 500;
+        MainContainer.OnSizeChanged(OnSizeChanged);
+        MainContainer?.SetWindowSize(this, width, height);
+        MainContainer?.SetWindowPosition(this, MainContainer.Width - width - 4, 50);
     }
 
     public void GetProperties(object? currentObject)
@@ -164,12 +168,13 @@ public class PropertiesWindow : Window, IGetPropertyUpdates
         newRoot.Children.Add(valueItem);
     }
 
+    private void OnSizeChanged(object? sender, EventArgs e)
+    {
+        MainContainer?.SetWindowPosition(this, MainContainer.Width - 180, 50);
+    }
+
     private void PropertiesView_SizeChanged(object? sender, EventArgs e)
     {
-        int width = 200;
-        int height = 500;
-        MainContainer?.SetWindowSize(this, width, height);
-        MainContainer?.SetWindowPosition(this, MainContainer.Width - width - 4, 50);
     }
 }
 

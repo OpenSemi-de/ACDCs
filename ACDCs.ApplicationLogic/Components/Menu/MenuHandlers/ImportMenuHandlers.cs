@@ -1,7 +1,5 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.Menu.MenuHandlers;
 
-using Views;
-
 public class ImportMenuHandlers : MenuHandler
 {
     public ComponentsView? ComponentsView

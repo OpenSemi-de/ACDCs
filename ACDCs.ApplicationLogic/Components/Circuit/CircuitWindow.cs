@@ -17,6 +17,7 @@ public class CircuitWindow : Window
         {
             CircuitSheetView circuitSheetView = new(container);
             window.MenuParameters.Add("CircuitView", circuitSheetView.CircuitView);
+            window.Maximize();
             return circuitSheetView;
         }
 

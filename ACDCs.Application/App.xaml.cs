@@ -14,7 +14,7 @@ public partial class App : Microsoft.Maui.Controls.Application
         {
             API.UserAppTheme = App.Current.UserAppTheme;
             API.Resources = App.Current.Resources;
-            API.TrackError = Crashes.TrackError;
+            API.TrackError = OnError;
         }
 
         bool darkMode = Convert.ToBoolean(API.GetPreference("DarkMode"));
@@ -32,5 +32,10 @@ public partial class App : Microsoft.Maui.Controls.Application
     private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
         Crashes.TrackError(e.ExceptionObject as Exception);
+    }
+
+    private void OnError(Exception arg1, IDictionary<string, string> arg2, ErrorAttachmentLog[] arg3)
+    {
+        Crashes.TrackError(arg1, arg2, arg3);
     }
 }

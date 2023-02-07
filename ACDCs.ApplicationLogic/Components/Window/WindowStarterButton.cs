@@ -4,16 +4,11 @@ using Sharp.UI;
 
 public class WindowStarterButton : Button
 {
-    private readonly WindowContainer? _container;
+    private readonly WindowContainer _container;
     private readonly Type _startType;
 
-    public WindowStarterButton(string text, Type? startType = null, WindowContainer? container = null) : base(text)
+    public WindowStarterButton(string text, Type startType, WindowContainer container) : base(text)
     {
-        if (startType == null || container == null)
-        {
-            return;
-        }
-
         _container = container;
         _startType = startType;
 
@@ -22,6 +17,6 @@ public class WindowStarterButton : Button
 
     private void WindowStarterButton_Clicked(object? sender, EventArgs e)
     {
-        var startedInstance = Activator.CreateInstance(_startType, _container);
+        Activator.CreateInstance(_startType, _container);
     }
 }

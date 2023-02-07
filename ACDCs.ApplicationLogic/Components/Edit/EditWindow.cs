@@ -12,11 +12,8 @@ public class EditWindow : Window
     private EditButton? _mirrorButton;
     private EditButton? _rotateButton;
     private EditButton? _selectAreaButton;
-
     private double ButtonHeight { get; set; }
-
     private StackLayout ButtonLayout => _buttonLayout;
-
     private double ButtonWidth { get; set; }
 
     public EditWindow(WindowContainer? layout) : base(layout, "Tools", "", false, GetView)

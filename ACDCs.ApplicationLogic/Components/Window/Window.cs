@@ -1,5 +1,6 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.Window;
 
+using Menu;
 using Microsoft.Maui.Layouts;
 using Sharp.UI;
 
@@ -32,6 +33,7 @@ public class Window : Grid
 
     public int LastWidth { get; set; }
 
+    public WindowState? LastWindowState { get; private set; } = WindowState.Standard;
     public double LastX { get; set; }
 
     public double LastY { get; set; }
@@ -59,7 +61,7 @@ public class Window : Grid
 
     public WindowTitle Title => _windowTitle;
 
-    public WindowState WindowState { get; set; }
+    public WindowState WindowState { get; set; } = WindowState.Standard;
 
     public string WindowTitle
     {
@@ -80,7 +82,7 @@ public class Window : Grid
     {
         if (OnClose.Invoke())
         {
-            _container.CloseWindow(this);
+            _container?.CloseWindow(this);
         }
     }
 
@@ -95,20 +97,20 @@ public class Window : Grid
     public void Maximize()
     {
         WindowState = WindowState.Maximized;
-        _container.MaximizeWindow(this);
+        LastWindowState = WindowState;
+        _container?.MaximizeWindow(this);
         _windowButtons.ShowRestore();
     }
 
     public void Minimize()
     {
         WindowState = WindowState.Minimized;
-        _container.MinimizeWindow(this);
+        _container?.MinimizeWindow(this);
     }
 
     public void Restore()
     {
-        WindowState = WindowState.Standard;
-        _container.RestoreWindow(this);
+        _container?.RestoreWindow(this);
         _windowButtons.ShowMaximize();
     }
 
@@ -133,7 +135,7 @@ public class Window : Grid
             LoadMenu();
         }
 
-        _container.AddWindow(this);
+        _container?.AddWindow(this);
 
         SetSize(500, 400);
         _childView = _childViewFunction?.Invoke(this);
@@ -218,7 +220,7 @@ public class Window : Grid
 
     private void SetSize(int width, int height)
     {
-        _container.SetWindowSize(this, width, height);
+        _container?.SetWindowSize(this, width, height);
     }
 
     private void Window_Loaded(object? sender, EventArgs e)

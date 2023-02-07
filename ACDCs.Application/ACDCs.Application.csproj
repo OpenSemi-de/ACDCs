@@ -56,6 +56,7 @@
 	  <None Remove="Resources\Fonts\OpenSans-Semibold.ttf" />
 	  <None Remove="Resources\Images\dotnet_bot.svg" />
 	  <None Remove="Resources\Raw\AboutAssets.txt" />
+	  <None Remove="Resources\Raw\starters.json" />
 	  <None Remove="Resources\Splash\acdcs.svg" />
 	  <None Remove="Resources\Splash\splash.svg" />
 	</ItemGroup>

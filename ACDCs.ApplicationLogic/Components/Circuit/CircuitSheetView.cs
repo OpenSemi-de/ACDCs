@@ -1,9 +1,11 @@
 namespace ACDCs.ApplicationLogic.Components.Circuit;
 
+using Edit;
 using Microsoft.Maui.Layouts;
+using Properties;
 using Sharp.UI;
 using Window;
-using ItemsView = Views.Items.ItemsView;
+using ItemsView = Items.ItemsView;
 
 public sealed class CircuitSheetView : AbsoluteLayout
 {

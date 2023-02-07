@@ -43,7 +43,7 @@ public class ModelEditorWindow : Window, IGetPropertyUpdates
 
         DataTemplate itemTemplate = new()
         {
-            LoadTemplate = () => new ModelPropertyTemplate(this)
+            LoadTemplate = () => new ModelPropertyTemplate(this as IGetPropertyUpdates)
         };
 
         _modelView.ItemTemplate(itemTemplate);

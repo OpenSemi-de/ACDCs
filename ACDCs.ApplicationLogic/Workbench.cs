@@ -30,7 +30,7 @@ public class Workbench : ContentPage
             .ColumnDefinitions(columns)
             .RowDefinitions(rows);
 
-        _windowContainer = new();
+        _windowContainer = new WindowContainer();
         _mainGrid.Add(_windowContainer);
 
         _starterFrame = new WindowStarterFrame(_windowContainer);
@@ -41,6 +41,8 @@ public class Workbench : ContentPage
         _windowTabBar = new WindowTabBar(_starterFrame)
             .HorizontalOptions(LayoutOptions.Fill)
             .HeightRequest(42);
+
+        _windowContainer.TabBar = _windowTabBar;
 
         Grid.SetRow(_windowTabBar, 1);
         _mainGrid.Add(_windowTabBar);

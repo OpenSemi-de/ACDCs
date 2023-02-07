@@ -9,6 +9,8 @@ public class WindowContainer : AbsoluteLayout
     private Rect? _lastPosition;
     private Window? _pickWindow;
 
+    public WindowTabBar? TabBar { get; set; }
+
     public WindowContainer()
     {
         _windows = new List<Window>();
@@ -22,6 +24,7 @@ public class WindowContainer : AbsoluteLayout
         _windows.Add(window);
         window.Title.GestureRecognizers.Add(_windowPanRecognizer);
         Add(window);
+        TabBar?.AddWindow(window);
     }
 
     public void CloseWindow(Window window)
@@ -29,11 +32,14 @@ public class WindowContainer : AbsoluteLayout
         _windows.Remove(window);
         window.Title.GestureRecognizers.Remove(_windowPanRecognizer);
         Remove(window);
+        TabBar?.RemoveWindow(window);
     }
 
     public void MaximizeWindow(Window window)
     {
         AbsoluteLayout.SetLayoutBounds(window, new Rect(0, 0, Width, Height));
+        window.WidthRequest = Width;
+        window.HeightRequest = Height;
         window.GetBackgroundImage();
     }
 
@@ -44,8 +50,18 @@ public class WindowContainer : AbsoluteLayout
 
     public void RestoreWindow(Window window)
     {
-        AbsoluteLayout.SetLayoutBounds(window, new Rect(window.LastX, window.LastY, window.LastWidth, window.LastHeight));
-        SetWindowSize(window, window.LastWidth, window.LastHeight, isRestore: true);
+        if (window.LastWindowState == WindowState.Standard)
+        {
+            window.TranslateTo(window.LastX, window.LastY);
+            SetWindowSize(window, window.LastWidth, window.LastHeight, isRestore: true);
+            window.WindowState = WindowState.Standard;
+        }
+        else
+        {
+            SetWindowSize(window, Convert.ToInt32(Width), Convert.ToInt32(Height), true);
+            window.TranslateTo(0, 0);
+            window.WindowState = WindowState.Maximized;
+        }
     }
 
     public void SetWindowPosition(Window window, double x, double y)
@@ -65,6 +81,8 @@ public class WindowContainer : AbsoluteLayout
         currentBounds.Width = width;
         currentBounds.Height = height;
         AbsoluteLayout.SetLayoutBounds(window, currentBounds);
+        window.WidthRequest = width;
+        window.HeightRequest = height;
         window.GetBackgroundImage();
     }
 

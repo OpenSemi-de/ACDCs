@@ -104,44 +104,57 @@ public class WindowTabBar : Grid, IWindowTabBarProperties
         }
     }
 
-    public void RemoveWindow(Window windowView)
+    public async void RemoveWindow(Window window)
     {
-        if (!_windows.ContainsValue(windowView))
-        {
-            return;
-        }
+        await API.Call(() =>
+         {
+             if (!_windows.ContainsValue(window))
+             {
+                 return Task.CompletedTask;
+             }
 
-        WindowTab tab = _windows.First(kv => kv.Value == windowView).Key;
-        _windows.Remove(tab);
-        _mainLayout.Remove(tab);
-        // windowView.TabBar = null;
+             WindowTab tab = _windows.First(kv => kv.Value == window).Key;
+             _windows.Remove(tab);
+             _mainLayout.Remove(tab);
+             return Task.CompletedTask;
+         });
     }
 
     private void Debug()
     {
     }
 
-    private void MarkFocused()
+    private async void MarkFocused()
     {
-        foreach (WindowTab windowTab in _windows.Keys)
+        await API.Call(() =>
         {
-            windowTab.SetInactive();
-            _windows[windowTab].SetInactive();
-        }
+            foreach (WindowTab windowTab in _windows.Keys)
+            {
+                windowTab.SetInactive();
+                _windows[windowTab].SetInactive();
+            }
 
-        if (_focusWindow == null)
-        {
-            return;
-        }
+            if (_focusWindow == null)
+            {
+                return Task.CompletedTask;
+            }
 
-        KeyValuePair<WindowTab, Window>? focusTab = _windows.First(kv => kv.Value == _focusWindow);
-        focusTab?.Key.SetActive();
+            if (!_windows.ContainsValue(_focusWindow))
+            {
+                return Task.CompletedTask;
+            }
 
-        _focusWindow.SetActive();
+            KeyValuePair<WindowTab, Window>? focusTab = _windows.First(kv => kv.Value == _focusWindow);
+            focusTab?.Key.SetActive();
+
+            _focusWindow.SetActive();
+            return Task.CompletedTask;
+        });
     }
 
     private void OnStarterButton_Clicked(object? sender, EventArgs e)
     {
+        StarterFrame.Load();
         StarterFrame.FadeIn();
     }
 

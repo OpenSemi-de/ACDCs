@@ -1,6 +1,6 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.Window;
 
-using Circuit;
+using Newtonsoft.Json;
 using Sharp.UI;
 
 public class WindowStarterFrame : Frame
@@ -9,6 +9,7 @@ public class WindowStarterFrame : Frame
     private readonly Grid _grid;
     private readonly ScrollView _scrollView;
     private readonly WindowContainer? _windowContainer;
+    private bool _loaded;
 
     public WindowStarterFrame(WindowContainer? windowContainer = null)
     {
@@ -43,9 +44,6 @@ public class WindowStarterFrame : Frame
 
         _scrollView.Content = _buttonStack;
 
-        WindowStarterButton newCircuit = new("New circuit window", typeof(CircuitWindow), windowContainer);
-        _buttonStack.Add(newCircuit);
-
         BorderColor = API.Instance.Border;
         BackgroundColor = API.Instance.BackgroundHigh;
         WidthRequest = 200;
@@ -61,6 +59,22 @@ public class WindowStarterFrame : Frame
     {
         IsVisible = true;
         this.FadeTo(1, 500);
+    }
+
+    public async void Load()
+    {
+        if (_loaded) return;
+        string json = await API.LoadMauiAssetAsString("starters.json");
+        Dictionary<string, string> starters = JsonConvert.DeserializeObject<Dictionary<string, string>>(json) ??
+                                            new Dictionary<string, string>();
+
+        foreach (KeyValuePair<string, string> starter in starters)
+        {
+            Type? startType = this.GetType().Assembly.GetTypes().FirstOrDefault(t => t.Name == starter.Value);
+            WindowStarterButton newButton = new(starter.Key, startType, _windowContainer);
+            _buttonStack.Add(newButton);
+        }
+        _loaded = true;
     }
 
     private void API_Reset(object sender, ResetEventArgs args)

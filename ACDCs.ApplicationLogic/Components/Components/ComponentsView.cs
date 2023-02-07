@@ -4,24 +4,52 @@ using System.Reflection;
 using ACDCs.Data.ACDCs.Components.BJT;
 using ACDCs.Data.ACDCs.Interfaces;
 using CommunityToolkit.Maui.Views;
+using Components;
 using IO.Spice;
-using Menu.MenuHandlers;
 using ModelSelection;
 using Sharp.UI;
 
-public partial class ComponentsView : AbsoluteLayout
+public class ComponentsView : Grid
 {
     public List<ComponentViewModel> dataSource = new();
-    private readonly ImportMenuHandlers _handlers;
+    private readonly string _category = string.Empty;
+    private readonly ListView _componentsGrid;
+    private readonly Entry _keywordEntry;
+    private readonly Window.Window _window;
     private List<ComponentViewModel> _baseData = new();
-    private string _category = string.Empty;
 
-    public ComponentsView()
+    public ComponentsView(Window.Window window)
     {
-        InitializeComponent();
+        this.Margin(4);
+        _window = window;
+
+        ColumnDefinitionCollection columnDefinitions = new() { new Microsoft.Maui.Controls.ColumnDefinition() };
+        this.ColumnDefinitions(columnDefinitions);
+
+        RowDefinitionCollection rowDefinitions = new()
+        {
+            new Microsoft.Maui.Controls.RowDefinition(40),
+            new Microsoft.Maui.Controls.RowDefinition(34), new Microsoft.Maui.Controls.RowDefinition()
+        };
+
+        this.RowDefinitions(rowDefinitions);
+
+        _keywordEntry = new Entry()
+            .OnTextChanged(KeywordEntry_OnTextChanged)
+            .HorizontalOptions(LayoutOptions.Fill);
+
+        StackLayout inputlayout = new() { new Label("Search text:"), _keywordEntry };
+        inputlayout.Row(1).Orientation(StackOrientation.Horizontal);
+        Add(inputlayout);
+
+        _componentsGrid = new ListView()
+            .ItemTemplate(new ComponentsGridTemplate())
+            .Row(2);
+
+        Add(_componentsGrid);
+
         Loaded += OnLoaded;
         SizeChanged += OnSizeChanged;
-        //   _handlers = new ImportMenuHandlers { ComponentsView = this };
     }
 
     public async void ImportSpiceModels(string fileName)
@@ -135,11 +163,11 @@ public partial class ComponentsView : AbsoluteLayout
             query = query.Where(d => d.Type.ToLower().Contains(_category.ToLower()));
         }
 
-        string keyword = keywordEntry.Text.ToLower();
+        string keyword = _keywordEntry.Text.ToLower();
 
         if (keyword != "")
         {
-            query = query.Where(d => d.Name != null && (ReflectedSearch(d, keywordEntry.Text) ||
+            query = query.Where(d => d.Name != null && (ReflectedSearch(d, _keywordEntry.Text) ||
                                                         d.Type.ToLower().Contains(keyword) ||
                                                         d.Name.ToLower().Contains(keyword)));
         }
@@ -169,7 +197,7 @@ public partial class ComponentsView : AbsoluteLayout
 
     private void Reload()
     {
-        ComponentsGrid.ItemsSource = null;
-        ComponentsGrid.ItemsSource = dataSource;
+        _componentsGrid.ItemsSource = null;
+        _componentsGrid.ItemsSource = dataSource;
     }
 }

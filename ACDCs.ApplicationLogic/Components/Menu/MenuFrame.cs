@@ -73,12 +73,13 @@ public class MenuFrame : StackLayout
                                 ? StackOrientation.Vertical
                                 : StackOrientation.Horizontal
                             : Orientation,
-                        IsVisible = false
+                        IsVisible = false,
+                        ZIndex = 10,
                     };
 
                     menuButton.MenuFrame.LoadMenu(menuItem.MenuItems, false, menuParameters);
 
-                    ParentWindow.ChildLayout?.Add(menuButton.MenuFrame);
+                    ParentWindow?.ChildLayout.Add(menuButton.MenuFrame);
                 }
                 else if (menuItem.IsChecked != "")
                 {

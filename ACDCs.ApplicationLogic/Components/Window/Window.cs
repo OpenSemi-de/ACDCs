@@ -33,7 +33,7 @@ public class Window : Grid
 
     public int LastWidth { get; set; }
 
-    public WindowState? LastWindowState { get; private set; } = WindowState.Standard;
+    public WindowState? LastWindowState { get; set; } = WindowState.Standard;
     public double LastX { get; set; }
 
     public double LastY { get; set; }
@@ -210,7 +210,6 @@ public class Window : Grid
     {
         _menuView = new MenuView(_menuFile, MenuParameters)
         {
-            PopupTarget = _childLayout,
             HeightRequest = 34,
             ParentWindow = this
         };

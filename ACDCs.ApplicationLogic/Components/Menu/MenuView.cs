@@ -21,8 +21,6 @@ public class MenuView : ContentView
 
     public Window? ParentWindow { get; set; }
 
-    public AbsoluteLayout? PopupTarget { get; set; }
-
     public MenuView(string? menuFile, Dictionary<string, object> menuParameters)
     {
         _menuParameters = menuParameters;

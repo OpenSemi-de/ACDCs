@@ -32,6 +32,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Remove="Components\Components\ComponentsView.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Maui" Version="4.0.0" />
 	  <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.1" />
 	  <PackageReference Include="Microsoft.Maui.Graphics.Skia" Version="7.0.52" />
@@ -76,7 +80,7 @@
 	  <Compile Update="Components\ComponentsDetailPopup.xaml.cs">
 	    <DependentUpon>%(Filename)</DependentUpon>
 	  </Compile>
-	  <Compile Update="Components\ComponentsView.xaml.cs">
+	  <Compile Update="Components\Components\ComponentsView.cs">
 	    <DependentUpon>%(Filename)</DependentUpon>
 	  </Compile>
 	</ItemGroup>
@@ -85,7 +89,7 @@
 	  <MauiXaml Update="Components\ComponentsDetailPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Components\ComponentsView.xaml">
+	  <MauiXaml Update="Components\Components\ComponentsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

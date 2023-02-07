@@ -37,6 +37,8 @@ public class WindowContainer : AbsoluteLayout
 
     public void MaximizeWindow(Window window)
     {
+        window.LastWidth = Convert.ToInt32(window.Width);
+        window.LastHeight = Convert.ToInt32(window.Height);
         AbsoluteLayout.SetLayoutBounds(window, new Rect(0, 0, Width, Height));
         window.WidthRequest = Width;
         window.HeightRequest = Height;
@@ -50,18 +52,17 @@ public class WindowContainer : AbsoluteLayout
 
     public void RestoreWindow(Window window)
     {
-        if (window.LastWindowState == WindowState.Standard)
-        {
-            window.TranslateTo(window.LastX, window.LastY);
-            SetWindowSize(window, window.LastWidth, window.LastHeight, isRestore: true);
-            window.WindowState = WindowState.Standard;
-        }
-        else
+        if (window.LastWindowState == WindowState.Maximized && window.WindowState != WindowState.Maximized)
         {
             SetWindowSize(window, Convert.ToInt32(Width), Convert.ToInt32(Height), true);
             window.TranslateTo(0, 0);
             window.WindowState = WindowState.Maximized;
+            return;
         }
+
+        window.TranslateTo(window.LastX, window.LastY);
+        SetWindowSize(window, window.LastWidth, window.LastHeight, isRestore: true);
+        window.WindowState = WindowState.Standard;
     }
 
     public void SetWindowPosition(Window window, double x, double y)

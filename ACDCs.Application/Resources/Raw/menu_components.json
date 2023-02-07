@@ -4,33 +4,35 @@
         "MenuItems": [
             {
                 "Text": "New",
-                "MenuCommand": "newdb"
+                "MenuCommand": "newdb",
+                "Handler": "ImportMenu"
             },
             {
                 "Text": "Open default DB",
-                "MenuCommand": "opendb"
+                "MenuCommand": "opendb",
+                "Handler": "ImportMenu"
             },
             {
                 "Text": "Save",
-                "MenuCommand": "savedb"
+                "MenuCommand": "savedb",
+                "Handler": "ImportMenu"
             },
             {
                 "Text": "Save to..",
-                "MenuCommand": "savetodb"
+                "MenuCommand": "savetodb",
+                "Handler": "ImportMenu"
             },
             {
-                "Text": "Import",
-                "MenuCommand": "",
-                "MenuItems": [
-                    {
-                        "Text": "Spice models...",
-                        "MenuCommand": "importspicemodels"
-                    }
-                ]
+                "Text": "Import spice models...",
+                "MenuCommand": "importspicemodels",
+                "Handler": "ImportMenu"
+
+
             },
             {
                 "Text": "Save json",
-                "MenuCommand": "savejson"
+                "MenuCommand": "savejson",
+                "Handler": "ImportMenu"
             }
         ]
     },
@@ -40,25 +42,30 @@
             {
                 "Text": "Multiselect",
                 "IsChecked": "False",
-                "MenuCommand": "multiselect"
+                "MenuCommand": "multiselect",
+                "Handler": "EditMenu"
             },
             {
                 "Text": "Deselect all",
-                "MenuCommand": "deselectall"
+                "MenuCommand": "deselectall",
+                "Handler": "EditMenu"
             },
             {
                 "Text": "Select all",
-                "MenuCommand": "selectall"
+                "MenuCommand": "selectall",
+                "Handler": "EditMenu"
             },
             {},
             {
                 "Text": "Duplicate",
-                "MenuCommand": "duplicate"
+                "MenuCommand": "duplicate",
+                "Handler": "EditMenu"
             },
             {},
             {
                 "Text": "Delete",
-                "MenuCommand": "delete"
+                "MenuCommand": "delete",
+                "Handler": "EditMenu"
             }
         ]
     },

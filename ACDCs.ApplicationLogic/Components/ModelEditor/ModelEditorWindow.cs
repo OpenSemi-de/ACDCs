@@ -81,7 +81,6 @@ public class ModelEditorWindow : Window, IGetPropertyUpdates
         Start();
 
         ChildLayout.Add(_modelGrid);
-        HideWindowButtons();
     }
 
     public void GetProperties(object? currentObject)

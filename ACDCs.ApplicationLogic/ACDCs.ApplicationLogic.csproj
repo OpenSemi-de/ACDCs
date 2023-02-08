@@ -32,6 +32,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Remove="Components\Components\ComponentsDetailPopup.xaml" />
 	  <MauiXaml Remove="Components\Components\ComponentsView.xaml" />
 	</ItemGroup>
 
@@ -77,16 +78,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Components\ComponentsDetailPopup.xaml.cs">
-	    <DependentUpon>%(Filename)</DependentUpon>
-	  </Compile>
 	  <Compile Update="Components\Components\ComponentsView.cs">
 	    <DependentUpon>%(Filename)</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Components\ComponentsDetailPopup.xaml">
+	  <MauiXaml Update="Components\Components\ComponentsDetailPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Components\Components\ComponentsView.xaml">

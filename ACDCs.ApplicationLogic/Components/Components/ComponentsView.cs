@@ -1,9 +1,9 @@
 ﻿namespace ACDCs.ApplicationLogic.Components;
 
 using System.Reflection;
+using ACDCs.ApplicationLogic.Components.ModelEditor;
 using ACDCs.Data.ACDCs.Components.BJT;
 using ACDCs.Data.ACDCs.Interfaces;
-using CommunityToolkit.Maui.Views;
 using Components;
 using IO.Spice;
 using ModelSelection;
@@ -17,6 +17,7 @@ public class ComponentsView : Grid
     private readonly Entry _keywordEntry;
     private readonly Window.Window _window;
     private List<ComponentViewModel> _baseData = new();
+    private object? _lastSelectedItem;
 
     public ComponentsView(Window.Window window)
     {
@@ -43,6 +44,7 @@ public class ComponentsView : Grid
         Add(inputlayout);
 
         _componentsGrid = new ListView()
+            .OnItemTapped(ComponentsGrid_ItemTapped)
             .ItemTemplate(new ComponentsGridTemplate())
             .Row(2);
 
@@ -138,21 +140,14 @@ public class ComponentsView : Grid
         return false;
     }
 
-    private void DetailsButton_OnClicked(object? sender, EventArgs e)
+    private void ComponentsGrid_ItemTapped(object? sender, ItemTappedEventArgs e)
     {
-        if (sender is not Button { CommandParameter: int row })
+        if (e.Item == _lastSelectedItem)
         {
-            return;
+            ShowModelEditor(e.Item);
+            _lastSelectedItem = null;
         }
-
-        ComponentViewModel model = dataSource[row];
-        ComponentsDetailPopup popup = new();
-        if (API.MainPage != null)
-        {
-            API.MainPage.ShowPopup(popup);
-        }
-
-        popup.Load(model);
+        _lastSelectedItem = e.Item;
     }
 
     private void KeywordEntry_OnTextChanged(object? sender, TextChangedEventArgs e)
@@ -199,5 +194,14 @@ public class ComponentsView : Grid
     {
         _componentsGrid.ItemsSource = null;
         _componentsGrid.ItemsSource = dataSource;
+    }
+
+    private void ShowModelEditor(object selectedItem)
+    {
+        if (selectedItem is ComponentViewModel viewModel)
+        {
+            ModelEditorWindow modelEditor = new(API.MainContainer);
+            modelEditor.GetProperties(viewModel.Model);
+        }
     }
 }

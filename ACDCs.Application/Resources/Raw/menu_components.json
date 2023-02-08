@@ -18,7 +18,7 @@
                 "Handler": "ImportMenu"
             },
             {
-                "Text": "Save to..",
+                "Text": "Save to default DB",
                 "MenuCommand": "savetodb",
                 "Handler": "ImportMenu"
             },
@@ -26,63 +26,11 @@
                 "Text": "Import spice models...",
                 "MenuCommand": "importspicemodels",
                 "Handler": "ImportMenu"
-
-
             },
             {
                 "Text": "Save json",
                 "MenuCommand": "savejson",
                 "Handler": "ImportMenu"
-            }
-        ]
-    },
-    {
-        "Text": "Edit",
-        "MenuItems": [
-            {
-                "Text": "Multiselect",
-                "IsChecked": "False",
-                "MenuCommand": "multiselect",
-                "Handler": "EditMenu"
-            },
-            {
-                "Text": "Deselect all",
-                "MenuCommand": "deselectall",
-                "Handler": "EditMenu"
-            },
-            {
-                "Text": "Select all",
-                "MenuCommand": "selectall",
-                "Handler": "EditMenu"
-            },
-            {},
-            {
-                "Text": "Duplicate",
-                "MenuCommand": "duplicate",
-                "Handler": "EditMenu"
-            },
-            {},
-            {
-                "Text": "Delete",
-                "MenuCommand": "delete",
-                "Handler": "EditMenu"
-            }
-        ]
-    },
-    {
-        "Text": "Info",
-        "MenuItems": [
-            {
-                "Text": "About",
-                "MenuCommand": "about"
-            },
-            {
-                "Text": "License",
-                "MenuCommand": "license"
-            },
-            {
-                "Text": "Debug",
-                "MenuCommand": "debug"
             }
         ]
     }

@@ -5,6 +5,8 @@ using Sharp.UI;
 
 public class WindowStarterFrame : Frame
 {
+    private readonly Label _badge;
+    private readonly StackLayout _badgeBg;
     private readonly StackLayout _buttonStack;
     private readonly Grid _grid;
     private readonly ScrollView _scrollView;
@@ -16,12 +18,12 @@ public class WindowStarterFrame : Frame
         _windowContainer = windowContainer;
         ColumnDefinitionCollection columns = new()
         {
+            new ColumnDefinition(20),
             new ColumnDefinition()
         };
 
         RowDefinitionCollection rows = new()
         {
-            new RowDefinition(20),
             new RowDefinition()
         };
 
@@ -31,12 +33,23 @@ public class WindowStarterFrame : Frame
             .ColumnDefinitions(columns)
             .RowDefinitions(rows);
 
+        _badgeBg = new StackLayout().BackgroundColor(API.Instance.Foreground)
+
+            .Row(0).Column(0);
+        _grid.Add(_badgeBg);
+
+        _badge = new Label("").Rotation(-90)
+            .HorizontalOptions(LayoutOptions.Start).VerticalOptions(LayoutOptions.Start)
+            .FontSize(11);
+
+        _badgeBg.Add(_badge);
+
         _scrollView = new ScrollView()
             .HorizontalOptions(LayoutOptions.Fill)
-            .VerticalOptions(LayoutOptions.Fill);
+            .VerticalOptions(LayoutOptions.Fill)
+            .Row(0).Column(1);
 
         _grid.Add(_scrollView);
-        Grid.SetRow(_scrollView, 1);
 
         _buttonStack = new StackLayout()
             .HorizontalOptions(LayoutOptions.Fill)

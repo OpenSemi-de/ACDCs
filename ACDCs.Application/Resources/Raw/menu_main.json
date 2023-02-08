@@ -79,25 +79,5 @@
                 "MenuCommand": "delete"
             }
         ]
-    },
-    {
-        "Text": "Info",
-        "MenuItems": [
-            {
-                "Text": "About",
-                "Handler": "InfoMenu",
-                "MenuCommand": "about"
-            },
-            {
-                "Text": "License",
-                "Handler": "InfoMenu",
-                "MenuCommand": "license"
-            },
-            {
-                "Text": "Debug",
-                "Handler": "InfoMenu",
-                "MenuCommand": "debug"
-            }
-        ]
     }
 ]

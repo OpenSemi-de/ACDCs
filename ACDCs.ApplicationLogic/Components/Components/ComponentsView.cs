@@ -1,11 +1,10 @@
-﻿namespace ACDCs.ApplicationLogic.Components;
+﻿namespace ACDCs.ApplicationLogic.Components.Components;
 
 using System.Reflection;
-using ACDCs.ApplicationLogic.Components.ModelEditor;
 using ACDCs.Data.ACDCs.Components.BJT;
 using ACDCs.Data.ACDCs.Interfaces;
-using Components;
 using IO.Spice;
+using ModelEditor;
 using ModelSelection;
 using Sharp.UI;
 
@@ -51,7 +50,6 @@ public class ComponentsView : Grid
         Add(_componentsGrid);
 
         Loaded += OnLoaded;
-        SizeChanged += OnSizeChanged;
     }
 
     public async void ImportSpiceModels(string fileName)
@@ -180,14 +178,8 @@ public class ComponentsView : Grid
     {
     }
 
-    private void OnSizeChanged(object? sender, EventArgs e)
+    private void OnModelEdited(IElectronicComponent obj)
     {
-        InvalidateMeasure();
-        foreach (Microsoft.Maui.IView? child in Children)
-        {
-            child.InvalidateMeasure();
-            child.InvalidateArrange();
-        }
     }
 
     private void Reload()
@@ -200,7 +192,10 @@ public class ComponentsView : Grid
     {
         if (selectedItem is ComponentViewModel viewModel)
         {
-            ModelEditorWindow modelEditor = new(API.MainContainer);
+            ModelEditorWindow modelEditor = new(API.MainContainer)
+            {
+                OnModelEdited = OnModelEdited
+            };
             modelEditor.GetProperties(viewModel.Model);
         }
     }

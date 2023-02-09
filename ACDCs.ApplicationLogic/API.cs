@@ -2,8 +2,8 @@
 
 using System.Collections.Concurrent;
 using ACDCs.ApplicationLogic.Components.Window;
-using Components;
 using Components.Circuit;
+using Components.Components;
 using Interfaces;
 using IO.DB;
 using Microsoft.AppCenter.Crashes;

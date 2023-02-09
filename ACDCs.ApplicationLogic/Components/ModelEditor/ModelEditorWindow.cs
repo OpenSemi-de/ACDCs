@@ -8,7 +8,43 @@ using Properties;
 using Sharp.UI;
 using Window;
 
-public class ModelEditorWindow : Window, IGetPropertyUpdates
+public class ModelEditorWindow : Window
+{
+    public Action<IElectronicComponent>? OnModelEdited
+    {
+        set
+        {
+            if (ModelEditorView != null)
+            {
+                ModelEditorView.OnModelEdited = value;
+            }
+        }
+    }
+
+    private ModelEditorView? ModelEditorView
+    {
+        get => base.CurrentView as ModelEditorView;
+    }
+
+    public ModelEditorWindow(WindowContainer? layout) : base(layout, "Edit model",
+                childViewFunction: GetView)
+    {
+        Start();
+    }
+
+    public void GetProperties(IElectronicComponent component)
+    {
+        ModelEditorView?.GetProperties(component);
+    }
+
+    private static View GetView(Window window)
+    {
+        var modelEditor = new ModelEditorView(window);
+        return modelEditor;
+    }
+}
+
+public class ModelEditorView : ContentView, IGetPropertyUpdates
 {
     private readonly StackLayout _buttonStack;
     private readonly Button _cancelButton;
@@ -16,13 +52,15 @@ public class ModelEditorWindow : Window, IGetPropertyUpdates
     private readonly Grid _modelGrid;
     private readonly ListView _modelView;
     private readonly Button _okButton;
+    private readonly Window _window;
     private object? _currentObject;
     public Action<IElectronicComponent>? OnModelEdited { get; set; }
     public Action? OnUpdate { get; set; }
     private List<string> PropertyExcludeList { get; } = new();
 
-    public ModelEditorWindow(WindowContainer? layout) : base(layout, "Edit model")
+    public ModelEditorView(Window window)
     {
+        _window = window;
         _modelGrid = new Grid()
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill)
@@ -78,9 +116,9 @@ public class ModelEditorWindow : Window, IGetPropertyUpdates
         Grid.SetRow(_buttonStack, 1);
 
         _modelGrid.Add(_buttonStack);
-        Start();
-
-        ChildLayout.Add(_modelGrid);
+        // Start();
+        Content = _modelGrid;
+        //ChildLayout.Add(_modelGrid);
     }
 
     public void GetProperties(object? currentObject)
@@ -154,12 +192,12 @@ public class ModelEditorWindow : Window, IGetPropertyUpdates
 
     private void CancelButton_Clicked(object? sender, EventArgs e)
     {
-        Close();
+        _window.Close();
     }
 
     private void OKButton_Click(object? sender, EventArgs e)
     {
         OnModelEdited?.Invoke((IElectronicComponent)_currentObject);
-        Close();
+        _window.Close();
     }
 }

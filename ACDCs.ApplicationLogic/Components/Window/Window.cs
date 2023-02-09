@@ -4,7 +4,7 @@ using Menu;
 using Microsoft.Maui.Layouts;
 using Sharp.UI;
 
-public class Window : Grid
+public class Window : ContentView
 {
     private readonly Func<Window, View> _childViewFunction;
     private readonly WindowContainer? _container;
@@ -14,7 +14,9 @@ public class Window : Grid
     private Image _backgroundImage;
     private AbsoluteLayout _childLayout;
     private View? _childView;
+    private Grid _mainGrid;
     private MenuView _menuView;
+    private WindowResizer _resizeLabel;
     private WindowButtons _windowButtons;
     private WindowTitle _windowTitle;
 
@@ -30,12 +32,9 @@ public class Window : Grid
     }
 
     public int LastHeight { get; set; }
-
     public int LastWidth { get; set; }
-
     public WindowState? LastWindowState { get; set; } = WindowState.Standard;
     public double LastX { get; set; }
-
     public double LastY { get; set; }
 
     public WindowContainer? MainContainer
@@ -57,16 +56,21 @@ public class Window : Grid
     // ReSharper disable once MemberCanBePrivate.Global
     public Func<bool> OnClose { get; set; }
 
+    public WindowResizer Resizer
+    {
+        get => _resizeLabel;
+    }
+
     public Action<Window>? Started { get; set; }
-
     public WindowTitle Title => _windowTitle;
-
     public WindowState WindowState { get; set; } = WindowState.Standard;
 
     public string WindowTitle
     {
         get => _title;
     }
+
+    protected View CurrentView { get; private set; }
 
     public Window(WindowContainer? container, string title, string? menuFile = null, bool isWindowParent = false,
                                     Func<Window, View> childViewFunction = null)
@@ -129,6 +133,7 @@ public class Window : Grid
         AddChildLayout(_isWindowParent);
         AddWindowTitle();
         AddWindowButtons();
+        AddWindowResizer();
 
         if (_menuFile != null)
         {
@@ -144,14 +149,17 @@ public class Window : Grid
             AbsoluteLayout.SetLayoutFlags(_childView, AbsoluteLayoutFlags.SizeProportional);
             AbsoluteLayout.SetLayoutBounds(_childView, new Rect(0, 0, 1, 1));
             _childLayout?.Add(_childView);
+            CurrentView = _childView;
         }
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
         OnClose = DefaultClose;
         Loaded += Window_Loaded;
+        Content = _mainGrid;
     }
 
     protected void HideResizer()
     {
+        _resizeLabel.IsVisible = false;
     }
 
     protected void HideWindowButtons()
@@ -166,22 +174,26 @@ public class Window : Grid
             .Aspect(Aspect.Fill)
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
-        this.SetRowAndColumn(_backgroundImage, 0, 0, 3, 3);
-        Add(_backgroundImage);
+        _mainGrid.SetRowAndColumn(_backgroundImage, 0, 0, 3, 3);
+        _mainGrid.Add(_backgroundImage);
     }
 
     private void AddChildLayout(bool isWindowParent)
     {
-        _childLayout = isWindowParent ? new WindowContainer() : new AbsoluteLayout();
-        this.SetRowAndColumn(_childLayout, 1, 0, 2, 2);
-        Add(_childLayout);
+        _childLayout = new WindowContainer();// : new AbsoluteLayout();
+        _mainGrid.SetRowAndColumn(_childLayout, 1, 0, 2, 2);
+        _mainGrid.Add(_childLayout);
     }
 
     private void AddGridDefinitions()
     {
-        this.ColumnDefinitions(new ColumnDefinitionCollection { new ColumnDefinition(), new ColumnDefinition(102) });
-
-        this.RowDefinitions(new RowDefinitionCollection
+        _mainGrid = new Grid()
+        .ColumnDefinitions(new ColumnDefinitionCollection
+        {
+            new ColumnDefinition(),
+            new ColumnDefinition(102)
+        })
+        .RowDefinitions(new RowDefinitionCollection
         {
             new RowDefinition(38), new RowDefinition(), new RowDefinition(34)
         });
@@ -190,15 +202,28 @@ public class Window : Grid
     private void AddWindowButtons()
     {
         _windowButtons = new WindowButtons(this);
-        this.SetRowAndColumn(_windowButtons, 0, 1);
-        Add(_windowButtons);
+        _mainGrid.SetRowAndColumn(_windowButtons, 0, 1);
+        _mainGrid.Add(_windowButtons);
+    }
+
+    private void AddWindowResizer()
+    {
+        _resizeLabel = new WindowResizer()
+            .Text("//")
+            .Row(2)
+            .Column(1)
+            .FontSize(20)
+            .HorizontalOptions(LayoutOptions.End)
+            .VerticalOptions(LayoutOptions.End);
+        _resizeLabel.ParentWindow = this;
+        _mainGrid.Add(_resizeLabel);
     }
 
     private void AddWindowTitle()
     {
         _windowTitle = new WindowTitle(_title, this);
-        this.SetRowAndColumn(Title, 0, 0, 2);
-        Add(_windowTitle);
+        _mainGrid.SetRowAndColumn(Title, 0, 0, 2);
+        _mainGrid.Add(_windowTitle);
     }
 
     private bool DefaultClose()
@@ -227,4 +252,9 @@ public class Window : Grid
         GetBackgroundImage();
         Started?.Invoke(this);
     }
+}
+
+public class WindowResizer : Label
+{
+    public Window? ParentWindow { get; set; }
 }

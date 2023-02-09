@@ -83,7 +83,7 @@ public class WindowStarterFrame : Frame
 
         foreach (KeyValuePair<string, string> starter in starters)
         {
-            Type? startType = this.GetType().Assembly.GetTypes().FirstOrDefault(t => t.Name == starter.Value);
+            Type? startType = GetType().Assembly.GetTypes().FirstOrDefault(t => t.Name == starter.Value);
             WindowStarterButton newButton = new(starter.Key, startType, _windowContainer);
             _buttonStack.Add(newButton);
         }

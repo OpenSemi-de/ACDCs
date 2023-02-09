@@ -1,7 +1,7 @@
 namespace ACDCs.ApplicationLogic.Interfaces;
 
-using Components;
 using Components.Circuit;
+using Components.Components;
 using Sharp.UI;
 
 public interface IMenuViewProperties

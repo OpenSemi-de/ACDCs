@@ -6,23 +6,37 @@ public class WindowContainer : AbsoluteLayout
 {
     private readonly PanGestureRecognizer _windowPanRecognizer;
     private readonly List<Window> _windows;
-    private Rect? _lastPosition;
+    private double? _lastHeight = null;
+    private double? _lastWidth = null;
+    private double? _lastX = null;
+    private double? _lastY = null;
     private Window? _pickWindow;
-
+    private WindowOperation _windowOperation = WindowOperation.None;
+    private PanGestureRecognizer _windowSizePanRecognizer;
     public WindowTabBar? TabBar { get; set; }
 
     public WindowContainer()
     {
+        this.HorizontalOptions(LayoutOptions.Fill)
+            .VerticalOptions(LayoutOptions.Fill);
+
         _windows = new List<Window>();
         _windowPanRecognizer = new PanGestureRecognizer();
         _windowPanRecognizer.PanUpdated += WindowPanRecognizer_PanUpdated;
         GestureRecognizers.Add(_windowPanRecognizer);
+
+        _windowSizePanRecognizer = new PanGestureRecognizer();
+        _windowSizePanRecognizer.PanUpdated += WindowSizePanRecognizer_PanUpdated;
+        GestureRecognizers.Add(_windowSizePanRecognizer);
     }
 
     public void AddWindow(Window window)
     {
         _windows.Add(window);
-        window.Title.GestureRecognizers.Add(_windowPanRecognizer);
+        if (!window.Title.GestureRecognizers.Contains(_windowPanRecognizer))
+            window.Title.GestureRecognizers.Add(_windowPanRecognizer);
+        if (!window.Resizer.GestureRecognizers.Contains(_windowSizePanRecognizer))
+            window.Resizer.GestureRecognizers.Add(_windowSizePanRecognizer);
         Add(window);
         TabBar?.AddWindow(window);
     }
@@ -87,6 +101,15 @@ public class WindowContainer : AbsoluteLayout
         window.GetBackgroundImage();
     }
 
+    private void GetPosition()
+    {
+        var lastPosition = AbsoluteLayout.GetLayoutBounds(_pickWindow);
+        _lastX = lastPosition.X;
+        _lastY = lastPosition.Y;
+        _lastWidth = lastPosition.Width;
+        _lastHeight = lastPosition.Height;
+    }
+
     private void SetWindowPosition(GestureStatus statusType, double totalX, double totalY)
     {
         if (_pickWindow?.WindowState == WindowState.Maximized)
@@ -98,20 +121,56 @@ public class WindowContainer : AbsoluteLayout
             _pickWindow?.GetBackgroundImage();
         }
 
-        if (_lastPosition != null && _pickWindow != null)
+        if (_pickWindow == null || _lastX == null || _lastY == null)
         {
-            Rect newPosition = new(_lastPosition.Value.Location, _lastPosition.Value.Size);
-            newPosition.X += totalX;
-            newPosition.Y += totalY;
-            _pickWindow.LastX = newPosition.X;
-            _pickWindow.LastY = newPosition.Y;
-            SetWindowPosition(_pickWindow, newPosition);
+            return;
         }
+
+        Rect newPosition = new(_lastX.Value, _lastY.Value, AutoSize, AutoSize);
+        newPosition.X += totalX;
+        newPosition.Y += totalY;
+        _pickWindow.LastX = newPosition.X;
+        _pickWindow.LastY = newPosition.Y;
+        SetWindowPosition(_pickWindow, newPosition);
     }
 
     private void SetWindowPosition(Window window, Rect newPosition)
     {
         AbsoluteLayout.SetLayoutBounds(window, newPosition);
+    }
+
+    private void SetWindowSize(GestureStatus statusType, double totalX, double totalY)
+    {
+        if (_pickWindow == null)
+        {
+            return;
+        }
+
+        if (_lastX == null)
+        {
+            GetPosition();
+        }
+
+        switch (statusType)
+        {
+            case GestureStatus.Completed:
+            case GestureStatus.Canceled:
+            case GestureStatus.Running:
+                {
+                    if (_lastWidth != null)
+                    {
+                        int widthRequest = Convert.ToInt32(_lastWidth + totalX);
+                        int heightRequest = Convert.ToInt32(_lastHeight + totalY);
+                        SetWindowSize(_pickWindow, widthRequest, heightRequest);
+                    }
+
+                    break;
+                }
+            case GestureStatus.Started:
+
+                GetPosition();
+                break;
+        }
     }
 
     private void SetWindowState(Window? window, GestureStatus statusType, double totalX, double totalY)
@@ -123,13 +182,13 @@ public class WindowContainer : AbsoluteLayout
         {
             case GestureStatus.Started:
                 _pickWindow = window;
-                _lastPosition = AbsoluteLayout.GetLayoutBounds(_pickWindow);
+                GetPosition();
                 return;
 
             case GestureStatus.Completed:
                 _pickWindow?.GetBackgroundImage();
                 _pickWindow = null;
-                _lastPosition = null;
+                _windowOperation = WindowOperation.None;
                 break;
 
             case GestureStatus.Running:
@@ -148,12 +207,45 @@ public class WindowContainer : AbsoluteLayout
         switch (sender)
         {
             case WindowTitle windowTitle:
+                _windowOperation = WindowOperation.Move;
                 SetWindowState(windowTitle.ParentWindow, e.StatusType, e.TotalX, e.TotalY);
                 break;
 
             case WindowContainer windowContainer:
-                SetWindowPosition(e.StatusType, e.TotalX, e.TotalY);
+                if (_pickWindow == null)
+                    return;
+
+                switch (_windowOperation)
+                {
+                    case WindowOperation.Move:
+                        SetWindowPosition(e.StatusType, e.TotalX, e.TotalY);
+                        break;
+
+                    case WindowOperation.Size:
+                        SetWindowSize(e.StatusType, e.TotalX, e.TotalY);
+                        break;
+                }
                 break;
         }
     }
+
+    private void WindowSizePanRecognizer_PanUpdated(object? sender, PanUpdatedEventArgs e)
+    {
+        if (sender is WindowResizer { ParentWindow: { } } resizer)
+        {
+            _pickWindow = resizer.ParentWindow;
+            if (e.StatusType == GestureStatus.Started)
+            {
+                GetPosition();
+                _windowOperation = WindowOperation.Size;
+            }
+        }
+    }
+}
+
+internal enum WindowOperation
+{
+    None,
+    Size,
+    Move
 }

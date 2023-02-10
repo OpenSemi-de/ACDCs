@@ -18,9 +18,9 @@ public class TraceItem : WorksheetItem
         DrawableComponent = new TraceDrawable(this);
     }
 
-    public void AddPart(Coordinate from, Coordinate to)
+    public void AddPart(Coordinate from, Coordinate to, PinDrawable fromPin, PinDrawable toPin)
     {
-        ((TraceDrawable)DrawableComponent).AddPart(from, to);
+        ((TraceDrawable)DrawableComponent).AddPart(from, to, fromPin, toPin);
     }
 
     public void ResetColor()
@@ -41,6 +41,31 @@ public class TraceItem : WorksheetItem
         {
             _colors.Add(line, line.StrokeColor);
             line.StrokeColor = color;
+        }
+    }
+
+    public void SetColorFromToPin(Color color, LineInstruction selectedLine)
+    {
+        _colors.Clear();
+
+        if (DrawableComponent is not TraceDrawable traceDrawable)
+        {
+            return;
+        }
+
+        PinDrawable? fromPin = traceDrawable.GetPinFrom(selectedLine);
+        PinDrawable? toPin = traceDrawable.GetPinTo(selectedLine);
+        if (fromPin == null || toPin == null)
+        {
+            return;
+        }
+
+        foreach (LineInstruction line in traceDrawable.DrawInstructions.OfType<LineInstruction>())
+        {
+            _colors.Add(line, line.StrokeColor);
+
+            if (traceDrawable.IsLineBetween(line, fromPin, toPin))
+                line.StrokeColor = color;
         }
     }
 }

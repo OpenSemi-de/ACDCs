@@ -247,9 +247,10 @@ public class CircuitView : ContentView, ICircuitViewProperties
         return selectedItem;
     }
 
-    private TraceItem? GetWorksheetTraceAt(PointF position)
+    private TraceItem? GetWorksheetTraceAt(PointF position, out LineInstruction? line)
     {
         TraceItem? traceItem = null;
+        LineInstruction? foundLine = null;
 
         API.Call(() =>
         {
@@ -270,7 +271,7 @@ public class CircuitView : ContentView, ICircuitViewProperties
                             Math.Min(instruction.Position.Y, instruction.End.Y) <= y &&
                             Math.Max(instruction.Position.Y, instruction.End.Y) >= y)
                         {
-                            //   instruction.StrokeColor = new CircuitRenderer.Definitions.Color(API.Instance.Border);
+                            foundLine = instruction;
                             return true;
                         }
 
@@ -279,7 +280,7 @@ public class CircuitView : ContentView, ICircuitViewProperties
                             Math.Min(instruction.Position.X, instruction.End.X) <= x &&
                             Math.Max(instruction.Position.X, instruction.End.X) >= x)
                         {
-                            //   instruction.StrokeColor = new CircuitRenderer.Definitions.Color(API.Instance.Border);
+                            foundLine = instruction;
                             return true;
                         }
                     }
@@ -292,7 +293,7 @@ public class CircuitView : ContentView, ICircuitViewProperties
                 traceItem = (TraceItem?)worksheetItems.First();
             return Task.CompletedTask;
         }).Wait();
-
+        line = foundLine;
         return traceItem;
     }
 
@@ -539,16 +540,27 @@ public class CircuitView : ContentView, ICircuitViewProperties
                         return;
                     }
 
-                    TraceItem? trace = GetWorksheetTraceAt(touch);
+                    TraceItem? trace = GetWorksheetTraceAt(touch, out LineInstruction? line);
                     if (trace != null)
                     {
                         SelectedItem = trace;
                         CurrentWorksheet.ToggleSelectItem(trace);
+                        if (SelectedTrace != null)
+                        {
+                            SelectedTrace.SetColor(new ACDCs.CircuitRenderer.Definitions.Color(API.Instance.Border));
+                        }
+                        else
+                        {
+                            trace.SetColorFromToPin(new CircuitRenderer.Definitions.Color(API.Instance.Border),
+                                line);
+                        }
+
                         SelectedTrace = trace;
-                        SelectedTrace.SetColor(new ACDCs.CircuitRenderer.Definitions.Color(API.Instance.Border));
+
                         await Paint();
                         return;
                     }
+                    SelectedTrace = null;
                 }
             }
 

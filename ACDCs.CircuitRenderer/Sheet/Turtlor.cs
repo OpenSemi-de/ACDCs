@@ -200,6 +200,8 @@ public class Turtlor
                 if (lastPin != null)
                 {
                     trace = GetTrace(trace, lastPin, pin, pathfinderOptions, tiles);
+                    trace.Pins.Add(pin);
+                    trace.Pins.Add(lastPin);
                 }
 
                 lastPin = pin;
@@ -237,11 +239,11 @@ public class Turtlor
         foreach (Point point in path)
         {
             Coordinate pathCoordinate = new(point.X, point.Y);
-            trace.AddPart(loopPos, pathCoordinate);
+            trace.AddPart(loopPos, pathCoordinate, fromPin, toPin);
             loopPos = pathCoordinate;
         }
 
-        trace.AddPart(loopPos, pinAbsoluteCoordinateTo);
+        trace.AddPart(loopPos, pinAbsoluteCoordinateTo, fromPin, toPin);
 
         return trace;
     }

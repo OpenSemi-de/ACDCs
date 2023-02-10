@@ -136,6 +136,23 @@ public sealed class Worksheet
         StartRouter();
     }
 
+    public void DeleteTrace(TraceItem trace)
+    {
+        DeleteItem(trace);
+        if (Traces.Contains(trace))
+        {
+            Traces.Remove(trace);
+        }
+
+        IWorksheetItem? traceNet = Nets.FirstOrDefault(iitem => (NetItem)iitem == trace.Net);
+        if (traceNet != null)
+        {
+            Nets.Remove(traceNet);
+        }
+
+        StartRouter();
+    }
+
     public void DeselectItem(WorksheetItem item)
     {
         if (!SelectedItems.Contains(item))

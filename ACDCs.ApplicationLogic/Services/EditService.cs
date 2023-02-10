@@ -1,5 +1,6 @@
 ﻿namespace ACDCs.ApplicationLogic.Services;
 
+using CircuitRenderer.Interfaces;
 using CircuitRenderer.Items;
 using CircuitRenderer.Sheet;
 using Components.Circuit;
@@ -10,8 +11,20 @@ public class EditService : IEditService
     public async Task Delete(CircuitView circuitView)
     {
         Worksheet sheet = circuitView.CurrentWorksheet;
-        sheet.SelectedItems.ToList().ForEach(
-            item => { sheet.DeleteItem((WorksheetItem)item); });
+        foreach (IWorksheetItem iitem in sheet.SelectedItems.ToList())
+        {
+            switch (iitem)
+            {
+                case TraceItem trace:
+                    sheet.DeleteTrace(trace);
+                    break;
+
+                case WorksheetItem item:
+                    sheet.DeleteItem(item);
+                    break;
+            }
+        }
+
         sheet.StartRouter();
         await circuitView.Paint();
     }

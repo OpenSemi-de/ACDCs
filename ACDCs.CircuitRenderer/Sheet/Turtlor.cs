@@ -182,10 +182,16 @@ public class Turtlor
             UseDiagonals = false,
         };
 
-        foreach (IWorksheetItem net in _nets)
+        foreach (IWorksheetItem iitem in _nets)
         {
-            TraceItem trace = new();
-            var pins = SortDistance(net.Pins);
+            if (iitem is not NetItem net)
+            {
+                continue;
+            }
+
+            TraceItem trace = new() { Net = net };
+
+            List<PinDrawable> pins = SortDistance(net.Pins);
 
             PinDrawable? lastPin = null;
 

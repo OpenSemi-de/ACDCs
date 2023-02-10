@@ -542,6 +542,8 @@ public class CircuitView : ContentView, ICircuitViewProperties
                     TraceItem? trace = GetWorksheetTraceAt(touch);
                     if (trace != null)
                     {
+                        SelectedItem = trace;
+                        CurrentWorksheet.ToggleSelectItem(trace);
                         SelectedTrace = trace;
                         SelectedTrace.SetColor(new ACDCs.CircuitRenderer.Definitions.Color(API.Instance.Border));
                         await Paint();

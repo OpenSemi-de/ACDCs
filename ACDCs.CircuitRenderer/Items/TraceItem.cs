@@ -10,8 +10,8 @@ public class TraceItem : WorksheetItem
 {
     private Dictionary<LineInstruction, Color> _colors = new();
     public override string DefaultValue => "";
-
     public override bool IsInsertable => false;
+    public NetItem Net { get; set; }
 
     public TraceItem()
     {

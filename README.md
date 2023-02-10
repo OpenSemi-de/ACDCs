@@ -4,8 +4,8 @@
 
 Advanced Circuit Design Component Suite
 
-Circuit Designer for Windows, Android (, IOS, MacCatalyst)
-Server components for display, collaboratiob and simulation
+ - Circuit Designer for Windows, Android (, IOS, MacCatalyst)
+ - Server components for circuit display, collaboration and simulation
 
 Currently in alpha-state, no warranty or agreements come with this software.
 

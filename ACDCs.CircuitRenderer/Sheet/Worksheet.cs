@@ -13,6 +13,9 @@ using Color = ACDCs.CircuitRenderer.Definitions.Color;
 
 namespace ACDCs.CircuitRenderer.Sheet;
 
+using System.Collections.Generic;
+using Instructions;
+
 public sealed class Worksheet
 {
     public Color? BackgroundColor { get; set; }
@@ -136,15 +139,46 @@ public sealed class Worksheet
         StartRouter();
     }
 
-    public void DeleteTrace(TraceItem trace)
+    public void DeleteTrace(TraceItem trace, LineInstruction? selectedTraceLine = null)
     {
+        IWorksheetItem? traceNet = Nets.FirstOrDefault(iitem => (NetItem)iitem == trace.Net);
+
+        if (selectedTraceLine != null)
+        {
+            if (trace.DrawableComponent is TraceDrawable traceDrawable)
+            {
+                PinDrawable? pinFrom = traceDrawable.GetPinFrom(selectedTraceLine);
+                PinDrawable? pinTo = traceDrawable.GetPinTo(selectedTraceLine);
+                int usedSubnetsFrom = traceDrawable.CountSubnets(pinFrom);
+                int usedSubnetsTo = traceDrawable.CountSubnets(pinTo);
+
+                // if (traceNet != null && pinTo != null && traceNet.Pins.Contains(pinTo))
+                // {
+                //     traceNet.Pins.Remove(pinTo);
+                // }
+
+                if (traceNet != null && pinFrom != null)
+                {
+                    if (usedSubnetsFrom == 1 && traceNet.Pins.Contains(pinFrom))
+                    {
+                        traceNet.Pins.Remove(pinFrom);
+                    }
+                    else if (usedSubnetsTo == 1 && traceNet.Pins.Contains(pinTo))
+                    {
+                        traceNet.Pins.Remove(pinTo);
+                    }
+                }
+            }
+            StartRouter();
+            return;
+        }
+
         DeleteItem(trace);
         if (Traces.Contains(trace))
         {
             Traces.Remove(trace);
         }
 
-        IWorksheetItem? traceNet = Nets.FirstOrDefault(iitem => (NetItem)iitem == trace.Net);
         if (traceNet != null)
         {
             Nets.Remove(traceNet);
@@ -178,18 +212,18 @@ public sealed class Worksheet
     {
         DrawableComponentList list = new(this);
 
-        foreach (IDrawableComponent item in
+        IEnumerable<IDrawableComponent> drawableComponents = Items.AsParallel()
+            .Select(item =>
+                item.DrawableComponent
+            )
+            .Union(
+                Traces.AsParallel()
+                    .Select(item =>
+                        item.DrawableComponent
+                    )
+            );
 
-                 Items
-                     .Select(item =>
-                         item.DrawableComponent
-                            )
-                     .Union(
-                         Traces
-                             .Select(item =>
-                                 item.DrawableComponent
-                                    )
-                           ))
+        foreach (IDrawableComponent item in drawableComponents)
         {
             list.Add(item);
         }
@@ -305,7 +339,7 @@ public sealed class Worksheet
     {
         DrawableComponentList list = new(this);
 
-        foreach (IDrawableComponent item in SelectedItems.Select(item => item.DrawableComponent))
+        foreach (IDrawableComponent item in SelectedItems.AsParallel().Select(item => item.DrawableComponent).ToList())
         {
             list.Add(item);
         }

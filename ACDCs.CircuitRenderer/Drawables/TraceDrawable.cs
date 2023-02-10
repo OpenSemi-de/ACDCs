@@ -27,6 +27,11 @@ public class TraceDrawable : DrawableComponent
         tracePart.Instructions.Add(lineInstruction);
     }
 
+    public int CountSubnets(PinDrawable? pin)
+    {
+        return _traceParts.Count(part => part.FromPin == pin || part.ToPin == pin);
+    }
+
     public PinDrawable? GetPinFrom(LineInstruction selectedLine)
     {
         TraceDrawablePart? tracePart = _traceParts.FirstOrDefault(part => part.Instructions.Contains(selectedLine));

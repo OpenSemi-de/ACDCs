@@ -12,9 +12,9 @@ public class WindowTabBar : Grid, IWindowTabBarProperties
     private readonly Dictionary<WindowTab, Window> _windows;
     private Window? _focusWindow;
 
-    public WindowStarterFrame StarterFrame { get; set; }
+    public WindowStarterFrame? StarterFrame { get; set; }
 
-    public WindowTabBar(WindowStarterFrame starterFrame)
+    public WindowTabBar(WindowStarterFrame? starterFrame)
     {
         StarterFrame = starterFrame;
         API.TabBar = this;
@@ -208,5 +208,5 @@ public class WindowTabBar : Grid, IWindowTabBarProperties
 
 public interface IWindowTabBarProperties
 {
-    WindowStarterFrame StarterFrame { get; set; }
+    WindowStarterFrame? StarterFrame { get; set; }
 }

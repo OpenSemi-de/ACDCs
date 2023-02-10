@@ -104,17 +104,25 @@ public class ImageService : IImageService
         await context.Image.SaveAsync(ms);
         ms.Position = 0;
 
-        ImageSource? source = ImageSource.FromStream(() => ms);
+        ImageSource? source = ImageSource.FromStream(() =>
+        {
+            return GetStream(ms);
+        });
+        return source;
+    }
+
+    private static Stream GetStream(MemoryStream memoryStream)
+    {
 #pragma warning disable CS4014
         Task.Run(() =>
 #pragma warning restore CS4014
         {
-            Task.Delay(2000).Wait();
-            ms.Dispose();
-            ms = null;
+            Task.Delay(10000).Wait();
+            memoryStream.Dispose();
             GC.Collect();
         });
-        return source;
+
+        return memoryStream;
     }
 
     public ImageSource? WindowImageSource(float width, float height)

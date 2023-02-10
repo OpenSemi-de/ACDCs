@@ -16,7 +16,7 @@ public class EditService : IEditService
             switch (iitem)
             {
                 case TraceItem trace:
-                    sheet.DeleteTrace(trace);
+                    sheet.DeleteTrace(trace, circuitView.SelectedTraceLine);
                     break;
 
                 case WorksheetItem item:

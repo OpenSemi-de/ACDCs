@@ -41,6 +41,7 @@ public class CircuitView : ContentView, ICircuitViewProperties
     public AbsoluteLayout PopupTarget { get; set; }
     public WorksheetItem? SelectedItem { get; set; }
     public TraceItem? SelectedTrace { get; set; }
+    public LineInstruction? SelectedTraceLine { get; set; }
     public bool ShowCollisionMap { get; set; }
 
     public CircuitView()
@@ -548,11 +549,13 @@ public class CircuitView : ContentView, ICircuitViewProperties
                         if (SelectedTrace != null)
                         {
                             SelectedTrace.SetColor(new ACDCs.CircuitRenderer.Definitions.Color(API.Instance.Border));
+                            SelectedTraceLine = null;
                         }
                         else
                         {
                             trace.SetColorFromToPin(new CircuitRenderer.Definitions.Color(API.Instance.Border),
                                 line);
+                            SelectedTraceLine = line;
                         }
 
                         SelectedTrace = trace;
@@ -560,7 +563,9 @@ public class CircuitView : ContentView, ICircuitViewProperties
                         await Paint();
                         return;
                     }
+
                     SelectedTrace = null;
+                    SelectedTraceLine = null;
                 }
             }
 

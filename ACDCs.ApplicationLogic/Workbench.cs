@@ -1,28 +1,29 @@
 ﻿namespace ACDCs.ApplicationLogic;
 
-using ACDCs.ApplicationLogic.Components.Window;
+using Components.Window;
 using Microsoft.Maui.Layouts;
 using Sharp.UI;
+using ColumnDefinition = ColumnDefinition;
+using RowDefinition = RowDefinition;
 
 public class Workbench : ContentPage
 {
     private readonly API _api;
-    private readonly Grid _mainGrid;
-    private readonly WindowStarterFrame _starterFrame;
-    private readonly WindowContainer? _windowContainer;
-    private readonly WindowTabBar _windowTabBar;
-
-    public WindowContainer? WindowContainer => _windowContainer;
+    private Grid? _mainGrid;
+    private WindowStarterFrame? _starterFrame;
+    private WindowContainer? _windowContainer;
+    private WindowTabBar? _windowTabBar;
 
     public Workbench(API api)
     {
         _api = api;
-        ColumnDefinitionCollection columns = new(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
-        RowDefinitionCollection rows = new(new[]
-        {
-            new Microsoft.Maui.Controls.RowDefinition(GridLength.Star),
-            new Microsoft.Maui.Controls.RowDefinition(new GridLength(43))
-        });
+        this.OnLoaded(Load);
+    }
+
+    private void Load(Workbench sender)
+    {
+        ColumnDefinitionCollection columns = new(new ColumnDefinition(GridLength.Star));
+        RowDefinitionCollection rows = new(new RowDefinition(GridLength.Star), new RowDefinition(new GridLength(43)));
 
         _mainGrid = new Grid()
             .HorizontalOptions(LayoutOptions.Fill)
@@ -49,7 +50,6 @@ public class Workbench : ContentPage
 
         Content = _mainGrid;
 
-        Loaded += OnLoaded;
         API.MainPage = this;
         API.MainContainer = _windowContainer;
         PointerGestureRecognizer pointerMovement = new();
@@ -57,16 +57,13 @@ public class Workbench : ContentPage
         _windowContainer.GestureRecognizers.Add(pointerMovement.MauiObject);
 
         SizeChanged += OnSizeChanged;
-    }
 
-    private void OnLoaded(object? sender, EventArgs e)
-    {
         BackgroundImageSource = _api.BackgroundImageSource(this);
     }
 
     private void OnSizeChanged(object? sender, EventArgs e)
     {
-        _windowTabBar.OnSizeChanged();
+        _windowTabBar?.OnSizeChanged();
     }
 
     private void PointerMovementOnPointerMoved(object? sender, PointerEventArgs e)

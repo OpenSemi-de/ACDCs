@@ -68,12 +68,12 @@ public sealed class CircuitSheetView : AbsoluteLayout
     private void OnLoaded(object? sender, EventArgs e)
     {
         _editWindow = new EditWindow(_container);
-        _propertiesWindow = new PropertiesWindow(_container) { OnUpdate = OnUpdate };
-        _propertiesWindow.PropertyExcludeList.AddRange(
-        new[]{
-            "IsInsertable", "DefaultValue", "DefaultType", "DrawableComponent", "Pins", "TypeName", "RefName", "ItemGuid"
-        });
-        CircuitView.OnSelectedItemChange = _propertiesWindow.GetProperties;
+        //   _propertiesWindow = new PropertiesWindow(_container) { OnUpdate = OnUpdate };
+        //  _propertiesWindow.PropertyExcludeList.AddRange(
+        //  new[]{
+        //       "IsInsertable", "DefaultValue", "DefaultType", "DrawableComponent", "Pins", "TypeName", "RefName", "ItemGuid"
+        //.  });
+        //  CircuitView.OnSelectedItemChange = _propertiesWindow.GetProperties;
     }
 
     private async void OnUpdate()

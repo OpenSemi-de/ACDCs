@@ -81,14 +81,16 @@ public class EditWindow : Window
         WidthRequest = 64;
         _buttonLayout = _buttonLayout
             .HorizontalOptions(LayoutOptions.Fill)
-            .VerticalOptions(LayoutOptions.Fill);
+            .VerticalOptions(LayoutOptions.Fill)
+            .Margin(2)
+            .Padding(0);
         Start();
 
-        _layout?.SetWindowSize(this, 50, 200);
         _layout?.SetWindowPosition(this, 4, 50);
         HideWindowButtons();
         HideResizer();
         AddButtons();
+        _layout?.SetWindowSize(this, 100, 70 * _buttonLayout.Children.Count);
     }
 
     private void OnSelectButtonChange(EditButton editButton)

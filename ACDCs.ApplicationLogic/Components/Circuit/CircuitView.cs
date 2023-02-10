@@ -1,5 +1,6 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.Circuit;
 
+using ACDCs.CircuitRenderer.Instructions;
 using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
 using CircuitRenderer;
@@ -39,6 +40,7 @@ public class CircuitView : ContentView, ICircuitViewProperties
     public Action<WorksheetItem>? OnSelectedItemChange { get; set; }
     public AbsoluteLayout PopupTarget { get; set; }
     public WorksheetItem? SelectedItem { get; set; }
+    public TraceItem? SelectedTrace { get; set; }
     public bool ShowCollisionMap { get; set; }
 
     public CircuitView()
@@ -245,6 +247,55 @@ public class CircuitView : ContentView, ICircuitViewProperties
         return selectedItem;
     }
 
+    private TraceItem? GetWorksheetTraceAt(PointF position)
+    {
+        TraceItem? traceItem = null;
+
+        API.Call(() =>
+        {
+            float x = GetRelPos(position.X);
+            float y = GetRelPos(position.Y);
+
+            IEnumerable<IWorksheetItem> hitItems = CurrentWorksheet.Traces.Where(
+                item =>
+                {
+                    IEnumerable<LineInstruction>? lineInstruxtions = item.DrawableComponent.DrawInstructions.OfType<LineInstruction>();
+
+                    foreach (var instruction in lineInstruxtions)
+                    {
+                        System.Diagnostics.Debug.WriteLine(x + "/" + y + "/" + ":" + instruction.Position + ":" +
+                                                           instruction.End);
+                        if (instruction.Position.X == instruction.End.X &&
+                            instruction.Position.X == x &&
+                            Math.Min(instruction.Position.Y, instruction.End.Y) <= y &&
+                            Math.Max(instruction.Position.Y, instruction.End.Y) >= y)
+                        {
+                            //   instruction.StrokeColor = new CircuitRenderer.Definitions.Color(API.Instance.Border);
+                            return true;
+                        }
+
+                        if (instruction.Position.Y == instruction.End.Y &&
+                            instruction.Position.Y == y &&
+                            Math.Min(instruction.Position.X, instruction.End.X) <= x &&
+                            Math.Max(instruction.Position.X, instruction.End.X) >= x)
+                        {
+                            //   instruction.StrokeColor = new CircuitRenderer.Definitions.Color(API.Instance.Border);
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+            );
+            IWorksheetItem[] worksheetItems = hitItems as IWorksheetItem[] ?? hitItems.ToArray();
+            if (worksheetItems.Any())
+                traceItem = (TraceItem?)worksheetItems.First();
+            return Task.CompletedTask;
+        }).Wait();
+
+        return traceItem;
+    }
+
     private void OnCursorPositionChanged(CursorPositionChangeEventArgs args)
     {
         CursorPositionChanged?.Invoke(this, args);
@@ -421,8 +472,17 @@ public class CircuitView : ContentView, ICircuitViewProperties
                 {
                     touch.X -= offsetX;
                     touch.Y -= offsetY;
+                    SelectedTrace?.ResetColor();
 
                     WorksheetItem? selectedItem = GetWorksheetItemaAt(touch);
+                    if (selectedItem == null && !MultiSelectionMode)
+                    {
+                        if (SelectedItem != null)
+                        {
+                            CurrentWorksheet.ToggleSelectItem(SelectedItem);
+                            SelectedItem = null;
+                        }
+                    }
 
                     if (selectedItem != null)
                     {
@@ -455,10 +515,13 @@ public class CircuitView : ContentView, ICircuitViewProperties
                                 if (CurrentWorksheet.SelectedPin != null)
                                 {
                                     await AddTrace(pin, CurrentWorksheet.SelectedPin);
+                                    CurrentWorksheet.SelectedPin = null;
                                 }
-
-                                selectedPin = pin;
-                                CurrentWorksheet.SelectedPin = selectedPin;
+                                else
+                                {
+                                    selectedPin = pin;
+                                    CurrentWorksheet.SelectedPin = selectedPin;
+                                }
 
                                 break;
                             }
@@ -472,11 +535,22 @@ public class CircuitView : ContentView, ICircuitViewProperties
                         {
                             CurrentWorksheet.ToggleSelectItem(selectedItem);
                         }
-
                         await Paint();
+                        return;
+                    }
+
+                    TraceItem? trace = GetWorksheetTraceAt(touch);
+                    if (trace != null)
+                    {
+                        SelectedTrace = trace;
+                        SelectedTrace.SetColor(new ACDCs.CircuitRenderer.Definitions.Color(API.Instance.Border));
+                        await Paint();
+                        return;
                     }
                 }
             }
+
+            await Paint();
         });
     }
 }

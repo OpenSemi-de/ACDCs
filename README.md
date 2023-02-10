@@ -4,9 +4,12 @@
 
 Advanced Circuit Design Component Suite
 
+Circuit Designer for Windows, Android (, IOS, MacCatalyst)
+Server components for display, collaboratiob and simulation
+
 Currently in alpha-state, no warranty or agreements come with this software.
 
-The products/source are licensed in Trial under GPLv3 for educational purpose only - until further notice
+The products/source are licensed in Trial under Apache License for educational purpose only - until further notice
 
 Any commercial usage is prohibited, plans to do so have to be communicated with me. sb(at)lmnt.one
 

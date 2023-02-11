@@ -64,7 +64,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-		<PackageReference Include="Sharp.UI" Version="0.2.6-alpha.2" />
+		<PackageReference Include="Sharp.UI" Version="0.3.0-alpha.2" />
 	</ItemGroup>
 
 	<ItemGroup>

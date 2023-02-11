@@ -1,4 +1,4 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Circuit;
+﻿namespace ACDCs.ApplicationLogic.Delegates;
 
 public class CursorPositionChangeEventArgs
 {

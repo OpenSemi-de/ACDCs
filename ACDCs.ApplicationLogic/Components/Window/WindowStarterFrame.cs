@@ -1,5 +1,6 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.Window;
 
+using Delegates;
 using Newtonsoft.Json;
 using Sharp.UI;
 

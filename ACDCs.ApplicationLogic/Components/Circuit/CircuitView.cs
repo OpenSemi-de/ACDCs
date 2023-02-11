@@ -1,5 +1,6 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.Circuit;
 
+using ACDCs.ApplicationLogic.Delegates;
 using ACDCs.CircuitRenderer.Instructions;
 using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;

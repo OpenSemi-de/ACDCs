@@ -205,8 +205,3 @@ public class WindowTabBar : Grid, IWindowTabBarProperties
         MarkFocused();
     }
 }
-
-public interface IWindowTabBarProperties
-{
-    WindowStarterFrame? StarterFrame { get; set; }
-}

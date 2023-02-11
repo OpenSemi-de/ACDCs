@@ -178,8 +178,3 @@ public class PropertiesWindow : Window, IGetPropertyUpdates
         return false;
     }
 }
-
-public interface IGetPropertyUpdates
-{
-    void OnPropertyUpdated(string? propertyName, object value);
-}

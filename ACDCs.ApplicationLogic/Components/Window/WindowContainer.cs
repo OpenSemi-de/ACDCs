@@ -242,10 +242,3 @@ public class WindowContainer : AbsoluteLayout
         }
     }
 }
-
-internal enum WindowOperation
-{
-    None,
-    Size,
-    Move
-}

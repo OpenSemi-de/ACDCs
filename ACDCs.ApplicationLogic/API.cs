@@ -4,18 +4,13 @@ using System.Collections.Concurrent;
 using ACDCs.ApplicationLogic.Components.Window;
 using Components.Circuit;
 using Components.Components;
+using Delegates;
 using Interfaces;
 using IO.DB;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Maui.Graphics.Skia;
 using Services;
 using Sharp.UI;
-
-public delegate void ResetEvent(object sender, ResetEventArgs args);
-
-public class ResetEventArgs
-{
-}
 
 public class API : IWorkbenchService, IImageService, IColorService, IDescriptionService, IEditService, IMenuService, IFileService, IImportService
 {

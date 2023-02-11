@@ -1,5 +1,6 @@
 namespace ACDCs.ApplicationLogic.Components.Menu;
 
+using Delegates;
 using Interfaces;
 using Sharp.UI;
 using Window;

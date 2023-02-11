@@ -1,5 +1,6 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.Properties;
 
+using Interfaces;
 using Sharp.UI;
 
 public class PropertyTemplate : Grid

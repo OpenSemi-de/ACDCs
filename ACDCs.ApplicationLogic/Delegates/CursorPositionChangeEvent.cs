@@ -1,3 +1,3 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Circuit;
+﻿namespace ACDCs.ApplicationLogic.Delegates;
 
 public delegate void CursorPositionChangeEvent(object sender, CursorPositionChangeEventArgs args);

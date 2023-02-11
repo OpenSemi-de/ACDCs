@@ -18,6 +18,7 @@ public class EditMenuHandlers : MenuHandler
         API.Instance.Add("deselectall", DeselectAll);
         API.Instance.Add("multiselect", SwitchMultiselect);
         API.Instance.Add("rotate", Rotate);
+        API.Instance.Add("showproperties", ShowProperties);
     }
 
     private async void Delete(object? o)
@@ -65,6 +66,14 @@ public class EditMenuHandlers : MenuHandler
         if (CircuitView != null)
         {
             await API.Instance.SelectAll(CircuitView);
+        }
+    }
+
+    private async void ShowProperties(object? obj)
+    {
+        if (CircuitView != null)
+        {
+            await API.Instance.ShowProperties(CircuitView);
         }
     }
 

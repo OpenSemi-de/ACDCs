@@ -91,6 +91,14 @@ public class EditService : IEditService
         await circuitView.Paint();
     }
 
+    public async Task ShowProperties(CircuitView circuitView)
+    {
+        if (circuitView.CurrentWorksheet.SelectedItems.Count == 0) return;
+
+        circuitView.ShowProperties(circuitView.CurrentWorksheet.SelectedItems.First());
+        await circuitView.Paint();
+    }
+
     public async Task SwitchMultiselect(object? state, CircuitView circuitView)
     {
         circuitView.UseMultiselect((bool)(state ?? false));

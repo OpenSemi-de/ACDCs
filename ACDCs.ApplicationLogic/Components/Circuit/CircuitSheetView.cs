@@ -1,5 +1,6 @@
 namespace ACDCs.ApplicationLogic.Components.Circuit;
 
+using CircuitRenderer.Interfaces;
 using Edit;
 using Microsoft.Maui.Layouts;
 using Properties;
@@ -10,7 +11,6 @@ using ItemsView = Items.ItemsView;
 public sealed class CircuitSheetView : AbsoluteLayout
 {
     private readonly WindowContainer _container;
-
     private readonly Label? _cursorDebugLabel;
     private readonly ItemsView _itemsView;
     private readonly bool _showCursorDebugOutput = Convert.ToBoolean(API.GetPreference("ShowDebugCursorOutput"));
@@ -45,7 +45,6 @@ public sealed class CircuitSheetView : AbsoluteLayout
         if (_showCursorDebugOutput)
         {
             _cursorDebugLabel = new Label { ZIndex = 2 };
-
             AbsoluteLayout.SetLayoutFlags(_cursorDebugLabel, AbsoluteLayoutFlags.None);
             AbsoluteLayout.SetLayoutBounds(_cursorDebugLabel, new Rect(0, 300, 100, 300));
             Add(_cursorDebugLabel);
@@ -68,16 +67,30 @@ public sealed class CircuitSheetView : AbsoluteLayout
     private void OnLoaded(object? sender, EventArgs e)
     {
         _editWindow = new EditWindow(_container);
-        //   _propertiesWindow = new PropertiesWindow(_container) { OnUpdate = OnUpdate };
-        //  _propertiesWindow.PropertyExcludeList.AddRange(
-        //  new[]{
-        //       "IsInsertable", "DefaultValue", "DefaultType", "DrawableComponent", "Pins", "TypeName", "RefName", "ItemGuid"
-        //.  });
-        //  CircuitView.OnSelectedItemChange = _propertiesWindow.GetProperties;
+        _propertiesWindow = new PropertiesWindow(_container) { OnUpdate = OnUpdate };
+        _propertiesWindow.PropertyExcludeList.AddRange(
+      new[]{
+              "IsInsertable", "DefaultValue", "DefaultType", "DrawableComponent", "Pins", "TypeName", "RefName", "ItemGuid"
+        });
+        _propertiesWindow.IsVisible = false;
+        _propertiesWindow.FadeTo(0);
+        CircuitView.CallPropertiesShow = ShowProperties;
     }
 
     private async void OnUpdate()
     {
         await CircuitView.Paint();
+    }
+
+    private void ShowProperties(IWorksheetItem? obj)
+    {
+        if (obj == null || _propertiesWindow == null)
+        {
+            return;
+        }
+
+        _propertiesWindow.GetProperties(obj);
+        _propertiesWindow.IsVisible = true;
+        _propertiesWindow.FadeTo(1);
     }
 }

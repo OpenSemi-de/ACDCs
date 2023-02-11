@@ -16,5 +16,7 @@ public interface IEditService
 
     Task SelectAll(CircuitView circuitView);
 
+    Task ShowProperties(CircuitView circuitView);
+
     Task SwitchMultiselect(object? state, CircuitView circuitView);
 }

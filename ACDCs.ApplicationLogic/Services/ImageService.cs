@@ -7,8 +7,6 @@ using Sharp.UI;
 
 public class ImageService : IImageService
 {
-    public IColorService? ColorService { get; set; }
-
     public ImageSource? BackgroundImageSource(ContentPage view)
     {
         return BackgroundImageSource((float)view.Width, (float)view.Height);
@@ -21,9 +19,9 @@ public class ImageService : IImageService
             using BitmapExportContext context = API.BitmapExportContextService.CreateContext((int)width, (int)height);
             ICanvas? canvas = context.Canvas;
 
-            List<Color> colors = new() { ColorService.Full, ColorService.Background };
+            List<Color> colors = new() { API.Instance.Full, API.Instance.Background };
 
-            canvas.SetShadow(new SizeF(6, 8), 10f, ColorService.BackgroundHigh);
+            canvas.SetShadow(new SizeF(6, 8), 10f, API.Instance.BackgroundHigh);
 
             RadialGradientPaint paintFrom = new(new Point(1, 1), 1) { StartColor = colors[0], EndColor = colors[1] };
 
@@ -31,7 +29,7 @@ public class ImageService : IImageService
             canvas.FillRectangle(0, 0, width, height);
 
             RadialGradientPaint paintTo =
-                new(new Point(1, 1), 1) { StartColor = ColorService.Foreground, EndColor = colors[0] };
+                new(new Point(1, 1), 1) { StartColor = API.Instance.Foreground, EndColor = colors[0] };
 
             canvas.SetFillPaint(paintTo, new RectF(0f, 0f, width, height));
             canvas.FontSize = 120;
@@ -64,7 +62,7 @@ public class ImageService : IImageService
             ICanvas? canvas = context.Canvas;
             canvas.Alpha = 0.7f;
 
-            List<Color> colors = new() { ColorService.Background, ColorService.BackgroundHigh };
+            List<Color> colors = new() { API.Instance.Background, API.Instance.BackgroundHigh };
 
             canvas.SetShadow(new SizeF(2, 4), 10f, colors[1]);
 
@@ -76,12 +74,12 @@ public class ImageService : IImageService
             canvas.SetFillPaint(paintFrom, new RectF(0f, 0f, width, height));
             canvas.FillRoundedRectangle(0, 0, width, height, 2);
             canvas.StrokeSize = 3;
-            canvas.StrokeColor = ColorService.Border;
+            canvas.StrokeColor = API.Instance.Border;
             canvas.Antialias = false;
             canvas.DrawRoundedRectangle(2, 2, width - 4, height - 4, 2);
             canvas.Antialias = true;
 
-            canvas.FontColor = ColorService.Text;
+            canvas.FontColor = API.Instance.Text;
             canvas.Font = new Font("Maple Mono");
             canvas.DrawString(text, width / 2, height / 2, HorizontalAlignment.Center);
 
@@ -132,7 +130,7 @@ public class ImageService : IImageService
             using BitmapExportContext context = API.BitmapExportContextService.CreateContext((int)width, (int)height);
             ICanvas? canvas = context.Canvas;
 
-            List<Color> colors = new() { ColorService.Background, ColorService.Foreground };
+            List<Color> colors = new() { API.Instance.Background, API.Instance.Foreground };
 
             RadialGradientPaint paintFrom = new(new Point(1, 0), 1)
             {
@@ -143,7 +141,7 @@ public class ImageService : IImageService
             canvas.SetFillPaint(paintFrom, new RectF(0f, 0f, width, height));
             canvas.FillRoundedRectangle(0, 0, width, height, 1);
             canvas.StrokeSize = 1;
-            canvas.StrokeColor = ColorService.Border;
+            canvas.StrokeColor = API.Instance.Border;
             canvas.Antialias = false;
             canvas.DrawRoundedRectangle(2, 2, width - 4, height - 4, 1);
 

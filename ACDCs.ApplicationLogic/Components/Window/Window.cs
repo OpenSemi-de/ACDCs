@@ -167,6 +167,11 @@ public class Window : ContentView
         _windowButtons.IsVisible = false;
     }
 
+    protected void HideWindowButtonsExceptClose()
+    {
+        _windowButtons.ShowOnlyClose();
+    }
+
     private void AddBackgroundImage()
     {
         _backgroundImage = new Image()
@@ -228,6 +233,11 @@ public class Window : ContentView
 
     private bool DefaultClose()
     {
+        Task.Run(() =>
+        {
+            this.FadeTo(0).Wait();
+        });
+
         return true;
     }
 
@@ -252,9 +262,4 @@ public class Window : ContentView
         GetBackgroundImage();
         Started?.Invoke(this);
     }
-}
-
-public class WindowResizer : Label
-{
-    public Window? ParentWindow { get; set; }
 }

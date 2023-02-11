@@ -30,8 +30,8 @@ public class CircuitView : ContentView, ICircuitViewProperties
     private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions = new();
 
     public Color BackgroundHighColor { get; set; }
+    public Action<IWorksheetItem?>? CallPropertiesShow { get; set; }
     public Worksheet CurrentWorksheet { get; set; }
-
     public Action? CursorDebugChanged { get; set; }
     public string? CursorDebugOutput { get; set; }
     public Color ForegroundColor { get; set; }
@@ -192,6 +192,14 @@ public class CircuitView : ContentView, ICircuitViewProperties
 
         await File.WriteAllTextAsync(fileName, jsonData);
         OnSavedSheet();
+    }
+
+    public void ShowProperties(IWorksheetItem? item)
+    {
+        if (item != null)
+        {
+            CallPropertiesShow?.Invoke(item);
+        }
     }
 
     public void UseMultiselect(bool state)

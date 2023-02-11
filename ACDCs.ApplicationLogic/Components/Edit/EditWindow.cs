@@ -10,6 +10,7 @@ public class EditWindow : Window
     private EditButton? _deleteButton;
     private EditButton? _lastButton;
     private EditButton? _mirrorButton;
+    private EditButton _propertiesButton;
     private EditButton? _rotateButton;
     private EditButton? _selectAreaButton;
     private double ButtonHeight { get; set; }
@@ -61,16 +62,24 @@ public class EditWindow : Window
         CallHandler("selectarea");
     }
 
+    private static void ShowProperties()
+    {
+        CallHandler("showproperties");
+    }
+
     private void AddButtons()
     {
         if (ButtonHeight == 0) ButtonHeight = 60;
-        if (ButtonWidth == 0) ButtonWidth = 60;
+        if (ButtonWidth == 0) ButtonWidth = 88;
 
         _selectAreaButton = new EditButton("Select", SelectArea, OnSelectButtonChange, ButtonWidth, ButtonHeight, true);
+        _propertiesButton =
+            new EditButton("Properties", ShowProperties, OnSelectButtonChange, ButtonWidth, ButtonHeight);
         _rotateButton = new EditButton("Rotate", Rotate, OnSelectButtonChange, ButtonWidth, ButtonHeight);
         _mirrorButton = new EditButton("Mirror", Mirror, OnSelectButtonChange, ButtonWidth, ButtonHeight);
         _deleteButton = new EditButton("Delete", Delete, OnSelectButtonChange, ButtonWidth, ButtonHeight);
         _buttonLayout.Add(_selectAreaButton);
+        _buttonLayout.Add(_propertiesButton);
         _buttonLayout.Add(_rotateButton);
         _buttonLayout.Add(_mirrorButton);
         _buttonLayout.Add(_deleteButton);
@@ -82,7 +91,7 @@ public class EditWindow : Window
         _buttonLayout = _buttonLayout
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill)
-            .Margin(2)
+            .Margin(0)
             .Padding(0);
         Start();
 

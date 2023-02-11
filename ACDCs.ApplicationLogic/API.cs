@@ -20,6 +20,7 @@ public class ResetEventArgs
 public class API : IWorkbenchService, IImageService, IColorService, IDescriptionService, IEditService, IMenuService, IFileService, IImportService
 {
     private static readonly ConcurrentDictionary<string, ConcurrentDictionary<string, object?>> s_comValues = new();
+    private readonly IColorService _colorService;
     private readonly IDescriptionService _descriptionService;
     private readonly IEditService _editService;
     private readonly IFileService _fileService;
@@ -27,7 +28,6 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
     private readonly IImportService _importService;
     private readonly IMenuService _menuService;
     private readonly IWorkbenchService _workbenchService;
-    private IColorService _colorService;
     public static PlatformBitmapExportService BitmapExportContextService { get; } = new();
     public static API Instance { get; set; }
     public static WindowContainer? MainContainer { get; set; }
@@ -42,12 +42,6 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
     public Color Background => _colorService.Background;
     public Color BackgroundHigh => _colorService.BackgroundHigh;
     public Color Border => _colorService.Border;
-
-    public IColorService ColorService
-    {
-        get => _colorService;
-        set => _colorService = value;
-    }
 
     public Color Foreground => _colorService.Foreground;
     public Color Full => _colorService.Full;
@@ -66,8 +60,6 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
         _menuService = menuService;
         _fileService = fileService;
         _importService = importService;
-
-        _imageService.ColorService = _colorService;
         Instance = this;
     }
 
@@ -151,17 +143,6 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
         return contents;
     }
 
-    public static async Task Open(Window window, WindowState windowState = WindowState.Maximized)
-    {
-        await Call(() =>
-        {
-            if (windowState == WindowState.Maximized)
-                window.Maximize();
-            TabBar?.AddWindow(window);
-            return Task.CompletedTask;
-        });
-    }
-
     public static async Task PopupException(Exception exception)
     {
         if (MainPage != null)
@@ -190,7 +171,7 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
 
     public Task Duplicate(CircuitView circuitView) => _editService.Duplicate(circuitView);
 
-    public Color GetColor(string colorName) => ColorService.GetColor(colorName);
+    public Color GetColor(string colorName) => _colorService.GetColor(colorName);
 
     public string GetComponentDescription(Type parentType, string propertyName) => _descriptionService.GetComponentDescription(parentType, propertyName);
 
@@ -219,6 +200,8 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
     public void SaveToDB(ComponentsView componentsView) => _importService.SaveToDB(componentsView);
 
     public Task SelectAll(CircuitView circuitView) => _editService.SelectAll(circuitView);
+
+    public Task ShowProperties(CircuitView circuitView) => _editService.ShowProperties(circuitView);
 
     public Task SwitchMultiselect(object? state, CircuitView circuitView) => _editService.SwitchMultiselect(state, circuitView);
 

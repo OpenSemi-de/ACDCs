@@ -33,7 +33,7 @@ public class PropertiesWindow : Window, IGetPropertyUpdates
         itemTemplate.LoadTemplate = () =>
         {
             PropertyTemplate propertyTemplate = new(this);
-            propertyTemplate.Unloaded += (sender, args) =>
+            propertyTemplate.Unloaded += (_, _) =>
             {
                 itemTemplate.Bindings.Clear();
             };
@@ -59,14 +59,14 @@ public class PropertiesWindow : Window, IGetPropertyUpdates
         _propertiesView.ChildrenBinding.Mode = BindingMode.OneTime;
         Start();
         ChildLayout.Add(_propertiesGrid);
+        OnClose = OnClosePropertiesWindow;
 
-        HideWindowButtons();
+        HideWindowButtonsExceptClose();
         HideResizer();
         const int width = 176;
-        const int height = 500;
-        MainContainer.OnSizeChanged(OnSizeChanged);
+        const int height = 300;
         MainContainer?.SetWindowSize(this, width, height);
-        MainContainer?.SetWindowPosition(this, MainContainer.Width - width - 4, 50);
+        MainContainer?.SetWindowPosition(this, 4, 450);
     }
 
     public void GetProperties(object? currentObject)
@@ -156,7 +156,7 @@ public class PropertiesWindow : Window, IGetPropertyUpdates
         OnUpdate?.Invoke();
     }
 
-    private static void RerootItem(List<PropertyItem> propertyItems, string name, PropertyItem newRoot)
+    private static void RerootItem(ICollection<PropertyItem> propertyItems, string name, PropertyItem newRoot)
     {
         PropertyItem? valueItem = propertyItems.FirstOrDefault(p => p.Name == name);
         if (valueItem == null)
@@ -168,13 +168,14 @@ public class PropertiesWindow : Window, IGetPropertyUpdates
         newRoot.Children.Add(valueItem);
     }
 
-    private void OnSizeChanged(object? sender, EventArgs e)
+    private bool OnClosePropertiesWindow()
     {
-        MainContainer?.SetWindowPosition(this, MainContainer.Width - 180, 50);
-    }
-
-    private void PropertiesView_SizeChanged(object? sender, EventArgs e)
-    {
+        Task.Run(() =>
+        {
+            this.FadeTo(0).Wait();
+            this.IsVisible = false;
+        });
+        return false;
     }
 }
 

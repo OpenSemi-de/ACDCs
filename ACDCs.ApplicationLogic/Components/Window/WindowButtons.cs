@@ -9,6 +9,7 @@ public class WindowButtons : Grid
     private readonly WindowButton _minimizeButton;
     private readonly WindowButton _restoreButton;
     private readonly Window _window;
+    private bool _showOnlyClose;
 
     public WindowButtons(Window window)
     {
@@ -40,12 +41,22 @@ public class WindowButtons : Grid
 
     public void ShowMaximize()
     {
+        if (_showOnlyClose) return;
         _restoreButton.IsVisible = false;
         _maximizeButton.IsVisible = true;
     }
 
+    public void ShowOnlyClose()
+    {
+        _maximizeButton.IsVisible = false;
+        _minimizeButton.IsVisible = false;
+        _restoreButton.IsVisible = false;
+        _showOnlyClose = true;
+    }
+
     public void ShowRestore()
     {
+        if (_showOnlyClose) return;
         _restoreButton.IsVisible = true;
         _maximizeButton.IsVisible = false;
     }

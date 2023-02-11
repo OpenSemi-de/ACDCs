@@ -1,10 +1,11 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.Items;
 
-using ACDCs.CircuitRenderer.Items;
 using CircuitRenderer;
 using CircuitRenderer.Definitions;
+using CircuitRenderer.Items;
 using CircuitRenderer.Sheet;
 using Sharp.UI;
+using Color = Color;
 
 public class ItemButton : ImageButton
 {
@@ -39,7 +40,7 @@ public class ItemButton : ImageButton
         sheet.DisplayOffset = new Coordinate(-10, -10);
         if (BackgroundColor != null)
         {
-            sheet.BackgroundColor = new Color(BackgroundColor.WithAlpha(0.2f));
+            sheet.BackgroundColor = new CircuitRenderer.Definitions.Color(BackgroundColor.WithAlpha(0.2f));
             BackgroundColor = BackgroundColor.WithAlpha(0.2f);
         }
 
@@ -78,7 +79,7 @@ public class ItemButton : ImageButton
         Source = ImageSource.FromFile(fl.FilePath);
     }
 
-    public void SetBackground(Microsoft.Maui.Graphics.Color backgroundColor)
+    public void SetBackground(Color backgroundColor)
     {
         BackgroundColor = backgroundColor;
     }

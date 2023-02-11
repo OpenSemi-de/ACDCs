@@ -4,6 +4,8 @@ using IO.DB;
 using Newtonsoft.Json;
 using Properties;
 using Sharp.UI;
+using ColumnDefinition = ColumnDefinition;
+using RowDefinition = RowDefinition;
 
 public class PreferencesView : Grid
 {
@@ -29,14 +31,14 @@ public class PreferencesView : Grid
 
         ColumnDefinitionCollection columns = new()
         {
-            new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star),
-            new Microsoft.Maui.Controls.ColumnDefinition(new GridLength(120))
+            new ColumnDefinition(GridLength.Star),
+            new ColumnDefinition(new GridLength(120))
         };
 
         RowDefinitionCollection rows = new()
         {
-            new Microsoft.Maui.Controls.RowDefinition(GridLength.Star),
-            new Microsoft.Maui.Controls.RowDefinition(new GridLength(34))
+            new RowDefinition(GridLength.Star),
+            new RowDefinition(new GridLength(34))
         };
 
         this.HorizontalOptions(LayoutOptions.Fill)

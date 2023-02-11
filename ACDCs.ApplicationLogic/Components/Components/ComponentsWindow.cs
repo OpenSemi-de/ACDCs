@@ -2,6 +2,7 @@
 
 using Window;
 
+// ReSharper disable once UnusedType.Global
 public class ComponentsWindow : Window
 {
     public ComponentsWindow(WindowContainer? container) : base(container, "Components", "menu_components.json", true, GetView)

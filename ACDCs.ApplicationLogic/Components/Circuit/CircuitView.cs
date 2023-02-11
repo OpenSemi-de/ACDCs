@@ -1,20 +1,23 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.Circuit;
 
-using ACDCs.ApplicationLogic.Delegates;
-using ACDCs.CircuitRenderer.Instructions;
-using ACDCs.CircuitRenderer.Interfaces;
-using ACDCs.CircuitRenderer.Items;
+using System.Diagnostics;
 using CircuitRenderer;
 using CircuitRenderer.Definitions;
 using CircuitRenderer.Drawables;
+using CircuitRenderer.Instructions;
+using CircuitRenderer.Interfaces;
+using CircuitRenderer.Items;
 using CircuitRenderer.Scene;
 using CircuitRenderer.Sheet;
+using Delegates;
 using Interfaces;
+using Items;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Sharp.UI;
 using Color = Color;
-using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
-using ItemsView = Items.ItemsView;
+using Path = Path;
+using TapGestureRecognizer = TapGestureRecognizer;
 
 public class CircuitView : ContentView, ICircuitViewProperties
 {
@@ -30,20 +33,19 @@ public class CircuitView : ContentView, ICircuitViewProperties
     private Coordinate? _lastDisplayOffset;
     private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions = new();
 
-    public Color BackgroundHighColor { get; set; }
+    public Color BackgroundHighColor { get; set; } = API.Instance.BackgroundHigh;
     public Action<IWorksheetItem?>? CallPropertiesShow { get; set; }
-    public Worksheet CurrentWorksheet { get; set; }
+    public Worksheet CurrentWorksheet { get; private set; }
     public Action? CursorDebugChanged { get; set; }
-    public string? CursorDebugOutput { get; set; }
-    public Color ForegroundColor { get; set; }
+    public string? CursorDebugOutput { get; private set; }
+    public Color ForegroundColor { get; set; } = API.Instance.Foreground;
     public ItemsView? ItemsView { get; set; }
-    public bool MultiSelectionMode { get; set; }
-    public Action<WorksheetItem>? OnSelectedItemChange { get; set; }
-    public AbsoluteLayout PopupTarget { get; set; }
-    public WorksheetItem? SelectedItem { get; set; }
-    public TraceItem? SelectedTrace { get; set; }
-    public LineInstruction? SelectedTraceLine { get; set; }
+    public LineInstruction? SelectedTraceLine { get; private set; }
     public bool ShowCollisionMap { get; set; }
+    private static Action<WorksheetItem>? OnSelectedItemChange => null;
+    private bool MultiSelectionMode { get; }
+    private WorksheetItem? SelectedItem { get; set; }
+    private TraceItem? SelectedTrace { get; set; }
 
     public CircuitView()
     {
@@ -55,7 +57,7 @@ public class CircuitView : ContentView, ICircuitViewProperties
 
         this.BackgroundColor(Colors.Transparent);
 
-        _tapRecognizer = new Microsoft.Maui.Controls.TapGestureRecognizer();
+        _tapRecognizer = new TapGestureRecognizer();
         _tapRecognizer.Tapped += TapGestureRecognizer_OnTapped;
 
         _panRecognizer = new PanGestureRecognizer();
@@ -70,7 +72,7 @@ public class CircuitView : ContentView, ICircuitViewProperties
             .VerticalOptions(LayoutOptions.Fill)
             .GestureRecognizers(_panRecognizer)
             .GestureRecognizers(_pointerRecognizer)
-        .GestureRecognizers(_tapRecognizer);
+        .GestureRecognizers<GraphicsView, Sharp.UI.TapGestureRecognizer>(_tapRecognizer);
 
         Content = _graphicsView;
         API.Com<CircuitView>(nameof(CircuitView), "Instance", this);
@@ -78,39 +80,20 @@ public class CircuitView : ContentView, ICircuitViewProperties
         Loaded += OnLoaded;
     }
 
+    // ReSharper disable once EventNeverSubscribedTo.Global
     public event CursorPositionChangeEvent? CursorPositionChanged;
 
     public event EventHandler<EventArgs>? LoadedSheet;
 
     public event EventHandler<EventArgs>? SavedSheet;
 
+    // ReSharper disable once EventNeverSubscribedTo.Global
     public event CursorPositionChangeEvent? TapPositionChanged;
 
     public void Clear()
     {
         _currentWorkbook.Sheets.Clear();
         CurrentWorksheet = _currentWorkbook.AddNewSheet();
-    }
-
-    public async Task InsertToPosition(float x, float y)
-    {
-        await API.Call(() =>
-        {
-            Func<float, float, Worksheet, WorksheetItem?>? doInsert = API.Com<Func<float, float, Worksheet, WorksheetItem?>?>("Items", "DoInsert");
-            WorksheetItem? newItem = doInsert?.Invoke(x, y, CurrentWorksheet);
-            if (newItem != null)
-            {
-                newItem.X -= newItem.Width / 2;
-                newItem.Y -= newItem.Height / 2;
-            }
-
-            if (ItemsView != null)
-            {
-                ItemsView.IsInserting = false;
-            }
-
-            return Task.CompletedTask;
-        });
     }
 
     public async void Open(string fileName)
@@ -133,7 +116,7 @@ public class CircuitView : ContentView, ICircuitViewProperties
             CurrentWorksheet = newSheet;
 
             API.Com<Worksheet>(nameof(CircuitView), "_currentSheet", CurrentWorksheet);
-            CurrentWorksheet.Filename = System.IO.Path.GetFileName(fileName);
+            CurrentWorksheet.Filename = Path.GetFileName(fileName);
             await Paint();
         }
 
@@ -149,15 +132,9 @@ public class CircuitView : ContentView, ICircuitViewProperties
                 CurrentWorksheet.BackgroundColor = new CircuitRenderer.Definitions.Color(BackgroundColor.WithAlpha(0.2f));
             }
 
-            if (ForegroundColor != null)
-            {
-                CurrentWorksheet.ForegroundColor = new CircuitRenderer.Definitions.Color(ForegroundColor);
-            }
+            CurrentWorksheet.ForegroundColor = new CircuitRenderer.Definitions.Color(ForegroundColor);
 
-            if (BackgroundHighColor != null)
-            {
-                CurrentWorksheet.BackgroundHighColor = new CircuitRenderer.Definitions.Color(BackgroundHighColor);
-            }
+            CurrentWorksheet.BackgroundHighColor = new CircuitRenderer.Definitions.Color(BackgroundHighColor);
 
             if (ItemsView != null && ItemsView.IsInserting)
                 return Task.CompletedTask;
@@ -188,8 +165,8 @@ public class CircuitView : ContentView, ICircuitViewProperties
             TypeNameHandling = TypeNameHandling.All
         };
         string jsonData = JsonConvert.SerializeObject(CurrentWorksheet, settings: settings);
-        CurrentWorksheet.Filename = System.IO.Path.GetFileName(fileName);
-        CurrentWorksheet.Filename = System.IO.Path.GetFullPath(fileName);
+        CurrentWorksheet.Filename = Path.GetFileName(fileName);
+        CurrentWorksheet.Filename = Path.GetFullPath(fileName);
 
         await File.WriteAllTextAsync(fileName, jsonData);
         OnSavedSheet();
@@ -274,8 +251,8 @@ public class CircuitView : ContentView, ICircuitViewProperties
 
                     foreach (var instruction in lineInstruxtions)
                     {
-                        System.Diagnostics.Debug.WriteLine(x + "/" + y + "/" + ":" + instruction.Position + ":" +
-                                                           instruction.End);
+                        Debug.WriteLine(x + "/" + y + "/" + ":" + instruction.Position + ":" +
+                                        instruction.End);
                         if (instruction.Position.X == instruction.End.X &&
                             instruction.Position.X == x &&
                             Math.Min(instruction.Position.Y, instruction.End.Y) <= y &&
@@ -285,14 +262,16 @@ public class CircuitView : ContentView, ICircuitViewProperties
                             return true;
                         }
 
-                        if (instruction.Position.Y == instruction.End.Y &&
-                            instruction.Position.Y == y &&
-                            Math.Min(instruction.Position.X, instruction.End.X) <= x &&
-                            Math.Max(instruction.Position.X, instruction.End.X) >= x)
+                        if (instruction.Position.Y != instruction.End.Y ||
+                            instruction.Position.Y != y ||
+                            !(Math.Min(instruction.Position.X, instruction.End.X) <= x) ||
+                            !(Math.Max(instruction.Position.X, instruction.End.X) >= x))
                         {
-                            foundLine = instruction;
-                            return true;
+                            continue;
                         }
+
+                        foundLine = instruction;
+                        return true;
                     }
 
                     return false;
@@ -305,6 +284,27 @@ public class CircuitView : ContentView, ICircuitViewProperties
         }).Wait();
         line = foundLine;
         return traceItem;
+    }
+
+    private async Task InsertToPosition(float x, float y)
+    {
+        await API.Call(() =>
+        {
+            Func<float, float, Worksheet, WorksheetItem?>? doInsert = API.Com<Func<float, float, Worksheet, WorksheetItem?>?>("Items", "DoInsert");
+            WorksheetItem? newItem = doInsert?.Invoke(x, y, CurrentWorksheet);
+            if (newItem != null)
+            {
+                newItem.X -= newItem.Width / 2;
+                newItem.Y -= newItem.Height / 2;
+            }
+
+            if (ItemsView != null)
+            {
+                ItemsView.IsInserting = false;
+            }
+
+            return Task.CompletedTask;
+        });
     }
 
     private void OnCursorPositionChanged(CursorPositionChangeEventArgs args)
@@ -366,6 +366,15 @@ public class CircuitView : ContentView, ICircuitViewProperties
                                 }
                             case GestureStatus.Completed:
                                 _isDraggingItem = false;
+                                break;
+
+                            case GestureStatus.Running:
+                                break;
+
+                            case GestureStatus.Canceled:
+                                break;
+
+                            default:
                                 break;
                         }
 
@@ -430,6 +439,11 @@ public class CircuitView : ContentView, ICircuitViewProperties
                         await Paint();
                         break;
                     }
+                case GestureStatus.Canceled:
+                    break;
+
+                default:
+                    break;
             }
         }).Wait();
     }
@@ -557,14 +571,17 @@ public class CircuitView : ContentView, ICircuitViewProperties
                         CurrentWorksheet.ToggleSelectItem(trace);
                         if (SelectedTrace != null)
                         {
-                            SelectedTrace.SetColor(new ACDCs.CircuitRenderer.Definitions.Color(API.Instance.Border));
+                            SelectedTrace.SetColor(new CircuitRenderer.Definitions.Color(API.Instance.Border));
                             SelectedTraceLine = null;
                         }
                         else
                         {
-                            trace.SetColorFromToPin(new CircuitRenderer.Definitions.Color(API.Instance.Border),
-                                line);
-                            SelectedTraceLine = line;
+                            if (line != null)
+                            {
+                                trace.SetColorFromToPin(new CircuitRenderer.Definitions.Color(API.Instance.Border),
+                                    line);
+                                SelectedTraceLine = line;
+                            }
                         }
 
                         SelectedTrace = trace;

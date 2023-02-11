@@ -2,9 +2,10 @@
 
 using Circuit;
 
+// ReSharper disable once UnusedType.Global
 public class EditMenuHandlers : MenuHandler
 {
-    public CircuitView? CircuitView
+    private CircuitView? CircuitView
     {
         get => GetParameter<CircuitView>("CircuitView");
     }

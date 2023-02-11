@@ -20,7 +20,11 @@ public class ModelEditorView : ContentView, IGetPropertyUpdates
     private readonly Window _window;
     private object? _currentObject;
     public Action<IElectronicComponent>? OnModelEdited { get; set; }
+
+    // ReSharper disable once MemberCanBePrivate.Global
+    // ReSharper disable once UnusedAutoPropertyAccessor.Global
     public Action? OnUpdate { get; set; }
+
     private List<string> PropertyExcludeList { get; } = new();
 
     public ModelEditorView(Window window)
@@ -46,7 +50,7 @@ public class ModelEditorView : ContentView, IGetPropertyUpdates
 
         DataTemplate itemTemplate = new()
         {
-            LoadTemplate = () => new ModelPropertyTemplate(this as IGetPropertyUpdates)
+            LoadTemplate = () => new ModelPropertyTemplate(this)
         };
 
         _modelView.ItemTemplate(itemTemplate);
@@ -110,8 +114,12 @@ public class ModelEditorView : ContentView, IGetPropertyUpdates
                     item.Value = value;
                 }
 
-                item.Order = API.Instance.GetComponentPropertyOrder(parentType, propertyInfo.Name);
-                item.ParentType = parentType;
+                if (parentType != null)
+                {
+                    item.Order = API.Instance.GetComponentPropertyOrder(parentType, propertyInfo.Name);
+                    item.ParentType = parentType;
+                }
+
                 propertyItems.Add(item);
             }
         }
@@ -162,7 +170,11 @@ public class ModelEditorView : ContentView, IGetPropertyUpdates
 
     private void OKButton_Click(object? sender, EventArgs e)
     {
-        OnModelEdited?.Invoke((IElectronicComponent)_currentObject);
+        if (_currentObject != null)
+        {
+            OnModelEdited?.Invoke((IElectronicComponent)_currentObject);
+        }
+
         _window.Close();
     }
 }

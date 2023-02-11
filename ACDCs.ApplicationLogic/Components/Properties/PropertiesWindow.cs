@@ -6,6 +6,7 @@ using Interfaces;
 using Sharp.UI;
 using UraniumUI.Material.Controls;
 using Window;
+using DataTemplate = DataTemplate;
 
 public class PropertiesWindow : Window, IGetPropertyUpdates
 {
@@ -29,7 +30,7 @@ public class PropertiesWindow : Window, IGetPropertyUpdates
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
 
-        Microsoft.Maui.Controls.DataTemplate itemTemplate = new();
+        DataTemplate itemTemplate = new();
 
         itemTemplate.LoadTemplate = () =>
         {
@@ -174,7 +175,7 @@ public class PropertiesWindow : Window, IGetPropertyUpdates
         Task.Run(() =>
         {
             this.FadeTo(0).Wait();
-            this.IsVisible = false;
+            IsVisible = false;
         });
         return false;
     }

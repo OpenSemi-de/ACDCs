@@ -6,15 +6,15 @@ using Window;
 public class EditWindow : Window
 {
     private readonly WindowContainer? _layout;
-    private StackLayout _buttonLayout = new();
     private EditButton? _deleteButton;
     private EditButton? _lastButton;
     private EditButton? _mirrorButton;
-    private EditButton _propertiesButton;
+    private EditButton? _propertiesButton;
     private EditButton? _rotateButton;
     private EditButton? _selectAreaButton;
     private double ButtonHeight { get; set; }
-    private StackLayout ButtonLayout => _buttonLayout;
+    private StackLayout ButtonLayout { get; set; } = new();
+
     private double ButtonWidth { get; set; }
 
     public EditWindow(WindowContainer? layout) : base(layout, "Tools", "", false, GetView)
@@ -78,17 +78,17 @@ public class EditWindow : Window
         _rotateButton = new EditButton("Rotate", Rotate, OnSelectButtonChange, ButtonWidth, ButtonHeight);
         _mirrorButton = new EditButton("Mirror", Mirror, OnSelectButtonChange, ButtonWidth, ButtonHeight);
         _deleteButton = new EditButton("Delete", Delete, OnSelectButtonChange, ButtonWidth, ButtonHeight);
-        _buttonLayout.Add(_selectAreaButton);
-        _buttonLayout.Add(_propertiesButton);
-        _buttonLayout.Add(_rotateButton);
-        _buttonLayout.Add(_mirrorButton);
-        _buttonLayout.Add(_deleteButton);
+        ButtonLayout.Add(_selectAreaButton);
+        ButtonLayout.Add(_propertiesButton);
+        ButtonLayout.Add(_rotateButton);
+        ButtonLayout.Add(_mirrorButton);
+        ButtonLayout.Add(_deleteButton);
     }
 
     private void Initialize()
     {
         WidthRequest = 64;
-        _buttonLayout = _buttonLayout
+        ButtonLayout = ButtonLayout
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill)
             .Margin(0)
@@ -99,7 +99,7 @@ public class EditWindow : Window
         HideWindowButtons();
         HideResizer();
         AddButtons();
-        _layout?.SetWindowSize(this, 100, 70 * _buttonLayout.Children.Count);
+        _layout?.SetWindowSize(this, 100, 70 * ButtonLayout.Children.Count);
     }
 
     private void OnSelectButtonChange(EditButton editButton)

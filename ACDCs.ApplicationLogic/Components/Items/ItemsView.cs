@@ -1,8 +1,8 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.Items;
 
 using System.Reflection;
-using ACDCs.CircuitRenderer.Interfaces;
-using ACDCs.CircuitRenderer.Items;
+using CircuitRenderer.Interfaces;
+using CircuitRenderer.Items;
 using CircuitRenderer.Sheet;
 using Interfaces;
 using Sharp.UI;
@@ -141,7 +141,7 @@ public partial class ItemsView : StackLayout, IItemsViewProperties
             if (item != null)
             {
                 API.Com<Func<float, float, Worksheet, WorksheetItem?>?>("Items", "DoInsert",
-                    (float x, float y, Worksheet sheet) =>
+(float x, float y, Worksheet sheet) =>
                     {
                         item.DrawableComponent.Position.X = x;
                         item.DrawableComponent.Position.Y = y;

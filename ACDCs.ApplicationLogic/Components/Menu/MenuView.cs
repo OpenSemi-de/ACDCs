@@ -1,25 +1,18 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.Menu;
 
-using Circuit;
 using Microsoft.Maui.Layouts;
 using Newtonsoft.Json;
 using Sharp.UI;
-using Window = Window.Window;
+using Window;
 
 public class MenuView : ContentView
 {
-    private readonly StackLayout _menuLayout;
-    private readonly Dictionary<string, object> _menuParameters;
+    private readonly StackLayout? _menuLayout;
+    private readonly Dictionary<string, object>? _menuParameters;
     private Label? _fileNameLabel;
-
     private MenuFrame? _menuFrame;
-
-    // ReSharper disable once MemberCanBePrivate.Global
-    public CircuitView? CircuitView { get; set; }
-
-    public string? MenuFilename { get; set; }
-
     public Window? ParentWindow { get; set; }
+    private string? MenuFilename { get; }
 
     public MenuView(string? menuFile, Dictionary<string, object> menuParameters)
     {
@@ -66,15 +59,9 @@ public class MenuView : ContentView
             ParentWindow = ParentWindow
         };
 
-        _menuLayout.Add(_menuFrame);
+        _menuLayout?.Add(_menuFrame);
 
         LoadMenu(MenuFilename);
-
-        if (CircuitView != null)
-        {
-            CircuitView.LoadedSheet += Sheet_Loaded;
-            CircuitView.SavedSheet += Sheet_Saved;
-        }
 
         _fileNameLabel = new Label
         {
@@ -86,25 +73,9 @@ public class MenuView : ContentView
             BackgroundColor = Colors.Transparent
         };
 
-        _menuLayout.Add(_fileNameLabel);
+        _menuLayout?.Add(_fileNameLabel);
 
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.WidthProportional);
         AbsoluteLayout.SetLayoutBounds(this, new Rect(2, 0, 1, 34));
-    }
-
-    private void Sheet_Loaded(object? sender, EventArgs e)
-    {
-        if (_fileNameLabel != null)
-        {
-            _fileNameLabel.Text = CircuitView?.CurrentWorksheet.Filename;
-        }
-    }
-
-    private void Sheet_Saved(object? sender, EventArgs e)
-    {
-        if (_fileNameLabel != null)
-        {
-            _fileNameLabel.Text = CircuitView?.CurrentWorksheet.Filename;
-        }
     }
 }

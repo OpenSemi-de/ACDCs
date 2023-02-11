@@ -1,6 +1,6 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.ModelEditor;
 
-using ACDCs.Data.ACDCs.Interfaces;
+using Data.ACDCs.Interfaces;
 using Window;
 
 public class ModelEditorWindow : Window
@@ -18,7 +18,7 @@ public class ModelEditorWindow : Window
 
     private ModelEditorView? ModelEditorView
     {
-        get => base.CurrentView as ModelEditorView;
+        get => CurrentView as ModelEditorView;
     }
 
     public ModelEditorWindow(WindowContainer? layout) : base(layout, "Edit model",

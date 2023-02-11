@@ -10,7 +10,7 @@ internal class FakeLocalFile : IDisposable
     /// </summary>
     public FakeLocalFile(Stream source, string idFilePath)
     {
-        FilePath = System.IO.Path.Combine(FileSystem.Current.CacheDirectory, $"{idFilePath}");
+        FilePath = Path.Combine(FileSystem.Current.CacheDirectory, $"{idFilePath}");
         using FileStream fs = new(FilePath, FileMode.Create);
         source.CopyTo(fs);
     }

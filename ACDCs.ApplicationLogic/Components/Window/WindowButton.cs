@@ -59,9 +59,6 @@ public class WindowButton : Button
             case WindowButtonType.Close:
                 _window.Close();
                 break;
-
-            default:
-                break;
         }
     }
 }

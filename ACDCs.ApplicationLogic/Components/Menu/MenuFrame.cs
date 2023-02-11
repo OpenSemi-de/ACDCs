@@ -4,12 +4,14 @@ using Delegates;
 using Interfaces;
 using Sharp.UI;
 using Window;
+using AbsoluteLayout = AbsoluteLayout;
+using IView = IView;
 
 public class MenuFrame : StackLayout
 {
     private static readonly List<MenuFrame> s_menuFrameList = new();
     private readonly bool _eventSet;
-    private List<MenuHandler> _handlers = new();
+    private readonly List<MenuHandler> _handlers = new();
     public Window? ParentWindow { get; set; }
 
     public MenuFrame()
@@ -28,12 +30,7 @@ public class MenuFrame : StackLayout
         _eventSet = true;
     }
 
-    public static void HideAllMenus()
-    {
-        s_menuFrameList.ForEach(menuFrame => { menuFrame.IsVisible = false; });
-    }
-
-    public void LoadMenu(List<MenuItemDefinition> items, bool isRoot = false, Dictionary<string, object> menuParameters = null)
+    public void LoadMenu(List<MenuItemDefinition> items, bool isRoot = false, Dictionary<string, object>? menuParameters = null)
     {
         API.Call(() =>
         {
@@ -75,7 +72,7 @@ public class MenuFrame : StackLayout
                                 : StackOrientation.Horizontal
                             : Orientation,
                         IsVisible = false,
-                        ZIndex = 10,
+                        ZIndex = 10
                     };
 
                     menuButton.MenuFrame.LoadMenu(menuItem.MenuItems, false, menuParameters);
@@ -93,7 +90,7 @@ public class MenuFrame : StackLayout
                 }
             }
 
-            menuParts.ForEach(part => Add(part as Microsoft.Maui.IView));
+            menuParts.ForEach(part => Add(part as IView));
             return Task.CompletedTask;
         }).Wait();
     }
@@ -112,17 +109,22 @@ public class MenuFrame : StackLayout
 
         double mainX = 0;
         double mainY = menuButton.Height;
-        mainX += AbsoluteLayout.GetLayoutBounds(ParentWindow.ChildLayout).X;
-        mainY += AbsoluteLayout.GetLayoutBounds(ParentWindow.ChildLayout).Y + menuButton.Height;
+        mainX += Sharp.UI.AbsoluteLayout.GetLayoutBounds(ParentWindow?.ChildLayout).X;
+        mainY += Sharp.UI.AbsoluteLayout.GetLayoutBounds(ParentWindow?.ChildLayout).Y + menuButton.Height;
         menuButton.MenuFrame.ZIndex(999);
 
-        Microsoft.Maui.Controls.AbsoluteLayout.SetLayoutBounds(menuButton.MenuFrame,
-                    new Rect(menuButton.X + mainX, mainY, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
+        AbsoluteLayout.SetLayoutBounds(menuButton.MenuFrame,
+                    new Rect(menuButton.X + mainX, mainY, Sharp.UI.AbsoluteLayout.AutoSize, Sharp.UI.AbsoluteLayout.AutoSize));
     }
 
     private static void App_Reset(object sender, ResetEventArgs args)
     {
         HideAllMenus();
+    }
+
+    private static void HideAllMenus()
+    {
+        s_menuFrameList.ForEach(menuFrame => { menuFrame.IsVisible = false; });
     }
 
     private void LoadHandler(string menuItemHandler, Dictionary<string, object> menuParameters)
@@ -135,8 +137,7 @@ public class MenuFrame : StackLayout
 
         if (exists) return;
 
-        MenuHandler? instance = Activator.CreateInstance(handlerType) as MenuHandler;
-        if (instance == null)
+        if (Activator.CreateInstance(handlerType) is not MenuHandler instance)
             return;
 
         foreach (KeyValuePair<string, object> param in menuParameters)

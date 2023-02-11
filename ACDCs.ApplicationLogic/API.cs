@@ -1,9 +1,9 @@
 ﻿namespace ACDCs.ApplicationLogic;
 
 using System.Collections.Concurrent;
-using ACDCs.ApplicationLogic.Components.Window;
 using Components.Circuit;
 using Components.Components;
+using Components.Window;
 using Delegates;
 using Interfaces;
 using IO.DB;
@@ -14,7 +14,7 @@ using Sharp.UI;
 
 public class API : IWorkbenchService, IImageService, IColorService, IDescriptionService, IEditService, IMenuService, IFileService, IImportService
 {
-    private static readonly ConcurrentDictionary<string, ConcurrentDictionary<string, object?>> s_comValues = new();
+    private static readonly ConcurrentDictionary<string, ConcurrentDictionary<string, object>> s_comValues = new();
     private readonly IColorService _colorService;
     private readonly IDescriptionService _descriptionService;
     private readonly IEditService _editService;
@@ -24,14 +24,19 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
     private readonly IMenuService _menuService;
     private readonly IWorkbenchService _workbenchService;
     public static PlatformBitmapExportService BitmapExportContextService { get; } = new();
-    public static API Instance { get; set; }
+    public static API Instance { get; private set; } = null!;
     public static WindowContainer? MainContainer { get; set; }
-    public static Page? MainPage { get; set; }
+    public static Page MainPage { get; set; } = null!;
+
+    // ReSharper disable once UnusedAutoPropertyAccessor.Global
     public static Action<Point>? PointerCallback { get; set; }
+
+    // ReSharper disable once UnusedAutoPropertyAccessor.Global
     public static Element? PointerLayoutObjectToMeasure { get; set; }
+
     public static ResourceDictionary? Resources { get; set; }
     public static WindowTabBar? TabBar { get; set; }
-    public static Action<Exception, IDictionary<string, string>?, ErrorAttachmentLog[]?> TrackError { get; set; }
+    public static Action<Exception, IDictionary<string, string>?, ErrorAttachmentLog[]?>? TrackError { get; set; }
     public static AppTheme UserAppTheme { get; set; }
 
     public Color Background => _colorService.Background;
@@ -70,7 +75,7 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
             }
             catch (Exception exception)
             {
-                TrackError(exception, null, null);
+                TrackError?.Invoke(exception, null, null);
             }
         }
 
@@ -80,7 +85,7 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
         }
         catch (Exception exception)
         {
-            TrackError(exception, null, null);
+            TrackError?.Invoke(exception, null, null);
 
             await PopupException(exception);
         }
@@ -91,7 +96,7 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
         if (value != null)
         {
             if (!s_comValues.ContainsKey(name))
-                s_comValues.GetOrAdd(name, new ConcurrentDictionary<string, object?>());
+                s_comValues.GetOrAdd(name, new ConcurrentDictionary<string, object>());
             if (!s_comValues[name].ContainsKey(property))
             {
                 s_comValues[name].GetOrAdd(property, value);
@@ -102,9 +107,9 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
             }
         }
 
-        if (s_comValues.ContainsKey(name) && s_comValues[name].ContainsKey(property))
+        if (s_comValues.TryGetValue(name, out ConcurrentDictionary<string, object>? newValue) && newValue.ContainsKey(property))
         {
-            return (T)s_comValues[name][property]!;
+            return (T)s_comValues[name][property];
         }
 
         return default;
@@ -131,6 +136,11 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
 
     public static async Task<string> LoadMauiAssetAsString(string? name)
     {
+        if (name == null)
+        {
+            return string.Empty;
+        }
+
         await using Stream stream = await FileSystem.OpenAppPackageFileAsync(name);
         using StreamReader reader = new(stream);
 

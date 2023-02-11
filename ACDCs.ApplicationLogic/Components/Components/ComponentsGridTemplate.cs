@@ -1,6 +1,8 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.Components;
 
 using Sharp.UI;
+using ColumnDefinition = ColumnDefinition;
+using RowDefinition = RowDefinition;
 
 public class ComponentsGridTemplate : DataTemplate
 {
@@ -17,17 +19,17 @@ public class ComponentsGridTemplate : DataTemplate
     {
         RowDefinitionCollection rowDefinitions = new()
         {
-            new Microsoft.Maui.Controls.RowDefinition(32)
+            new RowDefinition(32)
         };
 
         ColumnDefinitionCollection columnDefinitions = new()
         {
-            new Microsoft.Maui.Controls.ColumnDefinition(100),
-            new Microsoft.Maui.Controls.ColumnDefinition(100),
-            new Microsoft.Maui.Controls.ColumnDefinition(),
-            new Microsoft.Maui.Controls.ColumnDefinition(60),
-            new Microsoft.Maui.Controls.ColumnDefinition(60),
-            new Microsoft.Maui.Controls.ColumnDefinition(60)
+            new ColumnDefinition(100),
+            new ColumnDefinition(100),
+            new ColumnDefinition(),
+            new ColumnDefinition(60),
+            new ColumnDefinition(60),
+            new ColumnDefinition(60)
         };
 
         Label nameLabel = new Label()
@@ -40,7 +42,7 @@ public class ComponentsGridTemplate : DataTemplate
             .Bind(Label.TextProperty, "Value")
             .Column(2);
 
-        Grid grid = new Grid()
+        Grid grid = new Grid
             {
                 nameLabel,
                 typeLabel,

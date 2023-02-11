@@ -1,5 +1,7 @@
 ﻿namespace ACDCs.ApplicationLogic.Components;
 
+using ObjectsComparer;
+
 public static class CompareExtension
 {
     public static bool IsFlatEqual<T>(this T? left, T? right)
@@ -7,7 +9,7 @@ public static class CompareExtension
         if (left == null || right == null)
             return false;
 
-        ObjectsComparer.Comparer<T> comparer = new();
+        Comparer<T> comparer = new();
         bool isEqual = comparer.Compare(left, right);
         return isEqual;
     }

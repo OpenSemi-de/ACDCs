@@ -1,17 +1,18 @@
 ﻿namespace ACDCs.ApplicationLogic.Services;
 
-using ACDCs.Data.ACDCs.Components.BJT;
-using ACDCs.Data.ACDCs.Components.Inductor;
-using ACDCs.Data.ACDCs.Components.Resistor;
-using ACDCs.Data.ACDCs.Interfaces;
+using Data.ACDCs.Components.BJT;
+using Data.ACDCs.Components.Inductor;
+using Data.ACDCs.Components.Resistor;
+using Data.ACDCs.Interfaces;
 using Interfaces;
 using SpiceSharp.Attributes;
+using SpiceSharp.Components.Resistors;
 
 public class DescriptionService : IDescriptionService
 {
     private static readonly Dictionary<Type, Type> s_descriptionTypes = new()
     {
-        {typeof(Resistor), typeof(SpiceSharp.Components.Resistors.Parameters)},
+        {typeof(Resistor), typeof(Parameters)},
         {typeof(Bjt), typeof(SpiceSharp.Components.Bipolars.Parameters)},
         {typeof(Inductor), typeof(SpiceSharp.Components.Inductors.Parameters)}
     };

@@ -1,17 +1,19 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.Properties;
 
-using ACDCs.Data.ACDCs.Interfaces;
+using System.ComponentModel;
+using Data.ACDCs.Interfaces;
 using Interfaces;
 using ModelEditor;
 using ModelSelection;
 using Sharp.UI;
+using Window;
 
 [SharpObject]
 public partial class PropertyEditorView : ContentView, IPropertyEditorViewProperties
 {
     private ModelEditorWindow? _modelEditorWindow;
     private ModelSelectionWindow? _modelSelectionWindow;
-    private Window.Window? _parentWindow;
+    private Window? _parentWindow;
     public bool ShowDescription { get; set; }
     public string ValueType { get; set; } = string.Empty;
 
@@ -20,7 +22,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
         Initialize();
     }
 
-    public PropertyEditorView(Window.Window? parentWindow)
+    public PropertyEditorView(Window? parentWindow)
     {
         Initialize(parentWindow);
     }
@@ -47,7 +49,10 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
                 ZIndex = 10
             };
 
-            _modelEditorWindow.GetProperties(Value as IElectronicComponent);
+            if (Value != null)
+            {
+                _modelEditorWindow.GetProperties((Value as IElectronicComponent)!);
+            }
 
             _modelEditorWindow.OnClose = () =>
             {
@@ -69,7 +74,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
         }
     }
 
-    private void Initialize(Window.Window? parentWindow = null)
+    private void Initialize(Window? parentWindow = null)
     {
         _parentWindow = parentWindow;
         PropertyChanged += PropertyEditor_PropertyChanged;
@@ -118,7 +123,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
         }
     }
 
-    private async void PropertyEditor_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private async void PropertyEditor_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         await API.Call(() =>
         {

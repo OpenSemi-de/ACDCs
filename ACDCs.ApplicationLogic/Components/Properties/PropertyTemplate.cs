@@ -2,6 +2,9 @@
 
 using Interfaces;
 using Sharp.UI;
+using Window;
+using ColumnDefinition = ColumnDefinition;
+using RowDefinition = RowDefinition;
 
 public class PropertyTemplate : Grid
 {
@@ -14,15 +17,15 @@ public class PropertyTemplate : Grid
         _updatePropertyAction = getPropertyUpdates.OnPropertyUpdated;
         this.HorizontalOptions(LayoutOptions.Fill);
 
-        ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(new GridLength(60)));
-        ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
-        RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(GridLength.Auto));
+        ColumnDefinitions.Add(new ColumnDefinition(new GridLength(60)));
+        ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
+        RowDefinitions.Add(new RowDefinition(GridLength.Auto));
         _label = new Label();
 
         _label.SetBinding(Label.TextProperty, "Name");
         Add(_label);
 
-        _entry = new PropertyEditorView(getPropertyUpdates as Window.Window)
+        _entry = new PropertyEditorView(getPropertyUpdates as Window)
             .HorizontalOptions(LayoutOptions.Fill)
             .Margin(1)
             .Padding(1);

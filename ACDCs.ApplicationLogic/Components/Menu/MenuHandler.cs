@@ -2,12 +2,7 @@
 
 public class MenuHandler
 {
-    private Dictionary<string, object> Parameters { get; set; } = new();
-
-    public T? GetParameter<T>(string name) where T : class
-    {
-        return !Parameters.ContainsKey(name) ? default : Parameters[name] as T;
-    }
+    private Dictionary<string, object> Parameters { get; } = new();
 
     public void SetParameter(string name, object value)
     {
@@ -15,5 +10,10 @@ public class MenuHandler
             Parameters[name] = value;
         else
             Parameters.Add(name, value);
+    }
+
+    protected T? GetParameter<T>(string name) where T : class
+    {
+        return !Parameters.ContainsKey(name) ? default : Parameters[name] as T;
     }
 }

@@ -2,6 +2,7 @@
 
 using Circuit;
 
+// ReSharper disable once UnusedType.Global
 public class FileMenuHandlers : MenuHandler
 {
     private CircuitView? CircuitView

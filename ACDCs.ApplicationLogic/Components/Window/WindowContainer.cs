@@ -6,10 +6,10 @@ public class WindowContainer : AbsoluteLayout
 {
     private readonly PanGestureRecognizer _windowPanRecognizer;
     private readonly List<Window> _windows;
-    private double? _lastHeight = null;
-    private double? _lastWidth = null;
-    private double? _lastX = null;
-    private double? _lastY = null;
+    private double? _lastHeight;
+    private double? _lastWidth;
+    private double? _lastX;
+    private double? _lastY;
     private Window? _pickWindow;
     private WindowOperation _windowOperation = WindowOperation.None;
     private PanGestureRecognizer _windowSizePanRecognizer;
@@ -195,9 +195,6 @@ public class WindowContainer : AbsoluteLayout
                 break;
 
             case GestureStatus.Canceled:
-                break;
-
-            default:
                 break;
         }
     }

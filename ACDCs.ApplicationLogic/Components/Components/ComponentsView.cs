@@ -1,35 +1,36 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.Components;
 
 using System.Reflection;
-using ACDCs.Data.ACDCs.Components.BJT;
-using ACDCs.Data.ACDCs.Interfaces;
+using Data.ACDCs.Components.BJT;
+using Data.ACDCs.Interfaces;
 using IO.Spice;
 using ModelEditor;
 using ModelSelection;
 using Sharp.UI;
+using Window;
+using ColumnDefinition = ColumnDefinition;
+using RowDefinition = RowDefinition;
 
 public class ComponentsView : Grid
 {
-    public List<ComponentViewModel> dataSource = new();
+    public readonly List<ComponentViewModel> DataSource = new();
     private readonly string _category = string.Empty;
     private readonly ListView _componentsGrid;
     private readonly Entry _keywordEntry;
-    private readonly Window.Window _window;
     private List<ComponentViewModel> _baseData = new();
     private object? _lastSelectedItem;
 
-    public ComponentsView(Window.Window window)
+    public ComponentsView(Window window)
     {
         this.Margin(4);
-        _window = window;
 
-        ColumnDefinitionCollection columnDefinitions = new() { new Microsoft.Maui.Controls.ColumnDefinition() };
+        ColumnDefinitionCollection columnDefinitions = new() { new ColumnDefinition() };
         this.ColumnDefinitions(columnDefinitions);
 
         RowDefinitionCollection rowDefinitions = new()
         {
-            new Microsoft.Maui.Controls.RowDefinition(40),
-            new Microsoft.Maui.Controls.RowDefinition(34), new Microsoft.Maui.Controls.RowDefinition()
+            new RowDefinition(40),
+            new RowDefinition(34), new RowDefinition()
         };
 
         this.RowDefinitions(rowDefinitions);
@@ -69,7 +70,7 @@ public class ComponentsView : Grid
 
     public void LoadFromSource(List<IElectronicComponent> components)
     {
-        dataSource.Clear();
+        DataSource.Clear();
         components = components.OrderBy(c => c.Name).ThenBy(c => c.Type).ToList();
         int row = 0;
         foreach (IElectronicComponent component in components)
@@ -90,11 +91,11 @@ public class ComponentsView : Grid
                     break;
             }
 
-            dataSource.Add(modelLine);
+            DataSource.Add(modelLine);
             row++;
         }
 
-        _baseData = dataSource.ToList();
+        _baseData = DataSource.ToList();
         Reload();
     }
 
@@ -109,6 +110,14 @@ public class ComponentsView : Grid
                 ComponentsGrid.ItemsSource = new List<string>();
                 ComponentsGrid.BatchCommit();
         */
+    }
+
+    private static void OnLoaded(object? sender, EventArgs e)
+    {
+    }
+
+    private static void OnModelEdited(IElectronicComponent obj)
+    {
     }
 
     private static bool ReflectedSearch(ComponentViewModel componentViewModel, string text)
@@ -165,37 +174,35 @@ public class ComponentsView : Grid
                                                         d.Name.ToLower().Contains(keyword)));
         }
 
-        dataSource.Clear();
+        DataSource.Clear();
         foreach (ComponentViewModel model in query)
         {
-            dataSource.Add(model);
+            DataSource.Add(model);
         }
 
         Reload();
     }
 
-    private void OnLoaded(object? sender, EventArgs e)
-    {
-    }
-
-    private void OnModelEdited(IElectronicComponent obj)
-    {
-    }
-
     private void Reload()
     {
         _componentsGrid.ItemsSource = null;
-        _componentsGrid.ItemsSource = dataSource;
+        _componentsGrid.ItemsSource = DataSource;
     }
 
     private void ShowModelEditor(object selectedItem)
     {
-        if (selectedItem is ComponentViewModel viewModel)
+        if (selectedItem is not ComponentViewModel viewModel)
         {
-            ModelEditorWindow modelEditor = new(API.MainContainer)
-            {
-                OnModelEdited = OnModelEdited
-            };
+            return;
+        }
+
+        ModelEditorWindow modelEditor = new(API.MainContainer)
+        {
+            OnModelEdited = OnModelEdited
+        };
+
+        if (viewModel.Model != null)
+        {
             modelEditor.GetProperties(viewModel.Model);
         }
     }

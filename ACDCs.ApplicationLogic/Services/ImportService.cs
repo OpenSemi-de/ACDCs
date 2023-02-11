@@ -1,8 +1,8 @@
 ﻿namespace ACDCs.ApplicationLogic.Services;
 
-using ACDCs.Data.ACDCs.Interfaces;
 using Components;
 using Components.Components;
+using Data.ACDCs.Interfaces;
 using Interfaces;
 using IO.DB;
 using IO.Spice;
@@ -53,7 +53,7 @@ public class ImportService : IImportService
 
     public void SaveToDB(ComponentsView componentsView)
     {
-        List<IElectronicComponent?> components = componentsView.dataSource.Select(m => m.Model).ToList();
+        List<IElectronicComponent?> components = componentsView.DataSource.Select(m => m.Model).ToList();
         DefaultModelRepository repository = new();
         List<IElectronicComponent> existingComponents = repository.GetModels();
 

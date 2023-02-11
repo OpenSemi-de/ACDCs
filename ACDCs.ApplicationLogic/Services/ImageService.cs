@@ -1,9 +1,8 @@
-﻿using Font = Microsoft.Maui.Graphics.Font;
-
-namespace ACDCs.ApplicationLogic.Services;
+﻿namespace ACDCs.ApplicationLogic.Services;
 
 using Interfaces;
 using Sharp.UI;
+using Font = Microsoft.Maui.Graphics.Font;
 
 public class ImageService : IImageService
 {

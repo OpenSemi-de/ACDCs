@@ -4,6 +4,9 @@ using Microsoft.Maui.Layouts;
 using Sharp.UI;
 using UraniumUI.Material.Controls;
 using Window;
+using ColumnDefinition = ColumnDefinition;
+using Grid = Grid;
+using RowDefinition = RowDefinition;
 
 public class DebugWindow : Window
 {
@@ -16,14 +19,14 @@ public class DebugWindow : Window
 
     public DebugWindow(WindowContainer? layout) : base(layout, "Debug", "")
     {
-        _debugGrid = new Grid()
+        _debugGrid = new Sharp.UI.Grid()
             .ColumnDefinitions(new ColumnDefinitionCollection(
-                new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star),
-                new Microsoft.Maui.Controls.ColumnDefinition(new GridLength(60))
+                new ColumnDefinition(GridLength.Star),
+                new ColumnDefinition(new GridLength(60))
             ))
             .RowDefinitions(new RowDefinitionCollection(
-                new Microsoft.Maui.Controls.RowDefinition(GridLength.Star),
-                new Microsoft.Maui.Controls.RowDefinition(new GridLength(40))
+                new RowDefinition(GridLength.Star),
+                new RowDefinition(new GridLength(40))
             ))
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
@@ -33,16 +36,16 @@ public class DebugWindow : Window
 
         _label = new Label("ACDCs Debug console" + Environment.NewLine)
             .MaxLines(int.MaxValue);
-        Microsoft.Maui.Controls.Grid.SetColumnSpan(_label, 2);
+        Grid.SetColumnSpan(_label, 2);
         _textField = new TextField();
         _textField.TextChanged += TextFieldOnTextChanged;
-        Grid.SetRow(_textField, 1);
+        Sharp.UI.Grid.SetRow(_textField, 1);
         _debugGrid.Add(_label);
         _debugGrid.Add(_textField);
         _button = new Button(">")
             .WidthRequest(60);
-        Grid.SetRow(_button, 1);
-        Grid.SetColumn(_button, 1);
+        Sharp.UI.Grid.SetRow(_button, 1);
+        Sharp.UI.Grid.SetColumn(_button, 1);
         _button.Clicked += ButtonOnClicked;
         _debugGrid.Add(_button);
         Start();

@@ -2,11 +2,11 @@ namespace ACDCs.ApplicationLogic.Components.Circuit;
 
 using CircuitRenderer.Interfaces;
 using Edit;
+using Items;
 using Microsoft.Maui.Layouts;
 using Properties;
 using Sharp.UI;
 using Window;
-using ItemsView = Items.ItemsView;
 
 public sealed class CircuitSheetView : AbsoluteLayout
 {
@@ -16,7 +16,9 @@ public sealed class CircuitSheetView : AbsoluteLayout
     private readonly bool _showCursorDebugOutput = Convert.ToBoolean(API.GetPreference("ShowDebugCursorOutput"));
 
     // ReSharper disable once NotAccessedField.Local
+#pragma warning disable IDE0052
     private EditWindow? _editWindow;
+#pragma warning restore IDE0052
 
     private PropertiesWindow? _propertiesWindow;
 
@@ -36,7 +38,7 @@ public sealed class CircuitSheetView : AbsoluteLayout
         AbsoluteLayout.SetLayoutBounds(_itemsView, new Rect(0, 1, 1, 60));
         Add(_itemsView);
 
-        CircuitView = new CircuitView { PopupTarget = this, ZIndex = 0 };
+        CircuitView = new CircuitView { ZIndex = 0 };
 
         AbsoluteLayout.SetLayoutFlags(CircuitView, AbsoluteLayoutFlags.SizeProportional);
         AbsoluteLayout.SetLayoutBounds(CircuitView, new Rect(0, 0, 1, 1));

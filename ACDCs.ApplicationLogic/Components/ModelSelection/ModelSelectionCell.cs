@@ -1,6 +1,9 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.ModelSelection;
 
 using Sharp.UI;
+using ColumnDefinition = ColumnDefinition;
+using Grid = Grid;
+using Label = Label;
 
 public class ModelSelectionCell : ViewCell
 {
@@ -11,37 +14,37 @@ public class ModelSelectionCell : ViewCell
 
     public ModelSelectionCell()
     {
-        _grid = new Grid()
+        _grid = new Sharp.UI.Grid()
             .HorizontalOptions(LayoutOptions.Fill)
             .HeightRequest(34);
 
         _grid.SetBinding(VisualElement.BackgroundColorProperty, "ItemBackground");
 
-        _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(new GridLength(80)));
-        _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(new GridLength(80)));
-        _grid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
+        _grid.ColumnDefinitions.Add(new ColumnDefinition(new GridLength(80)));
+        _grid.ColumnDefinitions.Add(new ColumnDefinition(new GridLength(80)));
+        _grid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
 
-        _labelName = new Label()
+        _labelName = new Sharp.UI.Label()
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
 
-        _labelName.SetBinding(Microsoft.Maui.Controls.Label.TextProperty, "Name");
+        _labelName.SetBinding(Label.TextProperty, "Name");
         _grid.Add(_labelName);
 
-        _labelType = new Label()
+        _labelType = new Sharp.UI.Label()
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
-        Microsoft.Maui.Controls.Grid.SetColumn(_labelType, 1);
+        Grid.SetColumn(_labelType, 1);
 
-        _labelType.SetBinding(Microsoft.Maui.Controls.Label.TextProperty, "Type");
+        _labelType.SetBinding(Label.TextProperty, "Type");
         _grid.Add(_labelType);
 
-        _labelValue = new Label()
+        _labelValue = new Sharp.UI.Label()
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
-        Microsoft.Maui.Controls.Grid.SetColumn(_labelValue, 2);
+        Grid.SetColumn(_labelValue, 2);
 
-        _labelValue.SetBinding(Microsoft.Maui.Controls.Label.TextProperty, "Value");
+        _labelValue.SetBinding(Label.TextProperty, "Value");
         _grid.Add(_labelValue);
 
         Add(_grid);

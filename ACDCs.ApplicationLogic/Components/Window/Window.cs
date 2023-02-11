@@ -10,30 +10,16 @@ public class Window : ContentView
     private readonly WindowContainer? _container;
     private readonly bool _isWindowParent;
     private readonly string? _menuFile;
-    private readonly string _title;
     private Image _backgroundImage;
-    private AbsoluteLayout _childLayout;
     private View? _childView;
     private Grid _mainGrid;
-    private MenuView _menuView;
     private WindowResizer _resizeLabel;
     private WindowButtons _windowButtons;
-    private WindowTitle _windowTitle;
 
-    public AbsoluteLayout ChildLayout
-    {
-        get => _childLayout;
-        set => _childLayout = value;
-    }
-
-    public View? ChildView
-    {
-        get => _childView;
-    }
-
+    public AbsoluteLayout ChildLayout { get; private set; }
     public int LastHeight { get; set; }
     public int LastWidth { get; set; }
-    public WindowState? LastWindowState { get; set; } = WindowState.Standard;
+    public WindowState? LastWindowState { get; private set; } = WindowState.Standard;
     public double LastX { get; set; }
     public double LastY { get; set; }
 
@@ -41,17 +27,12 @@ public class Window : ContentView
     {
         get
         {
-            if (_childLayout is WindowContainer childlayout) return childlayout;
+            if (ChildLayout is WindowContainer childlayout) return childlayout;
             return _container;
         }
     }
 
     public Dictionary<string, object> MenuParameters { get; } = new();
-
-    public MenuView MenuView
-    {
-        get => _menuView;
-    }
 
     // ReSharper disable once MemberCanBePrivate.Global
     public Func<bool> OnClose { get; set; }
@@ -61,22 +42,20 @@ public class Window : ContentView
         get => _resizeLabel;
     }
 
+    // ReSharper disable once MemberCanBePrivate.Global
     public Action<Window>? Started { get; set; }
-    public WindowTitle Title => _windowTitle;
+
+    public WindowTitle Title { get; private set; }
     public WindowState WindowState { get; set; } = WindowState.Standard;
-
-    public string WindowTitle
-    {
-        get => _title;
-    }
-
+    public string WindowTitle { get; }
     protected View CurrentView { get; private set; }
+    private MenuView MenuView { get; set; }
 
-    public Window(WindowContainer? container, string title, string? menuFile = null, bool isWindowParent = false,
+    protected Window(WindowContainer? container, string title, string? menuFile = null, bool isWindowParent = false,
                                     Func<Window, View> childViewFunction = null)
     {
         _container = container;
-        _title = title;
+        WindowTitle = title;
         _menuFile = menuFile;
         _isWindowParent = isWindowParent;
         _childViewFunction = childViewFunction;
@@ -148,7 +127,7 @@ public class Window : ContentView
         {
             AbsoluteLayout.SetLayoutFlags(_childView, AbsoluteLayoutFlags.SizeProportional);
             AbsoluteLayout.SetLayoutBounds(_childView, new Rect(0, 0, 1, 1));
-            _childLayout?.Add(_childView);
+            ChildLayout?.Add(_childView);
             CurrentView = _childView;
         }
         AbsoluteLayout.SetLayoutFlags(this, AbsoluteLayoutFlags.None);
@@ -185,9 +164,9 @@ public class Window : ContentView
 
     private void AddChildLayout(bool isWindowParent)
     {
-        _childLayout = new WindowContainer();// : new AbsoluteLayout();
-        _mainGrid.SetRowAndColumn(_childLayout, 1, 0, 2, 2);
-        _mainGrid.Add(_childLayout);
+        ChildLayout = new WindowContainer();// : new AbsoluteLayout();
+        _mainGrid.SetRowAndColumn(ChildLayout, 1, 0, 2, 2);
+        _mainGrid.Add(ChildLayout);
     }
 
     private void AddGridDefinitions()
@@ -226,9 +205,9 @@ public class Window : ContentView
 
     private void AddWindowTitle()
     {
-        _windowTitle = new WindowTitle(_title, this);
+        Title = new WindowTitle(WindowTitle, this);
         _mainGrid.SetRowAndColumn(Title, 0, 0, 2);
-        _mainGrid.Add(_windowTitle);
+        _mainGrid.Add(Title);
     }
 
     private bool DefaultClose()
@@ -243,13 +222,13 @@ public class Window : ContentView
 
     private void LoadMenu()
     {
-        _menuView = new MenuView(_menuFile, MenuParameters)
+        MenuView = new MenuView(_menuFile, MenuParameters)
         {
             HeightRequest = 34,
             ParentWindow = this
         };
-        _childLayout.Add(_menuView);
-        _menuView.ZIndex = 999;
+        ChildLayout.Add(MenuView);
+        MenuView.ZIndex = 999;
     }
 
     private void SetSize(int width, int height)

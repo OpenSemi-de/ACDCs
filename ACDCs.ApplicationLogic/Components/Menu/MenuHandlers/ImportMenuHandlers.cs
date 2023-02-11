@@ -2,9 +2,10 @@
 
 using Components;
 
+// ReSharper disable once UnusedType.Global
 public class ImportMenuHandlers : MenuHandler
 {
-    public ComponentsView? ComponentsView
+    private ComponentsView? ComponentsView
     {
         get => GetParameter<ComponentsView>("ComponentsView");
     }
@@ -33,7 +34,7 @@ public class ImportMenuHandlers : MenuHandler
         }
     }
 
-    private async void SaveJson(object? obj)
+    private void SaveJson(object? obj)
     {
         API.Instance.SaveJson();
     }

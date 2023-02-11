@@ -1,14 +1,16 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.ModelSelection;
 
 using System.Collections.ObjectModel;
-using ACDCs.Data.ACDCs.Components.BJT;
-using ACDCs.Data.ACDCs.Components.Diode;
-using ACDCs.Data.ACDCs.Components.Resistor;
-using ACDCs.Data.ACDCs.Interfaces;
 using CommunityToolkit.Maui.Core.Extensions;
+using Data.ACDCs.Components.BJT;
+using Data.ACDCs.Components.Diode;
+using Data.ACDCs.Components.Resistor;
+using Data.ACDCs.Interfaces;
 using IO.DB;
 using Sharp.UI;
 using Window;
+using ColumnDefinition = ColumnDefinition;
+using RowDefinition = RowDefinition;
 
 public class ModelSelectionWindow : Window
 {
@@ -37,12 +39,12 @@ public class ModelSelectionWindow : Window
             .Margin(0)
             .Padding(0);
 
-        _modelGrid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(new GridLength(40)));
-        _modelGrid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(GridLength.Star));
-        _modelGrid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(new GridLength(40)));
-        _modelGrid.RowDefinitions.Add(new Microsoft.Maui.Controls.RowDefinition(new GridLength(40)));
+        _modelGrid.RowDefinitions.Add(new RowDefinition(new GridLength(40)));
+        _modelGrid.RowDefinitions.Add(new RowDefinition(GridLength.Star));
+        _modelGrid.RowDefinitions.Add(new RowDefinition(new GridLength(40)));
+        _modelGrid.RowDefinitions.Add(new RowDefinition(new GridLength(40)));
 
-        _modelGrid.ColumnDefinitions.Add(new Microsoft.Maui.Controls.ColumnDefinition(GridLength.Star));
+        _modelGrid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
 
         _searchEntry = new Entry()
             .HorizontalOptions(LayoutOptions.Fill)

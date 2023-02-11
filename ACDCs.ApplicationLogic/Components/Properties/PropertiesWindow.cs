@@ -2,6 +2,7 @@
 
 using System.Collections.ObjectModel;
 using System.Reflection;
+using Interfaces;
 using Sharp.UI;
 using UraniumUI.Material.Controls;
 using Window;

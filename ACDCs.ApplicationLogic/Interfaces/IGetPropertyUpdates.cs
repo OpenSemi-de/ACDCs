@@ -1,4 +1,4 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Properties;
+﻿namespace ACDCs.ApplicationLogic.Interfaces;
 
 public interface IGetPropertyUpdates
 {

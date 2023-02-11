@@ -1,4 +1,6 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Window;
+﻿namespace ACDCs.ApplicationLogic.Interfaces;
+
+using Components.Window;
 
 public interface IWindowTabBarProperties
 {

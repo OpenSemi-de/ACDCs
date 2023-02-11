@@ -1,5 +1,6 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.Window;
 
+using Interfaces;
 using Sharp.UI;
 using UraniumUI.Icons.FontAwesome;
 

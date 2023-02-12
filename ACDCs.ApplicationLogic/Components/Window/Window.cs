@@ -6,15 +6,14 @@ using Sharp.UI;
 
 public class Window : ContentView
 {
-    private readonly Func<Window, View> _childViewFunction;
+    private readonly Func<Window, View>? _childViewFunction;
     private readonly WindowContainer? _container;
     private readonly bool _isWindowParent;
     private readonly string? _menuFile;
-    private Image _backgroundImage;
+    private Image? _backgroundImage;
     private View? _childView;
-    private Grid _mainGrid;
-    private WindowResizer _resizeLabel;
-    private WindowButtons _windowButtons;
+    private Grid? _mainGrid;
+    private WindowButtons? _windowButtons;
 
     public AbsoluteLayout ChildLayout { get; private set; }
     public int LastHeight { get; set; }
@@ -37,10 +36,7 @@ public class Window : ContentView
     // ReSharper disable once MemberCanBePrivate.Global
     public Func<bool> OnClose { get; set; }
 
-    public WindowResizer Resizer
-    {
-        get => _resizeLabel;
-    }
+    public WindowResizer Resizer { get; private set; }
 
     // ReSharper disable once MemberCanBePrivate.Global
     public Action<Window>? Started { get; set; }
@@ -52,13 +48,16 @@ public class Window : ContentView
     private MenuView MenuView { get; set; }
 
     protected Window(WindowContainer? container, string title, string? menuFile = null, bool isWindowParent = false,
-                                    Func<Window, View> childViewFunction = null)
+                                    Func<Window, View>? childViewFunction = null)
     {
         _container = container;
         WindowTitle = title;
         _menuFile = menuFile;
         _isWindowParent = isWindowParent;
-        _childViewFunction = childViewFunction;
+        if (childViewFunction != null)
+        {
+            _childViewFunction = childViewFunction;
+        }
     }
 
     public void Close()
@@ -82,7 +81,7 @@ public class Window : ContentView
         WindowState = WindowState.Maximized;
         LastWindowState = WindowState;
         _container?.MaximizeWindow(this);
-        _windowButtons.ShowRestore();
+        _windowButtons?.ShowRestore();
     }
 
     public void Minimize()
@@ -94,7 +93,7 @@ public class Window : ContentView
     public void Restore()
     {
         _container?.RestoreWindow(this);
-        _windowButtons.ShowMaximize();
+        _windowButtons?.ShowMaximize();
     }
 
     public void SetActive()
@@ -105,7 +104,25 @@ public class Window : ContentView
     {
     }
 
-    public void Start()
+    protected void HideResizer()
+    {
+        Resizer.IsVisible = false;
+    }
+
+    protected void HideWindowButtons()
+    {
+        if (_windowButtons != null)
+        {
+            _windowButtons.IsVisible = false;
+        }
+    }
+
+    protected void HideWindowButtonsExceptClose()
+    {
+        _windowButtons?.ShowOnlyClose();
+    }
+
+    protected void Start()
     {
         AddGridDefinitions();
         AddBackgroundImage();
@@ -136,21 +153,6 @@ public class Window : ContentView
         Content = _mainGrid;
     }
 
-    protected void HideResizer()
-    {
-        _resizeLabel.IsVisible = false;
-    }
-
-    protected void HideWindowButtons()
-    {
-        _windowButtons.IsVisible = false;
-    }
-
-    protected void HideWindowButtonsExceptClose()
-    {
-        _windowButtons.ShowOnlyClose();
-    }
-
     private void AddBackgroundImage()
     {
         _backgroundImage = new Image()
@@ -158,15 +160,21 @@ public class Window : ContentView
             .Aspect(Aspect.Fill)
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
-        _mainGrid.SetRowAndColumn(_backgroundImage, 0, 0, 3, 3);
-        _mainGrid.Add(_backgroundImage);
+        if (_mainGrid != null)
+        {
+            _mainGrid.SetRowAndColumn(_backgroundImage, 0, 0, 3, 3);
+            _mainGrid.Add(_backgroundImage);
+        }
     }
 
     private void AddChildLayout(bool isWindowParent)
     {
         ChildLayout = new WindowContainer();// : new AbsoluteLayout();
-        _mainGrid.SetRowAndColumn(ChildLayout, 1, 0, 2, 2);
-        _mainGrid.Add(ChildLayout);
+        if (_mainGrid != null)
+        {
+            _mainGrid.SetRowAndColumn(ChildLayout, 1, 0, 2, 2);
+            _mainGrid.Add(ChildLayout);
+        }
     }
 
     private void AddGridDefinitions()
@@ -186,28 +194,34 @@ public class Window : ContentView
     private void AddWindowButtons()
     {
         _windowButtons = new WindowButtons(this);
-        _mainGrid.SetRowAndColumn(_windowButtons, 0, 1);
-        _mainGrid.Add(_windowButtons);
+        if (_mainGrid != null)
+        {
+            _mainGrid.SetRowAndColumn(_windowButtons, 0, 1);
+            _mainGrid.Add(_windowButtons);
+        }
     }
 
     private void AddWindowResizer()
     {
-        _resizeLabel = new WindowResizer()
+        Resizer = new WindowResizer()
             .Text("//")
             .Row(2)
             .Column(1)
             .FontSize(20)
             .HorizontalOptions(LayoutOptions.End)
             .VerticalOptions(LayoutOptions.End);
-        _resizeLabel.ParentWindow = this;
-        _mainGrid.Add(_resizeLabel);
+        Resizer.ParentWindow = this;
+        _mainGrid?.Add(Resizer);
     }
 
     private void AddWindowTitle()
     {
         Title = new WindowTitle(WindowTitle, this);
-        _mainGrid.SetRowAndColumn(Title, 0, 0, 2);
-        _mainGrid.Add(Title);
+        if (_mainGrid != null)
+        {
+            _mainGrid.SetRowAndColumn(Title, 0, 0, 2);
+            _mainGrid.Add(Title);
+        }
     }
 
     private bool DefaultClose()

@@ -127,7 +127,7 @@ public class MenuFrame : StackLayout
         s_menuFrameList.ForEach(menuFrame => { menuFrame.IsVisible = false; });
     }
 
-    private void LoadHandler(string menuItemHandler, Dictionary<string, object> menuParameters)
+    private void LoadHandler(string menuItemHandler, Dictionary<string, object>? menuParameters)
     {
         Type? handlerType = GetType().Assembly.GetTypes().FirstOrDefault(t => t.Name.Contains($"{menuItemHandler}Handlers"));
         if (handlerType == null)
@@ -140,9 +140,12 @@ public class MenuFrame : StackLayout
         if (Activator.CreateInstance(handlerType) is not MenuHandler instance)
             return;
 
-        foreach (KeyValuePair<string, object> param in menuParameters)
+        if (menuParameters != null)
         {
-            instance.SetParameter(param.Key, param.Value);
+            foreach (KeyValuePair<string, object> param in menuParameters)
+            {
+                instance.SetParameter(param.Key, param.Value);
+            }
         }
 
         _handlers.Add(instance);

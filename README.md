@@ -1,6 +1,6 @@
 # ACDCs
 
-[![Android relase build](https://github.com/OpenSemi-de/ACDCs/actions/workflows/dotnet.yml/badge.svg)](https://github.com/OpenSemi-de/ACDCs/actions/workflows/dotnet.yml)
+[![Android relase build](https://github.com/OpenSemi-de/ACDCs/actions/workflows/dotnet.yml/badge.svg)](https://github.com/OpenSemi-de/ACDCs/actions/workflows/dotnet.yml) [![CodeQL](https://github.com/OpenSemi-de/ACDCs/actions/workflows/codeql.yml/badge.svg?branch=master)](https://github.com/OpenSemi-de/ACDCs/actions/workflows/codeql.yml)
 
 Advanced Circuit Design Component Suite
 

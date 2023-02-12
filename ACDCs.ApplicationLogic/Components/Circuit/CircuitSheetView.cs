@@ -1,5 +1,6 @@
 namespace ACDCs.ApplicationLogic.Components.Circuit;
 
+using ACDCs.ApplicationLogic.Components.QuickEdit;
 using CircuitRenderer.Interfaces;
 using Edit;
 using Items;
@@ -21,6 +22,7 @@ public sealed class CircuitSheetView : AbsoluteLayout
 #pragma warning restore IDE0052
 
     private PropertiesWindow? _propertiesWindow;
+    private QuickEditWindow? _quickEditWindow;
 
     public CircuitView CircuitView { get; }
 
@@ -69,6 +71,9 @@ public sealed class CircuitSheetView : AbsoluteLayout
     private void OnLoaded(object? sender, EventArgs e)
     {
         _editWindow = new EditWindow(_container);
+
+        _quickEditWindow = new QuickEditWindow(_container);
+
         _propertiesWindow = new PropertiesWindow(_container) { OnUpdate = OnUpdate };
         _propertiesWindow.PropertyExcludeList.AddRange(
       new[]{

@@ -136,7 +136,7 @@ public class Window : ContentView
         AddWindowButtons();
         AddWindowResizer();
 
-        if (_menuFile != null)
+        if (!string.IsNullOrEmpty(_menuFile))
         {
             LoadMenu();
         }

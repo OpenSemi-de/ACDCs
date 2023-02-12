@@ -6,19 +6,39 @@ using Sharp.UI;
 public class QuickEditView : Grid
 {
     private readonly Label _labelName;
+    private readonly Label _unitLabel;
+    private readonly Entry _valueEntry;
 
     public QuickEditView()
     {
-        this.ColumnDefinitions(new ColumnDefinitionCollection
+        this.Margin(2)
+        .ColumnDefinitions(new ColumnDefinitionCollection
         {
             new ColumnDefinition(120),
-            new ColumnDefinition(140),
+            new ColumnDefinition(60),
+            new ColumnDefinition(10),
             new ColumnDefinition()
+        })
+        .RowDefinitions(new RowDefinitionCollection
+        {
+            new RowDefinition(40) ,
+            new RowDefinition(20)
         });
 
-        this.RowDefinitions(new RowDefinitionCollection { new RowDefinition(60) });
         _labelName = new QuickEditLabel("Select item");
         Add(_labelName);
+
+        _valueEntry = new Entry("---")
+            .HorizontalOptions(LayoutOptions.Fill)
+            .VerticalOptions(LayoutOptions.Fill)
+            .IsEnabled(true)
+            .Margin(0)
+            .Column(1);
+        Add(_valueEntry);
+
+        _unitLabel = new QuickEditLabel("---")
+            .Column(2);
+        Add(_unitLabel);
     }
 
     public void UpdateEditor(IWorksheetItem item)

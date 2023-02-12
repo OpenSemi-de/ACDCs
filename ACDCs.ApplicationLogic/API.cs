@@ -210,7 +210,7 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
 
     public Task SwitchMultiselect(object? state, CircuitView circuitView) => _editService.SwitchMultiselect(state, circuitView);
 
-    public ImageSource? WindowImageSource(float width, float height) => _imageService.WindowImageSource(width, height);
+    public ImageSource? WindowImageSource(float width, float height, int titleHeight) => _imageService.WindowImageSource(width, height, titleHeight);
 
     private static void OnReset(ResetEventArgs args)
     {

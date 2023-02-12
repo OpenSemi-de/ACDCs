@@ -58,6 +58,12 @@ public sealed class CircuitSheetView : AbsoluteLayout
         CircuitView.ShowCollisionMap = Convert.ToBoolean(API.GetPreference("ShowTraceCollisionMap"));
         CircuitView.CursorDebugChanged = CursorDebugChanged;
         CircuitView.ItemsView = _itemsView;
+        CircuitView.OnSelectedItemChange = OnSelectedItemChange;
+    }
+
+    private void OnSelectedItemChange(IWorksheetItem obj)
+    {
+        _quickEditWindow?.EditView.UpdateEditor(obj);
     }
 
     private void CursorDebugChanged()

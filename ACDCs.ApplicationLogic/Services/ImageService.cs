@@ -114,7 +114,7 @@ public class ImageService : IImageService
         Task.Run(() =>
 #pragma warning restore CS4014
         {
-            Task.Delay(10000).Wait();
+            Task.Delay(30000).Wait();
             memoryStream.Dispose();
             GC.Collect();
         });
@@ -122,7 +122,7 @@ public class ImageService : IImageService
         return memoryStream;
     }
 
-    public ImageSource? WindowImageSource(float width, float height)
+    public ImageSource? WindowImageSource(float width, float height, int titleHeight)
     {
         try
         {
@@ -145,9 +145,9 @@ public class ImageService : IImageService
             canvas.DrawRoundedRectangle(2, 2, width - 4, height - 4, 1);
 
             canvas.Antialias = true;
-            canvas.FillRoundedRectangle(0, 0, width, 38, 1);
+            canvas.FillRoundedRectangle(0, 0, width, titleHeight, 1);
             canvas.Antialias = false;
-            canvas.DrawRoundedRectangle(2, 2, width - 4, 36, 1);
+            canvas.DrawRoundedRectangle(2, 2, width - 4, titleHeight - 2, 1);
 
             ImageSource source = GetImageSource(context).GetAwaiter().GetResult();
 

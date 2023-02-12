@@ -17,7 +17,7 @@ public class EditWindow : Window
 
     private double ButtonWidth { get; set; }
 
-    public EditWindow(WindowContainer? layout) : base(layout, "Tools", "", false, GetView)
+    public EditWindow(WindowContainer? layout) : base(layout, "Tools", "", false, GetView, titleHeight: 28)
     {
         _layout = layout;
         Initialize();

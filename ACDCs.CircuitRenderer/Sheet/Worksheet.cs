@@ -301,12 +301,12 @@ public sealed class Worksheet
                 return false;
             }
 
-            SelectedItems.AddItem(selectedItem);
+            SelectedItems.Add(selectedItem);
             return true;
         }
 
         SelectedItems.Clear();
-        SelectedItems.AddItem(selectedItem);
+        SelectedItems.Add(selectedItem);
         return true;
     }
 

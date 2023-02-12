@@ -38,11 +38,11 @@ public class CircuitView : ContentView, ICircuitViewProperties
     public Worksheet CurrentWorksheet { get; private set; }
     public Action? CursorDebugChanged { get; set; }
     public string? CursorDebugOutput { get; private set; }
-    public Color ForegroundColor { get; set; } = API.Instance.Foreground;
+    public Color ForegroundColor { get; set; } = API.Instance.Text;
     public ItemsView? ItemsView { get; set; }
+    public Action<WorksheetItem>? OnSelectedItemChange { get; set; }
     public LineInstruction? SelectedTraceLine { get; private set; }
     public bool ShowCollisionMap { get; set; }
-    private static Action<WorksheetItem>? OnSelectedItemChange => null;
     private bool MultiSelectionMode { get; }
     private WorksheetItem? SelectedItem { get; set; }
     private TraceItem? SelectedTrace { get; set; }

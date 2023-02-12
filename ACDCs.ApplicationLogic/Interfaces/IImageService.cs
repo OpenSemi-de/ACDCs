@@ -12,5 +12,5 @@ public interface IImageService
 
     ImageSource? ButtonImageSource(string text, int width, int height);
 
-    ImageSource? WindowImageSource(float width, float height);
+    ImageSource? WindowImageSource(float width, float height, int titleHeight);
 }

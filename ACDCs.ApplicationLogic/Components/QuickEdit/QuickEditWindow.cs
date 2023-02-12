@@ -5,15 +5,25 @@ using Window;
 // ReSharper disable once UnusedType.Global
 public class QuickEditWindow : Window
 {
-    public QuickEditWindow(WindowContainer? container) : base(container, "QuickEdit", "", false, GetView)
+    public QuickEditView EditView { get; set; }
+
+    public QuickEditWindow(WindowContainer? container) : base(container, "QuickEdit", "", false, GetView, titleHeight: 28)
     {
         Start();
-        container?.SetWindowPosition(this, 400, 4);
+        HideResizer();
+        HideWindowButtons();
+        container?.SetWindowPosition(this, 260, 4);
         container?.SetWindowSize(this, 400, 90);
     }
 
-    private static View GetView(Window arg)
+    private static View GetView(Window window)
     {
-        return new QuickEditView();
+        QuickEditView quickEditView = new QuickEditView();
+        if (window is QuickEditWindow quickEditWindow)
+        {
+            quickEditWindow.EditView = quickEditView;
+        }
+
+        return quickEditView;
     }
 }

@@ -23,7 +23,7 @@ public sealed class WorksheetItemList : List<IWorksheetItem>
     public int AddItem(IWorksheetItem item)
     {
         int refNum = ReferenceManager.GetRefNum(item.GetType().Name);
-        item.RefName = $"{item.GetType().Name}{refNum}";
+        item.RefName = $"{item.GetType().Name.Replace("Item", "")}{refNum}";
         Add(item);
         item.DrawableComponent.Worksheet = Worksheet;
         OnItemAdded?.Invoke(item);
@@ -37,7 +37,7 @@ public sealed class WorksheetItemList : List<IWorksheetItem>
         NetItem newNet = new();
         newNet.Pins.Add(pin1);
         newNet.Pins.Add(pin2);
-        newNet.RefName = $"{nameof(NetItem)}{refNum}";
+        newNet.RefName = $"{nameof(NetItem).Replace("Item", "")}{refNum}";
         newNet.DrawableComponent.Worksheet = Worksheet;
         Add(newNet);
         OnItemAdded?.Invoke(newNet);

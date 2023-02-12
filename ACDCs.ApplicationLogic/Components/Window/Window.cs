@@ -10,11 +10,11 @@ public class Window : ContentView
     private readonly WindowContainer? _container;
     private readonly bool _isWindowParent;
     private readonly string? _menuFile;
+    private readonly int _titleHeight;
     private Image? _backgroundImage;
     private View? _childView;
     private Grid? _mainGrid;
     private WindowButtons? _windowButtons;
-
     public AbsoluteLayout ChildLayout { get; private set; }
     public int LastHeight { get; set; }
     public int LastWidth { get; set; }
@@ -39,6 +39,7 @@ public class Window : ContentView
     public WindowResizer Resizer { get; private set; }
 
     // ReSharper disable once MemberCanBePrivate.Global
+    // ReSharper disable once UnusedAutoPropertyAccessor.Global
     public Action<Window>? Started { get; set; }
 
     public WindowTitle Title { get; private set; }
@@ -48,9 +49,10 @@ public class Window : ContentView
     private MenuView MenuView { get; set; }
 
     protected Window(WindowContainer? container, string title, string? menuFile = null, bool isWindowParent = false,
-                                    Func<Window, View>? childViewFunction = null)
+                                    Func<Window, View>? childViewFunction = null, int titleHeight = 38)
     {
         _container = container;
+        _titleHeight = titleHeight;
         WindowTitle = title;
         _menuFile = menuFile;
         _isWindowParent = isWindowParent;
@@ -71,9 +73,12 @@ public class Window : ContentView
     public void GetBackgroundImage()
     {
         Rect currentBounds = AbsoluteLayout.GetLayoutBounds(this);
-        _backgroundImage.Source =
-            API.Instance.WindowImageSource(Convert.ToSingle(currentBounds.Width),
-                Convert.ToSingle(currentBounds.Height));
+        if (_backgroundImage != null)
+        {
+            _backgroundImage.Source =
+                API.Instance.WindowImageSource(Convert.ToSingle(currentBounds.Width),
+                    Convert.ToSingle(currentBounds.Height), _titleHeight);
+        }
     }
 
     public void Maximize()
@@ -165,6 +170,8 @@ public class Window : ContentView
             _mainGrid.SetRowAndColumn(_backgroundImage, 0, 0, 3, 3);
             _mainGrid.Add(_backgroundImage);
         }
+
+        GetBackgroundImage();
     }
 
     private void AddChildLayout(bool isWindowParent)
@@ -187,7 +194,7 @@ public class Window : ContentView
         })
         .RowDefinitions(new RowDefinitionCollection
         {
-            new RowDefinition(38), new RowDefinition(), new RowDefinition(34)
+            new RowDefinition(_titleHeight), new RowDefinition(), new RowDefinition(34)
         });
     }
 
@@ -205,6 +212,7 @@ public class Window : ContentView
     {
         Resizer = new WindowResizer()
             .Text("//")
+            .ZIndex(999)
             .Row(2)
             .Column(1)
             .FontSize(20)

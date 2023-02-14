@@ -22,19 +22,19 @@ public class QuickEditView : Grid
     {
         _window = window;
         this.Margin(2)
-        .ColumnDefinitions(new ColumnDefinitionCollection
-        {
-            new ColumnDefinition(90),
-            new ColumnDefinition(60),
-            new ColumnDefinition(20),
-            new ColumnDefinition(100),
-            new ColumnDefinition(100),
-            new ColumnDefinition()
-        })
-        .RowDefinitions(new RowDefinitionCollection
-        {
-            new RowDefinition(30)
-        });
+            .ColumnDefinitions(new ColumnDefinitionCollection
+            {
+                new ColumnDefinition(90),
+                new ColumnDefinition(60),
+                new ColumnDefinition(20),
+                new ColumnDefinition(100),
+                new ColumnDefinition(100),
+                new ColumnDefinition()
+            })
+            .RowDefinitions(new RowDefinitionCollection
+            {
+                new RowDefinition(30)
+            });
 
         _unitDescriptionLabel = new QuickEditLabel("Select item")
             .HorizontalTextAlignment(TextAlignment.End);
@@ -143,25 +143,17 @@ public class QuickEditView : Grid
     private async void SelectModelButton_Clicked(object? sender, EventArgs e)
     {
         await API.Call(() =>
-         {
-             if (_currentItem == null)
-             {
-                 return Task.CompletedTask;
-             }
+        {
+            if (_currentItem == null)
+            {
+                return Task.CompletedTask;
+            }
 
-             _modelSelectionWindow.IsVisible = true;
-             _modelSelectionWindow.FadeTo(1);
-             _modelSelectionWindow?.SetComponentType(_currentItem.GetType().Name);
-             API.TabBar?.BringToFront(_modelSelectionWindow);
-             return Task.CompletedTask;
-         });
-    }
-}
-
-public class QuickEditLabel : Label
-{
-    public QuickEditLabel(string text)
-    {
-        this.Text(text);
+            _modelSelectionWindow.IsVisible = true;
+            _modelSelectionWindow.FadeTo(1);
+            _modelSelectionWindow?.SetComponentType(_currentItem.GetType().Name);
+            API.TabBar?.BringToFront(_modelSelectionWindow);
+            return Task.CompletedTask;
+        });
     }
 }

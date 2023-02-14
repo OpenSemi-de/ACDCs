@@ -1,11 +1,11 @@
 namespace ACDCs.ApplicationLogic.Components.Circuit;
 
-using ACDCs.ApplicationLogic.Components.QuickEdit;
 using CircuitRenderer.Interfaces;
 using Edit;
 using Items;
 using Microsoft.Maui.Layouts;
 using Properties;
+using QuickEdit;
 using Sharp.UI;
 using Window;
 

@@ -13,12 +13,12 @@ public class QuickEditWindow : Window
         HideResizer();
         HideWindowButtons();
         container?.SetWindowPosition(this, 260, 4);
-        container?.SetWindowSize(this, 400, 90);
+        container?.SetWindowSize(this, 400, 70);
     }
 
     private static View GetView(Window window)
     {
-        QuickEditView quickEditView = new QuickEditView();
+        QuickEditView quickEditView = new QuickEditView(window);
         if (window is QuickEditWindow quickEditWindow)
         {
             quickEditWindow.EditView = quickEditView;

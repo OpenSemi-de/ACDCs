@@ -1,6 +1,7 @@
 ﻿namespace ACDCs.ApplicationLogic.Components.ModelSelection;
 
 using System.Collections.ObjectModel;
+using CircuitRenderer.Items.Transistors;
 using CommunityToolkit.Maui.Core.Extensions;
 using Data.ACDCs.Components.BJT;
 using Data.ACDCs.Components.Diode;
@@ -14,37 +15,65 @@ using RowDefinition = RowDefinition;
 
 public class ModelSelectionWindow : Window
 {
+    public ModelSelectionView? ModelSelectionView { get; set; }
+
+    public Action<IElectronicComponent>? OnModelSelected { get; set; }
+
+    public ModelSelectionWindow(WindowContainer? container) : base(container, "Select model", "", false, GetView)
+    {
+        Start();
+    }
+
+    public void SetComponentType(string name)
+    {
+        ModelSelectionView?.SetComponentType(name);
+    }
+
+    private static View GetView(Window window)
+    {
+        if (window is not ModelSelectionWindow modelSelectionWindow)
+        {
+            return new Label("error");
+        }
+
+        ModelSelectionView modelSelectionView = new(window) { OnModelSelected = modelSelectionWindow.OnModelSelected };
+        modelSelectionWindow.ModelSelectionView = modelSelectionView;
+        modelSelectionWindow.ModelSelectionView.OnModelSelected = component => modelSelectionWindow.OnModelSelected(component);
+        return modelSelectionView;
+    }
+}
+
+public class ModelSelectionView : Grid
+{
     private readonly StackLayout _buttonStack;
     private readonly Button _cancelButton;
     private readonly ListView _componentsList;
     private readonly Label _dividerButtons;
-    private readonly Grid _modelGrid;
     private readonly Button _okButton;
     private readonly StackLayout _pagingStack;
     private readonly Entry _searchEntry;
+    private readonly Window _window;
     private string? _componentType;
     private ObservableCollection<ComponentViewModel>? _fullCollection;
     private ComponentViewModel? _lastSelectedItem;
     private IElectronicComponent? _selectedModel;
     public Action<IElectronicComponent>? OnModelSelected { get; set; }
 
-    public ModelSelectionWindow(WindowContainer? layout) : base(layout, "Select Model")
+    public ModelSelectionView(Window window)
     {
-        WidthRequest = 500;
-        HeightRequest = 500;
+        _window = window;
 
-        _modelGrid = new Grid()
-            .HorizontalOptions(LayoutOptions.Fill)
+        this.HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill)
             .Margin(0)
             .Padding(0);
 
-        _modelGrid.RowDefinitions.Add(new RowDefinition(new GridLength(40)));
-        _modelGrid.RowDefinitions.Add(new RowDefinition(GridLength.Star));
-        _modelGrid.RowDefinitions.Add(new RowDefinition(new GridLength(40)));
-        _modelGrid.RowDefinitions.Add(new RowDefinition(new GridLength(40)));
+        RowDefinitions.Add(new RowDefinition(new GridLength(40)));
+        RowDefinitions.Add(new RowDefinition(GridLength.Star));
+        RowDefinitions.Add(new RowDefinition(new GridLength(40)));
+        RowDefinitions.Add(new RowDefinition(new GridLength(40)));
 
-        _modelGrid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
+        ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
 
         _searchEntry = new Entry()
             .HorizontalOptions(LayoutOptions.Fill)
@@ -94,12 +123,10 @@ public class ModelSelectionWindow : Window
 
         _buttonStack.Add(_okButton);
 
-        _modelGrid.Add(_searchEntry);
-        _modelGrid.Add(_componentsList);
-        _modelGrid.Add(_pagingStack);
-        _modelGrid.Add(_buttonStack);
-        Start();
-        ChildLayout.Add(_modelGrid);
+        Add(_searchEntry);
+        Add(_componentsList);
+        Add(_pagingStack);
+        Add(_buttonStack);
     }
 
     public void SetComponentType(string componentType)
@@ -108,10 +135,12 @@ public class ModelSelectionWindow : Window
         switch (_componentType)
         {
             case "Bjt:NPN":
+            case nameof(NpnTransistorItem):
                 LoadDB("NPN");
                 return;
 
             case "Bjt:PNP":
+            case nameof(PnpTransistorItem):
                 LoadDB("PNP");
                 return;
 
@@ -148,7 +177,7 @@ public class ModelSelectionWindow : Window
 
     private void CancelButton_Clicked(object? sender, EventArgs e)
     {
-        Close();
+        _window.Close();
     }
 
     private void ComponentsList_ItemTapped(object? sender, ItemTappedEventArgs e)
@@ -168,6 +197,7 @@ public class ModelSelectionWindow : Window
 
     private async void LoadDB(string type)
     {
+        type = type.Replace("Item", "");
         await API.Call(() =>
         {
             SetItemSource(Array.Empty<IElectronicComponent>());
@@ -221,7 +251,7 @@ public class ModelSelectionWindow : Window
         }
 
         OnModelSelected?.Invoke(_selectedModel);
-        Close();
+        _window.Close();
     }
 
     private void SearchTextChanged(object? sender, TextChangedEventArgs e)

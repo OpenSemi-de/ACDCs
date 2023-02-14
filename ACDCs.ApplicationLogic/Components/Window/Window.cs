@@ -109,6 +109,11 @@ public class Window : ContentView
     {
     }
 
+    public void SetTitle(string title)
+    {
+        Title.Text = title;
+    }
+
     protected void HideResizer()
     {
         Resizer.IsVisible = false;

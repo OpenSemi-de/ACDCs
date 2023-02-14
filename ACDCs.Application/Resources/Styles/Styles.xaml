@@ -6,7 +6,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:window="clr-namespace:ACDCs.ApplicationLogic.Components.Window;assembly=ACDCs.ApplicationLogic"
     xmlns:ui="clr-namespace:Sharp.UI;assembly=Sharp.UI"
-    xmlns:menu="clr-namespace:ACDCs.ApplicationLogic.Components.Menu;assembly=ACDCs.ApplicationLogic">
+    xmlns:menu="clr-namespace:ACDCs.ApplicationLogic.Components.Menu;assembly=ACDCs.ApplicationLogic"
+    xmlns:quickEdit="clr-namespace:ACDCs.ApplicationLogic.Components.QuickEdit;assembly=ACDCs.ApplicationLogic">
 
 
     <Style TargetType="window:WindowStarterButton">
@@ -79,6 +80,15 @@
 
     <Style TargetType="window:WindowTitle">
         <Setter Property="FontAttributes" Value="Bold"></Setter>
+        <Setter Property="FontSize" Value="14"></Setter>
+        <Setter Property="TextColor"
+                Value="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}" />
+        <Setter Property="FontFamily" Value="Maple Mono"></Setter>
+    </Style>
+
+    <Style TargetType="quickEdit:QuickEditLabel">
+        <Setter Property="VerticalTextAlignment" Value="Center"></Setter>
+        <Setter Property="FontAttributes" Value="None"></Setter>
         <Setter Property="FontSize" Value="14"></Setter>
         <Setter Property="TextColor"
                 Value="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}" />

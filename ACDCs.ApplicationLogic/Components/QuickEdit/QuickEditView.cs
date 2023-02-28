@@ -2,6 +2,7 @@
 
 using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Items;
+using ACDCs.CircuitRenderer.Items.Sources;
 using Data.ACDCs.Interfaces;
 using ModelSelection;
 using Sharp.UI;
@@ -24,7 +25,7 @@ public class QuickEditView : Grid
         this.Margin(2)
             .ColumnDefinitions(new ColumnDefinitionCollection
             {
-                new ColumnDefinition(90),
+                new ColumnDefinition(100),
                 new ColumnDefinition(60),
                 new ColumnDefinition(20),
                 new ColumnDefinition(100),
@@ -41,11 +42,13 @@ public class QuickEditView : Grid
         Add(_unitDescriptionLabel);
 
         _valueEntry = new Entry("")
+            .FontSize(15)
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill)
             .IsEnabled(true)
             .Margin(0)
-            .Column(1);
+            .Column(1)
+            .OnTextChanged(ValueEntry_OnTextChanged);
         Add(_valueEntry);
 
         _unitLabel = new QuickEditLabel("-")
@@ -83,11 +86,37 @@ public class QuickEditView : Grid
         };
     }
 
+    private void ValueEntry_OnTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        if (_currentItem is not WorksheetItem worksheetItem)
+        {
+            return;
+        }
+
+        switch (_currentItem)
+        {
+            case ResistorItem:
+            case InductorItem:
+            case CapacitorItem:
+                if (worksheetItem.Model != null)
+                {
+                    worksheetItem.Model.Value = e.NewTextValue;
+                }
+                break;
+        }
+    }
+
     public void UpdateEditor(IWorksheetItem item)
     {
+        if (item is not WorksheetItem worksheetItem)
+        {
+            return;
+        }
+
         _currentItem = item;
         _unitDescriptionLabel.Text = "";
         _unitLabel.Text = "";
+        _valueEntry.Text = "";
 
         string typeName = item.GetType().Name.Replace("Item", "");
         _window?.SetTitle($"{typeName} / {item.RefName}");
@@ -95,18 +124,27 @@ public class QuickEditView : Grid
         switch (item)
         {
             case ResistorItem:
-                _unitDescriptionLabel.Text = "Resistance";
+                _valueEntry.Text = worksheetItem.Value;
+                _unitDescriptionLabel.Text = "Resistance:";
                 _unitLabel.Text = "Ω";
                 break;
 
             case InductorItem:
-                _unitDescriptionLabel.Text = "Henry";
+                _valueEntry.Text = worksheetItem.Value;
+                _unitDescriptionLabel.Text = "Inductance:";
                 _unitLabel.Text = "H";
                 break;
 
             case CapacitorItem:
-                _unitDescriptionLabel.Text = "Farad";
+                _valueEntry.Text = worksheetItem.Value;
+                _unitDescriptionLabel.Text = "Capacity:";
                 _unitLabel.Text = "F";
+                break;
+
+            case VoltageSourceItem:
+                _valueEntry.Text = worksheetItem.Value?.Replace("V", "");
+                _unitDescriptionLabel.Text = "Voltage:";
+                _unitLabel.Text = "V";
                 break;
 
             default:

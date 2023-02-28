@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ACDCs.Sensors.Client.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="5"
+            Padding="5,0"
+            VerticalOptions="Start">
+            <HorizontalStackLayout>
+                <Entry Text="Select output directory..." IsReadOnly="True" x:Name="DirectoryEntry" HorizontalOptions="Start" MinimumWidthRequest="300"></Entry>
+                <Button Text="Pick directory" Clicked="PickDirectory_Clicked" HorizontalOptions="End" WidthRequest="200"></Button>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Entry Text="" TextChanged="UrlEntry_TextChanged" x:Name="urlEntry" WidthRequest="200"></Entry>
+                <Button Text="Start client" Clicked="StartClient_Clicked"></Button>
+                <Button Text="Stop client" Clicked="StopClient_Clicked"></Button>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

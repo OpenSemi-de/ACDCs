@@ -17,6 +17,8 @@ public class SensorServer
     private readonly Server _server;
     private readonly List<Thread> _threads = new();
     private readonly Timer _updateTimer;
+    private int _connectionCount;
+    private int _sampleCount;
     public bool AccelerationSupported { get; set; }
     public bool AccelerationWorkerStarted { get; private set; }
     public string? AccelerometerCacheLabelText { get; set; }
@@ -37,6 +39,8 @@ public class SensorServer
     public string? MagnetometerCacheLabelText { get; set; }
     public string? MagnetometerSpeedLabelText { get; private set; }
     public bool MagnetometerSupported { get; set; }
+    public string? NetworkConnectionLabel { get; set; }
+    public string? NetworkDeliveryLabel { get; set; }
     public string? OrientationSensorCacheLabelText { get; set; }
     public string? OrientationSensorSpeedLabelText { get; private set; }
     public bool OrientationSupported { get; set; }
@@ -160,37 +164,88 @@ public class SensorServer
 
     private async Task GetAccelerationSamples(HttpContext ctx)
     {
-        await ctx.Response.Send(JsonConvert.SerializeObject(_accelerationWorker.GetSamples()));
+        _connectionCount++;
+        if (_accelerationWorker != null)
+        {
+            List<AccelerationSample> accelerationSamples = _accelerationWorker.GetSamples();
+            _sampleCount += accelerationSamples.Count;
+            await ctx.Response.Send(JsonConvert.SerializeObject(accelerationSamples));
+        }
     }
 
     private async Task GetBarometerSamples(HttpContext ctx)
     {
-        await ctx.Response.Send(JsonConvert.SerializeObject(_barometerWorker.GetSamples()));
+        _connectionCount++;
+        if (_barometerWorker != null)
+        {
+            List<BarometerSample> barometerSamples = _barometerWorker.GetSamples();
+            _sampleCount += barometerSamples.Count;
+            await ctx.Response.Send(JsonConvert.SerializeObject(barometerSamples));
+        }
     }
 
     private async Task GetCompassSamples(HttpContext ctx)
     {
-        await ctx.Response.Send(JsonConvert.SerializeObject(_compassWorker.GetSamples()));
+        _connectionCount++;
+        if (_compassWorker != null)
+        {
+            List<CompassSample> compassSamples = _compassWorker.GetSamples();
+            _sampleCount += compassSamples.Count;
+            await ctx.Response.Send(JsonConvert.SerializeObject(compassSamples));
+        }
+    }
+
+    private int GetConnectionCount()
+    {
+        int count = _connectionCount;
+        _connectionCount = 0;
+        return count;
     }
 
     private async Task GetDefaultRoute(HttpContext ctx)
     {
+        _connectionCount++;
         await ctx.Response.Send("ACDCs.Sensors.Server started.");
     }
 
     private async Task GetGyroscopeSamples(HttpContext ctx)
     {
-        await ctx.Response.Send(JsonConvert.SerializeObject(_gyroscopeWorker.GetSamples()));
+        _connectionCount++;
+        if (_gyroscopeWorker != null)
+        {
+            List<GyroscopeSample> gyroscopeSamples = _gyroscopeWorker.GetSamples();
+            _sampleCount += gyroscopeSamples.Count;
+            await ctx.Response.Send(JsonConvert.SerializeObject(gyroscopeSamples));
+        }
     }
 
     private async Task GetMagneticSamples(HttpContext ctx)
     {
-        await ctx.Response.Send(JsonConvert.SerializeObject(_magneticWorker.GetSamples()));
+        _connectionCount++;
+        if (_magneticWorker != null)
+        {
+            List<MagneticSample> magneticSamples = _magneticWorker.GetSamples();
+            _sampleCount += magneticSamples.Count;
+            await ctx.Response.Send(JsonConvert.SerializeObject(magneticSamples));
+        }
     }
 
     private async Task GetOrientationSamples(HttpContext ctx)
     {
-        await ctx.Response.Send(JsonConvert.SerializeObject(_orientationWorker.GetSamples()));
+        _connectionCount++;
+        if (_orientationWorker != null)
+        {
+            List<OrientationSample> orientationSamples = _orientationWorker.GetSamples();
+            _sampleCount += orientationSamples.Count;
+            await ctx.Response.Send(JsonConvert.SerializeObject(orientationSamples));
+        }
+    }
+
+    private int GetSampleCount()
+    {
+        int count = _sampleCount;
+        _sampleCount = 0;
+        return count;
     }
 
     private void StartThread(Action start)
@@ -202,6 +257,8 @@ public class SensorServer
 
     private async void UpdateGui(object? state)
     {
+        NetworkConnectionLabel = $"{GetConnectionCount()} connections/sec.";
+        NetworkDeliveryLabel = $"{GetSampleCount()} samples/sec.";
         AccelerometerSpeedLabelText = $"{_accelerationWorker.NumberOfSamplesSinceLastCheck()} samples/sec.";
         MagnetometerSpeedLabelText = $"{_magneticWorker.NumberOfSamplesSinceLastCheck()} samples/sec.";
         OrientationSensorSpeedLabelText = $"{_orientationWorker.NumberOfSamplesSinceLastCheck()} samples/sec.";

@@ -66,7 +66,7 @@ public class SensorWorker<TResult, TSampleType> : ISensorWorker<TSampleType> whe
         {
             List<DateTime> list = _samples.Keys.Order().ToList();
 
-            while (_samples.Count > 1000)
+            while (_samples.Count > 1000 && list.Count > 0)
             {
                 DateTime dateTime = list.First();
                 var inv = new TryRemoveThreaded(_samples.TryRemove);

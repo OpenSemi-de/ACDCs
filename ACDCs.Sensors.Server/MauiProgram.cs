@@ -16,7 +16,7 @@ public static class MauiProgram
             });
 
 #if ANDROID
-        builder.Services.AddTransient<IBackgroundService, BackgroundService>();
+        builder.Services.AddSingleton<IBackgroundService>(new BackgroundService());
 #endif
 
 #if DEBUG

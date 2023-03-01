@@ -14,6 +14,7 @@ public interface IBackgroundService
     void Stop();
 }
 
+[Service]
 public class BackgroundService : Service, IBackgroundService
 {
     public override IBinder? OnBind(Intent? intent) => throw new NotImplementedException();

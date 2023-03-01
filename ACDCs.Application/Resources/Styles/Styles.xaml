@@ -184,7 +184,8 @@
                     />
             </Setter.Value>
         </Setter>
-        <Setter Property="Padding" Value="14,10" />
+        <Setter Property="Padding" Value="2" />
+        <Setter Property="Margin" Value="1" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">

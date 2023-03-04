@@ -1,15 +1,16 @@
-﻿namespace ACDCs.ApplicationLogic.Components.ModelSelection;
+﻿namespace ACDCs.API.Core.Components.ModelSelection;
 
 using System.Collections.ObjectModel;
-using CircuitRenderer.Items.Transistors;
+using ACDCs.API.Windowing.Components.Window;
+using ACDCs.CircuitRenderer.Items.Transistors;
+using ACDCs.Data.ACDCs.Components.BJT;
+using ACDCs.Data.ACDCs.Components.Diode;
+using ACDCs.Data.ACDCs.Components.Resistor;
+using ACDCs.Data.ACDCs.Interfaces;
+using ACDCs.IO.DB;
 using CommunityToolkit.Maui.Core.Extensions;
-using Data.ACDCs.Components.BJT;
-using Data.ACDCs.Components.Diode;
-using Data.ACDCs.Components.Resistor;
-using Data.ACDCs.Interfaces;
-using IO.DB;
+using Instance;
 using Sharp.UI;
-using Window;
 using ColumnDefinition = ColumnDefinition;
 using RowDefinition = RowDefinition;
 

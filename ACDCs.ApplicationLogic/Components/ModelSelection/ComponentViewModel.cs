@@ -1,6 +1,6 @@
-﻿namespace ACDCs.ApplicationLogic.Components.ModelSelection;
+﻿namespace ACDCs.API.Core.Components.ModelSelection;
 
-using Data.ACDCs.Interfaces;
+using ACDCs.Data.ACDCs.Interfaces;
 using Sharp.UI;
 
 [BindableProperties]

@@ -1,4 +1,4 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Components;
+﻿namespace ACDCs.API.Core.Components.Components;
 
 using Sharp.UI;
 using ColumnDefinition = ColumnDefinition;

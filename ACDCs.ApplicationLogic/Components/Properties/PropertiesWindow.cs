@@ -1,11 +1,11 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Properties;
+﻿namespace ACDCs.API.Core.Components.Properties;
 
 using System.Collections.ObjectModel;
 using System.Reflection;
-using Interfaces;
+using ACDCs.API.Interfaces;
+using ACDCs.API.Windowing.Components.Window;
 using Sharp.UI;
 using UraniumUI.Material.Controls;
-using Window;
 using DataTemplate = DataTemplate;
 
 public class PropertiesWindow : Window, IGetPropertyUpdates

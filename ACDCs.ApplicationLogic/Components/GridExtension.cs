@@ -1,4 +1,4 @@
-﻿namespace ACDCs.ApplicationLogic.Components;
+﻿namespace ACDCs.API.Core.Components;
 
 using Sharp.UI;
 

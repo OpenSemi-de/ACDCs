@@ -56,12 +56,18 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-		<PackageReference Include="Sharp.UI" Version="0.4.4-alpha" />
+		<PackageReference Include="Sharp.UI" Version="0.4.5-alpha" />
 		<PackageReference Include="Watson" Version="4.3.8" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\ACDCs.Sensors.API\ACDCs.Sensors.API.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Platforms\Windows\NetService.cs">
+	    <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>

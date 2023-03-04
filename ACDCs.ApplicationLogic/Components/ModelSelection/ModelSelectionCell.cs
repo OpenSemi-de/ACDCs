@@ -1,4 +1,4 @@
-﻿namespace ACDCs.ApplicationLogic.Components.ModelSelection;
+﻿namespace ACDCs.API.Core.Components.ModelSelection;
 
 using Sharp.UI;
 using ColumnDefinition = ColumnDefinition;

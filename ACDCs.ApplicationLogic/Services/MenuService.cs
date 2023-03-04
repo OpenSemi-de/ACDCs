@@ -1,6 +1,8 @@
-﻿namespace ACDCs.ApplicationLogic.Services;
+﻿namespace ACDCs.API.Core.Services;
 
-using Interfaces;
+using ACDCs.API.Interfaces;
+
+using Instance;
 
 public class MenuService : IMenuService
 {

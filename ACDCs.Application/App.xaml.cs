@@ -1,7 +1,9 @@
-﻿using ACDCs.ApplicationLogic;
+﻿using ACDCs.API.Core;
 using Microsoft.AppCenter.Crashes;
 
 namespace ACDCs.Application;
+
+using API.Instance;
 
 public partial class App : Microsoft.Maui.Controls.Application
 {
@@ -10,10 +12,10 @@ public partial class App : Microsoft.Maui.Controls.Application
     public App()
     {
         InitializeComponent();
-        if (App.Current != null)
+        if (Current != null)
         {
-            API.UserAppTheme = App.Current.UserAppTheme;
-            API.Resources = App.Current.Resources;
+            API.UserAppTheme = Current.UserAppTheme;
+            API.Resources = Current.Resources;
             API.TrackError = OnError;
         }
 
@@ -24,7 +26,7 @@ public partial class App : Microsoft.Maui.Controls.Application
             UserAppTheme = AppTheme.Dark;
         }
 
-        _api = API.GetAPIInstance();
+        _api = Workbench.GetAPIInstance();
         MainPage = _api.GetWorkbenchPage();
         AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
     }

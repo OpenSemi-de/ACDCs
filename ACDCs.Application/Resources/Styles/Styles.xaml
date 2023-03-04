@@ -4,13 +4,13 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:window="clr-namespace:ACDCs.ApplicationLogic.Components.Window;assembly=ACDCs.ApplicationLogic"
     xmlns:ui="clr-namespace:Sharp.UI;assembly=Sharp.UI"
-    xmlns:menu="clr-namespace:ACDCs.ApplicationLogic.Components.Menu;assembly=ACDCs.ApplicationLogic"
-    xmlns:quickEdit="clr-namespace:ACDCs.ApplicationLogic.Components.QuickEdit;assembly=ACDCs.ApplicationLogic">
+    xmlns:window1="clr-namespace:ACDCs.API.Windowing.Components.Window;assembly=ACDCs.API.Windowing"
+    xmlns:quickEdit1="clr-namespace:ACDCs.API.Core.Components.QuickEdit;assembly=ACDCs.API.Core"
+    xmlns:menu1="clr-namespace:ACDCs.API.Windowing.Components.Menu;assembly=ACDCs.API.Windowing">
 
 
-    <Style TargetType="window:WindowStarterButton">
+    <Style TargetType="window1:WindowStarterButton">
         <Setter Property="BorderWidth" Value="1"></Setter>
         <Setter Property="CornerRadius" Value="0"></Setter>
         <Setter Property="FontSize" Value="13"></Setter>
@@ -42,7 +42,7 @@
     </Style>
 
 
-    <Style TargetType="window:WindowButton">
+    <Style TargetType="window1:WindowButton">
         <Setter Property="BorderWidth" Value="1"></Setter>
         <Setter Property="CornerRadius" Value="0"></Setter>
         <Setter Property="FontSize" Value="13"></Setter>
@@ -73,12 +73,12 @@
 
     </Style>
 
-    <Style TargetType="window:WindowButtons">
+    <Style TargetType="window1:WindowButtons">
         <Setter Property="Margin" Value="2,0,2,0">
         </Setter>
     </Style>
 
-    <Style TargetType="window:WindowTitle">
+    <Style TargetType="window1:WindowTitle">
         <Setter Property="FontAttributes" Value="Bold"></Setter>
         <Setter Property="FontSize" Value="14"></Setter>
         <Setter Property="TextColor"
@@ -86,7 +86,7 @@
         <Setter Property="FontFamily" Value="Maple Mono"></Setter>
     </Style>
 
-    <Style TargetType="quickEdit:QuickEditLabel">
+    <Style TargetType="quickEdit1:QuickEditLabel">
         <Setter Property="VerticalTextAlignment" Value="Center"></Setter>
         <Setter Property="FontAttributes" Value="None"></Setter>
         <Setter Property="FontSize" Value="14"></Setter>
@@ -118,11 +118,11 @@
                 Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
 
-    <Style TargetType="menu:MenuFrame">
+    <Style TargetType="menu1:MenuFrame">
         <Setter Property="BackgroundColor" Value="Transparent"></Setter>
     </Style>
 
-    <Style TargetType="menu:MenuButton" ApplyToDerivedTypes="True">
+    <Style TargetType="menu1:MenuButton" ApplyToDerivedTypes="True">
         <Setter Property="TextColor"
                 Value="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}" />
         <Setter Property="BackgroundColor"

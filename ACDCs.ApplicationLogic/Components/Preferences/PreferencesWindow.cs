@@ -1,6 +1,6 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Preferences;
+﻿namespace ACDCs.API.Core.Components.Preferences;
 
-using Window;
+using ACDCs.API.Windowing.Components.Window;
 
 // ReSharper disable once UnusedType.Global
 public class PreferencesWindow : Window

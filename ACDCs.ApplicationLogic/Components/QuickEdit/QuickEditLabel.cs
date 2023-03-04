@@ -1,4 +1,4 @@
-﻿namespace ACDCs.ApplicationLogic.Components.QuickEdit;
+﻿namespace ACDCs.API.Core.Components.QuickEdit;
 
 using Sharp.UI;
 

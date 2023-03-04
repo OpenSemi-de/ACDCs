@@ -1,6 +1,7 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Preferences;
+﻿namespace ACDCs.API.Core.Components.Preferences;
 
-using IO.DB;
+using ACDCs.IO.DB;
+using Instance;
 using Newtonsoft.Json;
 using Properties;
 using Sharp.UI;

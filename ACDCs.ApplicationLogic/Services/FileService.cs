@@ -1,21 +1,24 @@
-﻿namespace ACDCs.ApplicationLogic.Services;
+﻿namespace ACDCs.API.Core.Services;
 
-using CommunityToolkit.Maui.Core.Primitives;
+using ACDCs.API.Interfaces;
 using CommunityToolkit.Maui.Storage;
 using Components.Circuit;
-using Interfaces;
 
 public class FileService : IFileService
 {
-    public async Task NewFile(CircuitView circuitView)
+    public async Task NewFile(ICircuitView circuitView)
     {
-        circuitView.Clear();
+        if (circuitView is not CircuitView circuit) return;
+
+        circuit.Clear();
         GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
-        await circuitView.Paint();
+        await circuit.Paint();
     }
 
-    public async Task OpenFile(CircuitView circuitView)
+    public async Task OpenFile(ICircuitView circuitView)
     {
+        if (circuitView is not CircuitView circuit) return;
+
         Dictionary<DevicePlatform, IEnumerable<string>> fileTypes =
             new()
             {
@@ -33,17 +36,19 @@ public class FileService : IFileService
         if (result != null)
         {
             string fileName = result.FullPath;
-            circuitView.Open(fileName);
-            circuitView.CurrentWorksheet.Directory = Path.GetFullPath(fileName);
-            circuitView.CurrentWorksheet.Filename = Path.GetFileNameWithoutExtension(fileName);
+            circuit.Open(fileName);
+            circuit.CurrentWorksheet.Directory = Path.GetFullPath(fileName);
+            circuit.CurrentWorksheet.Filename = Path.GetFileNameWithoutExtension(fileName);
         }
     }
 
-    public async Task SaveFile(CircuitView circuitView, Page popupPage)
+    public async Task SaveFile(ICircuitView circuitView, Page popupPage)
     {
-        if (circuitView.CurrentWorksheet.Filename != "")
+        if (circuitView is not CircuitView circuit) return;
+
+        if (circuit.CurrentWorksheet.Filename != "")
         {
-            circuitView.SaveAs(Path.Combine(circuitView.CurrentWorksheet.Directory, circuitView.CurrentWorksheet.Filename));
+            circuit.SaveAs(Path.Combine(circuit.CurrentWorksheet.Directory, circuit.CurrentWorksheet.Filename));
         }
         else
         {
@@ -51,18 +56,20 @@ public class FileService : IFileService
         }
     }
 
-    public async Task SaveFileAs(Page popupPage, CircuitView circuitView)
+    public async Task SaveFileAs(Page popupPage, ICircuitView circuitView)
     {
+        if (circuitView is not CircuitView circuit) return;
+
         try
         {
-            Folder filePath = await FolderPicker.Default.PickAsync(
+            var filePath = await FolderPicker.Default.PickAsync(
                 FileSystem.Current.AppDataDirectory,
                 new CancellationToken());
             string? result = await popupPage.DisplayPromptAsync("filename", "filename",
-                initialValue: Path.GetFileNameWithoutExtension(circuitView.CurrentWorksheet.Filename) + ".acc");
-            if (result != null && filePath.Path != "")
+                initialValue: Path.GetFileNameWithoutExtension(circuit.CurrentWorksheet.Filename) + ".acc");
+            if (result != null && filePath.Folder?.Path != "")
             {
-                circuitView.SaveAs(Path.Combine(filePath.Path, result));
+                circuit.SaveAs(Path.Combine(filePath.Folder?.Path, result));
             }
         }
         catch (FolderPickerException)

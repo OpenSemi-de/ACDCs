@@ -1,9 +1,9 @@
-﻿namespace ACDCs.ApplicationLogic.Components.ModelEditor;
+﻿namespace ACDCs.API.Core.Components.ModelEditor;
 
-using Data.ACDCs.Interfaces;
-using Window;
+using ACDCs.API.Windowing.Components.Window;
+using ACDCs.Data.ACDCs.Interfaces;
 
-public class ModelEditorWindow : Window
+public class ModelEditorWindow : Window, Interfaces.IWindow
 {
     public Action<IElectronicComponent>? OnModelEdited
     {

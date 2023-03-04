@@ -1,16 +1,20 @@
-﻿namespace ACDCs.ApplicationLogic.Services;
+﻿namespace ACDCs.API.Core.Services;
 
+using ACDCs.API.Interfaces;
+using ACDCs.Data.ACDCs.Interfaces;
+using ACDCs.IO.DB;
+using ACDCs.IO.Spice;
 using Components;
 using Components.Components;
-using Data.ACDCs.Interfaces;
-using Interfaces;
-using IO.DB;
-using IO.Spice;
+
+using Instance;
 
 public class ImportService : IImportService
 {
-    public async Task ImportSpiceModels(ComponentsView componentsView)
+    public async Task ImportSpiceModels(IComponentsView icomponentsView)
     {
+        if (icomponentsView is not ComponentsView componentsView) return;
+
         IDictionary<DevicePlatform, IEnumerable<string>> fileTypes =
             new Dictionary<DevicePlatform, IEnumerable<string>>
             {
@@ -34,8 +38,10 @@ public class ImportService : IImportService
         componentsView.ImportSpiceModels(fileName);
     }
 
-    public async Task OpenDB(ComponentsView componentsView)
+    public async Task OpenDB(IComponentsView icomponentsView)
     {
+        if (icomponentsView is not ComponentsView componentsView) return;
+
         await API.Call(() =>
         {
             DefaultModelRepository repo = new();
@@ -51,8 +57,9 @@ public class ImportService : IImportService
         spiceReader.CreateJson();
     }
 
-    public void SaveToDB(ComponentsView componentsView)
+    public void SaveToDB(IComponentsView icomponentsView)
     {
+        if (icomponentsView is not ComponentsView componentsView) return;
         List<IElectronicComponent?> components = componentsView.DataSource.Select(m => m.Model).ToList();
         DefaultModelRepository repository = new();
         List<IElectronicComponent> existingComponents = repository.GetModels();

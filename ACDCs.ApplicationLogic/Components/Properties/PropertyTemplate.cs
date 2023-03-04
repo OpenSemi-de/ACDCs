@@ -1,8 +1,8 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Properties;
+﻿namespace ACDCs.API.Core.Components.Properties;
 
+using ACDCs.API.Windowing.Components.Window;
 using Interfaces;
 using Sharp.UI;
-using Window;
 using ColumnDefinition = ColumnDefinition;
 using RowDefinition = RowDefinition;
 

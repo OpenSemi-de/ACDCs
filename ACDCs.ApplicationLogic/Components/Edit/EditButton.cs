@@ -1,5 +1,6 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Edit;
+﻿namespace ACDCs.API.Core.Components.Edit;
 
+using Instance;
 using Sharp.UI;
 
 public class EditButton : ImageButton

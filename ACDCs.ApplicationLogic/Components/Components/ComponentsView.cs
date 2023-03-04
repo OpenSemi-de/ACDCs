@@ -1,17 +1,19 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Components;
+﻿namespace ACDCs.API.Core.Components.Components;
 
 using System.Reflection;
-using Data.ACDCs.Components.BJT;
-using Data.ACDCs.Interfaces;
-using IO.Spice;
+using ACDCs.API.Interfaces;
+using ACDCs.API.Windowing.Components.Window;
+using ACDCs.Data.ACDCs.Components.BJT;
+using ACDCs.Data.ACDCs.Interfaces;
+using ACDCs.IO.Spice;
+using Instance;
 using ModelEditor;
 using ModelSelection;
 using Sharp.UI;
-using Window;
 using ColumnDefinition = ColumnDefinition;
 using RowDefinition = RowDefinition;
 
-public class ComponentsView : Grid
+public class ComponentsView : Grid, IComponentsView
 {
     public readonly List<ComponentViewModel> DataSource = new();
     private readonly string _category = string.Empty;
@@ -196,7 +198,7 @@ public class ComponentsView : Grid
             return;
         }
 
-        ModelEditorWindow modelEditor = new(API.MainContainer)
+        ModelEditorWindow modelEditor = new(API.MainContainer as WindowContainer)
         {
             OnModelEdited = OnModelEdited
         };

@@ -1,4 +1,4 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Items;
+﻿namespace ACDCs.API.Core.Components.Items;
 
 internal class FakeLocalFile : IDisposable
 {

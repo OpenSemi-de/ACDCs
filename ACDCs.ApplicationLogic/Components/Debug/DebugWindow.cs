@@ -1,9 +1,9 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Debug;
+﻿namespace ACDCs.API.Core.Components.Debug;
 
+using ACDCs.API.Windowing.Components.Window;
 using Microsoft.Maui.Layouts;
 using Sharp.UI;
 using UraniumUI.Material.Controls;
-using Window;
 using ColumnDefinition = ColumnDefinition;
 using Grid = Grid;
 using RowDefinition = RowDefinition;

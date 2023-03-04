@@ -1,6 +1,7 @@
-﻿namespace ACDCs.ApplicationLogic.Services;
+﻿namespace ACDCs.API.Core.Services;
 
-using Interfaces;
+using ACDCs.API.Interfaces;
+using Instance;
 using Sharp.UI;
 using Font = Microsoft.Maui.Graphics.Font;
 
@@ -127,6 +128,10 @@ public class ImageService : IImageService
         try
         {
             using BitmapExportContext context = API.BitmapExportContextService.CreateContext((int)width, (int)height);
+            if (context.Canvas == null)
+            {
+                return null;
+            }
             ICanvas? canvas = context.Canvas;
 
             List<Color> colors = new() { API.Instance.Background, API.Instance.Foreground };

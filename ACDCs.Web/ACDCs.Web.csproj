@@ -5,11 +5,11 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <IncrementVersionOnBuild>1.+.yyyy.MMdd</IncrementVersionOnBuild>
-    <Version>1.165.2023.211</Version>
+    <Version>1.166.2023.303</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Graphics" Version="7.0.52" />
+    <PackageReference Include="Microsoft.Maui.Graphics" Version="7.0.59" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 

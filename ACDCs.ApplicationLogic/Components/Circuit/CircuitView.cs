@@ -1,16 +1,17 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Circuit;
+﻿namespace ACDCs.API.Core.Components.Circuit;
 
 using System.Diagnostics;
-using CircuitRenderer;
-using CircuitRenderer.Definitions;
-using CircuitRenderer.Drawables;
-using CircuitRenderer.Instructions;
-using CircuitRenderer.Interfaces;
-using CircuitRenderer.Items;
-using CircuitRenderer.Scene;
-using CircuitRenderer.Sheet;
-using Delegates;
-using Interfaces;
+using ACDCs.API.Interfaces;
+using ACDCs.API.Shared.Delegates;
+using ACDCs.CircuitRenderer;
+using ACDCs.CircuitRenderer.Definitions;
+using ACDCs.CircuitRenderer.Drawables;
+using ACDCs.CircuitRenderer.Instructions;
+using ACDCs.CircuitRenderer.Interfaces;
+using ACDCs.CircuitRenderer.Items;
+using ACDCs.CircuitRenderer.Scene;
+using ACDCs.CircuitRenderer.Sheet;
+using Instance;
 using Items;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -19,7 +20,7 @@ using Color = Color;
 using Path = Path;
 using TapGestureRecognizer = TapGestureRecognizer;
 
-public class CircuitView : ContentView, ICircuitViewProperties
+public class CircuitView : ContentView, ICircuitViewProperties, ICircuitView
 {
     private readonly Workbook _currentWorkbook;
     private readonly Dictionary<string, string> _cursorDebugValues = new();
@@ -72,7 +73,7 @@ public class CircuitView : ContentView, ICircuitViewProperties
             .VerticalOptions(LayoutOptions.Fill)
             .GestureRecognizers(_panRecognizer)
             .GestureRecognizers(_pointerRecognizer)
-        .GestureRecognizers<GraphicsView, Sharp.UI.TapGestureRecognizer>(_tapRecognizer);
+        .GestureRecognizers(_tapRecognizer);
 
         Content = _graphicsView;
         API.Com<CircuitView>(nameof(CircuitView), "Instance", this);

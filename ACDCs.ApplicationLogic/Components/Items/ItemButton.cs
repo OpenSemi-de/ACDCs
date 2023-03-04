@@ -1,9 +1,10 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Items;
+﻿namespace ACDCs.API.Core.Components.Items;
 
-using CircuitRenderer;
-using CircuitRenderer.Definitions;
-using CircuitRenderer.Items;
-using CircuitRenderer.Sheet;
+using ACDCs.CircuitRenderer;
+using ACDCs.CircuitRenderer.Definitions;
+using ACDCs.CircuitRenderer.Items;
+using ACDCs.CircuitRenderer.Sheet;
+using Instance;
 using Sharp.UI;
 using Color = Color;
 

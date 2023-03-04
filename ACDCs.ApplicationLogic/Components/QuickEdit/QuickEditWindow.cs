@@ -1,6 +1,6 @@
-﻿namespace ACDCs.ApplicationLogic.Components.QuickEdit;
+﻿namespace ACDCs.API.Core.Components.QuickEdit;
 
-using Window;
+using ACDCs.API.Windowing.Components.Window;
 
 // ReSharper disable once UnusedType.Global
 public class QuickEditWindow : Window

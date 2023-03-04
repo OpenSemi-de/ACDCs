@@ -28,6 +28,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -64,11 +65,12 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-		<PackageReference Include="Sharp.UI" Version="0.3.0-alpha.2" />
+		<PackageReference Include="Microsoft.Maui.Graphics.Skia" Version="7.0.59" />
+		<PackageReference Include="Sharp.UI" Version="0.4.5-alpha" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ACDCs.ApplicationLogic\ACDCs.ApplicationLogic.csproj" />
+	  <ProjectReference Include="..\ACDCs.ApplicationLogic\ACDCs.API.Core.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

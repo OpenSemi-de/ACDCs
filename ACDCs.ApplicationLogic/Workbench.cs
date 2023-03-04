@@ -1,9 +1,12 @@
-﻿namespace ACDCs.ApplicationLogic;
+﻿namespace ACDCs.API.Core;
 
-using Components.Window;
+using ACDCs.API.Windowing.Components.Window;
+using Instance;
 using Microsoft.Maui.Layouts;
+using Services;
 using Sharp.UI;
 using ColumnDefinition = ColumnDefinition;
+using PointerGestureRecognizer = Microsoft.Maui.Controls.PointerGestureRecognizer;
 using RowDefinition = RowDefinition;
 
 public class Workbench : ContentPage
@@ -17,10 +20,24 @@ public class Workbench : ContentPage
     public Workbench(API api)
     {
         _api = api;
-        this.OnLoaded(Load);
+        Loaded += Load;
     }
 
-    private void Load(Workbench sender)
+    public static API GetAPIInstance()
+    {
+        return new API(
+            new WorkbenchService(),
+            new ImageService(),
+            new ColorService(API.Resources, API.UserAppTheme),
+            new DescriptionService(),
+            new EditService(),
+            new MenuService(),
+            new FileService(),
+            new ImportService()
+        );
+    }
+
+    private void Load(object? o, EventArgs eventArgs)
     {
         ColumnDefinitionCollection columns = new(new ColumnDefinition(GridLength.Star));
         RowDefinitionCollection rows = new(new RowDefinition(GridLength.Star), new RowDefinition(new GridLength(43)));
@@ -54,11 +71,11 @@ public class Workbench : ContentPage
         API.MainContainer = _windowContainer;
         PointerGestureRecognizer pointerMovement = new();
         pointerMovement.PointerMoved += PointerMovementOnPointerMoved;
-        _windowContainer.GestureRecognizers.Add(pointerMovement.MauiObject);
+        _windowContainer.GestureRecognizers.Add(pointerMovement);
 
-        SizeChanged += OnSizeChanged;
+        // SizeChanged += OnSizeChanged;
 
-        BackgroundImageSource = _api.BackgroundImageSource(this);
+        //     BackgroundImageSource = _api.BackgroundImageSource(this);
     }
 
     private void OnSizeChanged(object? sender, EventArgs e)

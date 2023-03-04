@@ -1,6 +1,6 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Components;
+﻿namespace ACDCs.API.Core.Components.Components;
 
-using Window;
+using ACDCs.API.Windowing.Components.Window;
 
 // ReSharper disable once UnusedType.Global
 public class ComponentsWindow : Window

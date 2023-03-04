@@ -1,14 +1,13 @@
 ﻿// ReSharper disable UnusedAutoPropertyAccessor.Local
 namespace ACDCs.Sensors.Server;
 
-using System.Net;
-using System.Net.Sockets;
+using Services;
 using Sharp.UI;
 
 public class MainPage : ContentPage
 {
     // ReSharper disable once RedundantNameQualifier
-    private readonly ACDCs.Sensors.API.SensorServer _server = new();
+    private ACDCs.Sensors.API.SensorServer? _server;
 
     // ReSharper disable once NotAccessedField.Local
     private readonly Timer _timer;
@@ -23,11 +22,11 @@ public class MainPage : ContentPage
 
     private CheckBox? AccelerometerAvailableCheckbox { get; set; }
 
-    private Label? AccelerometerCacheLabel { get; set; }
+    private Label? AccelerometerCacheLabel { get; set; } = new();
 
     private CheckBox? AccelerometerRunningCheckbox { get; set; }
 
-    private Label? AccelerometerSpeedLabel { get; set; }
+    private Label? AccelerometerSpeedLabel { get; set; } = new();
 
     private CheckBox? AllAvailableCheckbox { get; set; }
 
@@ -35,47 +34,47 @@ public class MainPage : ContentPage
 
     private CheckBox? BarometerRunningCheckbox { get; set; }
 
-    private Label? BarometerSensorCacheLabel { get; set; }
+    private Label? BarometerSensorCacheLabel { get; set; } = new();
 
-    private Label? BarometerSensorSpeedLabel { get; set; }
+    private Label? BarometerSensorSpeedLabel { get; set; } = new();
 
     private CheckBox? CompassAvailableCheckbox { get; set; }
 
     private CheckBox? CompassRunningCheckbox { get; set; }
 
-    private Label? CompassSensorCacheLabel { get; set; }
+    private Label? CompassSensorCacheLabel { get; set; } = new();
 
-    private Label? CompassSensorSpeedLabel { get; set; }
+    private Label? CompassSensorSpeedLabel { get; set; } = new();
 
     private CheckBox? GyroscopeAvailableCheckbox { get; set; }
 
     private CheckBox? GyroscopeRunningCheckbox { get; set; }
 
-    private Label? GyroscopeSensorCacheLabel { get; set; }
+    private Label? GyroscopeSensorCacheLabel { get; set; } = new();
 
-    private Label? GyroscopeSensorSpeedLabel { get; set; }
+    private Label? GyroscopeSensorSpeedLabel { get; set; } = new();
 
-    private Label? IpLabel { get; set; }
+    private Label IpLabel { get; set; } = new();
 
     private CheckBox? MagnetometerAvailableCheckbox { get; set; }
 
-    private Label? MagnetometerCacheLabel { get; set; }
+    private Label? MagnetometerCacheLabel { get; set; } = new();
 
     private CheckBox? MagnetometerRunningCheckbox { get; set; }
 
-    private Label? MagnetometerSpeedLabel { get; set; }
+    private Label? MagnetometerSpeedLabel { get; set; } = new();
 
-    private Label? NetworkConnectionsLabel { get; set; }
+    private Label? NetworkConnectionsLabel { get; set; } = new();
 
-    private Label? NetworkDeliveryLabel { get; set; }
+    private Label? NetworkDeliveryLabel { get; set; } = new();
 
     private CheckBox? OrientationSensorAvailableCheckbox { get; set; }
 
-    private Label? OrientationSensorCacheLabel { get; set; }
+    private Label? OrientationSensorCacheLabel { get; set; } = new();
 
     private CheckBox? OrientationSensorRunningCheckbox { get; set; }
 
-    private Label? OrientationSensorSpeedLabel { get; set; }
+    private Label? OrientationSensorSpeedLabel { get; set; } = new();
 
     private Entry? PortEntry { get; set; }
 
@@ -84,62 +83,23 @@ public class MainPage : ContentPage
         InitializeComponent();
 
         _timer = new Timer(UpdateGui, null, 0, 1000);
-
-        if (MagnetometerAvailableCheckbox != null)
-        {
-            MagnetometerAvailableCheckbox.IsEnabled =
-                MagnetometerAvailableCheckbox.IsChecked = _server.MagnetometerSupported;
-        }
-
-        if (OrientationSensorAvailableCheckbox != null)
-        {
-            OrientationSensorAvailableCheckbox.IsEnabled =
-                OrientationSensorAvailableCheckbox.IsChecked = _server.OrientationSupported;
-        }
-
-        if (AccelerometerAvailableCheckbox != null)
-        {
-            AccelerometerAvailableCheckbox.IsEnabled =
-                AccelerometerAvailableCheckbox.IsChecked = _server.AccelerationSupported;
-        }
-
-        if (BarometerAvailableCheckbox != null)
-        {
-            BarometerAvailableCheckbox.IsEnabled = BarometerAvailableCheckbox.IsChecked = _server.BarometerSupported;
-        }
-
-        if (CompassAvailableCheckbox != null)
-        {
-            CompassAvailableCheckbox.IsEnabled = CompassAvailableCheckbox.IsChecked = _server.CompassSupported;
-        }
-
-        if (GyroscopeAvailableCheckbox != null)
-        {
-            GyroscopeAvailableCheckbox.IsEnabled = GyroscopeAvailableCheckbox.IsChecked = _server.GyroscopeSupported;
-        }
     }
 
     private static string GetLocalIpAddress()
     {
-        var host = Dns.GetHostEntry(Dns.GetHostName());
-
-        foreach (var ip in host.AddressList)
-        {
-            if (ip.AddressFamily == AddressFamily.InterNetwork && !ip.ToString().StartsWith("127."))
-            {
-                return ip.ToString();
-            }
-        }
-
-        return "No IP found.";
+        NetService netService = new();
+        string ipAddress = netService.ConvertHostIP();
+        return $"http://{ipAddress}:";
     }
 
     private void AccelerometerAvailableCheckbox_CheckedChanged(object? sender, CheckedChangedEventArgs e)
     {
-        if (AccelerometerAvailableCheckbox != null)
+        if (AccelerometerAvailableCheckbox == null || _server == null)
         {
-            _server.AccelerationSupported = AccelerometerAvailableCheckbox.IsChecked;
+            return;
         }
+
+        _server.AccelerationSupported = AccelerometerAvailableCheckbox.IsChecked;
     }
 
     private void AllAvailableCheckbox_CheckedChanged(object? sender, CheckedChangedEventArgs e)
@@ -180,7 +140,12 @@ public class MainPage : ContentPage
 
     private void BarometerAvailableCheckbox_CheckedChanged(object? sender, CheckedChangedEventArgs e)
     {
-        if (BarometerAvailableCheckbox != null)
+        if (BarometerAvailableCheckbox == null)
+        {
+            return;
+        }
+
+        if (_server != null)
         {
             _server.BarometerSupported = BarometerAvailableCheckbox.IsChecked;
         }
@@ -206,7 +171,12 @@ public class MainPage : ContentPage
 
     private void CompassAvailableCheckbox_CheckedChanged(object? sender, CheckedChangedEventArgs e)
     {
-        if (CompassAvailableCheckbox != null)
+        if (CompassAvailableCheckbox == null)
+        {
+            return;
+        }
+
+        if (_server != null)
         {
             _server.CompassSupported = CompassAvailableCheckbox.IsChecked;
         }
@@ -214,7 +184,12 @@ public class MainPage : ContentPage
 
     private void GyroscopeAvailableCheckbox_CheckedChanged(object? sender, CheckedChangedEventArgs e)
     {
-        if (GyroscopeAvailableCheckbox != null)
+        if (GyroscopeAvailableCheckbox == null)
+        {
+            return;
+        }
+
+        if (_server != null)
         {
             _server.GyroscopeSupported = GyroscopeAvailableCheckbox.IsChecked;
         }
@@ -255,26 +230,49 @@ public class MainPage : ContentPage
             .RowSpacing(0)
             .Margin(2);
 
+        _mainGrid.Add(new Label("ACDCs.Sensors.Server")
+            .FontSize(25)
+            .FontAttributes(FontAttributes.Bold)
+            .ColumnSpan(4));
+
         AllAvailableCheckbox = Checkbox(1)
             .OnCheckedChanged(AllAvailableCheckbox_CheckedChanged);
 
+        _mainGrid.Add(new Label("(de)select all")
+            .Row(1)
+            .VerticalTextAlignment(TextAlignment.Center)
+            .ColumnSpan(3)
+            .Column(1));
+
         MagnetometerAvailableCheckbox = Checkbox(3)
-            .OnCheckedChanged(this.MagnetometerAvailableCheckbox_CheckedChanged);
+            .OnCheckedChanged(MagnetometerAvailableCheckbox_CheckedChanged);
+
+        PutLabels(MagnetometerSpeedLabel, MagnetometerCacheLabel, 3, "Magnetometer");
 
         OrientationSensorAvailableCheckbox = Checkbox(4)
             .OnCheckedChanged(OrientationSensorAvailableCheckbox_CheckedChanged);
 
+        PutLabels(OrientationSensorSpeedLabel, OrientationSensorCacheLabel, 4, "Orientation");
+
         AccelerometerAvailableCheckbox = Checkbox(5)
             .OnCheckedChanged(AccelerometerAvailableCheckbox_CheckedChanged);
+
+        PutLabels(AccelerometerSpeedLabel, AccelerometerCacheLabel, 5, "Accelerometer");
 
         BarometerAvailableCheckbox = Checkbox(6)
             .OnCheckedChanged(BarometerAvailableCheckbox_CheckedChanged);
 
+        PutLabels(BarometerSensorSpeedLabel, BarometerSensorCacheLabel, 6, "Barometer");
+
         CompassAvailableCheckbox = Checkbox(7)
             .OnCheckedChanged(CompassAvailableCheckbox_CheckedChanged);
 
+        PutLabels(CompassSensorSpeedLabel, CompassSensorCacheLabel, 7, "Compass");
+
         GyroscopeAvailableCheckbox = Checkbox(8)
             .OnCheckedChanged(GyroscopeAvailableCheckbox_CheckedChanged);
+
+        PutLabels(GyroscopeSensorSpeedLabel, GyroscopeSensorCacheLabel, 8, "Gyroscope");
 
         MagnetometerRunningCheckbox = Checkbox(3, 1);
         OrientationSensorRunningCheckbox = Checkbox(4, 1);
@@ -295,12 +293,34 @@ public class MainPage : ContentPage
             .OnClicked(StopServer_Clicked);
         _mainGrid.Add(_stopButton);
 
+        _mainGrid.Add(
+            IpLabel
+                .Text(GetLocalIpAddress())
+                .FontSize(14)
+                .Row(10)
+                .ColumnSpan(3));
+
+        PortEntry = new Entry("port")
+            .Text("5000")
+            .Row(10)
+            .Column(2)
+            .WidthRequest(60)
+            .HorizontalOptions(LayoutOptions.End);
+        _mainGrid.Add(PortEntry);
+
+        PutLabels(NetworkDeliveryLabel, NetworkConnectionsLabel, 9, "Network");
+
         Content = _mainGrid;
     }
 
     private void MagnetometerAvailableCheckbox_CheckedChanged(object? sender, CheckedChangedEventArgs e)
     {
-        if (MagnetometerAvailableCheckbox != null)
+        if (MagnetometerAvailableCheckbox == null)
+        {
+            return;
+        }
+
+        if (_server != null)
         {
             _server.MagnetometerSupported = MagnetometerAvailableCheckbox.IsChecked;
         }
@@ -308,10 +328,31 @@ public class MainPage : ContentPage
 
     private void OrientationSensorAvailableCheckbox_CheckedChanged(object? sender, CheckedChangedEventArgs e)
     {
-        if (OrientationSensorAvailableCheckbox != null)
+        if (OrientationSensorAvailableCheckbox == null)
+        {
+            return;
+        }
+
+        if (_server != null)
         {
             _server.OrientationSupported = OrientationSensorAvailableCheckbox.IsChecked;
         }
+    }
+
+    private void PutLabels(Label? label1, Label? label2, int row, string label)
+    {
+        StackLayout labelLayout = new StackLayout { label1, label2 }
+            .Row(row)
+            .Column(3)
+            .Orientation(StackOrientation.Vertical);
+
+        _mainGrid?.Add(labelLayout);
+
+        _mainGrid?.Add(new Label(label)
+            .Row(row)
+            .Column(2)
+            .VerticalTextAlignment(TextAlignment.Center)
+        );
     }
 
     private RowDefinition Row(int height = 0)
@@ -321,17 +362,50 @@ public class MainPage : ContentPage
 
     private void StartServer_Clicked(object? sender, EventArgs e)
     {
+        int port = 5000;
         // ReSharper disable once InlineOutVariableDeclaration
-        if (!int.TryParse(PortEntry?.Text, out int _))
+        if (int.TryParse(PortEntry?.Text, out int editPort))
         {
+            port = editPort;
         }
 
-        if (IpLabel != null)
-        {
-            IpLabel.Text = GetLocalIpAddress();
-        }
+        IpLabel.Text = GetLocalIpAddress();
 
+        _server = new API.SensorServer(port);
         _server.Start();
+
+        if (MagnetometerAvailableCheckbox != null)
+        {
+            MagnetometerAvailableCheckbox.IsEnabled =
+                MagnetometerAvailableCheckbox.IsChecked = _server.MagnetometerSupported;
+        }
+
+        if (OrientationSensorAvailableCheckbox != null)
+        {
+            OrientationSensorAvailableCheckbox.IsEnabled =
+                OrientationSensorAvailableCheckbox.IsChecked = _server.OrientationSupported;
+        }
+
+        if (AccelerometerAvailableCheckbox != null)
+        {
+            AccelerometerAvailableCheckbox.IsEnabled =
+                AccelerometerAvailableCheckbox.IsChecked = _server.AccelerationSupported;
+        }
+
+        if (BarometerAvailableCheckbox != null)
+        {
+            BarometerAvailableCheckbox.IsEnabled = BarometerAvailableCheckbox.IsChecked = _server.BarometerSupported;
+        }
+
+        if (CompassAvailableCheckbox != null)
+        {
+            CompassAvailableCheckbox.IsEnabled = CompassAvailableCheckbox.IsChecked = _server.CompassSupported;
+        }
+
+        if (GyroscopeAvailableCheckbox != null)
+        {
+            GyroscopeAvailableCheckbox.IsEnabled = GyroscopeAvailableCheckbox.IsChecked = _server.GyroscopeSupported;
+        }
 
         if (MagnetometerRunningCheckbox != null)
         {
@@ -366,82 +440,95 @@ public class MainPage : ContentPage
 
     private void StopServer_Clicked(object? sender, EventArgs e)
     {
-        _server.Stop();
+        _server?.Stop();
+    }
+
+    private void Update()
+    {
+        if (_server == null) return;
+        if (NetworkConnectionsLabel != null)
+        {
+            NetworkConnectionsLabel.Text = _server?.NetworkConnectionLabel;
+        }
+
+        if (NetworkDeliveryLabel != null)
+        {
+            NetworkDeliveryLabel.Text = _server?.NetworkDeliveryLabel;
+        }
+
+        if (MagnetometerSpeedLabel != null)
+        {
+            MagnetometerSpeedLabel.Text = _server?.MagnetometerSpeedLabelText;
+        }
+
+        if (OrientationSensorSpeedLabel != null)
+        {
+            OrientationSensorSpeedLabel.Text = _server?.OrientationSensorSpeedLabelText;
+        }
+
+        if (AccelerometerSpeedLabel != null)
+        {
+            AccelerometerSpeedLabel.Text = _server?.AccelerometerSpeedLabelText;
+        }
+
+        if (BarometerSensorSpeedLabel != null)
+        {
+            BarometerSensorSpeedLabel.Text = _server?.BarometerSensorSpeedLabelText;
+        }
+
+        if (CompassSensorSpeedLabel != null)
+        {
+            CompassSensorSpeedLabel.Text = _server?.CompassSensorSpeedLabelText;
+        }
+
+        if (GyroscopeSensorSpeedLabel != null)
+        {
+            GyroscopeSensorSpeedLabel.Text = _server?.GyroscopeSensorSpeedLabelText;
+        }
+
+        if (MagnetometerCacheLabel != null)
+        {
+            MagnetometerCacheLabel.Text = _server?.MagnetometerCacheLabelText;
+        }
+
+        if (OrientationSensorCacheLabel != null)
+        {
+            OrientationSensorCacheLabel.Text = _server?.OrientationSensorCacheLabelText;
+        }
+
+        if (AccelerometerCacheLabel != null)
+        {
+            AccelerometerCacheLabel.Text = _server?.AccelerometerCacheLabelText;
+        }
+
+        if (BarometerSensorCacheLabel != null)
+        {
+            BarometerSensorCacheLabel.Text = _server?.BarometerSensorCacheLabelText;
+        }
+
+        if (CompassSensorCacheLabel != null)
+        {
+            CompassSensorCacheLabel.Text = _server?.CompassSensorCacheLabelText;
+        }
+
+        if (GyroscopeSensorCacheLabel != null)
+        {
+            GyroscopeSensorCacheLabel.Text = _server?.GyroscopeSensorCacheLabelText;
+        }
     }
 
     private void UpdateGui(object? state)
     {
-        MainThread.InvokeOnMainThreadAsync(() =>
+#if ANDROID
+        if (MainThread.IsMainThread)
         {
-            if (NetworkConnectionsLabel != null)
-            {
-                NetworkConnectionsLabel.Text = _server.NetworkConnectionLabel;
-            }
+            return;
+        }
 
-            if (NetworkDeliveryLabel != null)
-            {
-                NetworkDeliveryLabel.Text = _server.NetworkDeliveryLabel;
-            }
-
-            if (MagnetometerSpeedLabel != null)
-            {
-                MagnetometerSpeedLabel.Text = _server.MagnetometerSpeedLabelText;
-            }
-
-            if (OrientationSensorSpeedLabel != null)
-            {
-                OrientationSensorSpeedLabel.Text = _server.OrientationSensorSpeedLabelText;
-            }
-
-            if (AccelerometerSpeedLabel != null)
-            {
-                AccelerometerSpeedLabel.Text = _server.AccelerometerSpeedLabelText;
-            }
-
-            if (BarometerSensorSpeedLabel != null)
-            {
-                BarometerSensorSpeedLabel.Text = _server.BarometerSensorSpeedLabelText;
-            }
-
-            if (CompassSensorSpeedLabel != null)
-            {
-                CompassSensorSpeedLabel.Text = _server.CompassSensorSpeedLabelText;
-            }
-
-            if (GyroscopeSensorSpeedLabel != null)
-            {
-                GyroscopeSensorSpeedLabel.Text = _server.GyroscopeSensorSpeedLabelText;
-            }
-
-            if (MagnetometerCacheLabel != null)
-            {
-                MagnetometerCacheLabel.Text = _server.MagnetometerCacheLabelText;
-            }
-
-            if (OrientationSensorCacheLabel != null)
-            {
-                OrientationSensorCacheLabel.Text = _server.OrientationSensorCacheLabelText;
-            }
-
-            if (AccelerometerCacheLabel != null)
-            {
-                AccelerometerCacheLabel.Text = _server.AccelerometerCacheLabelText;
-            }
-
-            if (BarometerSensorCacheLabel != null)
-            {
-                BarometerSensorCacheLabel.Text = _server.BarometerSensorCacheLabelText;
-            }
-
-            if (CompassSensorCacheLabel != null)
-            {
-                CompassSensorCacheLabel.Text = _server.CompassSensorCacheLabelText;
-            }
-
-            if (GyroscopeSensorCacheLabel != null)
-            {
-                GyroscopeSensorCacheLabel.Text = _server.GyroscopeSensorCacheLabelText;
-            }
-        });
+        MainThread.InvokeOnMainThreadAsync(Update);
+#endif
+#if WINDOWS
+        Update();
+#endif
     }
 }

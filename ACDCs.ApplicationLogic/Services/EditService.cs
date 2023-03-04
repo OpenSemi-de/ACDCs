@@ -1,22 +1,24 @@
-﻿namespace ACDCs.ApplicationLogic.Services;
+﻿namespace ACDCs.API.Core.Services;
 
-using CircuitRenderer.Interfaces;
-using CircuitRenderer.Items;
-using CircuitRenderer.Sheet;
+using ACDCs.API.Interfaces;
+using ACDCs.CircuitRenderer.Interfaces;
+using ACDCs.CircuitRenderer.Items;
+using ACDCs.CircuitRenderer.Sheet;
 using Components.Circuit;
-using Interfaces;
 
 public class EditService : IEditService
 {
-    public async Task Delete(CircuitView circuitView)
+    public async Task Delete(ICircuitView circuitView)
     {
-        Worksheet sheet = circuitView.CurrentWorksheet;
+        if (circuitView is not CircuitView circuit) return;
+
+        Worksheet sheet = circuit.CurrentWorksheet;
         foreach (IWorksheetItem iitem in sheet.SelectedItems.ToList())
         {
             switch (iitem)
             {
                 case TraceItem trace:
-                    sheet.DeleteTrace(trace, circuitView.SelectedTraceLine);
+                    sheet.DeleteTrace(trace, circuit.SelectedTraceLine);
                     break;
 
                 case WorksheetItem item:
@@ -26,19 +28,23 @@ public class EditService : IEditService
         }
 
         sheet.StartRouter();
-        await circuitView.Paint();
+        await circuit.Paint();
     }
 
-    public async Task DeselectAll(CircuitView circuitView)
+    public async Task DeselectAll(ICircuitView circuitView)
     {
-        circuitView.CurrentWorksheet.SelectedItems.Clear();
-        circuitView.CurrentWorksheet.SelectedPin = null;
-        await circuitView.Paint();
+        if (circuitView is not CircuitView circuit) return;
+
+        circuit.CurrentWorksheet.SelectedItems.Clear();
+        circuit.CurrentWorksheet.SelectedPin = null;
+        await circuit.Paint();
     }
 
-    public async Task Duplicate(CircuitView circuitView)
+    public async Task Duplicate(ICircuitView circuitView)
     {
-        Worksheet sheet = circuitView.CurrentWorksheet;
+        if (circuitView is not CircuitView circuit) return;
+
+        Worksheet sheet = circuit.CurrentWorksheet;
 
         List<WorksheetItem?> newItems = new();
         sheet.SelectedItems.ToList().ForEach(
@@ -63,45 +69,54 @@ public class EditService : IEditService
             sheet.SelectItem(item);
         });
         sheet.StartRouter();
-        await circuitView.Paint();
+        await circuit.Paint();
     }
 
-    public async Task Mirror(CircuitView circuitView)
+    public async Task Mirror(ICircuitView circuitView)
     {
-        Worksheet sheet = circuitView.CurrentWorksheet;
+        if (circuitView is not CircuitView circuit) return;
+
+        Worksheet sheet = circuit.CurrentWorksheet;
         sheet.SelectedItems.ToList().ForEach(
             item => { sheet.MirrorItem((WorksheetItem)item); });
         sheet.StartRouter();
-        await circuitView.Paint();
+        await circuit.Paint();
     }
 
-    public async Task Rotate(CircuitView circuitView)
+    public async Task Rotate(ICircuitView circuitView)
     {
-        Worksheet sheet = circuitView.CurrentWorksheet;
+        if (circuitView is not CircuitView circuit) return;
+
+        Worksheet sheet = circuit.CurrentWorksheet;
         sheet.SelectedItems.ToList().ForEach(
             item => { sheet.RotateItem((WorksheetItem)item); });
         sheet.StartRouter();
-        await circuitView.Paint();
+        await circuit.Paint();
     }
 
-    public async Task SelectAll(CircuitView circuitView)
+    public async Task SelectAll(ICircuitView circuitView)
     {
-        circuitView.CurrentWorksheet.SelectedItems.AddRange(
-            circuitView.CurrentWorksheet.Items);
-        await circuitView.Paint();
+        if (circuitView is not CircuitView circuit) return;
+
+        circuit.CurrentWorksheet.SelectedItems.AddRange(
+            circuit.CurrentWorksheet.Items);
+        await circuit.Paint();
     }
 
-    public async Task ShowProperties(CircuitView circuitView)
+    public async Task ShowProperties(ICircuitView circuitView)
     {
-        if (circuitView.CurrentWorksheet.SelectedItems.Count == 0) return;
+        if (circuitView is not CircuitView circuit) return;
 
-        circuitView.ShowProperties(circuitView.CurrentWorksheet.SelectedItems.First());
-        await circuitView.Paint();
+        if (circuit.CurrentWorksheet.SelectedItems.Count == 0) return;
+
+        circuit.ShowProperties(circuit.CurrentWorksheet.SelectedItems.First());
+        await circuit.Paint();
     }
 
-    public async Task SwitchMultiselect(object? state, CircuitView circuitView)
+    public async Task SwitchMultiselect(object? state, ICircuitView circuitView)
     {
-        circuitView.UseMultiselect((bool)(state ?? false));
+        if (circuitView is not CircuitView circuit) return;
+        circuit.UseMultiselect((bool)(state ?? false));
         await Task.Delay(0);
     }
 }

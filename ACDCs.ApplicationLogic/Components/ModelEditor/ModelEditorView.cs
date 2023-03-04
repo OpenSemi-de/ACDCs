@@ -1,13 +1,14 @@
-﻿namespace ACDCs.ApplicationLogic.Components.ModelEditor;
+﻿namespace ACDCs.API.Core.Components.ModelEditor;
 
 using System.Collections.ObjectModel;
 using System.Reflection;
+using ACDCs.API.Interfaces;
+using ACDCs.API.Windowing.Components.Window;
+using ACDCs.Data.ACDCs.Interfaces;
 using CommunityToolkit.Maui.Core.Extensions;
-using Data.ACDCs.Interfaces;
-using Interfaces;
+using Instance;
 using Properties;
 using Sharp.UI;
-using Window;
 
 public class ModelEditorView : ContentView, IGetPropertyUpdates
 {

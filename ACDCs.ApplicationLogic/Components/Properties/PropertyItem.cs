@@ -1,4 +1,4 @@
-﻿namespace ACDCs.ApplicationLogic.Components.Properties;
+﻿namespace ACDCs.API.Core.Components.Properties;
 
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;

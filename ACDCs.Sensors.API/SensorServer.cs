@@ -48,9 +48,9 @@ public class SensorServer
 
     private bool Started { get; set; }
 
-    public SensorServer()
+    public SensorServer(int port)
     {
-        _server = new Server("*", 5000, defaultRoute: GetDefaultRoute);
+        _server = new Server("*", port, defaultRoute: GetDefaultRoute);
 
         MagnetometerSupported = AddWorker<MagneticWorker, MagneticSample>(out _magneticWorker, GetMagneticSamples);
         OrientationSupported = AddWorker<OrientationWorker, OrientationSample>(out _orientationWorker, GetOrientationSamples);

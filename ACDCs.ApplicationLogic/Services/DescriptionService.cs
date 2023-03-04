@@ -1,10 +1,10 @@
-﻿namespace ACDCs.ApplicationLogic.Services;
+﻿namespace ACDCs.API.Core.Services;
 
-using Data.ACDCs.Components.BJT;
-using Data.ACDCs.Components.Inductor;
-using Data.ACDCs.Components.Resistor;
-using Data.ACDCs.Interfaces;
-using Interfaces;
+using ACDCs.API.Interfaces;
+using ACDCs.Data.ACDCs.Components.BJT;
+using ACDCs.Data.ACDCs.Components.Inductor;
+using ACDCs.Data.ACDCs.Components.Resistor;
+using ACDCs.Data.ACDCs.Interfaces;
 using SpiceSharp.Attributes;
 using SpiceSharp.Components.Resistors;
 

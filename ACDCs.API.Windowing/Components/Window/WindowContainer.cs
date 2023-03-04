@@ -34,9 +34,9 @@ public class WindowContainer : AbsoluteLayout, IWindowContainer
     public void AddWindow(Window window)
     {
         _windows.Add(window);
-        if (!window.Title.GestureRecognizers.Contains(_windowPanRecognizer))
+        if (window.Title != null && !window.Title.GestureRecognizers.Contains(_windowPanRecognizer))
             window.Title.GestureRecognizers.Add(_windowPanRecognizer);
-        if (!window.Resizer.GestureRecognizers.Contains(_windowSizePanRecognizer))
+        if (window.Resizer != null && !window.Resizer.GestureRecognizers.Contains(_windowSizePanRecognizer))
             window.Resizer.GestureRecognizers.Add(_windowSizePanRecognizer);
         Add(window);
         TabBar?.AddWindow(window);
@@ -45,7 +45,7 @@ public class WindowContainer : AbsoluteLayout, IWindowContainer
     public void CloseWindow(Window window)
     {
         _windows.Remove(window);
-        window.Title.GestureRecognizers.Remove(_windowPanRecognizer);
+        window.Title?.GestureRecognizers.Remove(_windowPanRecognizer);
         Remove(window);
         TabBar?.RemoveWindow(window);
     }

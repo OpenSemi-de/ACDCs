@@ -157,7 +157,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
                     .VerticalOptions(LayoutOptions.Fill)
 
                     .OnTextChanged(Value_OnTextChanged)
-                    .Text(Convert.ToString(value)));
+                    .Text(Convert.ToString(value) ?? string.Empty));
             }
             else if (value is bool boolValue)
             {
@@ -226,7 +226,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
             else
             {
                 grid.Add(new Entry().
-                    HorizontalOptions(LayoutOptions.Fill).VerticalOptions(LayoutOptions.Fill).OnTextChanged(Entry_OnTextChanged).Text(Convert.ToString(value)));
+                    HorizontalOptions(LayoutOptions.Fill).VerticalOptions(LayoutOptions.Fill).OnTextChanged(Entry_OnTextChanged).Text(Convert.ToString(value) ?? string.Empty));
             }
 
             if (!ShowDescription)

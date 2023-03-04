@@ -87,7 +87,12 @@ public class WindowStarterFrame : Frame, IWindowStarterFrame
 
         foreach (KeyValuePair<string, string> starter in starters)
         {
-            Type? startType = GetAssemblyByName("ACDCs.API.Core").GetTypes().FirstOrDefault(t => t.Name == starter.Value);
+            Type? startType = GetAssemblyByName("ACDCs.API.Core")?.GetTypes().FirstOrDefault(t => t.Name == starter.Value);
+            if (startType == null || _windowContainer == null)
+            {
+                continue;
+            }
+
             WindowStarterButton newButton = new(starter.Key, startType, _windowContainer);
             _buttonStack.Add(newButton);
         }
@@ -106,7 +111,7 @@ public class WindowStarterFrame : Frame, IWindowStarterFrame
         IsVisible = false;
     }
 
-    private Assembly GetAssemblyByName(string name)
+    private Assembly? GetAssemblyByName(string name)
     {
         return AppDomain.CurrentDomain.GetAssemblies().
             SingleOrDefault(assembly => assembly.GetName().Name == name);

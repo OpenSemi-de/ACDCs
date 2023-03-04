@@ -1,4 +1,4 @@
 {
-    "Debug": "DebugWindow",
-    "Info":  "InfoWindow"
+    "Sensor configuration": "SensorsConfigurationWindow",
+    "Debug": "DebugWindow"
 }

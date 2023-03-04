@@ -5,7 +5,7 @@ using Windowing.Components.Window;
 // ReSharper disable once UnusedType.Global
 public class QuickEditWindow : Window
 {
-    public QuickEditView EditView { get; set; }
+    public QuickEditView? EditView { get; set; }
 
     public QuickEditWindow(WindowContainer? container) : base(container, "QuickEdit", "", false, GetView, titleHeight: 28)
     {

@@ -189,8 +189,9 @@ public class QuickEditView : Grid
 
             _modelSelectionWindow.IsVisible = true;
             _modelSelectionWindow.FadeTo(1);
-            _modelSelectionWindow?.SetComponentType(_currentItem.GetType().Name);
+            _modelSelectionWindow.SetComponentType(_currentItem.GetType().Name);
             API.TabBar?.BringToFront(_modelSelectionWindow);
+
             return Task.CompletedTask;
         });
     }

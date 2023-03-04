@@ -17,7 +17,7 @@ public class Window : ContentView
     private View? _childView;
     private Grid? _mainGrid;
     private WindowButtons? _windowButtons;
-    public AbsoluteLayout ChildLayout { get; private set; }
+    public AbsoluteLayout? ChildLayout { get; private set; }
     public int LastHeight { get; set; }
     public int LastWidth { get; set; }
     public WindowState? LastWindowState { get; private set; } = WindowState.Standard;
@@ -36,19 +36,19 @@ public class Window : ContentView
     public Dictionary<string, object> MenuParameters { get; } = new();
 
     // ReSharper disable once MemberCanBePrivate.Global
-    public Func<bool> OnClose { get; set; }
+    public Func<bool>? OnClose { get; set; }
 
-    public WindowResizer Resizer { get; private set; }
+    public WindowResizer? Resizer { get; private set; }
 
     // ReSharper disable once MemberCanBePrivate.Global
     // ReSharper disable once UnusedAutoPropertyAccessor.Global
     public Action<Window>? Started { get; set; }
 
-    public WindowTitle Title { get; private set; }
+    public WindowTitle? Title { get; private set; }
     public WindowState WindowState { get; set; } = WindowState.Standard;
     public string WindowTitle { get; }
-    protected View CurrentView { get; private set; }
-    private MenuView MenuView { get; set; }
+    protected View? CurrentView { get; private set; }
+    private MenuView? MenuView { get; set; }
 
     protected Window(WindowContainer? container, string title, string? menuFile = null, bool isWindowParent = false,
                                     Func<Window, View>? childViewFunction = null, int titleHeight = 38)
@@ -66,7 +66,7 @@ public class Window : ContentView
 
     public void Close()
     {
-        if (OnClose.Invoke())
+        if (OnClose != null && OnClose.Invoke())
         {
             _container?.CloseWindow(this);
         }
@@ -113,12 +113,18 @@ public class Window : ContentView
 
     public void SetTitle(string title)
     {
-        Title.Text = title;
+        if (Title != null)
+        {
+            Title.Text = title;
+        }
     }
 
     protected void HideResizer()
     {
-        Resizer.IsVisible = false;
+        if (Resizer != null)
+        {
+            Resizer.IsVisible = false;
+        }
     }
 
     protected void HideWindowButtons()
@@ -181,6 +187,7 @@ public class Window : ContentView
         GetBackgroundImage();
     }
 
+    // ReSharper disable once UnusedParameter.Local
     private void AddChildLayout(bool isWindowParent)
     {
         ChildLayout = new WindowContainer();// : new AbsoluteLayout();
@@ -256,7 +263,7 @@ public class Window : ContentView
             HeightRequest = 34,
             ParentWindow = this
         };
-        ChildLayout.Add(MenuView);
+        ChildLayout?.Add(MenuView);
         MenuView.ZIndex = 999;
     }
 

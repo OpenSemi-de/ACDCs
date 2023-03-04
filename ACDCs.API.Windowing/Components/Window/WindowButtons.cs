@@ -9,12 +9,10 @@ public class WindowButtons : Grid
     private readonly WindowButton _maximizeButton;
     private readonly WindowButton _minimizeButton;
     private readonly WindowButton _restoreButton;
-    private readonly Window _window;
     private bool _showOnlyClose;
 
     public WindowButtons(Window window)
     {
-        _window = window;
         this.ColumnDefinitions(
             new ColumnDefinitionCollection
             {

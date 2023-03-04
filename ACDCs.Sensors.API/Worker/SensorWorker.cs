@@ -11,7 +11,7 @@ public class SensorWorker<TResult, TSampleType> : ISensorWorker<TSampleType> whe
     private Thread? _cleanupThread;
     private int _numberOfSamples;
     public bool Started { get; set; }
-    public bool Supported => _sensor.IsSupported;
+    public bool Supported => ISensor<TResult>.IsSupported;
 
     protected SensorWorker(ISensor<TResult> sensor)
     {

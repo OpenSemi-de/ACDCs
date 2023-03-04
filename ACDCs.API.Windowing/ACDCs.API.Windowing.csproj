@@ -23,7 +23,7 @@
     <PackageReference Include="Sharp.UI">
       <Version>0.4.5-alpha</Version>
     </PackageReference>
-    <PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.3.1" />
+    <PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.4.0-pre.1" />
   </ItemGroup>
 
   <ItemGroup>

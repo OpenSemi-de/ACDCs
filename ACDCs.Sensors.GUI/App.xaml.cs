@@ -18,11 +18,11 @@ public partial class App : Application
         }
 
         bool darkMode = Convert.ToBoolean(API.GetPreference("DarkMode"));
-        if (darkMode)
-        {
-            API.UserAppTheme = AppTheme.Dark;
-            UserAppTheme = AppTheme.Dark;
-        }
+        //   if (darkMode)
+        //      {
+        API.UserAppTheme = AppTheme.Dark;
+        UserAppTheme = AppTheme.Dark;
+        //      }
 
         _api = Workbench.GetAPIInstance();
         MainPage = _api.GetWorkbenchPage();

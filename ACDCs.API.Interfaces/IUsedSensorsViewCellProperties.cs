@@ -3,7 +3,7 @@
 using Sharp.UI;
 
 [BindableProperties]
-public interface IUsedSensorsTemplateProperties
+public interface IUsedSensorsViewCellProperties
 {
     public string Description { get; set; }
     public string Location { get; set; }

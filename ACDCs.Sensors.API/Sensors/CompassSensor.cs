@@ -4,7 +4,7 @@ using Interfaces;
 
 public class CompassSensor : ISensor<double>
 {
-    public bool IsSupported
+    public static bool IsSupported
     {
         get { return Compass.IsSupported; }
         set => throw new NotImplementedException();

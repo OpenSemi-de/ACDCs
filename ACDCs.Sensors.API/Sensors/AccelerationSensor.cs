@@ -6,7 +6,7 @@ using Microsoft.Maui.Devices.Sensors;
 
 public class AccelerationSensor : ISensor<Vector3>
 {
-    public bool IsSupported
+    public static bool IsSupported
     {
         get { return Accelerometer.IsSupported; }
         set => throw new NotImplementedException();

@@ -6,7 +6,7 @@ using Microsoft.Maui.Devices.Sensors;
 
 public class MagneticSensor : ISensor<Vector3>
 {
-    public bool IsSupported
+    public static bool IsSupported
     {
         get { return Magnetometer.IsSupported; }
         set => throw new NotImplementedException();

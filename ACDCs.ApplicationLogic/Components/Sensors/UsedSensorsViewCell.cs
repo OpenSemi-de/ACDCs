@@ -3,15 +3,9 @@
 using Interfaces;
 
 [SharpObject]
-public partial class UsedSensorsTemplate : DataTemplate, IUsedSensorsTemplateProperties
+public partial class UsedSensorsViewCell : ViewCell, IUsedSensorsViewCellProperties
 {
-    public UsedSensorsTemplate()
+    public UsedSensorsViewCell()
     {
-        this.Add(OnLoadTemplate);
-    }
-
-    private object OnLoadTemplate()
-    {
-        return new ViewCell();
     }
 }

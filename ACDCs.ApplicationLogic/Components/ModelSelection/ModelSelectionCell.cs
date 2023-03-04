@@ -1,10 +1,5 @@
 ﻿namespace ACDCs.API.Core.Components.ModelSelection;
 
-using Sharp.UI;
-using ColumnDefinition = ColumnDefinition;
-using Grid = Grid;
-using Label = Label;
-
 public class ModelSelectionCell : ViewCell
 {
     private readonly Grid _grid;
@@ -14,24 +9,22 @@ public class ModelSelectionCell : ViewCell
 
     public ModelSelectionCell()
     {
-        _grid = new Sharp.UI.Grid()
+        _grid = new Grid()
             .HorizontalOptions(LayoutOptions.Fill)
             .HeightRequest(34);
 
         _grid.SetBinding(VisualElement.BackgroundColorProperty, "ItemBackground");
 
-        _grid.ColumnDefinitions.Add(new ColumnDefinition(new GridLength(80)));
-        _grid.ColumnDefinitions.Add(new ColumnDefinition(new GridLength(80)));
-        _grid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
+        _grid.ColumnDefinitions(new ColumnDefinition(new GridLength(80)), new ColumnDefinition(new GridLength(80)), new ColumnDefinition(GridLength.Star));
 
-        _labelName = new Sharp.UI.Label()
+        _labelName = new Label()
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
 
         _labelName.SetBinding(Label.TextProperty, "Name");
         _grid.Add(_labelName);
 
-        _labelType = new Sharp.UI.Label()
+        _labelType = new Label()
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
         Grid.SetColumn(_labelType, 1);
@@ -39,7 +32,7 @@ public class ModelSelectionCell : ViewCell
         _labelType.SetBinding(Label.TextProperty, "Type");
         _grid.Add(_labelType);
 
-        _labelValue = new Sharp.UI.Label()
+        _labelValue = new Label()
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill);
         Grid.SetColumn(_labelValue, 2);

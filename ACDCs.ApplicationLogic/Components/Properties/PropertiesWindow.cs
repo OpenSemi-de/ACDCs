@@ -2,11 +2,9 @@
 
 using System.Collections.ObjectModel;
 using System.Reflection;
-using ACDCs.API.Interfaces;
-using ACDCs.API.Windowing.Components.Window;
-using Sharp.UI;
+using Interfaces;
 using UraniumUI.Material.Controls;
-using DataTemplate = DataTemplate;
+using Windowing.Components.Window;
 
 public class PropertiesWindow : Window, IGetPropertyUpdates
 {
@@ -35,10 +33,6 @@ public class PropertiesWindow : Window, IGetPropertyUpdates
         itemTemplate.LoadTemplate = () =>
         {
             PropertyTemplate propertyTemplate = new(this);
-            propertyTemplate.Unloaded += (_, _) =>
-            {
-                itemTemplate.Bindings.Clear();
-            };
             return propertyTemplate;
         };
 

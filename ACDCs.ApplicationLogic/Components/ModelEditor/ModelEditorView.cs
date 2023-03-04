@@ -2,13 +2,12 @@
 
 using System.Collections.ObjectModel;
 using System.Reflection;
-using ACDCs.API.Interfaces;
-using ACDCs.API.Windowing.Components.Window;
-using ACDCs.Data.ACDCs.Interfaces;
 using CommunityToolkit.Maui.Core.Extensions;
+using Data.ACDCs.Interfaces;
 using Instance;
+using Interfaces;
 using Properties;
-using Sharp.UI;
+using Windowing.Components.Window;
 
 public class ModelEditorView : ContentView, IGetPropertyUpdates
 {

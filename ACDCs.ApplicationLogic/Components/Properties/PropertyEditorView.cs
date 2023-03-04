@@ -1,13 +1,12 @@
 ﻿namespace ACDCs.API.Core.Components.Properties;
 
 using System.ComponentModel;
-using ACDCs.API.Interfaces;
-using ACDCs.API.Windowing.Components.Window;
-using ACDCs.Data.ACDCs.Interfaces;
+using Data.ACDCs.Interfaces;
 using Instance;
+using Interfaces;
 using ModelEditor;
 using ModelSelection;
-using Sharp.UI;
+using Windowing.Components.Window;
 
 [SharpObject]
 public partial class PropertyEditorView : ContentView, IPropertyEditorViewProperties, IPropertyEditorView
@@ -133,7 +132,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
                 return Task.CompletedTask;
             }
 
-            object? value = GetValue(PropertyEditorView.ValueProperty);
+            object? value = GetValue(ValueProperty);
             if (value == null)
             {
                 return Task.CompletedTask;

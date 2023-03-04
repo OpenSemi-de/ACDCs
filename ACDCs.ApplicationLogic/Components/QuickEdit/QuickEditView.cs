@@ -1,13 +1,12 @@
 ﻿namespace ACDCs.API.Core.Components.QuickEdit;
 
-using ACDCs.API.Windowing.Components.Window;
-using ACDCs.CircuitRenderer.Interfaces;
-using ACDCs.CircuitRenderer.Items;
-using ACDCs.CircuitRenderer.Items.Sources;
-using ACDCs.Data.ACDCs.Interfaces;
+using CircuitRenderer.Interfaces;
+using CircuitRenderer.Items;
+using CircuitRenderer.Items.Sources;
+using Data.ACDCs.Interfaces;
 using Instance;
 using ModelSelection;
-using Sharp.UI;
+using Windowing.Components.Window;
 
 public class QuickEditView : Grid
 {

@@ -1,11 +1,8 @@
 ﻿namespace ACDCs.API.Core.Components.ModelEditor;
 
-using ACDCs.API.Interfaces;
-using ACDCs.API.Windowing.Components.Window;
+using Interfaces;
 using Properties;
-using Sharp.UI;
-using ColumnDefinition = ColumnDefinition;
-using RowDefinition = RowDefinition;
+using Windowing.Components.Window;
 
 public class ModelPropertyTemplate : ViewCell
 {
@@ -31,8 +28,8 @@ public class ModelPropertyTemplate : ViewCell
             .HorizontalOptions(LayoutOptions.Fill);
         entry.ShowDescription = true;
         entry.SetBinding(PropertyEditorView.ParentTypeProperty, "ParentType", BindingMode.OneTime);
-        entry.SetBinding(Properties.PropertyEditorView.PropertyNameProperty, "Name", BindingMode.OneTime);
-        entry.SetBinding(Properties.PropertyEditorView.ValueProperty, "Value", BindingMode.OneTime);
+        entry.SetBinding(PropertyEditorView.PropertyNameProperty, "Name", BindingMode.OneTime);
+        entry.SetBinding(PropertyEditorView.ValueProperty, "Value", BindingMode.OneTime);
 
         entry.OnValueChanged += newValue =>
         {

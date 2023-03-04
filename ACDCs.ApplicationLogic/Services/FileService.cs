@@ -1,8 +1,9 @@
 ﻿namespace ACDCs.API.Core.Services;
 
-using ACDCs.API.Interfaces;
 using CommunityToolkit.Maui.Storage;
 using Components.Circuit;
+using Interfaces;
+using DevicePlatform = Microsoft.Maui.Devices.DevicePlatform;
 
 public class FileService : IFileService
 {

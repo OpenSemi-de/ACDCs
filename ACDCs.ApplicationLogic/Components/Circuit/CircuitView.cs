@@ -1,24 +1,21 @@
 ﻿namespace ACDCs.API.Core.Components.Circuit;
 
 using System.Diagnostics;
-using ACDCs.API.Interfaces;
-using ACDCs.API.Shared.Delegates;
-using ACDCs.CircuitRenderer;
-using ACDCs.CircuitRenderer.Definitions;
-using ACDCs.CircuitRenderer.Drawables;
-using ACDCs.CircuitRenderer.Instructions;
-using ACDCs.CircuitRenderer.Interfaces;
-using ACDCs.CircuitRenderer.Items;
-using ACDCs.CircuitRenderer.Scene;
-using ACDCs.CircuitRenderer.Sheet;
+using CircuitRenderer;
+using CircuitRenderer.Definitions;
+using CircuitRenderer.Drawables;
+using CircuitRenderer.Instructions;
+using CircuitRenderer.Interfaces;
+using CircuitRenderer.Items;
+using CircuitRenderer.Scene;
+using CircuitRenderer.Sheet;
 using Instance;
+using Interfaces;
 using Items;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Sharp.UI;
-using Color = Color;
-using Path = Path;
-using TapGestureRecognizer = TapGestureRecognizer;
+using Shared.Delegates;
+using Color = Microsoft.Maui.Graphics.Color;
 
 public class CircuitView : ContentView, ICircuitViewProperties, ICircuitView
 {
@@ -374,9 +371,6 @@ public class CircuitView : ContentView, ICircuitViewProperties, ICircuitView
 
                             case GestureStatus.Canceled:
                                 break;
-
-                            default:
-                                break;
                         }
 
                         break;
@@ -441,9 +435,6 @@ public class CircuitView : ContentView, ICircuitViewProperties, ICircuitView
                         break;
                     }
                 case GestureStatus.Canceled:
-                    break;
-
-                default:
                     break;
             }
         }).Wait();

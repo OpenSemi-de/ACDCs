@@ -1,7 +1,5 @@
 ﻿namespace ACDCs.API.Core.Components;
 
-using Sharp.UI;
-
 public static class GridExtension
 {
     // ReSharper disable once UnusedParameter.Global

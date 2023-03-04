@@ -1,17 +1,14 @@
 ﻿namespace ACDCs.API.Core.Components.Components;
 
 using System.Reflection;
-using ACDCs.API.Interfaces;
-using ACDCs.API.Windowing.Components.Window;
-using ACDCs.Data.ACDCs.Components.BJT;
-using ACDCs.Data.ACDCs.Interfaces;
-using ACDCs.IO.Spice;
+using Data.ACDCs.Components.BJT;
+using Data.ACDCs.Interfaces;
 using Instance;
+using Interfaces;
+using IO.Spice;
 using ModelEditor;
 using ModelSelection;
-using Sharp.UI;
-using ColumnDefinition = ColumnDefinition;
-using RowDefinition = RowDefinition;
+using Windowing.Components.Window;
 
 public class ComponentsView : Grid, IComponentsView
 {

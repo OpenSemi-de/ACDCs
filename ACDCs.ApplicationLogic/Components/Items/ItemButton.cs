@@ -1,12 +1,11 @@
 ﻿namespace ACDCs.API.Core.Components.Items;
 
-using ACDCs.CircuitRenderer;
-using ACDCs.CircuitRenderer.Definitions;
-using ACDCs.CircuitRenderer.Items;
-using ACDCs.CircuitRenderer.Sheet;
+using CircuitRenderer;
+using CircuitRenderer.Definitions;
+using CircuitRenderer.Items;
+using CircuitRenderer.Sheet;
 using Instance;
-using Sharp.UI;
-using Color = Color;
+using Color = Microsoft.Maui.Graphics.Color;
 
 public class ItemButton : ImageButton
 {

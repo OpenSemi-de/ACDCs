@@ -1,12 +1,9 @@
 ﻿namespace ACDCs.API.Core.Components.Preferences;
 
-using ACDCs.IO.DB;
 using Instance;
+using IO.DB;
 using Newtonsoft.Json;
 using Properties;
-using Sharp.UI;
-using ColumnDefinition = ColumnDefinition;
-using RowDefinition = RowDefinition;
 
 public class PreferencesView : Grid
 {

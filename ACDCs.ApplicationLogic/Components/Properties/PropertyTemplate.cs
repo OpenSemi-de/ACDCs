@@ -1,10 +1,7 @@
 ﻿namespace ACDCs.API.Core.Components.Properties;
 
-using ACDCs.API.Windowing.Components.Window;
 using Interfaces;
-using Sharp.UI;
-using ColumnDefinition = ColumnDefinition;
-using RowDefinition = RowDefinition;
+using Windowing.Components.Window;
 
 public class PropertyTemplate : Grid
 {

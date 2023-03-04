@@ -1,13 +1,9 @@
 ﻿namespace ACDCs.API.Core;
 
-using ACDCs.API.Windowing.Components.Window;
 using Instance;
 using Microsoft.Maui.Layouts;
 using Services;
-using Sharp.UI;
-using ColumnDefinition = ColumnDefinition;
-using PointerGestureRecognizer = Microsoft.Maui.Controls.PointerGestureRecognizer;
-using RowDefinition = RowDefinition;
+using Windowing.Components.Window;
 
 public class Workbench : ContentPage
 {

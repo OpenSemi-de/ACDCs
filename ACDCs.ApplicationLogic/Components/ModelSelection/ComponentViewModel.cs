@@ -1,7 +1,6 @@
 ﻿namespace ACDCs.API.Core.Components.ModelSelection;
 
-using ACDCs.Data.ACDCs.Interfaces;
-using Sharp.UI;
+using Data.ACDCs.Interfaces;
 
 [BindableProperties]
 public class ComponentViewModel

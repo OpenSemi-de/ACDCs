@@ -1,10 +1,10 @@
 ﻿namespace ACDCs.API.Core.Components.ModelSelection;
 
-using ACDCs.API.Windowing.Components.Window;
-using ACDCs.Data.ACDCs.Interfaces;
-using Sharp.UI;
+using Data.ACDCs.Interfaces;
+using Interfaces;
+using Windowing.Components.Window;
 
-public class ModelSelectionWindow : Window, Interfaces.IWindow
+public class ModelSelectionWindow : Window, IWindow
 {
     public ModelSelectionView? ModelSelectionView { get; set; }
 

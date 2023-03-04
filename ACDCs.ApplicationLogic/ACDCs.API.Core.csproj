@@ -62,6 +62,7 @@
 	  <ProjectReference Include="..\ACDCS.CircuitRenderer\ACDCs.CircuitRenderer.csproj" />
 	  <ProjectReference Include="..\ACDCs.Data\ACDCs.Data.csproj" />
 	  <ProjectReference Include="..\ACDCs.IO\ACDCs.IO.csproj" />
+	  <ProjectReference Include="..\ACDCs.Sensors.API\ACDCs.Sensors.API.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

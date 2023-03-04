@@ -1,12 +1,8 @@
 ﻿namespace ACDCs.API.Core.Components.Debug;
 
-using ACDCs.API.Windowing.Components.Window;
 using Microsoft.Maui.Layouts;
-using Sharp.UI;
 using UraniumUI.Material.Controls;
-using ColumnDefinition = ColumnDefinition;
-using Grid = Grid;
-using RowDefinition = RowDefinition;
+using Windowing.Components.Window;
 
 public class DebugWindow : Window
 {
@@ -19,7 +15,7 @@ public class DebugWindow : Window
 
     public DebugWindow(WindowContainer? layout) : base(layout, "Debug", "")
     {
-        _debugGrid = new Sharp.UI.Grid()
+        _debugGrid = new Grid()
             .ColumnDefinitions(new ColumnDefinitionCollection(
                 new ColumnDefinition(GridLength.Star),
                 new ColumnDefinition(new GridLength(60))
@@ -39,13 +35,13 @@ public class DebugWindow : Window
         Grid.SetColumnSpan(_label, 2);
         _textField = new TextField();
         _textField.TextChanged += TextFieldOnTextChanged;
-        Sharp.UI.Grid.SetRow(_textField, 1);
+        Grid.SetRow(_textField, 1);
         _debugGrid.Add(_label);
         _debugGrid.Add(_textField);
         _button = new Button(">")
             .WidthRequest(60);
-        Sharp.UI.Grid.SetRow(_button, 1);
-        Sharp.UI.Grid.SetColumn(_button, 1);
+        Grid.SetRow(_button, 1);
+        Grid.SetColumn(_button, 1);
         _button.Clicked += ButtonOnClicked;
         _debugGrid.Add(_button);
         Start();

@@ -1,8 +1,7 @@
 ﻿namespace ACDCs.API.Core.Services;
 
-using ACDCs.API.Interfaces;
 using Instance;
-using Sharp.UI;
+using Interfaces;
 using Font = Microsoft.Maui.Graphics.Font;
 
 public class ImageService : IImageService

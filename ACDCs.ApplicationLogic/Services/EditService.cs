@@ -1,10 +1,10 @@
 ﻿namespace ACDCs.API.Core.Services;
 
-using ACDCs.API.Interfaces;
-using ACDCs.CircuitRenderer.Interfaces;
-using ACDCs.CircuitRenderer.Items;
-using ACDCs.CircuitRenderer.Sheet;
+using CircuitRenderer.Interfaces;
+using CircuitRenderer.Items;
+using CircuitRenderer.Sheet;
 using Components.Circuit;
+using Interfaces;
 
 public class EditService : IEditService
 {

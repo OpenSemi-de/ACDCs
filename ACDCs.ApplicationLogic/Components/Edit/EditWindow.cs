@@ -1,8 +1,7 @@
 ﻿namespace ACDCs.API.Core.Components.Edit;
 
-using ACDCs.API.Windowing.Components.Window;
 using Instance;
-using Sharp.UI;
+using Windowing.Components.Window;
 
 public class EditWindow : Window
 {

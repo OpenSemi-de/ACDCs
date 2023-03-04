@@ -1,14 +1,13 @@
 namespace ACDCs.API.Core.Components.Circuit;
 
-using ACDCs.API.Windowing.Components.Window;
-using ACDCs.CircuitRenderer.Interfaces;
+using CircuitRenderer.Interfaces;
 using Edit;
 using Instance;
 using Items;
 using Microsoft.Maui.Layouts;
 using Properties;
 using QuickEdit;
-using Sharp.UI;
+using Windowing.Components.Window;
 
 public sealed class CircuitSheetView : AbsoluteLayout
 {

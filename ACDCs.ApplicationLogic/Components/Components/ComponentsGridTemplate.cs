@@ -1,9 +1,5 @@
 ﻿namespace ACDCs.API.Core.Components.Components;
 
-using Sharp.UI;
-using ColumnDefinition = ColumnDefinition;
-using RowDefinition = RowDefinition;
-
 public class ComponentsGridTemplate : DataTemplate
 {
     public ComponentsGridTemplate()

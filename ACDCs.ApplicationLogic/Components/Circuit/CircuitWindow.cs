@@ -1,7 +1,6 @@
 ﻿namespace ACDCs.API.Core.Components.Circuit;
 
-using ACDCs.API.Windowing.Components.Window;
-using Sharp.UI;
+using Windowing.Components.Window;
 
 // ReSharper disable once UnusedType.Global
 public class CircuitWindow : Window

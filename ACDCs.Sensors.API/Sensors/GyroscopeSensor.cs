@@ -5,7 +5,9 @@ using Interfaces;
 
 public class GyroscopeSensor : ISensor<Vector3>
 {
-    public static bool IsSupported
+    public static bool Supported => Gyroscope.IsSupported;
+
+    public bool IsSupported
     {
         get { return Gyroscope.IsSupported; }
         set => throw new NotImplementedException();

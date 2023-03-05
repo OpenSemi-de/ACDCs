@@ -1,6 +1,7 @@
 ﻿namespace ACDCs.API.Core.Components.Sensors;
 
 using System.Collections.ObjectModel;
+using ACDCs.Sensors.API.Client;
 using ACDCs.Sensors.API.Sensors;
 using Instance;
 
@@ -88,6 +89,10 @@ public class SensorsConfigurationView : Grid
 
     private void NewRemoteClicked(object? sender, EventArgs e)
     {
+        if (Uri.TryCreate(_addNewRemoteEntry.Text, UriKind.Absolute, out Uri? baseUrl))
+        {
+            Task<Dictionary<Type, bool>?> availability = DownloadClient.GetSensorAvailability(baseUrl);
+        }
     }
 
     private void OnLoad(object? sender, EventArgs e)

@@ -21,6 +21,31 @@ public class DownloadClient
         _downloadDelay = downloadDelay;
     }
 
+    public static async Task<Dictionary<Type, bool>?> GetSensorAvailability(Uri baseUrl)
+    {
+        HttpClient httpClient = new();
+        Dictionary<Type, bool>? availability = new();
+        Uri avUri = new Uri(baseUrl.AbsoluteUri + "Sensors/Availability");
+        try
+        {
+            HttpResponseMessage response = await httpClient.GetAsync(avUri);
+            if (response.IsSuccessStatusCode)
+            {
+                string source = await response.Content.ReadAsStringAsync();
+                availability =
+                    JsonConvert.DeserializeObject(source, typeof(Dictionary<Type, bool>)) as Dictionary<Type, bool>;
+            }
+        }
+        catch (Exception ex)
+        {
+            // ignored
+        }
+
+        httpClient.Dispose();
+
+        return availability;
+    }
+
     public async Task Start()
     {
         _isRunning = true;
@@ -53,7 +78,7 @@ public class DownloadClient
 
     private async Task<List<ISample>> GetSamplesFromServer()
     {
-        HttpClient httpClient = new HttpClient();
+        HttpClient httpClient = new();
 
         List<ISample> samples = new();
         try

@@ -5,7 +5,9 @@ using Interfaces;
 
 public class OrientationSensor : ISensor<Quaternion>
 {
-    public static bool IsSupported
+    public static bool Supported => Microsoft.Maui.Devices.Sensors.OrientationSensor.IsSupported;
+
+    public bool IsSupported
     {
         get { return Microsoft.Maui.Devices.Sensors.OrientationSensor.IsSupported; }
         set => throw new NotImplementedException();

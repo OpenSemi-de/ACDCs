@@ -4,7 +4,9 @@ using Interfaces;
 
 public class BarometerSensor : ISensor<double>
 {
-    public static bool IsSupported
+    public static bool Supported => Barometer.IsSupported;
+
+    public bool IsSupported
     {
         get { return Barometer.IsSupported; }
         set => throw new NotImplementedException();

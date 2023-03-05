@@ -1,11 +1,15 @@
-﻿namespace ACDCs.Sensors.API;
+﻿// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+namespace ACDCs.Sensors.API;
 
 using Interfaces;
 using Newtonsoft.Json;
 using Samples;
+using Sensors;
 using WatsonWebserver;
 using Worker;
 
+// ReSharper disable once UnusedType.Global
 public class SensorServer
 {
     private readonly AccelerationWorker? _accelerationWorker;
@@ -16,7 +20,10 @@ public class SensorServer
     private readonly OrientationWorker? _orientationWorker;
     private readonly Server _server;
     private readonly List<Thread> _threads = new();
+
+    // ReSharper disable once NotAccessedField.Local
     private readonly Timer _updateTimer;
+
     private int _connectionCount;
     private int _sampleCount;
     public bool AccelerationSupported { get; set; }
@@ -59,7 +66,7 @@ public class SensorServer
         BarometerSupported = AddWorker<BarometerWorker, BarometerSample>(out _barometerWorker, GetBarometerSamples);
         CompassSupported = AddWorker<CompassWorker, CompassSample>(out _compassWorker, GetCompassSamples);
         GyroscopeSupported = AddWorker<GyroscopeWorker, GyroscopeSample>(out _gyroscopeWorker, GetGyroscopeSamples);
-
+        AddAvailabilityRequest();
         _updateTimer = new Timer(UpdateGui, null, 0, 1000);
     }
 
@@ -143,16 +150,21 @@ public class SensorServer
         if (!Started) return;
         _server.Stop();
 
-        _magneticWorker.Stop();
-        _accelerationWorker.Stop();
-        _orientationWorker.Stop();
-        _barometerWorker.Stop();
-        _compassWorker.Stop();
-        _gyroscopeWorker.Stop();
+        _magneticWorker?.Stop();
+        _accelerationWorker?.Stop();
+        _orientationWorker?.Stop();
+        _barometerWorker?.Stop();
+        _compassWorker?.Stop();
+        _gyroscopeWorker?.Stop();
 
         _threads.ForEach(t => t.Join());
         _threads.Clear();
         Started = false;
+    }
+
+    private void AddAvailabilityRequest()
+    {
+        _server.Routes.Static.Add(HttpMethod.GET, "/Sensors/Availability", GetSensorAvailability);
     }
 
     private bool AddWorker<T, TSampleType>(out T? worker, Func<HttpContext, Task> routeHandler) where T : ISensorWorker<TSampleType>, new()
@@ -246,6 +258,11 @@ public class SensorServer
         int count = _sampleCount;
         _sampleCount = 0;
         return count;
+    }
+
+    private async Task GetSensorAvailability(HttpContext ctx)
+    {
+        await ctx.Response.Send(JsonConvert.SerializeObject(SensorAvailability.GetAvailableSensors()));
     }
 
     private void StartThread(Action start)

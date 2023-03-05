@@ -11,12 +11,13 @@ public class SensorWorker<TResult, TSampleType> : ISensorWorker<TSampleType> whe
     private Thread? _cleanupThread;
     private int _numberOfSamples;
     public bool Started { get; set; }
-    public bool Supported => ISensor<TResult>.IsSupported;
+    public bool Supported { get; }
 
     protected SensorWorker(ISensor<TResult> sensor)
     {
         _sensor = sensor;
         _instance = this;
+        Supported = sensor.IsSupported;
     }
 
     private delegate bool TryRemoveThreaded(DateTime key, out TSampleType value);

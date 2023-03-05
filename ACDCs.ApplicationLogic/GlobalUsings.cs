@@ -7,6 +7,7 @@ global using GraphicsView = Microsoft.Maui.Controls.GraphicsView;
 global using PointerGestureRecognizer = Microsoft.Maui.Controls.PointerGestureRecognizer;
 global using RowDefinition = Microsoft.Maui.Controls.RowDefinition;
 global using Button = Sharp.UI.Button;
+global using CollectionView = Sharp.UI.CollectionView;
 global using ContentPage = Sharp.UI.ContentPage;
 global using ContentView = Sharp.UI.ContentView;
 global using DataTemplate = Sharp.UI.DataTemplate;

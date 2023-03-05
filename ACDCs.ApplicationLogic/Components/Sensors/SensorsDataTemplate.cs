@@ -1,0 +1,31 @@
+﻿namespace ACDCs.API.Core.Components.Sensors;
+
+public class SensorsDataTemplate : DataTemplate
+{
+    public string Description { get; set; }
+    public string Location { get; set; }
+    public string Name { get; set; }
+    public SensorSpeed SensorSpeed { get; set; }
+    public string Type { get; set; }
+    public string TypeDescription { get; set; }
+
+    public SensorsDataTemplate()
+    {
+        Add(GetLayout);
+    }
+
+    private object GetLayout()
+    {
+        ColumnDefinition[] columns =
+            {
+            new (80),
+            new(GridLength.Star)
+        };
+
+        return new Grid()
+        {
+            new Label().Bind(Label.TextProperty, "Name"), new Label().Column(1).Bind(Label.TextProperty, "Location")
+        }
+              .ColumnDefinitions(columns);
+    }
+}

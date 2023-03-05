@@ -10,9 +10,9 @@ public class SensorsConfigurationView : Grid
     private readonly Button _addNewRemoteButton;
     private readonly Entry _addNewRemoteEntry;
     private readonly Button _addToUsedButton;
-    private readonly ListView _availableSensorsListView;
+    private readonly CollectionView _availableSensorsCollectionView;
     private readonly Button _removeFromUsedButton;
-    private readonly ListView _usedSensorsListView;
+    private readonly CollectionView _usedSensorsCollectionView;
 
     public SensorsConfigurationView()
     {
@@ -37,21 +37,21 @@ public class SensorsConfigurationView : Grid
             .Padding(0)
             .Margin(2);
 
-        _usedSensorsListView = new ListView()
+        _usedSensorsCollectionView = new CollectionView()
             .BackgroundColor(API.Instance.Foreground.WithAlpha(0.7f))
             .Row(1)
             .Column(0)
-            .Margin(2)
-            .ItemTemplate(new DataTemplate(typeof(UsedSensorsViewCell)));
-        Add(_usedSensorsListView);
+            .Margin(2);
+        //    .ItemTemplate(new DataTemplate(typeof(UsedSensorsViewCell)));
+        Add(_usedSensorsCollectionView);
 
-        _availableSensorsListView = new ListView()
+        _availableSensorsCollectionView = new CollectionView()
             .BackgroundColor(API.Instance.Foreground.WithAlpha(0.7f))
             .Row(1)
             .Column(2)
             .Margin(2)
-            .ItemTemplate(new DataTemplate(typeof(AvailableSensorsViewCell)));
-        Add(_availableSensorsListView);
+          .ItemTemplate(new SensorsDataTemplate());
+        Add(_availableSensorsCollectionView);
 
         _addNewRemoteEntry = new Entry("URL of Server")
             .WidthRequest(100);
@@ -83,22 +83,9 @@ public class SensorsConfigurationView : Grid
         this.OnLoaded(OnLoad);
     }
 
-    private void AddToUsedClicked(object? sender, EventArgs e)
+    private static void GetAvailable(Dictionary<Type, bool> sensors, string location, ObservableCollection<SensorItem> items)
     {
-    }
-
-    private void NewRemoteClicked(object? sender, EventArgs e)
-    {
-        if (Uri.TryCreate(_addNewRemoteEntry.Text, UriKind.Absolute, out Uri? baseUrl))
-        {
-            Task<Dictionary<Type, bool>?> availability = DownloadClient.GetSensorAvailability(baseUrl);
-        }
-    }
-
-    private void OnLoad(object? sender, EventArgs e)
-    {
-        ObservableCollection<SensorItem> items = new();
-        foreach (var avail in SensorAvailability.GetAvailableSensors())
+        foreach (KeyValuePair<Type, bool> avail in sensors)
         {
             if (!avail.Value)
             {
@@ -107,7 +94,7 @@ public class SensorsConfigurationView : Grid
 
             SensorItem? item = new SensorItem(
                 avail.Key.Name,
-                "local",
+                location,
                 avail.Key.Name,
                 SensorSpeed.Fastest,
                 avail.Key.Name,
@@ -118,7 +105,35 @@ public class SensorsConfigurationView : Grid
                 item
             );
         }
-        _availableSensorsListView.ItemsSource = items;
+    }
+
+    private void AddToUsedClicked(object? sender, EventArgs e)
+    {
+    }
+
+    private async void NewRemoteClicked(object? sender, EventArgs e)
+    {
+        if (Uri.TryCreate(_addNewRemoteEntry.Text, UriKind.Absolute, out Uri? baseUrl))
+        {
+            Dictionary<Type, bool>? availability = await DownloadClient.GetSensorAvailability(baseUrl);
+            ObservableCollection<SensorItem>? items =
+                _availableSensorsCollectionView.ItemsSource as ObservableCollection<SensorItem>;
+            if (availability == null || items == null)
+            {
+                return;
+            }
+
+            GetAvailable(availability, baseUrl.ToString(), items);
+        }
+    }
+
+    private void OnLoad(object? sender, EventArgs e)
+    {
+        ObservableCollection<SensorItem> items = new();
+        Dictionary<Type, bool> sensors = SensorAvailability.GetAvailableSensors();
+        string location = "local";
+        GetAvailable(sensors, location, items);
+        _availableSensorsCollectionView.ItemsSource = items;
     }
 
     private void RemoveFromUsedClicked(object? sender, EventArgs e)

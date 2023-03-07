@@ -1,6 +1,8 @@
 ﻿namespace ACDCs.API.Core.Components.Sensors;
 
 using System.Collections.ObjectModel;
+using ACDCs.IO.DB;
+using ACDCs.Sensors.API;
 using ACDCs.Sensors.API.Client;
 using ACDCs.Sensors.API.Sensors;
 using Instance;
@@ -38,14 +40,16 @@ public class SensorsConfigurationView : Grid
             .Margin(2);
 
         _usedSensorsCollectionView = new CollectionView()
+            .SelectionMode(SelectionMode.Single)
             .BackgroundColor(API.Instance.Foreground.WithAlpha(0.7f))
             .Row(1)
             .Column(0)
-            .Margin(2);
-        //    .ItemTemplate(new DataTemplate(typeof(UsedSensorsViewCell)));
+            .Margin(2)
+          .ItemTemplate(new SensorsDataTemplate());
         Add(_usedSensorsCollectionView);
 
         _availableSensorsCollectionView = new CollectionView()
+            .SelectionMode(SelectionMode.Single)
             .BackgroundColor(API.Instance.Foreground.WithAlpha(0.7f))
             .Row(1)
             .Column(2)
@@ -83,60 +87,71 @@ public class SensorsConfigurationView : Grid
         this.OnLoaded(OnLoad);
     }
 
-    private static void GetAvailable(Dictionary<Type, bool> sensors, string location, ObservableCollection<SensorItem> items)
-    {
-        foreach (KeyValuePair<Type, bool> avail in sensors)
-        {
-            if (!avail.Value)
-            {
-                continue;
-            }
-
-            SensorItem? item = new SensorItem(
-                avail.Key.Name,
-                location,
-                avail.Key.Name,
-                SensorSpeed.Fastest,
-                avail.Key.Name,
-                avail.Key.Name
-            );
-
-            items.Add(
-                item
-            );
-        }
-    }
-
     private void AddToUsedClicked(object? sender, EventArgs e)
     {
+        if (_availableSensorsCollectionView.SelectedItem is not SensorItem item) return;
+        if (_availableSensorsCollectionView.ItemsSource is not ObservableCollection<SensorItem> items) return;
+        if (_usedSensorsCollectionView.ItemsSource is not ObservableCollection<SensorItem> itemsUsed) return;
+        items.Remove(item);
+        itemsUsed.Add(item);
+        SaveSensors(itemsUsed);
+    }
+
+    private List<SensorItem> GetSavedSensors()
+    {
+        DBConnection usedSensorsDb = new("Sensors");
+
+        List<SensorItem> sensorItems = usedSensorsDb.Read<SensorItem>("UsedSensors");
+        return sensorItems;
     }
 
     private async void NewRemoteClicked(object? sender, EventArgs e)
     {
         if (Uri.TryCreate(_addNewRemoteEntry.Text, UriKind.Absolute, out Uri? baseUrl))
         {
-            Dictionary<Type, bool>? availability = await DownloadClient.GetSensorAvailability(baseUrl);
-            ObservableCollection<SensorItem>? items =
-                _availableSensorsCollectionView.ItemsSource as ObservableCollection<SensorItem>;
-            if (availability == null || items == null)
+            List<SensorItem>? sensors = await DownloadClient.GetSensorAvailability(baseUrl);
+            if (sensors == null || _availableSensorsCollectionView.ItemsSource is not ObservableCollection<SensorItem> items)
             {
                 return;
             }
 
-            GetAvailable(availability, baseUrl.ToString(), items);
+            foreach (SensorItem item in sensors)
+            {
+                item.Location = $"{baseUrl.ToString().TrimEnd('/')}{item.Location}";
+                items.Add(item);
+            }
         }
     }
 
     private void OnLoad(object? sender, EventArgs e)
     {
         ObservableCollection<SensorItem> items = new();
-        Dictionary<Type, bool> sensors = SensorAvailability.GetAvailableSensors();
+        ObservableCollection<SensorItem> itemsUsed = new(GetSavedSensors());
+        _usedSensorsCollectionView.ItemsSource = itemsUsed;
+        List<SensorItem> sensors = SensorAvailability.GetAvailableSensors();
+
         string location = "local";
-        GetAvailable(sensors, location, items);
+        foreach (SensorItem item in sensors)
+        {
+            item.Location = location;
+            items.Add(item);
+        }
         _availableSensorsCollectionView.ItemsSource = items;
     }
 
     private void RemoveFromUsedClicked(object? sender, EventArgs e)
     {
+        if (_usedSensorsCollectionView.SelectedItem is not SensorItem item) return;
+        if (_availableSensorsCollectionView.ItemsSource is not ObservableCollection<SensorItem> items) return;
+        if (_usedSensorsCollectionView.ItemsSource is not ObservableCollection<SensorItem> itemsUsed) return;
+        items.Add(item);
+        itemsUsed.Remove(item);
+        SaveSensors(itemsUsed);
+    }
+
+    private void SaveSensors(ObservableCollection<SensorItem> itemsUsed)
+    {
+        DBConnection usedSensorsDb = new("Sensors");
+        usedSensorsDb.ReWrite(itemsUsed.ToList(), "UsedSensors");
     }
 }

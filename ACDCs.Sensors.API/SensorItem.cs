@@ -1,7 +1,7 @@
 ﻿// ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 // ReSharper disable ClassNeverInstantiated.Global
-namespace ACDCs.API.Core.Components.Sensors;
+namespace ACDCs.Sensors.API;
 
 public class SensorItem
 {
@@ -13,17 +13,17 @@ public class SensorItem
 
     public SensorSpeed SensorSpeed { get; set; }
 
-    public string Type { get; set; }
+    public string SensorType { get; set; }
 
     public string TypeDescription { get; set; }
 
-    public SensorItem(string description, string location, string name, SensorSpeed sensorSpeed, string type, string typeDescription)
+    public SensorItem(string description, string location, string name, SensorSpeed sensorSpeed, string sensorType, string typeDescription)
     {
         Description = description;
         Location = location;
         Name = name;
         SensorSpeed = sensorSpeed;
-        Type = type;
+        SensorType = sensorType;
         TypeDescription = typeDescription;
     }
 }

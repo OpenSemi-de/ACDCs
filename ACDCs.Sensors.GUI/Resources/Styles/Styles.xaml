@@ -167,9 +167,23 @@
                 Value="{AppThemeBinding Light={StaticResource BackgroundHighLight}, Dark={StaticResource BackgroundHighDark}}" />
     </Style>
 
-    <Style TargetType="Grid" BaseResourceKey="GridStyle">
+    <Style TargetType="ui:Grid" BaseResourceKey="GridStyle">
         <Setter Property="RowSpacing" Value="0"></Setter>
         <Setter Property="ColumnSpacing" Value="0"></Setter>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Selected">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor"
+                                    Value="{AppThemeBinding Light={StaticResource BackgroundHighLight}, Dark={StaticResource BackgroundHighDark}}" />
+
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
     </Style>
 
     <Style TargetType="ui:ImageButton">

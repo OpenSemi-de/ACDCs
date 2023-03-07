@@ -2,9 +2,9 @@
 
 public static class SensorAvailability
 {
-    public static Dictionary<Type, bool> GetAvailableSensors()
+    public static List<SensorItem> GetAvailableSensors()
     {
-        return new Dictionary<Type, bool>
+        Dictionary<Type, bool> supported = new()
         {
             { typeof(AccelerationSensor), AccelerationSensor.Supported },
             { typeof(BarometerSensor), BarometerSensor.Supported },
@@ -13,5 +13,17 @@ public static class SensorAvailability
             { typeof(MagneticSensor), MagneticSensor.Supported },
             { typeof(OrientationSensor), OrientationSensor.Supported },
         };
+
+        List<SensorItem> available = supported
+            .Where(kv => kv.Value)
+            .Select(kv => new SensorItem(
+                kv.Key.Name,
+                $"/{kv.Key.Name.Replace("Worker", "")}/Samples",
+                kv.Key.Name,
+                SensorSpeed.Fastest,
+                kv.Key.Name,
+                kv.Key.Name))
+            .ToList();
+        return available;
     }
 }

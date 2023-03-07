@@ -16,19 +16,14 @@
         public object? GetPreference(string key)
         {
             PreferenceSetting? setting = _connection.GetOrSet<PreferenceSetting>("Preferences", "Key", key);
-            if (setting == null)
-            {
-                return null;
-            }
-
-            return setting.Value;
+            return setting?.Value;
         }
 
         public PreferenceSetting SetPreference(string key, object value)
         {
             PreferenceSetting setting = new() { Key = key, Value = value, TypeName = value.GetType().Name };
 
-            var existingValue = GetPreference(key);
+            object? existingValue = GetPreference(key);
             if (existingValue != null)
             {
                 _connection.GetOrSet("Preferences", "Key", key, value);

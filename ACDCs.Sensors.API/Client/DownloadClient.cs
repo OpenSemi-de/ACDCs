@@ -21,10 +21,10 @@ public class DownloadClient
         _downloadDelay = downloadDelay;
     }
 
-    public static async Task<Dictionary<Type, bool>?> GetSensorAvailability(Uri baseUrl)
+    public static async Task<List<SensorItem>?> GetSensorAvailability(Uri baseUrl)
     {
         HttpClient httpClient = new();
-        Dictionary<Type, bool>? availability = new();
+        List<SensorItem>? availability = new();
         Uri avUri = new Uri(baseUrl.AbsoluteUri + "Sensors/Availability");
         try
         {
@@ -33,7 +33,7 @@ public class DownloadClient
             {
                 string source = await response.Content.ReadAsStringAsync();
                 availability =
-                    JsonConvert.DeserializeObject(source, typeof(Dictionary<Type, bool>)) as Dictionary<Type, bool>;
+                    JsonConvert.DeserializeObject(source, typeof(List<SensorItem>)) as List<SensorItem>;
             }
         }
         catch (Exception ex)

@@ -20,16 +20,21 @@ public class DBConnection
     {
         using LiteDatabase db = new(_connectionString);
         T? retValue = default;
-        if (db.CollectionExists(collectionName))
+        if (!db.CollectionExists(collectionName))
         {
-            var col = db.GetCollection<T>(collectionName);
-            retValue = col.FindOne(Query.EQ(keyName, keyValue));
-            if (newValue != null)
-            {
-                col.DeleteMany(Query.EQ(keyName, keyValue));
-                col.Insert(newValue);
-            }
+            return retValue;
         }
+
+        ILiteCollection<T>? col = db.GetCollection<T>(collectionName);
+        retValue = col.FindOne(Query.EQ(keyName, keyValue));
+        if (newValue == null)
+        {
+            return retValue;
+        }
+
+        if (retValue != null)
+            col.DeleteMany(Query.EQ(keyName, keyValue));
+        col.Insert(newValue);
 
         return retValue;
     }
@@ -40,12 +45,19 @@ public class DBConnection
         return db.CollectionExists(collectionName) ? db.GetCollection<T>(collectionName).FindAll().ToList() : new List<T>();
     }
 
+    public void ReWrite<T>(List<T> items, string collectionName)
+    {
+        using LiteDatabase db = new(_connectionString);
+
+        db.GetCollection<T>(collectionName).DeleteAll();
+        db.GetCollection<T>(collectionName).Insert(items);
+    }
+
     public void Write<T>(List<T> items, string collectionName)
     {
         using LiteDatabase db = new(_connectionString);
 
         db.GetCollection<T>(collectionName)
             .Insert(items);
-        db.Dispose();
     }
 }

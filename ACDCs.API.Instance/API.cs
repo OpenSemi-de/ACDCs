@@ -119,6 +119,11 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
         return PreferencesRepository.GetPreference(key)!;
     }
 
+    public static T? GetPreference<T>(string v) where T : class
+    {
+        return GetPreference(v) as T;
+    }
+
     public static async Task<string> LoadMauiAssetAsString(string? name)
     {
         if (name == null)
@@ -139,6 +144,11 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
         {
             await MainPage.DisplayAlert("Internal exception", exception.Message, "ok");
         }
+    }
+
+    public static void SetPreference(string name, object preference)
+    {
+        PreferencesRepository.SetPreference(name, preference);
     }
 
     public void Add(string name, Action<object?> action) => _menuService.Add(name, action);

@@ -57,7 +57,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-		<PackageReference Include="Sharp.UI" Version="0.4.5-alpha" />
+		<PackageReference Include="Sharp.UI" Version="0.4.6-alpha" />
 		<PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.4.0-pre.1" />
 	</ItemGroup>
 

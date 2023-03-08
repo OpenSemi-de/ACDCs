@@ -3,7 +3,7 @@
 using System.Numerics;
 using Interfaces;
 
-public class OrientationSample : ISample<Quaternion>
+public class OrientationSample : ISample<Quaternion>, ISample
 {
     public Quaternion Sample { get; set; }
 

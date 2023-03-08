@@ -2,7 +2,7 @@
 
 using Interfaces;
 
-public class BarometerSample : ISample<double>
+public class BarometerSample : ISample<double>, ISample
 {
     public double Sample { get; set; }
 

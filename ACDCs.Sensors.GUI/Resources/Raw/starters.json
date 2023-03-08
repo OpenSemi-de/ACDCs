@@ -1,4 +1,5 @@
 {
+    "Sensor view": "SensorsDisplayWindow",
     "Sensor configuration": "SensorsConfigurationWindow",
     "Debug": "DebugWindow"
 }

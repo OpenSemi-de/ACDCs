@@ -19,9 +19,9 @@
 	</PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Sharp.UI">
-      <Version>0.4.5-alpha</Version>
+      <Version>0.4.6-alpha</Version>
     </PackageReference>
     <PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.4.0-pre.1" />
   </ItemGroup>

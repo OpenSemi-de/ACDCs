@@ -1,17 +1,18 @@
 ﻿namespace ACDCs.Sensors.API.Client;
 
+using System.Collections;
 using Interfaces;
 using Newtonsoft.Json;
 
 public class DownloadClient
 {
     private readonly int _downloadDelay;
+    private readonly string _outputPath;
     private readonly Type _resultType;
+    private readonly Dictionary<string, List<ISample>> _sampleFiles;
     private readonly Uri _uri;
     private bool _isRunning;
-    private string _outputPath;
-
-    private Dictionary<string, List<ISample>> _sampleFiles = new();
+    private List<ISample> _sampleCache;
 
     public DownloadClient(Uri uri, string outputPath, Type resultType, int downloadDelay = 1000)
     {
@@ -19,13 +20,21 @@ public class DownloadClient
         _outputPath = outputPath;
         _resultType = resultType;
         _downloadDelay = downloadDelay;
+        _sampleCache = new List<ISample>();
+        _sampleFiles = new Dictionary<string, List<ISample>>();
+    }
+
+    public List<ISample> SampleCache
+    {
+        get => _sampleCache;
+        set => _sampleCache = value;
     }
 
     public static async Task<List<SensorItem>?> GetSensorAvailability(Uri baseUrl)
     {
         HttpClient httpClient = new();
         List<SensorItem>? availability = new();
-        Uri avUri = new Uri(baseUrl.AbsoluteUri + "Sensors/Availability");
+        Uri avUri = new($"{baseUrl.AbsoluteUri}Sensors/Availability");
         try
         {
             HttpResponseMessage response = await httpClient.GetAsync(avUri);
@@ -36,7 +45,9 @@ public class DownloadClient
                     JsonConvert.DeserializeObject(source, typeof(List<SensorItem>)) as List<SensorItem>;
             }
         }
+#pragma warning disable CS0168
         catch (Exception ex)
+#pragma warning restore CS0168
         {
             // ignored
         }
@@ -49,18 +60,39 @@ public class DownloadClient
     public async Task Start()
     {
         _isRunning = true;
+        await Task.Delay(100);
         while (_isRunning)
         {
             List<ISample> samples = await GetSamplesFromServer();
-            PutToOutputPath(samples);
-            SaveFiles();
-            Thread.Sleep(_downloadDelay);
+            if (!string.IsNullOrEmpty(_outputPath))
+            {
+                PutToOutputPath(samples);
+                SaveFiles();
+
+                Thread.Sleep(_downloadDelay);
+            }
+            else
+            {
+                AddToCache(samples);
+                await Task.Delay(_downloadDelay);
+            }
         }
     }
 
     public void Stop()
     {
         _isRunning = false;
+    }
+
+    private void AddToCache(List<ISample> samples)
+    {
+        _sampleCache = _sampleCache
+            .Union(samples)
+            .DistinctBy(s => s.Time)
+            .OrderByDescending(s => s.Time)
+            .Take(5000)
+            .OrderBy(s => s.Time)
+            .ToList();
     }
 
     private void CheckDirectories(string filePath, string dateTimePath)
@@ -87,13 +119,16 @@ public class DownloadClient
             if (response.IsSuccessStatusCode)
             {
                 string source = await response.Content.ReadAsStringAsync();
-                if (JsonConvert.DeserializeObject(source, _resultType) is ISample[] list)
+                var isamples = JsonConvert.DeserializeObject(source, _resultType);
+                foreach (var sample in isamples as IList)
                 {
-                    samples = list.ToList();
+                    samples.Add(sample as ISample);
                 }
             }
         }
+#pragma warning disable CS0168
         catch (Exception ex)
+#pragma warning restore CS0168
         {
             // ignored
         }
@@ -121,7 +156,7 @@ public class DownloadClient
                 {
                     SaveFiles();
                     string fileData = File.ReadAllText(outputFilePath);
-                    _sampleFiles.Add(outputFilePath, (JsonConvert.DeserializeObject(fileData, _resultType) as ISample[]).ToList());
+                    _sampleFiles.Add(outputFilePath, (JsonConvert.DeserializeObject(fileData, _resultType) as ISample[] ?? Array.Empty<ISample>()).ToList());
                 }
                 else
                 {

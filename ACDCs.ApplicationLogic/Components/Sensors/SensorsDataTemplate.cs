@@ -16,16 +16,22 @@ public class SensorsDataTemplate : DataTemplate
 
     private object GetLayout()
     {
-        ColumnDefinition[] columns =
+        RowDefinition[] rows =
             {
-            new (80),
-            new(GridLength.Star)
+            new (16),
+            new(30)
         };
 
         return new Grid()
         {
-            new Label().Bind(Label.TextProperty, "Name"), new Label().Column(1).Bind(Label.TextProperty, "Location")
+            new Label()
+                .Bind(Label.TextProperty, "Name")
+                .FontSize(11),
+            new Label()
+                .Row(1)
+                .Bind(Label.TextProperty, "Location")
+                .FontSize(10)
         }
-              .ColumnDefinitions(columns);
+              .RowDefinitions(rows);
     }
 }

@@ -2,7 +2,7 @@
 
 using Interfaces;
 
-public class CompassSample : ISample<double>
+public class CompassSample : ISample<double>, ISample
 {
     public double Sample { get; set; }
     public DateTime Time { get; set; }

@@ -87,6 +87,14 @@ public class SensorsConfigurationView : Grid
         this.OnLoaded(OnLoad);
     }
 
+    public static List<SensorItem> GetSavedSensors()
+    {
+        DBConnection usedSensorsDb = new("Sensors");
+
+        List<SensorItem> sensorItems = usedSensorsDb.Read<SensorItem>("UsedSensors");
+        return sensorItems;
+    }
+
     private void AddToUsedClicked(object? sender, EventArgs e)
     {
         if (_availableSensorsCollectionView.SelectedItem is not SensorItem item) return;
@@ -95,14 +103,6 @@ public class SensorsConfigurationView : Grid
         items.Remove(item);
         itemsUsed.Add(item);
         SaveSensors(itemsUsed);
-    }
-
-    private List<SensorItem> GetSavedSensors()
-    {
-        DBConnection usedSensorsDb = new("Sensors");
-
-        List<SensorItem> sensorItems = usedSensorsDb.Read<SensorItem>("UsedSensors");
-        return sensorItems;
     }
 
     private async void NewRemoteClicked(object? sender, EventArgs e)

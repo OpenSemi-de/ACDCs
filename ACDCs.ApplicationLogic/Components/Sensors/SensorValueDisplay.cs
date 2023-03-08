@@ -52,14 +52,14 @@ public class SensorValueDisplay : Grid
         Add(_label4);
     }
 
-    public void SetSample(ISample sample)
+    public void SetSample(ISample? sample)
     {
         if (!MainThread.IsMainThread)
             MainThread.BeginInvokeOnMainThread(() => SetSampleRaw(sample));
         else SetSampleRaw(sample);
     }
 
-    public void SetSampleRaw(ISample sample)
+    public void SetSampleRaw(ISample? sample)
     {
         switch (sample)
         {

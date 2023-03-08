@@ -11,8 +11,14 @@ public class DownloadClient
     private readonly Type _resultType;
     private readonly Dictionary<string, List<ISample>> _sampleFiles;
     private readonly Uri _uri;
-    private bool _isRunning;
-    private List<ISample> _sampleCache;
+    private bool _isRunning = true;
+    private List<ISample?> _sampleCache;
+
+    public List<ISample?> SampleCache
+    {
+        get => _sampleCache;
+        set => _sampleCache = value;
+    }
 
     public DownloadClient(Uri uri, string outputPath, Type resultType, int downloadDelay = 1000)
     {
@@ -20,14 +26,8 @@ public class DownloadClient
         _outputPath = outputPath;
         _resultType = resultType;
         _downloadDelay = downloadDelay;
-        _sampleCache = new List<ISample>();
+        _sampleCache = new List<ISample?>();
         _sampleFiles = new Dictionary<string, List<ISample>>();
-    }
-
-    public List<ISample> SampleCache
-    {
-        get => _sampleCache;
-        set => _sampleCache = value;
     }
 
     public static async Task<List<SensorItem>?> GetSensorAvailability(Uri baseUrl)
@@ -59,7 +59,6 @@ public class DownloadClient
 
     public async Task Start()
     {
-        _isRunning = true;
         await Task.Delay(100);
         while (_isRunning)
         {

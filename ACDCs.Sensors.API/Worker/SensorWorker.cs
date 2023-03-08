@@ -22,9 +22,9 @@ public class SensorWorker<TResult, TSampleType> : ISensorWorker<TSampleType> whe
 
     private delegate bool TryRemoveThreaded(DateTime key, out TSampleType value);
 
-    public List<TSampleType> GetSamples(int count = 1024)
+    public List<TSampleType> GetSamples(int count = 256)
     {
-        return _samples.AsParallel().OrderByDescending(s => s.Key)
+        return _samples.OrderByDescending(s => s.Key)
             .Take(count)
             .Select(kv => kv.Value)
             .ToList();

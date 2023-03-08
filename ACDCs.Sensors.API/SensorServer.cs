@@ -26,6 +26,7 @@ public class SensorServer
 
     private int _connectionCount;
     private int _sampleCount;
+    private bool _started;
     public bool AccelerationSupported { get; set; }
     public bool AccelerationWorkerStarted { get; private set; }
     public string? AccelerometerCacheLabelText { get; set; }
@@ -53,12 +54,9 @@ public class SensorServer
     public bool OrientationSupported { get; set; }
     public bool OrientationWorkerStarted { get; private set; }
 
-    private bool Started { get; set; }
-
     public SensorServer(int port)
     {
         _server = new Server("*", port, defaultRoute: GetDefaultRoute);
-
         MagnetometerSupported = AddWorker<MagneticWorker, MagneticSample>(out _magneticWorker, GetMagneticSamples);
         OrientationSupported = AddWorker<OrientationWorker, OrientationSample>(out _orientationWorker, GetOrientationSamples);
         AccelerationSupported =
@@ -72,7 +70,7 @@ public class SensorServer
 
     public void Start()
     {
-        if (Started) return;
+        if (_started) return;
         _server.Start();
 
         if (MagnetometerSupported)
@@ -142,12 +140,12 @@ public class SensorServer
             GyroscopeWorkerStarted = _gyroscopeWorker.Started;
         }
 
-        Started = true;
+        _started = true;
     }
 
     public void Stop()
     {
-        if (!Started) return;
+        if (!_started) return;
         _server.Stop();
 
         _magneticWorker?.Stop();
@@ -159,7 +157,7 @@ public class SensorServer
 
         _threads.ForEach(t => t.Join());
         _threads.Clear();
-        Started = false;
+        _started = false;
     }
 
     private void AddAvailabilityRequest()

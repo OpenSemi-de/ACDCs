@@ -17,7 +17,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 		<Nullable>enable</Nullable>
 		<IncrementVersionOnBuild>1.+.yyyy.MMdd</IncrementVersionOnBuild>
-		<Version>1.1183.2023.308</Version>
+		<Version>1.1214.2023.308</Version>
 	</PropertyGroup>
 
 	<ItemGroup>

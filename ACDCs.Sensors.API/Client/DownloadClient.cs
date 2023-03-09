@@ -1,6 +1,8 @@
 ﻿namespace ACDCs.Sensors.API.Client;
 
 using System.Collections;
+using System.Collections.Concurrent;
+using ACDCs.Sensors.API.Samples;
 using Interfaces;
 using Newtonsoft.Json;
 
@@ -12,9 +14,9 @@ public class DownloadClient
     private readonly Dictionary<string, List<ISample>> _sampleFiles;
     private readonly Uri _uri;
     private bool _isRunning = true;
-    private List<ISample?> _sampleCache;
+    private ConcurrentQueue<ISample?> _sampleCache;
 
-    public List<ISample?> SampleCache
+    public ConcurrentQueue<ISample?> SampleCache
     {
         get => _sampleCache;
         set => _sampleCache = value;
@@ -26,7 +28,7 @@ public class DownloadClient
         _outputPath = outputPath;
         _resultType = resultType;
         _downloadDelay = downloadDelay;
-        _sampleCache = new List<ISample?>();
+        _sampleCache = new ConcurrentQueue<ISample?>();
         _sampleFiles = new Dictionary<string, List<ISample>>();
     }
 
@@ -57,25 +59,10 @@ public class DownloadClient
         return availability;
     }
 
-    public async Task Start()
+    public void Start()
     {
-        await Task.Delay(100);
-        while (_isRunning)
-        {
-            List<ISample> samples = await GetSamplesFromServer();
-            if (!string.IsNullOrEmpty(_outputPath))
-            {
-                PutToOutputPath(samples);
-                SaveFiles();
-
-                Thread.Sleep(_downloadDelay);
-            }
-            else
-            {
-                AddToCache(samples);
-                await Task.Delay(_downloadDelay);
-            }
-        }
+        Thread loop = new Thread(Loop);
+        loop.Start();
     }
 
     public void Stop()
@@ -85,13 +72,18 @@ public class DownloadClient
 
     private void AddToCache(List<ISample> samples)
     {
-        _sampleCache = _sampleCache
-            .Union(samples)
-            .DistinctBy(s => s.Time)
-            .OrderByDescending(s => s.Time)
-            .Take(5000)
-            .OrderBy(s => s.Time)
-            .ToList();
+        ISample latestSample = SampleCache.OrderBy(s => s.Time).LastOrDefault() ?? new CompassSample() { Time = DateTime.MinValue };
+
+        List<ISample> updates = samples.Where(s => s.Time > latestSample.Time).ToList();
+        foreach (ISample update in updates)
+        {
+            SampleCache.Enqueue(update);
+        }
+
+        while (SampleCache.Count > 1000)
+        {
+            SampleCache.TryDequeue(out _);
+        }
     }
 
     private void CheckDirectories(string filePath, string dateTimePath)
@@ -135,6 +127,27 @@ public class DownloadClient
         httpClient.Dispose();
 
         return samples;
+    }
+
+    private async void Loop()
+    {
+        await Task.Delay(100);
+        while (_isRunning)
+        {
+            List<ISample> samples = await GetSamplesFromServer();
+            if (!string.IsNullOrEmpty(_outputPath))
+            {
+                PutToOutputPath(samples);
+                SaveFiles();
+
+                Thread.Sleep(_downloadDelay);
+            }
+            else
+            {
+                AddToCache(samples);
+                await Task.Delay(_downloadDelay);
+            }
+        }
     }
 
     private void PutSampleToFile(string filePath, ISample sample)

@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <IncrementVersionOnBuild>1.+.yyyy.MMdd</IncrementVersionOnBuild>
-    <Version>1.166.2023.303</Version>
+    <Version>1.167.2023.309</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -20,22 +20,35 @@ using SkiaSharp;
 
 public class SensorsDisplayView : Grid
 {
+    private readonly FftWorker _fftWorkerH;
+    private readonly FftWorker _fftWorkerX;
+    private readonly FftWorker _fftWorkerY;
+    private readonly FftWorker _fftWorkerZ;
     private readonly Label _selectedSensorLabel;
+    private readonly Timer _updateFftTimer;
     private readonly Timer _updateTimer;
     private readonly CollectionView _usedSensorsCollectionView;
     private readonly SensorValueDisplay _valueDisplay;
-    private Axis _axisY;
+    private Axis? _axisFftY;
+    private Axis? _axisY;
+    private CartesianChart? _fftChart;
     private DownloadClient? _selectedClient;
-    private LineSeries<SeriesSample> _seriesH;
-    private LineSeries<SeriesSample> _seriesX;
-    private LineSeries<SeriesSample> _seriesY;
-    private LineSeries<SeriesSample> _seriesZ;
+    private LineSeries<FftInfo>? _seriesFftH;
+    private LineSeries<FftInfo>? _seriesFftX;
+    private LineSeries<FftInfo>? _seriesFftY;
+    private LineSeries<FftInfo>? _seriesFftZ;
+    private LineSeries<SeriesSample>? _seriesH;
+    private LineSeries<SeriesSample>? _seriesX;
+    private LineSeries<SeriesSample>? _seriesY;
+    private LineSeries<SeriesSample>? _seriesZ;
     private CartesianChart? _valueChart;
 
     public SensorsDisplayView()
     {
         _updateTimer = new Timer(UpdateGui);
+        _updateFftTimer = new Timer(UpdateFft);
         _updateTimer.Change(0, 100);
+        _updateFftTimer.Change(0, 100);
 
         ColumnDefinition[] columms = {
             new(130),
@@ -98,13 +111,48 @@ public class SensorsDisplayView : Grid
         views.Add(_valueDisplay);
 
         AddValueChart(views);
+        AddFftChart(views);
 
         Add(views);
 
+        _fftWorkerX = new FftWorker();
+        _fftWorkerY = new FftWorker();
+        _fftWorkerZ = new FftWorker();
+        _fftWorkerH = new FftWorker();
+
         this.OnLoaded(OnLoaded);
+        this.OnUnloaded(OnUnloaded);
     }
 
-    private static LineSeries<SeriesSample> GetSeries(SKColor color)
+    private static void GetDataForFft(LineSeries<FftInfo>? series, FftWorker worker)
+    {
+        if (series == null || series.Values == null) return;
+        try
+        {
+            if (series.Values is not ObservableCollection<FftInfo> values) return;
+            values.Clear();
+            if (!worker.OutputQueue.TryDequeue(out FftInfoPacket? pack))
+            {
+                return;
+            }
+
+            if (pack == null)
+            {
+                return;
+            }
+
+            foreach (var info in pack)
+            {
+                values.Add(info);
+            }
+        }
+        catch (Exception ex)
+        {
+            // ignored
+        }
+    }
+
+    private static LineSeries<SeriesSample>? GetSeries(SKColor color)
     {
         return new LineSeries<SeriesSample>
         {
@@ -124,10 +172,36 @@ public class SensorsDisplayView : Grid
         };
     }
 
+    private static LineSeries<FftInfo>? GetSeriesFft(SKColor color)
+    {
+        return new LineSeries<FftInfo>
+        {
+            Values = new ObservableCollection<FftInfo>(),
+            DataLabelsPaint = null,
+            DataLabelsPadding = new LiveChartsCore.Drawing.Padding(2),
+            DataLabelsPosition = DataLabelsPosition.End,
+            Stroke = new SolidColorPaint(color)
+            {
+                StrokeThickness = 3
+            },
+            GeometryStroke = null,
+            GeometrySize = 0,
+            EnableNullSplitting = false,
+            GeometryFill = null,
+            Mapping = MappingFft
+        };
+    }
+
     private static void Mapping(SeriesSample sample, ChartPoint chartPoint)
     {
         chartPoint.PrimaryValue = sample.Value;
         chartPoint.SecondaryValue = sample.Time.Ticks;
+    }
+
+    private static void MappingFft(FftInfo fft, ChartPoint chartPoint)
+    {
+        chartPoint.PrimaryValue = fft.Value;
+        chartPoint.SecondaryValue = fft.Freq;
     }
 
     private static double SampleValues(ISample? update, double sampleValueX, ref double sampleValueY,
@@ -172,6 +246,63 @@ public class SensorsDisplayView : Grid
         return sampleValueX;
     }
 
+    private void AddFftChart(Grid targetGrid)
+    {
+        _fftChart = new CartesianChart()
+            .Margin(0)
+            .Padding(0);
+
+        _seriesFftX = GetSeriesFft(SKColors.Red);
+        _seriesFftY = GetSeriesFft(SKColors.Green);
+        _seriesFftZ = GetSeriesFft(SKColors.Blue);
+        _seriesFftH = GetSeriesFft(SKColors.Yellow);
+
+        _fftChart.Series = new ObservableCollection<ISeries> { _seriesFftX, _seriesFftY, _seriesFftZ, _seriesFftH };
+        _fftChart.XAxes = new List<Axis>
+        {
+            new()
+            {
+                Name = "Frequency",
+                NamePadding = new LiveChartsCore.Drawing.Padding(2),
+                Padding = new LiveChartsCore.Drawing.Padding(2),
+                NameTextSize= 12,
+                NamePaint = new SolidColorPaint(SKColors.White),
+                LabelsPaint = new SolidColorPaint(SKColors.White),
+                TextSize = 12,
+                SeparatorsPaint = new SolidColorPaint(SKColors.LightSlateGray)
+                {
+                    StrokeThickness = 2
+                }
+            }
+        };
+
+        _axisFftY = new Axis
+        {
+            NameTextSize = 12,
+            NamePadding = new LiveChartsCore.Drawing.Padding(2),
+            Padding = new LiveChartsCore.Drawing.Padding(2),
+            NamePaint = new SolidColorPaint(SKColors.Yellow),
+            LabelsPaint = new SolidColorPaint(SKColors.Yellow),
+            TextSize = 12,
+            SeparatorsPaint = new SolidColorPaint(SKColors.LightSlateGray)
+            {
+                StrokeThickness = 2,
+                PathEffect = new DashEffect(new float[] { 3, 3 })
+            },
+        };
+
+        _fftChart.YAxes = new List<Axis?>
+        {
+            _axisFftY
+        };
+
+        targetGrid.Add(
+            _fftChart
+                .Row(4)
+                .Column(0)
+                .ColumnSpan(2));
+    }
+
     private void AddValueChart(Grid targetGrid)
     {
         _valueChart = new CartesianChart()
@@ -183,7 +314,7 @@ public class SensorsDisplayView : Grid
         _seriesZ = GetSeries(SKColors.Blue);
         _seriesH = GetSeries(SKColors.Yellow);
 
-        _valueChart.Series = new ObservableCollection<ISeries> { _seriesX, _seriesY, _seriesZ };
+        _valueChart.Series = new ObservableCollection<ISeries> { _seriesX, _seriesY, _seriesZ, _seriesH };
         _valueChart.XAxes = new List<Axis>
         {
             new()
@@ -205,7 +336,6 @@ public class SensorsDisplayView : Grid
         _axisY = new Axis
         {
             NameTextSize = 12,
-            Name = "Power (μT)",
             NamePadding = new LiveChartsCore.Drawing.Padding(2),
             Padding = new LiveChartsCore.Drawing.Padding(2),
             NamePaint = new SolidColorPaint(SKColors.Yellow),
@@ -218,22 +348,35 @@ public class SensorsDisplayView : Grid
             },
         };
 
-        _valueChart.YAxes = new List<Axis>
+        _valueChart.YAxes = new List<Axis?>
         {
             _axisY
         };
 
         targetGrid.Add(
             _valueChart
-            .Row(3)
-            .Column(0)
-            .ColumnSpan(2));
+                .Row(3)
+                .Column(0)
+                .ColumnSpan(2));
     }
 
     private void OnLoaded(object? sender, EventArgs e)
     {
         ObservableCollection<SensorItem> itemsUsed = new(SensorsConfigurationView.GetSavedSensors());
         _usedSensorsCollectionView.ItemsSource = itemsUsed;
+    }
+
+    private void OnUnloaded(object? sender, EventArgs e)
+    {
+        _selectedClient?.Stop();
+    }
+
+    private void UpdateFft(object? state)
+    {
+        GetDataForFft(_seriesFftX, _fftWorkerX);
+        GetDataForFft(_seriesFftY, _fftWorkerY);
+        GetDataForFft(_seriesFftZ, _fftWorkerZ);
+        GetDataForFft(_seriesFftH, _fftWorkerH);
     }
 
     private void UpdateGui(object? state)
@@ -302,6 +445,8 @@ public class SensorsDisplayView : Grid
                     valuesZ.RemoveAt(0);
                 if (valuesH.Count > 1000)
                     valuesH.RemoveAt(0);
+
+                _fftWorkerX.EnqueueSample(new FftSample(sampleValueX, update.Time));
             }
         }
         catch (Exception ex)
@@ -345,7 +490,7 @@ public class SensorsDisplayView : Grid
                 _seriesY.IsVisible = false;
                 _seriesZ.IsVisible = false;
                 _seriesH.IsVisible = false;
-                _axisY.Name = "uBar";
+                _axisY.Name = "μBar";
                 break;
 
             case nameof(CompassSensor):
@@ -361,7 +506,7 @@ public class SensorsDisplayView : Grid
                 _seriesY.IsVisible = true;
                 _seriesZ.IsVisible = true;
                 _seriesH.IsVisible = false;
-                _axisY.Name = "Dir";
+                _axisY.Name = "Degree";
                 break;
 
             case nameof(MagneticSensor):
@@ -369,7 +514,7 @@ public class SensorsDisplayView : Grid
                 _seriesY.IsVisible = true;
                 _seriesZ.IsVisible = true;
                 _seriesH.IsVisible = false;
-                _axisY.Name = "uT";
+                _axisY.Name = "μT";
                 break;
 
             case nameof(OrientationSensor):
@@ -377,7 +522,7 @@ public class SensorsDisplayView : Grid
                 _seriesY.IsVisible = true;
                 _seriesZ.IsVisible = true;
                 _seriesH.IsVisible = true;
-                _axisY.Name = "Dir";
+                _axisY.Name = "Degree";
                 break;
         }
 

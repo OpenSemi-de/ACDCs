@@ -47,13 +47,7 @@ public class DownloadWorker
 
         Uri clientUri = new(_uri, url);
         DownloadClient client = new(clientUri, _outputPath, resultType, 250);
-        Thread newThread = new(() =>
-        {
-            client.Start().Wait();
-        })
-        { Priority = ThreadPriority.BelowNormal };
-        newThread.Start();
-        _threads.Add(newThread);
+        client.Start();
         _clientsInstance.Add(client);
         await Task.CompletedTask;
     }

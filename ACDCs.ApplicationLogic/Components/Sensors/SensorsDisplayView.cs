@@ -47,8 +47,8 @@ public class SensorsDisplayView : Grid
     {
         _updateTimer = new Timer(UpdateGui);
         _updateFftTimer = new Timer(UpdateFft);
-        _updateTimer.Change(0, 100);
-        _updateFftTimer.Change(0, 100);
+        _updateTimer.Change(0, 200);
+        _updateFftTimer.Change(0, 200);
 
         ColumnDefinition[] columms = {
             new(130),
@@ -124,45 +124,47 @@ public class SensorsDisplayView : Grid
         this.OnUnloaded(OnUnloaded);
     }
 
-    private static void GetDataForFft(LineSeries<FftInfo>? series, FftWorker worker)
+    private static void GetDataForFft(LineSeries<FftInfo>? series, FftWorker? worker)
     {
-        if (series == null || series.Values == null) return;
-        try
+        if (worker == null) return;
+        if (series?.Values is not ObservableCollection<FftInfo> values) return;
+        // values.Clear();
+        if (!worker.OutputQueue.TryDequeue(out FftInfoPacket? pack))
         {
-            if (series.Values is not ObservableCollection<FftInfo> values) return;
-            values.Clear();
-            if (!worker.OutputQueue.TryDequeue(out FftInfoPacket? pack))
-            {
-                return;
-            }
+            return;
+        }
 
-            if (pack == null)
-            {
-                return;
-            }
+        if (pack.Count != values.Count)
+        {
+            values.Clear();
 
             foreach (var info in pack)
             {
                 values.Add(info);
             }
         }
-        catch (Exception ex)
+        else
         {
-            // ignored
+            for (int i = 0; i < values.Count; i++)
+            {
+                values[i] = pack[i];
+            }
         }
     }
 
-    private static LineSeries<SeriesSample>? GetSeries(SKColor color)
+    private static LineSeries<SeriesSample> GetSeries(SKColor color)
     {
         return new LineSeries<SeriesSample>
         {
+            AnimationsSpeed = TimeSpan.FromMilliseconds(250),
             Values = new ObservableCollection<SeriesSample>(),
             DataLabelsPaint = null,
             DataLabelsPadding = new LiveChartsCore.Drawing.Padding(2),
             DataLabelsPosition = DataLabelsPosition.End,
             Stroke = new SolidColorPaint(color)
             {
-                StrokeThickness = 3
+                StrokeThickness = 2,
+                IsAntialias = false
             },
             GeometryStroke = null,
             GeometrySize = 0,
@@ -172,17 +174,19 @@ public class SensorsDisplayView : Grid
         };
     }
 
-    private static LineSeries<FftInfo>? GetSeriesFft(SKColor color)
+    private static LineSeries<FftInfo> GetSeriesFft(SKColor color)
     {
         return new LineSeries<FftInfo>
         {
+            AnimationsSpeed = TimeSpan.FromMilliseconds(250),
             Values = new ObservableCollection<FftInfo>(),
             DataLabelsPaint = null,
             DataLabelsPadding = new LiveChartsCore.Drawing.Padding(2),
             DataLabelsPosition = DataLabelsPosition.End,
             Stroke = new SolidColorPaint(color)
             {
-                StrokeThickness = 3
+                StrokeThickness = 2,
+                IsAntialias = false
             },
             GeometryStroke = null,
             GeometrySize = 0,
@@ -266,11 +270,12 @@ public class SensorsDisplayView : Grid
                 NamePadding = new LiveChartsCore.Drawing.Padding(2),
                 Padding = new LiveChartsCore.Drawing.Padding(2),
                 NameTextSize= 12,
-                NamePaint = new SolidColorPaint(SKColors.White),
-                LabelsPaint = new SolidColorPaint(SKColors.White),
+                NamePaint = new SolidColorPaint(SKColors.White){IsAntialias = false},
+                LabelsPaint = new SolidColorPaint(SKColors.White){IsAntialias = false},
                 TextSize = 12,
                 SeparatorsPaint = new SolidColorPaint(SKColors.LightSlateGray)
                 {
+                    IsAntialias = false,
                     StrokeThickness = 2
                 }
             }
@@ -278,20 +283,22 @@ public class SensorsDisplayView : Grid
 
         _axisFftY = new Axis
         {
+            Name = "dBi",
             NameTextSize = 12,
             NamePadding = new LiveChartsCore.Drawing.Padding(2),
             Padding = new LiveChartsCore.Drawing.Padding(2),
-            NamePaint = new SolidColorPaint(SKColors.Yellow),
-            LabelsPaint = new SolidColorPaint(SKColors.Yellow),
+            NamePaint = new SolidColorPaint(SKColors.Yellow) { IsAntialias = false },
+            LabelsPaint = new SolidColorPaint(SKColors.Yellow) { IsAntialias = false },
             TextSize = 12,
             SeparatorsPaint = new SolidColorPaint(SKColors.LightSlateGray)
             {
+                IsAntialias = false,
                 StrokeThickness = 2,
                 PathEffect = new DashEffect(new float[] { 3, 3 })
             },
         };
 
-        _fftChart.YAxes = new List<Axis?>
+        _fftChart.YAxes = new List<Axis>
         {
             _axisFftY
         };
@@ -314,7 +321,7 @@ public class SensorsDisplayView : Grid
         _seriesZ = GetSeries(SKColors.Blue);
         _seriesH = GetSeries(SKColors.Yellow);
 
-        _valueChart.Series = new ObservableCollection<ISeries> { _seriesX, _seriesY, _seriesZ, _seriesH };
+        _valueChart.Series = new ObservableCollection<ISeries> { _seriesX!, _seriesY!, _seriesZ!, _seriesH! };
         _valueChart.XAxes = new List<Axis>
         {
             new()
@@ -323,12 +330,13 @@ public class SensorsDisplayView : Grid
                 NamePadding = new LiveChartsCore.Drawing.Padding(2),
                 Padding = new LiveChartsCore.Drawing.Padding(2),
                 NameTextSize= 12,
-                NamePaint = new SolidColorPaint(SKColors.White),
-                LabelsPaint = new SolidColorPaint(SKColors.White),
+                NamePaint = new SolidColorPaint(SKColors.White){IsAntialias = false},
+                LabelsPaint = new SolidColorPaint(SKColors.White){IsAntialias = false},
                 TextSize = 12,
                 SeparatorsPaint = new SolidColorPaint(SKColors.LightSlateGray)
                 {
-                    StrokeThickness = 2
+                    StrokeThickness = 2,
+                    IsAntialias = false
                 }
             }
         };
@@ -338,17 +346,18 @@ public class SensorsDisplayView : Grid
             NameTextSize = 12,
             NamePadding = new LiveChartsCore.Drawing.Padding(2),
             Padding = new LiveChartsCore.Drawing.Padding(2),
-            NamePaint = new SolidColorPaint(SKColors.Yellow),
-            LabelsPaint = new SolidColorPaint(SKColors.Yellow),
+            NamePaint = new SolidColorPaint(SKColors.Yellow) { IsAntialias = false },
+            LabelsPaint = new SolidColorPaint(SKColors.Yellow) { IsAntialias = false },
             TextSize = 12,
             SeparatorsPaint = new SolidColorPaint(SKColors.LightSlateGray)
             {
+                IsAntialias = false,
                 StrokeThickness = 2,
-                PathEffect = new DashEffect(new float[] { 3, 3 })
+                PathEffect = new DashEffect(new float[] { 3, 3 }),
             },
         };
 
-        _valueChart.YAxes = new List<Axis?>
+        _valueChart.YAxes = new List<Axis>
         {
             _axisY
         };
@@ -373,10 +382,10 @@ public class SensorsDisplayView : Grid
 
     private void UpdateFft(object? state)
     {
-        GetDataForFft(_seriesFftX, _fftWorkerX);
-        GetDataForFft(_seriesFftY, _fftWorkerY);
-        GetDataForFft(_seriesFftZ, _fftWorkerZ);
-        GetDataForFft(_seriesFftH, _fftWorkerH);
+        if (_seriesFftX != null && _seriesFftX.IsVisible) GetDataForFft(_seriesFftX, _fftWorkerX);
+        if (_seriesFftY != null && _seriesFftY.IsVisible) GetDataForFft(_seriesFftY, _fftWorkerY);
+        if (_seriesFftZ != null && _seriesFftZ.IsVisible) GetDataForFft(_seriesFftZ, _fftWorkerZ);
+        if (_seriesFftH != null && _seriesFftH.IsVisible) GetDataForFft(_seriesFftH, _fftWorkerH);
     }
 
     private void UpdateGui(object? state)
@@ -395,26 +404,28 @@ public class SensorsDisplayView : Grid
                 _valueDisplay.SetSample(sample);
             }
 
-            if (_seriesX.Values is not ObservableCollection<SeriesSample> valuesX) return;
-            if (_seriesY.Values is not ObservableCollection<SeriesSample> valuesY) return;
-            if (_seriesZ.Values is not ObservableCollection<SeriesSample> valuesZ) return;
-            if (_seriesH.Values is not ObservableCollection<SeriesSample> valuesH) return;
+            if (_seriesX?.Values is not ObservableCollection<SeriesSample> valuesX) return;
+            if (_seriesY?.Values is not ObservableCollection<SeriesSample> valuesY) return;
+            if (_seriesZ?.Values is not ObservableCollection<SeriesSample> valuesZ) return;
+            if (_seriesH?.Values is not ObservableCollection<SeriesSample> valuesH) return;
             var lastSample = valuesX.LastOrDefault();
 
-            List<ISample?> updates = null;
+            List<ISample?>? updates;
             if (lastSample == null)
             {
                 updates = _selectedClient?.SampleCache
-                    .OrderByDescending(x => x.Time)
+                    .Where(x => x != null)
+                    .OrderByDescending(x => x!.Time)
                     .Take(1000)
-                    .OrderBy(x => x.Time)
+                    .OrderBy(x => x!.Time)
                     .ToList();
             }
             else
             {
                 updates = _selectedClient?.SampleCache
-                    .Where(s => s.Time > lastSample.Time)
-                    .OrderBy(x => x.Time)
+                    .Where(x => x != null)
+                    .Where(s => s!.Time > lastSample.Time)
+                    .OrderBy(x => x!.Time)
                     .ToList();
             }
 
@@ -432,21 +443,27 @@ public class SensorsDisplayView : Grid
 
                 sampleValueX = SampleValues(update, sampleValueX, ref sampleValueY, ref sampleValueZ, ref sampleValueH);
 
-                valuesX.Add(new SeriesSample(sampleValueX, update.Time));
-                valuesY.Add(new SeriesSample(sampleValueY, update.Time));
-                valuesZ.Add(new SeriesSample(sampleValueZ, update.Time));
-                valuesH.Add(new SeriesSample(sampleValueH, update.Time));
+                if (update != null)
+                {
+                    valuesX.Add(new SeriesSample(sampleValueX, update.Time));
+                    valuesY.Add(new SeriesSample(sampleValueY, update.Time));
+                    valuesZ.Add(new SeriesSample(sampleValueZ, update.Time));
+                    valuesH.Add(new SeriesSample(sampleValueH, update.Time));
 
-                if (valuesX.Count > 1000)
-                    valuesX.RemoveAt(0);
-                if (valuesY.Count > 1000)
-                    valuesY.RemoveAt(0);
-                if (valuesZ.Count > 1000)
-                    valuesZ.RemoveAt(0);
-                if (valuesH.Count > 1000)
-                    valuesH.RemoveAt(0);
+                    if (valuesX.Count > 1000)
+                        valuesX.RemoveAt(0);
+                    if (valuesY.Count > 1000)
+                        valuesY.RemoveAt(0);
+                    if (valuesZ.Count > 1000)
+                        valuesZ.RemoveAt(0);
+                    if (valuesH.Count > 1000)
+                        valuesH.RemoveAt(0);
 
-                _fftWorkerX.EnqueueSample(new FftSample(sampleValueX, update.Time));
+                    _fftWorkerX.EnqueueSample(new FftSample(sampleValueX, update.Time));
+                    _fftWorkerY.EnqueueSample(new FftSample(sampleValueY, update.Time));
+                    _fftWorkerZ.EnqueueSample(new FftSample(sampleValueZ, update.Time));
+                    _fftWorkerH.EnqueueSample(new FftSample(sampleValueH, update.Time));
+                }
             }
         }
         catch (Exception ex)
@@ -457,6 +474,7 @@ public class SensorsDisplayView : Grid
 
     private async void UsedSensor_Selected(object? sender, SelectionChangedEventArgs e)
     {
+        await Task.CompletedTask;
         if (_usedSensorsCollectionView.SelectedItem is not SensorItem item) return;
 
         Type? resultType = item.SensorType switch
@@ -470,58 +488,58 @@ public class SensorsDisplayView : Grid
             _ => null
         };
 
-        (_seriesX.Values as ObservableCollection<SeriesSample>).Clear();
-        (_seriesY.Values as ObservableCollection<SeriesSample>).Clear();
-        (_seriesZ.Values as ObservableCollection<SeriesSample>).Clear();
-        (_seriesH.Values as ObservableCollection<SeriesSample>).Clear();
+        (_seriesX?.Values as ObservableCollection<SeriesSample>)?.Clear();
+        (_seriesY?.Values as ObservableCollection<SeriesSample>)?.Clear();
+        (_seriesZ?.Values as ObservableCollection<SeriesSample>)?.Clear();
+        (_seriesH?.Values as ObservableCollection<SeriesSample>)?.Clear();
 
         switch (item.SensorType)
         {
             case nameof(AccelerationSensor):
-                _seriesX.IsVisible = true;
-                _seriesY.IsVisible = true;
-                _seriesZ.IsVisible = true;
-                _seriesH.IsVisible = false;
+                _seriesFftX.IsVisible = _seriesX.IsVisible = true;
+                _seriesFftY.IsVisible = _seriesY.IsVisible = true;
+                _seriesFftZ.IsVisible = _seriesZ.IsVisible = true;
+                _seriesFftH.IsVisible = _seriesH.IsVisible = false;
                 _axisY.Name = "G";
                 break;
 
             case nameof(BarometerSensor):
-                _seriesX.IsVisible = true;
-                _seriesY.IsVisible = false;
-                _seriesZ.IsVisible = false;
-                _seriesH.IsVisible = false;
+                _seriesFftX.IsVisible = _seriesX.IsVisible = true;
+                _seriesFftY.IsVisible = _seriesY.IsVisible = false;
+                _seriesFftZ.IsVisible = _seriesZ.IsVisible = false;
+                _seriesFftH.IsVisible = _seriesH.IsVisible = false;
                 _axisY.Name = "μBar";
                 break;
 
             case nameof(CompassSensor):
-                _seriesX.IsVisible = true;
-                _seriesY.IsVisible = false;
-                _seriesZ.IsVisible = false;
-                _seriesH.IsVisible = false;
+                _seriesFftX.IsVisible = _seriesX.IsVisible = true;
+                _seriesFftY.IsVisible = _seriesY.IsVisible = false;
+                _seriesFftZ.IsVisible = _seriesZ.IsVisible = false;
+                _seriesFftH.IsVisible = _seriesH.IsVisible = false;
                 _axisY.Name = "Degree";
                 break;
 
             case nameof(GyroscopeSensor):
-                _seriesX.IsVisible = true;
-                _seriesY.IsVisible = true;
-                _seriesZ.IsVisible = true;
-                _seriesH.IsVisible = false;
+                _seriesFftX.IsVisible = _seriesX.IsVisible = true;
+                _seriesFftY.IsVisible = _seriesY.IsVisible = true;
+                _seriesFftZ.IsVisible = _seriesZ.IsVisible = true;
+                _seriesFftH.IsVisible = _seriesH.IsVisible = false;
                 _axisY.Name = "Degree";
                 break;
 
             case nameof(MagneticSensor):
-                _seriesX.IsVisible = true;
-                _seriesY.IsVisible = true;
-                _seriesZ.IsVisible = true;
-                _seriesH.IsVisible = false;
+                _seriesFftX.IsVisible = _seriesX.IsVisible = true;
+                _seriesFftY.IsVisible = _seriesY.IsVisible = true;
+                _seriesFftZ.IsVisible = _seriesZ.IsVisible = true;
+                _seriesFftH.IsVisible = _seriesH.IsVisible = false;
                 _axisY.Name = "μT";
                 break;
 
             case nameof(OrientationSensor):
-                _seriesX.IsVisible = true;
-                _seriesY.IsVisible = true;
-                _seriesZ.IsVisible = true;
-                _seriesH.IsVisible = true;
+                _seriesFftX.IsVisible = _seriesX.IsVisible = true;
+                _seriesFftY.IsVisible = _seriesY.IsVisible = true;
+                _seriesFftZ.IsVisible = _seriesZ.IsVisible = true;
+                _seriesFftH.IsVisible = _seriesH.IsVisible = true;
                 _axisY.Name = "Degree";
                 break;
         }

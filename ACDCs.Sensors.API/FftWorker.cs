@@ -9,6 +9,7 @@ public class FftWorker
     private Filter _filter = Filter.None;
     private double _filterFrequency = 0;
     private bool _isRunning = true;
+    private DateTime? _lastSampleTime;
     private ConcurrentQueue<FftSample> _samples = new();
     private Thread _thread;
 
@@ -91,9 +92,10 @@ public class FftWorker
                 FftInfoPacket seriesFft = new();
                 await GetFft(seriesFft);
                 Enqueue(seriesFft);
+                await Task.Delay(1);
             }
-            while (OutputQueue.Count > 1)
-                await Task.Delay(50);
+            while (OutputQueue.Count > 3)
+                await Task.Delay(10);
         }
         // ReSharper disable once FunctionNeverReturns
     }
@@ -144,13 +146,17 @@ public class FftWorker
         try
         {
             if (_samples.Count == 0) return Array.Empty<double>();
-            double[] samplesList = _samples
+            List<FftSample> samplesList = _samples
                 .OrderByDescending(sample => sample.Time)
-                .Take(FftWindowSize)
-                .Select(sampleRecord => sampleRecord.Sample)
+                .Take(FftWindowSize).ToList();
+            DateTime? lastDate = samplesList.FirstOrDefault()?.Time;
+            if (_lastSampleTime == lastDate) return Array.Empty<double>();
+            _lastSampleTime = lastDate;
+
+            double[] doublesList = samplesList.Select(sampleRecord => sampleRecord.Sample)
                 .ToArray();
 
-            return await Task.FromResult(samplesList);
+            return await Task.FromResult(doublesList);
         }
         catch (Exception ex)
         {

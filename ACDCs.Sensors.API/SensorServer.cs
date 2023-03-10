@@ -160,6 +160,18 @@ public class SensorServer
         _started = false;
     }
 
+    private static DateTime? FromDate(HttpContext ctx)
+    {
+        DateTime? fromDate = null;
+        if (ctx.Request.Query.Elements.ContainsKey("date") &&
+            DateTime.TryParse(ctx.Request.Query.Elements["date"], out DateTime time))
+        {
+            fromDate = time;
+        }
+
+        return fromDate;
+    }
+
     private void AddAvailabilityRequest()
     {
         _server.Routes.Static.Add(HttpMethod.GET, "/Sensors/Availability", GetSensorAvailability);
@@ -177,7 +189,9 @@ public class SensorServer
         _connectionCount++;
         if (_accelerationWorker != null)
         {
-            List<AccelerationSample> accelerationSamples = _accelerationWorker.GetSamples();
+            DateTime? fromDate = FromDate(ctx);
+
+            List<AccelerationSample> accelerationSamples = _accelerationWorker.GetSamples(fromDate);
             _sampleCount += accelerationSamples.Count;
             await ctx.Response.Send(JsonConvert.SerializeObject(accelerationSamples));
         }
@@ -188,7 +202,9 @@ public class SensorServer
         _connectionCount++;
         if (_barometerWorker != null)
         {
-            List<BarometerSample> barometerSamples = _barometerWorker.GetSamples();
+            DateTime? fromDate = FromDate(ctx);
+
+            List<BarometerSample> barometerSamples = _barometerWorker.GetSamples(fromDate);
             _sampleCount += barometerSamples.Count;
             await ctx.Response.Send(JsonConvert.SerializeObject(barometerSamples));
         }
@@ -199,7 +215,9 @@ public class SensorServer
         _connectionCount++;
         if (_compassWorker != null)
         {
-            List<CompassSample> compassSamples = _compassWorker.GetSamples();
+            DateTime? fromDate = FromDate(ctx);
+
+            List<CompassSample> compassSamples = _compassWorker.GetSamples(fromDate);
             _sampleCount += compassSamples.Count;
             await ctx.Response.Send(JsonConvert.SerializeObject(compassSamples));
         }
@@ -223,7 +241,9 @@ public class SensorServer
         _connectionCount++;
         if (_gyroscopeWorker != null)
         {
-            List<GyroscopeSample> gyroscopeSamples = _gyroscopeWorker.GetSamples();
+            DateTime? fromDate = FromDate(ctx);
+
+            List<GyroscopeSample> gyroscopeSamples = _gyroscopeWorker.GetSamples(fromDate);
             _sampleCount += gyroscopeSamples.Count;
             await ctx.Response.Send(JsonConvert.SerializeObject(gyroscopeSamples));
         }
@@ -234,7 +254,9 @@ public class SensorServer
         _connectionCount++;
         if (_magneticWorker != null)
         {
-            List<MagneticSample> magneticSamples = _magneticWorker.GetSamples();
+            DateTime? fromDate = FromDate(ctx);
+
+            List<MagneticSample> magneticSamples = _magneticWorker.GetSamples(fromDate);
             _sampleCount += magneticSamples.Count;
             await ctx.Response.Send(JsonConvert.SerializeObject(magneticSamples));
         }
@@ -245,7 +267,9 @@ public class SensorServer
         _connectionCount++;
         if (_orientationWorker != null)
         {
-            List<OrientationSample> orientationSamples = _orientationWorker.GetSamples();
+            DateTime? fromDate = FromDate(ctx);
+
+            List<OrientationSample> orientationSamples = _orientationWorker.GetSamples(fromDate);
             _sampleCount += orientationSamples.Count;
             await ctx.Response.Send(JsonConvert.SerializeObject(orientationSamples));
         }

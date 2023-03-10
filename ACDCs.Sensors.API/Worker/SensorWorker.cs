@@ -22,11 +22,13 @@ public class SensorWorker<TResult, TSampleType> : ISensorWorker<TSampleType> whe
 
     private delegate bool TryRemoveThreaded(DateTime key, out TSampleType value);
 
-    public List<TSampleType> GetSamples(int count = 256)
+    public List<TSampleType> GetSamples(DateTime? fromDate = null, int count = 2048)
     {
-        return _samples.OrderByDescending(s => s.Key)
+        return _samples.ToList().OrderByDescending(s => s.Key)
+            .Where(s => fromDate == null || s.Key > fromDate)
             .Take(count)
             .Select(kv => kv.Value)
+            .Where(s => s != null)
             .ToList();
     }
 
@@ -67,12 +69,13 @@ public class SensorWorker<TResult, TSampleType> : ISensorWorker<TSampleType> whe
         {
             List<DateTime> list = _samples.Keys.Order().ToList();
 
-            while (_samples.Count > 1000 && list.Count > 0)
+            while (_samples.Count > 4000 && list.Count > 0)
             {
                 DateTime dateTime = list.First();
                 var inv = new TryRemoveThreaded(_samples.TryRemove);
                 inv.Invoke(dateTime, out _);
                 list.Remove(dateTime);
+                Thread.Sleep(TimeSpan.FromMicroseconds(100));
             }
 
             Thread.Sleep(100);

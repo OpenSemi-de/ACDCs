@@ -15,7 +15,7 @@
 		<ApplicationTitle>ACDCs.Sensors.Server</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.acdcs.sensors.server</ApplicationId>
+		<ApplicationId>de.opensemi.acdcs.sensors.server</ApplicationId>
 		<ApplicationIdGuid>419be307-da47-43ec-be9c-2c294b68746f</ApplicationIdGuid>
 
 		<!-- Versions -->

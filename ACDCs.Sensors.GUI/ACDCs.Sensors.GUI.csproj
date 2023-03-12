@@ -15,7 +15,7 @@
 		<ApplicationTitle>ACDCs.Sensors.GUI</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.acdcs.sensors.gui</ApplicationId>
+		<ApplicationId>de.opensemi.acdcs.sensors.gui</ApplicationId>
 		<ApplicationIdGuid>b5734bbb-b9ff-494f-96be-a7d841d0c8cb</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -33,7 +33,8 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appicon.svg" Color="#001155" />
+		<MauiSplashScreen Include="Resources\Splash\acdcs.svg" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -50,9 +51,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\AppIcon\appicon.svg" />
 	  <None Remove="Resources\Fonts\MapleMono-Bold.ttf" />
 	  <None Remove="Resources\Fonts\MapleMono-Regular.ttf" />
+	  <None Remove="Resources\Fonts\OpenSans-Regular.ttf" />
+	  <None Remove="Resources\Fonts\OpenSans-Semibold.ttf" />
+	  <None Remove="Resources\Images\dotnet_bot.svg" />
+	  <None Remove="Resources\Raw\AboutAssets.txt" />
+	  <None Remove="Resources\Raw\menu_components.json" />
+	  <None Remove="Resources\Raw\menu_main.json" />
+	  <None Remove="Resources\Raw\preferences.json" />
 	  <None Remove="Resources\Raw\starters.json" />
+	  <None Remove="Resources\Splash\acdcs.svg" />
+	  <None Remove="Resources\Splash\splash.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -79,15 +90,39 @@
 	  <MauiXaml Update="Resources\Styles\Colors.xaml">
 	    <SubType>Designer</SubType>
 	  </MauiXaml>
-	  <MauiXaml Update="Resources\Styles\MaterialResourceColor.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Resources\Styles\MaterialResourceStyle.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\Styles.xaml">
 	    <SubType>Designer</SubType>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Update="Resources\Images\dotnet_bot.svg">
+	    <BaseSize>168,208</BaseSize>
+	  </MauiImage>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiAsset Update="Resources\Raw\AboutAssets.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiAsset Update="Resources\Raw\menu_components.json">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiAsset Update="Resources\Raw\menu_main.json">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiAsset Update="Resources\Raw\preferences.json">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
 	</ItemGroup>
 
 </Project>

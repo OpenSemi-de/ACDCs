@@ -26,7 +26,7 @@
             object? existingValue = GetPreference(key);
             if (existingValue != null)
             {
-                _connection.GetOrSet("Preferences", "Key", key, value);
+                _connection.GetOrSet("Preferences", "Key", key, setting);
             }
             else
             {

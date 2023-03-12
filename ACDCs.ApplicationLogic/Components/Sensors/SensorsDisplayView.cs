@@ -17,6 +17,7 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using Sharp.UI;
 using SkiaSharp;
+using Image = Sharp.UI.Image;
 
 public class SensorsDisplayView : Grid
 {
@@ -41,6 +42,7 @@ public class SensorsDisplayView : Grid
     private LineSeries<SeriesSample>? _seriesX;
     private LineSeries<SeriesSample>? _seriesY;
     private LineSeries<SeriesSample>? _seriesZ;
+    private Image _spectogramImage;
     private CartesianChart? _valueChart;
 
     public SensorsDisplayView()
@@ -86,9 +88,8 @@ public class SensorsDisplayView : Grid
             new (30),
             new (30),
             new (30),
-            new (200),
-            new (200),
             new (GridLength.Star),
+            new (260),
         };
 
         ColumnDefinition[] viewColumns =
@@ -388,7 +389,7 @@ public class SensorsDisplayView : Grid
         if (_seriesFftH != null && _seriesFftH.IsVisible) GetDataForFft(_seriesFftH, _fftWorkerH);
     }
 
-    private void UpdateGui(object? state)
+    private async void UpdateGui(object? state)
     {
         try
         {
@@ -443,28 +444,30 @@ public class SensorsDisplayView : Grid
 
                 sampleValueX = SampleValues(update, sampleValueX, ref sampleValueY, ref sampleValueZ, ref sampleValueH);
 
-                if (update != null)
+                if (update == null)
                 {
-                    valuesX.Add(new SeriesSample(sampleValueX, update.Time));
-                    valuesY.Add(new SeriesSample(sampleValueY, update.Time));
-                    valuesZ.Add(new SeriesSample(sampleValueZ, update.Time));
-                    valuesH.Add(new SeriesSample(sampleValueH, update.Time));
-
-                    if (valuesX.Count > 1000)
-                        valuesX.RemoveAt(0);
-                    if (valuesY.Count > 1000)
-                        valuesY.RemoveAt(0);
-                    if (valuesZ.Count > 1000)
-                        valuesZ.RemoveAt(0);
-                    if (valuesH.Count > 1000)
-                        valuesH.RemoveAt(0);
-
-                    _fftWorkerX.EnqueueSample(new FftSample(sampleValueX, update.Time));
-                    _fftWorkerY.EnqueueSample(new FftSample(sampleValueY, update.Time));
-                    _fftWorkerZ.EnqueueSample(new FftSample(sampleValueZ, update.Time));
-                    _fftWorkerH.EnqueueSample(new FftSample(sampleValueH, update.Time));
+                    continue;
                 }
+
+                valuesX.Add(new SeriesSample(sampleValueX, update.Time));
+                valuesY.Add(new SeriesSample(sampleValueY, update.Time));
+                valuesZ.Add(new SeriesSample(sampleValueZ, update.Time));
+                valuesH.Add(new SeriesSample(sampleValueH, update.Time));
+
+                _fftWorkerX.EnqueueSample(new FftSample(sampleValueX, update.Time));
+                _fftWorkerY.EnqueueSample(new FftSample(sampleValueY, update.Time));
+                _fftWorkerZ.EnqueueSample(new FftSample(sampleValueZ, update.Time));
+                _fftWorkerH.EnqueueSample(new FftSample(sampleValueH, update.Time));
             }
+
+            while (valuesX.Count > 1000)
+                valuesX.RemoveAt(0);
+            while (valuesY.Count > 1000)
+                valuesY.RemoveAt(0);
+            while (valuesZ.Count > 1000)
+                valuesZ.RemoveAt(0);
+            while (valuesH.Count > 1000)
+                valuesH.RemoveAt(0);
         }
         catch (Exception ex)
         {

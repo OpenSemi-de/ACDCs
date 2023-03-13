@@ -69,7 +69,7 @@ public class WindowContainer : AbsoluteLayout, IWindowContainer
     {
         if (window.LastWindowState == WindowState.Maximized && window.WindowState != WindowState.Maximized)
         {
-            SetWindowSize(window, Convert.ToInt32(Width), Convert.ToInt32(Height), true);
+            SetWindowSize(window, window.LastWidth, window.LastHeight, true);
             window.TranslateTo(0, 0);
             window.WindowState = WindowState.Maximized;
             return;
@@ -82,6 +82,7 @@ public class WindowContainer : AbsoluteLayout, IWindowContainer
 
     public void SetWindowPosition(Window window, double x, double y)
     {
+        if (y < 0) y = 0;
         SetWindowPosition(window, new Rect(x, y, AutoSize, AutoSize));
     }
 

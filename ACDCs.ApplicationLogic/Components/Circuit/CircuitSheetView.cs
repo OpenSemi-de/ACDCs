@@ -61,11 +61,6 @@ public sealed class CircuitSheetView : AbsoluteLayout
         CircuitView.OnSelectedItemChange = OnSelectedItemChange;
     }
 
-    private void OnSelectedItemChange(IWorksheetItem obj)
-    {
-        _quickEditWindow?.EditView.UpdateEditor(obj);
-    }
-
     private void CursorDebugChanged()
     {
         if (_showCursorDebugOutput && _cursorDebugLabel != null)
@@ -78,7 +73,7 @@ public sealed class CircuitSheetView : AbsoluteLayout
     {
         _editWindow = new EditWindow(_container);
 
-        _quickEditWindow = new QuickEditWindow(_container);
+        _quickEditWindow = new QuickEditWindow(_container, OnUpdate);
 
         _propertiesWindow = new PropertiesWindow(_container) { OnUpdate = OnUpdate };
         _propertiesWindow.PropertyExcludeList.AddRange(
@@ -88,6 +83,11 @@ public sealed class CircuitSheetView : AbsoluteLayout
         _propertiesWindow.IsVisible = false;
         _propertiesWindow.FadeTo(0);
         CircuitView.CallPropertiesShow = ShowProperties;
+    }
+
+    private void OnSelectedItemChange(IWorksheetItem obj)
+    {
+        _quickEditWindow?.EditView.UpdateEditor(obj);
     }
 
     private async void OnUpdate()

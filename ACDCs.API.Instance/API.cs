@@ -84,7 +84,7 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
         }
         catch (Exception exception)
         {
-            TrackError?.Invoke(exception, null, null);
+            //TrackError?.Invoke(exception, null, null);
 
             await PopupException(exception);
         }

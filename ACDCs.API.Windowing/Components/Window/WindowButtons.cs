@@ -21,6 +21,7 @@ public class WindowButtons : Grid
                 new ColumnDefinition(34),
             }
         );
+        this.Margin(new Thickness(0, 1, 1, 0));
 
         _minimizeButton = new WindowButton(WindowButtonType.Minimize, window);
         _maximizeButton = new WindowButton(WindowButtonType.Maximize, window);

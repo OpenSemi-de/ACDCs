@@ -43,8 +43,8 @@ public class PreferencesView : Grid
             .VerticalOptions(LayoutOptions.Fill)
             .ColumnDefinitions(columns)
             .RowDefinitions(rows)
-            .Padding(0)
-            .Margin(0);
+            .Padding(2)
+            .Margin(2);
 
         _preferencesLayout = new StackLayout()
             .HorizontalOptions(LayoutOptions.Fill)

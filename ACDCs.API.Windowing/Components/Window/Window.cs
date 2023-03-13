@@ -62,6 +62,9 @@ public class Window : ContentView
         {
             _childViewFunction = childViewFunction;
         }
+
+        _container?.SetWindowSize(this, 500, 400);
+        _container?.SetWindowPosition(this, 10, 10);
     }
 
     public void Close()
@@ -204,7 +207,7 @@ public class Window : ContentView
         .ColumnDefinitions(new ColumnDefinitionCollection
         {
             new ColumnDefinition(),
-            new ColumnDefinition(102)
+            new ColumnDefinition(104)
         })
         .RowDefinitions(new RowDefinitionCollection
         {

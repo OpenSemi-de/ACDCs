@@ -33,8 +33,8 @@ public class ModelEditorView : ContentView, IGetPropertyUpdates
         _modelGrid = new Grid()
             .HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill)
-            .Padding(0)
-            .Margin(0);
+            .Padding(2)
+            .Margin(2);
 
         RowDefinitionCollection rows = new()
         {

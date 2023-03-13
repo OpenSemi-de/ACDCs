@@ -33,8 +33,8 @@ public class ModelSelectionView : Grid
 
         this.HorizontalOptions(LayoutOptions.Fill)
             .VerticalOptions(LayoutOptions.Fill)
-            .Margin(0)
-            .Padding(0);
+            .Margin(2)
+            .Padding(2);
 
         RowDefinitions.Add(new RowDefinition(new GridLength(40)));
         RowDefinitions.Add(new RowDefinition(GridLength.Star));

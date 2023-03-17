@@ -95,7 +95,7 @@ public class WindowTabBar : Grid, IWindowTabBarProperties, IWindowTabBar
         _focusWindow = window;
     }
 
-    public void BringToFront(IWindow window)
+    public void BringToFront(IWindow? window)
     {
         BringToFront(window as object);
     }

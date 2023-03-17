@@ -5,10 +5,10 @@ using Windowing.Components.Window;
 // ReSharper disable once UnusedType.Global
 public class QuickEditWindow : Window
 {
-    private readonly Action _onUpdate;
+    private readonly Action? _onUpdate;
     public QuickEditView? EditView { get; set; }
 
-    public QuickEditWindow(WindowContainer? container, Action onUpdate) : base(container, "QuickEdit", "", false, GetView, titleHeight: 28)
+    public QuickEditWindow(WindowContainer? container, Action? onUpdate) : base(container, "QuickEdit", "", false, GetView, titleHeight: 28)
     {
         _onUpdate = onUpdate;
         Start();
@@ -18,6 +18,8 @@ public class QuickEditWindow : Window
         if (quickEditView != null)
         {
             quickEditView.OnUpdatedValue = _onUpdate;
+            quickEditView.ParentContainer = container;
+            quickEditView.Initialize();
         }
 
         container?.SetWindowPosition(this, 260, 4);

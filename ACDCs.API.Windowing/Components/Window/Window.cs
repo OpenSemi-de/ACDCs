@@ -36,7 +36,7 @@ public class Window : ContentView
     public Dictionary<string, object> MenuParameters { get; } = new();
 
     // ReSharper disable once MemberCanBePrivate.Global
-    public Func<bool>? OnClose { get; set; }
+    public Func<Window, bool>? OnClose { get; set; }
 
     public WindowResizer? Resizer { get; private set; }
 
@@ -69,7 +69,7 @@ public class Window : ContentView
 
     public void Close()
     {
-        if (OnClose != null && OnClose.Invoke())
+        if (OnClose != null && OnClose.Invoke(this))
         {
             _container?.CloseWindow(this);
         }
@@ -249,7 +249,7 @@ public class Window : ContentView
         }
     }
 
-    private bool DefaultClose()
+    private bool DefaultClose(Window window)
     {
         Task.Run(() =>
         {

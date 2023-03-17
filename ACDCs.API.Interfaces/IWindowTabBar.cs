@@ -2,5 +2,5 @@
 
 public interface IWindowTabBar
 {
-    void BringToFront(IWindow window);
+    void BringToFront(IWindow? window);
 }

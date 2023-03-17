@@ -1,9 +1,10 @@
 ﻿// ReSharper disable StringLiteralTypo
 namespace ACDCs.API.Core.Components.QuickEdit;
 
+using ACDCs.CircuitRenderer.Items.Sources;
+using ACDCs.CircuitRenderer.Items.Transistors;
 using CircuitRenderer.Interfaces;
 using CircuitRenderer.Items;
-using CircuitRenderer.Items.Sources;
 using Data.ACDCs.Interfaces;
 using Instance;
 using ModelSelection;
@@ -13,15 +14,16 @@ public class QuickEditView : Grid
 {
     private readonly Button _editButton;
     private readonly Button _modelButton;
-    private readonly ModelSelectionWindow _modelSelectionWindow;
     private readonly Label _unitDescriptionLabel;
     private readonly Label _unitLabel;
     private readonly Entry _valueEntry;
     private readonly Window? _window;
     private IWorksheetItem? _currentItem;
     private bool _isUpdating;
-
-    public Action OnUpdatedValue { get; set; }
+    private ModelSelectionWindow? _modelSelectionWindow;
+    private SourceEditorWindow? _sourceEditorWindow;
+    public Action? OnUpdatedValue { get; set; }
+    public WindowContainer? ParentContainer { get; set; }
 
     public QuickEditView(Window? window)
     {
@@ -37,10 +39,7 @@ public class QuickEditView : Grid
                 new(100),
                 new()
             })
-            .RowDefinitions(new RowDefinitionCollection
-            {
-                new(30)
-            });
+            .RowDefinitions(new RowDefinitionCollection { new(30) });
 
         _unitDescriptionLabel = new QuickEditLabel("Select item")
             .HorizontalTextAlignment(TextAlignment.End);
@@ -81,14 +80,27 @@ public class QuickEditView : Grid
             .OnClicked(EditModelButton_Clicked)
             .Column(4);
         Add(_editButton);
+    }
 
-        _modelSelectionWindow = new ModelSelectionWindow(_window?.MainContainer)
+    public void Initialize()
+    {
+        _modelSelectionWindow = new ModelSelectionWindow(ParentContainer)
         {
             OnModelSelected = OnModelSelected,
             ZIndex = 10,
             OnClose = OnClose,
             IsVisible = false
         };
+        _modelSelectionWindow.FadeTo(0);
+
+        _sourceEditorWindow = new SourceEditorWindow(ParentContainer)
+        {
+            OnClose = OnClose,
+            IsVisible = false,
+            ZIndex = 10,
+            OnSourceEdited = OnSourceEdited
+        };
+        _sourceEditorWindow.FadeTo(0);
     }
 
     public void UpdateEditor(IWorksheetItem item)
@@ -104,6 +116,8 @@ public class QuickEditView : Grid
         _unitDescriptionLabel.Text = "";
         _unitLabel.Text = "";
         _valueEntry.Text = "";
+        _valueEntry.IsEnabled = true;
+        _modelButton.Text = "Select model";
 
         string typeName = item.GetType().Name.Replace("Item", "");
         _window?.SetTitle($"{typeName} / {item.RefName}");
@@ -111,31 +125,30 @@ public class QuickEditView : Grid
         switch (item)
         {
             case ResistorItem:
-                _valueEntry.Text = worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString();
-                _unitDescriptionLabel.Text = "Resistance:";
-                _unitLabel.Text = "Ω";
+                UpdateFields(worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString(), "Resistance:", "Ω");
                 break;
 
             case InductorItem:
-                _valueEntry.Text = worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString();
-                _unitDescriptionLabel.Text = "Inductance:";
-                _unitLabel.Text = "H";
+                UpdateFields(worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString(), "Inductance:", "H");
                 break;
 
             case CapacitorItem:
-                _valueEntry.Text = worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString();
-                _unitDescriptionLabel.Text = "Capacity:";
-                _unitLabel.Text = "F";
+                UpdateFields(worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString(), "Capacity:", "F");
+                break;
+
+            case PnpTransistorItem:
+            case NpnTransistorItem:
+                UpdateFields(worksheetItem.Value, "Model:", "");
+                _valueEntry.IsEnabled = false;
                 break;
 
             case VoltageSourceItem:
-                _valueEntry.Text = worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString();
-                _unitDescriptionLabel.Text = "Voltage:";
-                _unitLabel.Text = "V";
+                UpdateFields(worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString(), "Voltage:", "V");
+                _modelButton.Text = "Edit source";
                 break;
 
             default:
-                _unitLabel.Text = "";
+                UpdateFields("", "", "");
                 break;
         }
 
@@ -146,14 +159,14 @@ public class QuickEditView : Grid
     {
     }
 
-    private bool OnClose()
+    private bool OnClose(Window window)
     {
 #pragma warning disable CS4014
         API.Call(async () =>
 #pragma warning restore CS4014
         {
-            await _modelSelectionWindow.FadeTo(0);
-            _modelSelectionWindow.IsVisible = false;
+            await window.FadeTo(0);
+            window.IsVisible = false;
         });
 
         return false;
@@ -164,18 +177,31 @@ public class QuickEditView : Grid
         if (_currentItem is WorksheetItem item)
         {
             item.Model = component;
-            item.Value = component.Name;
+            item.Value = component.Value;
             OnUpdatedValue?.Invoke();
+            UpdateEditor(item);
         }
+    }
+
+    private void OnSourceEdited(WorksheetItem item)
+    {
     }
 
     private async void SelectModelButton_Clicked(object? sender, EventArgs e)
     {
         await API.Call(() =>
         {
-            if (_currentItem == null)
+            switch (_currentItem)
             {
-                return Task.CompletedTask;
+                case null:
+                    return Task.CompletedTask;
+
+                case VoltageSourceItem voltageSource:
+                    _sourceEditorWindow.IsVisible = true;
+                    _sourceEditorWindow.FadeTo(1);
+                    _sourceEditorWindow.SetSource(voltageSource);
+                    API.TabBar?.BringToFront(_sourceEditorWindow);
+                    return Task.CompletedTask;
             }
 
             _modelSelectionWindow.IsVisible = true;
@@ -185,6 +211,13 @@ public class QuickEditView : Grid
 
             return Task.CompletedTask;
         });
+    }
+
+    private void UpdateFields(string value, string description, string unit)
+    {
+        _valueEntry.Text = value;
+        _unitDescriptionLabel.Text = description;
+        _unitLabel.Text = unit;
     }
 
     private void ValueEntry_OnTextChanged(object? sender, TextChangedEventArgs e)

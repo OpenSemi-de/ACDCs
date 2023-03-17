@@ -11,8 +11,8 @@ using Windowing.Components.Window;
 [SharpObject]
 public partial class PropertyEditorView : ContentView, IPropertyEditorViewProperties, IPropertyEditorView
 {
-    private ModelEditorWindow? _modelEditorWindow;
-    private ModelSelectionWindow? _modelSelectionWindow;
+    private ModelEditorWindow _modelEditorWindow;
+    private ModelSelectionWindow _modelSelectionWindow;
     private Window? _parentWindow;
     public bool ShowDescription { get; set; }
     public string ValueType { get; set; } = string.Empty;
@@ -54,7 +54,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
                 _modelEditorWindow.GetProperties((Value as IElectronicComponent)!);
             }
 
-            _modelEditorWindow.OnClose = () =>
+            _modelEditorWindow.OnClose = (Window _) =>
             {
                 _modelEditorWindow = null;
                 return false;
@@ -93,7 +93,7 @@ public partial class PropertyEditorView : ContentView, IPropertyEditorViewProper
 
             _modelSelectionWindow.SetComponentType(Value.GetType().Name);
 
-            _modelSelectionWindow.OnClose = () =>
+            _modelSelectionWindow.OnClose = (_) =>
             {
                 _modelSelectionWindow = null;
                 return false;

@@ -19,7 +19,7 @@ public class PreferencesWindow : Window
     {
         s_instance = this;
 
-        OnClose = () =>
+        OnClose = (_) =>
         {
             s_instance = null;
             return false;

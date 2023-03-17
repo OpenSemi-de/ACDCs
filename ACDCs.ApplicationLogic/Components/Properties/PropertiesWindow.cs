@@ -164,7 +164,7 @@ public class PropertiesWindow : Window, IGetPropertyUpdates
         newRoot.Children.Add(valueItem);
     }
 
-    private bool OnClosePropertiesWindow()
+    private bool OnClosePropertiesWindow(Window window)
     {
         Task.Run(() =>
         {

@@ -269,7 +269,7 @@
         <Setter Property="TextColor"
                 Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
         <Setter Property="BackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource BackgroundHighLight}, Dark={StaticResource BackgroundHighDark}}" />
+                Value="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" />
         <Setter Property="FontFamily" Value="Maple Mono" />
         <Setter Property="FontSize" Value="11" />
         <Setter Property="PlaceholderColor"
@@ -281,7 +281,7 @@
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
                             <Setter Property="TextColor"
-                                    Value="{AppThemeBinding Light={StaticResource ForegroundLight}, Dark={StaticResource ForegroundDark}}" />
+                                    Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>

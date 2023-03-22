@@ -14,7 +14,7 @@ public class QuickEditWindow : Window
         Start();
         HideResizer();
         HideWindowButtons();
-        QuickEditView? quickEditView = this.EditView;
+        QuickEditView? quickEditView = EditView;
         if (quickEditView != null)
         {
             quickEditView.OnUpdatedValue = _onUpdate;

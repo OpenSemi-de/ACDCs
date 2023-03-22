@@ -5,6 +5,7 @@ using ACDCs.CircuitRenderer.Items.Sources;
 using ACDCs.CircuitRenderer.Items.Transistors;
 using CircuitRenderer.Interfaces;
 using CircuitRenderer.Items;
+using CircuitRenderer.Items.Capacitors;
 using Data.ACDCs.Interfaces;
 using Instance;
 using ModelSelection;
@@ -122,34 +123,63 @@ public class QuickEditView : Grid
         string typeName = item.GetType().Name.Replace("Item", "");
         _window?.SetTitle($"{typeName} / {item.RefName}");
 
-        switch (item)
+        if (worksheetItem.Value != null)
         {
-            case ResistorItem:
-                UpdateFields(worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString(), "Resistance:", "Ω");
-                break;
+            switch (item)
+            {
+                case PolarizedCapacitorItem polarizedCapacitorItem:
+                    break;
 
-            case InductorItem:
-                UpdateFields(worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString(), "Inductance:", "H");
-                break;
+                case StandardCapacitorItem standardCapacitorItem:
+                    break;
 
-            case CapacitorItem:
-                UpdateFields(worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString(), "Capacity:", "F");
-                break;
+                case ResistorItem:
+                    UpdateFields(worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString(), "Resistance:",
+                        "Ω");
+                    break;
 
-            case PnpTransistorItem:
-            case NpnTransistorItem:
-                UpdateFields(worksheetItem.Value, "Model:", "");
-                _valueEntry.IsEnabled = false;
-                break;
+                case InductorItem:
+                    UpdateFields(worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString(), "Inductance:",
+                        "H");
+                    break;
 
-            case VoltageSourceItem:
-                UpdateFields(worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString(), "Voltage:", "V");
-                _modelButton.Text = "Edit source";
-                break;
+                case CapacitorItem:
+                    UpdateFields(worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString(), "Capacity:", "F");
+                    break;
 
-            default:
-                UpdateFields("", "", "");
-                break;
+                case PnpTransistorItem:
+                case NpnTransistorItem:
+                    UpdateFields(worksheetItem.Value, "Model:", "");
+                    _valueEntry.IsEnabled = false;
+                    break;
+
+                case VoltageSourceItem:
+                    UpdateFields(worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString(), "Voltage:", "V");
+                    _modelButton.Text = "Edit source";
+                    break;
+
+                case SourceItem sourceItem:
+                    break;
+
+                case TerminalItem terminalItem:
+                    break;
+
+                case TextItem textItem:
+                    UpdateFields(textItem.Value, "Text:", "");
+                    break;
+
+                case TraceItem traceItem:
+                    break;
+
+                case DiodeItem:
+                    UpdateFields(worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString(),
+                        description: "Voltage drop:", "V");
+                    break;
+
+                default:
+                    UpdateFields("", "", "");
+                    break;
+            }
         }
 
         _isUpdating = false;
@@ -213,7 +243,7 @@ public class QuickEditView : Grid
         });
     }
 
-    private void UpdateFields(string value, string description, string unit)
+    private void UpdateFields(string? value, string description, string unit)
     {
         _valueEntry.Text = value;
         _unitDescriptionLabel.Text = description;

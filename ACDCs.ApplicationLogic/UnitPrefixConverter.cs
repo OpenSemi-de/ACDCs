@@ -107,9 +107,9 @@ public static class UnitPrefixConverter
         return numberValue;
     }
 
-    public static string ParseToPrefixedString(this double value)
+    public static string? ParseToPrefixedString(this double value)
     {
-        string prefixedValue = "";
+        string? prefixedValue = "";
 
         foreach (KeyValuePair<string, int> kvp in s_exponents)
         {

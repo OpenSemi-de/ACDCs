@@ -1,11 +1,11 @@
 ﻿namespace ACDCs.API.Core.Components.Sensors;
 
 using System.Collections.ObjectModel;
-using ACDCs.IO.DB;
 using ACDCs.Sensors.API;
 using ACDCs.Sensors.API.Client;
 using ACDCs.Sensors.API.Sensors;
 using Instance;
+using IO.DB;
 
 public class SensorsConfigurationView : Grid
 {

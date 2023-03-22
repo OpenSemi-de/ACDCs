@@ -2,29 +2,64 @@
 
 public class SourceGridRow<T> : Grid
 {
+    private bool _isEnabled = true;
+
     public Label DescriptionLabel { get; }
+
+    public new bool IsEnabled
+    {
+        get { return _isEnabled; }
+        set
+        {
+            this.IsVisible(value);
+            this.View.IsEnabled = value;
+            this.DescriptionLabel.IsEnabled = value;
+            this.SymbolLabel.IsEnabled = value;
+            _isEnabled = value;
+        }
+    }
 
     public Label SymbolLabel { get; }
 
     public View? View { get; }
 
-    public SourceGridRow(string description, string symbol, Action<object?, object?> function, List<string> options)
+    public SourceGridRow(string description, string symbol, Action<object?, object?>? function, List<string>? options)
     {
         this.ColumnDefinitions(
-            new ColumnDefinition(70),
-            new ColumnDefinition(70),
-            new ColumnDefinition(20));
+            new ColumnDefinition(100),
+            new ColumnDefinition(120),
+            new ColumnDefinition(GridLength.Star));
 
         RowDefinitions.Add(new RowDefinition(32));
 
         DescriptionLabel = new Label(description)
-            .VerticalTextAlignment(TextAlignment.Center);
+            .VerticalTextAlignment(TextAlignment.Center)
+            .HorizontalOptions(LayoutOptions.End);
 
-        if (typeof(T) == typeof(string) ||
+        if (options != null)
+        {
+            Picker picker = new Picker()
+                .OnSelectedIndexChanged((sender, value) =>
+                {
+                    function?.Invoke(this, value);
+                });
+
+            picker.ItemsSource = options;
+            picker.SelectedIndex = 0;
+            this.Add(picker, 1);
+            View = picker;
+        }
+        else if (typeof(T) == typeof(string) ||
             typeof(T) == typeof(double))
         {
-            View = new Entry();
-            this.Add(View, 1);
+            Entry entry = new Entry()
+                .OnTextChanged((sender, value) =>
+                {
+                    function?.Invoke(this, value);
+                });
+
+            this.Add(entry, 1);
+            View = entry;
         }
         else if (typeof(T) == typeof(bool))
         {
@@ -35,9 +70,10 @@ public class SourceGridRow<T> : Grid
         }
 
         SymbolLabel = new Label(symbol)
-            .VerticalTextAlignment(TextAlignment.Center);
+            .VerticalTextAlignment(TextAlignment.Center)
+            .HorizontalOptions(LayoutOptions.Start);
 
-        this.Add(DescriptionLabel);
+        Add(DescriptionLabel);
         this.Add(SymbolLabel, 2);
     }
 }

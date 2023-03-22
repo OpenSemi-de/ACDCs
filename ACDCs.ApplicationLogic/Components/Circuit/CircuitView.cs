@@ -15,7 +15,7 @@ using Items;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Shared.Delegates;
-using Color = Microsoft.Maui.Graphics.Color;
+using Color = Color;
 
 public class CircuitView : ContentView, ICircuitViewProperties, ICircuitView
 {

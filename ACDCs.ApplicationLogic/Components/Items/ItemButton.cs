@@ -5,7 +5,7 @@ using CircuitRenderer.Definitions;
 using CircuitRenderer.Items;
 using CircuitRenderer.Sheet;
 using Instance;
-using Color = Microsoft.Maui.Graphics.Color;
+using Color = Color;
 
 public class ItemButton : ImageButton
 {

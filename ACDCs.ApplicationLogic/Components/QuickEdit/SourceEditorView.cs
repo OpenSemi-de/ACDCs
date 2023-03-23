@@ -183,6 +183,8 @@ public class SourceEditorView : Grid
             Pulse(sourceModel).Period = doubleValue;
         else if (row == _delayAcEntry)
             Pulse(sourceModel).Delay = doubleValue;
+
+        OnSourceEdited?.Invoke(_source);
     }
 
     private void OnWaveformSelect(object? arg1, object? arg2)

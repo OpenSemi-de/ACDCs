@@ -3,6 +3,7 @@ namespace ACDCs.API.Core.Components.QuickEdit;
 
 using ACDCs.CircuitRenderer.Items.Sources;
 using ACDCs.CircuitRenderer.Items.Transistors;
+using ACDCs.Data.ACDCs.Components.Source;
 using CircuitRenderer.Interfaces;
 using CircuitRenderer.Items;
 using CircuitRenderer.Items.Capacitors;
@@ -18,6 +19,7 @@ public class QuickEditView : Grid
     private readonly Label _unitDescriptionLabel;
     private readonly Label _unitLabel;
     private readonly Entry _valueEntry;
+    private readonly Label _valueLabel;
     private readonly Window? _window;
     private IWorksheetItem? _currentItem;
     private bool _isUpdating;
@@ -55,6 +57,16 @@ public class QuickEditView : Grid
             .Column(1)
             .OnTextChanged(ValueEntry_OnTextChanged);
         Add(_valueEntry);
+
+        _valueLabel = new Label()
+            .IsVisible(true)
+            .FontSize(15)
+            .HorizontalOptions(LayoutOptions.Fill)
+            .VerticalOptions(LayoutOptions.Fill)
+            .VerticalTextAlignment(TextAlignment.Center)
+            .Margin(0)
+            .Column(1);
+        Add(_valueLabel);
 
         _unitLabel = new QuickEditLabel("-")
             .FontSize(20)
@@ -117,6 +129,7 @@ public class QuickEditView : Grid
         _unitDescriptionLabel.Text = "";
         _unitLabel.Text = "";
         _valueEntry.Text = "";
+        _valueLabel.Text = "";
         _valueEntry.IsEnabled = true;
         _modelButton.Text = "Select model";
 
@@ -127,12 +140,6 @@ public class QuickEditView : Grid
         {
             switch (item)
             {
-                case PolarizedCapacitorItem polarizedCapacitorItem:
-                    break;
-
-                case StandardCapacitorItem standardCapacitorItem:
-                    break;
-
                 case ResistorItem:
                     UpdateFields(worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString(), "Resistance:",
                         "Ω");
@@ -143,6 +150,8 @@ public class QuickEditView : Grid
                         "H");
                     break;
 
+                case PolarizedCapacitorItem polarizedCapacitorItem:
+                case StandardCapacitorItem standardCapacitorItem:
                 case CapacitorItem:
                     UpdateFields(worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString(), "Capacity:", "F");
                     break;
@@ -154,8 +163,10 @@ public class QuickEditView : Grid
                     break;
 
                 case VoltageSourceItem:
-                    UpdateFields(worksheetItem.Value.ParsePrefixesToDouble().ParseToPrefixedString(), "Voltage:", "V");
+                    UpdateFields(worksheetItem.Value, "Voltage:", "");
                     _modelButton.Text = "Edit source";
+                    _valueEntry.IsVisible(false);
+                    _valueLabel.IsVisible(true);
                     break;
 
                 case SourceItem sourceItem:
@@ -215,6 +226,18 @@ public class QuickEditView : Grid
 
     private void OnSourceEdited(WorksheetItem item)
     {
+        if (item is not VoltageSourceItem source) return;
+        if (source.Model is not Source sourceModel) return;
+        if (sourceModel.Type == "AC")
+        {
+            source.Value = $"AC {sourceModel.AcValue}V {sourceModel.Waveform?.GetType().Name}";
+        }
+        else
+        {
+            source.Value = $"DC {sourceModel.DcValue}V";
+        }
+
+        OnUpdatedValue?.Invoke();
     }
 
     private async void SelectModelButton_Clicked(object? sender, EventArgs e)
@@ -246,6 +269,7 @@ public class QuickEditView : Grid
     private void UpdateFields(string? value, string description, string unit)
     {
         _valueEntry.Text = value;
+        _valueLabel.Text = value;
         _unitDescriptionLabel.Text = description;
         _unitLabel.Text = unit;
     }
@@ -261,6 +285,14 @@ public class QuickEditView : Grid
 
         switch (_currentItem)
         {
+            case TextItem textItem:
+                textItem.Value = e.NewTextValue;
+                break;
+
+            case DiodeItem diodeItem:
+                diodeItem.Value = e.NewTextValue.ParsePrefixesToDouble().ParseToPrefixedString();
+                break;
+
             case ResistorItem:
             case InductorItem:
             case CapacitorItem:

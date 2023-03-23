@@ -5,7 +5,7 @@ namespace ACDCs.CircuitRenderer.Items;
 
 public sealed class DiodeItem : WorksheetItem
 {
-    public override string DefaultValue => "0.7";
+    public override string DefaultValue => "700m";
 
     public override bool IsInsertable => true;
 

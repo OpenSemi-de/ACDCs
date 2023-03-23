@@ -5,7 +5,7 @@ namespace ACDCs.CircuitRenderer.Items;
 
 public class SourceItem : WorksheetItem
 {
-    public override string DefaultValue => "5v";
+    public override string DefaultValue => "DC 5v";
 
     public override bool IsInsertable => false;
 

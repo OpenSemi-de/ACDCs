@@ -88,6 +88,20 @@ public class CircuitView : ContentView, ICircuitViewProperties, ICircuitView
     // ReSharper disable once EventNeverSubscribedTo.Global
     public event CursorPositionChangeEvent? TapPositionChanged;
 
+    public static Coordinate GetAbsolutePinPosition(PinDrawable pin)
+    {
+        Coordinate center = pin.ParentItem.DrawableComponent.Size.Multiply(0.5f)
+            .Add(pin.ParentItem.DrawableComponent.Position);
+
+        Coordinate rotatedPinPos = new(pin.ParentItem.DrawableComponent.Position.X,
+            pin.ParentItem.DrawableComponent.Position.Y);
+        rotatedPinPos = rotatedPinPos.Add(pin.Position.Multiply(pin.ParentItem.DrawableComponent.Size));
+        rotatedPinPos = rotatedPinPos.RotateCoordinate(center.X, center.Y, pin.ParentItem.Rotation);
+        rotatedPinPos.X = (float)Math.Floor(rotatedPinPos.X);
+        rotatedPinPos.Y = (float)Math.Floor(rotatedPinPos.Y);
+        return rotatedPinPos;
+    }
+
     public void Clear()
     {
         _currentWorkbook.Sheets.Clear();
@@ -513,11 +527,13 @@ public class CircuitView : ContentView, ICircuitViewProperties, ICircuitView
                             PinDrawable? selectedPin = null;
                             foreach (PinDrawable pin in selectedItem.Pins)
                             {
-                                double pinX = Math.Floor(pin.Position.X * selectedItem.Width);
-                                double pinY = Math.Floor(pin.Position.Y * selectedItem.Height);
-                                pinX += selectedItem.X;
-                                pinY += selectedItem.Y;
-                                if (pinX != x || pinY != y)
+                                // double pinX = Math.Floor(pin.Position.X * selectedItem.Width);
+                                // double pinY = Math.Floor(pin.Position.Y * selectedItem.Height);
+                                // pinX += selectedItem.X;
+                                // pinY += selectedItem.Y;
+                                Coordinate pinPosition = GetAbsolutePinPosition(pin);
+
+                                if (pinPosition.X != x || pinPosition.Y != y)
                                 {
                                     continue;
                                 }

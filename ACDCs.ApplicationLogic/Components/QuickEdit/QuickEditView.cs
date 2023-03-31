@@ -10,6 +10,7 @@ using CircuitRenderer.Items.Capacitors;
 using Data.ACDCs.Interfaces;
 using Instance;
 using ModelSelection;
+using SpiceSharp.Components;
 using Windowing.Components.Window;
 
 public class QuickEditView : Grid
@@ -230,7 +231,11 @@ public class QuickEditView : Grid
         if (source.Model is not Source sourceModel) return;
         if (sourceModel.Type == "AC")
         {
-            source.Value = $"AC {sourceModel.AcValue}V {sourceModel.Waveform?.GetType().Name}";
+            source.Value = $"AC {sourceModel.AcValue}V {sourceModel.Waveform?.GetType().Name} ";
+            if (sourceModel.Waveform is Sine sine)
+            {
+                source.Value += $"({sine.Amplitude}V {sine.Frequency}hz D:{sine.Delay}s P:{sine.Phase}d T:{sine.Theta})";
+            }
         }
         else
         {

@@ -54,6 +54,8 @@ public class Turtlor
             pin.ParentItem.DrawableComponent.Position.Y);
         rotatedPinPos = rotatedPinPos.Add(pin.Position.Multiply(pin.ParentItem.DrawableComponent.Size));
         rotatedPinPos = rotatedPinPos.RotateCoordinate(center.X, center.Y, pin.ParentItem.Rotation);
+        rotatedPinPos.X = (float)Math.Floor(rotatedPinPos.X);
+        rotatedPinPos.Y = (float)Math.Floor(rotatedPinPos.Y);
 
         return rotatedPinPos;
     }

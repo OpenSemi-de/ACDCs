@@ -163,8 +163,7 @@ public class SensorServer
     private static DateTime? FromDate(HttpContext ctx)
     {
         DateTime? fromDate = null;
-        if (ctx.Request.Query.Elements.ContainsKey("date") &&
-            DateTime.TryParse(ctx.Request.Query.Elements["date"], out DateTime time))
+        if (DateTime.TryParse(ctx.Request.Query.Elements["date"], out DateTime time))
         {
             fromDate = time;
         }

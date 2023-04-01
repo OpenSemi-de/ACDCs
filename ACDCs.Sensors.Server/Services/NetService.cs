@@ -6,7 +6,6 @@ using System.Net;
 
 using Android.App;
 using Android.Net.Wifi;
-using Application = Microsoft.Maui.Controls.Application;
 
 #elif WINDOWS
 

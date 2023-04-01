@@ -39,7 +39,7 @@ internal class SimulationControlView : Grid
     {
     }
 
-    private void OnAddWatchEnabled(EditButton obj)
+    private void OnAddWatchEnabled(EditButton button)
     {
     }
 
@@ -47,7 +47,7 @@ internal class SimulationControlView : Grid
     {
     }
 
-    private void OnRewindEnabled(EditButton obj)
+    private void OnRewindEnabled(EditButton b)
     {
     }
 

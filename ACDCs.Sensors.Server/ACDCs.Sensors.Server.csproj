@@ -57,7 +57,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Sharp.UI" Version="0.4.6-alpha" />
-		<PackageReference Include="Watson" Version="4.3.8" />
+		<PackageReference Include="Watson" Version="5.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>

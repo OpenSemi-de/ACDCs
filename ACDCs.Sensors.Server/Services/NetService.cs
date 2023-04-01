@@ -1,6 +1,41 @@
 ﻿namespace ACDCs.Sensors.Server.Services;
 
-public partial class NetService
+using System.Net;
+
+#if ANDROID
+
+using Android.App;
+using Android.Net.Wifi;
+using Application = Microsoft.Maui.Controls.Application;
+
+#elif WINDOWS
+
+using System.Net.Sockets;
+#endif
+
+public class NetService
 {
-    public partial string ConvertHostIP();
+    public string ConvertHostIP()
+    {
+#if WINDOWS
+       var host = Dns.GetHostEntry(Dns.GetHostName());
+        foreach (var ip in host.AddressList)
+        {
+            if (ip.AddressFamily == AddressFamily.InterNetwork)
+            {
+                return ip.ToString();
+            }
+        }
+#elif ANDROID
+
+        WifiManager wifiManager = (WifiManager)Application.Context.GetSystemService(Service.WifiService);
+        int ip = wifiManager.ConnectionInfo.IpAddress;
+
+        IPAddress ipAddr = new IPAddress(ip);
+
+        //  System.out.println(host);
+        return ipAddr.ToString();
+#endif
+        return "";
+    }
 }

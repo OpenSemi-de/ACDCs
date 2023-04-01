@@ -65,12 +65,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Platforms\Windows\NetService.cs">
-	    <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <MauiXaml Update="Resources\Styles\Colors.xaml">
 	    <SubType>Designer</SubType>
 	  </MauiXaml>

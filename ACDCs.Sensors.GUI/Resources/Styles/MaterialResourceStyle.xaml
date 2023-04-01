@@ -325,7 +325,6 @@
 
                 <Style TargetType="c:ButtonView" ApplyToDerivedTypes="True">
                     <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
-                    <Setter Property="StrokeShape" Value="{RoundRectangle CornerRadius=2}"/>
                     <Setter Property="t:CascadingStyle.Resources">
                         <Setter.Value>
                             <ResourceDictionary>

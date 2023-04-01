@@ -14,6 +14,11 @@ internal class SimulationControlView : Grid
 
     public SimulationControlView()
     {
+        this.Margin(2)
+            .Padding(2)
+            .RowSpacing(2)
+            .ColumnSpacing(2);
+
         AddButton(_startStopButton, "Start", "Stop", OnStartStopClicked, OnStartStopEnabled);
         AddButton(_rewindButton, "Rewind", "", OnRewindClicked, OnRewindEnabled);
         AddButton(_addRemoveWatchButton, "Add watch", "Remove watch", OnAddWatchClicked, OnAddWatchEnabled);
@@ -24,7 +29,7 @@ internal class SimulationControlView : Grid
     private void AddButton(EditButton? editButton, string text, string textEnabled, Action buttonAction,
         Action<EditButton> selectedAction)
     {
-        editButton = new EditButton(text, buttonAction, selectedAction, 90, 75, textEnabled != "");
+        editButton = new EditButton(text, buttonAction, selectedAction, 84, 60, textEnabled != "");
         this.RowDefinitions.Add(new RowDefinition());
         this.Add(editButton, 0, _row);
         _row++;

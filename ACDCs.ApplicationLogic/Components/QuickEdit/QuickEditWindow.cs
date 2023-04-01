@@ -8,7 +8,7 @@ public class QuickEditWindow : Window
     private readonly Action? _onUpdate;
     public QuickEditView? EditView { get; set; }
 
-    public QuickEditWindow(WindowContainer? container, Action? onUpdate) : base(container, "QuickEdit", "", false, GetView, titleHeight: 28)
+    public QuickEditWindow(WindowContainer? container, Action? onUpdate) : base(container, "QuickEdit", "", false, GetView, titleHeight: 20)
     {
         _onUpdate = onUpdate;
         Start();

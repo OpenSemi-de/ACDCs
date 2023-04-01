@@ -5,7 +5,23 @@ using Windowing.Components.Window;
 
 public class EditWindow : Window
 {
-    private readonly WindowContainer? _layout;
+    public EditWindow(WindowContainer? layout) : base(layout, "Tools", "", false, GetView, titleHeight: 20)
+    {
+        Start();
+        layout?.SetWindowPosition(this, 4, 50);
+        HideWindowButtons();
+        HideResizer();
+        layout?.SetWindowSize(this, 104, 300);
+    }
+
+    private static View GetView(Window arg)
+    {
+        return new EditView();
+    }
+}
+
+public class EditView : Grid
+{
     private EditButton? _deleteButton;
     private EditButton? _lastButton;
     private EditButton? _mirrorButton;
@@ -13,13 +29,20 @@ public class EditWindow : Window
     private EditButton? _rotateButton;
     private EditButton? _selectAreaButton;
     private double ButtonHeight { get; set; }
-    private StackLayout ButtonLayout { get; set; } = new();
-
     private double ButtonWidth { get; set; }
 
-    public EditWindow(WindowContainer? layout) : base(layout, "Tools", "", false, GetView, titleHeight: 28)
+    public EditView()
     {
-        _layout = layout;
+        RowDefinition[] rows =
+        {
+            new(),
+            new(),
+            new(),
+            new(),
+            new(),
+            new(),
+        };
+        this.RowDefinitions(rows);
         Initialize();
     }
 
@@ -35,16 +58,6 @@ public class EditWindow : Window
     private static void Delete()
     {
         CallHandler("delete");
-    }
-
-    private static View GetView(Window arg)
-    {
-        if (arg is EditWindow edit)
-        {
-            return edit.ButtonLayout;
-        }
-
-        return new Label();
     }
 
     private static void Mirror()
@@ -69,37 +82,27 @@ public class EditWindow : Window
 
     private void AddButtons()
     {
-        if (ButtonHeight == 0) ButtonHeight = 60;
-        if (ButtonWidth == 0) ButtonWidth = 88;
-
-        _selectAreaButton = new EditButton("Select", SelectArea, OnSelectButtonChange, ButtonWidth, ButtonHeight, true);
+        _selectAreaButton = new EditButton("Select", SelectArea, OnSelectButtonChange, 84, 60, true);
         _propertiesButton =
-            new EditButton("Properties", ShowProperties, OnSelectButtonChange, ButtonWidth, ButtonHeight);
-        _rotateButton = new EditButton("Rotate", Rotate, OnSelectButtonChange, ButtonWidth, ButtonHeight);
-        _mirrorButton = new EditButton("Mirror", Mirror, OnSelectButtonChange, ButtonWidth, ButtonHeight);
-        _deleteButton = new EditButton("Delete", Delete, OnSelectButtonChange, ButtonWidth, ButtonHeight);
-        ButtonLayout.Add(_selectAreaButton);
-        ButtonLayout.Add(_propertiesButton);
-        ButtonLayout.Add(_rotateButton);
-        ButtonLayout.Add(_mirrorButton);
-        ButtonLayout.Add(_deleteButton);
+            new EditButton("Properties", ShowProperties, OnSelectButtonChange, 84, 60);
+        _rotateButton = new EditButton("Rotate", Rotate, OnSelectButtonChange, 84, 60);
+        _mirrorButton = new EditButton("Mirror", Mirror, OnSelectButtonChange, 84, 60);
+        _deleteButton = new EditButton("Delete", Delete, OnSelectButtonChange, 84, 60);
+        this.Add(_selectAreaButton, 0, 0);
+        this.Add(_propertiesButton, 0, 1);
+        this.Add(_rotateButton, 0, 2);
+        this.Add(_mirrorButton, 0, 3);
+        this.Add(_deleteButton, 0, 4);
     }
 
     private void Initialize()
     {
-        WidthRequest = 64;
-        ButtonLayout = ButtonLayout
-            .HorizontalOptions(LayoutOptions.Fill)
-            .VerticalOptions(LayoutOptions.Fill)
-            .Margin(0)
-            .Padding(0);
-        Start();
+        this.Margin(2)
+            .Padding(2)
+            .RowSpacing(2)
+            .ColumnSpacing(2);
 
-        _layout?.SetWindowPosition(this, 4, 50);
-        HideWindowButtons();
-        HideResizer();
         AddButtons();
-        _layout?.SetWindowSize(this, 100, 70 * ButtonLayout.Children.Count);
     }
 
     private void OnSelectButtonChange(EditButton editButton)

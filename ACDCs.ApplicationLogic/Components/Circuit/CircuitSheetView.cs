@@ -1,5 +1,6 @@
 namespace ACDCs.API.Core.Components.Circuit;
 
+using ACDCs.API.Core.Components.Simulation;
 using CircuitRenderer.Interfaces;
 using Edit;
 using Instance;
@@ -23,6 +24,7 @@ public sealed class CircuitSheetView : AbsoluteLayout
 
     private PropertiesWindow? _propertiesWindow;
     private QuickEditWindow? _quickEditWindow;
+    private SimulationControlWindow? _simulationControlWindow;
 
     public CircuitView CircuitView { get; }
 
@@ -83,6 +85,8 @@ public sealed class CircuitSheetView : AbsoluteLayout
         _propertiesWindow.IsVisible = false;
         _propertiesWindow.FadeTo(0);
         CircuitView.CallPropertiesShow = ShowProperties;
+
+        _simulationControlWindow = new SimulationControlWindow(_container);
     }
 
     private void OnSelectedItemChange(IWorksheetItem obj)

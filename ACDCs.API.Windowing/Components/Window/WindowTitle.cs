@@ -10,6 +10,7 @@ public class WindowTitle : Label
     {
         ParentWindow = parentWindow;
         this.Text(windowTitle)
+            .FontAutoScalingEnabled(true)
             .HorizontalOptions(LayoutOptions.Fill)
            .VerticalOptions(LayoutOptions.Fill)
            .VerticalTextAlignment(TextAlignment.Center)

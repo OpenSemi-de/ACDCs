@@ -83,4 +83,8 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Components\Simulation\" />
+	</ItemGroup>
+
 </Project>

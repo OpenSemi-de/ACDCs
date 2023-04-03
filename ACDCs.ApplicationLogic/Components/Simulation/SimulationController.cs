@@ -1,6 +1,9 @@
 ﻿namespace ACDCs.API.Core.Components.Simulation;
 
 using ACDCs.CircuitRenderer.Items;
+using ACDCs.CircuitRenderer.Items.Sources;
+using ACDCs.CircuitRenderer.Items.Transistors;
+using ACDCs.Data.ACDCs.Components.Source;
 using CircuitRenderer.Drawables;
 using CircuitRenderer.Interfaces;
 using CircuitRenderer.Sheet;
@@ -65,7 +68,7 @@ public class Simulation
 
     public void Prepare(Worksheet worksheet)
     {
-        _simulation = new SpiceSharp.Simulations.Transient("default");
+        _simulation = new SpiceSharp.Simulations.Transient("default", 0.001, double.MaxValue);
         _circuit = new EntityCollection();
         _worksheet = worksheet;
 
@@ -75,12 +78,47 @@ public class Simulation
 
             switch (item)
             {
+                case CapacitorItem capacitor:
+                    double capacity = capacitor.Value.ParsePrefixesToDouble();
+                    entity = new Capacitor(capacitor.Name, GetNet(capacitor, 0), GetNet(capacitor, 1), capacity);
+                    break;
+
+                case InductorItem inductor:
+                    double inductance = inductor.Value.ParsePrefixesToDouble();
+                    entity = new Inductor(inductor.Name, GetNet(inductor, 0), GetNet(inductor, 1), inductance);
+                    break;
+
+                case DiodeItem diode:
+                    entity = new Diode(diode.Name, GetNet(diode, 0), GetNet(diode, 1), "");
+                    break;
+
                 case ResistorItem resistor:
-                    double prefixesToDouble = (double)resistor.Model?.Value.ParsePrefixesToDouble();
+                    double prefixesToDouble = resistor.Value.ParsePrefixesToDouble();
                     entity = new Resistor(item.RefName, GetNet(resistor, 0), GetNet(resistor, 1), prefixesToDouble);
                     break;
 
+                case PnpTransistorItem pnpTransistor:
+                    BipolarJunctionTransistor pnp = new(pnpTransistor.Name, GetNet(pnpTransistor, 0),
+                        GetNet(pnpTransistor, 1), GetNet(pnpTransistor, 2), "", pnpTransistor.Name + "m");
+                    BipolarJunctionTransistorModel pnpModel = new(pnpTransistor.Name + "m");
+                    pnpModel.Parameters.SetPnp(true);
+                    entity = pnp;
+                    break;
+
                 case TerminalItem terminal:
+                    break;
+
+                case VoltageSourceItem voltageSource:
+                    if (voltageSource.Model?.Type == "DC")
+                    {
+                        SourceParameters? dcModel = voltageSource.Model as SourceParameters;
+                        if (dcModel?.DcValue != null)
+                        {
+                            entity = new VoltageSource(voltageSource.Name, GetNet(voltageSource, 0),
+                                GetNet(voltageSource, 1), dcModel.DcValue);
+                        }
+                    }
+
                     break;
             }
 

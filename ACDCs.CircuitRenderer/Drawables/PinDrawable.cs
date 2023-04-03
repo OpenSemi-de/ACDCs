@@ -2,15 +2,22 @@
 using ACDCs.CircuitRenderer.Instructions;
 using ACDCs.CircuitRenderer.Interfaces;
 using ACDCs.CircuitRenderer.Sheet;
+using Newtonsoft.Json;
 
 namespace ACDCs.CircuitRenderer.Drawables;
 
 public class PinDrawable : DrawableComponent
 {
+    private readonly TextInstruction _textInstruction;
     private Worksheet? _worksheet;
 
-    public string PinText { get; }
+    public string PinText
+    {
+        get => _textInstruction.Text;
+        set => _textInstruction.Text = value;
+    }
 
+    [JsonIgnore]
     public new Worksheet? Worksheet
     {
         get => _worksheet;
@@ -21,11 +28,13 @@ public class PinDrawable : DrawableComponent
         }
     }
 
-    public PinDrawable(IWorksheetItem parent, float x, float y, string pinText = "") : base(typeof(PinDrawable), parent)
+    [JsonConstructor]
+    public PinDrawable(IWorksheetItem? parent = null, float x = 1, float y = 1, string pinText = "") : base(typeof(PinDrawable), parent)
     {
-        PinText = pinText;
         DrawInstructions.Add(new CircleInstruction(0, 0, 1, 1));
-        DrawInstructions.Add(new TextInstruction(pinText, 0, 12, 0.5f, 1.2f));
+        _textInstruction = new TextInstruction(pinText, 0, 12, 0.5f, 1.2f);
+        DrawInstructions.Add(_textInstruction);
+        PinText = pinText;
         Setup(x, y);
     }
 
@@ -41,10 +50,11 @@ public class PinDrawable : DrawableComponent
 
     private void Setup(float x, float y)
     {
-        if (!ParentItem.Pins.Contains(this))
-        {
-            ParentItem.Pins.Add(this);
-        }
+        if (ParentItem != null)
+            if (!ParentItem.Pins.Contains(this))
+            {
+                ParentItem.Pins.Add(this);
+            }
 
         SetSize(1, 1);
         SetPosition(x, y);

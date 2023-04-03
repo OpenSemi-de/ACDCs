@@ -49,6 +49,7 @@ public sealed class Workbook
         }
 
         Sheets.AddSheet(ws);
+        ws.StartRouter();
         return ws;
     }
 

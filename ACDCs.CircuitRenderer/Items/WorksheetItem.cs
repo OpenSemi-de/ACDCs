@@ -38,7 +38,7 @@ public class WorksheetItem : IWorksheetItem
 
     public string Name { get; set; } = string.Empty;
 
-    [JsonIgnore] public DrawablePinList Pins { get; set; } = new();
+    public DrawablePinList Pins { get; set; } = new();
 
     public string RefName { get; set; } = string.Empty;
 

@@ -125,6 +125,7 @@ public class CircuitView : ContentView, ICircuitViewProperties, ICircuitView
         {
             _currentWorkbook.Sheets.Clear();
             _currentWorkbook.Sheets.AddSheet(newSheet);
+            newSheet.StartRouter();
             CurrentWorksheet = newSheet;
 
             API.Com<Worksheet>(nameof(CircuitView), "_currentSheet", CurrentWorksheet);

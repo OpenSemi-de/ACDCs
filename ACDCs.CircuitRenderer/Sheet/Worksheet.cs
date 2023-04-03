@@ -55,6 +55,7 @@ public sealed class Worksheet
 
     public bool ShowGrid { get; set; } = true;
 
+    [JsonIgnore]
     public WorksheetItemList Traces { get; set; }
 
     public Worksheet()

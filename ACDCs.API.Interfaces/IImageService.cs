@@ -10,7 +10,7 @@ public interface IImageService
 
     ImageSource? BackgroundImageSource(View view);
 
-    ImageSource? ButtonImageSource(string text, int width, int height);
+    ImageSource? ButtonImageSource(string text, int width, int height, string font);
 
     ImageSource? WindowImageSource(float width, float height, int titleHeight);
 }

@@ -1,9 +1,12 @@
 ﻿namespace ACDCs.API.Core.Components.Simulation;
 
 using ACDCs.API.Windowing.Components.Window;
+using CircuitRenderer.Interfaces;
 
 public class SimulationControlWindow : Window
 {
+    private static SimulationControlView? _simulationControlView;
+
     public SimulationControlWindow(WindowContainer? container) : base(container, "Simulation", "", false, GetView, 20)
     {
         Start();
@@ -13,8 +16,19 @@ public class SimulationControlWindow : Window
         container?.SetWindowSize(this, 104, 300);
     }
 
+    public void SelectItem(IWorksheetItem item)
+    {
+        _simulationControlView?.SelectItem(item);
+    }
+
+    public void SetSimulation(SimulationController simulation)
+    {
+        _simulationControlView?.SetSimulation(simulation);
+    }
+
     private static View GetView(Window arg)
     {
-        return new SimulationControlView();
+        _simulationControlView = new SimulationControlView();
+        return _simulationControlView;
     }
 }

@@ -159,7 +159,7 @@ public class API : IWorkbenchService, IImageService, IColorService, IDescription
 
     public ImageSource? BackgroundImageSource(View view) => _imageService.BackgroundImageSource(view);
 
-    public ImageSource? ButtonImageSource(string text, int width, int height) => _imageService.ButtonImageSource(text, width, height);
+    public ImageSource? ButtonImageSource(string text, int width, int height, string font) => _imageService.ButtonImageSource(text, width, height, font);
 
     public void Call(string menuCommand) => _menuService.Call(menuCommand);
 

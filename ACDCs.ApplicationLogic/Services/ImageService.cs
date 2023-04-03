@@ -53,7 +53,7 @@ public class ImageService : IImageService
         return BackgroundImageSource(Convert.ToSingle(view.Width), Convert.ToSingle(view.Height));
     }
 
-    public ImageSource? ButtonImageSource(string text, int width, int height)
+    public ImageSource? ButtonImageSource(string text, int width, int height, string font = "")
     {
         try
         {
@@ -79,7 +79,8 @@ public class ImageService : IImageService
             canvas.Antialias = true;
 
             canvas.FontColor = API.Instance.Text;
-            canvas.Font = new Font("Maple Mono");
+            if (string.IsNullOrEmpty(font)) font = "Maple Mono";
+            canvas.Font = new Font(text);
             canvas.DrawString(text, width / 2, height / 2, HorizontalAlignment.Center);
 
             ImageSource source = GetImageSource(context).GetAwaiter().GetResult();
@@ -92,34 +93,6 @@ public class ImageService : IImageService
         }
 
         return null;
-    }
-
-    private static async Task<ImageSource> GetImageSource(BitmapExportContext context)
-    {
-        MemoryStream? ms = new();
-
-        await context.Image.SaveAsync(ms);
-        ms.Position = 0;
-
-        ImageSource? source = ImageSource.FromStream(() =>
-        {
-            return GetStream(ms);
-        });
-        return source;
-    }
-
-    private static Stream GetStream(MemoryStream memoryStream)
-    {
-#pragma warning disable CS4014
-        Task.Run(() =>
-#pragma warning restore CS4014
-        {
-            Task.Delay(30000).Wait();
-            memoryStream.Dispose();
-            GC.Collect();
-        });
-
-        return memoryStream;
     }
 
     public ImageSource? WindowImageSource(float width, float height, int titleHeight)
@@ -163,5 +136,33 @@ public class ImageService : IImageService
         }
 
         return null;
+    }
+
+    private static async Task<ImageSource> GetImageSource(BitmapExportContext context)
+    {
+        MemoryStream? ms = new();
+
+        await context.Image.SaveAsync(ms);
+        ms.Position = 0;
+
+        ImageSource? source = ImageSource.FromStream(() =>
+        {
+            return GetStream(ms);
+        });
+        return source;
+    }
+
+    private static Stream GetStream(MemoryStream memoryStream)
+    {
+#pragma warning disable CS4014
+        Task.Run(() =>
+#pragma warning restore CS4014
+        {
+            Task.Delay(30000).Wait();
+            memoryStream.Dispose();
+            GC.Collect();
+        });
+
+        return memoryStream;
     }
 }

@@ -62,12 +62,12 @@ public class EditView : Grid
 
     private void AddButtons()
     {
-        _selectAreaButton = new EditButton("Select", SelectArea, OnSelectButtonChange, 84, 60, true);
+        _selectAreaButton = new EditButton("Select", SelectArea, OnSelectButtonChange, null, 84, 60, true);
         _propertiesButton =
-            new EditButton("Properties", ShowProperties, OnSelectButtonChange, 84, 60);
-        _rotateButton = new EditButton("Rotate", Rotate, OnSelectButtonChange, 84, 60);
-        _mirrorButton = new EditButton("Mirror", Mirror, OnSelectButtonChange, 84, 60);
-        _deleteButton = new EditButton("Delete", Delete, OnSelectButtonChange, 84, 60);
+            new EditButton("Properties", ShowProperties, OnSelectButtonChange, null, 84, 60);
+        _rotateButton = new EditButton("Rotate", Rotate, OnSelectButtonChange, null, 84, 60);
+        _mirrorButton = new EditButton("Mirror", Mirror, OnSelectButtonChange, null, 84, 60);
+        _deleteButton = new EditButton("Delete", Delete, OnSelectButtonChange, null, 84, 60);
         this.Add(_selectAreaButton, 0, 0);
         this.Add(_propertiesButton, 0, 1);
         this.Add(_rotateButton, 0, 2);

@@ -2,15 +2,19 @@
 
 namespace ACDCs.API.Core.Components.Simulation;
 
-using ACDCs.API.Core.Components.Edit;
+using CircuitRenderer.Interfaces;
+using Edit;
+using UraniumUI.Icons.FontAwesome;
 
 internal class SimulationControlView : Grid
 {
-    private EditButton? _addRemoveWatchButton;
-    private EditButton? _rewindButton;
+    private readonly EditButton? _addRemoveWatchButton;
+    private readonly EditButton? _rewindButton;
+    private readonly EditButton? _showGraphsButton;
+    private readonly EditButton? _startStopButton;
+    private IWorksheetItem? _item;
     private int _row = 0;
-    private EditButton? _showGraphsButton;
-    private EditButton? _startStopButton;
+    private SimulationController? _simulation;
 
     public SimulationControlView()
     {
@@ -19,17 +23,40 @@ internal class SimulationControlView : Grid
             .RowSpacing(2)
             .ColumnSpacing(2);
 
-        AddButton(_startStopButton, "Start", "Stop", OnStartStopClicked, OnStartStopEnabled);
-        AddButton(_rewindButton, "Rewind", "", OnRewindClicked, OnRewindEnabled);
-        AddButton(_addRemoveWatchButton, "Add watch", "Remove watch", OnAddWatchClicked, OnAddWatchEnabled);
-        AddButton(_showGraphsButton, "Show graph", "Hide graph", OnShowGraphClicked, OnShowGraphEnabled);
+        AddButton(ref _startStopButton, Solid.Play, Solid.Stop, OnStartStopClicked, OnStartStopEnabled, OnStartStopDisabled);
+        AddButton(ref _rewindButton, Solid.Backward, "", OnRewindClicked, OnRewindEnabled, null);
+        AddButton(ref _addRemoveWatchButton, Solid.MagnifyingGlassPlus, Solid.MagnifyingGlassMinus, OnAddWatchClicked, OnAddWatchEnabled, OnAddWatchDisabled);
+        AddButton(ref _showGraphsButton, Solid.WaveSquare, Solid.CircleXmark, OnShowGraphClicked, OnShowGraphEnabled, OnShowGraphDisabled);
+    }
+
+    public void SelectItem(IWorksheetItem item)
+    {
+        _item = item;
+        if (_simulation == null)
+        {
+            return;
+        }
+
+        if (_simulation.HasGraph(item))
+        {
+            _addRemoveWatchButton?.Select();
+        }
+        else
+        {
+            _addRemoveWatchButton?.Deselect();
+        }
+    }
+
+    public void SetSimulation(SimulationController simulation)
+    {
+        _simulation = simulation;
     }
 
     // ReSharper disable once RedundantAssignment
-    private void AddButton(EditButton? editButton, string text, string textEnabled, Action buttonAction,
-        Action<EditButton> selectedAction)
+    private void AddButton(ref EditButton? editButton, string text, string textEnabled, Action buttonAction,
+        Action<EditButton> selectedAction, Action<EditButton>? deselectedAction)
     {
-        editButton = new EditButton(text, buttonAction, selectedAction, 84, 60, textEnabled != "");
+        editButton = new EditButton(text, buttonAction, selectedAction, deselectedAction, 84, 60, textEnabled != "", textEnabled, "FASolid", 26);
         this.RowDefinitions.Add(new RowDefinition());
         this.Add(editButton, 0, _row);
         _row++;
@@ -39,12 +66,46 @@ internal class SimulationControlView : Grid
     {
     }
 
+    private void OnAddWatchDisabled(EditButton obj)
+    {
+        if (_simulation == null)
+        {
+            return;
+        }
+
+        if (_item == null)
+        {
+            return;
+        }
+
+        if (_simulation.HasGraph(_item))
+        {
+            _simulation.RemoveGraph(_item);
+        }
+    }
+
     private void OnAddWatchEnabled(EditButton button)
     {
+        if (_simulation == null)
+        {
+            return;
+        }
+
+        if (_item == null)
+        {
+            return;
+        }
+
+        if (!_simulation.HasGraph(_item))
+        {
+            _simulation.AddGraph(_item);
+        }
     }
 
     private void OnRewindClicked()
     {
+        _simulation?.Rewind();
+        _startStopButton?.Deselect();
     }
 
     private void OnRewindEnabled(EditButton b)
@@ -52,6 +113,10 @@ internal class SimulationControlView : Grid
     }
 
     private void OnShowGraphClicked()
+    {
+    }
+
+    private void OnShowGraphDisabled(EditButton obj)
     {
     }
 
@@ -63,7 +128,13 @@ internal class SimulationControlView : Grid
     {
     }
 
+    private void OnStartStopDisabled(EditButton obj)
+    {
+        _simulation?.Stop();
+    }
+
     private void OnStartStopEnabled(EditButton obj)
     {
+        _simulation?.Start();
     }
 }

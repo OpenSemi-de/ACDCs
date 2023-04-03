@@ -24,8 +24,8 @@ public sealed class CircuitSheetView : AbsoluteLayout
 
     private PropertiesWindow? _propertiesWindow;
     private QuickEditWindow? _quickEditWindow;
+    private SimulationController? _simulationController;
     private SimulationControlWindow? _simulationControlWindow;
-
     public CircuitView CircuitView { get; }
 
     public CircuitSheetView(WindowContainer container)
@@ -86,12 +86,16 @@ public sealed class CircuitSheetView : AbsoluteLayout
         _propertiesWindow.FadeTo(0);
         CircuitView.CallPropertiesShow = ShowProperties;
 
+        _simulationController = new SimulationController();
         _simulationControlWindow = new SimulationControlWindow(_container);
+        _simulationControlWindow.SetSimulation(_simulationController);
+        _simulationController.Sheet = CircuitView.CurrentWorksheet;
     }
 
     private void OnSelectedItemChange(IWorksheetItem obj)
     {
-        _quickEditWindow?.EditView.UpdateEditor(obj);
+        _quickEditWindow?.EditView?.UpdateEditor(obj);
+        _simulationControlWindow?.SelectItem(obj);
     }
 
     private async void OnUpdate()

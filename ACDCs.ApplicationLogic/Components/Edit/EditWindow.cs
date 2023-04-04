@@ -10,7 +10,7 @@ public class EditWindow : Window
         layout?.SetWindowPosition(this, 4, 50);
         HideWindowButtons();
         HideResizer();
-        layout?.SetWindowSize(this, 104, 300);
+        layout?.SetWindowSize(this, 104, 316);
     }
 
     private static View GetView(Window arg)

@@ -11,6 +11,7 @@ internal class SimulationControlView : Grid
     private readonly EditButton? _addRemoveWatchButton;
     private readonly EditButton? _rewindButton;
     private readonly EditButton? _showGraphsButton;
+    private readonly EditButton? _showLogButton;
     private readonly EditButton? _startStopButton;
     private IWorksheetItem? _item;
     private int _row = 0;
@@ -27,6 +28,7 @@ internal class SimulationControlView : Grid
         AddButton(ref _rewindButton, Solid.Backward, "", OnRewindClicked, OnRewindEnabled, null);
         AddButton(ref _addRemoveWatchButton, Solid.MagnifyingGlassPlus, Solid.MagnifyingGlassMinus, OnAddWatchClicked, OnAddWatchEnabled, OnAddWatchDisabled);
         AddButton(ref _showGraphsButton, Solid.WaveSquare, Solid.CircleXmark, OnShowGraphClicked, OnShowGraphEnabled, OnShowGraphDisabled);
+        AddButton(ref _showLogButton, Solid.ClipboardList, Solid.ClipboardCheck, OnShowLogClicked, OnShowLogEnabled, OnShowLogDisabled);
     }
 
     public void SelectItem(IWorksheetItem item)
@@ -54,9 +56,9 @@ internal class SimulationControlView : Grid
 
     // ReSharper disable once RedundantAssignment
     private void AddButton(ref EditButton? editButton, string text, string textEnabled, Action buttonAction,
-        Action<EditButton> selectedAction, Action<EditButton>? deselectedAction)
+        Action<EditButton>? selectedAction, Action<EditButton>? deselectedAction)
     {
-        editButton = new EditButton(text, buttonAction, selectedAction, deselectedAction, 84, 60, textEnabled != "", textEnabled, "FASolid", 26);
+        editButton = new EditButton(text, buttonAction, selectedAction, deselectedAction, 74, 50, textEnabled != "", textEnabled, "FASolid", 26);
         this.RowDefinitions.Add(new RowDefinition());
         this.Add(editButton, 0, _row);
         _row++;
@@ -121,6 +123,18 @@ internal class SimulationControlView : Grid
     }
 
     private void OnShowGraphEnabled(EditButton obj)
+    {
+    }
+
+    private void OnShowLogClicked()
+    {
+    }
+
+    private void OnShowLogDisabled(EditButton obj)
+    {
+    }
+
+    private void OnShowLogEnabled(EditButton obj)
     {
     }
 

@@ -32,17 +32,29 @@ public class CircuitView : ContentView, ICircuitViewProperties, ICircuitView
     private Dictionary<WorksheetItem, Coordinate> _selectedItemsBasePositions = new();
 
     public Color BackgroundHighColor { get; set; } = API.Instance.BackgroundHigh;
+
     public Action<IWorksheetItem?>? CallPropertiesShow { get; set; }
+
     public Worksheet CurrentWorksheet { get; private set; }
+
     public Action? CursorDebugChanged { get; set; }
+
     public string? CursorDebugOutput { get; private set; }
+
     public Color ForegroundColor { get; set; } = API.Instance.Text;
+
     public ItemsView? ItemsView { get; set; }
+
     public Action<WorksheetItem>? OnSelectedItemChange { get; set; }
+
     public LineInstruction? SelectedTraceLine { get; private set; }
+
     public bool ShowCollisionMap { get; set; }
+
     private bool MultiSelectionMode { get; }
+
     private WorksheetItem? SelectedItem { get; set; }
+
     private TraceItem? SelectedTrace { get; set; }
 
     public CircuitView()
@@ -106,6 +118,11 @@ public class CircuitView : ContentView, ICircuitViewProperties, ICircuitView
     {
         _currentWorkbook.Sheets.Clear();
         CurrentWorksheet = _currentWorkbook.AddNewSheet();
+    }
+
+    public Worksheet GetSheet()
+    {
+        return CurrentWorksheet;
     }
 
     public async void Open(string fileName)

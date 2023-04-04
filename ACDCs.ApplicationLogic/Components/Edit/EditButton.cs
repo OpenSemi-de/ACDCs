@@ -16,7 +16,7 @@ public class EditButton : Button
     private bool _isSelected;
 
     public EditButton(string text, Action onClickAction, Action<EditButton>? onSelectAction, Action<EditButton>? onDeselectAction, double buttonWidth,
-        double buttonHeight, bool isSelectable = false, string selectedText = "", string font = "", int fontSize = 14)
+        double buttonHeight, bool isSelectable = false, string selectedText = "", string font = "", int fontSize = 16)
     {
         _text = text;
         _isSelected = false;

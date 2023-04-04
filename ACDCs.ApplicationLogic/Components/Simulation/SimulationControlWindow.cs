@@ -7,13 +7,15 @@ public class SimulationControlWindow : Window
 {
     private static SimulationControlView? _simulationControlView;
 
+    public SimulationLogWindow? LogWindow { get; set; }
+
     public SimulationControlWindow(WindowContainer? container) : base(container, "Simulation", "", false, GetView, 20)
     {
         Start();
         HideResizer();
         HideWindowButtons();
         container?.SetWindowPosition(this, 5, 405);
-        container?.SetWindowSize(this, 104, 300);
+        container?.SetWindowSize(this, 104, 330);
     }
 
     public void SelectItem(IWorksheetItem item)

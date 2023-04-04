@@ -15,6 +15,8 @@ public class SimulationController
 {
     private readonly Dictionary<IWorksheetItem, SimulationGraph> _graphs = new();
     private Simulation _simulation = new();
+    public Func<Worksheet>? GetSheet { get; set; }
+    public Action<string>? LogMethod { get; set; }
     public Worksheet? Sheet { get; set; }
 
     public void AddGraph(IWorksheetItem item)
@@ -42,7 +44,9 @@ public class SimulationController
 
     public void Start()
     {
+        Sheet = GetSheet?.Invoke();
         PrepareSheet();
+        _simulation.LogMethod = LogMethod;
         _simulation.Run();
     }
 
@@ -63,12 +67,24 @@ public class SimulationController
 public class Simulation
 {
     private EntityCollection? _circuit;
+
     private SpiceSharp.Simulations.Transient? _simulation;
+
     private Worksheet? _worksheet;
+
+    private RealVoltageExport? _zeroAnalysis;
+
+    public Action<string>? LogMethod { get; set; }
+
+    public Simulation()
+    {
+        _simulation = new SpiceSharp.Simulations.Transient("default", 0.1, 2);
+        _simulation.ExportSimulationData += ExportSimulationData;
+        _zeroAnalysis = new RealVoltageExport(_simulation, "0");
+    }
 
     public void Prepare(Worksheet worksheet)
     {
-        _simulation = new SpiceSharp.Simulations.Transient("default", 0.001, double.MaxValue);
         _circuit = new EntityCollection();
         _worksheet = worksheet;
 
@@ -80,16 +96,16 @@ public class Simulation
             {
                 case CapacitorItem capacitor:
                     double capacity = capacitor.Value.ParsePrefixesToDouble();
-                    entity = new Capacitor(capacitor.Name, GetNet(capacitor, 0), GetNet(capacitor, 1), capacity);
+                    entity = new Capacitor(item.RefName, GetNet(capacitor, 0), GetNet(capacitor, 1), capacity);
                     break;
 
                 case InductorItem inductor:
                     double inductance = inductor.Value.ParsePrefixesToDouble();
-                    entity = new Inductor(inductor.Name, GetNet(inductor, 0), GetNet(inductor, 1), inductance);
+                    entity = new Inductor(item.RefName, GetNet(inductor, 0), GetNet(inductor, 1), inductance);
                     break;
 
                 case DiodeItem diode:
-                    entity = new Diode(diode.Name, GetNet(diode, 0), GetNet(diode, 1), "");
+                    entity = new Diode(item.RefName, GetNet(diode, 0), GetNet(diode, 1), "");
                     break;
 
                 case ResistorItem resistor:
@@ -98,7 +114,7 @@ public class Simulation
                     break;
 
                 case PnpTransistorItem pnpTransistor:
-                    BipolarJunctionTransistor pnp = new(pnpTransistor.Name, GetNet(pnpTransistor, 0),
+                    BipolarJunctionTransistor pnp = new(item.RefName, GetNet(pnpTransistor, 0),
                         GetNet(pnpTransistor, 1), GetNet(pnpTransistor, 2), "", pnpTransistor.Name + "m");
                     BipolarJunctionTransistorModel pnpModel = new(pnpTransistor.Name + "m");
                     pnpModel.Parameters.SetPnp(true);
@@ -114,7 +130,7 @@ public class Simulation
                         SourceParameters? dcModel = voltageSource.Model as SourceParameters;
                         if (dcModel?.DcValue != null)
                         {
-                            entity = new VoltageSource(voltageSource.Name, GetNet(voltageSource, 0),
+                            entity = new VoltageSource(item.RefName, GetNet(voltageSource, 0),
                                 GetNet(voltageSource, 1), dcModel.DcValue);
                         }
                     }
@@ -133,10 +149,18 @@ public class Simulation
     {
         try
         {
-            _simulation?.Run(_circuit);
+            if (_simulation != null)
+            {
+                _simulation.Run(_circuit);
+            }
         }
         catch (ValidationFailedException validationException)
         {
+            foreach (var error in validationException.Rules.Violations)
+            {
+                if (error is SpiceSharp.Validation.VariablePresenceRuleViolation varError)
+                    LogMethod?.Invoke($"{varError.Variable}");
+            }
         }
         catch (Exception ex)
         {
@@ -144,6 +168,10 @@ public class Simulation
     }
 
     public void Stop()
+    {
+    }
+
+    private void ExportSimulationData(object? sender, ExportDataEventArgs e)
     {
     }
 
@@ -157,11 +185,6 @@ public class Simulation
         }
 
         var gnd = netItem.Pins.FirstOrDefault(p => p.ParentItem is TerminalItem);
-        if (gnd != null)
-        {
-            return "0";
-        }
-
-        return netItem.RefName;
+        return gnd != null ? "0" : netItem.RefName;
     }
 }

@@ -149,10 +149,7 @@ public class Simulation
     {
         try
         {
-            if (_simulation != null)
-            {
-                _simulation.Run(_circuit);
-            }
+            _simulation?.Run(_circuit);
         }
         catch (ValidationFailedException validationException)
         {
@@ -164,6 +161,7 @@ public class Simulation
         }
         catch (Exception ex)
         {
+            LogMethod?.Invoke(ex.ToString());
         }
     }
 
@@ -178,13 +176,17 @@ public class Simulation
     private string GetNet(WorksheetItem item, int portNum)
     {
         PinDrawable currentPin = item.Pins[portNum];
-        NetItem? netItem = _worksheet?.Nets.FirstOrDefault(net => net.Pins.Contains(currentPin)) as NetItem;
+        NetItem? netItem = _worksheet?.Nets.Cast<NetItem>().FirstOrDefault(net => net.Pins.Any(pin => pin.Equals(currentPin.ComponentGuid))) as NetItem;
         if (netItem == null)
         {
             return "";
         }
 
-        var gnd = netItem.Pins.FirstOrDefault(p => p.ParentItem is TerminalItem);
+        var itemsInNet = _worksheet.Items.Where(
+            i => i.Pins.Any(pin => netItem.Pins.Any(niPin => niPin.Equals(pin)))
+        ).ToList();
+
+        var gnd = itemsInNet.FirstOrDefault(i => i is TerminalItem);
         return gnd != null ? "0" : netItem.RefName;
     }
 }

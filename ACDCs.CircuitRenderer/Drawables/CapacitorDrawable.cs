@@ -1,25 +1,28 @@
 ﻿using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Instructions;
 using ACDCs.CircuitRenderer.Interfaces;
+using Newtonsoft.Json;
 
 namespace ACDCs.CircuitRenderer.Drawables;
 
 public sealed class CapacitorDrawable : DrawableComponent
 {
-    private TextInstruction? _textInstruction;
     public CapacitorDrawableType CapacitorType { get; set; }
+    public TextInstruction? TextInstruction { get; private set; }
 
-    public CapacitorDrawable(IWorksheetItem parent) : base(typeof(CapacitorDrawable), parent)
+    [JsonConstructor]
+    public CapacitorDrawable() : base(typeof(CapacitorDrawable), null)
     {
         Setup();
     }
 
     public CapacitorDrawable(IWorksheetItem parent, string value, CapacitorDrawableType type, float x, float y) : base(typeof(CapacitorDrawable), parent)
     {
+        Initialize(value, type);
         Setup(value, type, x, y);
     }
 
-    private void Setup(string value = "N/A", CapacitorDrawableType capacitorType = CapacitorDrawableType.Standard, float x = 0, float y = 0)
+    private void Initialize(string value, CapacitorDrawableType capacitorType)
     {
         CapacitorType = capacitorType;
         DrawInstructions.Add(new LineInstruction(0f, 0.5f, 0.3f, 0.5f));
@@ -44,8 +47,12 @@ public sealed class CapacitorDrawable : DrawableComponent
                 break;
         }
 
-        _textInstruction = new TextInstruction(value, 0f, 12f, 0.5f, 1.35f);
-        DrawInstructions.Add(_textInstruction);
+        TextInstruction = new TextInstruction(value, 0f, 12f, 0.5f, 1.35f);
+        DrawInstructions.Add(TextInstruction);
+    }
+
+    private void Setup(string value = "N/A", CapacitorDrawableType capacitorType = CapacitorDrawableType.Standard, float x = 0, float y = 0)
+    {
         SetSize(2, 1);
         SetPosition(x, y);
 
@@ -54,9 +61,9 @@ public sealed class CapacitorDrawable : DrawableComponent
 
     private void ValueSet()
     {
-        if (_textInstruction != null)
+        if (TextInstruction != null)
         {
-            _textInstruction.Text = Value;
+            TextInstruction.Text = Value;
         }
     }
 }

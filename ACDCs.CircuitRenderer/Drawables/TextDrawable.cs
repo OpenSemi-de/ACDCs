@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using ACDCs.CircuitRenderer.Instructions;
 using ACDCs.CircuitRenderer.Items;
+using Newtonsoft.Json;
 
 namespace ACDCs.CircuitRenderer.Drawables;
 
@@ -12,6 +13,11 @@ public class TextDrawable : DrawableComponent
     {
         get => ((TextInstruction)DrawInstructions.First()).IsRealFontSize;
         set => ((TextInstruction)DrawInstructions.First()).IsRealFontSize = value;
+    }
+
+    [JsonConstructor]
+    public TextDrawable() : base(typeof(TextDrawable), null)
+    {
     }
 
     public TextDrawable(WorksheetItem parent, string value, float textSize, float x, float y) : base(

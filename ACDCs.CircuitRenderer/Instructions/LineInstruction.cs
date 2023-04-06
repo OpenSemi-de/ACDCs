@@ -8,7 +8,7 @@ public sealed class LineInstruction : DrawInstruction
 
     public float StrokeWidth { get; set; }
 
-    public LineInstruction(float x1, float y1, float x2, float y2, int strokeWidth = 1) : base(typeof(LineInstruction))
+    public LineInstruction(float x1, float y1, float x2, float y2, float strokeWidth = 1) : base(typeof(LineInstruction))
     {
         Position = new Coordinate(x1, y1, 0);
         End = new Coordinate(x2, y2, 0);

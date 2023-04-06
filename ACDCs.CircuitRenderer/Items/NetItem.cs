@@ -1,8 +1,9 @@
 ﻿namespace ACDCs.CircuitRenderer.Items;
 
-using Drawables;
+using System;
+using System.Collections.Generic;
 
 public class NetItem : WorksheetItem
 {
-    public new DrawablePinList Pins { get; } = new();
+    public new List<Guid> Pins { get; } = new();
 }

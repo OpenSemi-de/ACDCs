@@ -1,5 +1,6 @@
 ﻿using ACDCs.CircuitRenderer.Drawables;
 using ACDCs.Data.ACDCs.Components.Resistor;
+using Newtonsoft.Json;
 
 namespace ACDCs.CircuitRenderer.Items;
 
@@ -8,6 +9,13 @@ public sealed class ResistorItem : WorksheetItem
     public override string DefaultValue => "10k";
 
     public override bool IsInsertable => true;
+
+    [JsonConstructor]
+    public ResistorItem(string value = "")
+    {
+        DrawableComponent = new ResistorDrawable();
+        Value = value;
+    }
 
     public ResistorItem()
     {

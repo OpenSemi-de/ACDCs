@@ -1,5 +1,6 @@
 ﻿using ACDCs.CircuitRenderer.Instructions;
 using ACDCs.CircuitRenderer.Items;
+using Newtonsoft.Json;
 
 namespace ACDCs.CircuitRenderer.Drawables;
 
@@ -9,6 +10,11 @@ public class SourceDrawable : DrawableComponent
     public SourceDrawableType SourceType { get; set; }
     private static string DefaultValue { get; set; } = "5v";
 
+    [JsonConstructor]
+    public SourceDrawable() : base(typeof(SourceDrawable), null)
+    {
+    }
+
     public SourceDrawable(WorksheetItem parent, SourceDrawableType type) : base(typeof(SourceDrawable), parent)
     {
         Setup(DefaultValue, type);
@@ -17,12 +23,12 @@ public class SourceDrawable : DrawableComponent
     public SourceDrawable(WorksheetItem parent, string value, SourceDrawableType type, float x, float y) : base(typeof(SourceDrawable), parent)
     {
         Value = value;
+        Initialize(value);
         Setup(value, type, x, y);
     }
 
-    private void Setup(string value = "N/A", SourceDrawableType type = SourceDrawableType.Voltage, float x = 0, float y = 0)
+    private void Initialize(string value)
     {
-        SourceType = type;
         DrawablePins.Add(new PinDrawable(ParentItem, 0, 0.49f));
         DrawablePins.Add(new PinDrawable(ParentItem, 1f, 0.49f));
         DrawInstructions.Add(new LineInstruction(0f, 0.5f, 0.25f, 0.5f));
@@ -33,6 +39,11 @@ public class SourceDrawable : DrawableComponent
         DrawInstructions.Add(new LineInstruction(0.75f, 0.5f, 1f, 0.5f));
         _textInstruction = new TextInstruction(value, 0f, 12f, 0.5f, 1.2f);
         DrawInstructions.Add(_textInstruction);
+    }
+
+    private void Setup(string value = "N/A", SourceDrawableType type = SourceDrawableType.Voltage, float x = 0, float y = 0)
+    {
+        SourceType = type;
         SetSize(2, 2);
         SetPosition(x, y);
         OnValueSet = ValueSet;

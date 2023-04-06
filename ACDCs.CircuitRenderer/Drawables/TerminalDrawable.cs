@@ -1,13 +1,19 @@
 ﻿using ACDCs.CircuitRenderer.Instructions;
 using ACDCs.CircuitRenderer.Interfaces;
+using Newtonsoft.Json;
 
 namespace ACDCs.CircuitRenderer.Drawables;
 
 public sealed class TerminalDrawable : DrawableComponent
 {
-    public string TerminalText { get; set; }
+    public string TerminalText { get; set; } = "";
 
     public TerminalDrawableType TerminalType { get; set; }
+
+    [JsonConstructor]
+    public TerminalDrawable() : base(typeof(TerminalDrawable), null)
+    {
+    }
 
     public TerminalDrawable(IWorksheetItem parent, float x, float y,
                 TerminalDrawableType terminalType = TerminalDrawableType.None, string terminalName = "") : base(

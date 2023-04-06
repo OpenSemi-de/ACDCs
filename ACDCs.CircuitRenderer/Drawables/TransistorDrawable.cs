@@ -1,6 +1,7 @@
 ﻿using ACDCs.CircuitRenderer.Definitions;
 using ACDCs.CircuitRenderer.Instructions;
 using ACDCs.CircuitRenderer.Interfaces;
+using Newtonsoft.Json;
 
 namespace ACDCs.CircuitRenderer.Drawables;
 
@@ -8,14 +9,20 @@ public sealed class TransistorDrawable : DrawableComponent
 {
     private TextInstruction? _textInstruction;
 
+    [JsonConstructor]
+    public TransistorDrawable() : base(typeof(TransistorDrawable), null)
+    {
+    }
+
     public TransistorDrawable(IWorksheetItem parent, TransistorDrawableType type, float x, float y) : base(
         typeof(TransistorDrawable), parent)
     {
+        Initialize(type);
+
         Setup(type, x, y);
     }
 
-    private void Setup(TransistorDrawableType type = TransistorDrawableType.Pnp, float x = 0,
-        float y = 0)
+    private void Initialize(TransistorDrawableType type)
     {
         DrawInstructions.Add(new LineInstruction(0f, 0.5f, 0.5f, 0.5f));
         DrawInstructions.Add(new LineInstruction(0.5f, 0.5f, 1f, 0.2f));
@@ -48,7 +55,11 @@ public sealed class TransistorDrawable : DrawableComponent
                 DrawInstructions.Add(new LineInstruction(0.65f, 0.7f, 0.8f, 0.55f));
                 break;
         }
+    }
 
+    private void Setup(TransistorDrawableType type = TransistorDrawableType.Pnp, float x = 0,
+            float y = 0)
+    {
         SetSize(2, 2);
         SetPosition(x, y);
 

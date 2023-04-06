@@ -193,7 +193,7 @@ public class Turtlor
 
             TraceItem trace = new() { Net = net };
 
-            List<PinDrawable> pins = SortDistance(net.Pins);
+            List<PinDrawable> pins = SortDistance(GetPins(net.Pins));
 
             PinDrawable? lastPin = null;
 
@@ -220,6 +220,21 @@ public class Turtlor
         var orderedPins = pins.OrderBy(pin => pin.Position.X).ToList();
 
         return orderedPins;
+    }
+
+    private DrawablePinList GetPins(List<Guid> netPins)
+    {
+        DrawablePinList pins = new();
+        foreach (var pin in netPins)
+        {
+            var pinDrawable = _items.SelectMany(i => i.Pins).FirstOrDefault(p => p.ComponentGuid.Equals(pin));
+            if (pinDrawable != null)
+            {
+                pins.Add(pinDrawable);
+            }
+        }
+
+        return pins;
     }
 
     private TraceItem GetTrace(TraceItem trace, PinDrawable fromPin, PinDrawable toPin,

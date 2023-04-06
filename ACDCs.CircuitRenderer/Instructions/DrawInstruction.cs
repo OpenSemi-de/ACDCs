@@ -7,7 +7,7 @@ namespace ACDCs.CircuitRenderer.Instructions;
 
 public class DrawInstruction : IDrawInstruction
 {
-    public List<Coordinate> Coordinates { get; } = new();
+    public List<Coordinate> Coordinates { get; set; } = new();
 
     public Coordinate Position { get; set; }
 

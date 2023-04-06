@@ -13,6 +13,8 @@ namespace ACDCs.Web.Controllers;
 [ApiController]
 public class CircuitRenderController : Controller
 {
+    private readonly IWebHostEnvironment _environment;
+
     public CircuitRenderController(IWebHostEnvironment environment)
     {
         _environment = environment;
@@ -70,10 +72,10 @@ public class CircuitRenderController : Controller
         ws.Items.AddItem(npnr);
 
         NetItem net2 = new();
-        net2.Pins.Add(res1.Pins[0]);
-        net2.Pins.Add(res2.Pins[1]);
-        net2.Pins.Add(pnp.Pins[0]);
-        net2.Pins.Add(npn.Pins[2]);
+        net2.Pins.Add(res1.Pins[0].ComponentGuid);
+        net2.Pins.Add(res2.Pins[1].ComponentGuid);
+        net2.Pins.Add(pnp.Pins[0].ComponentGuid);
+        net2.Pins.Add(npn.Pins[2].ComponentGuid);
         ws.Nets.AddItem(net2);
 
         CapacitorItem caps = new("10u", CapacitorDrawableType.Standard, 14, 1);
@@ -116,6 +118,4 @@ public class CircuitRenderController : Controller
 
         return File(imageBytes ?? Array.Empty<byte>(), "application/octet-stream", "img.bmp");
     }
-
-    private readonly IWebHostEnvironment _environment;
 }

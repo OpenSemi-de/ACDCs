@@ -35,8 +35,8 @@ public sealed class WorksheetItemList : List<IWorksheetItem>
         int refNum = ReferenceManager.GetRefNum(nameof(NetItem));
 
         NetItem newNet = new();
-        newNet.Pins.Add(pin1);
-        newNet.Pins.Add(pin2);
+        newNet.Pins.Add(pin1.ComponentGuid);
+        newNet.Pins.Add(pin2.ComponentGuid);
         newNet.RefName = $"{nameof(NetItem).Replace("Item", "")}{refNum}";
         newNet.DrawableComponent.Worksheet = Worksheet;
         Add(newNet);

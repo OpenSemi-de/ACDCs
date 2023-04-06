@@ -13,9 +13,9 @@ public class WorksheetItem : IWorksheetItem
 {
     private string? _value;
 
+    [JsonIgnore]
     public virtual string DefaultValue { get; set; } = string.Empty;
 
-    [JsonIgnore]
     public IDrawableComponent DrawableComponent { get; set; }
 
     public int Height
@@ -24,6 +24,7 @@ public class WorksheetItem : IWorksheetItem
         set => DrawableComponent.Size.Y = value;
     }
 
+    [JsonIgnore]
     public virtual bool IsInsertable { get; set; }
 
     public bool IsMirrored

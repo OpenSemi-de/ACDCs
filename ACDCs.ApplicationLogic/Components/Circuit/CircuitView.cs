@@ -142,6 +142,16 @@ public class CircuitView : ContentView, ICircuitViewProperties, ICircuitView
         {
             _currentWorkbook.Sheets.Clear();
             _currentWorkbook.Sheets.AddSheet(newSheet);
+            //   ReviveNets(newSheet);
+            foreach (var item in newSheet.Items)
+            {
+                foreach (var pin in item.Pins)
+                {
+                    pin.ParentItem = item;
+                }
+                if (item.DrawableComponent is IHaveAParent parented)
+                    parented.ParentItem = item;
+            }
             newSheet.StartRouter();
             CurrentWorksheet = newSheet;
 

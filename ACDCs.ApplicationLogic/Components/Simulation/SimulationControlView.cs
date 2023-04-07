@@ -34,7 +34,7 @@ internal class SimulationControlView : Grid
         AddButton(ref _showLogButton, Solid.ClipboardList, Solid.ClipboardCheck, OnShowLogClicked, OnShowLogEnabled, OnShowLogDisabled);
     }
 
-    public void SelectItem(IWorksheetItem item)
+    public void SelectItem(IWorksheetItem? item)
     {
         _item = item;
         if (_simulation == null)
@@ -42,7 +42,7 @@ internal class SimulationControlView : Grid
             return;
         }
 
-        if (_simulation.HasGraph(item))
+        if (item != null && _simulation.HasGraph(item))
         {
             _addRemoveWatchButton?.Select();
         }

@@ -58,10 +58,10 @@ public class Simulation
 
         foreach (KeyValuePair<IWorksheetItem, SimulationGraph> graphItem in Graphs)
         {
-            if (graphItem.Key is NetItem netItem)
+            if (graphItem.Key is TraceItem netItem)
             {
-                RealVoltageExport netExport = new RealVoltageExport(_simulation, netItem.RefName.Replace("Item", ""));
-                _exports.Add(netItem.RefName, netExport);
+                RealVoltageExport netExport = new RealVoltageExport(_simulation, netItem.Net.RefName);
+                _exports.Add(netItem.Net.RefName, netExport);
             }
         }
 

@@ -10,13 +10,13 @@ using Data.ACDCs.Components.Source;
 using SpiceSharp.Components;
 using SpiceSharp.Entities;
 using SpiceSharp.Simulations;
+using SpiceSharp.Validation;
 
 public class Simulation
 {
+    private readonly Dictionary<string, IExport<double>> _exports = new();
     private readonly Transient? _simulation;
-    private readonly RealVoltageExport? _zeroAnalysis;
     private EntityCollection? _circuit;
-    private Dictionary<string, IExport<double>> _exports = new();
     private Worksheet? _worksheet;
     public Dictionary<IWorksheetItem, SimulationGraph>? Graphs { get; set; }
     public Action<string>? LogMethod { get; set; }
@@ -25,30 +25,6 @@ public class Simulation
     {
         _simulation = new Transient("default", 0.1, 2);
         _simulation.ExportSimulationData += ExportSimulationData;
-        _zeroAnalysis = new RealVoltageExport(_simulation, "0");
-        _exports.Add("0", _zeroAnalysis);
-    }
-
-    public string GetNet(WorksheetItem item, int portNum)
-    {
-        PinDrawable currentPin = item.Pins[portNum];
-        NetItem? netItem = _worksheet?.Nets.Cast<NetItem>().FirstOrDefault(net => net.Pins.Any(pin => pin.Equals(currentPin.ComponentGuid))) as NetItem;
-        if (netItem == null)
-        {
-            return "";
-        }
-
-        var itemsInNet = _worksheet?.Items.Where(
-            i => i.Pins.Any(pin => netItem.Pins.Any(niPin => niPin.Equals(pin.ComponentGuid)))
-        ).ToList();
-
-        if (itemsInNet == null)
-        {
-            return "";
-        }
-
-        var gnd = itemsInNet.FirstOrDefault(i => i is TerminalItem);
-        return gnd != null ? "0" : netItem.RefName;
     }
 
     public void Prepare(Worksheet worksheet)
@@ -56,16 +32,34 @@ public class Simulation
         _circuit = new EntityCollection();
         _worksheet = worksheet;
 
-        foreach (KeyValuePair<IWorksheetItem, SimulationGraph> graphItem in Graphs)
+        if (Graphs != null)
         {
-            if (graphItem.Key is TraceItem netItem)
+            _exports.Clear();
+            foreach (KeyValuePair<IWorksheetItem, SimulationGraph> graphItem in Graphs)
             {
-                RealVoltageExport netExport = new RealVoltageExport(_simulation, netItem.Net.RefName);
-                _exports.Add(netItem.Net.RefName, netExport);
+                switch (graphItem.Key)
+                {
+                    case TraceItem netItem:
+                        {
+                            RealVoltageExport netVoltageExport = new(_simulation, netItem.Net.RefName);
+                            _exports.Add($"{netItem.Net.RefName}V", netVoltageExport);
+                            RealCurrentExport netCurrentExport = new(_simulation, netItem.Net.RefName);
+                            _exports.Add($"{netItem.Net.RefName}A", netCurrentExport);
+                            break;
+                        }
+                    case WorksheetItem item:
+                        {
+                            RealVoltageExport itemVoltageExport = new(_simulation, item.RefName);
+                            _exports.Add($"{item.RefName}V", itemVoltageExport);
+                            RealCurrentExport itemCurrentExport = new(_simulation, item.RefName);
+                            _exports.Add($"{item.RefName}A", itemCurrentExport);
+                            break;
+                        }
+                }
             }
         }
 
-        foreach (var item in worksheet.Items)
+        foreach (IWorksheetItem item in worksheet.Items)
         {
             IEntity? entity = null;
 
@@ -81,8 +75,12 @@ public class Simulation
                     break;
 
                 case InductorItem inductor:
-                    double inductance = inductor.Value.ParsePrefixesToDouble();
-                    entity = new Inductor(item.RefName, GetNet(inductor, 0), GetNet(inductor, 1), inductance);
+                    if (inductor.Value != null)
+                    {
+                        double inductance = inductor.Value.ParsePrefixesToDouble();
+                        entity = new Inductor(item.RefName, GetNet(inductor, 0), GetNet(inductor, 1), inductance);
+                    }
+
                     break;
 
                 case DiodeItem diode:
@@ -90,8 +88,12 @@ public class Simulation
                     break;
 
                 case ResistorItem resistor:
-                    double prefixesToDouble = resistor.Value.ParsePrefixesToDouble();
-                    entity = new Resistor(item.RefName, GetNet(resistor, 0), GetNet(resistor, 1), prefixesToDouble);
+                    if (resistor.Value != null)
+                    {
+                        double prefixesToDouble = resistor.Value.ParsePrefixesToDouble();
+                        entity = new Resistor(item.RefName, GetNet(resistor, 0), GetNet(resistor, 1), prefixesToDouble);
+                    }
+
                     break;
 
                 case PnpTransistorItem pnpTransistor:
@@ -102,7 +104,7 @@ public class Simulation
                     entity = pnp;
                     break;
 
-                case TerminalItem terminal:
+                case TerminalItem:
                     break;
 
                 case VoltageSourceItem voltageSource:
@@ -134,9 +136,9 @@ public class Simulation
         }
         catch (ValidationFailedException validationException)
         {
-            foreach (var error in validationException.Rules.Violations)
+            foreach (IRuleViolation? error in validationException.Rules.Violations)
             {
-                if (error is SpiceSharp.Validation.VariablePresenceRuleViolation varError)
+                if (error is VariablePresenceRuleViolation varError)
                     LogMethod?.Invoke($"{varError.Variable}");
             }
         }
@@ -153,9 +155,31 @@ public class Simulation
     private void ExportSimulationData(object? sender, ExportDataEventArgs e)
     {
         LogMethod?.Invoke($"{e.Time}");
-        foreach (var export in _exports)
+        foreach (KeyValuePair<string, IExport<double>> export in _exports)
         {
             LogMethod?.Invoke($"{export.Key} - {export.Value.Value}");
         }
+    }
+
+    private string GetNet(WorksheetItem item, int portNum)
+    {
+        PinDrawable currentPin = item.Pins[portNum];
+        NetItem? netItem = _worksheet?.Nets.Cast<NetItem>().FirstOrDefault(net => net.Pins.Any(pin => pin.Equals(currentPin.ComponentGuid)));
+        if (netItem == null)
+        {
+            return "";
+        }
+
+        List<IWorksheetItem>? itemsInNet = _worksheet?.Items.Where(
+            i => i.Pins.Any(pin => netItem.Pins.Any(niPin => niPin.Equals(pin.ComponentGuid)))
+        ).ToList();
+
+        if (itemsInNet == null)
+        {
+            return "";
+        }
+
+        IWorksheetItem? gnd = itemsInNet.FirstOrDefault(i => i is TerminalItem);
+        return gnd != null ? "0" : netItem.RefName;
     }
 }

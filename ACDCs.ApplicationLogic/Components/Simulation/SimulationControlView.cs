@@ -17,6 +17,9 @@ internal class SimulationControlView : Grid
     private int _row = 0;
     private SimulationController? _simulation;
 
+    public Action<bool>? OnGraphVisibilityChanged { get; set; }
+    public Action<bool>? OnLogVisibilityChanged { get; set; }
+
     public SimulationControlView()
     {
         this.Margin(2)
@@ -120,10 +123,12 @@ internal class SimulationControlView : Grid
 
     private void OnShowGraphDisabled(EditButton obj)
     {
+        OnGraphVisibilityChanged?.Invoke(false);
     }
 
     private void OnShowGraphEnabled(EditButton obj)
     {
+        OnGraphVisibilityChanged?.Invoke(true);
     }
 
     private void OnShowLogClicked()
@@ -132,10 +137,12 @@ internal class SimulationControlView : Grid
 
     private void OnShowLogDisabled(EditButton obj)
     {
+        OnLogVisibilityChanged?.Invoke(false);
     }
 
     private void OnShowLogEnabled(EditButton obj)
     {
+        OnLogVisibilityChanged?.Invoke(true);
     }
 
     private void OnStartStopClicked()

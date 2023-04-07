@@ -12,9 +12,14 @@ public class SimulationGraphWindow : Window
         set => _graphView = value;
     }
 
-    protected SimulationGraphWindow(WindowContainer? container) : base(container, "Graphs", "", false, GetView, 20)
+    public SimulationGraphWindow(WindowContainer? container) : base(container, "Graphs", "", false, GetView, 20)
     {
         Start();
+    }
+
+    public void VisibilityChanged(bool visible)
+    {
+        this.IsVisible = visible;
     }
 
     private static View GetView(Window arg)

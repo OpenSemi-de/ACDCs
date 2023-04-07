@@ -26,6 +26,7 @@ public sealed class CircuitSheetView : AbsoluteLayout
     private QuickEditWindow? _quickEditWindow;
     private SimulationController? _simulationController;
     private SimulationControlWindow? _simulationControlWindow;
+    private SimulationGraphWindow _simulationGraphWindow;
     private SimulationLogWindow _simulationLogWindow;
     public CircuitView CircuitView { get; }
 
@@ -95,6 +96,11 @@ public sealed class CircuitSheetView : AbsoluteLayout
         _simulationLogWindow = new SimulationLogWindow(_container);
         _simulationControlWindow.LogWindow = _simulationLogWindow;
         _simulationController.LogMethod = _simulationLogWindow.AddLog;
+        _simulationControlWindow.OnLogVisibilityChanged = _simulationLogWindow.VisibilityChanged;
+        _simulationGraphWindow = new SimulationGraphWindow(_container);
+        _simulationControlWindow.OnGraphVisibilityChanged = _simulationGraphWindow.VisibilityChanged;
+        _simulationLogWindow.IsVisible = false;
+        _simulationGraphWindow.IsVisible = false;
     }
 
     private void OnSelectedItemChange(IWorksheetItem obj)

@@ -45,7 +45,7 @@ public class CircuitView : ContentView, ICircuitViewProperties, ICircuitView
 
     public ItemsView? ItemsView { get; set; }
 
-    public Action<WorksheetItem>? OnSelectedItemChange { get; set; }
+    public Action<WorksheetItem?>? OnSelectedItemChange { get; set; }
 
     public LineInstruction? SelectedTraceLine { get; private set; }
 
@@ -621,6 +621,7 @@ public class CircuitView : ContentView, ICircuitViewProperties, ICircuitView
                         }
 
                         SelectedTrace = trace;
+                        OnSelectedItemChange?.Invoke(SelectedTrace);
 
                         await Paint();
                         return;
@@ -628,6 +629,7 @@ public class CircuitView : ContentView, ICircuitViewProperties, ICircuitView
 
                     SelectedTrace = null;
                     SelectedTraceLine = null;
+                    OnSelectedItemChange?.Invoke(null);
                 }
             }
 

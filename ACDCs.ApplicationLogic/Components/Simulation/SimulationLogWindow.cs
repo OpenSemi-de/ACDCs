@@ -12,7 +12,7 @@ public class SimulationLogWindow : Window
         set => _logView = value;
     }
 
-    public SimulationLogWindow(WindowContainer? container) : base(container, "Graphs", "", false, GetView, 20)
+    public SimulationLogWindow(WindowContainer? container) : base(container, "Log", "", false, GetView, 20)
     {
         Start();
     }
@@ -20,6 +20,11 @@ public class SimulationLogWindow : Window
     public void AddLog(string text)
     {
         LogView.AddLog(text);
+    }
+
+    public void VisibilityChanged(bool visible)
+    {
+        this.IsVisible = visible;
     }
 
     private static View GetView(Window arg)

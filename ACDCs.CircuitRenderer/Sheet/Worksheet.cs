@@ -71,8 +71,8 @@ public sealed class Worksheet
 
     public void AddRoute(PinDrawable pinFrom, PinDrawable pinTo)
     {
-        IWorksheetItem? netFromPin = Nets.FirstOrDefault(net => net.Pins.Contains(pinFrom));
-        IWorksheetItem? netToPin = Nets.FirstOrDefault(net => net.Pins.Contains(pinTo));
+        NetItem? netFromPin = Nets.Cast<NetItem>().FirstOrDefault(net => net.Pins.Any(pin => pin.Equals(pinFrom.ComponentGuid)));
+        NetItem? netToPin = Nets.Cast<NetItem>().FirstOrDefault(net => net.Pins.Any(pin => pin.Equals(pinTo.ComponentGuid)));
         if (netToPin == null & netFromPin == null)
         {
             Nets.AddNet(pinFrom, pinTo);
@@ -80,14 +80,14 @@ public sealed class Worksheet
 
         if (netToPin == null && netFromPin != null)
         {
-            if (!netFromPin.Pins.Contains(pinTo))
-                netFromPin.Pins.Add(pinTo);
+            if (!netFromPin.Pins.Any(pin => pin.Equals(pinTo.ComponentGuid)))
+                netFromPin.Pins.Add(pinTo.ComponentGuid);
         }
 
         if (netToPin != null && netFromPin == null)
         {
-            if (!netToPin.Pins.Contains(pinTo))
-                netToPin.Pins.Add(pinTo);
+            if (!netToPin.Pins.Any(pin => pin.Equals(pinTo.ComponentGuid)))
+                netToPin.Pins.Add(pinTo.ComponentGuid);
         }
 
         StartRouter();

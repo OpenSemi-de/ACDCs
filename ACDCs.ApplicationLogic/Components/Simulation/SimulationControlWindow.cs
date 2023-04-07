@@ -9,6 +9,33 @@ public class SimulationControlWindow : Window
 
     public SimulationLogWindow? LogWindow { get; set; }
 
+    public Action<bool>? OnGraphVisibilityChanged
+    {
+        get => _simulationControlView?.OnGraphVisibilityChanged;
+        set
+        {
+            if (_simulationControlView != null)
+            {
+                _simulationControlView.OnGraphVisibilityChanged = value;
+            }
+        }
+    }
+
+    public Action<bool>? OnLogVisibilityChanged
+    {
+        get
+        {
+            return _simulationControlView?.OnLogVisibilityChanged;
+        }
+        set
+        {
+            if (_simulationControlView != null)
+            {
+                _simulationControlView.OnLogVisibilityChanged = value;
+            }
+        }
+    }
+
     public SimulationControlWindow(WindowContainer? container) : base(container, "Simulation", "", false, GetView, 20)
     {
         Start();

@@ -1,7 +1,0 @@
-{
-    "New Circuit": "CircuitWindow",
-    "Components": "ComponentsWindow",
-    "Preferences": "PreferencesWindow",
-    "Debug": "DebugWindow",
-    "Info":  "InfoWindow"
-}

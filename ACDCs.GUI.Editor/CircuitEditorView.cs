@@ -35,8 +35,8 @@ public class CircuitEditorView : ContentView, ICircuitEditorView
         Content = (View)_circuitView;
         _logger.LogDebug("Circuit editor started.");
         Scene scene = new();
-        TextComponent item = new("Text1", "text", 120, 120, 100, 20, 0);
-        ResistorComponent resistor = new("R1", 10000, 140, 140, 100, 50, 0);
+        TextComponent item = new("Text1", "text", scene.StepSize * 3, scene.StepSize * 1, 100, 20, 0);
+        ResistorComponent resistor = new("R1", 10000, scene.StepSize * 3, scene.StepSize * 2, 100, 50, 0);
         scene.Circuit.Components.Add(item);
         scene.Circuit.Components.Add(resistor);
         string d = scene.ToJson();

@@ -57,11 +57,12 @@ public class SubRenderer<T>
     {
         if (drawing.IsRelativeScale)
         {
-            x = Convert.ToSingle(drawing.ParentDrawing.X + Position.X + (Scene?.StepSize * drawing.X));
-            y = Convert.ToSingle(drawing.ParentDrawing.Y + Position.Y + (Scene?.StepSize * drawing.Y));
+            float? stepSize = Scene?.StepSize;
+            x = Convert.ToSingle(drawing.ParentDrawing.X + Position.X + stepSize * drawing.X);
+            y = Convert.ToSingle(drawing.ParentDrawing.Y + Position.Y + stepSize * drawing.Y);
 
-            x2 = Convert.ToSingle(drawing.ParentDrawing.X + Position.X + (Scene?.StepSize * drawing.X2));
-            y2 = Convert.ToSingle(drawing.ParentDrawing.Y + Position.Y + (Scene?.StepSize * drawing.Y2));
+            x2 = Convert.ToSingle(drawing.ParentDrawing.X + Position.X + stepSize * drawing.X2);
+            y2 = Convert.ToSingle(drawing.ParentDrawing.Y + Position.Y + stepSize * drawing.Y2);
         }
         else
         {

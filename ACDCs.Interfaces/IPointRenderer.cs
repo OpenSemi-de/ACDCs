@@ -1,9 +1,9 @@
 ﻿namespace ACDCs.Interfaces;
 
 /// <summary>
-/// Interface for the renderer for the background grid.
+/// Interface for the renderer for points.
 /// </summary>
 /// <seealso cref="ACDCs.Interfaces.IRenderer" />
-public interface IGridRenderer : IRenderer
+public interface IPointRenderer : IRenderer
 {
 }

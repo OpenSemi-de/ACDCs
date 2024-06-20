@@ -28,7 +28,7 @@ public class TextComponent : IComponent
     /// <param name="width">The width.</param>
     /// <param name="height">The height.</param>
     /// <param name="rotation">The rotation.</param>
-    public TextComponent(string id, string text, int x, int y, float width, float height, float rotation)
+    public TextComponent(string id, string text, float x, float y, float width, float height, float rotation)
     {
         Id = id;
         Text = text;

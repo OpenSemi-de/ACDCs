@@ -5,17 +5,17 @@ namespace ACDCs.Renderer.Drawings;
 /// <summary>
 /// Drawing element for a point.
 /// </summary>
-/// <seealso cref="ACDCs.Interfaces.IDrawing" />
 /// <remarks>
-/// Initializes a new instance of the <see cref="PointDrawing"/> class.
+/// Initializes a new instance of the <see cref="PointDrawing" /> class.
 /// </remarks>
+/// <seealso cref="ACDCs.Interfaces.IDrawing" />
 /// <param name="id">The identifier.</param>
 /// <param name="x">The x.</param>
 /// <param name="y">The y.</param>
 /// <param name="width">The width.</param>
 /// <param name="height">The height.</param>
 /// <param name="isRelativeScale"></param>
-public class PointDrawing(string id, float x, float y, float width, float height, bool isRelativeScale = false) : IDrawing
+public class PointDrawing(string id, float x, float y, float x2, float y2, bool isRelativeScale = false) : IDrawing
 {
     /// <summary>
     /// Gets or sets the height.
@@ -23,7 +23,7 @@ public class PointDrawing(string id, float x, float y, float width, float height
     /// <value>
     /// The height.
     /// </value>
-    public float Height { get; set; } = height;
+    public float Height { get; set; }
 
     /// <summary>
     /// Gets or sets the identifier.
@@ -71,7 +71,7 @@ public class PointDrawing(string id, float x, float y, float width, float height
     /// <value>
     /// The width.
     /// </value>
-    public float Width { get; set; } = width;
+    public float Width { get; set; }
 
     /// <summary>
     /// Gets or sets the x.
@@ -81,7 +81,13 @@ public class PointDrawing(string id, float x, float y, float width, float height
     /// </value>
     public float X { get; set; } = x;
 
-    public float X2 { get; set; }
+    /// <summary>
+    /// Gets or sets the x2.
+    /// </summary>
+    /// <value>
+    /// The x2.
+    /// </value>
+    public float X2 { get; set; } = x2;
 
     /// <summary>
     /// Gets or sets the y.
@@ -91,5 +97,11 @@ public class PointDrawing(string id, float x, float y, float width, float height
     /// </value>
     public float Y { get; set; } = y;
 
-    public float Y2 { get; set; }
+    /// <summary>
+    /// Gets or sets the y2.
+    /// </summary>
+    /// <value>
+    /// The y2.
+    /// </value>
+    public float Y2 { get; set; } = y2;
 }

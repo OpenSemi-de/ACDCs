@@ -101,11 +101,11 @@ public class ResistorDrawing(string id, float value, float x, float y, float rot
     {
         List<IDrawing> drawings =
         [
-            new PointDrawing(Id + "_Pin1", 0f, 0.5f, 0.1f, 0.1f, true),
+            new PointDrawing(Id + "_Pin1", 0f, 0.4f, 0.2f, 0.6f, true),
             new LineDrawing(Id + "Line1", 0f, 0.5f, 0.2f, 0.5f, true),
             new BoxDrawing(Id + "Box1", 0.2f, 0.3f, 0.8f, 0.7f, true),
             new LineDrawing(Id + "Line2", 0.8f, 0.5f, 1f, 0.5f, true),
-            new PointDrawing(Id + "_Pin2", 1f, 0.5f, 0.1f, 0.1f, true),
+            new PointDrawing(Id + "_Pin2", 0.8f, 0.4f, 01f, 0.6f, true),
             new TextDrawing(Id + "_Text", Value.ToString(), 0f, 0.6f, 1f, 0.4f, 0, true)
         ];
 

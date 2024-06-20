@@ -34,4 +34,12 @@ public class Scene : IScene
     /// The size of the scene.
     /// </value>
     public Rect SceneSize { get; set; } = new Rect(0, 0, 1000, 1000);
+
+    /// <summary>
+    /// Gets or sets the size of the step.
+    /// </summary>
+    /// <value>
+    /// The size of the step.
+    /// </value>
+    public float StepSize { get; set; } = 25.4f;
 }

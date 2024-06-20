@@ -6,12 +6,36 @@
 public interface IDrawing
 {
     /// <summary>
+    /// Gets or sets the height.
+    /// </summary>
+    /// <value>
+    /// The height.
+    /// </value>
+    public float Height { get; set; }
+
+    /// <summary>
     /// Gets or sets the identifier.
     /// </summary>
     /// <value>
     /// The identifier.
     /// </value>
     public string Id { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this instance is relative scale.
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if this instance is relative scale; otherwise, <c>false</c>.
+    /// </value>
+    public bool IsRelativeScale { get; set; }
+
+    /// <summary>
+    /// Gets or sets the parent drawing.
+    /// </summary>
+    /// <value>
+    /// The parent drawing.
+    /// </value>
+    public IDrawing ParentDrawing { get; set; }
 
     /// <summary>
     /// Gets or sets the rotation.
@@ -28,6 +52,14 @@ public interface IDrawing
     /// The value.
     /// </value>
     public float Value { get; set; }
+
+    /// <summary>
+    /// Gets or sets the width.
+    /// </summary>
+    /// <value>
+    /// The width.
+    /// </value>
+    public float Width { get; set; }
 
     /// <summary>
     /// Gets or sets the x.

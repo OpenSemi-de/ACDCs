@@ -35,7 +35,7 @@ public interface IRenderManager
     /// <value>
     /// The size of the step.
     /// </value>
-    public int StepSize { get; set; }
+    public float StepSize { get; set; }
 
     /// <summary>
     /// Loads the scene from json.

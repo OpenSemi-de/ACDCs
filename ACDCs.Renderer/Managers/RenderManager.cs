@@ -18,7 +18,7 @@ public class RenderManager : IRenderManager, IDrawable
     private readonly Color _strokeColor;
     private readonly IThemeService _themeService;
     private Microsoft.Maui.Graphics.Point _position = new(100, 100);
-    private int _stepSize = Convert.ToInt32(1000 / 25.4);
+    private float _stepSize = 25.4f;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RenderManager" /> class.
@@ -82,7 +82,7 @@ public class RenderManager : IRenderManager, IDrawable
     /// <value>
     /// The size of the step.
     /// </value>
-    public int StepSize { get => _stepSize; set => _stepSize = value; }
+    public float StepSize { get => _stepSize; set => _stepSize = value; }
 
     /// <summary>
     /// Draws the specified canvas.
@@ -145,9 +145,9 @@ public class RenderManager : IRenderManager, IDrawable
             int endX = Convert.ToInt32(BaseSquare.X + BaseSquare.Width);
             int startY = Convert.ToInt32(BaseSquare.Y);
             int endY = Convert.ToInt32(BaseSquare.Y + BaseSquare.Height);
-            for (int x = startX; x < endX; x += _stepSize)
+            for (float x = startX; x < endX; x += _stepSize)
             {
-                for (int y = startY; y < endY; y += _stepSize)
+                for (float y = startY; y < endY; y += _stepSize)
                 {
                     canvas.DrawRectangle(Offset(new Rect(x, y, _stepSize, _stepSize)));
                 }

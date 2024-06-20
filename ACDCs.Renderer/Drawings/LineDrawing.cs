@@ -14,8 +14,17 @@ namespace ACDCs.Renderer.Drawings;
 /// <param name="y">The y.</param>
 /// <param name="x2">The x2.</param>
 /// <param name="y2">The y2.</param>
-public class LineDrawing(string id, float x, float y, float x2, float y2) : IDrawing
+/// <param name="isRelativeScale"></param>
+public class LineDrawing(string id, float x, float y, float x2, float y2, bool isRelativeScale = false) : IDrawing
 {
+    /// <summary>
+    /// Gets or sets the height.
+    /// </summary>
+    /// <value>
+    /// The height.
+    /// </value>
+    public float Height { get; set; } = 0;
+
     /// <summary>
     /// Gets or sets the identifier.
     /// </summary>
@@ -23,6 +32,22 @@ public class LineDrawing(string id, float x, float y, float x2, float y2) : IDra
     /// The identifier.
     /// </value>
     public string Id { get; set; } = id;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this instance is relative scale.
+    /// </summary>
+    /// <value>
+    /// <c>true</c> if this instance is relative scale; otherwise, <c>false</c>.
+    /// </value>
+    public bool IsRelativeScale { get; set; } = isRelativeScale;
+
+    /// <summary>
+    /// Gets or sets the parent drawing.
+    /// </summary>
+    /// <value>
+    /// The parent drawing.
+    /// </value>
+    public IDrawing ParentDrawing { get; set; }
 
     /// <summary>
     /// Gets or sets the rotation.
@@ -39,6 +64,14 @@ public class LineDrawing(string id, float x, float y, float x2, float y2) : IDra
     /// The value.
     /// </value>
     public float Value { get; set; }
+
+    /// <summary>
+    /// Gets or sets the width.
+    /// </summary>
+    /// <value>
+    /// The width.
+    /// </value>
+    public float Width { get; set; } = 0;
 
     /// <summary>
     /// Gets or sets the x.

@@ -16,7 +16,8 @@ namespace ACDCs.Renderer.Drawings;
 /// <param name="width">The width.</param>
 /// <param name="height">The height.</param>
 /// <param name="rotation">The rotation.</param>
-public class TextDrawing(string id, string text, float x, float y, float width, float height, float rotation) : IDrawing
+/// <param name="isRelativeScale"></param>
+public class TextDrawing(string id, string text, float x, float y, float width, float height, float rotation, bool isRelativeScale = false) : IDrawing
 {
     /// <summary>
     /// Gets or sets the height.
@@ -33,6 +34,22 @@ public class TextDrawing(string id, string text, float x, float y, float width, 
     /// The identifier.
     /// </value>
     public string Id { get; set; } = id;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this instance is relative scale.
+    /// </summary>
+    /// <value>
+    /// <c>true</c> if this instance is relative scale; otherwise, <c>false</c>.
+    /// </value>
+    public bool IsRelativeScale { get; set; } = isRelativeScale;
+
+    /// <summary>
+    /// Gets or sets the parent drawing.
+    /// </summary>
+    /// <value>
+    /// The parent drawing.
+    /// </value>
+    public IDrawing ParentDrawing { get; set; }
 
     /// <summary>
     /// Gets or sets the rotation.

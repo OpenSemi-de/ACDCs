@@ -6,7 +6,7 @@ namespace ACDCs.Renderer.Managers;
 /// <summary>
 /// Manager to handle fast access to render colors.
 /// </summary>
-public static class RenderColorManager
+public static class RenderSettingsManager
 {
     private static ConcurrentDictionary<ColorDefinition, Color> s_colorCache = new();
     private static IThemeService? s_themeService;

@@ -6,6 +6,14 @@
 public interface IRenderer
 {
     /// <summary>
+    /// Gets the type of the drawing.
+    /// </summary>
+    /// <value>
+    /// The type of the drawing.
+    /// </value>
+    Type DrawingType { get; }
+
+    /// <summary>
     /// Draws on the specified canvas.
     /// </summary>
     /// <param name="canvas">The canvas.</param>
@@ -21,5 +29,6 @@ public interface IRenderer
     /// Sets the scene.
     /// </summary>
     /// <param name="scene">The scene.</param>
-    void SetScene(IScene scene);
+    /// <param name="drawingType">Type of the drawing.</param>
+    void SetScene(IScene scene, Type drawingType);
 }

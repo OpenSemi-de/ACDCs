@@ -5,11 +5,11 @@ using ACDCs.Renderer.Managers;
 namespace ACDCs.Renderer.Renderers;
 
 /// <summary>
-/// The text renderer.
+/// The line renderer.
 /// </summary>
-/// <seealso cref="IRenderer" />
-/// <seealso cref="ITextRenderer" />
-public class TextRenderer : SubRenderer, IRenderer, ITextRenderer
+/// <seealso cref="ACDCs.Interfaces.IRenderer" />
+/// <seealso cref="ACDCs.Interfaces.ITextRenderer" />
+public class LineRenderer : SubRenderer, IRenderer, ITextRenderer
 {
     /// <summary>
     /// Gets the type of the drawing.
@@ -17,7 +17,7 @@ public class TextRenderer : SubRenderer, IRenderer, ITextRenderer
     /// <value>
     /// The type of the drawing.
     /// </value>
-    public override Type DrawingType { get => typeof(TextDrawing); }
+    public override Type DrawingType { get => typeof(LineDrawing); }
 
     /// <summary>
     /// Draws on the specified canvas.

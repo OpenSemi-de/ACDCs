@@ -84,7 +84,7 @@ public class SceneManager : ISceneManager
 
         foreach (IRenderer renderer in renderers)
         {
-            renderer.SetScene(scene);
+            renderer.SetScene(scene, renderer.DrawingType);
         }
     }
 }

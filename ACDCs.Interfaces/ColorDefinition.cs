@@ -79,4 +79,9 @@ public enum ColorDefinition
     /// The circuit renderer stroke
     /// </summary>
     CircuitRendererStroke = 14,
+
+    /// <summary>
+    /// The circuit renderer grid
+    /// </summary>
+    CircuitRendererGrid = 15,
 }

@@ -81,6 +81,8 @@ public class PointDrawing(string id, float x, float y, float width, float height
     /// </value>
     public float X { get; set; } = x;
 
+    public float X2 { get; set; }
+
     /// <summary>
     /// Gets or sets the y.
     /// </summary>
@@ -88,4 +90,6 @@ public class PointDrawing(string id, float x, float y, float width, float height
     /// The y.
     /// </value>
     public float Y { get; set; } = y;
+
+    public float Y2 { get; set; }
 }

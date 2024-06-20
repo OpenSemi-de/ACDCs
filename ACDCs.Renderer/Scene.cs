@@ -28,6 +28,14 @@ public class Scene : IScene
     public List<IDrawing> Drawings { get; } = [];
 
     /// <summary>
+    /// Gets or sets a value indicating whether this instance has outline (default:true).
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if this instance has outline; otherwise, <c>false</c>.
+    /// </value>
+    public bool HasOutline { get; set; } = true;
+
+    /// <summary>
     /// Gets or sets the size of the scene.
     /// </summary>
     /// <value>

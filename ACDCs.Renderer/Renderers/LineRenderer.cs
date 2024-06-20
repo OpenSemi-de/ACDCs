@@ -1,6 +1,8 @@
 ﻿using ACDCs.Interfaces;
 using ACDCs.Renderer.Drawings;
 using ACDCs.Renderer.Managers;
+using Microsoft.Maui.Graphics;
+using Rect = ACDCs.Interfaces.Rect;
 
 namespace ACDCs.Renderer.Renderers;
 
@@ -9,16 +11,8 @@ namespace ACDCs.Renderer.Renderers;
 /// </summary>
 /// <seealso cref="ACDCs.Interfaces.IRenderer" />
 /// <seealso cref="ACDCs.Interfaces.ITextRenderer" />
-public class LineRenderer : SubRenderer, IRenderer, ITextRenderer
+public class LineRenderer : SubRenderer<LineDrawing>, IRenderer, ILineRenderer
 {
-    /// <summary>
-    /// Gets the type of the drawing.
-    /// </summary>
-    /// <value>
-    /// The type of the drawing.
-    /// </value>
-    public override Type DrawingType { get => typeof(LineDrawing); }
-
     /// <summary>
     /// Draws on the specified canvas.
     /// </summary>
@@ -26,28 +20,18 @@ public class LineRenderer : SubRenderer, IRenderer, ITextRenderer
     public void Draw(ICanvas canvas)
     {
         RenderSettingsManager.ApplyColors(canvas);
+        canvas.StrokeSize = 2;
 
-        foreach (TextDrawing text in Drawings)
+        foreach (LineDrawing line in Drawings)
         {
-            float x = text.X;
-            float y = text.Y;
-            float width = text.Width;
-            float height = text.Height;
+            float x = line.X;
+            float y = line.Y;
+            float x2 = line.X2;
+            float y2 = line.Y2;
 
-            if (!text.IsRelativeScale)
-            {
-                x += Convert.ToSingle(Position.X);
-                y += Convert.ToSingle(Position.Y);
-            }
-            else
-            {
-                x = Convert.ToSingle(text.ParentDrawing.X + Position.X + (Scene?.StepSize * text.X));
-                y = Convert.ToSingle(text.ParentDrawing.Y + Position.Y + (Scene?.StepSize * text.Y));
-                width = Convert.ToSingle(text.ParentDrawing.Width * Scene?.StepSize);
-                height = Convert.ToSingle(height * Scene?.StepSize);
-            }
+            GetPositionAndEnd(line, ref x, ref y, ref x2, ref y2);
 
-            canvas.DrawString(text.Text, x, y, width, height, HorizontalAlignment.Center, VerticalAlignment.Center);
+            canvas.DrawLine(x, y, x2, y2);
         }
     }
 }

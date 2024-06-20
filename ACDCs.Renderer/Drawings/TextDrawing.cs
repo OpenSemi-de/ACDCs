@@ -91,6 +91,8 @@ public class TextDrawing(string id, string text, float x, float y, float width, 
     /// </value>
     public float X { get; set; } = x;
 
+    public float X2 { get; set; }
+
     /// <summary>
     /// Gets the y.
     /// </summary>
@@ -98,4 +100,6 @@ public class TextDrawing(string id, string text, float x, float y, float width, 
     /// The y.
     /// </value>
     public float Y { get; set; } = y;
+
+    public float Y2 { get; set; }
 }

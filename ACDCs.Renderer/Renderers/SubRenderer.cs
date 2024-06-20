@@ -5,7 +5,7 @@ namespace ACDCs.Renderer.Renderers;
 /// <summary>
 /// Sub renderer class as base for renderers.
 /// </summary>
-public class SubRenderer
+public class SubRenderer<T>
 {
     private List<IDrawing> _drawings = [];
 
@@ -27,7 +27,7 @@ public class SubRenderer
     /// <value>
     /// The type of the drawing.
     /// </value>
-    public virtual Type DrawingType { get; } = typeof(SubRenderer);
+    public virtual Type DrawingType { get; } = typeof(T);
 
     /// <summary>
     /// Gets or sets the position.
@@ -44,6 +44,57 @@ public class SubRenderer
     /// The scene.
     /// </value>
     public IScene? Scene { get => _scene; set => _scene = value; }
+
+    /// <summary>
+    /// Gets the position and end.
+    /// </summary>
+    /// <param name="drawing">The drawing.</param>
+    /// <param name="x">The x.</param>
+    /// <param name="y">The y.</param>
+    /// <param name="x2">The x2.</param>
+    /// <param name="y2">The y2.</param>
+    public void GetPositionAndEnd(IDrawing drawing, ref float x, ref float y, ref float x2, ref float y2)
+    {
+        if (drawing.IsRelativeScale)
+        {
+            x = Convert.ToSingle(drawing.ParentDrawing.X + Position.X + (Scene?.StepSize * drawing.X));
+            y = Convert.ToSingle(drawing.ParentDrawing.Y + Position.Y + (Scene?.StepSize * drawing.Y));
+
+            x2 = Convert.ToSingle(drawing.ParentDrawing.X + Position.X + (Scene?.StepSize * drawing.X2));
+            y2 = Convert.ToSingle(drawing.ParentDrawing.Y + Position.Y + (Scene?.StepSize * drawing.Y2));
+        }
+        else
+        {
+            x += Convert.ToSingle(Position.X);
+            y += Convert.ToSingle(Position.Y);
+            x2 += Convert.ToSingle(Position.X);
+            y2 += Convert.ToSingle(Position.Y);
+        }
+    }
+
+    /// <summary>
+    /// Gets the size of the position and.
+    /// </summary>
+    /// <param name="drawing">The drawing.</param>
+    /// <param name="x">The x.</param>
+    /// <param name="y">The y.</param>
+    /// <param name="width">The width.</param>
+    /// <param name="height">The height.</param>
+    public void GetPositionAndSize(IDrawing drawing, ref float x, ref float y, ref float width, ref float height)
+    {
+        if (drawing.IsRelativeScale)
+        {
+            x = Convert.ToSingle(drawing.ParentDrawing.X + Position.X + (Scene?.StepSize * drawing.X));
+            y = Convert.ToSingle(drawing.ParentDrawing.Y + Position.Y + (Scene?.StepSize * drawing.Y));
+            width = Convert.ToSingle(drawing.ParentDrawing.Width * Scene?.StepSize);
+            height = Convert.ToSingle(height * Scene?.StepSize);
+        }
+        else
+        {
+            x += Convert.ToSingle(Position.X);
+            y += Convert.ToSingle(Position.Y);
+        }
+    }
 
     /// <summary>
     /// Sets the position.

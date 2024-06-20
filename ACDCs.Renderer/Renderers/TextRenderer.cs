@@ -9,16 +9,8 @@ namespace ACDCs.Renderer.Renderers;
 /// </summary>
 /// <seealso cref="IRenderer" />
 /// <seealso cref="ITextRenderer" />
-public class TextRenderer : SubRenderer, IRenderer, ITextRenderer
+public class TextRenderer : SubRenderer<TextDrawing>, IRenderer, ITextRenderer
 {
-    /// <summary>
-    /// Gets the type of the drawing.
-    /// </summary>
-    /// <value>
-    /// The type of the drawing.
-    /// </value>
-    public override Type DrawingType { get => typeof(TextDrawing); }
-
     /// <summary>
     /// Draws on the specified canvas.
     /// </summary>
@@ -34,18 +26,7 @@ public class TextRenderer : SubRenderer, IRenderer, ITextRenderer
             float width = text.Width;
             float height = text.Height;
 
-            if (!text.IsRelativeScale)
-            {
-                x += Convert.ToSingle(Position.X);
-                y += Convert.ToSingle(Position.Y);
-            }
-            else
-            {
-                x = Convert.ToSingle(text.ParentDrawing.X + Position.X + (Scene?.StepSize * text.X));
-                y = Convert.ToSingle(text.ParentDrawing.Y + Position.Y + (Scene?.StepSize * text.Y));
-                width = Convert.ToSingle(text.ParentDrawing.Width * Scene?.StepSize);
-                height = Convert.ToSingle(height * Scene?.StepSize);
-            }
+            GetPositionAndSize(text, ref x, ref y, ref width, ref height);
 
             canvas.DrawString(text.Text, x, y, width, height, HorizontalAlignment.Center, VerticalAlignment.Center);
         }

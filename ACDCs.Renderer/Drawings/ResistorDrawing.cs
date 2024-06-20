@@ -81,6 +81,8 @@ public class ResistorDrawing(string id, float value, float x, float y, float rot
     /// </value>
     public float X { get; set; } = x;
 
+    public float X2 { get; set; }
+
     /// <summary>
     /// Gets or sets the y.
     /// </summary>
@@ -88,6 +90,8 @@ public class ResistorDrawing(string id, float value, float x, float y, float rot
     /// The y.
     /// </value>
     public float Y { get; set; } = y;
+
+    public float Y2 { get; set; }
 
     /// <summary>
     /// Gets the drawings.

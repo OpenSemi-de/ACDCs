@@ -1,5 +1,6 @@
 ﻿using ACDCs.Interfaces;
 using Microsoft.Extensions.Logging;
+using ACDCs.Renderer.Managers;
 
 namespace ACDCs.Renderer;
 
@@ -27,6 +28,7 @@ public class CircuitRenderer : GraphicsView, ICircuitRenderer
 
         _logger = logger;
         _themeService = themeService;
+        RenderSettingsManager.SetService(themeService);
         _renderCore = ServiceHelper.GetService<IRenderManager>();
 
         Drawable = (IDrawable)_renderCore;

@@ -34,7 +34,6 @@ public class RenderManager : IRenderManager, IDrawable
         _backgroundColor = _themeService.GetColor(ColorDefinition.CircuitRendererBackground);
         _strokeColor = _themeService.GetColor(ColorDefinition.CircuitRendererStroke);
         _fontColor = _themeService.GetColor(ColorDefinition.CircuitRendererFont);
-
         _sceneManager.SetPosition(_position);
 
         _logger.LogDebug("Circuit renderer core started.");
@@ -98,7 +97,6 @@ public class RenderManager : IRenderManager, IDrawable
 
         SetColors(canvas);
         FillBackground(canvas, dirtyRect);
-        DrawBaseSquare(canvas);
         _sceneManager.Draw(canvas);
 
         if (IsDebug)
@@ -137,32 +135,9 @@ public class RenderManager : IRenderManager, IDrawable
         canvas.FillRectangle(dirtyRect.X, dirtyRect.Y, dirtyRect.Width, dirtyRect.Height);
     }
 
-    private void DrawBaseSquare(ICanvas canvas)
-    {
-        if (HasOutline)
-        {
-            int startX = Convert.ToInt32(BaseSquare.X);
-            int endX = Convert.ToInt32(BaseSquare.X + BaseSquare.Width);
-            int startY = Convert.ToInt32(BaseSquare.Y);
-            int endY = Convert.ToInt32(BaseSquare.Y + BaseSquare.Height);
-            for (float x = startX; x < endX; x += _stepSize)
-            {
-                for (float y = startY; y < endY; y += _stepSize)
-                {
-                    canvas.DrawRectangle(Offset(new Rect(x, y, _stepSize, _stepSize)));
-                }
-            }
-        }
-    }
-
     private void DrawDebug(ICanvas canvas)
     {
         canvas.DrawString(_position.ToJson(), 0, 0, HorizontalAlignment.Left);
-    }
-
-    private Microsoft.Maui.Graphics.Rect Offset(Rect rect)
-    {
-        return rect.FromRect().Offset(_position.X, _position.Y);
     }
 
     private void SetColors(ICanvas canvas)

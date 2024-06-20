@@ -10,16 +10,21 @@ namespace ACDCs.Renderer.Managers;
 public class SceneManager : ISceneManager
 {
     private readonly ILogger _logger;
+    private readonly IThemeService _themeService;
     private readonly List<IRenderer> renderers = [];
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="SceneManager"/> class.
+    /// Initializes a new instance of the <see cref="SceneManager" /> class.
     /// </summary>
     /// <param name="logger">The logger.</param>
-    public SceneManager(ILogger logger)
+    /// <param name="themeService">The theme service.</param>
+    public SceneManager(ILogger logger, IThemeService themeService)
     {
         _logger = logger;
+        _themeService = themeService;
         renderers.Add((IRenderer)ServiceHelper.GetService<ITextRenderer>());
+        renderers.Add((IRenderer)ServiceHelper.GetService<ILineRenderer>());
+        renderers.Add((IRenderer)ServiceHelper.GetService<IGridRenderer>());
     }
 
     /// <summary>

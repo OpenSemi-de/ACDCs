@@ -70,10 +70,26 @@ public interface IDrawing
     public float X { get; set; }
 
     /// <summary>
+    /// Gets or sets the x2.
+    /// </summary>
+    /// <value>
+    /// The x2.
+    /// </value>
+    public float X2 { get; set; }
+
+    /// <summary>
     /// Gets or sets the y.
     /// </summary>
     /// <value>
     /// The y.
     /// </value>
     public float Y { get; set; }
+
+    /// <summary>
+    /// Gets or sets the y2.
+    /// </summary>
+    /// <value>
+    /// The y2.
+    /// </value>
+    public float Y2 { get; set; }
 }

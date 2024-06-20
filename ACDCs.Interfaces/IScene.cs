@@ -25,6 +25,14 @@ public interface IScene
     public List<IDrawing> Drawings { get; }
 
     /// <summary>
+    /// Gets or sets a value indicating whether this instance has outline.
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if this instance has outline; otherwise, <c>false</c>.
+    /// </value>
+    bool HasOutline { get; set; }
+
+    /// <summary>
     /// Gets or sets the size of the scene.
     /// </summary>
     /// <value>

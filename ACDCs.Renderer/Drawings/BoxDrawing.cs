@@ -83,10 +83,26 @@ public class BoxDrawing(string id, float x, float y, float width, float height, 
     public float X { get; set; } = x;
 
     /// <summary>
+    /// Gets or sets the x2.
+    /// </summary>
+    /// <value>
+    /// The x2.
+    /// </value>
+    public float X2 { get; set; }
+
+    /// <summary>
     /// Gets or sets the y.
     /// </summary>
     /// <value>
     /// The y.
     /// </value>
     public float Y { get; set; } = y;
+
+    /// <summary>
+    /// Gets or sets the y2.
+    /// </summary>
+    /// <value>
+    /// The y2.
+    /// </value>
+    public float Y2 { get; set; }
 }

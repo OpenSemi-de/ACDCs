@@ -71,6 +71,15 @@ public static class RenderSettingsManager
     }
 
     /// <summary>
+    /// Gets the color of the grid.
+    /// </summary>
+    /// <returns></returns>
+    public static Color GetGridColor()
+    {
+        return GetColor(ColorDefinition.CircuitRendererGrid);
+    }
+
+    /// <summary>
     /// Gets the color of the stroke.
     /// </summary>
     /// <returns></returns>

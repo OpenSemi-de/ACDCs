@@ -12,6 +12,12 @@ public interface IRenderer
     void Draw(ICanvas canvas);
 
     /// <summary>
+    /// Sets the position.
+    /// </summary>
+    /// <param name="position">The position.</param>
+    void SetPosition(Microsoft.Maui.Graphics.Point position);
+
+    /// <summary>
     /// Sets the scene.
     /// </summary>
     /// <param name="scene">The scene.</param>

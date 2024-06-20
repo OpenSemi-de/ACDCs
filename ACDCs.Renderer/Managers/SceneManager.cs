@@ -50,6 +50,15 @@ public class SceneManager : ISceneManager
         ProvideScene(scene);
     }
 
+    /// <summary>
+    /// Sets the position.
+    /// </summary>
+    /// <param name="position">The position.</param>
+    public void SetPosition(Microsoft.Maui.Graphics.Point position)
+    {
+        renderers.ForEach(r => r.SetPosition(position));
+    }
+
     private IDrawing? GetDrawing(IComponent component)
     {
         if (component.GetDrawing() is not IDrawing drawing)

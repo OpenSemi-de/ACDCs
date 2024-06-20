@@ -16,4 +16,10 @@ public interface ISceneManager
     /// </summary>
     /// <param name="jsonScene">The json scene string.</param>
     public void LoadJson(string jsonScene);
+
+    /// <summary>
+    /// Sets the position.
+    /// </summary>
+    /// <param name="position">The position.</param>
+    void SetPosition(Microsoft.Maui.Graphics.Point position);
 }

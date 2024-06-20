@@ -1,10 +1,20 @@
-﻿namespace ACDCs.Interfaces;
+﻿using System.Runtime.CompilerServices;
+
+namespace ACDCs.Interfaces;
 
 /// <summary>
 /// The interface to a circuit component.
 /// </summary>
 public interface IComponent
 {
+    /// <summary>
+    /// Gets or sets the height.
+    /// </summary>
+    /// <value>
+    /// The height.
+    /// </value>
+    public float Height { get; set; }
+
     /// <summary>
     /// Gets or sets the identifier.
     /// </summary>
@@ -28,6 +38,14 @@ public interface IComponent
     /// The value.
     /// </value>
     public float Value { get; set; }
+
+    /// <summary>
+    /// The width
+    /// </summary>
+    /// <value>
+    /// The width.
+    /// </value>
+    public float Width { get; set; }
 
     /// <summary>
     /// Gets or sets the x.

@@ -6,23 +6,27 @@ namespace ACDCs.Renderer.Components;
 /// <summary>
 /// Circuit component for a resistor.
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="ResistorComponent" /> class.
+/// </remarks>
 /// <seealso cref="ACDCs.Interfaces.IComponent" />
-public class ResistorComponent : IComponent
+/// <param name="id">The identifier.</param>
+/// <param name="value">The value.</param>
+/// <param name="x">The x.</param>
+/// <param name="y">The y.</param>
+/// <param name="width">The width.</param>
+/// <param name="height">The height.</param>
+/// <param name="rotation">The rotation.</param>
+
+public class ResistorComponent(string id, float value, float x, float y, float width, float height, float rotation) : IComponent
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ResistorComponent"/> class.
+    /// Gets or sets the height.
     /// </summary>
-    /// <param name="id">The identifier.</param>
-    /// <param name="value">The value.</param>
-    /// <param name="x">The x.</param>
-    /// <param name="y">The y.</param>
-    public ResistorComponent(string id, float value, float x, float y)
-    {
-        Id = id;
-        Value = value;
-        X = x;
-        Y = y;
-    }
+    /// <value>
+    /// The height.
+    /// </value>
+    public float Height { get; set; } = height;
 
     /// <summary>
     /// Gets or sets the identifier.
@@ -30,7 +34,7 @@ public class ResistorComponent : IComponent
     /// <value>
     /// The identifier.
     /// </value>
-    public string Id { get; set; }
+    public string Id { get; set; } = id;
 
     /// <summary>
     /// Gets or sets the rotation.
@@ -38,7 +42,7 @@ public class ResistorComponent : IComponent
     /// <value>
     /// The rotation.
     /// </value>
-    public float Rotation { get; set; }
+    public float Rotation { get; set; } = rotation;
 
     /// <summary>
     /// Gets or sets the value.
@@ -46,7 +50,15 @@ public class ResistorComponent : IComponent
     /// <value>
     /// The value.
     /// </value>
-    public float Value { get; set; }
+    public float Value { get; set; } = value;
+
+    /// <summary>
+    /// The width
+    /// </summary>
+    /// <value>
+    /// The width.
+    /// </value>
+    public float Width { get; set; } = width;
 
     /// <summary>
     /// Gets or sets the x.
@@ -54,7 +66,7 @@ public class ResistorComponent : IComponent
     /// <value>
     /// The x.
     /// </value>
-    public float X { get; set; }
+    public float X { get; set; } = x;
 
     /// <summary>
     /// Gets or sets the y.
@@ -62,7 +74,7 @@ public class ResistorComponent : IComponent
     /// <value>
     /// The y.
     /// </value>
-    public float Y { get; set; }
+    public float Y { get; set; } = y;
 
     /// <summary>
     /// Gets the drawing.
@@ -70,7 +82,7 @@ public class ResistorComponent : IComponent
     /// <returns></returns>
     public IDrawing GetDrawing()
     {
-        ResistorDrawing drawing = new ResistorDrawing(Id, Value, X, Y);
+        ResistorDrawing drawing = new(Id, Value, X, Y, Rotation);
         return drawing;
     }
 }

@@ -3,20 +3,18 @@
 namespace ACDCs.Renderer.Drawings;
 
 /// <summary>
-/// Drawing element for text.
+/// Drawing element for a point.
 /// </summary>
-/// <remarks>
-/// Initializes a new instance of the <see cref="TextDrawing" /> class.
-/// </remarks>
 /// <seealso cref="ACDCs.Interfaces.IDrawing" />
+/// <remarks>
+/// Initializes a new instance of the <see cref="PointDrawing"/> class.
+/// </remarks>
 /// <param name="id">The identifier.</param>
-/// <param name="text">The text.</param>
 /// <param name="x">The x.</param>
 /// <param name="y">The y.</param>
 /// <param name="width">The width.</param>
 /// <param name="height">The height.</param>
-/// <param name="rotation">The rotation.</param>
-public class TextDrawing(string id, string text, float x, float y, float width, float height, float rotation) : IDrawing
+public class PointDrawing(string id, float x, float y, float width, float height) : IDrawing
 {
     /// <summary>
     /// Gets or sets the height.
@@ -40,15 +38,7 @@ public class TextDrawing(string id, string text, float x, float y, float width, 
     /// <value>
     /// The rotation.
     /// </value>
-    public float Rotation { get; set; } = rotation;
-
-    /// <summary>
-    /// Gets or sets the text.
-    /// </summary>
-    /// <value>
-    /// The text.
-    /// </value>
-    public string Text { get; set; } = text;
+    public float Rotation { get; set; }
 
     /// <summary>
     /// Gets or sets the value.
@@ -56,7 +46,7 @@ public class TextDrawing(string id, string text, float x, float y, float width, 
     /// <value>
     /// The value.
     /// </value>
-    public float Value { get; set; } = 0;
+    public float Value { get; set; }
 
     /// <summary>
     /// Gets or sets the width.
@@ -67,7 +57,7 @@ public class TextDrawing(string id, string text, float x, float y, float width, 
     public float Width { get; set; } = width;
 
     /// <summary>
-    /// Gets the x.
+    /// Gets or sets the x.
     /// </summary>
     /// <value>
     /// The x.
@@ -75,7 +65,7 @@ public class TextDrawing(string id, string text, float x, float y, float width, 
     public float X { get; set; } = x;
 
     /// <summary>
-    /// Gets the y.
+    /// Gets or sets the y.
     /// </summary>
     /// <value>
     /// The y.

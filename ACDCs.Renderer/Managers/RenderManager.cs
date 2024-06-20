@@ -35,6 +35,8 @@ public class RenderManager : IRenderManager, IDrawable
         _strokeColor = _themeService.GetColor(ColorDefinition.CircuitRendererStroke);
         _fontColor = _themeService.GetColor(ColorDefinition.CircuitRendererFont);
 
+        _sceneManager.SetPosition(_position);
+
         _logger.LogDebug("Circuit renderer core started.");
 
 #if DEBUG
@@ -127,6 +129,7 @@ public class RenderManager : IRenderManager, IDrawable
         if (_position.Y > 100) _position.Y = 100;
         if (_position.X < -1 * (BaseSquare.X + BaseSquare.Width) + 100) _position.X = -1 * (BaseSquare.X + BaseSquare.Width) + 100;
         if (_position.Y < -1 * (BaseSquare.Y + BaseSquare.Height) + 100) _position.Y = -1 * (BaseSquare.Y + BaseSquare.Height) + 100;
+        _sceneManager.SetPosition(_position);
     }
 
     private static void FillBackground(ICanvas canvas, RectF dirtyRect)

@@ -1,6 +1,7 @@
-﻿using Sharp.UI;
+﻿using ACDCs.Interfaces.Modules;
+using Sharp.UI;
 
-namespace ACDCs.Interfaces;
+namespace ACDCs.Interfaces.View;
 
 /// <summary>
 /// Interface for the TaskbarView class.

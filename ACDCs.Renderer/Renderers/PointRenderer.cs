@@ -1,4 +1,4 @@
-﻿using ACDCs.Interfaces;
+﻿using ACDCs.Interfaces.Renderer;
 using ACDCs.Renderer.Drawings;
 using ACDCs.Renderer.Managers;
 
@@ -8,8 +8,8 @@ namespace ACDCs.Renderer.Renderers;
 /// The point renderer.
 /// </summary>
 /// <seealso cref="ACDCs.Renderer.Renderers.SubRenderer&lt;ACDCs.Renderer.Drawings.PointDrawing&gt;" />
-/// <seealso cref="ACDCs.Interfaces.IRenderer" />
-/// <seealso cref="ACDCs.Interfaces.ILineRenderer" />
+/// <seealso cref="Interfaces.Renderer.IRenderer" />
+/// <seealso cref="Interfaces.Renderer.ILineRenderer" />
 public class PointRenderer : SubRenderer<PointDrawing>, IRenderer, IPointRenderer
 {
     /// <summary>

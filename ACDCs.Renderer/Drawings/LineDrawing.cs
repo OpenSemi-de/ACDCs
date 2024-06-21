@@ -1,11 +1,11 @@
-﻿using ACDCs.Interfaces;
+﻿using ACDCs.Interfaces.Drawing;
 
 namespace ACDCs.Renderer.Drawings;
 
 /// <summary>
 /// Drawing element for a line.
 /// </summary>
-/// <seealso cref="ACDCs.Interfaces.IDrawing" />
+/// <seealso cref="Interfaces.Drawing.IDrawing" />
 /// <remarks>
 /// Initializes a new instance of the <see cref="PointDrawing" /> class.
 /// </remarks>
@@ -15,16 +15,8 @@ namespace ACDCs.Renderer.Drawings;
 /// <param name="x2">The x2.</param>
 /// <param name="y2">The y2.</param>
 /// <param name="isRelativeScale"></param>
-public class LineDrawing(string id, float x, float y, float x2, float y2, bool isRelativeScale = false) : IDrawing
+public class LineDrawing(string id, float x, float y, float x2, float y2, bool isRelativeScale = false) : IDrawing, IDrawingTwoPoint
 {
-    /// <summary>
-    /// Gets or sets the height.
-    /// </summary>
-    /// <value>
-    /// The height.
-    /// </value>
-    public float Height { get; set; } = 0;
-
     /// <summary>
     /// Gets or sets the identifier.
     /// </summary>
@@ -64,14 +56,6 @@ public class LineDrawing(string id, float x, float y, float x2, float y2, bool i
     /// The value.
     /// </value>
     public float Value { get; set; }
-
-    /// <summary>
-    /// Gets or sets the width.
-    /// </summary>
-    /// <value>
-    /// The width.
-    /// </value>
-    public float Width { get; set; } = 0;
 
     /// <summary>
     /// Gets or sets the x.

@@ -1,9 +1,11 @@
-﻿namespace ACDCs.Interfaces;
+﻿using ACDCs.Interfaces.Modules;
+
+namespace ACDCs.Interfaces.View;
 
 /// <summary>
 /// The interface for the window bar.
 /// </summary>
-public interface IWindowBar
+public interface IWindowBarView
 {
     /// <summary>
     /// Brings to front.

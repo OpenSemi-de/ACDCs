@@ -1,4 +1,4 @@
-﻿namespace ACDCs.Interfaces;
+﻿namespace ACDCs.Interfaces.Drawing;
 
 /// <summary>
 /// The interface for a drawing containing multiple drawings.

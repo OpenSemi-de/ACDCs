@@ -1,4 +1,4 @@
-﻿namespace ACDCs.Interfaces;
+﻿namespace ACDCs.Interfaces.Modules;
 
 /// <summary>
 /// Interface for App Modules shown in the Start Menu.

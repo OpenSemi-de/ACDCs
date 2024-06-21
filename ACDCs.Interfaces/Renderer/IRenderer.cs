@@ -1,4 +1,6 @@
-﻿namespace ACDCs.Interfaces;
+﻿using ACDCs.Interfaces.Circuit;
+
+namespace ACDCs.Interfaces.Renderer;
 
 /// <summary>
 /// The interface to sum up the different sub renderers.

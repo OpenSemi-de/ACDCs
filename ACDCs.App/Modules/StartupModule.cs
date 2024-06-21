@@ -2,6 +2,8 @@
 
 using ACDCs.App.Desktop;
 using ACDCs.Interfaces;
+using ACDCs.Interfaces.Modules;
+using ACDCs.Interfaces.View;
 using Microsoft.Extensions.Logging;
 using Sharp.UI;
 
@@ -9,7 +11,7 @@ using Sharp.UI;
 /// The splash screen module class.
 /// </summary>
 /// <seealso cref="ACDCs.App.Desktop.ModuleView" />
-/// <seealso cref="ACDCs.Interfaces.IStartMenuModule" />
+/// <seealso cref="Interfaces.Modules.IStartMenuModule" />
 public class StartupModule : ModuleView, IAutoStartModule
 {
     private readonly ILogger _logger;

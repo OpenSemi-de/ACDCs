@@ -1,4 +1,5 @@
-﻿using ACDCs.Interfaces;
+﻿using ACDCs.Interfaces.Circuit;
+using ACDCs.Interfaces.Drawing;
 
 namespace ACDCs.Renderer.Renderers;
 
@@ -61,8 +62,8 @@ public class SubRenderer<T>
             x = Convert.ToSingle(drawing.ParentDrawing.X + Position.X + stepSize * drawing.X);
             y = Convert.ToSingle(drawing.ParentDrawing.Y + Position.Y + stepSize * drawing.Y);
 
-            x2 = Convert.ToSingle(drawing.ParentDrawing.X + Position.X + stepSize * drawing.X2);
-            y2 = Convert.ToSingle(drawing.ParentDrawing.Y + Position.Y + stepSize * drawing.Y2);
+            x2 = Convert.ToSingle(drawing.ParentDrawing.X + Position.X + stepSize * ((IDrawingTwoPoint)drawing).X2);
+            y2 = Convert.ToSingle(drawing.ParentDrawing.Y + Position.Y + stepSize * ((IDrawingTwoPoint)drawing).Y2);
         }
         else
         {

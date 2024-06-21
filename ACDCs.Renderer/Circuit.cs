@@ -1,4 +1,5 @@
 ﻿using ACDCs.Interfaces;
+using ACDCs.Interfaces.Circuit;
 
 namespace ACDCs.Renderer;
 
@@ -13,6 +14,5 @@ public class Circuit : ICircuit
     /// </summary>
     /// <value>
     /// The components.
-    /// </value>
     public List<IComponent> Components { get; } = [];
 }

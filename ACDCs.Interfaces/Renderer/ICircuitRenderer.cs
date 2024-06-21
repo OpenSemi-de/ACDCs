@@ -1,4 +1,4 @@
-﻿namespace ACDCs.Interfaces;
+﻿namespace ACDCs.Interfaces.Renderer;
 
 /// <summary>
 /// The interface for the circuit renderer.

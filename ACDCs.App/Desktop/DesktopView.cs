@@ -1,6 +1,8 @@
 ﻿namespace ACDCs.App.Desktop;
 
 using ACDCs.Interfaces;
+using ACDCs.Interfaces.Modules;
+using ACDCs.Interfaces.View;
 using Sharp.UI;
 using System;
 using System.Threading.Tasks;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 /// The DesktopView class.
 /// </summary>
 /// <seealso cref="Sharp.UI.ContentView" />
-/// <seealso cref="ACDCs.Interfaces.IDesktopView" />
+/// <seealso cref="Interfaces.View.IDesktopView" />
 public class DesktopView : ContentView, IDesktopView
 {
     private readonly TapGestureRecognizer _desktopClickRecognizer;

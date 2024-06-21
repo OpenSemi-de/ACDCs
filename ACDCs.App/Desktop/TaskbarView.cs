@@ -3,19 +3,21 @@
 namespace ACDCs.App.Desktop;
 
 using ACDCs.App;
+using ACDCs.Interfaces.Modules;
+using ACDCs.Interfaces.View;
 using Sharp.UI;
 using Rect = Microsoft.Maui.Graphics.Rect;
 
 /// <summary>
 /// TaskbarView class.
 /// </summary>
-/// <seealso cref="ACDCs.Interfaces.ITaskbarView" />
-public class TaskbarView(IThemeService themeService, IStartButtonView startButtonView, IStartMenuView startMenuView, IWindowBar windowBar) : ITaskbarView
+/// <seealso cref="Interfaces.View.ITaskbarView" />
+public class TaskbarView(IThemeService themeService, IStartButtonView startButtonView, IStartMenuView startMenuView, IWindowBarView windowBar) : ITaskbarView
 {
     private readonly IStartButtonView _startButton = startButtonView;
     private readonly IStartMenuView _startMenu = startMenuView;
     private readonly IThemeService _themeService = themeService;
-    private readonly IWindowBar _windowBar = windowBar;
+    private readonly IWindowBarView _windowBar = windowBar;
     private AbsoluteLayout? _layout;
     private AppBorderedHorizontalStackLayout? _taskbarLayout;
 

@@ -1,5 +1,6 @@
 ﻿using ACDCs.App;
 using ACDCs.Interfaces;
+using ACDCs.Interfaces.View;
 using MetroLog;
 
 namespace ACDCs;

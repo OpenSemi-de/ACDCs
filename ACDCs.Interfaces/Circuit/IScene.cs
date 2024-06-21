@@ -1,6 +1,7 @@
-﻿using System.Text.Json.Serialization;
+﻿using ACDCs.Interfaces.Drawing;
+using System.Text.Json.Serialization;
 
-namespace ACDCs.Interfaces;
+namespace ACDCs.Interfaces.Circuit;
 
 /// <summary>
 /// The interface to the scene class.

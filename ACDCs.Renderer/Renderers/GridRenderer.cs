@@ -1,4 +1,6 @@
 ﻿using ACDCs.Interfaces;
+using ACDCs.Interfaces.Drawing;
+using ACDCs.Interfaces.Renderer;
 using ACDCs.Renderer.Managers;
 using Rect = ACDCs.Interfaces.Rect;
 
@@ -7,8 +9,8 @@ namespace ACDCs.Renderer.Renderers;
 /// <summary>
 /// The line renderer.
 /// </summary>
-/// <seealso cref="ACDCs.Interfaces.IRenderer" />
-/// <seealso cref="ACDCs.Interfaces.ITextRenderer" />
+/// <seealso cref="Interfaces.Renderer.IRenderer" />
+/// <seealso cref="Interfaces.Renderer.ITextRenderer" />
 public class GridRenderer : SubRenderer<IGridDrawing>, IRenderer, IGridRenderer
 {
     private Color _gridColor = RenderSettingsManager.GetGridColor();

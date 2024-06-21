@@ -2,6 +2,8 @@
 using ACDCs.App.Desktop;
 using ACDCs.App.GUI.Modules;
 using ACDCs.Interfaces;
+using ACDCs.Interfaces.Renderer;
+using ACDCs.Interfaces.View;
 using ACDCs.Renderer;
 using ACDCs.Renderer.Managers;
 using ACDCs.Renderer.Renderers;
@@ -39,7 +41,7 @@ public static class ServiceStartupHelper
         mauiAppBuilder.Services.AddSingleton<ITaskbarView, TaskbarView>();
         mauiAppBuilder.Services.AddSingleton<IStartButtonView, StartButtonView>();
         mauiAppBuilder.Services.AddSingleton<IStartMenuView, StartMenuView>();
-        mauiAppBuilder.Services.AddSingleton<IWindowBar, WindowBar>();
+        mauiAppBuilder.Services.AddSingleton<IWindowBarView, WindowBarView>();
 
         mauiAppBuilder.Services.AddTransient<ICircuitEditorView, CircuitEditorView>();
         mauiAppBuilder.Services.AddTransient<ICircuitControllerView, CircuitControllerView>();

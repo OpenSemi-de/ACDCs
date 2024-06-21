@@ -1,4 +1,6 @@
-﻿namespace ACDCs.Interfaces;
+﻿using ACDCs.Interfaces.Modules;
+
+namespace ACDCs.Interfaces;
 
 /// <summary>
 /// Window changed event args raised when a window is changed.

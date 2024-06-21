@@ -1,4 +1,6 @@
 ﻿using ACDCs.Interfaces;
+using ACDCs.Interfaces.Modules;
+using ACDCs.Interfaces.View;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 using System.Reflection;

@@ -1,4 +1,7 @@
 ﻿using ACDCs.Interfaces;
+using ACDCs.Interfaces.Circuit;
+using ACDCs.Interfaces.Drawing;
+using ACDCs.Interfaces.Renderer;
 using Microsoft.Extensions.Logging;
 
 namespace ACDCs.Renderer.Managers;

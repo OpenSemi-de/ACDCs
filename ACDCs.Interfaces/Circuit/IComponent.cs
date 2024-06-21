@@ -1,6 +1,7 @@
-﻿using System.Runtime.CompilerServices;
+﻿using ACDCs.Interfaces.Drawing;
+using System.Runtime.CompilerServices;
 
-namespace ACDCs.Interfaces;
+namespace ACDCs.Interfaces.Circuit;
 
 /// <summary>
 /// The interface to a circuit component.

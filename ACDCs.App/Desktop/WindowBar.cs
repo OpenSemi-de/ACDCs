@@ -2,6 +2,8 @@
 
 namespace ACDCs.App.Desktop;
 
+using ACDCs.Interfaces.Modules;
+using ACDCs.Interfaces.View;
 using Sharp.UI;
 using System.Collections.Concurrent;
 
@@ -9,19 +11,19 @@ using System.Collections.Concurrent;
 /// The window bar class for switching between windows.
 /// </summary>
 /// <seealso cref="Sharp.UI.StackLayout" />
-/// <seealso cref="ACDCs.Interfaces.IWindowBar" />
-public class WindowBar : StackLayout, IWindowBar
+/// <seealso cref="Interfaces.View.IWindowBarView" />
+public class WindowBarView : StackLayout, IWindowBarView
 {
     private readonly ConcurrentDictionary<IAppModule, AppButton> _buttons = new();
     private readonly IThemeService _themeService;
     private readonly IWindowService _windowService;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="WindowBar"/> class.
+    /// Initializes a new instance of the <see cref="WindowBarView"/> class.
     /// </summary>
     /// <param name="windowService">The window service.</param>
     /// <param name="themeService">The theme service.</param>
-    public WindowBar(IWindowService windowService, IThemeService themeService)
+    public WindowBarView(IWindowService windowService, IThemeService themeService)
     {
         _windowService = windowService;
         _themeService = themeService;

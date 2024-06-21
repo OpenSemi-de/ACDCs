@@ -3,13 +3,14 @@
 namespace ACDCs.App.Desktop;
 
 using ACDCs.App;
+using ACDCs.Interfaces.View;
 using Sharp.UI;
 
 /// <summary>
 /// The Start Button class.
 /// </summary>
 /// <seealso cref="ACDCs.App.AppButton" />
-/// <seealso cref="ACDCs.Interfaces.IStartButtonView" />
+/// <seealso cref="Interfaces.View.IStartButtonView" />
 public class StartButtonView : AppButton, IStartButtonView
 {
     private readonly IThemeService _themeService;

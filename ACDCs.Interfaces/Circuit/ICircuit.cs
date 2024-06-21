@@ -1,4 +1,6 @@
-﻿namespace ACDCs.Interfaces;
+﻿using ACDCs.Interfaces.Circuit;
+
+namespace ACDCs.Interfaces;
 
 /// <summary>
 /// The interface for the circuit data structure.

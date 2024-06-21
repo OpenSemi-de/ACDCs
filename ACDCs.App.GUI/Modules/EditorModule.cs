@@ -2,6 +2,8 @@
 
 using ACDCs.App.Desktop;
 using ACDCs.Interfaces;
+using ACDCs.Interfaces.Modules;
+using ACDCs.Interfaces.View;
 using MauiIcons.Material;
 using Microsoft.Extensions.Logging;
 
@@ -9,7 +11,7 @@ using Microsoft.Extensions.Logging;
 /// The module for the circuit editor.
 /// </summary>
 /// <seealso cref="ACDCs.App.Desktop.ModuleView" />
-/// <seealso cref="ACDCs.Interfaces.IStartMenuModule" />
+/// <seealso cref="Interfaces.Modules.IStartMenuModule" />
 public class EditorModule : ModuleView, IStartMenuModule
 {
     private readonly ICircuitComponentView _components;

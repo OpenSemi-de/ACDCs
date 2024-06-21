@@ -1,4 +1,4 @@
-﻿namespace ACDCs.Interfaces;
+﻿namespace ACDCs.Interfaces.Modules;
 
 /// <summary>
 /// Interface for modules hidden from start menu.

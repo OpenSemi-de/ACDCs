@@ -1,4 +1,4 @@
-﻿namespace ACDCs.Interfaces;
+﻿namespace ACDCs.Interfaces.Renderer;
 
 /// <summary>
 /// The service interface for a text renderer.

@@ -1,5 +1,5 @@
 using ACDCs.App;
-using ACDCs.Interfaces;
+using ACDCs.Interfaces.View;
 using Moq;
 
 namespace ACDCs.Tests

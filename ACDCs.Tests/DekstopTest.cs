@@ -1,5 +1,6 @@
 ﻿using ACDCs.App.Desktop;
 using ACDCs.Interfaces;
+using ACDCs.Interfaces.View;
 using Moq;
 
 
@@ -22,7 +23,7 @@ namespace ACDCs.Tests
             IThemeService themeService = Mock.Of<IThemeService>();
             IStartButtonView startButtonView = Mock.Of<IStartButtonView>();
             IStartMenuView startMenuView = Mock.Of<IStartMenuView>();
-            IWindowBar windowBar = Mock.Of<IWindowBar>();
+            IWindowBarView windowBar = Mock.Of<IWindowBarView>();
             TaskbarView taskbarView = new TaskbarView(themeService, startButtonView, startMenuView, windowBar);
             Assert.NotNull(taskbarView);
         }

@@ -1,9 +1,9 @@
-﻿namespace ACDCs.Interfaces;
+﻿namespace ACDCs.Interfaces.Renderer;
 
 /// <summary>
 /// Interface for the renderer for points.
 /// </summary>
-/// <seealso cref="ACDCs.Interfaces.IRenderer" />
+/// <seealso cref="IRenderer" />
 public interface IPointRenderer : IRenderer
 {
 }

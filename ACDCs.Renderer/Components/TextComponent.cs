@@ -1,4 +1,5 @@
-﻿using ACDCs.Interfaces;
+﻿using ACDCs.Interfaces.Circuit;
+using ACDCs.Interfaces.Drawing;
 using ACDCs.Renderer.Drawings;
 
 namespace ACDCs.Renderer.Components;
@@ -6,7 +7,7 @@ namespace ACDCs.Renderer.Components;
 /// <summary>
 /// Circuit component for text.
 /// </summary>
-/// <seealso cref="ACDCs.Interfaces.IComponent" />
+/// <seealso cref="Interfaces.Circuit.IComponent" />
 public class TextComponent : IComponent
 {
     /// <summary>

@@ -3,6 +3,8 @@
 namespace ACDCs.App.Desktop;
 
 using ACDCs.App;
+using ACDCs.Interfaces.Modules;
+using ACDCs.Interfaces.View;
 using Microsoft.Maui.Layouts;
 using Sharp.UI;
 using System.Reflection;
@@ -12,7 +14,7 @@ using Rect = Microsoft.Maui.Graphics.Rect;
 /// StartmenuView class.
 /// </summary>
 /// <seealso cref="Sharp.UI.VerticalStackLayout" />
-/// <seealso cref="ACDCs.Interfaces.IStartMenuView" />
+/// <seealso cref="Interfaces.View.IStartMenuView" />
 public class StartMenuView : AppBorderedVerticalStackLayout, IStartMenuView
 {
     private readonly IThemeService _themeService;

@@ -3,6 +3,8 @@
 namespace ACDCs.App.Desktop;
 
 using ACDCs.App;
+using ACDCs.Interfaces.Modules;
+using ACDCs.Interfaces.View;
 using MauiIcons.Material;
 using Sharp.UI;
 using System.Collections.Generic;
@@ -13,7 +15,7 @@ using Rect = Interfaces.Rect;
 /// </summary>
 /// <seealso cref="ACDCs.App.Desktop.AppBorderedGrid" />
 /// <seealso cref="Sharp.UI.Grid" />
-/// <seealso cref="ACDCs.Interfaces.IAppModule" />
+/// <seealso cref="Interfaces.Modules.IAppModule" />
 public class ModuleView : AppBorderedGrid, IAppModule
 {
     private readonly Grid? _bottomBar;

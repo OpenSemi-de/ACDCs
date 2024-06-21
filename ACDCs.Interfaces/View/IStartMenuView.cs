@@ -1,4 +1,4 @@
-﻿namespace ACDCs.Interfaces;
+﻿namespace ACDCs.Interfaces.View;
 
 /// <summary>
 /// Interace for the start menu view class.

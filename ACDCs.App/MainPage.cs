@@ -1,6 +1,6 @@
 ﻿namespace ACDCs.App;
 
-using ACDCs.Interfaces;
+using ACDCs.Interfaces.View;
 
 /// <summary>
 /// The MainPage to start the app.

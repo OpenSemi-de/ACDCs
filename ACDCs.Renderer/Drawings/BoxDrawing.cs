@@ -1,11 +1,11 @@
-﻿using ACDCs.Interfaces;
+﻿using ACDCs.Interfaces.Drawing;
 
 namespace ACDCs.Renderer.Drawings;
 
 /// <summary>
 /// Drawing element for a box.
 /// </summary>
-/// <seealso cref="ACDCs.Interfaces.IDrawing" />
+/// <seealso cref="Interfaces.Drawing.IDrawing" />
 /// <seealso cref="IDrawing" />
 /// <remarks>
 /// Initializes a new instance of the <see cref="BoxDrawing"/> class.
@@ -16,7 +16,7 @@ namespace ACDCs.Renderer.Drawings;
 /// <param name="width">The width.</param>
 /// <param name="height">The height.</param>
 /// <param name="isRelativeScale"></param>
-public class BoxDrawing(string id, float x, float y, float width, float height, bool isRelativeScale = false) : IDrawing
+public class BoxDrawing(string id, float x, float y, float width, float height, bool isRelativeScale = false) : IDrawing, IDrawingWithSize
 {
     /// <summary>
     /// Gets or sets the height.
@@ -83,26 +83,10 @@ public class BoxDrawing(string id, float x, float y, float width, float height, 
     public float X { get; set; } = x;
 
     /// <summary>
-    /// Gets or sets the x2.
-    /// </summary>
-    /// <value>
-    /// The x2.
-    /// </value>
-    public float X2 { get; set; }
-
-    /// <summary>
     /// Gets or sets the y.
     /// </summary>
     /// <value>
     /// The y.
     /// </value>
     public float Y { get; set; } = y;
-
-    /// <summary>
-    /// Gets or sets the y2.
-    /// </summary>
-    /// <value>
-    /// The y2.
-    /// </value>
-    public float Y2 { get; set; }
 }

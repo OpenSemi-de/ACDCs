@@ -1,4 +1,4 @@
-﻿using ACDCs.Interfaces;
+﻿using ACDCs.Interfaces.Drawing;
 
 namespace ACDCs.Renderer.Drawings;
 
@@ -8,7 +8,7 @@ namespace ACDCs.Renderer.Drawings;
 /// <remarks>
 /// Initializes a new instance of the <see cref="TextDrawing" /> class.
 /// </remarks>
-/// <seealso cref="ACDCs.Interfaces.IDrawing" />
+/// <seealso cref="Interfaces.Drawing.IDrawing" />
 /// <param name="id">The identifier.</param>
 /// <param name="text">The text.</param>
 /// <param name="x">The x.</param>
@@ -17,7 +17,7 @@ namespace ACDCs.Renderer.Drawings;
 /// <param name="height">The height.</param>
 /// <param name="rotation">The rotation.</param>
 /// <param name="isRelativeScale"></param>
-public class TextDrawing(string id, string text, float x, float y, float width, float height, float rotation, bool isRelativeScale = false) : IDrawing
+public class TextDrawing(string id, string text, float x, float y, float width, float height, float rotation, bool isRelativeScale = false) : IDrawing, IDrawingWithSize
 {
     /// <summary>
     /// Gets or sets the height.
@@ -91,8 +91,6 @@ public class TextDrawing(string id, string text, float x, float y, float width, 
     /// </value>
     public float X { get; set; } = x;
 
-    public float X2 { get; set; }
-
     /// <summary>
     /// Gets the y.
     /// </summary>
@@ -100,6 +98,4 @@ public class TextDrawing(string id, string text, float x, float y, float width, 
     /// The y.
     /// </value>
     public float Y { get; set; } = y;
-
-    public float Y2 { get; set; }
 }

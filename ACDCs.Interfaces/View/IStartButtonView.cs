@@ -1,4 +1,4 @@
-﻿namespace ACDCs.Interfaces;
+﻿namespace ACDCs.Interfaces.View;
 
 /// <summary>
 /// Interface for StartButtonView

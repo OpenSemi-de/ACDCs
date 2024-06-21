@@ -1,18 +1,10 @@
-﻿namespace ACDCs.Interfaces;
+﻿namespace ACDCs.Interfaces.Drawing;
 
 /// <summary>
 /// The interface for the drawings.
 /// </summary>
 public interface IDrawing
 {
-    /// <summary>
-    /// Gets or sets the height.
-    /// </summary>
-    /// <value>
-    /// The height.
-    /// </value>
-    public float Height { get; set; }
-
     /// <summary>
     /// Gets or sets the identifier.
     /// </summary>
@@ -54,14 +46,6 @@ public interface IDrawing
     public float Value { get; set; }
 
     /// <summary>
-    /// Gets or sets the width.
-    /// </summary>
-    /// <value>
-    /// The width.
-    /// </value>
-    public float Width { get; set; }
-
-    /// <summary>
     /// Gets or sets the x.
     /// </summary>
     /// <value>
@@ -70,26 +54,10 @@ public interface IDrawing
     public float X { get; set; }
 
     /// <summary>
-    /// Gets or sets the x2.
-    /// </summary>
-    /// <value>
-    /// The x2.
-    /// </value>
-    public float X2 { get; set; }
-
-    /// <summary>
     /// Gets or sets the y.
     /// </summary>
     /// <value>
     /// The y.
     /// </value>
     public float Y { get; set; }
-
-    /// <summary>
-    /// Gets or sets the y2.
-    /// </summary>
-    /// <value>
-    /// The y2.
-    /// </value>
-    public float Y2 { get; set; }
 }

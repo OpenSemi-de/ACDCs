@@ -2,6 +2,8 @@
 
 using ACDCs.App.Desktop;
 using ACDCs.Interfaces;
+using ACDCs.Interfaces.Modules;
+using ACDCs.Interfaces.View;
 using MauiIcons.Material;
 using MetroLog.Maui;
 using Microsoft.Extensions.Logging;
@@ -10,7 +12,7 @@ using Sharp.UI;
 /// <summary>
 /// The debug module class.
 /// </summary>
-/// <seealso cref="ACDCs.Interfaces.IStartMenuModule" />
+/// <seealso cref="Interfaces.Modules.IStartMenuModule" />
 /// <seealso cref="ACDCs.App.Desktop.ModuleView" />
 public class DebugModule : ModuleView, IStartMenuModule
 {

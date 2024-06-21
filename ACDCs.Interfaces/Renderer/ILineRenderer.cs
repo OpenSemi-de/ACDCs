@@ -1,9 +1,9 @@
-﻿namespace ACDCs.Interfaces;
+﻿namespace ACDCs.Interfaces.Renderer;
 
 /// <summary>
 /// Renderer for lines.
 /// </summary>
-/// <seealso cref="ACDCs.Interfaces.IRenderer" />
+/// <seealso cref="IRenderer" />
 public interface ILineRenderer : IRenderer
 {
 }

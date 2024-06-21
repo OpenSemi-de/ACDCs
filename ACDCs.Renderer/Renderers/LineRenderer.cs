@@ -1,4 +1,4 @@
-﻿using ACDCs.Interfaces;
+﻿using ACDCs.Interfaces.Renderer;
 using ACDCs.Renderer.Drawings;
 using ACDCs.Renderer.Managers;
 using Microsoft.Maui.Graphics;
@@ -9,8 +9,8 @@ namespace ACDCs.Renderer.Renderers;
 /// <summary>
 /// The line renderer.
 /// </summary>
-/// <seealso cref="ACDCs.Interfaces.IRenderer" />
-/// <seealso cref="ACDCs.Interfaces.ITextRenderer" />
+/// <seealso cref="Interfaces.Renderer.IRenderer" />
+/// <seealso cref="Interfaces.Renderer.ITextRenderer" />
 public class LineRenderer : SubRenderer<LineDrawing>, IRenderer, ILineRenderer
 {
     /// <summary>

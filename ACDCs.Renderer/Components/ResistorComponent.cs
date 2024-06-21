@@ -1,4 +1,5 @@
-﻿using ACDCs.Interfaces;
+﻿using ACDCs.Interfaces.Circuit;
+using ACDCs.Interfaces.Drawing;
 using ACDCs.Renderer.Drawings;
 
 namespace ACDCs.Renderer.Components;
@@ -9,7 +10,7 @@ namespace ACDCs.Renderer.Components;
 /// <remarks>
 /// Initializes a new instance of the <see cref="ResistorComponent" /> class.
 /// </remarks>
-/// <seealso cref="ACDCs.Interfaces.IComponent" />
+/// <seealso cref="Interfaces.Circuit.IComponent" />
 /// <param name="id">The identifier.</param>
 /// <param name="value">The value.</param>
 /// <param name="x">The x.</param>

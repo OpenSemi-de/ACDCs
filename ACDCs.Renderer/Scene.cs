@@ -1,4 +1,6 @@
 ﻿using ACDCs.Interfaces;
+using ACDCs.Interfaces.Circuit;
+using ACDCs.Interfaces.Drawing;
 using Newtonsoft.Json;
 using Rect = ACDCs.Interfaces.Rect;
 
@@ -7,7 +9,7 @@ namespace ACDCs.Renderer;
 /// <summary>
 /// The scene class holding the circuits information.
 /// </summary>
-/// <seealso cref="ACDCs.Interfaces.IScene" />
+/// <seealso cref="Interfaces.Circuit.IScene" />
 public class Scene : IScene
 {
     /// <summary>

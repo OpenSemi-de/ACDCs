@@ -1,6 +1,7 @@
 ﻿using ACDCs.Interfaces;
 using Microsoft.Extensions.Logging;
 using ACDCs.Renderer.Managers;
+using ACDCs.Interfaces.Renderer;
 
 namespace ACDCs.Renderer;
 

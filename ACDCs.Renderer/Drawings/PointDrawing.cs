@@ -1,4 +1,4 @@
-﻿using ACDCs.Interfaces;
+﻿using ACDCs.Interfaces.Drawing;
 
 namespace ACDCs.Renderer.Drawings;
 
@@ -8,22 +8,28 @@ namespace ACDCs.Renderer.Drawings;
 /// <remarks>
 /// Initializes a new instance of the <see cref="PointDrawing" /> class.
 /// </remarks>
-/// <seealso cref="ACDCs.Interfaces.IDrawing" />
-/// <param name="id">The identifier.</param>
-/// <param name="x">The x.</param>
-/// <param name="y">The y.</param>
-/// <param name="width">The width.</param>
-/// <param name="height">The height.</param>
-/// <param name="isRelativeScale"></param>
-public class PointDrawing(string id, float x, float y, float x2, float y2, bool isRelativeScale = false) : IDrawing
+/// <seealso cref="Interfaces.Drawing.IDrawingTwoPoint" />
+/// <seealso cref="Interfaces.Drawing.IDrawing" />
+public class PointDrawing : IDrawing, IDrawingTwoPoint
 {
     /// <summary>
-    /// Gets or sets the height.
+    /// Initializes a new instance of the <see cref="PointDrawing"/> class.
     /// </summary>
-    /// <value>
-    /// The height.
-    /// </value>
-    public float Height { get; set; }
+    /// <param name="id">The identifier.</param>
+    /// <param name="x">The x.</param>
+    /// <param name="y">The y.</param>
+    /// <param name="x2">The x2.</param>
+    /// <param name="y2">The y2.</param>
+    /// <param name="isRelativeScale">if set to <c>true</c> [is relative scale].</param>
+    public PointDrawing(string id, float x, float y, float x2, float y2, bool isRelativeScale = false)
+    {
+        Id = id;
+        IsRelativeScale = isRelativeScale;
+        X = x;
+        X2 = x2;
+        Y = y;
+        Y2 = y2;
+    }
 
     /// <summary>
     /// Gets or sets the identifier.
@@ -31,7 +37,7 @@ public class PointDrawing(string id, float x, float y, float x2, float y2, bool 
     /// <value>
     /// The identifier.
     /// </value>
-    public string Id { get; set; } = id;
+    public string Id { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether this instance is relative scale.
@@ -39,7 +45,7 @@ public class PointDrawing(string id, float x, float y, float x2, float y2, bool 
     /// <value>
     /// <c>true</c> if this instance is relative scale; otherwise, <c>false</c>.
     /// </value>
-    public bool IsRelativeScale { get; set; } = isRelativeScale;
+    public bool IsRelativeScale { get; set; }
 
     /// <summary>
     /// Gets or sets the parent drawing.
@@ -47,7 +53,7 @@ public class PointDrawing(string id, float x, float y, float x2, float y2, bool 
     /// <value>
     /// The parent drawing.
     /// </value>
-    public IDrawing ParentDrawing { get; set; }
+    public IDrawing? ParentDrawing { get; set; }
 
     /// <summary>
     /// Gets or sets the rotation.
@@ -66,20 +72,12 @@ public class PointDrawing(string id, float x, float y, float x2, float y2, bool 
     public float Value { get; set; }
 
     /// <summary>
-    /// Gets or sets the width.
-    /// </summary>
-    /// <value>
-    /// The width.
-    /// </value>
-    public float Width { get; set; }
-
-    /// <summary>
     /// Gets or sets the x.
     /// </summary>
     /// <value>
     /// The x.
     /// </value>
-    public float X { get; set; } = x;
+    public float X { get; set; }
 
     /// <summary>
     /// Gets or sets the x2.
@@ -87,7 +85,7 @@ public class PointDrawing(string id, float x, float y, float x2, float y2, bool 
     /// <value>
     /// The x2.
     /// </value>
-    public float X2 { get; set; } = x2;
+    public float X2 { get; set; }
 
     /// <summary>
     /// Gets or sets the y.
@@ -95,13 +93,7 @@ public class PointDrawing(string id, float x, float y, float x2, float y2, bool 
     /// <value>
     /// The y.
     /// </value>
-    public float Y { get; set; } = y;
+    public float Y { get; set; }
 
-    /// <summary>
-    /// Gets or sets the y2.
-    /// </summary>
-    /// <value>
-    /// The y2.
-    /// </value>
-    public float Y2 { get; set; } = y2;
+    public float Y2 { get; set; }
 }

@@ -1,12 +1,12 @@
-﻿using ACDCs.Interfaces;
+﻿using ACDCs.Interfaces.Drawing;
 
 namespace ACDCs.Renderer.Drawings;
 
 /// <summary>
 /// Drawing element for a resisitor.
 /// </summary>
-/// <seealso cref="ACDCs.Interfaces.IDrawing" />
-/// <seealso cref="ACDCs.Interfaces.ICompositeDrawing" />
+/// <seealso cref="Interfaces.Drawing.IDrawing" />
+/// <seealso cref="Interfaces.Drawing.ICompositeDrawing" />
 /// <remarks>
 /// Initializes a new instance of the <see cref="ResistorDrawing" /> class.
 /// </remarks>
@@ -15,7 +15,7 @@ namespace ACDCs.Renderer.Drawings;
 /// <param name="x">The x.</param>
 /// <param name="y">The y.</param>
 /// <param name="rotation">The rotation.</param>
-public class ResistorDrawing(string id, float value, float x, float y, float rotation) : IDrawing, ICompositeDrawing
+public class ResistorDrawing(string id, float value, float x, float y, float rotation) : IDrawing, ICompositeDrawing, IDrawingWithSize
 {
     /// <summary>
     /// Gets or sets the height.
@@ -81,8 +81,6 @@ public class ResistorDrawing(string id, float value, float x, float y, float rot
     /// </value>
     public float X { get; set; } = x;
 
-    public float X2 { get; set; }
-
     /// <summary>
     /// Gets or sets the y.
     /// </summary>
@@ -90,8 +88,6 @@ public class ResistorDrawing(string id, float value, float x, float y, float rot
     /// The y.
     /// </value>
     public float Y { get; set; } = y;
-
-    public float Y2 { get; set; }
 
     /// <summary>
     /// Gets the drawings.

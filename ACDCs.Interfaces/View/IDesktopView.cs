@@ -1,4 +1,6 @@
-﻿namespace ACDCs.Interfaces;
+﻿using ACDCs.Interfaces.Modules;
+
+namespace ACDCs.Interfaces.View;
 
 /// <summary>
 /// Interface for the DesktopView class.

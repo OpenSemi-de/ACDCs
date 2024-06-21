@@ -1,4 +1,4 @@
-﻿namespace ACDCs.Interfaces;
+﻿namespace ACDCs.Interfaces.Drawing;
 
 /// <summary>
 /// Interface stub for the grid drawing / rendering.

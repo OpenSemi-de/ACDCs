@@ -56,14 +56,22 @@ public class SubRenderer<T>
     /// <param name="y2">The y2.</param>
     public void GetPositionAndEnd(IDrawing drawing, ref float x, ref float y, ref float x2, ref float y2)
     {
+        if (drawing == null || drawing.ParentDrawing == null)
+        {
+            return;
+        }
+
         if (drawing.IsRelativeScale)
         {
-            float? stepSize = Scene?.StepSize;
-            x = Convert.ToSingle(drawing.ParentDrawing.X + Position.X + stepSize * drawing.X);
-            y = Convert.ToSingle(drawing.ParentDrawing.Y + Position.Y + stepSize * drawing.Y);
+            if (drawing.ParentDrawing is IDrawingWithSize drawingWithSize)
+            {
+                float? stepSize = Scene?.StepSize;
+                x = Convert.ToSingle(drawing.ParentDrawing.X + Position.X + stepSize * drawing.X * drawingWithSize.Width);
+                y = Convert.ToSingle(drawing.ParentDrawing.Y + Position.Y + stepSize * drawing.Y * drawingWithSize.Height);
 
-            x2 = Convert.ToSingle(drawing.ParentDrawing.X + Position.X + stepSize * ((IDrawingTwoPoint)drawing).X2);
-            y2 = Convert.ToSingle(drawing.ParentDrawing.Y + Position.Y + stepSize * ((IDrawingTwoPoint)drawing).Y2);
+                x2 = Convert.ToSingle(drawing.ParentDrawing.X + Position.X + stepSize * ((IDrawingTwoPoint)drawing).X2 * drawingWithSize.Width);
+                y2 = Convert.ToSingle(drawing.ParentDrawing.Y + Position.Y + stepSize * ((IDrawingTwoPoint)drawing).Y2 * drawingWithSize.Height);
+            }
         }
         else
         {
@@ -84,12 +92,20 @@ public class SubRenderer<T>
     /// <param name="height">The height.</param>
     public void GetPositionAndSize(IDrawing drawing, ref float x, ref float y, ref float width, ref float height)
     {
+        if (drawing.ParentDrawing == null)
+        {
+            return;
+        }
+
         if (drawing.IsRelativeScale)
         {
-            x = Convert.ToSingle(drawing.ParentDrawing.X + Position.X + (Scene?.StepSize * drawing.X));
-            y = Convert.ToSingle(drawing.ParentDrawing.Y + Position.Y + (Scene?.StepSize * drawing.Y));
-            width = Convert.ToSingle(drawing.ParentDrawing.Width * Scene?.StepSize);
-            height = Convert.ToSingle(height * Scene?.StepSize);
+            if (drawing.ParentDrawing is IDrawingWithSize drawingWithSize)
+            {
+                x = Convert.ToSingle(drawing.ParentDrawing.X + Position.X + (Scene?.StepSize * drawing.X * drawingWithSize.Width));
+                y = Convert.ToSingle(drawing.ParentDrawing.Y + Position.Y + (Scene?.StepSize * drawing.Y * drawingWithSize.Height));
+                width = Convert.ToSingle(drawingWithSize.Width * width * Scene?.StepSize);
+                height = Convert.ToSingle(drawingWithSize.Height * height * Scene?.StepSize);
+            }
         }
         else
         {

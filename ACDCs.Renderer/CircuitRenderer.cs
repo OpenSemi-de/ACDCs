@@ -13,8 +13,6 @@ public class CircuitRenderer : GraphicsView, ICircuitRenderer
     private readonly ILogger _logger;
     private readonly PanGestureRecognizer _panGestrueRecognizer;
     private readonly IRenderManager _renderCore;
-    private readonly IThemeService _themeService;
-    private Microsoft.Maui.Graphics.Point _lastPosition = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CircuitRenderer" /> class.
@@ -28,7 +26,6 @@ public class CircuitRenderer : GraphicsView, ICircuitRenderer
         GestureRecognizers.Add(_panGestrueRecognizer);
 
         _logger = logger;
-        _themeService = themeService;
         RenderSettingsManager.SetService(themeService);
         _renderCore = ServiceHelper.GetService<IRenderManager>();
 
@@ -60,10 +57,6 @@ public class CircuitRenderer : GraphicsView, ICircuitRenderer
         Microsoft.Maui.Graphics.Point position = _renderCore.Position;
         switch (e.StatusType)
         {
-            case GestureStatus.Started:
-                _lastPosition = position;
-                break;
-
             case GestureStatus.Running:
                 float x = Convert.ToSingle(e.TotalX / 20);
                 float y = Convert.ToSingle(e.TotalY / 20);

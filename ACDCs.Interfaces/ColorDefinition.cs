@@ -84,4 +84,9 @@ public enum ColorDefinition
     /// The circuit renderer grid
     /// </summary>
     CircuitRendererGrid = 15,
+
+    /// <summary>
+    /// The circuit renderer fill
+    /// </summary>
+    CircuitRendererFill = 16,
 }

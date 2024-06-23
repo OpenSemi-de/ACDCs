@@ -95,5 +95,11 @@ public class PointDrawing : IDrawing, IDrawingTwoPoint
     /// </value>
     public float Y { get; set; }
 
+    /// <summary>
+    /// Gets or sets the y2.
+    /// </summary>
+    /// <value>
+    /// The y2.
+    /// </value>
     public float Y2 { get; set; }
 }

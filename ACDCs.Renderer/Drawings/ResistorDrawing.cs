@@ -10,20 +10,29 @@ namespace ACDCs.Renderer.Drawings;
 /// <remarks>
 /// Initializes a new instance of the <see cref="ResistorDrawing" /> class.
 /// </remarks>
-/// <param name="id">The identifier.</param>
-/// <param name="value">The value.</param>
-/// <param name="x">The x.</param>
-/// <param name="y">The y.</param>
-/// <param name="rotation">The rotation.</param>
-public class ResistorDrawing(string id, float value, float x, float y, float rotation) : IDrawing, ICompositeDrawing, IDrawingWithSize
+public class ResistorDrawing : IDrawing, ICompositeDrawing, IDrawingWithSize
 {
+    /// <param name="id">The identifier.</param>
+    /// <param name="value">The value.</param>
+    /// <param name="x">The x.</param>
+    /// <param name="y">The y.</param>
+    /// <param name="rotation">The rotation.</param>
+    public ResistorDrawing(string id, float value, float x, float y, float rotation)
+    {
+        Id = id;
+        Rotation = rotation;
+        Value = value;
+        X = x;
+        Y = y;
+    }
+
     /// <summary>
     /// Gets or sets the height.
     /// </summary>
     /// <value>
     /// The height.
     /// </value>
-    public float Height { get; set; } = 3;
+    public float Height { get; set; } = 1;
 
     /// <summary>
     /// Gets or sets the identifier.
@@ -31,7 +40,7 @@ public class ResistorDrawing(string id, float value, float x, float y, float rot
     /// <value>
     /// The identifier.
     /// </value>
-    public string Id { get; set; } = id;
+    public string Id { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether this instance is relative scale.
@@ -47,7 +56,7 @@ public class ResistorDrawing(string id, float value, float x, float y, float rot
     /// <value>
     /// The parent drawing.
     /// </value>
-    public IDrawing ParentDrawing { get; set; }
+    public IDrawing? ParentDrawing { get; set; }
 
     /// <summary>
     /// Gets or sets the rotation.
@@ -55,7 +64,7 @@ public class ResistorDrawing(string id, float value, float x, float y, float rot
     /// <value>
     /// The rotation.
     /// </value>
-    public float Rotation { get; set; } = rotation;
+    public float Rotation { get; set; }
 
     /// <summary>
     /// Gets or sets the value.
@@ -63,7 +72,7 @@ public class ResistorDrawing(string id, float value, float x, float y, float rot
     /// <value>
     /// The value.
     /// </value>
-    public float Value { get; set; } = value;
+    public float Value { get; set; }
 
     /// <summary>
     /// Gets or sets the width.
@@ -71,7 +80,7 @@ public class ResistorDrawing(string id, float value, float x, float y, float rot
     /// <value>
     /// The width.
     /// </value>
-    public float Width { get; set; } = 3;
+    public float Width { get; set; } = 2;
 
     /// <summary>
     /// Gets or sets the x.
@@ -79,7 +88,7 @@ public class ResistorDrawing(string id, float value, float x, float y, float rot
     /// <value>
     /// The x.
     /// </value>
-    public float X { get; set; } = x;
+    public float X { get; set; }
 
     /// <summary>
     /// Gets or sets the y.
@@ -87,7 +96,7 @@ public class ResistorDrawing(string id, float value, float x, float y, float rot
     /// <value>
     /// The y.
     /// </value>
-    public float Y { get; set; } = y;
+    public float Y { get; set; }
 
     /// <summary>
     /// Gets the drawings.
@@ -98,9 +107,9 @@ public class ResistorDrawing(string id, float value, float x, float y, float rot
         List<IDrawing> drawings =
         [
             new PointDrawing(Id + "_Pin1", 0f, 0.4f, 0.2f, 0.6f, true),
-            new LineDrawing(Id + "Line1", 0f, 0.5f, 0.2f, 0.5f, true),
-            new BoxDrawing(Id + "Box1", 0.2f, 0.3f, 0.8f, 0.7f, true),
-            new LineDrawing(Id + "Line2", 0.8f, 0.5f, 1f, 0.5f, true),
+            new LineDrawing(Id + "_Line1", 0.2f, 0.5f, 0.3f, 0.5f, true),
+            new BoxDrawing(Id + "_Box1", 0.3f, 0.4f, 0.4f, 0.2f, true),
+            new LineDrawing(Id + "_Line2", 0.7f, 0.5f, 0.8f, 0.5f, true),
             new PointDrawing(Id + "_Pin2", 0.8f, 0.4f, 01f, 0.6f, true),
             new TextDrawing(Id + "_Text", Value.ToString(), 0f, 0.6f, 1f, 0.4f, 0, true)
         ];

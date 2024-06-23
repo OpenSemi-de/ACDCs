@@ -14,5 +14,6 @@ public class Circuit : ICircuit
     /// </summary>
     /// <value>
     /// The components.
+    /// </value>
     public List<IComponent> Components { get; } = [];
 }

@@ -39,7 +39,7 @@ public class LineDrawing(string id, float x, float y, float x2, float y2, bool i
     /// <value>
     /// The parent drawing.
     /// </value>
-    public IDrawing ParentDrawing { get; set; }
+    public IDrawing? ParentDrawing { get; set; }
 
     /// <summary>
     /// Gets or sets the rotation.

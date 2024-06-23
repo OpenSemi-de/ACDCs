@@ -58,7 +58,7 @@ public static class RenderSettingsManager
     /// <returns></returns>
     public static Color GetFillColor()
     {
-        return GetColor(ColorDefinition.CircuitRendererBackground);
+        return GetColor(ColorDefinition.CircuitRendererFill);
     }
 
     /// <summary>

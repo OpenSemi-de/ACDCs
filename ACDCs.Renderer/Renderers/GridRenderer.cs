@@ -13,7 +13,7 @@ namespace ACDCs.Renderer.Renderers;
 /// <seealso cref="Interfaces.Renderer.ITextRenderer" />
 public class GridRenderer : SubRenderer<IGridDrawing>, IRenderer, IGridRenderer
 {
-    private Color _gridColor = RenderSettingsManager.GetGridColor();
+    private readonly Color _gridColor = RenderSettingsManager.GetGridColor();
 
     /// <summary>
     /// Draws on the specified canvas.

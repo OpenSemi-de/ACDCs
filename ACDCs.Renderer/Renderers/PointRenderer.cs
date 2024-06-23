@@ -7,7 +7,6 @@ namespace ACDCs.Renderer.Renderers;
 /// <summary>
 /// The point renderer.
 /// </summary>
-/// <seealso cref="ACDCs.Renderer.Renderers.SubRenderer&lt;ACDCs.Renderer.Drawings.PointDrawing&gt;" />
 /// <seealso cref="Interfaces.Renderer.IRenderer" />
 /// <seealso cref="Interfaces.Renderer.ILineRenderer" />
 public class PointRenderer : SubRenderer<PointDrawing>, IRenderer, IPointRenderer
@@ -21,7 +20,7 @@ public class PointRenderer : SubRenderer<PointDrawing>, IRenderer, IPointRendere
         RenderSettingsManager.ApplyColors(canvas);
         canvas.StrokeSize = 2;
 
-        foreach (PointDrawing point in Drawings)
+        foreach (PointDrawing point in Drawings.Cast<PointDrawing>())
         {
             float x = point.X;
             float y = point.Y;
@@ -30,7 +29,8 @@ public class PointRenderer : SubRenderer<PointDrawing>, IRenderer, IPointRendere
 
             GetPositionAndEnd(point, ref x, ref y, ref x2, ref y2);
 
-            canvas.DrawEllipse(x, y, x2 - x, y2 - y);
+            canvas.FillCircle((x + x2) / 2, (y + y2) / 2, (x2 - x) / 2);
+            canvas.DrawCircle((x + x2) / 2, (y + y2) / 2, (x2 - x) / 2);
         }
     }
 }

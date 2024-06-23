@@ -29,6 +29,7 @@ public class SceneManager : ISceneManager
         renderers.Add(ServiceHelper.GetService<ILineRenderer>());
         renderers.Add(ServiceHelper.GetService<IPointRenderer>());
         renderers.Add(ServiceHelper.GetService<ITextRenderer>());
+        renderers.Add(ServiceHelper.GetService<IBoxRenderer>());
     }
 
     /// <summary>

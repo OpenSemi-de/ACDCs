@@ -27,7 +27,7 @@ public interface IDrawing
     /// <value>
     /// The parent drawing.
     /// </value>
-    public IDrawing ParentDrawing { get; set; }
+    public IDrawing? ParentDrawing { get; set; }
 
     /// <summary>
     /// Gets or sets the rotation.

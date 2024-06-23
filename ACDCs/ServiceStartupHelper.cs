@@ -54,6 +54,7 @@ public static class ServiceStartupHelper
         mauiAppBuilder.Services.AddTransient<ILineRenderer, LineRenderer>();
         mauiAppBuilder.Services.AddTransient<IGridRenderer, GridRenderer>();
         mauiAppBuilder.Services.AddTransient<IPointRenderer, PointRenderer>();
+        mauiAppBuilder.Services.AddTransient<IBoxRenderer, BoxRenderer>();
 
         if (Application.Current != null)
         {

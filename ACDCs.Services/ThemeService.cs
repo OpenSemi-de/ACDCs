@@ -32,8 +32,9 @@ public class ThemeService : IThemeService
             { ColorDefinition.CircuitBackground, Colors.LightBlue },
             { ColorDefinition.CircuitControllerBackground, Colors.LightBlue.AddLuminosity(-0.2f) },
             { ColorDefinition.CircuitComponentBackground, Colors.LightBlue.AddLuminosity(-0.2f) },
-            { ColorDefinition.CircuitRendererBackground, Colors.LightBlue.AddLuminosity(-0.1f) },
+            { ColorDefinition.CircuitRendererBackground, Colors.LightBlue.AddLuminosity(-0.2f) },
             { ColorDefinition.CircuitRendererStroke, Colors.Black.AddLuminosity(0.1f) },
+            { ColorDefinition.CircuitRendererFill, Colors.LightBlue.AddLuminosity(0.2f) },
             { ColorDefinition.CircuitRendererFont, Colors.Black.AddLuminosity(0.1f) },
             { ColorDefinition.CircuitRendererGrid, Colors.DarkBlue.AddLuminosity(0.4f) },
         };
@@ -54,6 +55,7 @@ public class ThemeService : IThemeService
             { ColorDefinition.CircuitComponentBackground, Colors.DarkBlue.AddLuminosity(0.2f) },
             { ColorDefinition.CircuitRendererBackground, Colors.DarkBlue.AddLuminosity(0.1f) },
             { ColorDefinition.CircuitRendererStroke, Colors.White.AddLuminosity(-0.1f) },
+            { ColorDefinition.CircuitRendererFill, Colors.DarkBlue.AddLuminosity(0.2f) },
             { ColorDefinition.CircuitRendererFont, Colors.White.AddLuminosity(-0.1f) },
             { ColorDefinition.CircuitRendererGrid, Colors.LightBlue.AddLuminosity(-0.4f) },
         };

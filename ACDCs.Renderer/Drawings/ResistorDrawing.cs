@@ -1,4 +1,6 @@
 ﻿using ACDCs.Interfaces.Drawing;
+using ACDCs.Interfaces;
+using Point = ACDCs.Interfaces.Point;
 
 namespace ACDCs.Renderer.Drawings;
 
@@ -49,6 +51,14 @@ public class ResistorDrawing : IDrawing, ICompositeDrawing, IDrawingWithSize
     /// <c>true</c> if this instance is relative scale; otherwise, <c>false</c>.
     /// </value>
     public bool IsRelativeScale { get; set; }
+
+    /// <summary>
+    /// Gets or sets the offset.
+    /// </summary>
+    /// <value>
+    /// The offset.
+    /// </value>
+    public Point Offset { get; set; } = new Point(0, -0.5);
 
     /// <summary>
     /// Gets or sets the parent drawing.
@@ -106,11 +116,11 @@ public class ResistorDrawing : IDrawing, ICompositeDrawing, IDrawingWithSize
     {
         List<IDrawing> drawings =
         [
-            new PointDrawing(Id + "_Pin1", 0f, 0.4f, 0.2f, 0.6f, true),
-            new LineDrawing(Id + "_Line1", 0.2f, 0.5f, 0.3f, 0.5f, true),
-            new BoxDrawing(Id + "_Box1", 0.3f, 0.4f, 0.4f, 0.2f, true),
-            new LineDrawing(Id + "_Line2", 0.7f, 0.5f, 0.8f, 0.5f, true),
-            new PointDrawing(Id + "_Pin2", 0.8f, 0.4f, 01f, 0.6f, true),
+            new PointDrawing(Id + "_Pin1", 0f, 0.45f, 0.1f, 0.55f, true),
+            new LineDrawing(Id + "_Line1", 0.1f, 0.5f, 0.25f, 0.5f, true),
+            new BoxDrawing(Id + "_Box1", 0.25f, 0.3f, 0.5f, 0.4f, true),
+            new LineDrawing(Id + "_Line2", 0.75f, 0.5f, 0.9f, 0.5f, true),
+            new PointDrawing(Id + "_Pin2", 0.9f, 0.45f, 1f, 0.55f, true),
             new TextDrawing(Id + "_Text", Value.ToString(), 0f, 0.6f, 1f, 0.4f, 0, true)
         ];
 

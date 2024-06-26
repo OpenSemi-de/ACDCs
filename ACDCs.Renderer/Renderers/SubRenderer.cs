@@ -71,6 +71,14 @@ public class SubRenderer<T>
 
                 x2 = Convert.ToSingle(drawing.ParentDrawing.X + Position.X + stepSize * ((IDrawingTwoPoint)drawing).X2 * drawingWithSize.Width);
                 y2 = Convert.ToSingle(drawing.ParentDrawing.Y + Position.Y + stepSize * ((IDrawingTwoPoint)drawing).Y2 * drawingWithSize.Height);
+
+                if (drawing.ParentDrawing is ICompositeDrawing composite)
+                {
+                    x += Convert.ToSingle(composite.Offset.X * stepSize);
+                    y += Convert.ToSingle(composite.Offset.Y * stepSize);
+                    x2 += Convert.ToSingle(composite.Offset.X * stepSize);
+                    y2 += Convert.ToSingle(composite.Offset.Y * stepSize);
+                }
             }
         }
         else
@@ -101,10 +109,17 @@ public class SubRenderer<T>
         {
             if (drawing.ParentDrawing is IDrawingWithSize drawingWithSize)
             {
+                float? stepSize = Scene?.StepSize;
                 x = Convert.ToSingle(drawing.ParentDrawing.X + Position.X + (Scene?.StepSize * drawing.X * drawingWithSize.Width));
                 y = Convert.ToSingle(drawing.ParentDrawing.Y + Position.Y + (Scene?.StepSize * drawing.Y * drawingWithSize.Height));
                 width = Convert.ToSingle(drawingWithSize.Width * width * Scene?.StepSize);
                 height = Convert.ToSingle(drawingWithSize.Height * height * Scene?.StepSize);
+
+                if (drawing.ParentDrawing is ICompositeDrawing composite)
+                {
+                    x += Convert.ToSingle(composite.Offset.X * stepSize);
+                    y += Convert.ToSingle(composite.Offset.Y * stepSize);
+                }
             }
         }
         else

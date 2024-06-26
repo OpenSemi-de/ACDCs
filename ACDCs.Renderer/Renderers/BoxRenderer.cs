@@ -17,16 +17,16 @@ public class BoxRenderer : SubRenderer<BoxDrawing>, IRenderer, IBoxRenderer
     /// <param name="canvas">The canvas.</param>
     public void Draw(ICanvas canvas)
     {
-        RenderSettingsManager.ApplyColors(canvas);
-
-        foreach (BoxDrawing text in Drawings.Cast<BoxDrawing>())
+        foreach (BoxDrawing box in Drawings.Cast<BoxDrawing>())
         {
-            float x = text.X;
-            float y = text.Y;
-            float width = text.Width;
-            float height = text.Height;
+            RenderSettingsManager.ApplyColors(canvas, box);
 
-            GetPositionAndSize(text, ref x, ref y, ref width, ref height);
+            float x = box.X;
+            float y = box.Y;
+            float width = box.Width;
+            float height = box.Height;
+
+            GetPositionAndSize(box, ref x, ref y, ref width, ref height);
 
             canvas.FillRectangle(x, y, width, height);
             canvas.DrawRectangle(x, y, width, height);

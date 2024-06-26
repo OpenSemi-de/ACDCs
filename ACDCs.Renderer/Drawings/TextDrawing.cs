@@ -36,6 +36,14 @@ public class TextDrawing : IDrawing, IDrawingWithSize
     }
 
     /// <summary>
+    /// Gets or sets the color of the background.
+    /// </summary>
+    /// <value>
+    /// The color of the background.
+    /// </value>
+    public Color? BackgroundColor { get; set; }
+
+    /// <summary>
     /// Gets or sets the height.
     /// </summary>
     /// <value>
@@ -58,6 +66,14 @@ public class TextDrawing : IDrawing, IDrawingWithSize
     /// <c>true</c> if this instance is relative scale; otherwise, <c>false</c>.
     /// </value>
     public bool IsRelativeScale { get; set; }
+
+    /// <summary>
+    /// Gets or sets the color of the line.
+    /// </summary>
+    /// <value>
+    /// The color of the line.
+    /// </value>
+    public Color? LineColor { get; set; }
 
     /// <summary>
     /// Gets or sets the parent drawing.

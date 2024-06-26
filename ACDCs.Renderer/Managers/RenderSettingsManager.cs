@@ -1,4 +1,5 @@
 ﻿using ACDCs.Interfaces;
+using ACDCs.Interfaces.Drawing;
 using System.Collections.Concurrent;
 
 namespace ACDCs.Renderer.Managers;
@@ -15,11 +16,12 @@ public static class RenderSettingsManager
     /// Applies the colors.
     /// </summary>
     /// <param name="canvas">The canvas.</param>
-    public static void ApplyColors(ICanvas canvas)
+    /// <param name="drawing">The drawing.</param>
+    public static void ApplyColors(ICanvas canvas, IDrawing? drawing = null)
     {
-        canvas.StrokeColor = GetStrokeColor();
-        canvas.FontColor = GetFontColor();
-        canvas.FillColor = GetFillColor();
+        canvas.StrokeColor = GetStrokeColor(drawing);
+        canvas.FontColor = GetFontColor(drawing);
+        canvas.FillColor = GetFillColor(drawing);
     }
 
     /// <summary>
@@ -55,19 +57,21 @@ public static class RenderSettingsManager
     /// <summary>
     /// Gets the color of the fill.
     /// </summary>
+    /// <param name="drawing">The drawing.</param>
     /// <returns></returns>
-    public static Color GetFillColor()
+    public static Color GetFillColor(IDrawing? drawing)
     {
-        return GetColor(ColorDefinition.CircuitRendererFill);
+        return drawing?.ParentDrawing?.BackgroundColor ?? GetColor(ColorDefinition.CircuitRendererFill);
     }
 
     /// <summary>
     /// Gets the color of the font.
     /// </summary>
+    /// <param name="drawing">The drawing.</param>
     /// <returns></returns>
-    public static Color GetFontColor()
+    public static Color GetFontColor(IDrawing? drawing)
     {
-        return GetColor(ColorDefinition.CircuitRendererFont);
+        return drawing?.ParentDrawing?.LineColor ?? GetColor(ColorDefinition.CircuitRendererFont);
     }
 
     /// <summary>
@@ -82,10 +86,11 @@ public static class RenderSettingsManager
     /// <summary>
     /// Gets the color of the stroke.
     /// </summary>
+    /// <param name="drawing">The drawing.</param>
     /// <returns></returns>
-    public static Color GetStrokeColor()
+    public static Color GetStrokeColor(IDrawing? drawing)
     {
-        return GetColor(ColorDefinition.CircuitRendererStroke);
+        return drawing?.ParentDrawing?.LineColor ?? GetColor(ColorDefinition.CircuitRendererStroke);
     }
 
     /// <summary>

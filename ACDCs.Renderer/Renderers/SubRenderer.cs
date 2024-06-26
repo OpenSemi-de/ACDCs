@@ -100,13 +100,13 @@ public class SubRenderer<T>
     /// <param name="height">The height.</param>
     public void GetPositionAndSize(IDrawing drawing, ref float x, ref float y, ref float width, ref float height)
     {
-        if (drawing.ParentDrawing == null)
-        {
-            return;
-        }
-
         if (drawing.IsRelativeScale)
         {
+            if (drawing.ParentDrawing == null)
+            {
+                return;
+            }
+
             if (drawing.ParentDrawing is IDrawingWithSize drawingWithSize)
             {
                 float? stepSize = Scene?.StepSize;

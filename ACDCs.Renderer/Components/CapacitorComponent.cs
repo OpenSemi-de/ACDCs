@@ -11,17 +11,22 @@ namespace ACDCs.Renderer.Components;
 /// Initializes a new instance of the <see cref="ResistorComponent" /> class.
 /// </remarks>
 /// <seealso cref="Interfaces.Circuit.IComponent" />
-public class ResistorComponent : IComponent
+public class CapacitorComponent : IComponent
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CapacitorComponent"/> class.
+    /// </summary>
     /// <param name="id">The identifier.</param>
     /// <param name="value">The value.</param>
     /// <param name="x">The x.</param>
     /// <param name="y">The y.</param>
     /// <param name="rotation">The rotation.</param>
-    public ResistorComponent(string id, float value, float x, float y, float rotation)
+    /// <param name="isPolar">if set to <c>true</c> [is polar].</param>
+    public CapacitorComponent(string id, float value, float x, float y, float rotation, bool isPolar = true)
     {
         Id = id;
         Rotation = rotation;
+        IsPolar = isPolar;
         Value = value;
         X = x;
         Y = y;
@@ -42,6 +47,14 @@ public class ResistorComponent : IComponent
     /// The identifier.
     /// </value>
     public string Id { get; set; }
+
+    /// <summary>
+    /// Gets a value indicating whether this instance is polar.
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if this instance is polar; otherwise, <c>false</c>.
+    /// </value>
+    public bool IsPolar { get; }
 
     /// <summary>
     /// Gets or sets the rotation.
@@ -89,7 +102,7 @@ public class ResistorComponent : IComponent
     /// <returns></returns>
     public IDrawing GetDrawing()
     {
-        ResistorDrawing drawing = new(Id, Value, X, Y, Rotation);
+        CapacitorDrawing drawing = new(Id, Value, X, Y, Rotation, IsPolar);
         return drawing;
     }
 }

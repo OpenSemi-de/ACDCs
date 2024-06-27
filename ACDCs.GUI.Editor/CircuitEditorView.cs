@@ -3,6 +3,7 @@
 using ACDCs.Interfaces;
 using ACDCs.Renderer;
 using ACDCs.Renderer.Components;
+using ACDCs.Renderer.Drawings.Composite;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Layouts;
 using Sharp.UI;
@@ -36,9 +37,11 @@ public class CircuitEditorView : ContentView, ICircuitEditorView
         _logger.LogDebug("Circuit editor started.");
         Scene scene = new();
         TextComponent item = new("Text1", "text", scene.StepSize * 3, scene.StepSize * 1, 100, 20, 0);
-        ResistorComponent resistor = new("R1", 10000, scene.StepSize * 3, scene.StepSize * 2, 100, 50, 0);
+        ResistorComponent resistor = new("R1", 10000, scene.StepSize * 3, scene.StepSize * 2, 0);
+        CapacitorComponent capacitor = new("C1", 10000, scene.StepSize * 3, scene.StepSize * 3, 0);
         scene.Circuit.Components.Add(item);
         scene.Circuit.Components.Add(resistor);
+        scene.Circuit.Components.Add(capacitor);
         string d = scene.ToJson();
         _circuitView.LoadJson(d);
     }

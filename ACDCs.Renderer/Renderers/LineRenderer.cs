@@ -1,8 +1,6 @@
 ﻿using ACDCs.Interfaces.Renderer;
 using ACDCs.Renderer.Drawings;
 using ACDCs.Renderer.Managers;
-using Microsoft.Maui.Graphics;
-using Rect = ACDCs.Interfaces.Rect;
 
 namespace ACDCs.Renderer.Renderers;
 

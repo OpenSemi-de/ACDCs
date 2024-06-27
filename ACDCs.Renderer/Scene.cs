@@ -51,5 +51,5 @@ public class Scene : IScene
     /// <value>
     /// The size of the step.
     /// </value>
-    public float StepSize { get; set; } = 25.4f;
+    public float StepSize { get; set; } = 25.4f * 4;
 }

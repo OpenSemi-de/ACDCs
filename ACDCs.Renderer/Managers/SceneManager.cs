@@ -26,10 +26,12 @@ public class SceneManager : ISceneManager
         _logger = logger;
         _themeService = themeService;
         renderers.Add(ServiceHelper.GetService<IGridRenderer>());
-        renderers.Add(ServiceHelper.GetService<ILineRenderer>());
         renderers.Add(ServiceHelper.GetService<IPointRenderer>());
-        renderers.Add(ServiceHelper.GetService<ITextRenderer>());
         renderers.Add(ServiceHelper.GetService<IBoxRenderer>());
+        renderers.Add(ServiceHelper.GetService<IArcRenderer>());
+        renderers.Add(ServiceHelper.GetService<ILineRenderer>());
+
+        renderers.Add(ServiceHelper.GetService<ITextRenderer>());
     }
 
     /// <summary>

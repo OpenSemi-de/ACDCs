@@ -19,9 +19,10 @@ public static class RenderSettingsManager
     /// <param name="drawing">The drawing.</param>
     public static void ApplyColors(ICanvas canvas, IDrawing? drawing = null)
     {
-        canvas.StrokeColor = GetStrokeColor(drawing);
-        canvas.FontColor = GetFontColor(drawing);
-        canvas.FillColor = GetFillColor(drawing);
+        canvas.StrokeSize = drawing?.StrokeSize ?? 2;
+        canvas.StrokeColor = drawing?.LineColor ?? GetStrokeColor(drawing);
+        canvas.FontColor = drawing?.LineColor ?? GetFontColor(drawing);
+        canvas.FillColor = drawing?.BackgroundColor ?? GetFillColor(drawing);
     }
 
     /// <summary>

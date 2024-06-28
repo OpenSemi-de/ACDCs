@@ -9,7 +9,7 @@ namespace ACDCs.Renderer.Renderers;
 /// </summary>
 /// <seealso cref="Interfaces.Renderer.IRenderer" />
 /// <seealso cref="Interfaces.Renderer.ITextRenderer" />
-public class LineRenderer : SubRenderer<LineDrawing>, IRenderer, ILineRenderer
+public class LineRenderer : BaseRenderer<LineDrawing>, IRenderer, ILineRenderer
 {
     /// <summary>
     /// Draws on the specified canvas.
@@ -18,7 +18,6 @@ public class LineRenderer : SubRenderer<LineDrawing>, IRenderer, ILineRenderer
     public void Draw(ICanvas canvas)
     {
         RenderSettingsManager.ApplyColors(canvas);
-        canvas.StrokeSize = 2;
 
         foreach (LineDrawing line in Drawings)
         {

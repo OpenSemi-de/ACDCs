@@ -1,9 +1,12 @@
-﻿namespace ACDCs.Interfaces.Drawing;
+﻿using ACDCs.Interfaces;
+using ACDCs.Interfaces.Drawing;
+
+namespace ACDCs.Renderer.Drawings;
 
 /// <summary>
-/// The interface for the drawings.
+/// Base Drawing class.
 /// </summary>
-public interface IDrawing
+public class BaseDrawing : IDrawing
 {
     /// <summary>
     /// Gets or sets the color of the background.
@@ -19,13 +22,13 @@ public interface IDrawing
     /// <value>
     /// The identifier.
     /// </value>
-    public string Id { get; set; }
+    public string Id { get; set; } = "";
 
     /// <summary>
     /// Gets or sets a value indicating whether this instance is relative scale.
     /// </summary>
     /// <value>
-    ///   <c>true</c> if this instance is relative scale; otherwise, <c>false</c>.
+    /// <c>true</c> if this instance is relative scale; otherwise, <c>false</c>.
     /// </value>
     public bool IsRelativeScale { get; set; }
 
@@ -59,7 +62,7 @@ public interface IDrawing
     /// <value>
     /// The size of the stroke.
     /// </value>
-    public float StrokeSize { get; set; }
+    public float StrokeSize { get; set; } = 2;
 
     /// <summary>
     /// Gets or sets the value.
@@ -90,12 +93,21 @@ public interface IDrawing
     /// </summary>
     /// <param name="color">The color.</param>
     /// <returns></returns>
-    public IDrawing SetBackgroundColor(Color color);
+    /// <exception cref="NotImplementedException"></exception>
+    public IDrawing SetBackgroundColor(Color color)
+    {
+        BackgroundColor = color;
+        return this;
+    }
 
     /// <summary>
     /// Sets the size of the stroke.
     /// </summary>
     /// <param name="strokeSize">Size of the stroke.</param>
     /// <returns></returns>
-    public IDrawing SetStrokeSize(float strokeSize);
+    public IDrawing SetStrokeSize(float strokeSize)
+    {
+        StrokeSize = strokeSize;
+        return this;
+    }
 }

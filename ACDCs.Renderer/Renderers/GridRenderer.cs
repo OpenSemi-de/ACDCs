@@ -11,7 +11,7 @@ namespace ACDCs.Renderer.Renderers;
 /// </summary>
 /// <seealso cref="Interfaces.Renderer.IRenderer" />
 /// <seealso cref="Interfaces.Renderer.ITextRenderer" />
-public class GridRenderer : SubRenderer<IGridDrawing>, IRenderer, IGridRenderer
+public class GridRenderer : BaseRenderer<IGridDrawing>, IRenderer, IGridRenderer
 {
     private readonly Color _gridColor = RenderSettingsManager.GetGridColor();
 

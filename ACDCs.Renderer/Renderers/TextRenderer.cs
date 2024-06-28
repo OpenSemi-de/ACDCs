@@ -9,7 +9,7 @@ namespace ACDCs.Renderer.Renderers;
 /// </summary>
 /// <seealso cref="IRenderer" />
 /// <seealso cref="ITextRenderer" />
-public class TextRenderer : SubRenderer<TextDrawing>, IRenderer, ITextRenderer
+public class TextRenderer : BaseRenderer<TextDrawing>, IRenderer, ITextRenderer
 {
     /// <summary>
     /// Draws on the specified canvas.

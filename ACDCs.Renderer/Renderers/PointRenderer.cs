@@ -9,7 +9,7 @@ namespace ACDCs.Renderer.Renderers;
 /// </summary>
 /// <seealso cref="Interfaces.Renderer.IRenderer" />
 /// <seealso cref="Interfaces.Renderer.ILineRenderer" />
-public class PointRenderer : SubRenderer<PointDrawing>, IRenderer, IPointRenderer
+public class PointRenderer : BaseRenderer<PointDrawing>, IRenderer, IPointRenderer
 {
     /// <summary>
     /// Draws on the specified canvas.

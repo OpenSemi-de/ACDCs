@@ -5,7 +5,9 @@ using ACDCs.Interfaces.Drawing;
 /// <summary>
 /// Drawing element for a arc.
 /// </summary>
-public class ArcDrawing : IDrawing, IDrawingWithSize
+/// <seealso cref="ACDCs.Renderer.Drawings.BaseDrawing" />
+/// <seealso cref="ACDCs.Interfaces.Drawing.IDrawingWithSize" />
+public class ArcDrawing : BaseDrawing, IDrawingWithSize
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="ArcDrawing" /> class.
@@ -31,14 +33,6 @@ public class ArcDrawing : IDrawing, IDrawingWithSize
     }
 
     /// <summary>
-    /// Gets or sets the color of the background.
-    /// </summary>
-    /// <value>
-    /// The color of the background.
-    /// </value>
-    public Color? BackgroundColor { get; set; }
-
-    /// <summary>
     /// Gets or sets the height.
     /// </summary>
     /// <value>
@@ -47,55 +41,20 @@ public class ArcDrawing : IDrawing, IDrawingWithSize
     public float Height { get; set; }
 
     /// <summary>
-    /// Gets or sets the identifier.
+    /// Gets the start angle.
     /// </summary>
     /// <value>
-    /// The identifier.
+    /// The start angle.
     /// </value>
-    public string Id { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether this instance is relative scale.
-    /// </summary>
-    /// <value>
-    /// <c>true</c> if this instance is relative scale; otherwise, <c>false</c>.
-    /// </value>
-    public bool IsRelativeScale { get; set; }
-
-    /// <summary>
-    /// Gets or sets the color of the line.
-    /// </summary>
-    /// <value>
-    /// The color of the line.
-    /// </value>
-    public Color? LineColor { get; set; }
-
-    /// <summary>
-    /// Gets or sets the parent drawing.
-    /// </summary>
-    /// <value>
-    /// The parent drawing.
-    /// </value>
-    public IDrawing? ParentDrawing { get; set; }
-
-    /// <summary>
-    /// Gets or sets the rotation.
-    /// </summary>
-    /// <value>
-    /// The rotation.
-    /// </value>
-    public float Rotation { get; set; }
-
     public float StartAngle { get; }
-    public float StopAngle { get; }
 
     /// <summary>
-    /// Gets or sets the value.
+    /// Gets the stop angle.
     /// </summary>
     /// <value>
-    /// The value.
+    /// The stop angle.
     /// </value>
-    public float Value { get; set; }
+    public float StopAngle { get; }
 
     /// <summary>
     /// Gets or sets the width.
@@ -104,20 +63,4 @@ public class ArcDrawing : IDrawing, IDrawingWithSize
     /// The width.
     /// </value>
     public float Width { get; set; }
-
-    /// <summary>
-    /// Gets or sets the x.
-    /// </summary>
-    /// <value>
-    /// The x.
-    /// </value>
-    public float X { get; set; }
-
-    /// <summary>
-    /// Gets or sets the y.
-    /// </summary>
-    /// <value>
-    /// The y.
-    /// </value>
-    public float Y { get; set; }
 }

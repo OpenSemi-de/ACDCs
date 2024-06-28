@@ -6,7 +6,7 @@ namespace ACDCs.Renderer.Renderers;
 /// <summary>
 /// Sub renderer class as base for renderers.
 /// </summary>
-public class SubRenderer<T>
+public class BaseRenderer<T>
 {
     private List<IDrawing> _drawings = [];
 

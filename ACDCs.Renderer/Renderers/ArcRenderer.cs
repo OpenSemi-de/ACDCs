@@ -9,7 +9,7 @@ namespace ACDCs.Renderer.Renderers;
 /// </summary>
 /// <seealso cref="IRenderer" />
 /// <seealso cref="ITextRenderer" />
-public class ArcRenderer : SubRenderer<ArcDrawing>, IRenderer, IArcRenderer
+public class ArcRenderer : BaseRenderer<ArcDrawing>, IRenderer, IArcRenderer
 {
     /// <summary>
     /// Draws on the specified canvas.

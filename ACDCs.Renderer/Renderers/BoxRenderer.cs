@@ -9,7 +9,7 @@ namespace ACDCs.Renderer.Renderers;
 /// </summary>
 /// <seealso cref="IRenderer" />
 /// <seealso cref="ITextRenderer" />
-public class BoxRenderer : SubRenderer<BoxDrawing>, IRenderer, IBoxRenderer
+public class BoxRenderer : BaseRenderer<BoxDrawing>, IRenderer, IBoxRenderer
 {
     /// <summary>
     /// Draws on the specified canvas.

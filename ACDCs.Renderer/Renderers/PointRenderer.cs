@@ -7,8 +7,8 @@ namespace ACDCs.Renderer.Renderers;
 /// <summary>
 /// The point renderer.
 /// </summary>
-/// <seealso cref="Interfaces.Renderer.IRenderer" />
-/// <seealso cref="Interfaces.Renderer.ILineRenderer" />
+/// <seealso cref="IRenderer" />
+/// <seealso cref="ILineRenderer" />
 public class PointRenderer : BaseRenderer<PointDrawing>, IRenderer, IPointRenderer
 {
     /// <summary>

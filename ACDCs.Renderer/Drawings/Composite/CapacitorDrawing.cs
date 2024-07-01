@@ -1,18 +1,19 @@
 ﻿using ACDCs.Interfaces;
 using ACDCs.Interfaces.Drawing;
-using Point = ACDCs.Interfaces.Point;
+using ACDCs.Shared;
+using ACDCs.Structs;
 
 namespace ACDCs.Renderer.Drawings.Composite;
 
 /// <summary>
 /// Drawing for a capacitor element.
 /// </summary>
-/// <seealso cref="ACDCs.Renderer.Drawings.BaseDrawing" />
-/// <seealso cref="ACDCs.Interfaces.Drawing.ICompositeDrawing" />
-/// <seealso cref="ACDCs.Interfaces.Drawing.IDrawingWithSize" />
+/// <seealso cref="BaseDrawing" />
+/// <seealso cref="ICompositeDrawing" />
+/// <seealso cref="IDrawingWithSize" />
 public class CapacitorDrawing : BaseDrawing, ICompositeDrawing, IDrawingWithSize
 {
-    private IThemeService _themeService;
+    private readonly IThemeService _themeService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CapacitorDrawing"/> class.

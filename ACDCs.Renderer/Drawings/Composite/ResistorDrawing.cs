@@ -1,5 +1,4 @@
 ﻿using ACDCs.Interfaces.Drawing;
-using Point = ACDCs.Interfaces.Point;
 
 namespace ACDCs.Renderer.Drawings.Composite;
 
@@ -9,9 +8,9 @@ namespace ACDCs.Renderer.Drawings.Composite;
 /// <remarks>
 /// Initializes a new instance of the <see cref="ResistorDrawing" /> class.
 /// </remarks>
-/// <seealso cref="ACDCs.Renderer.Drawings.BaseDrawing" />
-/// <seealso cref="ACDCs.Interfaces.Drawing.ICompositeDrawing" />
-/// <seealso cref="ACDCs.Interfaces.Drawing.IDrawingWithSize" />
+/// <seealso cref="BaseDrawing" />
+/// <seealso cref="ICompositeDrawing" />
+/// <seealso cref="IDrawingWithSize" />
 /// <seealso cref="IDrawing" />
 /// <seealso cref="ICompositeDrawing" />
 public class ResistorDrawing : BaseDrawing, ICompositeDrawing, IDrawingWithSize

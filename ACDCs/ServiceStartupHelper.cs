@@ -8,6 +8,7 @@ using ACDCs.Renderer;
 using ACDCs.Renderer.Managers;
 using ACDCs.Renderer.Renderers;
 using ACDCs.Services;
+using ACDCs.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace ACDCs;

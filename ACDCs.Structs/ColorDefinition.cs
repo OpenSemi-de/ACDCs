@@ -1,4 +1,4 @@
-﻿namespace ACDCs.Interfaces;
+﻿namespace ACDCs.Structs;
 
 /// <summary>
 /// Theme color definitions

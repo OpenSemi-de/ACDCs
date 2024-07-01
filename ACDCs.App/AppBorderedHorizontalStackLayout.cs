@@ -2,6 +2,7 @@
 
 namespace ACDCs.App;
 
+using ACDCs.Structs;
 using Sharp.UI;
 
 /// <summary>

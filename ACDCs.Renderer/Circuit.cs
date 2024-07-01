@@ -6,7 +6,7 @@ namespace ACDCs.Renderer;
 /// <summary>
 /// The circuit data structure.
 /// </summary>
-/// <seealso cref="ACDCs.Interfaces.ICircuit" />
+/// <seealso cref="ICircuit" />
 public class Circuit : ICircuit
 {
     /// <summary>

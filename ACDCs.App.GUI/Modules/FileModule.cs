@@ -4,6 +4,7 @@ using ACDCs.App.Desktop;
 using ACDCs.Interfaces;
 using ACDCs.Interfaces.Modules;
 using ACDCs.Interfaces.View;
+using ACDCs.Structs;
 using MauiIcons.Material;
 using Microsoft.Extensions.Logging;
 using Sharp.UI;

@@ -1,17 +1,25 @@
 ﻿using ACDCs.Interfaces;
 using ACDCs.Interfaces.Circuit;
 using ACDCs.Interfaces.Drawing;
+using ACDCs.Structs;
 using Newtonsoft.Json;
-using Rect = ACDCs.Interfaces.Rect;
 
 namespace ACDCs.Renderer;
 
 /// <summary>
 /// The scene class holding the circuits information.
 /// </summary>
-/// <seealso cref="Interfaces.Circuit.IScene" />
+/// <seealso cref="IScene" />
 public class Scene : IScene
 {
+    /// <summary>
+    /// Gets or sets the color of the background.
+    /// </summary>
+    /// <value>
+    /// The color of the background.
+    /// </value>
+    public Color BackgroundColor { get; set; } = Colors.Transparent;
+
     /// <summary>
     /// Gets or sets the circuit.
     /// </summary>
@@ -19,6 +27,23 @@ public class Scene : IScene
     /// The circuit.
     /// </value>
     public ICircuit Circuit { get; set; } = new Circuit();
+
+    /// <summary>
+    /// Gets the click boxes.
+    /// </summary>
+    /// <value>
+    /// The click boxes.
+    /// </value>
+    [JsonIgnore]
+    public List<Quad> ClickBoxes => [];
+
+    /// <summary>
+    /// Gets the debug.
+    /// </summary>
+    /// <value>
+    /// The debug.
+    /// </value>
+    public SceneDebug Debug => new();
 
     /// <summary>
     /// Gets the drawings.

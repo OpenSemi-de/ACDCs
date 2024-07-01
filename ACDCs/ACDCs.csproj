@@ -64,8 +64,8 @@
 		<PackageReference Include="AathifMahir.Maui.MauiIcons.Material" Version="3.0.0" />
 		<PackageReference Include="MetroLog.Maui" Version="2.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.60" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.60" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.61" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.61" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="NetEscapades.Extensions.Logging.RollingFile" Version="2.5.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

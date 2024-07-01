@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace ACDCs.Interfaces;
+namespace ACDCs.Shared;
 
 /// <summary>
 /// The Service Helper for service resolution.

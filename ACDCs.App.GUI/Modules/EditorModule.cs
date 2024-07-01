@@ -4,6 +4,7 @@ using ACDCs.App.Desktop;
 using ACDCs.Interfaces;
 using ACDCs.Interfaces.Modules;
 using ACDCs.Interfaces.View;
+using ACDCs.Shared;
 using MauiIcons.Material;
 using Microsoft.Extensions.Logging;
 

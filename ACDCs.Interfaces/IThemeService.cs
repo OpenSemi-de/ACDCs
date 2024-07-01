@@ -1,4 +1,6 @@
-﻿namespace ACDCs.Interfaces;
+﻿using ACDCs.Structs;
+
+namespace ACDCs.Interfaces;
 
 /// <summary>
 /// Interface for the theme service

@@ -1,16 +1,15 @@
-﻿using ACDCs.Interfaces;
-using ACDCs.Interfaces.Drawing;
+﻿using ACDCs.Interfaces.Drawing;
 using ACDCs.Interfaces.Renderer;
 using ACDCs.Renderer.Managers;
-using Rect = ACDCs.Interfaces.Rect;
+using ACDCs.Shared;
 
 namespace ACDCs.Renderer.Renderers;
 
 /// <summary>
 /// The line renderer.
 /// </summary>
-/// <seealso cref="Interfaces.Renderer.IRenderer" />
-/// <seealso cref="Interfaces.Renderer.ITextRenderer" />
+/// <seealso cref="IRenderer" />
+/// <seealso cref="ITextRenderer" />
 public class GridRenderer : BaseRenderer<IGridDrawing>, IRenderer, IGridRenderer
 {
     private readonly Color _gridColor = RenderSettingsManager.GetGridColor();
@@ -25,7 +24,7 @@ public class GridRenderer : BaseRenderer<IGridDrawing>, IRenderer, IGridRenderer
         canvas.StrokeColor = _gridColor;
         canvas.StrokeSize = 0.7f;
 
-        if (Scene != null && Scene.HasOutline)
+        if (Scene != null && Scene.Debug.HasOutline)
         {
             int startX = Convert.ToInt32(Scene?.SceneSize.X);
             int endX = Convert.ToInt32(Scene?.SceneSize.X + Scene?.SceneSize.Width);

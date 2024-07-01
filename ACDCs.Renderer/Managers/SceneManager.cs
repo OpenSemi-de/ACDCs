@@ -2,6 +2,7 @@
 using ACDCs.Interfaces.Circuit;
 using ACDCs.Interfaces.Drawing;
 using ACDCs.Interfaces.Renderer;
+using ACDCs.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace ACDCs.Renderer.Managers;
@@ -9,6 +10,7 @@ namespace ACDCs.Renderer.Managers;
 /// <summary>
 /// The scene manager to handle the sub renderers.
 /// </summary>
+/// <seealso cref="ISceneManager" />
 /// <seealso cref="ISceneManager" />
 public class SceneManager : ISceneManager
 {
@@ -30,8 +32,27 @@ public class SceneManager : ISceneManager
         renderers.Add(ServiceHelper.GetService<IBoxRenderer>());
         renderers.Add(ServiceHelper.GetService<IArcRenderer>());
         renderers.Add(ServiceHelper.GetService<ILineRenderer>());
-
         renderers.Add(ServiceHelper.GetService<ITextRenderer>());
+
+        Scene = new Scene();
+    }
+
+    /// <summary>
+    /// Gets or sets the scene.
+    /// </summary>
+    /// <value>
+    /// The scene.
+    /// </value>
+    public IScene Scene { get; set; }
+
+    /// <summary>
+    /// Adds the component.
+    /// </summary>
+    /// <param name="component">The component.</param>
+    public void AddComponent(IComponent component)
+    {
+        Scene.Circuit.Components.Add(component);
+        ProvideScene(Scene);
     }
 
     /// <summary>
@@ -44,6 +65,20 @@ public class SceneManager : ISceneManager
         {
             renderer.Draw(canvas);
         }
+    }
+
+    /// <summary>
+    /// Gets the tapped.
+    /// </summary>
+    /// <param name="clickPoint">The click point.</param>
+    public void GetTapped(Point? clickPoint)
+    {
+        if (clickPoint == null)
+        {
+            return;
+        }
+
+        Scene.ClickBoxes.FirstOrDefault(b => SelectionHelper.PointInRect(clickPoint.Value, b));
     }
 
     /// <summary>
@@ -66,12 +101,22 @@ public class SceneManager : ISceneManager
     /// Sets the position.
     /// </summary>
     /// <param name="position">The position.</param>
-    public void SetPosition(Microsoft.Maui.Graphics.Point position)
+    public void SetPosition(Point position)
     {
         renderers.ForEach(r => r.SetPosition(position));
     }
 
-    private IDrawing? GetDrawing(IComponent component)
+    /// <summary>
+    /// Sets the scene.
+    /// </summary>
+    /// <param name="scene">The scene.</param>
+    public void SetScene(IScene scene)
+    {
+        Scene = scene;
+        ProvideScene(Scene);
+    }
+
+    private static IDrawing? GetDrawing(IComponent component)
     {
         if (component.GetDrawing() is not IDrawing drawing)
         {
@@ -87,7 +132,7 @@ public class SceneManager : ISceneManager
 
         foreach (IComponent component in scene.Circuit.Components)
         {
-            IDrawing? item = GetDrawing(component);
+            IDrawing? item = SceneManager.GetDrawing(component);
             if (item != null)
             {
                 scene.Drawings.Add(item);

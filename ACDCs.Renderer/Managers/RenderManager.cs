@@ -1,6 +1,8 @@
 ﻿using ACDCs.Interfaces;
+using ACDCs.Interfaces.Circuit;
+using ACDCs.Shared;
+using ACDCs.Structs;
 using Microsoft.Extensions.Logging;
-using Rect = ACDCs.Interfaces.Rect;
 
 namespace ACDCs.Renderer.Managers;
 
@@ -17,7 +19,7 @@ public class RenderManager : IRenderManager, IDrawable
     private readonly ISceneManager _sceneManager;
     private readonly Color _strokeColor;
     private readonly IThemeService _themeService;
-    private Microsoft.Maui.Graphics.Point _position = new(100, 100);
+    private Point _position = new(100, 100);
     private float _stepSize = 25.4f;
 
     /// <summary>
@@ -73,7 +75,7 @@ public class RenderManager : IRenderManager, IDrawable
     /// <value>
     /// The position.
     /// </value>
-    public Microsoft.Maui.Graphics.Point Position { get => _position; set => _position = value; }
+    public Point Position { get => _position; set => _position = value; }
 
     /// <summary>
     /// Gets or sets the size of the step.
@@ -82,6 +84,15 @@ public class RenderManager : IRenderManager, IDrawable
     /// The size of the step.
     /// </value>
     public float StepSize { get => _stepSize; set => _stepSize = value; }
+
+    /// <summary>
+    /// Adds the component.
+    /// </summary>
+    /// <param name="component">The component.</param>
+    public void AddComponent(IComponent component)
+    {
+        _sceneManager.AddComponent(component);
+    }
 
     /// <summary>
     /// Draws the specified canvas.
@@ -96,13 +107,22 @@ public class RenderManager : IRenderManager, IDrawable
         }
 
         SetColors(canvas);
-        FillBackground(canvas, dirtyRect);
+        FillBackground(_sceneManager.Scene, canvas, dirtyRect);
         _sceneManager.Draw(canvas);
 
-        if (IsDebug)
+        if (IsDebug && _sceneManager.Scene.Debug.HasOutline)
         {
             DrawDebug(canvas);
         }
+    }
+
+    /// <summary>
+    /// Gets the tapped.
+    /// </summary>
+    /// <param name="clickPoint"></param>
+    public void GetTapped(Point? clickPoint)
+    {
+        _sceneManager.GetTapped(clickPoint);
     }
 
     /// <summary>
@@ -130,14 +150,33 @@ public class RenderManager : IRenderManager, IDrawable
         _sceneManager.SetPosition(_position);
     }
 
-    private static void FillBackground(ICanvas canvas, RectF dirtyRect)
+    /// <summary>
+    /// Sets the scene.
+    /// </summary>
+    /// <param name="scene">The scene.</param>
+    public void SetScene(IScene scene)
     {
-        canvas.FillRectangle(dirtyRect.X, dirtyRect.Y, dirtyRect.Width, dirtyRect.Height);
+        _sceneManager.SetScene(scene);
     }
 
     private void DrawDebug(ICanvas canvas)
     {
         canvas.DrawString(_position.ToJson(), 0, 0, HorizontalAlignment.Left);
+    }
+
+    private void FillBackground(IScene scene, ICanvas canvas, RectF dirtyRect)
+    {
+        if (scene.BackgroundColor != Colors.Transparent)
+        {
+            canvas.FillColor = scene.BackgroundColor;
+        }
+
+        canvas.FillRectangle(dirtyRect.X, dirtyRect.Y, dirtyRect.Width, dirtyRect.Height);
+
+        if (scene.BackgroundColor != Colors.Transparent)
+        {
+            SetColors(canvas);
+        }
     }
 
     private void SetColors(ICanvas canvas)

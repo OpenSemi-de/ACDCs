@@ -1,4 +1,4 @@
-﻿namespace ACDCs.Interfaces;
+﻿namespace ACDCs.Shared;
 
 /// <summary>
 /// Helper class from maui.graphics geometry to app internal.
@@ -10,9 +10,9 @@ public static class GeomHelper
     /// </summary>
     /// <param name="input">The input.</param>
     /// <returns></returns>
-    public static Microsoft.Maui.Graphics.Rect FromRect(this Rect input)
+    public static Rect FromRect(this Rect input)
     {
-        Microsoft.Maui.Graphics.Rect rect = new(input.X, input.Y, input.Width, input.Height);
+        Rect rect = new(input.X, input.Y, input.Width, input.Height);
         return rect;
     }
 
@@ -21,7 +21,7 @@ public static class GeomHelper
     /// </summary>
     /// <param name="input">The input.</param>
     /// <returns></returns>
-    public static Rect ToRect(this Microsoft.Maui.Graphics.Rect input)
+    public static Rect ToRect(this Rect input)
     {
         Rect rect = new(input.X, input.Y, input.Width, input.Height);
         return rect;

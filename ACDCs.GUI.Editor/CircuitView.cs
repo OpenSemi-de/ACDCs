@@ -1,7 +1,10 @@
 ﻿namespace ACDCs.App.GUI.Modules;
 
 using ACDCs.Interfaces;
+using ACDCs.Interfaces.Circuit;
 using ACDCs.Interfaces.Renderer;
+using ACDCs.Shared;
+using ACDCs.Structs;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Layouts;
 using Sharp.UI;
@@ -15,7 +18,7 @@ public class CircuitView : ContentView, ICircuitView
 {
     private readonly ICircuitRenderer _circuitRenderer;
     private readonly ILogger _logger;
-    private readonly IRenderManager _renderCore;
+    private readonly IRenderManager _renderManager;
     private readonly IThemeService _themeService;
 
     /// <summary>
@@ -33,7 +36,7 @@ public class CircuitView : ContentView, ICircuitView
 
         _circuitRenderer = ServiceHelper.GetService<ICircuitRenderer>();
         Content = (View)_circuitRenderer;
-        _renderCore = _circuitRenderer.RenderCore;
+        _renderManager = _circuitRenderer.RenderManager;
         _logger.LogDebug("Circuit editor started.");
     }
 
@@ -43,7 +46,16 @@ public class CircuitView : ContentView, ICircuitView
     /// <value>
     /// The render core.
     /// </value>
-    public IRenderManager RenderCore => _renderCore;
+    public IRenderManager RenderCore => _renderManager;
+
+    /// <summary>
+    /// Adds a component.
+    /// </summary>
+    /// <param name="component">The component.</param>
+    public void AddComponent(IComponent component)
+    {
+        _renderManager.AddComponent(component);
+    }
 
     /// <summary>
     /// Loads the scene from json.
@@ -52,5 +64,14 @@ public class CircuitView : ContentView, ICircuitView
     public void LoadJson(string jsonScene)
     {
         _circuitRenderer.LoadJson(jsonScene);
+    }
+
+    /// <summary>
+    /// Sets the scene.
+    /// </summary>
+    /// <param name="scene">The scene.</param>
+    public void SetScene(IScene scene)
+    {
+        _renderManager.SetScene(scene);
     }
 }

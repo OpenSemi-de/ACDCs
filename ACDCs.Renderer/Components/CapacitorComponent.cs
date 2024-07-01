@@ -10,9 +10,20 @@ namespace ACDCs.Renderer.Components;
 /// <remarks>
 /// Initializes a new instance of the <see cref="ResistorComponent" /> class.
 /// </remarks>
-/// <seealso cref="Interfaces.Circuit.IComponent" />
+/// <seealso cref="IComponent" />
 public class CapacitorComponent : IComponent
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CapacitorComponent"/> class.
+    /// </summary>
+    public CapacitorComponent()
+    {
+        Id = "Capacitor";
+        Rotation = 0;
+        IsPolar = true;
+        Value = 4.7f;
+    }
+
     /// <summary>
     /// Initializes a new instance of the <see cref="CapacitorComponent"/> class.
     /// </summary>
@@ -31,6 +42,14 @@ public class CapacitorComponent : IComponent
         X = x;
         Y = y;
     }
+
+    /// <summary>
+    /// Gets or sets the component display order.
+    /// </summary>
+    /// <value>
+    /// The component display order.
+    /// </value>
+    public int ComponentDisplayOrder { get; set; } = 2;
 
     /// <summary>
     /// Gets or sets the height.

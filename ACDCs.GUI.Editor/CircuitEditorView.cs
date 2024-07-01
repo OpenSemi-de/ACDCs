@@ -4,6 +4,8 @@ using ACDCs.Interfaces;
 using ACDCs.Renderer;
 using ACDCs.Renderer.Components;
 using ACDCs.Renderer.Drawings.Composite;
+using ACDCs.Shared;
+using ACDCs.Structs;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Layouts;
 using Sharp.UI;
@@ -42,6 +44,7 @@ public class CircuitEditorView : ContentView, ICircuitEditorView
         scene.Circuit.Components.Add(item);
         scene.Circuit.Components.Add(resistor);
         scene.Circuit.Components.Add(capacitor);
+        scene.Debug.ShowClickBoxes = true;
         string d = scene.ToJson();
         _circuitView.LoadJson(d);
     }

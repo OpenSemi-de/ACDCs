@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0;net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
@@ -16,7 +16,8 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
-
+	
+  
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -27,19 +28,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Platforms\Android\" />
-	  <Folder Include="Platforms\iOS\" />
-	  <Folder Include="Platforms\MacCatalyst\" />
-	  <Folder Include="Platforms\Tizen\" />
-	  <Folder Include="Platforms\Windows\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\ACDCs.App\ACDCs.App.csproj" />
-	  <ProjectReference Include="..\ACDCs.GUI.Editor\ACDCs.App.GUI.Editor.csproj" />
 	  <ProjectReference Include="..\ACDCs.Interfaces\ACDCs.Interfaces.csproj" />
-	  <ProjectReference Include="..\ACDCs.Services\ACDCs.Services.csproj" />
-	  <ProjectReference Include="..\libs\Sharp.UI\src\main\Sharp.UI\Sharp.UI.csproj" />
 	</ItemGroup>
 
 </Project>

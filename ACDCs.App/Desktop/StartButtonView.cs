@@ -4,6 +4,7 @@ namespace ACDCs.App.Desktop;
 
 using ACDCs.App;
 using ACDCs.Interfaces.View;
+using ACDCs.Structs;
 using Sharp.UI;
 
 /// <summary>

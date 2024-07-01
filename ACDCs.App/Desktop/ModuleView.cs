@@ -5,10 +5,10 @@ namespace ACDCs.App.Desktop;
 using ACDCs.App;
 using ACDCs.Interfaces.Modules;
 using ACDCs.Interfaces.View;
+using ACDCs.Structs;
 using MauiIcons.Material;
 using Sharp.UI;
 using System.Collections.Generic;
-using Rect = Interfaces.Rect;
 
 /// <summary>
 /// The Module View (App Window with start menu entry) base class.
@@ -48,7 +48,7 @@ public class ModuleView : AppBorderedGrid, IAppModule
         item.Tapped += Item_Tapped;
         GestureRecognizers.Add(item);
 
-        Rect position = this.GetAbsoluteLayoutBoundsValue().ToRect();
+        Rect position = this.GetAbsoluteLayoutBoundsValue();
         _lastBounds = position;
 
         _themeService = themeService;
@@ -61,7 +61,7 @@ public class ModuleView : AppBorderedGrid, IAppModule
 
         this.BackgroundColor(_themeService.GetColor(ColorDefinition.ModuleBackground));
         this.AbsoluteLayoutFlags(Microsoft.Maui.Layouts.AbsoluteLayoutFlags.None);
-        this.AbsoluteLayoutBounds(new Rect(10, 10, 400, 300).FromRect());
+        this.AbsoluteLayoutBounds(new Rect(10, 10, 400, 300));
 
         _mainView = new AbsoluteLayout()
             .Row(1)
@@ -326,7 +326,7 @@ public class ModuleView : AppBorderedGrid, IAppModule
     /// </summary>
     public void Maximize()
     {
-        _lastBounds = this.GetAbsoluteLayoutBoundsValue().ToRect();
+        _lastBounds = this.GetAbsoluteLayoutBoundsValue();
         this.AbsoluteLayoutFlags(Microsoft.Maui.Layouts.AbsoluteLayoutFlags.All);
         this.AbsoluteLayoutBounds(0, 0, 1, 1);
         _isMaximized = true;
@@ -347,7 +347,7 @@ public class ModuleView : AppBorderedGrid, IAppModule
     public void Restore()
     {
         this.AbsoluteLayoutFlags(Microsoft.Maui.Layouts.AbsoluteLayoutFlags.None);
-        this.AbsoluteLayoutBounds(_lastBounds.FromRect());
+        this.AbsoluteLayoutBounds(_lastBounds);
         _isMaximized = false;
         IsMinimized = false;
     }
@@ -416,7 +416,7 @@ public class ModuleView : AppBorderedGrid, IAppModule
     {
         if (_isMaximized) return;
 
-        Rect position = this.GetAbsoluteLayoutBoundsValue().ToRect();
+        Rect position = this.GetAbsoluteLayoutBoundsValue();
         switch (e.StatusType)
         {
             case GestureStatus.Started:
@@ -446,7 +446,7 @@ public class ModuleView : AppBorderedGrid, IAppModule
     {
         if (_isMaximized) return;
 
-        Rect position = this.GetAbsoluteLayoutBoundsValue().ToRect();
+        Rect position = this.GetAbsoluteLayoutBoundsValue();
         switch (e.StatusType)
         {
             case GestureStatus.Started:

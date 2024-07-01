@@ -1,5 +1,4 @@
 ﻿using ACDCs.Interfaces.Drawing;
-using System.Runtime.CompilerServices;
 
 namespace ACDCs.Interfaces.Circuit;
 
@@ -8,6 +7,14 @@ namespace ACDCs.Interfaces.Circuit;
 /// </summary>
 public interface IComponent
 {
+    /// <summary>
+    /// Gets or sets the component display order.
+    /// </summary>
+    /// <value>
+    /// The component display order.
+    /// </value>
+    public int ComponentDisplayOrder { get; set; }
+
     /// <summary>
     /// Gets or sets the height.
     /// </summary>

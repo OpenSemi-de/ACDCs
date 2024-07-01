@@ -5,6 +5,7 @@ namespace ACDCs.App.Desktop;
 using ACDCs.App;
 using ACDCs.Interfaces.Modules;
 using ACDCs.Interfaces.View;
+using ACDCs.Structs;
 using Microsoft.Maui.Layouts;
 using Sharp.UI;
 using System.Reflection;

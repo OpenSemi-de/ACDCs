@@ -1,6 +1,7 @@
 ﻿using ACDCs.Interfaces;
 using ACDCs.Interfaces.Modules;
 using ACDCs.Interfaces.View;
+using ACDCs.Structs;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 using System.Reflection;
@@ -21,7 +22,7 @@ public class WindowService(ILogger logger, IThemeService themeService) : IWindow
     /// <summary>
     /// Occurs when [on window changed].
     /// </summary>
-    public event EventHandler<WindowChangedEventArgs>? OnWindowChanged;
+    public event EventHandler<IWindowChangedEventArgs>? OnWindowChanged;
 
     /// <summary>
     /// Gets the automatic start views.

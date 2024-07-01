@@ -1,5 +1,8 @@
 ﻿using ACDCs.Interfaces.Circuit;
 using ACDCs.Interfaces.Drawing;
+using ACDCs.Shared;
+using ACDCs.Structs;
+using Rect = Microsoft.Maui.Graphics.Rect;
 
 namespace ACDCs.Renderer.Renderers;
 
@@ -10,7 +13,7 @@ public class BaseRenderer<T>
 {
     private List<IDrawing> _drawings = [];
 
-    private Microsoft.Maui.Graphics.Point _position;
+    private Point _position;
 
     private IScene? _scene;
 
@@ -36,7 +39,7 @@ public class BaseRenderer<T>
     /// <value>
     /// The position.
     /// </value>
-    public Microsoft.Maui.Graphics.Point Position { get => _position; set => _position = value; }
+    public Point Position { get => _position; set => _position = value; }
 
     /// <summary>
     /// Gets or sets the scene.
@@ -54,11 +57,11 @@ public class BaseRenderer<T>
     /// <param name="y">The y.</param>
     /// <param name="x2">The x2.</param>
     /// <param name="y2">The y2.</param>
-    public void GetPositionAndEnd(IDrawing drawing, ref float x, ref float y, ref float x2, ref float y2)
+    public Quad GetPositionAndEnd(IDrawing drawing, ref float x, ref float y, ref float x2, ref float y2)
     {
         if (drawing == null || drawing.ParentDrawing == null)
         {
-            return;
+            return new();
         }
 
         if (drawing.IsRelativeScale)
@@ -88,6 +91,8 @@ public class BaseRenderer<T>
             x2 += Convert.ToSingle(Position.X);
             y2 += Convert.ToSingle(Position.Y);
         }
+
+        return RegisterClickBox(x, y, x2, y2, drawing.Rotation);
     }
 
     /// <summary>
@@ -98,13 +103,13 @@ public class BaseRenderer<T>
     /// <param name="y">The y.</param>
     /// <param name="width">The width.</param>
     /// <param name="height">The height.</param>
-    public void GetPositionAndSize(IDrawing drawing, ref float x, ref float y, ref float width, ref float height)
+    public Quad GetPositionAndSize(IDrawing drawing, ref float x, ref float y, ref float width, ref float height)
     {
         if (drawing.IsRelativeScale)
         {
             if (drawing.ParentDrawing == null)
             {
-                return;
+                return new();
             }
 
             if (drawing.ParentDrawing is IDrawingWithSize drawingWithSize)
@@ -127,13 +132,15 @@ public class BaseRenderer<T>
             x += Convert.ToSingle(Position.X);
             y += Convert.ToSingle(Position.Y);
         }
+
+        return RegisterClickBox(x, y, x + width, y + width, drawing.Rotation);
     }
 
     /// <summary>
     /// Sets the position.
     /// </summary>
     /// <param name="position">The position.</param>
-    public void SetPosition(Microsoft.Maui.Graphics.Point position)
+    public void SetPosition(Point position)
     {
         Position = position;
     }
@@ -159,5 +166,12 @@ public class BaseRenderer<T>
             .Where(d => d.GetType() == drawingType)
             .ToList()
             );
+    }
+
+    private Quad RegisterClickBox(float x, float y, float x2, float y2, float rotation)
+    {
+        Quad quad = new(x, y, x2, y, x2, y2, x, y2);
+        Scene?.ClickBoxes.Add(quad);
+        return quad;
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace ACDCs.Interfaces;
+﻿using ACDCs.Interfaces.Circuit;
+
+namespace ACDCs.Interfaces;
 
 /// <summary>
 /// The interface for the core renderer.
@@ -27,7 +29,7 @@ public interface IRenderManager
     /// <value>
     /// The position.
     /// </value>
-    Microsoft.Maui.Graphics.Point Position { get; }
+    Point Position { get; }
 
     /// <summary>
     /// Gets or sets the size of the step.
@@ -36,6 +38,18 @@ public interface IRenderManager
     /// The size of the step.
     /// </value>
     public float StepSize { get; set; }
+
+    /// <summary>
+    /// Adds the component.
+    /// </summary>
+    /// <param name="component">The component.</param>
+    void AddComponent(IComponent component);
+
+    /// <summary>
+    /// Gets the tapped.
+    /// </summary>
+    /// <param name="clickPoint">The click point.</param>
+    void GetTapped(Point? clickPoint);
 
     /// <summary>
     /// Loads the scene from json.
@@ -49,4 +63,10 @@ public interface IRenderManager
     /// <param name="x">The x.</param>
     /// <param name="y">The y.</param>
     public void SetPositionOffset(float x, float y);
+
+    /// <summary>
+    /// Sets the scene.
+    /// </summary>
+    /// <param name="scene">The scene.</param>
+    void SetScene(IScene scene);
 }

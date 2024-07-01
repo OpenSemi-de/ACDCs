@@ -1,5 +1,6 @@
 ﻿using ACDCs.Interfaces;
 using ACDCs.Interfaces.Drawing;
+using ACDCs.Structs;
 using System.Collections.Concurrent;
 
 namespace ACDCs.Renderer.Managers;
@@ -9,7 +10,7 @@ namespace ACDCs.Renderer.Managers;
 /// </summary>
 public static class RenderSettingsManager
 {
-    private static ConcurrentDictionary<ColorDefinition, Color> s_colorCache = new();
+    private static readonly ConcurrentDictionary<ColorDefinition, Color> s_colorCache = new();
     private static IThemeService? s_themeService;
 
     /// <summary>

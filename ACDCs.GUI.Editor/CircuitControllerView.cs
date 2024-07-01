@@ -1,6 +1,7 @@
 ﻿namespace ACDCs.App.GUI.Modules;
 
 using ACDCs.Interfaces;
+using ACDCs.Structs;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Layouts;
 using Sharp.UI;

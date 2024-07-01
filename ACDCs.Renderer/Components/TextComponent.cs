@@ -7,7 +7,7 @@ namespace ACDCs.Renderer.Components;
 /// <summary>
 /// Circuit component for text.
 /// </summary>
-/// <seealso cref="Interfaces.Circuit.IComponent" />
+/// <seealso cref="IComponent" />
 public class TextComponent : IComponent
 {
     /// <summary>
@@ -16,7 +16,11 @@ public class TextComponent : IComponent
     public TextComponent()
     {
         Id = "";
-        Text = "";
+        Text = "Text";
+        Width = 60;
+        Height = 40;
+        Rotation = 0;
+        Value = 0;
     }
 
     /// <summary>
@@ -39,6 +43,14 @@ public class TextComponent : IComponent
         Height = height;
         Rotation = rotation;
     }
+
+    /// <summary>
+    /// Gets or sets the component display order.
+    /// </summary>
+    /// <value>
+    /// The component display order.
+    /// </value>
+    public int ComponentDisplayOrder { get; set; } = 999;
 
     /// <summary>
     /// Gets or sets the height.

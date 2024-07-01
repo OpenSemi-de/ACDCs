@@ -1,5 +1,6 @@
 ﻿using ACDCs.Interfaces.Modules;
 using ACDCs.Interfaces.View;
+using ACDCs.Structs;
 using System.Reflection;
 
 namespace ACDCs.Interfaces;
@@ -12,7 +13,7 @@ public interface IWindowService
     /// <summary>
     /// Occurs when [on window changed].
     /// </summary>
-    public event EventHandler<WindowChangedEventArgs>? OnWindowChanged;
+    public event EventHandler<IWindowChangedEventArgs>? OnWindowChanged;
 
     /// <summary>
     /// Gets the automatic start views.

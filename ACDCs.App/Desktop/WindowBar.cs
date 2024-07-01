@@ -2,6 +2,7 @@
 
 namespace ACDCs.App.Desktop;
 
+using ACDCs.App.Modules;
 using ACDCs.Interfaces.Modules;
 using ACDCs.Interfaces.View;
 using Sharp.UI;
@@ -61,7 +62,7 @@ public class WindowBarView : StackLayout, IWindowBarView
         }
     }
 
-    private void WindowService_OnWindowChanged(object? sender, WindowChangedEventArgs e)
+    private void WindowService_OnWindowChanged(object? sender, IWindowChangedEventArgs e)
     {
         if (e.Modules.Contains(e.ChangedModule))
         {

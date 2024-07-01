@@ -1,4 +1,4 @@
-﻿namespace ACDCs.Interfaces;
+﻿namespace ACDCs.Shared;
 
 using Newtonsoft.Json;
 

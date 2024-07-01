@@ -1,6 +1,7 @@
 ﻿namespace ACDCs.App.Desktop;
 
 using ACDCs.Interfaces;
+using ACDCs.Structs;
 using Sharp.UI;
 using System.Collections.Generic;
 

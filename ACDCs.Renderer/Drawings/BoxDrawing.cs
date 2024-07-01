@@ -8,9 +8,9 @@ namespace ACDCs.Renderer.Drawings;
 /// <remarks>
 /// Initializes a new instance of the <see cref="BoxDrawing" /> class.
 /// </remarks>
-/// <seealso cref="ACDCs.Renderer.Drawings.BaseDrawing" />
-/// <seealso cref="ACDCs.Interfaces.Drawing.IDrawingWithSize" />
-/// <seealso cref="Interfaces.Drawing.IDrawing" />
+/// <seealso cref="BaseDrawing" />
+/// <seealso cref="IDrawingWithSize" />
+/// <seealso cref="IDrawing" />
 /// <seealso cref="IDrawing" />
 public class BoxDrawing : BaseDrawing, IDrawingWithSize
 {

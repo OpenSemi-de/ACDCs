@@ -8,9 +8,9 @@ namespace ACDCs.Renderer.Drawings;
 /// <remarks>
 /// Initializes a new instance of the <see cref="PointDrawing" /> class.
 /// </remarks>
-/// <seealso cref="ACDCs.Renderer.Drawings.BaseDrawing" />
-/// <seealso cref="ACDCs.Interfaces.Drawing.IDrawingTwoPoint" />
-/// <seealso cref="Interfaces.Drawing.IDrawing" />
+/// <seealso cref="BaseDrawing" />
+/// <seealso cref="IDrawingTwoPoint" />
+/// <seealso cref="IDrawing" />
 public class LineDrawing : BaseDrawing, IDrawingTwoPoint
 {
     /// <param name="id">The identifier.</param>

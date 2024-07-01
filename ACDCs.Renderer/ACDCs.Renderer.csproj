@@ -22,12 +22,14 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.60" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.60" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.61" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.61" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\ACDCs.Interfaces\ACDCs.Interfaces.csproj" />
+	  <ProjectReference Include="..\ACDCs.Shared\ACDCs.Shared.csproj" />
+	  <ProjectReference Include="..\ACDCs.Structs\ACDCs.Structs.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

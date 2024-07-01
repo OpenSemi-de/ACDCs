@@ -2,6 +2,7 @@
 
 namespace ACDCs.App;
 
+using ACDCs.Structs;
 using MauiIcons.Core;
 using Sharp.UI;
 

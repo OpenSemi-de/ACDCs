@@ -5,8 +5,8 @@ using ACDCs.Interfaces.Drawing;
 /// <summary>
 /// Drawing element for a arc.
 /// </summary>
-/// <seealso cref="ACDCs.Renderer.Drawings.BaseDrawing" />
-/// <seealso cref="ACDCs.Interfaces.Drawing.IDrawingWithSize" />
+/// <seealso cref="BaseDrawing" />
+/// <seealso cref="IDrawingWithSize" />
 public class ArcDrawing : BaseDrawing, IDrawingWithSize
 {
     /// <summary>

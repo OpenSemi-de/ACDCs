@@ -1,4 +1,5 @@
 ﻿using ACDCs.Interfaces.Renderer;
+using ACDCs.Interfaces.Circuit;
 using ACDCs.Renderer.Drawings;
 using ACDCs.Renderer.Managers;
 
@@ -14,10 +15,12 @@ public class BoxRenderer : BaseRenderer<BoxDrawing>, IRenderer, IBoxRenderer
     /// <summary>
     /// Draws on the specified canvas.
     /// </summary>
+    /// <param name="scene">The scene.</param>
     /// <param name="canvas">The canvas.</param>
-    public void Draw(ICanvas canvas)
+    /// <param name="dirtyRect">The rect to draw</param>
+    public void Draw(IScene scene, ICanvas canvas, RectF dirtyRect)
     {
-        foreach (BoxDrawing box in Drawings.Cast<BoxDrawing>())
+        foreach (BoxDrawing box in scene.Drawings.OfType<BoxDrawing>())
         {
             RenderSettingsManager.ApplyColors(canvas, box);
 
@@ -26,7 +29,7 @@ public class BoxRenderer : BaseRenderer<BoxDrawing>, IRenderer, IBoxRenderer
             float width = box.Width;
             float height = box.Height;
 
-            GetPositionAndSize(box, ref x, ref y, ref width, ref height);
+            BaseRendererHelper.GetPositionAndSize(scene, Position, box, ref x, ref y, ref width, ref height);
 
             canvas.FillRectangle(x, y, width, height);
             canvas.DrawRectangle(x, y, width, height);

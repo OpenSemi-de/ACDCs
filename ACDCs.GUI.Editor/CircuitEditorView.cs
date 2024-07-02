@@ -45,6 +45,7 @@ public class CircuitEditorView : ContentView, ICircuitEditorView
         scene.Circuit.Components.Add(resistor);
         scene.Circuit.Components.Add(capacitor);
         scene.Debug.ShowClickBoxes = true;
+        scene.HasOutline = true;
         string d = scene.ToJson();
         _circuitView.LoadJson(d);
     }

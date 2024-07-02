@@ -35,7 +35,15 @@ public class Scene : IScene
     /// The click boxes.
     /// </value>
     [JsonIgnore]
-    public List<Quad> ClickBoxes => [];
+    public List<Quad> ClickBoxes { get; set; } = [];
+
+    /// <summary>
+    /// Gets or sets the clicked box.
+    /// </summary>
+    /// <value>
+    /// The clicked box.
+    /// </value>
+    public Quad? ClickedBox { get; set; }
 
     /// <summary>
     /// Gets the debug.
@@ -43,7 +51,7 @@ public class Scene : IScene
     /// <value>
     /// The debug.
     /// </value>
-    public SceneDebug Debug => new();
+    public SceneDebug Debug { get; set; } = new();
 
     /// <summary>
     /// Gets the drawings.
@@ -55,7 +63,7 @@ public class Scene : IScene
     public List<IDrawing> Drawings { get; } = [];
 
     /// <summary>
-    /// Gets or sets a value indicating whether this instance has outline (default:true).
+    /// Gets or sets a value indicating whether this instance has outline.
     /// </summary>
     /// <value>
     ///   <c>true</c> if this instance has outline; otherwise, <c>false</c>.

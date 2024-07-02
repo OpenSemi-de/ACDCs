@@ -50,13 +50,15 @@ public static class ServiceStartupHelper
         mauiAppBuilder.Services.AddTransient<ICircuitView, CircuitView>();
         mauiAppBuilder.Services.AddTransient<ICircuitRenderer, CircuitRenderer>();
         mauiAppBuilder.Services.AddTransient<IRenderManager, RenderManager>();
-        mauiAppBuilder.Services.AddTransient<ISceneManager, SceneManager>();
         mauiAppBuilder.Services.AddTransient<ITextRenderer, TextRenderer>();
         mauiAppBuilder.Services.AddTransient<ILineRenderer, LineRenderer>();
         mauiAppBuilder.Services.AddTransient<IGridRenderer, GridRenderer>();
         mauiAppBuilder.Services.AddTransient<IPointRenderer, PointRenderer>();
         mauiAppBuilder.Services.AddTransient<IBoxRenderer, BoxRenderer>();
         mauiAppBuilder.Services.AddTransient<IArcRenderer, ArcRenderer>();
+        mauiAppBuilder.Services.AddTransient<IDebugRenderer, DebugRenderer>();
+        mauiAppBuilder.Services.AddTransient<IBackgroundRenderer, BackgroundRenderer>();
+        mauiAppBuilder.Services.AddTransient<ISelectionRenderer, SelectionRenderer>();
 
         if (Application.Current != null)
         {

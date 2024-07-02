@@ -6,12 +6,12 @@
 public class SceneDebug
 {
     /// <summary>
-    /// Gets or sets a value indicating whether this instance has outline.
+    /// Gets or sets a value indicating whether [draw debug].
     /// </summary>
     /// <value>
-    ///   <c>true</c> if this instance has outline; otherwise, <c>false</c>.
+    ///   <c>true</c> if [draw debug]; otherwise, <c>false</c>.
     /// </value>
-    public bool HasOutline { get; set; }
+    public bool DrawDebug { get; set; } = false;
 
     /// <summary>
     /// Gets or sets a value indicating whether [show click boxes].
@@ -19,5 +19,5 @@ public class SceneDebug
     /// <value>
     ///   <c>true</c> if [show click boxes]; otherwise, <c>false</c>.
     /// </value>
-    public bool ShowClickBoxes { get; set; }
+    public bool ShowClickBoxes { get; set; } = false;
 }

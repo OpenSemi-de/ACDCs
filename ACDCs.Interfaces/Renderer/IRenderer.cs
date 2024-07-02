@@ -8,29 +8,16 @@ namespace ACDCs.Interfaces.Renderer;
 public interface IRenderer
 {
     /// <summary>
-    /// Gets the type of the drawing.
-    /// </summary>
-    /// <value>
-    /// The type of the drawing.
-    /// </value>
-    Type DrawingType { get; }
-
-    /// <summary>
     /// Draws on the specified canvas.
     /// </summary>
+    /// <param name="scene">The scene.</param>
     /// <param name="canvas">The canvas.</param>
-    void Draw(ICanvas canvas);
+    /// <param name="dirtyRect">The rect to draw</param>
+    void Draw(IScene scene, ICanvas canvas, RectF dirtyRect);
 
     /// <summary>
     /// Sets the position.
     /// </summary>
     /// <param name="position">The position.</param>
     void SetPosition(Microsoft.Maui.Graphics.Point position);
-
-    /// <summary>
-    /// Sets the scene.
-    /// </summary>
-    /// <param name="scene">The scene.</param>
-    /// <param name="drawingType">Type of the drawing.</param>
-    void SetScene(IScene scene, Type drawingType);
 }

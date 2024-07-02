@@ -35,7 +35,7 @@ public class CircuitRenderer : GraphicsView, ICircuitRenderer
         _logger = logger;
         RenderSettingsManager.SetService(themeService);
         _renderManager = ServiceHelper.GetService<IRenderManager>();
-
+        _renderManager.OnInvalidate += RenderManager_OnInvalidate;
         Drawable = (IDrawable)_renderManager;
 
         _logger.LogDebug("Circuit renderer view started.");
@@ -96,6 +96,11 @@ public class CircuitRenderer : GraphicsView, ICircuitRenderer
     private void PointerGestureRecognizer_PointerPressed(object? sender, PointerEventArgs e)
     {
         _renderManager.GetTapped(e.GetPosition(this));
+    }
+
+    private void RenderManager_OnInvalidate(object? sender, EventArgs e)
+    {
+        Invalidate();
     }
 
     private void TapGestureRecognizer_Tapped(object? sender, TappedEventArgs e)

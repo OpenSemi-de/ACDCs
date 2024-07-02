@@ -8,12 +8,9 @@ namespace ACDCs.Interfaces;
 public interface IRenderManager
 {
     /// <summary>
-    /// Gets a value indicating whether this instance has outline.
+    /// Occurs when [on invalidate].
     /// </summary>
-    /// <value>
-    ///   <c>true</c> if this instance has outline; otherwise, <c>false</c>.
-    /// </value>
-    public bool HasOutline { get; set; }
+    public event EventHandler OnInvalidate;
 
     /// <summary>
     /// Gets or sets a value indicating whether this instance is debug.

@@ -95,6 +95,7 @@ public class CircuitComponentView : HorizontalStackLayout, ICircuitComponentView
             scene.Circuit.Components.Add(component);
             scene.BackgroundColor = Colors.White;
             scene.HasOutline = false;
+            scene.Debug.ShowClickBoxes = false;
             circuitRenderer.SetScene(scene);
 
             _circuitRenderer.Add(circuitRenderer);

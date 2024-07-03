@@ -28,14 +28,17 @@ public class DebugRenderer : BaseRenderer<IDrawing>, IRenderer, IDebugRenderer
 
         RenderSettingsManager.ApplyColors(canvas);
 
-        foreach (Quad quad in scene.ClickBoxes)
+        if (scene.Debug.ShowClickBoxes)
         {
-            PathF path = new(quad.X1, quad.Y1);
-            path.LineTo(quad.X2, quad.Y2);
-            path.LineTo(quad.X3, quad.Y3);
-            path.LineTo(quad.X4, quad.Y4);
-            path.LineTo(quad.X1, quad.Y1);
-            canvas.DrawPath(path);
+            foreach (Quad quad in scene.ClickBoxes)
+            {
+                PathF path = new(quad.X1, quad.Y1);
+                path.LineTo(quad.X2, quad.Y2);
+                path.LineTo(quad.X3, quad.Y3);
+                path.LineTo(quad.X4, quad.Y4);
+                path.LineTo(quad.X1, quad.Y1);
+                canvas.DrawPath(path);
+            }
         }
     }
 }

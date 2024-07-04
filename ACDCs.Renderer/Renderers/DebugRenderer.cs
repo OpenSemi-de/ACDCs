@@ -30,7 +30,7 @@ public class DebugRenderer : BaseRenderer<IDrawing>, IRenderer, IDebugRenderer
 
         if (scene.Debug.ShowClickBoxes)
         {
-            foreach (ClickBox clickBox in scene.ClickBoxes)
+            foreach (ClickBox clickBox in scene.ClickBoxes.Cast<ClickBox>())
             {
                 Quad quad = clickBox.Quad;
                 PathF path = new(quad.X1, quad.Y1);

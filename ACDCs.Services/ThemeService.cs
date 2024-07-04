@@ -38,6 +38,7 @@ public class ThemeService : IThemeService
             { ColorDefinition.CircuitRendererFill, Colors.LightBlue.AddLuminosity(0.2f) },
             { ColorDefinition.CircuitRendererFont, Colors.Black.AddLuminosity(0.1f) },
             { ColorDefinition.CircuitRendererGrid, Colors.DarkBlue.AddLuminosity(0.4f) },
+            { ColorDefinition.Selection, Colors.DarkBlue.AddLuminosity(0.4f) },
         };
 
         _colorsDark = new()
@@ -59,6 +60,7 @@ public class ThemeService : IThemeService
             { ColorDefinition.CircuitRendererFill, Colors.DarkBlue.AddLuminosity(0.2f) },
             { ColorDefinition.CircuitRendererFont, Colors.White.AddLuminosity(-0.1f) },
             { ColorDefinition.CircuitRendererGrid, Colors.LightBlue.AddLuminosity(-0.4f) },
+            { ColorDefinition.Selection, Colors.LightBlue.AddLuminosity(-0.4f) },
         };
 
         _theme = theme ?? AppTheme.Unspecified;

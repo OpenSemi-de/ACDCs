@@ -23,6 +23,7 @@ public class RendererButton : Border
     /// <param name="themeService">The theme service.</param>
     public RendererButton(IComponent component, IThemeService themeService)
     {
+        StrokeThickness = 3;
         _circuitRenderer = (CircuitRenderer)ServiceHelper.GetService<ICircuitRenderer>();
         _circuitRenderer.DisableMovement();
 
@@ -57,18 +58,34 @@ public class RendererButton : Border
     public event EventHandler? OnClicked;
 
     /// <summary>
+    /// Gets a value indicating whether this <see cref="RendererButton"/> is selected.
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if selected; otherwise, <c>false</c>.
+    /// </value>
+    public bool Selected { get; private set; }
+
+    /// <summary>
     /// Resets this instance.
     /// </summary>
     public void Reset()
     {
+        Selected = false;
         Color color = _themeService.GetColor(Structs.ColorDefinition.Border);
         Stroke = new SolidColorBrush(color);
     }
 
     private void PointerGestureRecognizer_PointerPressed(object? sender, PointerEventArgs e)
     {
+        if (Selected)
+        {
+            Reset();
+            return;
+        }
+
         OnClicked?.Invoke(this, new());
-        Color color = Colors.Black; // _themeService.GetColor(Structs.ColorDefinition.Border);
+        Color color = _themeService.GetColor(Structs.ColorDefinition.Selection);
         Stroke = new SolidColorBrush(color);
+        Selected = true;
     }
 }

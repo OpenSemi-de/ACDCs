@@ -18,7 +18,7 @@ public interface IRenderManager
     /// <value>
     ///   <c>true</c> if this instance is debug; otherwise, <c>false</c>.
     /// </value>
-    public bool IsDebug { get; set; }
+    public bool IsDebug { get; }
 
     /// <summary>
     /// Gets the position.

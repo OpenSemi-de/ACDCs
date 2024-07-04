@@ -12,8 +12,6 @@ namespace ACDCs.Renderer.Renderers;
 /// <typeparam name="T"></typeparam>
 public class BaseRenderer<T>
 {
-    private readonly List<IDrawing> _drawings = [];
-
     private Point _position;
 
     /// <summary>

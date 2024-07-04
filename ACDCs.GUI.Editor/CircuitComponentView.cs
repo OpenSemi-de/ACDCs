@@ -87,7 +87,7 @@ public class CircuitComponentView : HorizontalStackLayout, ICircuitComponentView
 
         foreach (var component in components)
         {
-            RendererButton button = new RendererButton(component, _themeService);
+            RendererButton button = new(component, _themeService);
 
             button.OnClicked += Button_OnClicked;
             _circuitRenderers.Add(button);

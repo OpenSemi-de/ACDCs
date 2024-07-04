@@ -89,4 +89,9 @@ public enum ColorDefinition
     /// The circuit renderer fill
     /// </summary>
     CircuitRendererFill = 16,
+
+    /// <summary>
+    /// The selection color
+    /// </summary>
+    Selection = 17,
 }

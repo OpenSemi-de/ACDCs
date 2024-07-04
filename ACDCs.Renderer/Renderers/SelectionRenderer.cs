@@ -3,6 +3,7 @@ using ACDCs.Renderer.Drawings;
 using ACDCs.Renderer.Managers;
 using ACDCs.Interfaces.Circuit;
 using ACDCs.Structs;
+using ACDCs.Interfaces;
 
 namespace ACDCs.Renderer.Renderers;
 
@@ -29,7 +30,8 @@ public class SelectionRenderer : BaseRenderer<ArcDrawing>, IRenderer, ISelection
         }
 
         Quad quad = scene.ClickedBox.Quad;
-        canvas.StrokeColor = Colors.Red;
+        Color selectionColor = RenderSettingsManager.GetColor(ColorDefinition.Selection);
+        canvas.StrokeColor = selectionColor;
 
         PathF path = new(quad.X1, quad.Y1);
         path.LineTo(quad.X2, quad.Y2);

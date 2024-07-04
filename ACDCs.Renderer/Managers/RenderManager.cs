@@ -18,7 +18,6 @@ namespace ACDCs.Renderer.Managers;
 public class RenderManager : IRenderManager, IDrawable
 {
     private readonly ILogger _logger;
-    private readonly IThemeService _themeService;
     private readonly List<IRenderer> renderers = [];
     private Point _position = new(100, 100);
     private IScene _scene;
@@ -28,11 +27,9 @@ public class RenderManager : IRenderManager, IDrawable
     /// Initializes a new instance of the <see cref="RenderManager" /> class.
     /// </summary>
     /// <param name="logger">The logger.</param>
-    /// <param name="themeService">The theme service.</param>
-    public RenderManager(ILogger logger, IThemeService themeService)
+    public RenderManager(ILogger logger)
     {
         _logger = logger;
-        _themeService = themeService;
 
         renderers.Add(ServiceHelper.GetService<IBackgroundRenderer>());
         renderers.Add(ServiceHelper.GetService<IGridRenderer>());
@@ -49,10 +46,6 @@ public class RenderManager : IRenderManager, IDrawable
         _scene = new Scene();
 
         _logger.LogDebug("Circuit renderer core started.");
-
-#if DEBUG
-        IsDebug = true;
-#endif
     }
 
     /// <inheritdoc/>
@@ -72,7 +65,7 @@ public class RenderManager : IRenderManager, IDrawable
     /// <value>
     ///   <c>true</c> if this instance is debug; otherwise, <c>false</c>.
     /// </value>
-    public bool IsDebug { get; set; }
+    public bool IsDebug { get => Scene?.Debug.DrawDebug ?? false; }
 
     /// <summary>
     /// Gets the position.
@@ -120,13 +113,12 @@ public class RenderManager : IRenderManager, IDrawable
             _logger.LogDebug($"Circuit renderer drawing: {dirtyRect.ToJson()}");
         }
 
-        ProvideScene();
         foreach (IRenderer renderer in renderers)
         {
             renderer.Draw(_scene, canvas, dirtyRect);
         }
 
-        if (IsDebug && _scene.Debug.DrawDebug)
+        if (IsDebug)
         {
             DrawDebug(canvas);
         }
@@ -197,12 +189,7 @@ public class RenderManager : IRenderManager, IDrawable
         ProvideScene();
     }
 
-    private void DrawDebug(ICanvas canvas)
-    {
-        canvas.DrawString(_position.ToJson(), 0, 0, HorizontalAlignment.Left);
-    }
-
-    private void GetDrawing(IComponent component)
+    private void AddDrawings(IComponent component)
     {
         if (component.GetDrawing() is not IDrawing drawing)
         {
@@ -221,6 +208,11 @@ public class RenderManager : IRenderManager, IDrawable
         }
     }
 
+    private void DrawDebug(ICanvas canvas)
+    {
+        canvas.DrawString(_position.ToJson(), 0, 0, HorizontalAlignment.Left);
+    }
+
     private void ProvideScene()
     {
         _scene.Drawings.Clear();
@@ -228,7 +220,7 @@ public class RenderManager : IRenderManager, IDrawable
 
         foreach (IComponent component in _scene.Circuit.Components)
         {
-            GetDrawing(component);
+            AddDrawings(component);
         }
     }
 

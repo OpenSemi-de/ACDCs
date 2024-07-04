@@ -31,7 +31,7 @@ public class TextRenderer : BaseRenderer<TextDrawing>, IRenderer, ITextRenderer
 
             BaseRendererHelper.GetPositionAndSize(scene, Position, text, ref x, ref y, ref width, ref height);
 
-            canvas.DrawString(text.Text, x, y, width, height, HorizontalAlignment.Center, VerticalAlignment.Center);
+            canvas.DrawString(text.Text, x, y, width, height, HorizontalAlignment.Center, VerticalAlignment.Top);
         }
     }
 }

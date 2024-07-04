@@ -28,7 +28,7 @@ public class SelectionRenderer : BaseRenderer<ArcDrawing>, IRenderer, ISelection
             return;
         }
 
-        Quad quad = scene.ClickedBox;
+        Quad quad = scene.ClickedBox.Quad;
         canvas.StrokeColor = Colors.Red;
 
         PathF path = new(quad.X1, quad.Y1);

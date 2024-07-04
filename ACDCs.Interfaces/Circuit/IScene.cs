@@ -34,7 +34,7 @@ public interface IScene
     /// The click boxes.
     /// </value>
     [JsonIgnore]
-    public List<Quad> ClickBoxes { get; }
+    public List<IClickBox> ClickBoxes { get; }
 
     /// <summary>
     /// Gets or sets the clicked box.
@@ -42,7 +42,7 @@ public interface IScene
     /// <value>
     /// The clicked box.
     /// </value>
-    Quad? ClickedBox { get; set; }
+    IClickBox? ClickedBox { get; set; }
 
     /// <summary>
     /// Gets the debug.

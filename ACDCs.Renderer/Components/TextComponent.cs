@@ -17,8 +17,8 @@ public class TextComponent : IComponent
     {
         Id = "";
         Text = "Text";
-        Width = 60;
-        Height = 40;
+        Width = 40;
+        Height = 20;
         Rotation = 0;
         Value = 0;
     }

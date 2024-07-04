@@ -17,7 +17,7 @@ using ACDCs.Structs;
 /// <seealso cref="Sharp.UI.ContentView" />
 public class CircuitComponentView : HorizontalStackLayout, ICircuitComponentView
 {
-    private readonly List<ICircuitRenderer> _circuitRenderer;
+    private readonly List<RendererButton> _circuitRenderers;
     private readonly ILogger _logger;
     private readonly IThemeService _themeService;
 
@@ -34,7 +34,7 @@ public class CircuitComponentView : HorizontalStackLayout, ICircuitComponentView
             .AbsoluteLayoutFlags(AbsoluteLayoutFlags.YProportional | AbsoluteLayoutFlags.WidthProportional)
             .BackgroundColor = _themeService.GetColor(ColorDefinition.CircuitComponentBackground);
 
-        _circuitRenderer = [];
+        _circuitRenderers = [];
         GenerateCircuitViews();
 
         _logger.LogDebug("Circuit components started.");
@@ -47,6 +47,15 @@ public class CircuitComponentView : HorizontalStackLayout, ICircuitComponentView
     /// The render core.
     /// </value>
     public IRenderManager? RenderCore { get; set; }
+
+    private void Button_OnClicked(object? sender, EventArgs e)
+    {
+        _circuitRenderers.ForEach(r => r.Reset());
+    }
+
+    private void CircuitRendererPointerGestureRecognizer_PointerPressed(object? sender, PointerEventArgs e)
+    {
+    }
 
     private void GenerateCircuitViews()
     {
@@ -78,28 +87,12 @@ public class CircuitComponentView : HorizontalStackLayout, ICircuitComponentView
 
         foreach (var component in components)
         {
-            CircuitRenderer circuitRenderer = (CircuitRenderer)ServiceHelper.GetService<ICircuitRenderer>();
-            circuitRenderer.DisableMovement();
-            circuitRenderer.WidthRequest = 60;
-            circuitRenderer.HeightRequest = 60;
+            RendererButton button = new RendererButton(component, _themeService);
 
-            component.X = -80;
-            component.Y = -80;
-            Scene scene = new()
-            {
-                SceneSize = new Rect(0, 0, 60, 60),
-            };
+            button.OnClicked += Button_OnClicked;
+            _circuitRenderers.Add(button);
 
-            scene.StepSize /= 5;
-
-            scene.Circuit.Components.Add(component);
-            scene.BackgroundColor = Colors.White;
-            scene.HasOutline = false;
-            scene.Debug.ShowClickBoxes = false;
-            circuitRenderer.SetScene(scene);
-
-            _circuitRenderer.Add(circuitRenderer);
-            Children.Add(circuitRenderer);
+            Children.Add(button);
         }
     }
 }

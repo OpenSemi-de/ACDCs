@@ -22,7 +22,6 @@ public class RenderManager : IRenderManager, IDrawable
     private readonly List<IRenderer> renderers = [];
     private Point _position = new(100, 100);
     private IScene _scene;
-    private Quad? _selectedQuad = new();
     private float _stepSize = 25.4f;
 
     /// <summary>
@@ -57,7 +56,7 @@ public class RenderManager : IRenderManager, IDrawable
     }
 
     /// <inheritdoc/>
-    public event EventHandler OnInvalidate;
+    public event EventHandler? OnInvalidate;
 
     /// <summary>
     /// Gets or sets the base square.
@@ -144,14 +143,14 @@ public class RenderManager : IRenderManager, IDrawable
             return;
         }
 
-        Quad? clickedQuad =
+        IClickBox? clickedBox =
             Scene.
             ClickBoxes.
-            FirstOrDefault(rect =>
-                SelectionHelper.PointInRect(clickPoint.Value, rect)
+            FirstOrDefault(clickBox =>
+                SelectionHelper.PointInRect(clickPoint.Value, clickBox.Quad)
                 );
 
-        Scene.ClickedBox = clickedQuad;
+        Scene.ClickedBox = clickedBox;
 
         OnInvalidate?.Invoke(this, new());
     }
@@ -218,7 +217,7 @@ public class RenderManager : IRenderManager, IDrawable
         if (drawing is ICompositeDrawing composite)
         {
             _scene.Drawings.AddRange(composite.GetDrawings());
-            RegisterClickBox(composite);
+            RegisterClickBox(composite, component);
         }
     }
 
@@ -233,7 +232,7 @@ public class RenderManager : IRenderManager, IDrawable
         }
     }
 
-    private void RegisterClickBox(ICompositeDrawing composite)
+    private void RegisterClickBox(ICompositeDrawing composite, IComponent component)
     {
         if (composite is IDrawing drawing)
         {
@@ -272,7 +271,7 @@ public class RenderManager : IRenderManager, IDrawable
                 x, y + height
             );
 
-            _scene.ClickBoxes.Add(quad);
+            _scene.ClickBoxes.Add(new ClickBox(component, quad));
         }
     }
 }

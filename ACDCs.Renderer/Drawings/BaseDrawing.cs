@@ -1,4 +1,4 @@
-﻿using ACDCs.Interfaces;
+﻿using ACDCs.Interfaces.Circuit;
 using ACDCs.Interfaces.Drawing;
 
 namespace ACDCs.Renderer.Drawings;
@@ -15,6 +15,14 @@ public class BaseDrawing : IDrawing
     /// The color of the background.
     /// </value>
     public Color? BackgroundColor { get; set; }
+
+    /// <summary>
+    /// Gets or sets the component.
+    /// </summary>
+    /// <value>
+    /// The component.
+    /// </value>
+    public IComponent? Component { get; set; }
 
     /// <summary>
     /// Gets or sets the identifier.

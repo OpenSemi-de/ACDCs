@@ -60,6 +60,14 @@ public class RenderManager : IRenderManager, IDrawable
     public Rect BaseSquare { get; set; } = new Rect(0, 0, 1000, 1000);
 
     /// <summary>
+    /// Gets the insert component.
+    /// </summary>
+    /// <value>
+    /// The insert component.
+    /// </value>
+    public IComponent? InsertComponent { get; set; }
+
+    /// <summary>
     /// Gets a value indicating whether this instance is debug.
     /// </summary>
     /// <value>
@@ -113,6 +121,8 @@ public class RenderManager : IRenderManager, IDrawable
             _logger.LogDebug($"Circuit renderer drawing: {dirtyRect.ToJson()}");
         }
 
+        RegisterClickBoxes();
+
         foreach (IRenderer renderer in renderers)
         {
             renderer.Draw(_scene, canvas, dirtyRect);
@@ -135,14 +145,21 @@ public class RenderManager : IRenderManager, IDrawable
             return;
         }
 
-        IClickBox? clickedBox =
-            Scene.
-            ClickBoxes.
-            FirstOrDefault(clickBox =>
-                SelectionHelper.PointInRect(clickPoint.Value, clickBox.Quad)
-                );
+        if (InsertComponent == null)
+        {
+            IClickBox? clickedBox =
+                Scene.
+                ClickBoxes.
+                FirstOrDefault(clickBox =>
+                    SelectionHelper.PointInRect(clickPoint.Value, clickBox.Quad)
+                    );
 
-        Scene.ClickedBox = clickedBox;
+            Scene.ClickedBox = clickedBox;
+        }
+        else
+        {
+            AddComponent(InsertComponent);
+        }
 
         OnInvalidate?.Invoke(this, new());
     }
@@ -203,8 +220,8 @@ public class RenderManager : IRenderManager, IDrawable
 
         if (drawing is ICompositeDrawing composite)
         {
+            drawing.Component = component;
             _scene.Drawings.AddRange(composite.GetDrawings());
-            RegisterClickBox(composite, component);
         }
     }
 
@@ -264,6 +281,18 @@ public class RenderManager : IRenderManager, IDrawable
             );
 
             _scene.ClickBoxes.Add(new ClickBox(component, quad));
+        }
+    }
+
+    private void RegisterClickBoxes()
+    {
+        _scene.ClickBoxes.Clear();
+        foreach (ICompositeDrawing composite in _scene.Drawings.OfType<ICompositeDrawing>())
+        {
+            if (composite is IDrawing drawing && drawing.Component is IComponent component)
+            {
+                RegisterClickBox(composite, component);
+            }
         }
     }
 }

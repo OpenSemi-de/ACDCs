@@ -13,6 +13,7 @@ using ACDCs.Structs;
 /// <summary>
 /// The view for the circuit components.
 /// </summary>
+/// <seealso cref="Sharp.UI.HorizontalStackLayout" />
 /// <seealso cref="ACDCs.Interfaces.ICircuitComponentView" />
 /// <seealso cref="Sharp.UI.ContentView" />
 public class CircuitComponentView : HorizontalStackLayout, ICircuitComponentView
@@ -40,6 +41,8 @@ public class CircuitComponentView : HorizontalStackLayout, ICircuitComponentView
         _logger.LogDebug("Circuit components started.");
     }
 
+    public event EventHandler? OnSelected;
+
     /// <summary>
     /// Gets or sets the render core.
     /// </summary>
@@ -51,6 +54,10 @@ public class CircuitComponentView : HorizontalStackLayout, ICircuitComponentView
     private void Button_OnClicked(object? sender, EventArgs e)
     {
         _circuitRenderers.ForEach(r => r.Reset());
+        if (RenderCore != null && sender is RendererButton button)
+        {
+            RenderCore.InsertComponent = (IComponent?)Activator.CreateInstance(button.Component.GetType());
+        }
     }
 
     private void CircuitRendererPointerGestureRecognizer_PointerPressed(object? sender, PointerEventArgs e)

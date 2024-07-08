@@ -1,5 +1,7 @@
 ﻿namespace ACDCs.Interfaces.Drawing;
 
+using ACDCs.Interfaces.Circuit;
+
 /// <summary>
 /// The interface for the drawings.
 /// </summary>
@@ -12,6 +14,14 @@ public interface IDrawing
     /// The color of the background.
     /// </value>
     public Color? BackgroundColor { get; set; }
+
+    /// <summary>
+    /// Gets or sets the component.
+    /// </summary>
+    /// <value>
+    /// The component.
+    /// </value>
+    public IComponent? Component { get; set; }
 
     /// <summary>
     /// Gets or sets the identifier.

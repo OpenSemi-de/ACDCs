@@ -13,6 +13,14 @@ public interface IRenderManager
     public event EventHandler OnInvalidate;
 
     /// <summary>
+    /// Gets the insert component.
+    /// </summary>
+    /// <value>
+    /// The insert component.
+    /// </value>
+    public IComponent? InsertComponent { get; set; }
+
+    /// <summary>
     /// Gets or sets a value indicating whether this instance is debug.
     /// </summary>
     /// <value>

@@ -49,6 +49,7 @@ public class RendererButton : Border
         scene.Debug.ShowClickBoxes = false;
         _circuitRenderer.SetScene(scene);
         Content = _circuitRenderer;
+        Component = component;
         _themeService = themeService;
     }
 
@@ -56,6 +57,14 @@ public class RendererButton : Border
     /// Occurs when [on clicked].
     /// </summary>
     public event EventHandler? OnClicked;
+
+    /// <summary>
+    /// Gets the component.
+    /// </summary>
+    /// <value>
+    /// The component.
+    /// </value>
+    public IComponent Component { get; }
 
     /// <summary>
     /// Gets a value indicating whether this <see cref="RendererButton"/> is selected.

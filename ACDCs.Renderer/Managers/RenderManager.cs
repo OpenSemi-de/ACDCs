@@ -49,6 +49,9 @@ public class RenderManager : IRenderManager, IDrawable
     }
 
     /// <inheritdoc/>
+    public event EventHandler? OnInserted;
+
+    /// <inheritdoc/>
     public event EventHandler? OnInvalidate;
 
     /// <summary>
@@ -158,7 +161,11 @@ public class RenderManager : IRenderManager, IDrawable
         }
         else
         {
+            InsertComponent.X = Convert.ToSingle(PutOnGrid(clickPoint.Value.X - _position.X));
+            InsertComponent.Y = Convert.ToSingle(PutOnGrid(clickPoint.Value.Y - _position.Y));
             AddComponent(InsertComponent);
+            InsertComponent = null;
+            OnInserted?.Invoke(this, new());
         }
 
         OnInvalidate?.Invoke(this, new());
@@ -239,6 +246,11 @@ public class RenderManager : IRenderManager, IDrawable
         {
             AddDrawings(component);
         }
+    }
+
+    private float PutOnGrid(double input)
+    {
+        return (-1 + Convert.ToInt32(input / _scene.StepSize)) * _scene.StepSize;
     }
 
     private void RegisterClickBox(ICompositeDrawing composite, IComponent component)

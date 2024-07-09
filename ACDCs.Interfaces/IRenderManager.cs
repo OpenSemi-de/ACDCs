@@ -8,6 +8,11 @@ namespace ACDCs.Interfaces;
 public interface IRenderManager
 {
     /// <summary>
+    /// Occurs when [on inserted].
+    /// </summary>
+    public event EventHandler? OnInserted;
+
+    /// <summary>
     /// Occurs when [on invalidate].
     /// </summary>
     public event EventHandler OnInvalidate;

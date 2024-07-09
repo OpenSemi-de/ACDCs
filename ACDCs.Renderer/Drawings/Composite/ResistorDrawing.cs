@@ -61,11 +61,11 @@ public class ResistorDrawing : BaseDrawing, ICompositeDrawing, IDrawingWithSize
     {
         List<IDrawing> drawings =
         [
-            new PointDrawing(Id + "_Pin1", 0f, 0.45f, 0.1f, 0.55f, true),
-            new LineDrawing(Id + "_Line1", 0.1f, 0.5f, 0.25f, 0.5f, true),
+            new PointDrawing(Id + "_Pin1", -0.05f, 0.45f, 0.05f, 0.55f, true),
+            new LineDrawing(Id + "_Line1", 0.05f, 0.5f, 0.25f, 0.5f, true),
             new BoxDrawing(Id + "_Box1", 0.25f, 0.3f, 0.5f, 0.4f, true),
-            new LineDrawing(Id + "_Line2", 0.75f, 0.5f, 0.9f, 0.5f, true),
-            new PointDrawing(Id + "_Pin2", 0.9f, 0.45f, 1f, 0.55f, true),
+            new LineDrawing(Id + "_Line2", 0.75f, 0.5f, 0.95f, 0.5f, true),
+            new PointDrawing(Id + "_Pin2", 0.95f, 0.45f, 1.05f, 0.55f, true),
             new TextDrawing(Id + "_Text", Value.ToString(), 0f, 0.8f, 1f, 0.4f, 0, true)
         ];
 

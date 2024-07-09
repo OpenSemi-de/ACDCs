@@ -75,12 +75,12 @@ public class CapacitorDrawing : BaseDrawing, ICompositeDrawing, IDrawingWithSize
     {
         List<IDrawing> drawings =
         [
-            new PointDrawing(Id + "_Pin1", 0f, 0.45f, 0.1f, 0.55f, true),
-            new LineDrawing(Id + "_Line1", 0.1f, 0.5f, 0.45f, 0.5f, true),
+            new PointDrawing(Id + "_Pin1", -0.05f, 0.45f, 0.05f, 0.55f, true),
+            new LineDrawing(Id + "_Line1", 0.05f, 0.5f, 0.45f, 0.5f, true),
             new BoxDrawing(Id + "_Line2", 0.45f, 0.2f, 0.05f, 0.6f, true),
             new ArcDrawing(Id + "_Arc1", 0.55f, 0.2f, 0.2f, 0.6f, 120, 240, true).SetStrokeSize(4).SetBackgroundColor(_themeService.GetColor(ColorDefinition.CircuitRendererStroke)),
-            new LineDrawing(Id + "_Line3", 0.55f, 0.5f, 0.9f, 0.5f, true).SetStrokeSize(4),
-            new PointDrawing(Id + "_Pin2", 0.9f, 0.45f, 1f, 0.55f, true),
+            new LineDrawing(Id + "_Line3", 0.55f, 0.5f, 0.95f, 0.5f, true).SetStrokeSize(4),
+            new PointDrawing(Id + "_Pin2", 0.95f, 0.45f, 1.05f, 0.55f, true),
             new TextDrawing(Id + "_Text", Value.ToString(), 0f, 0.8f, 1f, 0.4f, 0, true)
         ];
 

@@ -21,6 +21,7 @@ public class CircuitComponentView : HorizontalStackLayout, ICircuitComponentView
     private readonly List<RendererButton> _circuitRenderers;
     private readonly ILogger _logger;
     private readonly IThemeService _themeService;
+    private IRenderManager? renderCore;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CircuitEditorView" /> class.
@@ -41,6 +42,7 @@ public class CircuitComponentView : HorizontalStackLayout, ICircuitComponentView
         _logger.LogDebug("Circuit components started.");
     }
 
+    /// <inheritdoc/>
     public event EventHandler? OnSelected;
 
     /// <summary>
@@ -49,7 +51,18 @@ public class CircuitComponentView : HorizontalStackLayout, ICircuitComponentView
     /// <value>
     /// The render core.
     /// </value>
-    public IRenderManager? RenderCore { get; set; }
+    public IRenderManager? RenderCore
+    {
+        get => renderCore;
+        set
+        {
+            renderCore = value;
+            if (renderCore != null)
+            {
+                renderCore.OnInserted += RenderCore_OnInserted;
+            }
+        }
+    }
 
     private void Button_OnClicked(object? sender, EventArgs e)
     {
@@ -101,5 +114,10 @@ public class CircuitComponentView : HorizontalStackLayout, ICircuitComponentView
 
             Children.Add(button);
         }
+    }
+
+    private void RenderCore_OnInserted(object? sender, EventArgs e)
+    {
+        _circuitRenderers.ForEach(r => r.Reset());
     }
 }

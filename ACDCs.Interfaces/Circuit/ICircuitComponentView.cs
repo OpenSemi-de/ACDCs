@@ -6,6 +6,11 @@
 public interface ICircuitComponentView
 {
     /// <summary>
+    /// Occurs when [on selected].
+    /// </summary>
+    event EventHandler? OnSelected;
+
+    /// <summary>
     /// Gets or sets the render core.
     /// </summary>
     /// <value>

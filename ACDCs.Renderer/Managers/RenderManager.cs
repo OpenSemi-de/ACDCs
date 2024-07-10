@@ -20,7 +20,7 @@ public class RenderManager : IRenderManager, IDrawable
     private readonly ILogger _logger;
     private readonly List<IRenderer> renderers = [];
     private Point _position = new(100, 100);
-    private IScene _scene;
+    private IScene? _scene;
     private float _stepSize = 25.4f;
 
     /// <summary>
@@ -30,6 +30,7 @@ public class RenderManager : IRenderManager, IDrawable
     public RenderManager(ILogger logger)
     {
         _logger = logger;
+        Scene = new Scene();
 
         renderers.Add(ServiceHelper.GetService<IBackgroundRenderer>());
         renderers.Add(ServiceHelper.GetService<IGridRenderer>());
@@ -43,7 +44,6 @@ public class RenderManager : IRenderManager, IDrawable
         renderers.Add(ServiceHelper.GetService<ISelectionRenderer>());
 
         SetPositionOffset(Convert.ToSingle(Position.X), Convert.ToSingle(Position.Y));
-        _scene = new Scene();
 
         _logger.LogDebug("Circuit renderer core started.");
     }
@@ -92,7 +92,7 @@ public class RenderManager : IRenderManager, IDrawable
     /// <value>
     /// The scene.
     /// </value>
-    public IScene Scene { get => _scene; set => _scene = value; }
+    public IScene? Scene { get => _scene; set => _scene = value; }
 
     /// <summary>
     /// Gets or sets the size of the step.
@@ -108,8 +108,13 @@ public class RenderManager : IRenderManager, IDrawable
     /// <param name="component">The component.</param>
     public void AddComponent(IComponent component)
     {
-        _scene.Circuit.Components.Add(component);
-        SetScene(_scene);
+        if (Scene == null)
+        {
+            return;
+        }
+
+        Scene.Circuit.Components.Add(component);
+        SetScene(Scene);
     }
 
     /// <summary>
@@ -119,6 +124,11 @@ public class RenderManager : IRenderManager, IDrawable
     /// <param name="dirtyRect">The dirty rect.</param>
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
+        if (Scene == null)
+        {
+            return;
+        }
+
         if (IsDebug)
         {
             _logger.LogDebug($"Circuit renderer drawing: {dirtyRect.ToJson()}");
@@ -128,7 +138,7 @@ public class RenderManager : IRenderManager, IDrawable
 
         foreach (IRenderer renderer in renderers)
         {
-            renderer.Draw(_scene, canvas, dirtyRect);
+            renderer.Draw(Scene, canvas, dirtyRect);
         }
 
         if (IsDebug)
@@ -143,7 +153,7 @@ public class RenderManager : IRenderManager, IDrawable
     /// <param name="clickPoint"></param>
     public void GetTapped(Point? clickPoint)
     {
-        if (clickPoint == null)
+        if (clickPoint == null || Scene == null)
         {
             return;
         }
@@ -194,13 +204,33 @@ public class RenderManager : IRenderManager, IDrawable
     /// <param name="y">The y.</param>
     public void SetPositionOffset(float x, float y)
     {
-        _position.X += x;
-        _position.Y += y;
-        if (_position.X > 100) _position.X = 100;
-        if (_position.Y > 100) _position.Y = 100;
-        if (_position.X < -1 * (BaseSquare.X + BaseSquare.Width) + 100) _position.X = -1 * (BaseSquare.X + BaseSquare.Width) + 100;
-        if (_position.Y < -1 * (BaseSquare.Y + BaseSquare.Height) + 100) _position.Y = -1 * (BaseSquare.Y + BaseSquare.Height) + 100;
-        renderers.ForEach(r => r.SetPosition(_position));
+        if (Scene == null)
+        {
+            return;
+        }
+
+        if (Scene.ClickedBox == null)
+        {
+            _position.X += x;
+            _position.Y += y;
+            if (_position.X > 100) _position.X = 100;
+            if (_position.Y > 100) _position.Y = 100;
+            if (_position.X < -1 * (BaseSquare.X + BaseSquare.Width) + 100) _position.X = -1 * (BaseSquare.X + BaseSquare.Width) + 100;
+            if (_position.Y < -1 * (BaseSquare.Y + BaseSquare.Height) + 100) _position.Y = -1 * (BaseSquare.Y + BaseSquare.Height) + 100;
+            renderers.ForEach(r => r.SetPosition(_position));
+        }
+        else
+        {
+            if (Scene.ClickedBox != null && Scene.ClickedBox.Component is IComponent component)
+            {
+                float posX = Convert.ToSingle(component.X + (Math.Round(x / Scene.StepSize) * Scene.StepSize));
+                float posY = Convert.ToSingle(component.Y + (Math.Round(y / Scene.StepSize) * Scene.StepSize));
+                component.X = posX;
+                component.Y = posY;
+                ProvideScene();
+                OnInvalidate?.Invoke(this, new());
+            }
+        }
     }
 
     /// <summary>
@@ -209,12 +239,18 @@ public class RenderManager : IRenderManager, IDrawable
     /// <param name="scene">The scene.</param>
     public void SetScene(IScene scene)
     {
-        _scene = scene;
+        Scene = scene;
         ProvideScene();
+        OnInvalidate?.Invoke(this, new());
     }
 
     private void AddDrawings(IComponent component)
     {
+        if (Scene == null)
+        {
+            return;
+        }
+
         if (component.GetDrawing() is not IDrawing drawing)
         {
             return;
@@ -222,13 +258,13 @@ public class RenderManager : IRenderManager, IDrawable
 
         if (drawing != null)
         {
-            _scene.Drawings.Add(drawing);
+            Scene.Drawings.Add(drawing);
         }
 
         if (drawing is ICompositeDrawing composite)
         {
             drawing.Component = component;
-            _scene.Drawings.AddRange(composite.GetDrawings());
+            Scene.Drawings.AddRange(composite.GetDrawings());
         }
     }
 
@@ -239,10 +275,15 @@ public class RenderManager : IRenderManager, IDrawable
 
     private void ProvideScene()
     {
-        _scene.Drawings.Clear();
-        _scene.ClickBoxes.Clear();
+        if (Scene == null)
+        {
+            return;
+        }
 
-        foreach (IComponent component in _scene.Circuit.Components)
+        Scene.Drawings.Clear();
+        Scene.ClickBoxes.Clear();
+
+        foreach (IComponent component in Scene.Circuit.Components)
         {
             AddDrawings(component);
         }
@@ -250,12 +291,17 @@ public class RenderManager : IRenderManager, IDrawable
 
     private float PutOnGrid(double input)
     {
-        return (-1 + Convert.ToInt32(input / _scene.StepSize)) * _scene.StepSize;
+        if (Scene == null)
+        {
+            return 0;
+        }
+
+        return (-1 + Convert.ToInt32(input / Scene.StepSize)) * Scene.StepSize;
     }
 
     private void RegisterClickBox(ICompositeDrawing composite, IComponent component)
     {
-        if (composite is IDrawing drawing)
+        if (Scene != null && composite is IDrawing drawing)
         {
             float x = drawing.X;
             float y = drawing.Y;
@@ -270,17 +316,17 @@ public class RenderManager : IRenderManager, IDrawable
 
             if (composite is IDrawingWithSize dws)
             {
-                width = dws.Width * _scene.StepSize;
-                height = dws.Height * _scene.StepSize;
+                width = dws.Width * Scene.StepSize;
+                height = dws.Height * Scene.StepSize;
             }
 
-            x += (Convert.ToSingle(composite.Offset.X) * _scene.StepSize);
-            y += (Convert.ToSingle(composite.Offset.Y) * _scene.StepSize);
+            x += (Convert.ToSingle(composite.Offset.X) * Scene.StepSize);
+            y += (Convert.ToSingle(composite.Offset.Y) * Scene.StepSize);
 
             x += Convert.ToSingle(_position.X);
             y += Convert.ToSingle(_position.Y);
 
-            if (_scene.Debug.ShowClickBoxes)
+            if (Scene.Debug.ShowClickBoxes)
             {
                 _logger.LogDebug($"ClickBox: {x},{y},{width},{height}");
             }
@@ -292,14 +338,19 @@ public class RenderManager : IRenderManager, IDrawable
                 x, y + height
             );
 
-            _scene.ClickBoxes.Add(new ClickBox(component, quad));
+            Scene.ClickBoxes.Add(new ClickBox(component, quad));
         }
     }
 
     private void RegisterClickBoxes()
     {
-        _scene.ClickBoxes.Clear();
-        foreach (ICompositeDrawing composite in _scene.Drawings.OfType<ICompositeDrawing>())
+        if (Scene == null)
+        {
+            return;
+        }
+
+        Scene.ClickBoxes.Clear();
+        foreach (ICompositeDrawing composite in Scene.Drawings.OfType<ICompositeDrawing>())
         {
             if (composite is IDrawing drawing && drawing.Component is IComponent component)
             {

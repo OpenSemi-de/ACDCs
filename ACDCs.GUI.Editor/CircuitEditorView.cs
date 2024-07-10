@@ -37,17 +37,6 @@ public class CircuitEditorView : ContentView, ICircuitEditorView
         _circuitView = ServiceHelper.GetService<ICircuitView>();
         Content = (View)_circuitView;
         _logger.LogDebug("Circuit editor started.");
-        Scene scene = new();
-        TextComponent item = new("Text1", "text", scene.StepSize * 3, scene.StepSize * 1, 100, 20, 0);
-        ResistorComponent resistor = new("R1", 10000, scene.StepSize * 3, scene.StepSize * 2, 0);
-        CapacitorComponent capacitor = new("C1", 10000, scene.StepSize * 3, scene.StepSize * 3, 0);
-        scene.Circuit.Components.Add(item);
-        scene.Circuit.Components.Add(resistor);
-        scene.Circuit.Components.Add(capacitor);
-        scene.Debug.ShowClickBoxes = true;
-        scene.HasOutline = true;
-        string d = scene.ToJson();
-        _circuitView.LoadJson(d);
     }
 
     /// <summary>

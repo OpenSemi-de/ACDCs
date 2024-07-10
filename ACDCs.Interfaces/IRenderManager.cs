@@ -41,6 +41,8 @@ public interface IRenderManager
     /// </value>
     Point Position { get; }
 
+    IScene? Scene { get; set; }
+
     /// <summary>
     /// Gets or sets the size of the step.
     /// </summary>

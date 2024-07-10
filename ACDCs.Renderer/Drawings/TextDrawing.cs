@@ -11,7 +11,7 @@ namespace ACDCs.Renderer.Drawings;
 /// <seealso cref="BaseDrawing" />
 /// <seealso cref="IDrawing" />
 /// <seealso cref="IDrawingWithSize" />
-public class TextDrawing : BaseDrawing, IDrawingWithSize
+public class TextDrawing : BaseDrawing, IDrawingWithSize, ICompositeDrawing
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="TextDrawing"/> class.
@@ -24,7 +24,7 @@ public class TextDrawing : BaseDrawing, IDrawingWithSize
     /// <param name="height">The height.</param>
     /// <param name="rotation">The rotation.</param>
     /// <param name="isRelativeScale">if set to <c>true</c> [is relative scale].</param>
-    public TextDrawing(string id, string text, float x, float y, float width, float height, float rotation, bool isRelativeScale = false)
+    public TextDrawing(string id, string text, float x, float y, float width, float height, float rotation, bool isRelativeScale = true)
     {
         Height = height;
         Id = id;
@@ -34,6 +34,7 @@ public class TextDrawing : BaseDrawing, IDrawingWithSize
         Width = width;
         X = x;
         Y = y;
+        ParentDrawing = this;
     }
 
     /// <summary>
@@ -42,7 +43,15 @@ public class TextDrawing : BaseDrawing, IDrawingWithSize
     /// <value>
     /// The height.
     /// </value>
-    public float Height { get; set; }
+    public float Height { get; set; } = 1;
+
+    /// <summary>
+    /// Gets or sets the offset.
+    /// </summary>
+    /// <value>
+    /// The offset.
+    /// </value>
+    public Point Offset { get; set; }
 
     /// <summary>
     /// Gets or sets the text.
@@ -58,5 +67,14 @@ public class TextDrawing : BaseDrawing, IDrawingWithSize
     /// <value>
     /// The width.
     /// </value>
-    public float Width { get; set; }
+    public float Width { get; set; } = 2;
+
+    /// <summary>
+    /// Gets the drawings.
+    /// </summary>
+    /// <returns></returns>
+    public List<IDrawing> GetDrawings()
+    {
+        return [this];
+    }
 }
